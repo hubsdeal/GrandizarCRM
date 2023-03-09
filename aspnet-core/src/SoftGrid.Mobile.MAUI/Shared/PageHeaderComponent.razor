@@ -1,0 +1,59 @@
+﻿<!--begin::Title-->
+<div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
+    <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">
+        @PageHeaderService.Title
+    </h1>
+</div>
+<!--end::Title-->
+
+@if (PageHeaderService.HeaderButtonInfos != null)
+{
+    <!--begin::Header wrapper-->
+    <div class="d-flex align-items-stretch justify-content-between flex-lg-grow-1" id="kt_app_header_wrapper">
+        <!--begin::Navbar-->
+        <div class="app-navbar flex-shrink-0">
+            <!--begin::User menu-->
+            <div class="app-navbar-item ms-1 ms-lg-3">
+                <!--begin::Menu wrapper-->
+                @if (PageHeaderService.HeaderButtonInfos.Count == 1)
+                {
+                    @foreach (var button in PageHeaderService.HeaderButtonInfos)
+                    {
+                        <button class="btn btn-primary" @onclick="button.OnClick">
+                            @button.Text
+                        </button>
+                    }
+                }
+                else if (PageHeaderService.HeaderButtonInfos.Count > 1)
+                {
+                    <button class="btn btn-icon btn-color-gray-400 btn-active-color-primary justify-content-end" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-overflow="true">
+                        <!--begin::Svg Icon | path: icons/duotune/general/gen023.svg-->
+                        <span class="svg-icon svg-icon-2qx svg-icon-gray-300 me-n1">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="4" fill="currentColor"></rect>
+                                <rect x="11" y="11" width="2.6" height="2.6" rx="1.3" fill="currentColor"></rect>
+                                <rect x="15" y="11" width="2.6" height="2.6" rx="1.3" fill="currentColor"></rect>
+                                <rect x="7" y="11" width="2.6" height="2.6" rx="1.3" fill="currentColor"></rect>
+                            </svg>
+                        </span>
+                        <!--end::Svg Icon-->
+                    </button>
+                    <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-200px" data-kt-menu="true" style="">
+                        <div class="menu-item px-3">
+                            @foreach (var button in PageHeaderService.HeaderButtonInfos)
+                            {
+                                <a href="javascript:;" class="menu-link px-3" @onclick="button.OnClick">
+                                    @button.Text
+                                </a>
+                            }
+                        </div>
+                    </div>
+                }
+                <!--end::Menu wrapper-->
+            </div>
+            <!--end::User menu-->
+        </div>
+        <!--end::Navbar-->
+    </div>
+    <!--end::Header wrapper-->
+}

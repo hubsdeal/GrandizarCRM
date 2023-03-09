@@ -1,0 +1,14 @@
+<a routerLink="/" target="_blank">
+    <img *ngIf="!appSession.tenant || !appSession.tenant.HasLogo()" [src]="defaultLogo" alt="logo"  class="h-30px logo" />
+    <img
+        *ngIf="appSession.tenant && appSession.tenant.HasLogo()"
+        [src]="
+            remoteServiceBaseUrl +
+            '/TenantCustomization/GetTenantLogo?skin=' +
+            skin +
+            '&tenantId=' +
+            appSession.tenant.id
+        "
+        class="h-30px logo"
+    />
+</a>
