@@ -1,0 +1,148 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span>{{ l('Details') }}</span>
+                </h4>
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    (click)="close()"
+                    aria-label="Close"
+                    [disabled]="saving"
+                ></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('FullName') }} :</h6>
+                        {{ item.contact.fullName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('FirstName') }} :</h6>
+                        {{ item.contact.firstName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('LastName') }} :</h6>
+                        {{ item.contact.lastName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('FullAddress') }} :</h6>
+                        {{ item.contact.fullAddress }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Address') }} :</h6>
+                        {{ item.contact.address }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('ZipCode') }} :</h6>
+                        {{ item.contact.zipCode }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('City') }} :</h6>
+                        {{ item.contact.city }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('DateOfBirth') }} :</h6>
+                        {{ item.contact.dateOfBirth | luxonFormat : 'yyyy-LL-dd HH:mm:ss' }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Mobile') }} :</h6>
+                        {{ item.contact.mobile }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('OfficePhone') }} :</h6>
+                        {{ item.contact.officePhone }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('CountryCode') }} :</h6>
+                        {{ item.contact.countryCode }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('PersonalEmail') }} :</h6>
+                        {{ item.contact.personalEmail }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('BusinessEmail') }} :</h6>
+                        {{ item.contact.businessEmail }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('JobTitle') }} :</h6>
+                        {{ item.contact.jobTitle }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('CompanyName') }} :</h6>
+                        {{ item.contact.companyName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('AiDataTag') }} :</h6>
+                        {{ item.contact.aiDataTag }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Facebook') }} :</h6>
+                        {{ item.contact.facebook }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('LinkedIn') }} :</h6>
+                        {{ item.contact.linkedIn }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Referred') }} :</h6>
+                        <div *ngIf="item.contact.referred" class="text-left">
+                            <i class="fa fa-check-circle text-success" title="True"></i>
+                        </div>
+                        <div *ngIf="!item.contact.referred" class="text-left">
+                            <i class="fa fa-times-circle" title="False"></i>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Verified') }} :</h6>
+                        <div *ngIf="item.contact.verified" class="text-left">
+                            <i class="fa fa-check-circle text-success" title="True"></i>
+                        </div>
+                        <div *ngIf="!item.contact.verified" class="text-left">
+                            <i class="fa fa-times-circle" title="False"></i>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Score') }} :</h6>
+                        {{ item.contact.score }}
+                    </div>
+
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('User') }}) {{ l('Name') }} :</h6>
+                        {{ item.userName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('Country') }}) {{ l('Name') }} :</h6>
+                        {{ item.countryName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('State') }}) {{ l('Name') }} :</h6>
+                        {{ item.stateName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('MembershipType') }}) {{ l('Name') }} :</h6>
+                        {{ item.membershipTypeName }}
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button [disabled]="saving" type="button" class="btn btn-primary blue" (click)="close()">
+                    {{ l('Close') }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

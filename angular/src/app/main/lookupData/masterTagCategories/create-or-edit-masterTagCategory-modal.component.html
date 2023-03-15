@@ -1,0 +1,91 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #masterTagCategoryForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="masterTagCategory.id">{{ l('EditMasterTagCategory') }}</span>
+                        <span *ngIf="!masterTagCategory.id">{{ l('CreateNewMasterTagCategory') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="MasterTagCategory_Name">{{ l('Name') }} *</label>
+                        <input
+                            type="text"
+                            #MasterTagCategory_Name="ngModel"
+                            id="MasterTagCategory_Name"
+                            class="form-control"
+                            [(ngModel)]="masterTagCategory.name"
+                            name="Name"
+                            minlength="1"
+                            maxlength="128"
+                            required
+                        />
+                        <validation-messages [formCtrl]="MasterTagCategory_Name"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="MasterTagCategory_Description">{{ l('Description') }}</label>
+                        <input
+                            type="text"
+                            #MasterTagCategory_Description="ngModel"
+                            id="MasterTagCategory_Description"
+                            class="form-control"
+                            [(ngModel)]="masterTagCategory.description"
+                            name="Description"
+                            minlength="1"
+                            maxlength="2500"
+                        />
+                        <validation-messages [formCtrl]="MasterTagCategory_Description"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="MasterTagCategory_PictureId">{{ l('PictureId') }}</label>
+                        <input
+                            type="text"
+                            #MasterTagCategory_PictureId="ngModel"
+                            id="MasterTagCategory_PictureId"
+                            class="form-control"
+                            [(ngModel)]="masterTagCategory.pictureId"
+                            name="PictureId"
+                        />
+                        <validation-messages [formCtrl]="MasterTagCategory_PictureId"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!masterTagCategoryForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

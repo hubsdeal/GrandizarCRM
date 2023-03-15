@@ -13,4 +13,4 @@
         </div>
     </div>
   {{Div_After_Metronic_V606}}
-</div>
+{{Div_Before_Metronic_V812}}

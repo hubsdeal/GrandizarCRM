@@ -1,0 +1,78 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #membershipTypeForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="membershipType.id">{{ l('EditMembershipType') }}</span>
+                        <span *ngIf="!membershipType.id">{{ l('CreateNewMembershipType') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="MembershipType_Name">{{ l('Name') }} *</label>
+                        <input
+                            type="text"
+                            #MembershipType_Name="ngModel"
+                            id="MembershipType_Name"
+                            class="form-control"
+                            [(ngModel)]="membershipType.name"
+                            name="Name"
+                            minlength="1"
+                            maxlength="128"
+                            required
+                        />
+                        <validation-messages [formCtrl]="MembershipType_Name"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="MembershipType_Description">{{ l('Description') }}</label>
+                        <input
+                            type="text"
+                            #MembershipType_Description="ngModel"
+                            id="MembershipType_Description"
+                            class="form-control"
+                            [(ngModel)]="membershipType.description"
+                            name="Description"
+                            minlength="1"
+                            maxlength="1500"
+                        />
+                        <validation-messages [formCtrl]="MembershipType_Description"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!membershipTypeForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

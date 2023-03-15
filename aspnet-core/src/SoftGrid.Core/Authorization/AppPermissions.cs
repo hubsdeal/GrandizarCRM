@@ -6,6 +6,101 @@
     /// </summary>
     public static class AppPermissions
     {
+        public const string Pages_Contacts = "Pages.Contacts";
+        public const string Pages_Contacts_Create = "Pages.Contacts.Create";
+        public const string Pages_Contacts_Edit = "Pages.Contacts.Edit";
+        public const string Pages_Contacts_Delete = "Pages.Contacts.Delete";
+
+        public const string Pages_Hubs = "Pages.Hubs";
+        public const string Pages_Hubs_Create = "Pages.Hubs.Create";
+        public const string Pages_Hubs_Edit = "Pages.Hubs.Edit";
+        public const string Pages_Hubs_Delete = "Pages.Hubs.Delete";
+
+        public const string Pages_HubTypes = "Pages.HubTypes";
+        public const string Pages_HubTypes_Create = "Pages.HubTypes.Create";
+        public const string Pages_HubTypes_Edit = "Pages.HubTypes.Edit";
+        public const string Pages_HubTypes_Delete = "Pages.HubTypes.Delete";
+
+        public const string Pages_MembershipTypes = "Pages.MembershipTypes";
+        public const string Pages_MembershipTypes_Create = "Pages.MembershipTypes.Create";
+        public const string Pages_MembershipTypes_Edit = "Pages.MembershipTypes.Edit";
+        public const string Pages_MembershipTypes_Delete = "Pages.MembershipTypes.Delete";
+
+        public const string Pages_ContractTypes = "Pages.ContractTypes";
+        public const string Pages_ContractTypes_Create = "Pages.ContractTypes.Create";
+        public const string Pages_ContractTypes_Edit = "Pages.ContractTypes.Edit";
+        public const string Pages_ContractTypes_Delete = "Pages.ContractTypes.Delete";
+
+        public const string Pages_DocumentTypes = "Pages.DocumentTypes";
+        public const string Pages_DocumentTypes_Create = "Pages.DocumentTypes.Create";
+        public const string Pages_DocumentTypes_Edit = "Pages.DocumentTypes.Edit";
+        public const string Pages_DocumentTypes_Delete = "Pages.DocumentTypes.Delete";
+
+        public const string Pages_SmsTemplates = "Pages.SmsTemplates";
+        public const string Pages_SmsTemplates_Create = "Pages.SmsTemplates.Create";
+        public const string Pages_SmsTemplates_Edit = "Pages.SmsTemplates.Edit";
+        public const string Pages_SmsTemplates_Delete = "Pages.SmsTemplates.Delete";
+
+        public const string Pages_EmailTemplates = "Pages.EmailTemplates";
+        public const string Pages_EmailTemplates_Create = "Pages.EmailTemplates.Create";
+        public const string Pages_EmailTemplates_Edit = "Pages.EmailTemplates.Edit";
+        public const string Pages_EmailTemplates_Delete = "Pages.EmailTemplates.Delete";
+
+        public const string Pages_ConnectChannels = "Pages.ConnectChannels";
+        public const string Pages_ConnectChannels_Create = "Pages.ConnectChannels.Create";
+        public const string Pages_ConnectChannels_Edit = "Pages.ConnectChannels.Edit";
+        public const string Pages_ConnectChannels_Delete = "Pages.ConnectChannels.Delete";
+
+        public const string Pages_ZipCodes = "Pages.ZipCodes";
+        public const string Pages_ZipCodes_Create = "Pages.ZipCodes.Create";
+        public const string Pages_ZipCodes_Edit = "Pages.ZipCodes.Edit";
+        public const string Pages_ZipCodes_Delete = "Pages.ZipCodes.Delete";
+
+        public const string Pages_RatingLikes = "Pages.RatingLikes";
+        public const string Pages_RatingLikes_Create = "Pages.RatingLikes.Create";
+        public const string Pages_RatingLikes_Edit = "Pages.RatingLikes.Edit";
+        public const string Pages_RatingLikes_Delete = "Pages.RatingLikes.Delete";
+
+        public const string Pages_MeasurementUnits = "Pages.MeasurementUnits";
+        public const string Pages_MeasurementUnits_Create = "Pages.MeasurementUnits.Create";
+        public const string Pages_MeasurementUnits_Edit = "Pages.MeasurementUnits.Edit";
+        public const string Pages_MeasurementUnits_Delete = "Pages.MeasurementUnits.Delete";
+
+        public const string Pages_MasterTags = "Pages.MasterTags";
+        public const string Pages_MasterTags_Create = "Pages.MasterTags.Create";
+        public const string Pages_MasterTags_Edit = "Pages.MasterTags.Edit";
+        public const string Pages_MasterTags_Delete = "Pages.MasterTags.Delete";
+
+        public const string Pages_MasterTagCategories = "Pages.MasterTagCategories";
+        public const string Pages_MasterTagCategories_Create = "Pages.MasterTagCategories.Create";
+        public const string Pages_MasterTagCategories_Edit = "Pages.MasterTagCategories.Edit";
+        public const string Pages_MasterTagCategories_Delete = "Pages.MasterTagCategories.Delete";
+
+        public const string Pages_Cities = "Pages.Cities";
+        public const string Pages_Cities_Create = "Pages.Cities.Create";
+        public const string Pages_Cities_Edit = "Pages.Cities.Edit";
+        public const string Pages_Cities_Delete = "Pages.Cities.Delete";
+
+        public const string Pages_Counties = "Pages.Counties";
+        public const string Pages_Counties_Create = "Pages.Counties.Create";
+        public const string Pages_Counties_Edit = "Pages.Counties.Edit";
+        public const string Pages_Counties_Delete = "Pages.Counties.Delete";
+
+        public const string Pages_States = "Pages.States";
+        public const string Pages_States_Create = "Pages.States.Create";
+        public const string Pages_States_Edit = "Pages.States.Edit";
+        public const string Pages_States_Delete = "Pages.States.Delete";
+
+        public const string Pages_Countries = "Pages.Countries";
+        public const string Pages_Countries_Create = "Pages.Countries.Create";
+        public const string Pages_Countries_Edit = "Pages.Countries.Edit";
+        public const string Pages_Countries_Delete = "Pages.Countries.Delete";
+
+        public const string Pages_Currencies = "Pages.Currencies";
+        public const string Pages_Currencies_Create = "Pages.Currencies.Create";
+        public const string Pages_Currencies_Edit = "Pages.Currencies.Edit";
+        public const string Pages_Currencies_Delete = "Pages.Currencies.Delete";
+
         //COMMON PERMISSIONS (FOR BOTH OF TENANTS AND HOST)
 
         public const string Pages = "Pages";
@@ -72,12 +167,12 @@
         public const string Pages_Administration_DynamicEntityPropertyValue_Create = "Pages.Administration.DynamicEntityPropertyValue.Create";
         public const string Pages_Administration_DynamicEntityPropertyValue_Edit = "Pages.Administration.DynamicEntityPropertyValue.Edit";
         public const string Pages_Administration_DynamicEntityPropertyValue_Delete = "Pages.Administration.DynamicEntityPropertyValue.Delete";
-        
+
         public const string Pages_Administration_MassNotification = "Pages.Administration.MassNotification";
         public const string Pages_Administration_MassNotification_Create = "Pages.Administration.MassNotification.Create";
-        
+
         public const string Pages_Administration_NewVersion_Create = "Pages_Administration_NewVersion_Create";
-        
+
         //TENANT-SPECIFIC PERMISSIONS
 
         public const string Pages_Tenant_Dashboard = "Pages.Tenant.Dashboard";

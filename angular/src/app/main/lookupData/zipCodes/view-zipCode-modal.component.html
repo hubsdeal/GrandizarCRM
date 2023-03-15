@@ -1,0 +1,290 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span>{{ l('Details') }}</span>
+                </h4>
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    (click)="close()"
+                    aria-label="Close"
+                    [disabled]="saving"
+                ></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Name') }} :</h6>
+                        {{ item.zipCode.name }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('AreaCode') }} :</h6>
+                        {{ item.zipCode.areaCode }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('AsianPopulation') }} :</h6>
+                        {{ item.zipCode.asianPopulation }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('AverageHouseValue') }} :</h6>
+                        {{ item.zipCode.averageHouseValue }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('BlackPopulation') }} :</h6>
+                        {{ item.zipCode.blackPopulation }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('CBSA') }} :</h6>
+                        {{ item.zipCode.cbsa }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('CBSA_Div') }} :</h6>
+                        {{ item.zipCode.cbsA_Div }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('CBSA_Div_Name') }} :</h6>
+                        {{ item.zipCode.cbsA_Div_Name }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('CBSA_Name') }} :</h6>
+                        {{ item.zipCode.cbsA_Name }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('CBSA_Type') }} :</h6>
+                        {{ item.zipCode.cbsA_Type }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('CSA') }} :</h6>
+                        {{ item.zipCode.csa }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('CSAName') }} :</h6>
+                        {{ item.zipCode.csaName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('CarrierRouteRateSortation') }} :</h6>
+                        {{ item.zipCode.carrierRouteRateSortation }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('City') }} :</h6>
+                        {{ item.zipCode.city }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('CityAliasCode') }} :</h6>
+                        {{ item.zipCode.cityAliasCode }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('CityAliasMixedCase') }} :</h6>
+                        {{ item.zipCode.cityAliasMixedCase }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('CityAliasName') }} :</h6>
+                        {{ item.zipCode.cityAliasName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('CityDeliveryIndicator') }} :</h6>
+                        {{ item.zipCode.cityDeliveryIndicator }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('CityMixedCase') }} :</h6>
+                        {{ item.zipCode.cityMixedCase }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('CityStateKey') }} :</h6>
+                        {{ item.zipCode.cityStateKey }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('CityType') }} :</h6>
+                        {{ item.zipCode.cityType }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('ClassificationCode') }} :</h6>
+                        {{ item.zipCode.classificationCode }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('County') }} :</h6>
+                        {{ item.zipCode.county }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('CountyANSI') }} :</h6>
+                        {{ item.zipCode.countyANSI }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('CountyFIPS') }} :</h6>
+                        {{ item.zipCode.countyFIPS }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('CountyMixedCase') }} :</h6>
+                        {{ item.zipCode.countyMixedCase }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('DayLightSaving') }} :</h6>
+                        {{ item.zipCode.dayLightSaving }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Division') }} :</h6>
+                        {{ item.zipCode.division }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Elevation') }} :</h6>
+                        {{ item.zipCode.elevation }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('FacilityCode') }} :</h6>
+                        {{ item.zipCode.facilityCode }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('FemalePopulation') }} :</h6>
+                        {{ item.zipCode.femalePopulation }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('FinanceNumber') }} :</h6>
+                        {{ item.zipCode.financeNumber }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('HawaiianPopulation') }} :</h6>
+                        {{ item.zipCode.hawaiianPopulation }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('HispanicPopulation') }} :</h6>
+                        {{ item.zipCode.hispanicPopulation }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('HouseholdsPerZipCode') }} :</h6>
+                        {{ item.zipCode.householdsPerZipCode }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('IncomePerHousehold') }} :</h6>
+                        {{ item.zipCode.incomePerHousehold }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('IndianPopulation') }} :</h6>
+                        {{ item.zipCode.indianPopulation }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Latitude') }} :</h6>
+                        {{ item.zipCode.latitude }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Longitude') }} :</h6>
+                        {{ item.zipCode.longitude }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('MSA') }} :</h6>
+                        {{ item.zipCode.msa }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('MSA_Name') }} :</h6>
+                        {{ item.zipCode.msA_Name }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('MailingName') }} :</h6>
+                        {{ item.zipCode.mailingName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('MalePopulation') }} :</h6>
+                        {{ item.zipCode.malePopulation }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('MultiCounty') }} :</h6>
+                        {{ item.zipCode.multiCounty }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('OtherPopulation') }} :</h6>
+                        {{ item.zipCode.otherPopulation }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('PMSA') }} :</h6>
+                        {{ item.zipCode.pmsa }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('PMSA_Name') }} :</h6>
+                        {{ item.zipCode.pmsA_Name }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('PersonsPerHousehold') }} :</h6>
+                        {{ item.zipCode.personsPerHousehold }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Population') }} :</h6>
+                        {{ item.zipCode.population }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('PreferredLastLineKey') }} :</h6>
+                        {{ item.zipCode.preferredLastLineKey }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('PrimaryRecord') }} :</h6>
+                        {{ item.zipCode.primaryRecord }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Region') }} :</h6>
+                        {{ item.zipCode.region }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('State') }} :</h6>
+                        {{ item.zipCode.state }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('StateANSI') }} :</h6>
+                        {{ item.zipCode.stateANSI }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('StateFIPS') }} :</h6>
+                        {{ item.zipCode.stateFIPS }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('StateFullName') }} :</h6>
+                        {{ item.zipCode.stateFullName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('TimeZone') }} :</h6>
+                        {{ item.zipCode.timeZone }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('UniqueZIPName') }} :</h6>
+                        {{ item.zipCode.uniqueZIPName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('WhitePopulation') }} :</h6>
+                        {{ item.zipCode.whitePopulation }}
+                    </div>
+
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('Country') }}) {{ l('Name') }} :</h6>
+                        {{ item.countryName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('State') }}) {{ l('Name') }} :</h6>
+                        {{ item.stateName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('City') }}) {{ l('Name') }} :</h6>
+                        {{ item.cityName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('County') }}) {{ l('Name') }} :</h6>
+                        {{ item.countyName }}
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button [disabled]="saving" type="button" class="btn btn-primary blue" (click)="close()">
+                    {{ l('Close') }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

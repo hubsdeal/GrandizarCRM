@@ -54,7 +54,7 @@
 					"content" : "
 							<div class=\"col-md-3\">
 								<label for=\"{{Property_Name_Here}}FilterSelect\">{{l(\"{{Property_Name_Here}}\")}}</label>
-								<select class=\"form-control\" name=\"{{Property_Name_Here}}Filter\" id=\"{{Property_Name_Here}}FilterSelect\" [(ngModel)]=\"{{property_Name_Here}}Filter\">
+								<select class=\"form-select\" name=\"{{Property_Name_Here}}Filter\" id=\"{{Property_Name_Here}}FilterSelect\" [(ngModel)]=\"{{property_Name_Here}}Filter\">
 								<option value=\"-1\">{{l(\"All\")}}</option>
 									{{Enum_Option_Looped_Template_Here}}
 								</select>
@@ -65,7 +65,7 @@
 					"content" : "	
 							<div class=\"col-md-3\">
 								<label for=\"{{Property_Name_Here}}FilterSelect\">{{l(\"{{Property_Name_Here}}\")}}</label>
-								<select class=\"form-control\" name=\"{{Property_Name_Here}}Filter\" id=\"{{Property_Name_Here}}FilterSelect\" [(ngModel)]=\"{{property_Name_Here}}Filter\">
+								<select class=\"form-select\" name=\"{{Property_Name_Here}}Filter\" id=\"{{Property_Name_Here}}FilterSelect\" [(ngModel)]=\"{{property_Name_Here}}Filter\">
 								<option value=\"-1\">{{l(\"All\")}}</option>
 								<option value=\"0\">{{l(\"False\")}}</option>
 								<option value=\"1\">{{l(\"True\")}}</option>
@@ -153,7 +153,6 @@
 			"content": "										    <li>
                                                 <a 
                                                    (click)=\"view{{Entity_Name_Here}}Modal.show(record)\">
-                                                   <i class=\"far fa-eye mr-2\"></i>
                                                    {{l('View')}}
                                                 </a>
                                             </li>"
@@ -184,7 +183,6 @@
 			"condition": "{{Is_Non_Modal_CRUD_Page}} == false",
 			"content": "<a *ngIf=\"permission.isGranted('{{Permission_Value_Here}}.Edit')\"
                                                    (click)=\"createOrEdit{{Entity_Name_Here}}Modal.show(record.{{entity_Name_Here}}.id)\">
-                           <i class=\"far fa-edit mr-2\"></i>
                            {{l('Edit')}}
                        </a>"
 		},
@@ -193,7 +191,6 @@
 			"condition": "{{Is_Non_Modal_CRUD_Page}} == true",
 			"content": " <a *ngIf=\"permission.isGranted('{{Permission_Value_Here}}.Edit')\"
 			[routerLink]=\"['/app/{{menu_Position_Here}}/{{namespace_Relative_Here}}/{{entity_Name_Plural_Here}}/createOrEdit']\" [queryParams]=\"{id: record.{{entity_Name_Here}}.id}\">
-              <i class=\"far fa-edit mr-2\"></i>
               {{l('Edit')}}	
             </a>"
 		},

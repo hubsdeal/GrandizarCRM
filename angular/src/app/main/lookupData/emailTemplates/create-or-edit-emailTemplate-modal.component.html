@@ -1,0 +1,93 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #emailTemplateForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="emailTemplate.id">{{ l('EditEmailTemplate') }}</span>
+                        <span *ngIf="!emailTemplate.id">{{ l('CreateNewEmailTemplate') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="EmailTemplate_Subject">{{ l('Subject') }} *</label>
+                        <input
+                            type="text"
+                            #EmailTemplate_Subject="ngModel"
+                            id="EmailTemplate_Subject"
+                            class="form-control"
+                            [(ngModel)]="emailTemplate.subject"
+                            name="Subject"
+                            minlength="1"
+                            maxlength="512"
+                            required
+                        />
+                        <validation-messages [formCtrl]="EmailTemplate_Subject"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="EmailTemplate_Content">{{ l('Content') }} *</label>
+                        <input
+                            type="text"
+                            #EmailTemplate_Content="ngModel"
+                            id="EmailTemplate_Content"
+                            class="form-control"
+                            [(ngModel)]="emailTemplate.content"
+                            name="Content"
+                            required
+                        />
+                        <validation-messages [formCtrl]="EmailTemplate_Content"></validation-messages>
+                    </div>
+
+                    <br />
+                    <label class="form-check form-check-custom form-check-solid">
+                        <input
+                            id="EmailTemplate_Published"
+                            #EmailTemplate_Published="ngModel"
+                            name="Published"
+                            [(ngModel)]="emailTemplate.published"
+                            type="checkbox"
+                            class="form-check-input"
+                        />
+                        <span class="form-check-label">
+                            {{ l('Published') }}
+                        </span>
+                    </label>
+                    <validation-messages [formCtrl]="EmailTemplate_Published"></validation-messages>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!emailTemplateForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

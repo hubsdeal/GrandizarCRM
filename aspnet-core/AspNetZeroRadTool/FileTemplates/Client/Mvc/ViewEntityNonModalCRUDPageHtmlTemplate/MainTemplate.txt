@@ -17,12 +17,12 @@
     <div class="{{Portlet_Class_Here}} {{Card_Class_Here}}">
         <div class="{{Portlet_Body_Class_Here}} {{Card_Body_Class_Here}}">
              <div id="{{Entity_Name_Here}}InformationsTab">        
-                    <div class="row">
-                        {{Property_Looped_Template_Here}}
-                        {{NP_Looped_Template_Here}}
-                    </div>
+                <div class="row">
+                    {{Property_Looped_Template_Here}}
+                    {{NP_Looped_Template_Here}}
                 </div>
-			</div>
-        </div>
+            </div>
+		</div>
     </div>
-  {{Div_After_Metronic_V606}}
+</div>
+{{Div_After_Metronic_V606}}

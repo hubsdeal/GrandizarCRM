@@ -1,0 +1,93 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #smsTemplateForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="smsTemplate.id">{{ l('EditSmsTemplate') }}</span>
+                        <span *ngIf="!smsTemplate.id">{{ l('CreateNewSmsTemplate') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="SmsTemplate_Title">{{ l('Title') }} *</label>
+                        <input
+                            type="text"
+                            #SmsTemplate_Title="ngModel"
+                            id="SmsTemplate_Title"
+                            class="form-control"
+                            [(ngModel)]="smsTemplate.title"
+                            name="Title"
+                            minlength="1"
+                            maxlength="256"
+                            required
+                        />
+                        <validation-messages [formCtrl]="SmsTemplate_Title"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="SmsTemplate_Content">{{ l('Content') }} *</label>
+                        <input
+                            type="text"
+                            #SmsTemplate_Content="ngModel"
+                            id="SmsTemplate_Content"
+                            class="form-control"
+                            [(ngModel)]="smsTemplate.content"
+                            name="Content"
+                            required
+                        />
+                        <validation-messages [formCtrl]="SmsTemplate_Content"></validation-messages>
+                    </div>
+
+                    <br />
+                    <label class="form-check form-check-custom form-check-solid">
+                        <input
+                            id="SmsTemplate_Published"
+                            #SmsTemplate_Published="ngModel"
+                            name="Published"
+                            [(ngModel)]="smsTemplate.published"
+                            type="checkbox"
+                            class="form-check-input"
+                        />
+                        <span class="form-check-label">
+                            {{ l('Published') }}
+                        </span>
+                    </label>
+                    <validation-messages [formCtrl]="SmsTemplate_Published"></validation-messages>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!smsTemplateForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

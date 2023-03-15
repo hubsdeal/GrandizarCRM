@@ -17,10 +17,10 @@ namespace SoftGrid.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.10")
+                .HasAnnotation("ProductVersion", "7.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("Abp.Application.Editions.Edition", b =>
                 {
@@ -28,7 +28,7 @@ namespace SoftGrid.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2");
@@ -70,6 +70,8 @@ namespace SoftGrid.Migrations
                     b.ToTable("AbpEditions");
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("Edition");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("Abp.Application.Features.FeatureSetting", b =>
@@ -78,7 +80,7 @@ namespace SoftGrid.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2");
@@ -108,6 +110,8 @@ namespace SoftGrid.Migrations
                     b.ToTable("AbpFeatures");
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("FeatureSetting");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("Abp.Auditing.AuditLog", b =>
@@ -116,7 +120,7 @@ namespace SoftGrid.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("BrowserInfo")
                         .HasMaxLength(512)
@@ -192,7 +196,7 @@ namespace SoftGrid.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2");
@@ -222,6 +226,8 @@ namespace SoftGrid.Migrations
                     b.ToTable("AbpPermissions");
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("PermissionSetting");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("Abp.Authorization.Roles.RoleClaim", b =>
@@ -230,7 +236,7 @@ namespace SoftGrid.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("ClaimType")
                         .HasMaxLength(256)
@@ -266,7 +272,7 @@ namespace SoftGrid.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2");
@@ -327,7 +333,7 @@ namespace SoftGrid.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("ClaimType")
                         .HasMaxLength(256)
@@ -363,7 +369,7 @@ namespace SoftGrid.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("LoginProvider")
                         .IsRequired()
@@ -402,7 +408,7 @@ namespace SoftGrid.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("BrowserInfo")
                         .HasMaxLength(512)
@@ -451,7 +457,7 @@ namespace SoftGrid.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2");
@@ -488,7 +494,7 @@ namespace SoftGrid.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2");
@@ -522,7 +528,7 @@ namespace SoftGrid.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime?>("ExpireDate")
                         .HasColumnType("datetime2");
@@ -560,7 +566,7 @@ namespace SoftGrid.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2");
@@ -606,7 +612,7 @@ namespace SoftGrid.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2");
@@ -650,7 +656,7 @@ namespace SoftGrid.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("DynamicPropertyId")
                         .HasColumnType("int");
@@ -679,7 +685,7 @@ namespace SoftGrid.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<int>("DynamicEntityPropertyId")
                         .HasColumnType("int");
@@ -707,7 +713,7 @@ namespace SoftGrid.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("DisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -740,7 +746,7 @@ namespace SoftGrid.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<int>("DynamicPropertyId")
                         .HasColumnType("int");
@@ -765,7 +771,7 @@ namespace SoftGrid.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("ChangeTime")
                         .HasColumnType("datetime2");
@@ -802,7 +808,7 @@ namespace SoftGrid.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("BrowserInfo")
                         .HasMaxLength(512)
@@ -855,7 +861,7 @@ namespace SoftGrid.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<long>("EntityChangeId")
                         .HasColumnType("bigint");
@@ -951,7 +957,7 @@ namespace SoftGrid.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2");
@@ -1007,7 +1013,7 @@ namespace SoftGrid.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2");
@@ -1243,7 +1249,7 @@ namespace SoftGrid.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Code")
                         .IsRequired()
@@ -1297,7 +1303,7 @@ namespace SoftGrid.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2");
@@ -1433,7 +1439,7 @@ namespace SoftGrid.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2");
@@ -1486,7 +1492,7 @@ namespace SoftGrid.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -1584,7 +1590,7 @@ namespace SoftGrid.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
@@ -1724,13 +1730,163 @@ namespace SoftGrid.Migrations
                     b.ToTable("AbpUsers");
                 });
 
+            modelBuilder.Entity("SoftGrid.CRM.Contact", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Address")
+                        .HasMaxLength(1024)
+                        .HasColumnType("nvarchar(1024)");
+
+                    b.Property<string>("AiDataTag")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BusinessEmail")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<string>("City")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<string>("CompanyName")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<string>("CountryCode")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<long?>("CountryId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("DateOfBirth")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("DeleterUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Facebook")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("Fax")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<string>("FullAddress")
+                        .HasMaxLength(2048)
+                        .HasColumnType("nvarchar(2048)");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("JobTitle")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("LastModifierUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("LastName")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<decimal?>("Latitude")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("LinkedIn")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<decimal?>("Longitude")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<long?>("MembershipTypeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Mobile")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("OfficePhone")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("PersonalEmail")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<string>("Profile")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Referred")
+                        .HasColumnType("bit");
+
+                    b.Property<long?>("ReferredByUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("StateId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Verified")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ZipCode")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CountryId");
+
+                    b.HasIndex("MembershipTypeId");
+
+                    b.HasIndex("ReferredByUserId");
+
+                    b.HasIndex("StateId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("Contacts");
+                });
+
             modelBuilder.Entity("SoftGrid.Chat.ChatMessage", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2");
@@ -1783,7 +1939,7 @@ namespace SoftGrid.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2");
@@ -1827,13 +1983,713 @@ namespace SoftGrid.Migrations
                     b.ToTable("AppFriendships");
                 });
 
+            modelBuilder.Entity("SoftGrid.LookupData.City", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long?>("CountryId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("CountyId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<long?>("StateId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CountryId");
+
+                    b.HasIndex("CountyId");
+
+                    b.HasIndex("StateId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("Cities");
+                });
+
+            modelBuilder.Entity("SoftGrid.LookupData.ConnectChannel", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("ConnectChannels");
+                });
+
+            modelBuilder.Entity("SoftGrid.LookupData.ContractType", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("ContractTypes");
+                });
+
+            modelBuilder.Entity("SoftGrid.LookupData.Country", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("FlagIcon")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<string>("PhoneCode")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Ticker")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("Countries");
+                });
+
+            modelBuilder.Entity("SoftGrid.LookupData.County", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long?>("CountryId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<long?>("StateId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CountryId");
+
+                    b.HasIndex("StateId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("Counties");
+                });
+
+            modelBuilder.Entity("SoftGrid.LookupData.Currency", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Icon")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Ticker")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("Currencies");
+                });
+
+            modelBuilder.Entity("SoftGrid.LookupData.DocumentType", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("DocumentTypes");
+                });
+
+            modelBuilder.Entity("SoftGrid.LookupData.EmailTemplate", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Published")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Subject")
+                        .IsRequired()
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("EmailTemplates");
+                });
+
+            modelBuilder.Entity("SoftGrid.LookupData.HubType", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("HubTypes");
+                });
+
+            modelBuilder.Entity("SoftGrid.LookupData.MasterTag", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(2500)
+                        .HasColumnType("nvarchar(2500)");
+
+                    b.Property<int?>("DisplaySequence")
+                        .HasColumnType("int");
+
+                    b.Property<long>("MasterTagCategoryId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<Guid>("PictureId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Synonyms")
+                        .HasMaxLength(1500)
+                        .HasColumnType("nvarchar(1500)");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MasterTagCategoryId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("MasterTags");
+                });
+
+            modelBuilder.Entity("SoftGrid.LookupData.MasterTagCategory", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(2500)
+                        .HasColumnType("nvarchar(2500)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<Guid>("PictureId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("MasterTagCategories");
+                });
+
+            modelBuilder.Entity("SoftGrid.LookupData.MeasurementUnit", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("MeasurementUnits");
+                });
+
+            modelBuilder.Entity("SoftGrid.LookupData.MembershipType", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(1500)
+                        .HasColumnType("nvarchar(1500)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("MembershipTypes");
+                });
+
+            modelBuilder.Entity("SoftGrid.LookupData.RatingLike", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("IconLink")
+                        .HasMaxLength(1024)
+                        .HasColumnType("nvarchar(1024)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<int?>("Score")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("RatingLikes");
+                });
+
+            modelBuilder.Entity("SoftGrid.LookupData.SmsTemplate", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Published")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("SmsTemplates");
+                });
+
+            modelBuilder.Entity("SoftGrid.LookupData.State", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long>("CountryId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Ticker")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CountryId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("States");
+                });
+
+            modelBuilder.Entity("SoftGrid.LookupData.ZipCode", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("AreaCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AsianPopulation")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AverageHouseValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BlackPopulation")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CBSA")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CBSA_Div")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CBSA_Div_Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CBSA_Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CBSA_Type")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CSA")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CSAName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CarrierRouteRateSortation")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("City")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CityAliasCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CityAliasMixedCase")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CityAliasName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CityDeliveryIndicator")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("CityId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("CityMixedCase")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CityStateKey")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CityType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClassificationCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("CountryId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("County")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CountyANSI")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CountyFIPS")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("CountyId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("CountyMixedCase")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DayLightSaving")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Division")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Elevation")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FacilityCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FemalePopulation")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FinanceNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("HawaiianPopulation")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("HispanicPopulation")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("HouseholdsPerZipCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IncomePerHousehold")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IndianPopulation")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Latitude")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Longitude")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MSA")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MSA_Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MailingName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MalePopulation")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MultiCounty")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<string>("OtherPopulation")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PMSA")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PMSA_Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PersonsPerHousehold")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Population")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PreferredLastLineKey")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PrimaryRecord")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Region")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("State")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StateANSI")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StateFIPS")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StateFullName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("StateId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TimeZone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UniqueZIPName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("WhitePopulation")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CityId");
+
+                    b.HasIndex("CountryId");
+
+                    b.HasIndex("CountyId");
+
+                    b.HasIndex("StateId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("ZipCodes");
+                });
+
             modelBuilder.Entity("SoftGrid.MultiTenancy.Accounting.Invoice", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("InvoiceDate")
                         .HasColumnType("datetime2");
@@ -1861,7 +2717,7 @@ namespace SoftGrid.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18,2)");
@@ -1943,7 +2799,7 @@ namespace SoftGrid.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -1972,7 +2828,7 @@ namespace SoftGrid.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ConnectionString")
                         .HasMaxLength(1024)
@@ -2084,57 +2940,123 @@ namespace SoftGrid.Migrations
                     b.ToTable("AppBinaryObjects");
                 });
 
-            modelBuilder.Entity("Abp.Application.Features.EditionFeatureSetting", b =>
+            modelBuilder.Entity("SoftGrid.Territory.Hub", b =>
                 {
-                    b.HasBaseType("Abp.Application.Features.FeatureSetting");
-
-                    b.Property<int>("EditionId")
-                        .HasColumnType("int");
-
-                    b.HasIndex("EditionId", "Name");
-
-                    b.ToTable("AbpFeatures");
-
-                    b.HasDiscriminator().HasValue("EditionFeatureSetting");
-                });
-
-            modelBuilder.Entity("Abp.Authorization.Roles.RolePermissionSetting", b =>
-                {
-                    b.HasBaseType("Abp.Authorization.PermissionSetting");
-
-                    b.Property<int>("RoleId")
-                        .HasColumnType("int");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("AbpPermissions");
-
-                    b.HasDiscriminator().HasValue("RolePermissionSetting");
-                });
-
-            modelBuilder.Entity("Abp.Authorization.Users.UserPermissionSetting", b =>
-                {
-                    b.HasBaseType("Abp.Authorization.PermissionSetting");
-
-                    b.Property<long>("UserId")
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    b.HasIndex("UserId");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.ToTable("AbpPermissions");
+                    b.Property<long?>("CityId")
+                        .HasColumnType("bigint");
 
-                    b.HasDiscriminator().HasValue("UserPermissionSetting");
-                });
+                    b.Property<long?>("CountryId")
+                        .HasColumnType("bigint");
 
-            modelBuilder.Entity("Abp.MultiTenancy.TenantFeatureSetting", b =>
-                {
-                    b.HasBaseType("Abp.Application.Features.FeatureSetting");
+                    b.Property<long?>("CountyId")
+                        .HasColumnType("bigint");
 
-                    b.HasIndex("TenantId", "Name");
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
 
-                    b.ToTable("AbpFeatures");
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
 
-                    b.HasDiscriminator().HasValue("TenantFeatureSetting");
+                    b.Property<long?>("CurrencyId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("DeleterUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("DisplaySequence")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("EstimatedPopulation")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("HasParentHub")
+                        .HasColumnType("bit");
+
+                    b.Property<long>("HubTypeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("LastModifierUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal?>("Latitude")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<bool>("Live")
+                        .HasColumnType("bit");
+
+                    b.Property<decimal?>("Longitude")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<string>("OfficeFullAddress")
+                        .HasMaxLength(1500)
+                        .HasColumnType("nvarchar(1500)");
+
+                    b.Property<long?>("ParentHubId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("PartnerOrOwned")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Phone")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<Guid>("PictureId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<long?>("StateId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Url")
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
+
+                    b.Property<string>("YearlyRevenue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CityId");
+
+                    b.HasIndex("CountryId");
+
+                    b.HasIndex("CountyId");
+
+                    b.HasIndex("CurrencyId");
+
+                    b.HasIndex("HubTypeId");
+
+                    b.HasIndex("StateId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("Hubs");
                 });
 
             modelBuilder.Entity("SoftGrid.Editions.SubscribableEdition", b =>
@@ -2165,6 +3087,59 @@ namespace SoftGrid.Migrations
                     b.ToTable("AbpEditions");
 
                     b.HasDiscriminator().HasValue("SubscribableEdition");
+                });
+
+            modelBuilder.Entity("Abp.Application.Features.EditionFeatureSetting", b =>
+                {
+                    b.HasBaseType("Abp.Application.Features.FeatureSetting");
+
+                    b.Property<int>("EditionId")
+                        .HasColumnType("int");
+
+                    b.HasIndex("EditionId", "Name");
+
+                    b.ToTable("AbpFeatures");
+
+                    b.HasDiscriminator().HasValue("EditionFeatureSetting");
+                });
+
+            modelBuilder.Entity("Abp.MultiTenancy.TenantFeatureSetting", b =>
+                {
+                    b.HasBaseType("Abp.Application.Features.FeatureSetting");
+
+                    b.HasIndex("TenantId", "Name");
+
+                    b.ToTable("AbpFeatures");
+
+                    b.HasDiscriminator().HasValue("TenantFeatureSetting");
+                });
+
+            modelBuilder.Entity("Abp.Authorization.Roles.RolePermissionSetting", b =>
+                {
+                    b.HasBaseType("Abp.Authorization.PermissionSetting");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AbpPermissions");
+
+                    b.HasDiscriminator().HasValue("RolePermissionSetting");
+                });
+
+            modelBuilder.Entity("Abp.Authorization.Users.UserPermissionSetting", b =>
+                {
+                    b.HasBaseType("Abp.Authorization.PermissionSetting");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AbpPermissions");
+
+                    b.HasDiscriminator().HasValue("UserPermissionSetting");
                 });
 
             modelBuilder.Entity("Abp.Authorization.Roles.RoleClaim", b =>
@@ -2341,6 +3316,118 @@ namespace SoftGrid.Migrations
                     b.Navigation("LastModifierUser");
                 });
 
+            modelBuilder.Entity("SoftGrid.CRM.Contact", b =>
+                {
+                    b.HasOne("SoftGrid.LookupData.Country", "CountryFk")
+                        .WithMany()
+                        .HasForeignKey("CountryId");
+
+                    b.HasOne("SoftGrid.LookupData.MembershipType", "MembershipTypeFk")
+                        .WithMany()
+                        .HasForeignKey("MembershipTypeId");
+
+                    b.HasOne("SoftGrid.Authorization.Users.User", "ReferredByUserFk")
+                        .WithMany()
+                        .HasForeignKey("ReferredByUserId");
+
+                    b.HasOne("SoftGrid.LookupData.State", "StateFk")
+                        .WithMany()
+                        .HasForeignKey("StateId");
+
+                    b.Navigation("CountryFk");
+
+                    b.Navigation("MembershipTypeFk");
+
+                    b.Navigation("ReferredByUserFk");
+
+                    b.Navigation("StateFk");
+                });
+
+            modelBuilder.Entity("SoftGrid.LookupData.City", b =>
+                {
+                    b.HasOne("SoftGrid.LookupData.Country", "CountryFk")
+                        .WithMany()
+                        .HasForeignKey("CountryId");
+
+                    b.HasOne("SoftGrid.LookupData.County", "CountyFk")
+                        .WithMany()
+                        .HasForeignKey("CountyId");
+
+                    b.HasOne("SoftGrid.LookupData.State", "StateFk")
+                        .WithMany()
+                        .HasForeignKey("StateId");
+
+                    b.Navigation("CountryFk");
+
+                    b.Navigation("CountyFk");
+
+                    b.Navigation("StateFk");
+                });
+
+            modelBuilder.Entity("SoftGrid.LookupData.County", b =>
+                {
+                    b.HasOne("SoftGrid.LookupData.Country", "CountryFk")
+                        .WithMany()
+                        .HasForeignKey("CountryId");
+
+                    b.HasOne("SoftGrid.LookupData.State", "StateFk")
+                        .WithMany()
+                        .HasForeignKey("StateId");
+
+                    b.Navigation("CountryFk");
+
+                    b.Navigation("StateFk");
+                });
+
+            modelBuilder.Entity("SoftGrid.LookupData.MasterTag", b =>
+                {
+                    b.HasOne("SoftGrid.LookupData.MasterTagCategory", "MasterTagCategoryFk")
+                        .WithMany()
+                        .HasForeignKey("MasterTagCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MasterTagCategoryFk");
+                });
+
+            modelBuilder.Entity("SoftGrid.LookupData.State", b =>
+                {
+                    b.HasOne("SoftGrid.LookupData.Country", "CountryFk")
+                        .WithMany()
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CountryFk");
+                });
+
+            modelBuilder.Entity("SoftGrid.LookupData.ZipCode", b =>
+                {
+                    b.HasOne("SoftGrid.LookupData.City", "CityFk")
+                        .WithMany()
+                        .HasForeignKey("CityId");
+
+                    b.HasOne("SoftGrid.LookupData.Country", "CountryFk")
+                        .WithMany()
+                        .HasForeignKey("CountryId");
+
+                    b.HasOne("SoftGrid.LookupData.County", "CountyFk")
+                        .WithMany()
+                        .HasForeignKey("CountyId");
+
+                    b.HasOne("SoftGrid.LookupData.State", "StateFk")
+                        .WithMany()
+                        .HasForeignKey("StateId");
+
+                    b.Navigation("CityFk");
+
+                    b.Navigation("CountryFk");
+
+                    b.Navigation("CountyFk");
+
+                    b.Navigation("StateFk");
+                });
+
             modelBuilder.Entity("SoftGrid.MultiTenancy.Payments.SubscriptionPayment", b =>
                 {
                     b.HasOne("Abp.Application.Editions.Edition", "Edition")
@@ -2377,6 +3464,47 @@ namespace SoftGrid.Migrations
                     b.Navigation("Edition");
 
                     b.Navigation("LastModifierUser");
+                });
+
+            modelBuilder.Entity("SoftGrid.Territory.Hub", b =>
+                {
+                    b.HasOne("SoftGrid.LookupData.City", "CityFk")
+                        .WithMany()
+                        .HasForeignKey("CityId");
+
+                    b.HasOne("SoftGrid.LookupData.Country", "CountryFk")
+                        .WithMany()
+                        .HasForeignKey("CountryId");
+
+                    b.HasOne("SoftGrid.LookupData.County", "CountyFk")
+                        .WithMany()
+                        .HasForeignKey("CountyId");
+
+                    b.HasOne("SoftGrid.LookupData.Currency", "CurrencyFk")
+                        .WithMany()
+                        .HasForeignKey("CurrencyId");
+
+                    b.HasOne("SoftGrid.LookupData.HubType", "HubTypeFk")
+                        .WithMany()
+                        .HasForeignKey("HubTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SoftGrid.LookupData.State", "StateFk")
+                        .WithMany()
+                        .HasForeignKey("StateId");
+
+                    b.Navigation("CityFk");
+
+                    b.Navigation("CountryFk");
+
+                    b.Navigation("CountyFk");
+
+                    b.Navigation("CurrencyFk");
+
+                    b.Navigation("HubTypeFk");
+
+                    b.Navigation("StateFk");
                 });
 
             modelBuilder.Entity("Abp.Application.Features.EditionFeatureSetting", b =>

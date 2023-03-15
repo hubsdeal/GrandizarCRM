@@ -73,7 +73,7 @@
 					"content" : "
 							<div class=\"col-md-3\">
 								<label for=\"{{Property_Name_Here}}FilterSelect\">{{l(\"{{Property_Name_Here}}\")}}</label>
-								<select class=\"form-control\" name=\"{{Property_Name_Here}}Filter\" id=\"{{Property_Name_Here}}FilterSelect\" [(ngModel)]=\"{{property_Name_Here}}Filter\">
+								<select class=\"form-select\" name=\"{{Property_Name_Here}}Filter\" id=\"{{Property_Name_Here}}FilterSelect\" [(ngModel)]=\"{{property_Name_Here}}Filter\">
 								<option value=\"-1\">{{l(\"All\")}}</option>
 									{{Enum_Option_Looped_Template_Here}}
 								</select>
@@ -84,7 +84,7 @@
 					"content" : "	
 							<div class=\"col-md-3\">
 								<label for=\"{{Property_Name_Here}}FilterSelect\">{{l(\"{{Property_Name_Here}}\")}}</label>
-								<select class=\"form-control\" name=\"{{Property_Name_Here}}Filter\" id=\"{{Property_Name_Here}}FilterSelect\" [(ngModel)]=\"{{property_Name_Here}}Filter\">
+								<select class=\"form-select\" name=\"{{Property_Name_Here}}Filter\" id=\"{{Property_Name_Here}}FilterSelect\" [(ngModel)]=\"{{property_Name_Here}}Filter\">
 								<option value=\"-1\">{{l(\"All\")}}</option>
 								<option value=\"0\">{{l(\"False\")}}</option>
 								<option value=\"1\">{{l(\"True\")}}</option>
@@ -140,23 +140,27 @@
 					"type" : "enum",
 					"content" : "
 							<div class=\"col-md-3\">
-								<label for=\"{{Property_Name_Here}}FilterSelect\">{{l(\"{{Property_Name_Here}}\")}}</label>
-								<select class=\"form-control\" name=\"{{Property_Name_Here}}Filter\" id=\"{{Property_Name_Here}}FilterSelect\" [(ngModel)]=\"{{property_Name_Here}}Filter\">
-								<option value=\"-1\">{{l(\"All\")}}</option>
-									{{Enum_Option_Looped_Template_Here}}
-								</select>
+								<div class=\"my-3\">
+									<label class=\"form-label\" for=\"{{Property_Name_Here}}FilterSelect\">{{l(\"{{Property_Name_Here}}\")}}</label>
+									<select class=\"form-select\" name=\"{{Property_Name_Here}}Filter\" id=\"{{Property_Name_Here}}FilterSelect\" [(ngModel)]=\"{{property_Name_Here}}Filter\" (ngModelChange)=\"get{{Entity_Name_Plural_Here}}()\">
+									<option value=\"-1\">{{l(\"All\")}}</option>
+										{{Enum_Option_Looped_Template_Here}}
+									</select>
+								</div>
                             </div>"
 					},
 					{
 					"type" : "bool",
 					"content" : "	
 							<div class=\"col-md-3\">
-								<label for=\"{{Property_Name_Here}}FilterSelect\">{{l(\"{{Property_Name_Here}}\")}}</label>
-								<select class=\"form-control\" name=\"{{Property_Name_Here}}Filter\" id=\"{{Property_Name_Here}}FilterSelect\" [(ngModel)]=\"{{property_Name_Here}}Filter\">
-								<option value=\"-1\">{{l(\"All\")}}</option>
-								<option value=\"0\">{{l(\"False\")}}</option>
-								<option value=\"1\">{{l(\"True\")}}</option>
-								</select>
+								<div class=\"my-3\">
+									<label class=\"form-label\" for=\"{{Property_Name_Here}}FilterSelect\">{{l(\"{{Property_Name_Here}}\")}}</label>
+									<select class=\"form-select\" name=\"{{Property_Name_Here}}Filter\" id=\"{{Property_Name_Here}}FilterSelect\" [(ngModel)]=\"{{property_Name_Here}}Filter\" (ngModelChange)=\"get{{Entity_Name_Plural_Here}}()\">
+									<option value=\"-1\">{{l(\"All\")}}</option>
+									<option value=\"0\">{{l(\"False\")}}</option>
+									<option value=\"1\">{{l(\"True\")}}</option>
+									</select>
+								</div>
                             </div>"
 					},
 					{
@@ -177,10 +181,10 @@
 					"content" : "
                             <div class=\"col-md-3\">
                                 <div class=\"my-3\">
-									<label class\"form-label\" for=\"Min{{Property_Name_Here}}Filter\">{{l(\"MinMax\")}} {{l(\"{{Property_Name_Here}}\")}}</label>
+									<label class=\"form-label\" for=\"Min{{Property_Name_Here}}Filter\">{{l(\"MinMax\")}} {{l(\"{{Property_Name_Here}}\")}}</label>
 									<div class=\"input-group\">
-                                        <input type=\"number\" class=\"form-control\" id=\"Min{{Property_Name_Here}}Filter\" [(ngModel)]=\"min{{Property_Name_Here}}Filter\" placeholder=\"{{l('MinValue')}}\" name=\"min{{Property_Name_Here}}Filter\" />
-                                        <input type=\"number\" class=\"form-control\" [(ngModel)]=\"max{{Property_Name_Here}}Filter\" placeholder=\"{{l('MaxValue')}}\" name=\"max{{Property_Name_Here}}Filter\" />
+                                        <input type=\"number\" class=\"form-control\" id=\"Min{{Property_Name_Here}}Filter\" [(ngModel)]=\"min{{Property_Name_Here}}Filter\" placeholder=\"{{l('MinValue')}}\" name=\"min{{Property_Name_Here}}Filter\" (ngModelChange)=\"get{{Entity_Name_Plural_Here}}()\"/>
+                                        <input type=\"number\" class=\"form-control\" [(ngModel)]=\"max{{Property_Name_Here}}Filter\" placeholder=\"{{l('MaxValue')}}\" name=\"max{{Property_Name_Here}}Filter\" (ngModelChange)=\"get{{Entity_Name_Plural_Here}}()\"/>
 									</div>
                                 </div>
                             </div>"
@@ -190,12 +194,22 @@
 					"content" : ""
 					},
 					{
+					"type" : "Guid",
+					"content" : "
+							<div class=\"col-md-3\">
+								<div class=\"my-3\">
+									<label class=\"form-label\" for=\"{{Property_Name_Here}}Filter\">{{l(\"{{Property_Name_Here}}\")}}</label>
+									<input type=\"text\" class=\"form-control\" id=\"{{Property_Name_Here}}Filter\" name=\"{{property_Name_Here}}Filter\" [(ngModel)]=\"{{property_Name_Here}}Filter\">
+								</div>
+                            </div>"
+					},
+					{
 					"type" : "default",
 					"content" : "
 							<div class=\"col-md-3\">
-								<div class=\"for\">
-									<label for=\"{{Property_Name_Here}}Filter\">{{l(\"{{Property_Name_Here}}\")}}</label>
-									<input type=\"text\" class=\"form-control\" id=\"{{Property_Name_Here}}Filter\" name=\"{{property_Name_Here}}Filter\" [(ngModel)]=\"{{property_Name_Here}}Filter\">
+								<div class=\"my-3\">
+									<label class=\"form-label\" for=\"{{Property_Name_Here}}Filter\">{{l(\"{{Property_Name_Here}}\")}}</label>
+									<input type=\"text\" class=\"form-control\" id=\"{{Property_Name_Here}}Filter\" name=\"{{property_Name_Here}}Filter\" [(ngModel)]=\"{{property_Name_Here}}Filter\" (ngModelChange)=\"get{{Entity_Name_Plural_Here}}()\">
 								</div>
                             </div>"
 					}
@@ -310,7 +324,7 @@
 		{
 			"placeholder": "{{Get_Excel_Button_Here}}",
 			"condition": "{{Create_Excel_Export_Here}} == true",
-			"content": "<button (click)=\"exportToExcel()\" class=\"btn btn-outline-success\"><i class=\"fa fa-file-excel\"></i> {{l(\"ExportToExcel\")}}</button>
+			"content": "<button (click)=\"exportToExcel()\" class=\"btn btn-outline btn-outline-success btn-active-light-success me-1\"><i class=\"fa fa-file-excel\"></i> {{l(\"ExportToExcel\")}}</button>
                 "
 		},
 		{
@@ -323,9 +337,9 @@
 		{
 			"placeholder": "{{DateTimePicker_After_V6}}",
 			"condition": "{{Project_Version_Here}} >= 060000",
-			"content": "<input class=\"form-control m-input\" id=\"Min{{Property_Name_Here}}Filter\" name=\"Min{{Property_Name_Here}}Filter\" type=\"datetime\" bsDatepicker  placeholder=\"{{l('MinValue')}}\" [(ngModel)]=\"min{{Property_Name_Here}}Filter\">
+			"content": "<input class=\"form-control m-input\" id=\"Min{{Property_Name_Here}}Filter\" name=\"Min{{Property_Name_Here}}Filter\" type=\"datetime\" bsDatepicker  placeholder=\"{{l('MinValue')}}\" [(ngModel)]=\"min{{Property_Name_Here}}Filter\" (ngModelChange)=\"get{{Entity_Name_Plural_Here}}()\">
 			                            <span style=\"line-height: 40px;padding: 0 15px 0 15px;\"> &mdash; </span>
-                                        <input class=\"form-control m-input\" id=\"Max{{Property_Name_Here}}Filter\" name=\"Max{{Property_Name_Here}}Filter\" type=\"datetime\" bsDatepicker  placeholder=\"{{l('MaxValue')}}\" [(ngModel)]=\"max{{Property_Name_Here}}Filter\">"
+                                        <input class=\"form-control m-input\" id=\"Max{{Property_Name_Here}}Filter\" name=\"Max{{Property_Name_Here}}Filter\" type=\"datetime\" bsDatepicker  placeholder=\"{{l('MaxValue')}}\" [(ngModel)]=\"max{{Property_Name_Here}}Filter\" (ngModelChange)=\"get{{Entity_Name_Plural_Here}}()\">"
 		},
 		{
 			"placeholder": "{{Dropdown_Href_Attrr_After_V6}}",
@@ -377,6 +391,11 @@
 			"condition": "{{Project_Version_Here}} >= 070200",
 			"content": "</div>"
 		},
+		{
+			"placeholder": "{{Div_Before_Metronic_V812}}",
+			"condition": "{{Project_Version_Here}} < 110400",
+			"content": "</div>"
+		},
         {
             "placeholder": "{{Content_Class_After_Metronic_V606}}",
             "condition": "{{Project_Version_Here}} >= 070200 && {{Project_Version_Here}} < 090000",
@@ -384,7 +403,7 @@
         },
         {
             "placeholder": "{{Content_Class_After_Metronic_V90}}",
-            "condition": "{{Project_Version_Here}} >= 090000",
+            "condition": "{{Project_Version_Here}} >= 090000 && {{Project_Version_Here}} < 110400",
             "content": "<div class=\"content d-flex flex-column flex-column-fluid\">"
         },
 		{
@@ -520,7 +539,7 @@
         },
         {
         	"placeholder": "{{Seperator_Div_Here}}",
-        	"condition": "{{Project_Version_Here}} >= 090000",
+        	"condition": "{{Project_Version_Here}} >= 090000 && {{Project_Version_Here}} < 110000",
         	"content": "<div class=\"separator separator-dashed\"></div>"
         },
         {
@@ -543,7 +562,7 @@
         	"content": "
         	<div class=\"my-3\">                
                 <div class=\"input-group mb-3\">
-                  <input [(ngModel)]=\"filterText\" name=\"filterText\" autoFocus type=\"text\" class=\"form-control\" [placeholder]=\"l('SearchWithThreeDot')\">
+                  <input [(ngModel)]=\"filterText\" (ngModelChange)=\"get{{Entity_Name_Plural_Here}}()\" name=\"filterText\" autoFocus type=\"text\" class=\"form-control\" [placeholder]=\"l('SearchWithThreeDot')\">
                   <button class=\"btn btn-primary\" type=\"submit\" (click)=\"get{{Entity_Name_Plural_Here}}()\"><i class=\"flaticon-search-1\"></i></button>
                 </div>
             </div>

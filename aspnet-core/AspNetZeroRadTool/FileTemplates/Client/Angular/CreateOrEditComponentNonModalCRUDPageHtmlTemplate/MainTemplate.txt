@@ -26,4 +26,4 @@
     </div>
   {{Div_After_Metronic_V606}}
   {{NP_Looped_Modal_Here}}
-</div>
+{{Div_Before_Metronic_V812}}

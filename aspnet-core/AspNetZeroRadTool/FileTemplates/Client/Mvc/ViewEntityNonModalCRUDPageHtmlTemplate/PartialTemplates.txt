@@ -64,7 +64,7 @@
         },
 		{
 			"placeholder": "{{Div_After_Metronic_V606}}",
-			"condition": "{{Project_Version_Here}} >= 070200",
+			"condition": "{{Project_Version_Here}} >= 070200 && {{Project_Version_Here}} < 110400",
 			"content": "</div>"
 		},
 		{
@@ -79,7 +79,7 @@
 		},
         {
             "placeholder": "{{Content_Class_After_Metronic_V90}}",
-            "condition": "{{Project_Version_Here}} >= 090000",
+            "condition": "{{Project_Version_Here}} >= 090000 {{Project_Version_Here}} < 110400",
             "content": "<div class=\"content d-flex flex-column flex-column-fluid\">"
         },
 		{

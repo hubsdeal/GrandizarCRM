@@ -1,0 +1,863 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #zipCodeForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="zipCode.id">{{ l('EditZipCode') }}</span>
+                        <span *ngIf="!zipCode.id">{{ l('CreateNewZipCode') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="CountryName">{{ l('Country') }}</label>
+                        <select name="zipCode.countryId" [(ngModel)]="zipCode.countryId" class="form-select">
+                            <option value="">{{ l('SelectACountry') }}</option>
+                            <option *ngFor="let item of allCountrys" value="{{ item.id }}">
+                                {{ item.displayName }}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="StateName">{{ l('State') }}</label>
+                        <select name="zipCode.stateId" [(ngModel)]="zipCode.stateId" class="form-select">
+                            <option value="">{{ l('SelectAState') }}</option>
+                            <option *ngFor="let item of allStates" value="{{ item.id }}">{{ item.displayName }}</option>
+                        </select>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="CityName">{{ l('City') }}</label>
+                        <select name="zipCode.cityId" [(ngModel)]="zipCode.cityId" class="form-select">
+                            <option value="">{{ l('SelectACity') }}</option>
+                            <option *ngFor="let item of allCitys" value="{{ item.id }}">{{ item.displayName }}</option>
+                        </select>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="CountyName">{{ l('County') }}</label>
+                        <select name="zipCode.countyId" [(ngModel)]="zipCode.countyId" class="form-select">
+                            <option value="">{{ l('SelectACounty') }}</option>
+                            <option *ngFor="let item of allCountys" value="{{ item.id }}">
+                                {{ item.displayName }}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ZipCode_Name">{{ l('Name') }} *</label>
+                        <input
+                            type="text"
+                            #ZipCode_Name="ngModel"
+                            id="ZipCode_Name"
+                            class="form-control"
+                            [(ngModel)]="zipCode.name"
+                            name="Name"
+                            minlength="1"
+                            maxlength="128"
+                            required
+                        />
+                        <validation-messages [formCtrl]="ZipCode_Name"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ZipCode_AreaCode">{{ l('AreaCode') }}</label>
+                        <input
+                            type="text"
+                            #ZipCode_AreaCode="ngModel"
+                            id="ZipCode_AreaCode"
+                            class="form-control"
+                            [(ngModel)]="zipCode.areaCode"
+                            name="AreaCode"
+                        />
+                        <validation-messages [formCtrl]="ZipCode_AreaCode"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ZipCode_AsianPopulation">{{ l('AsianPopulation') }}</label>
+                        <input
+                            type="text"
+                            #ZipCode_AsianPopulation="ngModel"
+                            id="ZipCode_AsianPopulation"
+                            class="form-control"
+                            [(ngModel)]="zipCode.asianPopulation"
+                            name="AsianPopulation"
+                        />
+                        <validation-messages [formCtrl]="ZipCode_AsianPopulation"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ZipCode_AverageHouseValue">{{ l('AverageHouseValue') }}</label>
+                        <input
+                            type="text"
+                            #ZipCode_AverageHouseValue="ngModel"
+                            id="ZipCode_AverageHouseValue"
+                            class="form-control"
+                            [(ngModel)]="zipCode.averageHouseValue"
+                            name="AverageHouseValue"
+                        />
+                        <validation-messages [formCtrl]="ZipCode_AverageHouseValue"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ZipCode_BlackPopulation">{{ l('BlackPopulation') }}</label>
+                        <input
+                            type="text"
+                            #ZipCode_BlackPopulation="ngModel"
+                            id="ZipCode_BlackPopulation"
+                            class="form-control"
+                            [(ngModel)]="zipCode.blackPopulation"
+                            name="BlackPopulation"
+                        />
+                        <validation-messages [formCtrl]="ZipCode_BlackPopulation"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ZipCode_CBSA">{{ l('CBSA') }}</label>
+                        <input
+                            type="text"
+                            #ZipCode_CBSA="ngModel"
+                            id="ZipCode_CBSA"
+                            class="form-control"
+                            [(ngModel)]="zipCode.cbsa"
+                            name="CBSA"
+                        />
+                        <validation-messages [formCtrl]="ZipCode_CBSA"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ZipCode_CBSA_Div">{{ l('CBSA_Div') }}</label>
+                        <input
+                            type="text"
+                            #ZipCode_CBSA_Div="ngModel"
+                            id="ZipCode_CBSA_Div"
+                            class="form-control"
+                            [(ngModel)]="zipCode.cbsA_Div"
+                            name="CBSA_Div"
+                        />
+                        <validation-messages [formCtrl]="ZipCode_CBSA_Div"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ZipCode_CBSA_Div_Name">{{ l('CBSA_Div_Name') }}</label>
+                        <input
+                            type="text"
+                            #ZipCode_CBSA_Div_Name="ngModel"
+                            id="ZipCode_CBSA_Div_Name"
+                            class="form-control"
+                            [(ngModel)]="zipCode.cbsA_Div_Name"
+                            name="CBSA_Div_Name"
+                        />
+                        <validation-messages [formCtrl]="ZipCode_CBSA_Div_Name"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ZipCode_CBSA_Name">{{ l('CBSA_Name') }}</label>
+                        <input
+                            type="text"
+                            #ZipCode_CBSA_Name="ngModel"
+                            id="ZipCode_CBSA_Name"
+                            class="form-control"
+                            [(ngModel)]="zipCode.cbsA_Name"
+                            name="CBSA_Name"
+                        />
+                        <validation-messages [formCtrl]="ZipCode_CBSA_Name"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ZipCode_CBSA_Type">{{ l('CBSA_Type') }}</label>
+                        <input
+                            type="text"
+                            #ZipCode_CBSA_Type="ngModel"
+                            id="ZipCode_CBSA_Type"
+                            class="form-control"
+                            [(ngModel)]="zipCode.cbsA_Type"
+                            name="CBSA_Type"
+                        />
+                        <validation-messages [formCtrl]="ZipCode_CBSA_Type"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ZipCode_CSA">{{ l('CSA') }}</label>
+                        <input
+                            type="text"
+                            #ZipCode_CSA="ngModel"
+                            id="ZipCode_CSA"
+                            class="form-control"
+                            [(ngModel)]="zipCode.csa"
+                            name="CSA"
+                        />
+                        <validation-messages [formCtrl]="ZipCode_CSA"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ZipCode_CSAName">{{ l('CSAName') }}</label>
+                        <input
+                            type="text"
+                            #ZipCode_CSAName="ngModel"
+                            id="ZipCode_CSAName"
+                            class="form-control"
+                            [(ngModel)]="zipCode.csaName"
+                            name="CSAName"
+                        />
+                        <validation-messages [formCtrl]="ZipCode_CSAName"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ZipCode_CarrierRouteRateSortation">
+                            {{ l('CarrierRouteRateSortation') }}
+                        </label>
+                        <input
+                            type="text"
+                            #ZipCode_CarrierRouteRateSortation="ngModel"
+                            id="ZipCode_CarrierRouteRateSortation"
+                            class="form-control"
+                            [(ngModel)]="zipCode.carrierRouteRateSortation"
+                            name="CarrierRouteRateSortation"
+                        />
+                        <validation-messages [formCtrl]="ZipCode_CarrierRouteRateSortation"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ZipCode_City">{{ l('City') }}</label>
+                        <input
+                            type="text"
+                            #ZipCode_City="ngModel"
+                            id="ZipCode_City"
+                            class="form-control"
+                            [(ngModel)]="zipCode.city"
+                            name="City"
+                        />
+                        <validation-messages [formCtrl]="ZipCode_City"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ZipCode_CityAliasCode">{{ l('CityAliasCode') }}</label>
+                        <input
+                            type="text"
+                            #ZipCode_CityAliasCode="ngModel"
+                            id="ZipCode_CityAliasCode"
+                            class="form-control"
+                            [(ngModel)]="zipCode.cityAliasCode"
+                            name="CityAliasCode"
+                        />
+                        <validation-messages [formCtrl]="ZipCode_CityAliasCode"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ZipCode_CityAliasMixedCase">{{ l('CityAliasMixedCase') }}</label>
+                        <input
+                            type="text"
+                            #ZipCode_CityAliasMixedCase="ngModel"
+                            id="ZipCode_CityAliasMixedCase"
+                            class="form-control"
+                            [(ngModel)]="zipCode.cityAliasMixedCase"
+                            name="CityAliasMixedCase"
+                        />
+                        <validation-messages [formCtrl]="ZipCode_CityAliasMixedCase"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ZipCode_CityAliasName">{{ l('CityAliasName') }}</label>
+                        <input
+                            type="text"
+                            #ZipCode_CityAliasName="ngModel"
+                            id="ZipCode_CityAliasName"
+                            class="form-control"
+                            [(ngModel)]="zipCode.cityAliasName"
+                            name="CityAliasName"
+                        />
+                        <validation-messages [formCtrl]="ZipCode_CityAliasName"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ZipCode_CityDeliveryIndicator">
+                            {{ l('CityDeliveryIndicator') }}
+                        </label>
+                        <input
+                            type="text"
+                            #ZipCode_CityDeliveryIndicator="ngModel"
+                            id="ZipCode_CityDeliveryIndicator"
+                            class="form-control"
+                            [(ngModel)]="zipCode.cityDeliveryIndicator"
+                            name="CityDeliveryIndicator"
+                        />
+                        <validation-messages [formCtrl]="ZipCode_CityDeliveryIndicator"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ZipCode_CityMixedCase">{{ l('CityMixedCase') }}</label>
+                        <input
+                            type="text"
+                            #ZipCode_CityMixedCase="ngModel"
+                            id="ZipCode_CityMixedCase"
+                            class="form-control"
+                            [(ngModel)]="zipCode.cityMixedCase"
+                            name="CityMixedCase"
+                        />
+                        <validation-messages [formCtrl]="ZipCode_CityMixedCase"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ZipCode_CityStateKey">{{ l('CityStateKey') }}</label>
+                        <input
+                            type="text"
+                            #ZipCode_CityStateKey="ngModel"
+                            id="ZipCode_CityStateKey"
+                            class="form-control"
+                            [(ngModel)]="zipCode.cityStateKey"
+                            name="CityStateKey"
+                        />
+                        <validation-messages [formCtrl]="ZipCode_CityStateKey"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ZipCode_CityType">{{ l('CityType') }}</label>
+                        <input
+                            type="text"
+                            #ZipCode_CityType="ngModel"
+                            id="ZipCode_CityType"
+                            class="form-control"
+                            [(ngModel)]="zipCode.cityType"
+                            name="CityType"
+                        />
+                        <validation-messages [formCtrl]="ZipCode_CityType"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ZipCode_ClassificationCode">{{ l('ClassificationCode') }}</label>
+                        <input
+                            type="text"
+                            #ZipCode_ClassificationCode="ngModel"
+                            id="ZipCode_ClassificationCode"
+                            class="form-control"
+                            [(ngModel)]="zipCode.classificationCode"
+                            name="ClassificationCode"
+                        />
+                        <validation-messages [formCtrl]="ZipCode_ClassificationCode"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ZipCode_County">{{ l('County') }}</label>
+                        <input
+                            type="text"
+                            #ZipCode_County="ngModel"
+                            id="ZipCode_County"
+                            class="form-control"
+                            [(ngModel)]="zipCode.county"
+                            name="County"
+                        />
+                        <validation-messages [formCtrl]="ZipCode_County"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ZipCode_CountyANSI">{{ l('CountyANSI') }}</label>
+                        <input
+                            type="text"
+                            #ZipCode_CountyANSI="ngModel"
+                            id="ZipCode_CountyANSI"
+                            class="form-control"
+                            [(ngModel)]="zipCode.countyANSI"
+                            name="CountyANSI"
+                        />
+                        <validation-messages [formCtrl]="ZipCode_CountyANSI"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ZipCode_CountyFIPS">{{ l('CountyFIPS') }}</label>
+                        <input
+                            type="text"
+                            #ZipCode_CountyFIPS="ngModel"
+                            id="ZipCode_CountyFIPS"
+                            class="form-control"
+                            [(ngModel)]="zipCode.countyFIPS"
+                            name="CountyFIPS"
+                        />
+                        <validation-messages [formCtrl]="ZipCode_CountyFIPS"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ZipCode_CountyMixedCase">{{ l('CountyMixedCase') }}</label>
+                        <input
+                            type="text"
+                            #ZipCode_CountyMixedCase="ngModel"
+                            id="ZipCode_CountyMixedCase"
+                            class="form-control"
+                            [(ngModel)]="zipCode.countyMixedCase"
+                            name="CountyMixedCase"
+                        />
+                        <validation-messages [formCtrl]="ZipCode_CountyMixedCase"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ZipCode_DayLightSaving">{{ l('DayLightSaving') }}</label>
+                        <input
+                            type="text"
+                            #ZipCode_DayLightSaving="ngModel"
+                            id="ZipCode_DayLightSaving"
+                            class="form-control"
+                            [(ngModel)]="zipCode.dayLightSaving"
+                            name="DayLightSaving"
+                        />
+                        <validation-messages [formCtrl]="ZipCode_DayLightSaving"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ZipCode_Division">{{ l('Division') }}</label>
+                        <input
+                            type="text"
+                            #ZipCode_Division="ngModel"
+                            id="ZipCode_Division"
+                            class="form-control"
+                            [(ngModel)]="zipCode.division"
+                            name="Division"
+                        />
+                        <validation-messages [formCtrl]="ZipCode_Division"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ZipCode_Elevation">{{ l('Elevation') }}</label>
+                        <input
+                            type="text"
+                            #ZipCode_Elevation="ngModel"
+                            id="ZipCode_Elevation"
+                            class="form-control"
+                            [(ngModel)]="zipCode.elevation"
+                            name="Elevation"
+                        />
+                        <validation-messages [formCtrl]="ZipCode_Elevation"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ZipCode_FacilityCode">{{ l('FacilityCode') }}</label>
+                        <input
+                            type="text"
+                            #ZipCode_FacilityCode="ngModel"
+                            id="ZipCode_FacilityCode"
+                            class="form-control"
+                            [(ngModel)]="zipCode.facilityCode"
+                            name="FacilityCode"
+                        />
+                        <validation-messages [formCtrl]="ZipCode_FacilityCode"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ZipCode_FemalePopulation">{{ l('FemalePopulation') }}</label>
+                        <input
+                            type="text"
+                            #ZipCode_FemalePopulation="ngModel"
+                            id="ZipCode_FemalePopulation"
+                            class="form-control"
+                            [(ngModel)]="zipCode.femalePopulation"
+                            name="FemalePopulation"
+                        />
+                        <validation-messages [formCtrl]="ZipCode_FemalePopulation"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ZipCode_FinanceNumber">{{ l('FinanceNumber') }}</label>
+                        <input
+                            type="text"
+                            #ZipCode_FinanceNumber="ngModel"
+                            id="ZipCode_FinanceNumber"
+                            class="form-control"
+                            [(ngModel)]="zipCode.financeNumber"
+                            name="FinanceNumber"
+                        />
+                        <validation-messages [formCtrl]="ZipCode_FinanceNumber"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ZipCode_HawaiianPopulation">{{ l('HawaiianPopulation') }}</label>
+                        <input
+                            type="text"
+                            #ZipCode_HawaiianPopulation="ngModel"
+                            id="ZipCode_HawaiianPopulation"
+                            class="form-control"
+                            [(ngModel)]="zipCode.hawaiianPopulation"
+                            name="HawaiianPopulation"
+                        />
+                        <validation-messages [formCtrl]="ZipCode_HawaiianPopulation"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ZipCode_HispanicPopulation">{{ l('HispanicPopulation') }}</label>
+                        <input
+                            type="text"
+                            #ZipCode_HispanicPopulation="ngModel"
+                            id="ZipCode_HispanicPopulation"
+                            class="form-control"
+                            [(ngModel)]="zipCode.hispanicPopulation"
+                            name="HispanicPopulation"
+                        />
+                        <validation-messages [formCtrl]="ZipCode_HispanicPopulation"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ZipCode_HouseholdsPerZipCode">
+                            {{ l('HouseholdsPerZipCode') }}
+                        </label>
+                        <input
+                            type="text"
+                            #ZipCode_HouseholdsPerZipCode="ngModel"
+                            id="ZipCode_HouseholdsPerZipCode"
+                            class="form-control"
+                            [(ngModel)]="zipCode.householdsPerZipCode"
+                            name="HouseholdsPerZipCode"
+                        />
+                        <validation-messages [formCtrl]="ZipCode_HouseholdsPerZipCode"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ZipCode_IncomePerHousehold">{{ l('IncomePerHousehold') }}</label>
+                        <input
+                            type="text"
+                            #ZipCode_IncomePerHousehold="ngModel"
+                            id="ZipCode_IncomePerHousehold"
+                            class="form-control"
+                            [(ngModel)]="zipCode.incomePerHousehold"
+                            name="IncomePerHousehold"
+                        />
+                        <validation-messages [formCtrl]="ZipCode_IncomePerHousehold"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ZipCode_IndianPopulation">{{ l('IndianPopulation') }}</label>
+                        <input
+                            type="text"
+                            #ZipCode_IndianPopulation="ngModel"
+                            id="ZipCode_IndianPopulation"
+                            class="form-control"
+                            [(ngModel)]="zipCode.indianPopulation"
+                            name="IndianPopulation"
+                        />
+                        <validation-messages [formCtrl]="ZipCode_IndianPopulation"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ZipCode_Latitude">{{ l('Latitude') }}</label>
+                        <input
+                            type="text"
+                            #ZipCode_Latitude="ngModel"
+                            id="ZipCode_Latitude"
+                            class="form-control"
+                            [(ngModel)]="zipCode.latitude"
+                            name="Latitude"
+                        />
+                        <validation-messages [formCtrl]="ZipCode_Latitude"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ZipCode_Longitude">{{ l('Longitude') }}</label>
+                        <input
+                            type="text"
+                            #ZipCode_Longitude="ngModel"
+                            id="ZipCode_Longitude"
+                            class="form-control"
+                            [(ngModel)]="zipCode.longitude"
+                            name="Longitude"
+                        />
+                        <validation-messages [formCtrl]="ZipCode_Longitude"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ZipCode_MSA">{{ l('MSA') }}</label>
+                        <input
+                            type="text"
+                            #ZipCode_MSA="ngModel"
+                            id="ZipCode_MSA"
+                            class="form-control"
+                            [(ngModel)]="zipCode.msa"
+                            name="MSA"
+                        />
+                        <validation-messages [formCtrl]="ZipCode_MSA"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ZipCode_MSA_Name">{{ l('MSA_Name') }}</label>
+                        <input
+                            type="text"
+                            #ZipCode_MSA_Name="ngModel"
+                            id="ZipCode_MSA_Name"
+                            class="form-control"
+                            [(ngModel)]="zipCode.msA_Name"
+                            name="MSA_Name"
+                        />
+                        <validation-messages [formCtrl]="ZipCode_MSA_Name"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ZipCode_MailingName">{{ l('MailingName') }}</label>
+                        <input
+                            type="text"
+                            #ZipCode_MailingName="ngModel"
+                            id="ZipCode_MailingName"
+                            class="form-control"
+                            [(ngModel)]="zipCode.mailingName"
+                            name="MailingName"
+                        />
+                        <validation-messages [formCtrl]="ZipCode_MailingName"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ZipCode_MalePopulation">{{ l('MalePopulation') }}</label>
+                        <input
+                            type="text"
+                            #ZipCode_MalePopulation="ngModel"
+                            id="ZipCode_MalePopulation"
+                            class="form-control"
+                            [(ngModel)]="zipCode.malePopulation"
+                            name="MalePopulation"
+                        />
+                        <validation-messages [formCtrl]="ZipCode_MalePopulation"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ZipCode_MultiCounty">{{ l('MultiCounty') }}</label>
+                        <input
+                            type="text"
+                            #ZipCode_MultiCounty="ngModel"
+                            id="ZipCode_MultiCounty"
+                            class="form-control"
+                            [(ngModel)]="zipCode.multiCounty"
+                            name="MultiCounty"
+                        />
+                        <validation-messages [formCtrl]="ZipCode_MultiCounty"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ZipCode_OtherPopulation">{{ l('OtherPopulation') }}</label>
+                        <input
+                            type="text"
+                            #ZipCode_OtherPopulation="ngModel"
+                            id="ZipCode_OtherPopulation"
+                            class="form-control"
+                            [(ngModel)]="zipCode.otherPopulation"
+                            name="OtherPopulation"
+                        />
+                        <validation-messages [formCtrl]="ZipCode_OtherPopulation"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ZipCode_PMSA">{{ l('PMSA') }}</label>
+                        <input
+                            type="text"
+                            #ZipCode_PMSA="ngModel"
+                            id="ZipCode_PMSA"
+                            class="form-control"
+                            [(ngModel)]="zipCode.pmsa"
+                            name="PMSA"
+                        />
+                        <validation-messages [formCtrl]="ZipCode_PMSA"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ZipCode_PMSA_Name">{{ l('PMSA_Name') }}</label>
+                        <input
+                            type="text"
+                            #ZipCode_PMSA_Name="ngModel"
+                            id="ZipCode_PMSA_Name"
+                            class="form-control"
+                            [(ngModel)]="zipCode.pmsA_Name"
+                            name="PMSA_Name"
+                        />
+                        <validation-messages [formCtrl]="ZipCode_PMSA_Name"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ZipCode_PersonsPerHousehold">
+                            {{ l('PersonsPerHousehold') }}
+                        </label>
+                        <input
+                            type="text"
+                            #ZipCode_PersonsPerHousehold="ngModel"
+                            id="ZipCode_PersonsPerHousehold"
+                            class="form-control"
+                            [(ngModel)]="zipCode.personsPerHousehold"
+                            name="PersonsPerHousehold"
+                        />
+                        <validation-messages [formCtrl]="ZipCode_PersonsPerHousehold"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ZipCode_Population">{{ l('Population') }}</label>
+                        <input
+                            type="text"
+                            #ZipCode_Population="ngModel"
+                            id="ZipCode_Population"
+                            class="form-control"
+                            [(ngModel)]="zipCode.population"
+                            name="Population"
+                        />
+                        <validation-messages [formCtrl]="ZipCode_Population"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ZipCode_PreferredLastLineKey">
+                            {{ l('PreferredLastLineKey') }}
+                        </label>
+                        <input
+                            type="text"
+                            #ZipCode_PreferredLastLineKey="ngModel"
+                            id="ZipCode_PreferredLastLineKey"
+                            class="form-control"
+                            [(ngModel)]="zipCode.preferredLastLineKey"
+                            name="PreferredLastLineKey"
+                        />
+                        <validation-messages [formCtrl]="ZipCode_PreferredLastLineKey"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ZipCode_PrimaryRecord">{{ l('PrimaryRecord') }}</label>
+                        <input
+                            type="text"
+                            #ZipCode_PrimaryRecord="ngModel"
+                            id="ZipCode_PrimaryRecord"
+                            class="form-control"
+                            [(ngModel)]="zipCode.primaryRecord"
+                            name="PrimaryRecord"
+                        />
+                        <validation-messages [formCtrl]="ZipCode_PrimaryRecord"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ZipCode_Region">{{ l('Region') }}</label>
+                        <input
+                            type="text"
+                            #ZipCode_Region="ngModel"
+                            id="ZipCode_Region"
+                            class="form-control"
+                            [(ngModel)]="zipCode.region"
+                            name="Region"
+                        />
+                        <validation-messages [formCtrl]="ZipCode_Region"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ZipCode_State">{{ l('State') }}</label>
+                        <input
+                            type="text"
+                            #ZipCode_State="ngModel"
+                            id="ZipCode_State"
+                            class="form-control"
+                            [(ngModel)]="zipCode.state"
+                            name="State"
+                        />
+                        <validation-messages [formCtrl]="ZipCode_State"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ZipCode_StateANSI">{{ l('StateANSI') }}</label>
+                        <input
+                            type="text"
+                            #ZipCode_StateANSI="ngModel"
+                            id="ZipCode_StateANSI"
+                            class="form-control"
+                            [(ngModel)]="zipCode.stateANSI"
+                            name="StateANSI"
+                        />
+                        <validation-messages [formCtrl]="ZipCode_StateANSI"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ZipCode_StateFIPS">{{ l('StateFIPS') }}</label>
+                        <input
+                            type="text"
+                            #ZipCode_StateFIPS="ngModel"
+                            id="ZipCode_StateFIPS"
+                            class="form-control"
+                            [(ngModel)]="zipCode.stateFIPS"
+                            name="StateFIPS"
+                        />
+                        <validation-messages [formCtrl]="ZipCode_StateFIPS"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ZipCode_StateFullName">{{ l('StateFullName') }}</label>
+                        <input
+                            type="text"
+                            #ZipCode_StateFullName="ngModel"
+                            id="ZipCode_StateFullName"
+                            class="form-control"
+                            [(ngModel)]="zipCode.stateFullName"
+                            name="StateFullName"
+                        />
+                        <validation-messages [formCtrl]="ZipCode_StateFullName"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ZipCode_TimeZone">{{ l('TimeZone') }}</label>
+                        <input
+                            type="text"
+                            #ZipCode_TimeZone="ngModel"
+                            id="ZipCode_TimeZone"
+                            class="form-control"
+                            [(ngModel)]="zipCode.timeZone"
+                            name="TimeZone"
+                        />
+                        <validation-messages [formCtrl]="ZipCode_TimeZone"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ZipCode_UniqueZIPName">{{ l('UniqueZIPName') }}</label>
+                        <input
+                            type="text"
+                            #ZipCode_UniqueZIPName="ngModel"
+                            id="ZipCode_UniqueZIPName"
+                            class="form-control"
+                            [(ngModel)]="zipCode.uniqueZIPName"
+                            name="UniqueZIPName"
+                        />
+                        <validation-messages [formCtrl]="ZipCode_UniqueZIPName"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ZipCode_WhitePopulation">{{ l('WhitePopulation') }}</label>
+                        <input
+                            type="text"
+                            #ZipCode_WhitePopulation="ngModel"
+                            id="ZipCode_WhitePopulation"
+                            class="form-control"
+                            [(ngModel)]="zipCode.whitePopulation"
+                            name="WhitePopulation"
+                        />
+                        <validation-messages [formCtrl]="ZipCode_WhitePopulation"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!zipCodeForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

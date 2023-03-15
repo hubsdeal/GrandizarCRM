@@ -87,7 +87,6 @@
                                             <li>
                                                 <a *ngIf="permission.isGranted('{{Permission_Value_Here}}.Delete')"
                                                    (click)="delete{{Entity_Name_Here}}(record.{{entity_Name_Here}})">
-                                                   <i class="far fa-trash-alt mr-2"></i>
                                                    {{l('Delete')}}
                                                 </a>
                                             </li>

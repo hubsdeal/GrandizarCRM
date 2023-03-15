@@ -139,11 +139,7 @@
                                   
                        onSelect{{Property_Name_Here}}File(fileInput: any): void {
                            let selectedFile = <File>fileInput.target.files[0];
-                           if(!selectedFile){
-                               this.{{entity_Name_Here}}_{{property_Name_Here}}Label.nativeElement.innerText = this.l('ChooseAFile');
-                                return;
-                           }
-                           this.{{entity_Name_Here}}_{{property_Name_Here}}Label.nativeElement.innerText = selectedFile.name;
+
                            this.{{property_Name_Here}}FileUploader.clearQueue();
                            this.{{property_Name_Here}}FileUploader.addToQueue([selectedFile]);
                            this.{{property_Name_Here}}FileUploader.uploadAll();

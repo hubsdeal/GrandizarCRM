@@ -64,6 +64,10 @@
         }
       },
       "Abp.Zero/4.9.0": {
+        "dependencies": {
+          "Abp.Zero.Common": "4.9.0",
+          "Microsoft.AspNet.Identity.Core": "2.2.2"
+        },
         "runtime": {
           "lib/net461/Abp.Zero.dll": {
             "assemblyVersion": "4.9.0.0",
@@ -152,6 +156,14 @@
           "lib/netstandard2.0/JetBrains.Annotations.dll": {
             "assemblyVersion": "2019.1.1.0",
             "fileVersion": "2019.1.1.0"
+          }
+        }
+      },
+      "Microsoft.AspNet.Identity.Core/2.2.2": {
+        "runtime": {
+          "lib/net45/Microsoft.AspNet.Identity.Core.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "0.0.0.0"
           }
         }
       },
@@ -1753,6 +1765,13 @@
       "sha512": "sha512-y4RFn+HZ7BekqIx+uXuVAvh80quYNiu86oRG2QztmFXQ2mm1lprb7xNawZdFfLxBAh8BQUkSQdO0Itanal8DbQ==",
       "path": "jetbrains.annotations/2019.1.1",
       "hashPath": "jetbrains.annotations.2019.1.1.nupkg.sha512"
+    },
+    "Microsoft.AspNet.Identity.Core/2.2.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-aZoXAqqisAQlEdeMwcn204m7ErUeYXJuoZ4YqvV85OPeB0w8o8kW8Ww5o5ZTZFx3mrLmmtfWKjt4nLqfjzjXEw==",
+      "path": "microsoft.aspnet.identity.core/2.2.2",
+      "hashPath": "microsoft.aspnet.identity.core.2.2.2.nupkg.sha512"
     },
     "Microsoft.AspNetCore.Authentication/2.2.0": {
       "type": "package",

@@ -1,0 +1,91 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #cityForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="city.id">{{ l('EditCity') }}</span>
+                        <span *ngIf="!city.id">{{ l('CreateNewCity') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="CountryName">{{ l('Country') }}</label>
+                        <select name="city.countryId" [(ngModel)]="city.countryId" class="form-select">
+                            <option value="">{{ l('SelectACountry') }}</option>
+                            <option *ngFor="let item of allCountrys" value="{{ item.id }}">
+                                {{ item.displayName }}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="StateName">{{ l('State') }}</label>
+                        <select name="city.stateId" [(ngModel)]="city.stateId" class="form-select">
+                            <option value="">{{ l('SelectAState') }}</option>
+                            <option *ngFor="let item of allStates" value="{{ item.id }}">{{ item.displayName }}</option>
+                        </select>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="CountyName">{{ l('County') }}</label>
+                        <select name="city.countyId" [(ngModel)]="city.countyId" class="form-select">
+                            <option value="">{{ l('SelectACounty') }}</option>
+                            <option *ngFor="let item of allCountys" value="{{ item.id }}">
+                                {{ item.displayName }}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="City_Name">{{ l('Name') }} *</label>
+                        <input
+                            type="text"
+                            #City_Name="ngModel"
+                            id="City_Name"
+                            class="form-control"
+                            [(ngModel)]="city.name"
+                            name="Name"
+                            minlength="1"
+                            maxlength="128"
+                            required
+                        />
+                        <validation-messages [formCtrl]="City_Name"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!cityForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

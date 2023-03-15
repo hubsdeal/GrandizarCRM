@@ -10,7 +10,6 @@
             _modalManager = modalManager;
         };
 
-
         var dataTable = _${{nP_Foreign_Entity_Name_Here}}Table.DataTable({
             paging: true,
             serverSide: true,
@@ -59,12 +58,11 @@
             e.preventDefault();
         });
 
-        $(document).keypress(function (e) {
-            if (e.which === 13) {
+        $('#{{NP_Foreign_Entity_Name_Here}}TableFilter').keypress(function (e) {
+            if (e.which === 13 && e.target.tagName.toLocaleLowerCase() != 'textarea') {
                 get{{NP_Foreign_Entity_Name_Here}}();
             }
         });
 
     };
 })(jQuery);
-

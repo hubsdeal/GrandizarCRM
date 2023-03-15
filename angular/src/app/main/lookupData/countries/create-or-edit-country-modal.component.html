@@ -1,0 +1,108 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #countryForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="country.id">{{ l('EditCountry') }}</span>
+                        <span *ngIf="!country.id">{{ l('CreateNewCountry') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="Country_Name">{{ l('Name') }} *</label>
+                        <input
+                            type="text"
+                            #Country_Name="ngModel"
+                            id="Country_Name"
+                            class="form-control"
+                            [(ngModel)]="country.name"
+                            name="Name"
+                            minlength="1"
+                            maxlength="128"
+                            required
+                        />
+                        <validation-messages [formCtrl]="Country_Name"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Country_Ticker">{{ l('Ticker') }}</label>
+                        <input
+                            type="text"
+                            #Country_Ticker="ngModel"
+                            id="Country_Ticker"
+                            class="form-control"
+                            [(ngModel)]="country.ticker"
+                            name="Ticker"
+                            minlength="1"
+                            maxlength="50"
+                        />
+                        <validation-messages [formCtrl]="Country_Ticker"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Country_FlagIcon">{{ l('FlagIcon') }}</label>
+                        <input
+                            type="text"
+                            #Country_FlagIcon="ngModel"
+                            id="Country_FlagIcon"
+                            class="form-control"
+                            [(ngModel)]="country.flagIcon"
+                            name="FlagIcon"
+                            minlength="1"
+                            maxlength="128"
+                        />
+                        <validation-messages [formCtrl]="Country_FlagIcon"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Country_PhoneCode">{{ l('PhoneCode') }}</label>
+                        <input
+                            type="text"
+                            #Country_PhoneCode="ngModel"
+                            id="Country_PhoneCode"
+                            class="form-control"
+                            [(ngModel)]="country.phoneCode"
+                            name="PhoneCode"
+                            minlength="1"
+                            maxlength="50"
+                        />
+                        <validation-messages [formCtrl]="Country_PhoneCode"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!countryForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

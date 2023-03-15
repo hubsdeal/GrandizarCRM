@@ -35,6 +35,39 @@
 					}
 				]
 		},
+				{
+			"placeholder" : "{{Property_Filter_Def_Clear_Here}}",
+			"condition" : "{{Property_Advanced_Filter_Here}} == true",
+			"templates" : [
+					{
+					"type" : "enum",
+					"content" : "    this.{{property_Name_Here}}Filter = -1;
+"
+					},
+					{
+					"type" : "DateTime",
+					"content" : "    this.max{{Property_Name_Here}}Filter = undefined;
+		this.min{{Property_Name_Here}}Filter = undefined;
+"
+					},
+					{
+					"type" : "bool",
+					"content" : "    this.{{property_Name_Here}}Filter = -1;
+"
+					},
+					{
+					"type" : "numeric",
+					"content" : "    this.max{{Property_Name_Here}}Filter = this.max{{Property_Name_Here}}FilterEmpty;
+		this.min{{Property_Name_Here}}Filter = this.max{{Property_Name_Here}}FilterEmpty;
+"
+					},
+					{
+					"type" : "default",
+					"content" : "    this.{{property_Name_Here}}Filter = '';
+"
+					}
+				]
+		},
 		{
 			"placeholder" : "{{Property_Filter_Param_Here}}",
 			"condition" : "{{Property_Advanced_Filter_Here}} == true",
@@ -71,6 +104,16 @@
 					"relation" : "single",
 					"content" : "        {{nP_Foreign_Entity_Name_Here}}{{NP_Display_Property_Name_Here}}{{NP_Duplication_Number_Here}}Filter = '';
 "
+					}
+				]
+		},
+{
+			"placeholder" : "{{NP_Filter_Def_Clear_Here}}",
+			"templates" : [
+					{
+					"relation" : "single",
+					"content" : "		this.{{nP_Foreign_Entity_Name_Here}}{{NP_Display_Property_Name_Here}}{{NP_Duplication_Number_Here}}Filter = '';
+					"
 					}
 				]
 		},
@@ -176,7 +219,7 @@ import { View{{Entity_Name_Here}}ModalComponent } from './view-{{entity_Name_Her
 			"placeholder": "{{View_Component_Dec_Here}}",
 			"condition": "{{Create_View_Only_Here}} == true",
 			"content": "
-    @ViewChild('view{{Entity_Name_Here}}ModalComponent', { static: true }) view{{Entity_Name_Here}}Modal: View{{Entity_Name_Here}}ModalComponent;"
+    @ViewChild('view{{Entity_Name_Here}}Modal', { static: true }) view{{Entity_Name_Here}}Modal: View{{Entity_Name_Here}}ModalComponent;"
 		},
 		{
 			"placeholder": "{{TurboTable_Import_Here}}",

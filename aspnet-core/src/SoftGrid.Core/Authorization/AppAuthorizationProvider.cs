@@ -29,6 +29,102 @@ namespace SoftGrid.Authorization
             //COMMON PERMISSIONS (FOR BOTH OF TENANTS AND HOST)
 
             var pages = context.GetPermissionOrNull(AppPermissions.Pages) ?? context.CreatePermission(AppPermissions.Pages, L("Pages"));
+
+            var contacts = pages.CreateChildPermission(AppPermissions.Pages_Contacts, L("Contacts"));
+            contacts.CreateChildPermission(AppPermissions.Pages_Contacts_Create, L("CreateNewContact"));
+            contacts.CreateChildPermission(AppPermissions.Pages_Contacts_Edit, L("EditContact"));
+            contacts.CreateChildPermission(AppPermissions.Pages_Contacts_Delete, L("DeleteContact"));
+
+            var hubs = pages.CreateChildPermission(AppPermissions.Pages_Hubs, L("Hubs"));
+            hubs.CreateChildPermission(AppPermissions.Pages_Hubs_Create, L("CreateNewHub"));
+            hubs.CreateChildPermission(AppPermissions.Pages_Hubs_Edit, L("EditHub"));
+            hubs.CreateChildPermission(AppPermissions.Pages_Hubs_Delete, L("DeleteHub"));
+
+            var hubTypes = pages.CreateChildPermission(AppPermissions.Pages_HubTypes, L("HubTypes"));
+            hubTypes.CreateChildPermission(AppPermissions.Pages_HubTypes_Create, L("CreateNewHubType"));
+            hubTypes.CreateChildPermission(AppPermissions.Pages_HubTypes_Edit, L("EditHubType"));
+            hubTypes.CreateChildPermission(AppPermissions.Pages_HubTypes_Delete, L("DeleteHubType"));
+
+            var membershipTypes = pages.CreateChildPermission(AppPermissions.Pages_MembershipTypes, L("MembershipTypes"));
+            membershipTypes.CreateChildPermission(AppPermissions.Pages_MembershipTypes_Create, L("CreateNewMembershipType"));
+            membershipTypes.CreateChildPermission(AppPermissions.Pages_MembershipTypes_Edit, L("EditMembershipType"));
+            membershipTypes.CreateChildPermission(AppPermissions.Pages_MembershipTypes_Delete, L("DeleteMembershipType"));
+
+            var contractTypes = pages.CreateChildPermission(AppPermissions.Pages_ContractTypes, L("ContractTypes"));
+            contractTypes.CreateChildPermission(AppPermissions.Pages_ContractTypes_Create, L("CreateNewContractType"));
+            contractTypes.CreateChildPermission(AppPermissions.Pages_ContractTypes_Edit, L("EditContractType"));
+            contractTypes.CreateChildPermission(AppPermissions.Pages_ContractTypes_Delete, L("DeleteContractType"));
+
+            var documentTypes = pages.CreateChildPermission(AppPermissions.Pages_DocumentTypes, L("DocumentTypes"));
+            documentTypes.CreateChildPermission(AppPermissions.Pages_DocumentTypes_Create, L("CreateNewDocumentType"));
+            documentTypes.CreateChildPermission(AppPermissions.Pages_DocumentTypes_Edit, L("EditDocumentType"));
+            documentTypes.CreateChildPermission(AppPermissions.Pages_DocumentTypes_Delete, L("DeleteDocumentType"));
+
+            var smsTemplates = pages.CreateChildPermission(AppPermissions.Pages_SmsTemplates, L("SmsTemplates"));
+            smsTemplates.CreateChildPermission(AppPermissions.Pages_SmsTemplates_Create, L("CreateNewSmsTemplate"));
+            smsTemplates.CreateChildPermission(AppPermissions.Pages_SmsTemplates_Edit, L("EditSmsTemplate"));
+            smsTemplates.CreateChildPermission(AppPermissions.Pages_SmsTemplates_Delete, L("DeleteSmsTemplate"));
+
+            var emailTemplates = pages.CreateChildPermission(AppPermissions.Pages_EmailTemplates, L("EmailTemplates"));
+            emailTemplates.CreateChildPermission(AppPermissions.Pages_EmailTemplates_Create, L("CreateNewEmailTemplate"));
+            emailTemplates.CreateChildPermission(AppPermissions.Pages_EmailTemplates_Edit, L("EditEmailTemplate"));
+            emailTemplates.CreateChildPermission(AppPermissions.Pages_EmailTemplates_Delete, L("DeleteEmailTemplate"));
+
+            var connectChannels = pages.CreateChildPermission(AppPermissions.Pages_ConnectChannels, L("ConnectChannels"));
+            connectChannels.CreateChildPermission(AppPermissions.Pages_ConnectChannels_Create, L("CreateNewConnectChannel"));
+            connectChannels.CreateChildPermission(AppPermissions.Pages_ConnectChannels_Edit, L("EditConnectChannel"));
+            connectChannels.CreateChildPermission(AppPermissions.Pages_ConnectChannels_Delete, L("DeleteConnectChannel"));
+
+            var zipCodes = pages.CreateChildPermission(AppPermissions.Pages_ZipCodes, L("ZipCodes"));
+            zipCodes.CreateChildPermission(AppPermissions.Pages_ZipCodes_Create, L("CreateNewZipCode"));
+            zipCodes.CreateChildPermission(AppPermissions.Pages_ZipCodes_Edit, L("EditZipCode"));
+            zipCodes.CreateChildPermission(AppPermissions.Pages_ZipCodes_Delete, L("DeleteZipCode"));
+
+            var ratingLikes = pages.CreateChildPermission(AppPermissions.Pages_RatingLikes, L("RatingLikes"));
+            ratingLikes.CreateChildPermission(AppPermissions.Pages_RatingLikes_Create, L("CreateNewRatingLike"));
+            ratingLikes.CreateChildPermission(AppPermissions.Pages_RatingLikes_Edit, L("EditRatingLike"));
+            ratingLikes.CreateChildPermission(AppPermissions.Pages_RatingLikes_Delete, L("DeleteRatingLike"));
+
+            var measurementUnits = pages.CreateChildPermission(AppPermissions.Pages_MeasurementUnits, L("MeasurementUnits"));
+            measurementUnits.CreateChildPermission(AppPermissions.Pages_MeasurementUnits_Create, L("CreateNewMeasurementUnit"));
+            measurementUnits.CreateChildPermission(AppPermissions.Pages_MeasurementUnits_Edit, L("EditMeasurementUnit"));
+            measurementUnits.CreateChildPermission(AppPermissions.Pages_MeasurementUnits_Delete, L("DeleteMeasurementUnit"));
+
+            var masterTags = pages.CreateChildPermission(AppPermissions.Pages_MasterTags, L("MasterTags"));
+            masterTags.CreateChildPermission(AppPermissions.Pages_MasterTags_Create, L("CreateNewMasterTag"));
+            masterTags.CreateChildPermission(AppPermissions.Pages_MasterTags_Edit, L("EditMasterTag"));
+            masterTags.CreateChildPermission(AppPermissions.Pages_MasterTags_Delete, L("DeleteMasterTag"));
+
+            var masterTagCategories = pages.CreateChildPermission(AppPermissions.Pages_MasterTagCategories, L("MasterTagCategories"));
+            masterTagCategories.CreateChildPermission(AppPermissions.Pages_MasterTagCategories_Create, L("CreateNewMasterTagCategory"));
+            masterTagCategories.CreateChildPermission(AppPermissions.Pages_MasterTagCategories_Edit, L("EditMasterTagCategory"));
+            masterTagCategories.CreateChildPermission(AppPermissions.Pages_MasterTagCategories_Delete, L("DeleteMasterTagCategory"));
+
+            var cities = pages.CreateChildPermission(AppPermissions.Pages_Cities, L("Cities"));
+            cities.CreateChildPermission(AppPermissions.Pages_Cities_Create, L("CreateNewCity"));
+            cities.CreateChildPermission(AppPermissions.Pages_Cities_Edit, L("EditCity"));
+            cities.CreateChildPermission(AppPermissions.Pages_Cities_Delete, L("DeleteCity"));
+
+            var counties = pages.CreateChildPermission(AppPermissions.Pages_Counties, L("Counties"));
+            counties.CreateChildPermission(AppPermissions.Pages_Counties_Create, L("CreateNewCounty"));
+            counties.CreateChildPermission(AppPermissions.Pages_Counties_Edit, L("EditCounty"));
+            counties.CreateChildPermission(AppPermissions.Pages_Counties_Delete, L("DeleteCounty"));
+
+            var states = pages.CreateChildPermission(AppPermissions.Pages_States, L("States"));
+            states.CreateChildPermission(AppPermissions.Pages_States_Create, L("CreateNewState"));
+            states.CreateChildPermission(AppPermissions.Pages_States_Edit, L("EditState"));
+            states.CreateChildPermission(AppPermissions.Pages_States_Delete, L("DeleteState"));
+
+            var countries = pages.CreateChildPermission(AppPermissions.Pages_Countries, L("Countries"));
+            countries.CreateChildPermission(AppPermissions.Pages_Countries_Create, L("CreateNewCountry"));
+            countries.CreateChildPermission(AppPermissions.Pages_Countries_Edit, L("EditCountry"));
+            countries.CreateChildPermission(AppPermissions.Pages_Countries_Delete, L("DeleteCountry"));
+
+            var currencies = pages.CreateChildPermission(AppPermissions.Pages_Currencies, L("Currencies"));
+            currencies.CreateChildPermission(AppPermissions.Pages_Currencies_Create, L("CreateNewCurrency"));
+            currencies.CreateChildPermission(AppPermissions.Pages_Currencies_Edit, L("EditCurrency"));
+            currencies.CreateChildPermission(AppPermissions.Pages_Currencies_Delete, L("DeleteCurrency"));
+
             pages.CreateChildPermission(AppPermissions.Pages_DemoUiComponents, L("DemoUiComponents"));
 
             var administration = pages.CreateChildPermission(AppPermissions.Pages_Administration, L("Administration"));
@@ -53,7 +149,7 @@ namespace SoftGrid.Authorization
             languages.CreateChildPermission(AppPermissions.Pages_Administration_Languages_Delete, L("DeletingLanguages"), multiTenancySides: _isMultiTenancyEnabled ? MultiTenancySides.Host : MultiTenancySides.Tenant);
             languages.CreateChildPermission(AppPermissions.Pages_Administration_Languages_ChangeTexts, L("ChangingTexts"));
             languages.CreateChildPermission(AppPermissions.Pages_Administration_Languages_ChangeDefaultLanguage, L("ChangeDefaultLanguage"));
-            
+
             administration.CreateChildPermission(AppPermissions.Pages_Administration_AuditLogs, L("AuditLogs"));
 
             var organizationUnits = administration.CreateChildPermission(AppPermissions.Pages_Administration_OrganizationUnits, L("OrganizationUnits"));
@@ -93,7 +189,7 @@ namespace SoftGrid.Authorization
 
             var massNotification = administration.CreateChildPermission(AppPermissions.Pages_Administration_MassNotification, L("MassNotifications"));
             massNotification.CreateChildPermission(AppPermissions.Pages_Administration_MassNotification_Create, L("MassNotificationCreate"));
-            
+
             //TENANT-SPECIFIC PERMISSIONS
 
             pages.CreateChildPermission(AppPermissions.Pages_Tenant_Dashboard, L("Dashboard"), multiTenancySides: MultiTenancySides.Tenant);
@@ -117,10 +213,10 @@ namespace SoftGrid.Authorization
             tenants.CreateChildPermission(AppPermissions.Pages_Tenants_Impersonation, L("LoginForTenants"), multiTenancySides: MultiTenancySides.Host);
 
             administration.CreateChildPermission(AppPermissions.Pages_Administration_Host_Settings, L("Settings"), multiTenancySides: MultiTenancySides.Host);
-            
+
             var maintenance = administration.CreateChildPermission(AppPermissions.Pages_Administration_Host_Maintenance, L("Maintenance"), multiTenancySides: _isMultiTenancyEnabled ? MultiTenancySides.Host : MultiTenancySides.Tenant);
             maintenance.CreateChildPermission(AppPermissions.Pages_Administration_NewVersion_Create, L("SendNewVersionNotification"));
-            
+
             administration.CreateChildPermission(AppPermissions.Pages_Administration_HangfireDashboard, L("HangfireDashboard"), multiTenancySides: _isMultiTenancyEnabled ? MultiTenancySides.Host : MultiTenancySides.Tenant);
             administration.CreateChildPermission(AppPermissions.Pages_Administration_Host_Dashboard, L("Dashboard"), multiTenancySides: MultiTenancySides.Host);
         }

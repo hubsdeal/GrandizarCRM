@@ -74,6 +74,11 @@
 			"condition": "{{Project_Version_Here}} >= 070200",
 			"content": "</div>"
 		},
+        {
+			"placeholder": "{{Div_Before_Metronic_V812}}",
+			"condition": "{{Project_Version_Here}} < 110400",
+			"content": "</div>"
+		},
 		{
 			"placeholder": "{{Container_Class_Here}}",
 			"condition": "{{Project_Version_Here}} < 070200",
@@ -96,7 +101,7 @@
 		},        
 		{
             "placeholder": "{{Content_Class_After_Metronic_V90}}",
-            "condition": "{{Project_Version_Here}} >= 090000",
+            "condition": "{{Project_Version_Here}} >= 090000 && {{Project_Version_Here}} < 110400",
             "content": "<div class=\"content d-flex flex-column flex-column-fluid\">"
         },
 		{

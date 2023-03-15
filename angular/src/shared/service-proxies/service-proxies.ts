@@ -1632,6 +1632,575 @@ export class ChatServiceProxy {
 }
 
 @Injectable()
+export class CitiesServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param nameFilter (optional) 
+     * @param countryNameFilter (optional) 
+     * @param stateNameFilter (optional) 
+     * @param countyNameFilter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
+     * @return Success
+     */
+    getAll(filter: string | undefined, nameFilter: string | undefined, countryNameFilter: string | undefined, stateNameFilter: string | undefined, countyNameFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetCityForViewDto> {
+        let url_ = this.baseUrl + "/api/services/app/Cities/GetAll?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (nameFilter === null)
+            throw new Error("The parameter 'nameFilter' cannot be null.");
+        else if (nameFilter !== undefined)
+            url_ += "NameFilter=" + encodeURIComponent("" + nameFilter) + "&";
+        if (countryNameFilter === null)
+            throw new Error("The parameter 'countryNameFilter' cannot be null.");
+        else if (countryNameFilter !== undefined)
+            url_ += "CountryNameFilter=" + encodeURIComponent("" + countryNameFilter) + "&";
+        if (stateNameFilter === null)
+            throw new Error("The parameter 'stateNameFilter' cannot be null.");
+        else if (stateNameFilter !== undefined)
+            url_ += "StateNameFilter=" + encodeURIComponent("" + stateNameFilter) + "&";
+        if (countyNameFilter === null)
+            throw new Error("The parameter 'countyNameFilter' cannot be null.");
+        else if (countyNameFilter !== undefined)
+            url_ += "CountyNameFilter=" + encodeURIComponent("" + countyNameFilter) + "&";
+        if (sorting === null)
+            throw new Error("The parameter 'sorting' cannot be null.");
+        else if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
+        if (skipCount === null)
+            throw new Error("The parameter 'skipCount' cannot be null.");
+        else if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
+        if (maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' cannot be null.");
+        else if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAll(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAll(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<PagedResultDtoOfGetCityForViewDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<PagedResultDtoOfGetCityForViewDto>;
+        }));
+    }
+
+    protected processGetAll(response: HttpResponseBase): Observable<PagedResultDtoOfGetCityForViewDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PagedResultDtoOfGetCityForViewDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getCityForView(id: number | undefined): Observable<GetCityForViewDto> {
+        let url_ = this.baseUrl + "/api/services/app/Cities/GetCityForView?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetCityForView(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetCityForView(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<GetCityForViewDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<GetCityForViewDto>;
+        }));
+    }
+
+    protected processGetCityForView(response: HttpResponseBase): Observable<GetCityForViewDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = GetCityForViewDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getCityForEdit(id: number | undefined): Observable<GetCityForEditOutput> {
+        let url_ = this.baseUrl + "/api/services/app/Cities/GetCityForEdit?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetCityForEdit(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetCityForEdit(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<GetCityForEditOutput>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<GetCityForEditOutput>;
+        }));
+    }
+
+    protected processGetCityForEdit(response: HttpResponseBase): Observable<GetCityForEditOutput> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = GetCityForEditOutput.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    createOrEdit(body: CreateOrEditCityDto | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Cities/CreateOrEdit";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreateOrEdit(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreateOrEdit(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processCreateOrEdit(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    delete(id: number | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Cities/Delete?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDelete(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDelete(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processDelete(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param nameFilter (optional) 
+     * @param countryNameFilter (optional) 
+     * @param stateNameFilter (optional) 
+     * @param countyNameFilter (optional) 
+     * @return Success
+     */
+    getCitiesToExcel(filter: string | undefined, nameFilter: string | undefined, countryNameFilter: string | undefined, stateNameFilter: string | undefined, countyNameFilter: string | undefined): Observable<FileDto> {
+        let url_ = this.baseUrl + "/api/services/app/Cities/GetCitiesToExcel?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (nameFilter === null)
+            throw new Error("The parameter 'nameFilter' cannot be null.");
+        else if (nameFilter !== undefined)
+            url_ += "NameFilter=" + encodeURIComponent("" + nameFilter) + "&";
+        if (countryNameFilter === null)
+            throw new Error("The parameter 'countryNameFilter' cannot be null.");
+        else if (countryNameFilter !== undefined)
+            url_ += "CountryNameFilter=" + encodeURIComponent("" + countryNameFilter) + "&";
+        if (stateNameFilter === null)
+            throw new Error("The parameter 'stateNameFilter' cannot be null.");
+        else if (stateNameFilter !== undefined)
+            url_ += "StateNameFilter=" + encodeURIComponent("" + stateNameFilter) + "&";
+        if (countyNameFilter === null)
+            throw new Error("The parameter 'countyNameFilter' cannot be null.");
+        else if (countyNameFilter !== undefined)
+            url_ += "CountyNameFilter=" + encodeURIComponent("" + countyNameFilter) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetCitiesToExcel(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetCitiesToExcel(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<FileDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<FileDto>;
+        }));
+    }
+
+    protected processGetCitiesToExcel(response: HttpResponseBase): Observable<FileDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = FileDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @return Success
+     */
+    getAllCountryForTableDropdown(): Observable<CityCountryLookupTableDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/Cities/GetAllCountryForTableDropdown";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllCountryForTableDropdown(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllCountryForTableDropdown(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<CityCountryLookupTableDto[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<CityCountryLookupTableDto[]>;
+        }));
+    }
+
+    protected processGetAllCountryForTableDropdown(response: HttpResponseBase): Observable<CityCountryLookupTableDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(CityCountryLookupTableDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @return Success
+     */
+    getAllStateForTableDropdown(): Observable<CityStateLookupTableDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/Cities/GetAllStateForTableDropdown";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllStateForTableDropdown(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllStateForTableDropdown(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<CityStateLookupTableDto[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<CityStateLookupTableDto[]>;
+        }));
+    }
+
+    protected processGetAllStateForTableDropdown(response: HttpResponseBase): Observable<CityStateLookupTableDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(CityStateLookupTableDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @return Success
+     */
+    getAllCountyForTableDropdown(): Observable<CityCountyLookupTableDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/Cities/GetAllCountyForTableDropdown";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllCountyForTableDropdown(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllCountyForTableDropdown(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<CityCountyLookupTableDto[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<CityCountyLookupTableDto[]>;
+        }));
+    }
+
+    protected processGetAllCountyForTableDropdown(response: HttpResponseBase): Observable<CityCountyLookupTableDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(CityCountyLookupTableDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+}
+
+@Injectable()
 export class CommonLookupServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
@@ -1795,6 +2364,1652 @@ export class CommonLookupServiceProxy {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             result200 = GetDefaultEditionNameOutput.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+}
+
+@Injectable()
+export class ConnectChannelsServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param nameFilter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
+     * @return Success
+     */
+    getAll(filter: string | undefined, nameFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetConnectChannelForViewDto> {
+        let url_ = this.baseUrl + "/api/services/app/ConnectChannels/GetAll?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (nameFilter === null)
+            throw new Error("The parameter 'nameFilter' cannot be null.");
+        else if (nameFilter !== undefined)
+            url_ += "NameFilter=" + encodeURIComponent("" + nameFilter) + "&";
+        if (sorting === null)
+            throw new Error("The parameter 'sorting' cannot be null.");
+        else if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
+        if (skipCount === null)
+            throw new Error("The parameter 'skipCount' cannot be null.");
+        else if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
+        if (maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' cannot be null.");
+        else if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAll(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAll(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<PagedResultDtoOfGetConnectChannelForViewDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<PagedResultDtoOfGetConnectChannelForViewDto>;
+        }));
+    }
+
+    protected processGetAll(response: HttpResponseBase): Observable<PagedResultDtoOfGetConnectChannelForViewDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PagedResultDtoOfGetConnectChannelForViewDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getConnectChannelForView(id: number | undefined): Observable<GetConnectChannelForViewDto> {
+        let url_ = this.baseUrl + "/api/services/app/ConnectChannels/GetConnectChannelForView?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetConnectChannelForView(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetConnectChannelForView(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<GetConnectChannelForViewDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<GetConnectChannelForViewDto>;
+        }));
+    }
+
+    protected processGetConnectChannelForView(response: HttpResponseBase): Observable<GetConnectChannelForViewDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = GetConnectChannelForViewDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getConnectChannelForEdit(id: number | undefined): Observable<GetConnectChannelForEditOutput> {
+        let url_ = this.baseUrl + "/api/services/app/ConnectChannels/GetConnectChannelForEdit?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetConnectChannelForEdit(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetConnectChannelForEdit(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<GetConnectChannelForEditOutput>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<GetConnectChannelForEditOutput>;
+        }));
+    }
+
+    protected processGetConnectChannelForEdit(response: HttpResponseBase): Observable<GetConnectChannelForEditOutput> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = GetConnectChannelForEditOutput.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    createOrEdit(body: CreateOrEditConnectChannelDto | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/ConnectChannels/CreateOrEdit";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreateOrEdit(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreateOrEdit(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processCreateOrEdit(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    delete(id: number | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/ConnectChannels/Delete?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDelete(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDelete(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processDelete(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param nameFilter (optional) 
+     * @return Success
+     */
+    getConnectChannelsToExcel(filter: string | undefined, nameFilter: string | undefined): Observable<FileDto> {
+        let url_ = this.baseUrl + "/api/services/app/ConnectChannels/GetConnectChannelsToExcel?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (nameFilter === null)
+            throw new Error("The parameter 'nameFilter' cannot be null.");
+        else if (nameFilter !== undefined)
+            url_ += "NameFilter=" + encodeURIComponent("" + nameFilter) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetConnectChannelsToExcel(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetConnectChannelsToExcel(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<FileDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<FileDto>;
+        }));
+    }
+
+    protected processGetConnectChannelsToExcel(response: HttpResponseBase): Observable<FileDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = FileDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+}
+
+@Injectable()
+export class CountiesServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param nameFilter (optional) 
+     * @param countryNameFilter (optional) 
+     * @param stateNameFilter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
+     * @return Success
+     */
+    getAll(filter: string | undefined, nameFilter: string | undefined, countryNameFilter: string | undefined, stateNameFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetCountyForViewDto> {
+        let url_ = this.baseUrl + "/api/services/app/Counties/GetAll?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (nameFilter === null)
+            throw new Error("The parameter 'nameFilter' cannot be null.");
+        else if (nameFilter !== undefined)
+            url_ += "NameFilter=" + encodeURIComponent("" + nameFilter) + "&";
+        if (countryNameFilter === null)
+            throw new Error("The parameter 'countryNameFilter' cannot be null.");
+        else if (countryNameFilter !== undefined)
+            url_ += "CountryNameFilter=" + encodeURIComponent("" + countryNameFilter) + "&";
+        if (stateNameFilter === null)
+            throw new Error("The parameter 'stateNameFilter' cannot be null.");
+        else if (stateNameFilter !== undefined)
+            url_ += "StateNameFilter=" + encodeURIComponent("" + stateNameFilter) + "&";
+        if (sorting === null)
+            throw new Error("The parameter 'sorting' cannot be null.");
+        else if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
+        if (skipCount === null)
+            throw new Error("The parameter 'skipCount' cannot be null.");
+        else if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
+        if (maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' cannot be null.");
+        else if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAll(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAll(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<PagedResultDtoOfGetCountyForViewDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<PagedResultDtoOfGetCountyForViewDto>;
+        }));
+    }
+
+    protected processGetAll(response: HttpResponseBase): Observable<PagedResultDtoOfGetCountyForViewDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PagedResultDtoOfGetCountyForViewDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getCountyForView(id: number | undefined): Observable<GetCountyForViewDto> {
+        let url_ = this.baseUrl + "/api/services/app/Counties/GetCountyForView?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetCountyForView(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetCountyForView(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<GetCountyForViewDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<GetCountyForViewDto>;
+        }));
+    }
+
+    protected processGetCountyForView(response: HttpResponseBase): Observable<GetCountyForViewDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = GetCountyForViewDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getCountyForEdit(id: number | undefined): Observable<GetCountyForEditOutput> {
+        let url_ = this.baseUrl + "/api/services/app/Counties/GetCountyForEdit?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetCountyForEdit(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetCountyForEdit(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<GetCountyForEditOutput>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<GetCountyForEditOutput>;
+        }));
+    }
+
+    protected processGetCountyForEdit(response: HttpResponseBase): Observable<GetCountyForEditOutput> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = GetCountyForEditOutput.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    createOrEdit(body: CreateOrEditCountyDto | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Counties/CreateOrEdit";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreateOrEdit(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreateOrEdit(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processCreateOrEdit(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    delete(id: number | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Counties/Delete?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDelete(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDelete(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processDelete(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param nameFilter (optional) 
+     * @param countryNameFilter (optional) 
+     * @param stateNameFilter (optional) 
+     * @return Success
+     */
+    getCountiesToExcel(filter: string | undefined, nameFilter: string | undefined, countryNameFilter: string | undefined, stateNameFilter: string | undefined): Observable<FileDto> {
+        let url_ = this.baseUrl + "/api/services/app/Counties/GetCountiesToExcel?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (nameFilter === null)
+            throw new Error("The parameter 'nameFilter' cannot be null.");
+        else if (nameFilter !== undefined)
+            url_ += "NameFilter=" + encodeURIComponent("" + nameFilter) + "&";
+        if (countryNameFilter === null)
+            throw new Error("The parameter 'countryNameFilter' cannot be null.");
+        else if (countryNameFilter !== undefined)
+            url_ += "CountryNameFilter=" + encodeURIComponent("" + countryNameFilter) + "&";
+        if (stateNameFilter === null)
+            throw new Error("The parameter 'stateNameFilter' cannot be null.");
+        else if (stateNameFilter !== undefined)
+            url_ += "StateNameFilter=" + encodeURIComponent("" + stateNameFilter) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetCountiesToExcel(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetCountiesToExcel(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<FileDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<FileDto>;
+        }));
+    }
+
+    protected processGetCountiesToExcel(response: HttpResponseBase): Observable<FileDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = FileDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @return Success
+     */
+    getAllCountryForTableDropdown(): Observable<CountyCountryLookupTableDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/Counties/GetAllCountryForTableDropdown";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllCountryForTableDropdown(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllCountryForTableDropdown(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<CountyCountryLookupTableDto[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<CountyCountryLookupTableDto[]>;
+        }));
+    }
+
+    protected processGetAllCountryForTableDropdown(response: HttpResponseBase): Observable<CountyCountryLookupTableDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(CountyCountryLookupTableDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @return Success
+     */
+    getAllStateForTableDropdown(): Observable<CountyStateLookupTableDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/Counties/GetAllStateForTableDropdown";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllStateForTableDropdown(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllStateForTableDropdown(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<CountyStateLookupTableDto[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<CountyStateLookupTableDto[]>;
+        }));
+    }
+
+    protected processGetAllStateForTableDropdown(response: HttpResponseBase): Observable<CountyStateLookupTableDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(CountyStateLookupTableDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+}
+
+@Injectable()
+export class CountriesServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param nameFilter (optional) 
+     * @param tickerFilter (optional) 
+     * @param flagIconFilter (optional) 
+     * @param phoneCodeFilter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
+     * @return Success
+     */
+    getAll(filter: string | undefined, nameFilter: string | undefined, tickerFilter: string | undefined, flagIconFilter: string | undefined, phoneCodeFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetCountryForViewDto> {
+        let url_ = this.baseUrl + "/api/services/app/Countries/GetAll?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (nameFilter === null)
+            throw new Error("The parameter 'nameFilter' cannot be null.");
+        else if (nameFilter !== undefined)
+            url_ += "NameFilter=" + encodeURIComponent("" + nameFilter) + "&";
+        if (tickerFilter === null)
+            throw new Error("The parameter 'tickerFilter' cannot be null.");
+        else if (tickerFilter !== undefined)
+            url_ += "TickerFilter=" + encodeURIComponent("" + tickerFilter) + "&";
+        if (flagIconFilter === null)
+            throw new Error("The parameter 'flagIconFilter' cannot be null.");
+        else if (flagIconFilter !== undefined)
+            url_ += "FlagIconFilter=" + encodeURIComponent("" + flagIconFilter) + "&";
+        if (phoneCodeFilter === null)
+            throw new Error("The parameter 'phoneCodeFilter' cannot be null.");
+        else if (phoneCodeFilter !== undefined)
+            url_ += "PhoneCodeFilter=" + encodeURIComponent("" + phoneCodeFilter) + "&";
+        if (sorting === null)
+            throw new Error("The parameter 'sorting' cannot be null.");
+        else if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
+        if (skipCount === null)
+            throw new Error("The parameter 'skipCount' cannot be null.");
+        else if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
+        if (maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' cannot be null.");
+        else if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAll(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAll(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<PagedResultDtoOfGetCountryForViewDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<PagedResultDtoOfGetCountryForViewDto>;
+        }));
+    }
+
+    protected processGetAll(response: HttpResponseBase): Observable<PagedResultDtoOfGetCountryForViewDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PagedResultDtoOfGetCountryForViewDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getCountryForView(id: number | undefined): Observable<GetCountryForViewDto> {
+        let url_ = this.baseUrl + "/api/services/app/Countries/GetCountryForView?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetCountryForView(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetCountryForView(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<GetCountryForViewDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<GetCountryForViewDto>;
+        }));
+    }
+
+    protected processGetCountryForView(response: HttpResponseBase): Observable<GetCountryForViewDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = GetCountryForViewDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getCountryForEdit(id: number | undefined): Observable<GetCountryForEditOutput> {
+        let url_ = this.baseUrl + "/api/services/app/Countries/GetCountryForEdit?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetCountryForEdit(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetCountryForEdit(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<GetCountryForEditOutput>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<GetCountryForEditOutput>;
+        }));
+    }
+
+    protected processGetCountryForEdit(response: HttpResponseBase): Observable<GetCountryForEditOutput> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = GetCountryForEditOutput.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    createOrEdit(body: CreateOrEditCountryDto | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Countries/CreateOrEdit";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreateOrEdit(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreateOrEdit(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processCreateOrEdit(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    delete(id: number | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Countries/Delete?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDelete(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDelete(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processDelete(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param nameFilter (optional) 
+     * @param tickerFilter (optional) 
+     * @param flagIconFilter (optional) 
+     * @param phoneCodeFilter (optional) 
+     * @return Success
+     */
+    getCountriesToExcel(filter: string | undefined, nameFilter: string | undefined, tickerFilter: string | undefined, flagIconFilter: string | undefined, phoneCodeFilter: string | undefined): Observable<FileDto> {
+        let url_ = this.baseUrl + "/api/services/app/Countries/GetCountriesToExcel?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (nameFilter === null)
+            throw new Error("The parameter 'nameFilter' cannot be null.");
+        else if (nameFilter !== undefined)
+            url_ += "NameFilter=" + encodeURIComponent("" + nameFilter) + "&";
+        if (tickerFilter === null)
+            throw new Error("The parameter 'tickerFilter' cannot be null.");
+        else if (tickerFilter !== undefined)
+            url_ += "TickerFilter=" + encodeURIComponent("" + tickerFilter) + "&";
+        if (flagIconFilter === null)
+            throw new Error("The parameter 'flagIconFilter' cannot be null.");
+        else if (flagIconFilter !== undefined)
+            url_ += "FlagIconFilter=" + encodeURIComponent("" + flagIconFilter) + "&";
+        if (phoneCodeFilter === null)
+            throw new Error("The parameter 'phoneCodeFilter' cannot be null.");
+        else if (phoneCodeFilter !== undefined)
+            url_ += "PhoneCodeFilter=" + encodeURIComponent("" + phoneCodeFilter) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetCountriesToExcel(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetCountriesToExcel(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<FileDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<FileDto>;
+        }));
+    }
+
+    protected processGetCountriesToExcel(response: HttpResponseBase): Observable<FileDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = FileDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+}
+
+@Injectable()
+export class CurrenciesServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param nameFilter (optional) 
+     * @param tickerFilter (optional) 
+     * @param iconFilter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
+     * @return Success
+     */
+    getAll(filter: string | undefined, nameFilter: string | undefined, tickerFilter: string | undefined, iconFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetCurrencyForViewDto> {
+        let url_ = this.baseUrl + "/api/services/app/Currencies/GetAll?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (nameFilter === null)
+            throw new Error("The parameter 'nameFilter' cannot be null.");
+        else if (nameFilter !== undefined)
+            url_ += "NameFilter=" + encodeURIComponent("" + nameFilter) + "&";
+        if (tickerFilter === null)
+            throw new Error("The parameter 'tickerFilter' cannot be null.");
+        else if (tickerFilter !== undefined)
+            url_ += "TickerFilter=" + encodeURIComponent("" + tickerFilter) + "&";
+        if (iconFilter === null)
+            throw new Error("The parameter 'iconFilter' cannot be null.");
+        else if (iconFilter !== undefined)
+            url_ += "IconFilter=" + encodeURIComponent("" + iconFilter) + "&";
+        if (sorting === null)
+            throw new Error("The parameter 'sorting' cannot be null.");
+        else if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
+        if (skipCount === null)
+            throw new Error("The parameter 'skipCount' cannot be null.");
+        else if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
+        if (maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' cannot be null.");
+        else if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAll(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAll(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<PagedResultDtoOfGetCurrencyForViewDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<PagedResultDtoOfGetCurrencyForViewDto>;
+        }));
+    }
+
+    protected processGetAll(response: HttpResponseBase): Observable<PagedResultDtoOfGetCurrencyForViewDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PagedResultDtoOfGetCurrencyForViewDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getCurrencyForView(id: number | undefined): Observable<GetCurrencyForViewDto> {
+        let url_ = this.baseUrl + "/api/services/app/Currencies/GetCurrencyForView?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetCurrencyForView(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetCurrencyForView(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<GetCurrencyForViewDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<GetCurrencyForViewDto>;
+        }));
+    }
+
+    protected processGetCurrencyForView(response: HttpResponseBase): Observable<GetCurrencyForViewDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = GetCurrencyForViewDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getCurrencyForEdit(id: number | undefined): Observable<GetCurrencyForEditOutput> {
+        let url_ = this.baseUrl + "/api/services/app/Currencies/GetCurrencyForEdit?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetCurrencyForEdit(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetCurrencyForEdit(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<GetCurrencyForEditOutput>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<GetCurrencyForEditOutput>;
+        }));
+    }
+
+    protected processGetCurrencyForEdit(response: HttpResponseBase): Observable<GetCurrencyForEditOutput> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = GetCurrencyForEditOutput.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    createOrEdit(body: CreateOrEditCurrencyDto | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Currencies/CreateOrEdit";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreateOrEdit(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreateOrEdit(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processCreateOrEdit(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    delete(id: number | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Currencies/Delete?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDelete(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDelete(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processDelete(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param nameFilter (optional) 
+     * @param tickerFilter (optional) 
+     * @param iconFilter (optional) 
+     * @return Success
+     */
+    getCurrenciesToExcel(filter: string | undefined, nameFilter: string | undefined, tickerFilter: string | undefined, iconFilter: string | undefined): Observable<FileDto> {
+        let url_ = this.baseUrl + "/api/services/app/Currencies/GetCurrenciesToExcel?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (nameFilter === null)
+            throw new Error("The parameter 'nameFilter' cannot be null.");
+        else if (nameFilter !== undefined)
+            url_ += "NameFilter=" + encodeURIComponent("" + nameFilter) + "&";
+        if (tickerFilter === null)
+            throw new Error("The parameter 'tickerFilter' cannot be null.");
+        else if (tickerFilter !== undefined)
+            url_ += "TickerFilter=" + encodeURIComponent("" + tickerFilter) + "&";
+        if (iconFilter === null)
+            throw new Error("The parameter 'iconFilter' cannot be null.");
+        else if (iconFilter !== undefined)
+            url_ += "IconFilter=" + encodeURIComponent("" + iconFilter) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetCurrenciesToExcel(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetCurrenciesToExcel(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<FileDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<FileDto>;
+        }));
+    }
+
+    protected processGetCurrenciesToExcel(response: HttpResponseBase): Observable<FileDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = FileDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -4871,6 +7086,391 @@ export class EditionServiceProxy {
 }
 
 @Injectable()
+export class EmailTemplatesServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param subjectFilter (optional) 
+     * @param contentFilter (optional) 
+     * @param publishedFilter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
+     * @return Success
+     */
+    getAll(filter: string | undefined, subjectFilter: string | undefined, contentFilter: string | undefined, publishedFilter: number | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetEmailTemplateForViewDto> {
+        let url_ = this.baseUrl + "/api/services/app/EmailTemplates/GetAll?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (subjectFilter === null)
+            throw new Error("The parameter 'subjectFilter' cannot be null.");
+        else if (subjectFilter !== undefined)
+            url_ += "SubjectFilter=" + encodeURIComponent("" + subjectFilter) + "&";
+        if (contentFilter === null)
+            throw new Error("The parameter 'contentFilter' cannot be null.");
+        else if (contentFilter !== undefined)
+            url_ += "ContentFilter=" + encodeURIComponent("" + contentFilter) + "&";
+        if (publishedFilter === null)
+            throw new Error("The parameter 'publishedFilter' cannot be null.");
+        else if (publishedFilter !== undefined)
+            url_ += "PublishedFilter=" + encodeURIComponent("" + publishedFilter) + "&";
+        if (sorting === null)
+            throw new Error("The parameter 'sorting' cannot be null.");
+        else if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
+        if (skipCount === null)
+            throw new Error("The parameter 'skipCount' cannot be null.");
+        else if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
+        if (maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' cannot be null.");
+        else if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAll(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAll(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<PagedResultDtoOfGetEmailTemplateForViewDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<PagedResultDtoOfGetEmailTemplateForViewDto>;
+        }));
+    }
+
+    protected processGetAll(response: HttpResponseBase): Observable<PagedResultDtoOfGetEmailTemplateForViewDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PagedResultDtoOfGetEmailTemplateForViewDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getEmailTemplateForView(id: number | undefined): Observable<GetEmailTemplateForViewDto> {
+        let url_ = this.baseUrl + "/api/services/app/EmailTemplates/GetEmailTemplateForView?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetEmailTemplateForView(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetEmailTemplateForView(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<GetEmailTemplateForViewDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<GetEmailTemplateForViewDto>;
+        }));
+    }
+
+    protected processGetEmailTemplateForView(response: HttpResponseBase): Observable<GetEmailTemplateForViewDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = GetEmailTemplateForViewDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getEmailTemplateForEdit(id: number | undefined): Observable<GetEmailTemplateForEditOutput> {
+        let url_ = this.baseUrl + "/api/services/app/EmailTemplates/GetEmailTemplateForEdit?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetEmailTemplateForEdit(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetEmailTemplateForEdit(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<GetEmailTemplateForEditOutput>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<GetEmailTemplateForEditOutput>;
+        }));
+    }
+
+    protected processGetEmailTemplateForEdit(response: HttpResponseBase): Observable<GetEmailTemplateForEditOutput> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = GetEmailTemplateForEditOutput.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    createOrEdit(body: CreateOrEditEmailTemplateDto | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/EmailTemplates/CreateOrEdit";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreateOrEdit(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreateOrEdit(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processCreateOrEdit(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    delete(id: number | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/EmailTemplates/Delete?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDelete(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDelete(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processDelete(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param subjectFilter (optional) 
+     * @param contentFilter (optional) 
+     * @param publishedFilter (optional) 
+     * @return Success
+     */
+    getEmailTemplatesToExcel(filter: string | undefined, subjectFilter: string | undefined, contentFilter: string | undefined, publishedFilter: number | undefined): Observable<FileDto> {
+        let url_ = this.baseUrl + "/api/services/app/EmailTemplates/GetEmailTemplatesToExcel?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (subjectFilter === null)
+            throw new Error("The parameter 'subjectFilter' cannot be null.");
+        else if (subjectFilter !== undefined)
+            url_ += "SubjectFilter=" + encodeURIComponent("" + subjectFilter) + "&";
+        if (contentFilter === null)
+            throw new Error("The parameter 'contentFilter' cannot be null.");
+        else if (contentFilter !== undefined)
+            url_ += "ContentFilter=" + encodeURIComponent("" + contentFilter) + "&";
+        if (publishedFilter === null)
+            throw new Error("The parameter 'publishedFilter' cannot be null.");
+        else if (publishedFilter !== undefined)
+            url_ += "PublishedFilter=" + encodeURIComponent("" + publishedFilter) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetEmailTemplatesToExcel(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetEmailTemplatesToExcel(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<FileDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<FileDto>;
+        }));
+    }
+
+    protected processGetEmailTemplatesToExcel(response: HttpResponseBase): Observable<FileDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = FileDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+}
+
+@Injectable()
 export class FriendshipServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
@@ -6418,6 +9018,1239 @@ export class LanguageServiceProxy {
         if (status === 200) {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+}
+
+@Injectable()
+export class MasterTagCategoriesServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param nameFilter (optional) 
+     * @param descriptionFilter (optional) 
+     * @param pictureIdFilter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
+     * @return Success
+     */
+    getAll(filter: string | undefined, nameFilter: string | undefined, descriptionFilter: string | undefined, pictureIdFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetMasterTagCategoryForViewDto> {
+        let url_ = this.baseUrl + "/api/services/app/MasterTagCategories/GetAll?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (nameFilter === null)
+            throw new Error("The parameter 'nameFilter' cannot be null.");
+        else if (nameFilter !== undefined)
+            url_ += "NameFilter=" + encodeURIComponent("" + nameFilter) + "&";
+        if (descriptionFilter === null)
+            throw new Error("The parameter 'descriptionFilter' cannot be null.");
+        else if (descriptionFilter !== undefined)
+            url_ += "DescriptionFilter=" + encodeURIComponent("" + descriptionFilter) + "&";
+        if (pictureIdFilter === null)
+            throw new Error("The parameter 'pictureIdFilter' cannot be null.");
+        else if (pictureIdFilter !== undefined)
+            url_ += "PictureIdFilter=" + encodeURIComponent("" + pictureIdFilter) + "&";
+        if (sorting === null)
+            throw new Error("The parameter 'sorting' cannot be null.");
+        else if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
+        if (skipCount === null)
+            throw new Error("The parameter 'skipCount' cannot be null.");
+        else if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
+        if (maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' cannot be null.");
+        else if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAll(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAll(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<PagedResultDtoOfGetMasterTagCategoryForViewDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<PagedResultDtoOfGetMasterTagCategoryForViewDto>;
+        }));
+    }
+
+    protected processGetAll(response: HttpResponseBase): Observable<PagedResultDtoOfGetMasterTagCategoryForViewDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PagedResultDtoOfGetMasterTagCategoryForViewDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getMasterTagCategoryForView(id: number | undefined): Observable<GetMasterTagCategoryForViewDto> {
+        let url_ = this.baseUrl + "/api/services/app/MasterTagCategories/GetMasterTagCategoryForView?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetMasterTagCategoryForView(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetMasterTagCategoryForView(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<GetMasterTagCategoryForViewDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<GetMasterTagCategoryForViewDto>;
+        }));
+    }
+
+    protected processGetMasterTagCategoryForView(response: HttpResponseBase): Observable<GetMasterTagCategoryForViewDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = GetMasterTagCategoryForViewDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getMasterTagCategoryForEdit(id: number | undefined): Observable<GetMasterTagCategoryForEditOutput> {
+        let url_ = this.baseUrl + "/api/services/app/MasterTagCategories/GetMasterTagCategoryForEdit?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetMasterTagCategoryForEdit(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetMasterTagCategoryForEdit(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<GetMasterTagCategoryForEditOutput>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<GetMasterTagCategoryForEditOutput>;
+        }));
+    }
+
+    protected processGetMasterTagCategoryForEdit(response: HttpResponseBase): Observable<GetMasterTagCategoryForEditOutput> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = GetMasterTagCategoryForEditOutput.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    createOrEdit(body: CreateOrEditMasterTagCategoryDto | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/MasterTagCategories/CreateOrEdit";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreateOrEdit(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreateOrEdit(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processCreateOrEdit(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    delete(id: number | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/MasterTagCategories/Delete?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDelete(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDelete(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processDelete(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param nameFilter (optional) 
+     * @param descriptionFilter (optional) 
+     * @param pictureIdFilter (optional) 
+     * @return Success
+     */
+    getMasterTagCategoriesToExcel(filter: string | undefined, nameFilter: string | undefined, descriptionFilter: string | undefined, pictureIdFilter: string | undefined): Observable<FileDto> {
+        let url_ = this.baseUrl + "/api/services/app/MasterTagCategories/GetMasterTagCategoriesToExcel?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (nameFilter === null)
+            throw new Error("The parameter 'nameFilter' cannot be null.");
+        else if (nameFilter !== undefined)
+            url_ += "NameFilter=" + encodeURIComponent("" + nameFilter) + "&";
+        if (descriptionFilter === null)
+            throw new Error("The parameter 'descriptionFilter' cannot be null.");
+        else if (descriptionFilter !== undefined)
+            url_ += "DescriptionFilter=" + encodeURIComponent("" + descriptionFilter) + "&";
+        if (pictureIdFilter === null)
+            throw new Error("The parameter 'pictureIdFilter' cannot be null.");
+        else if (pictureIdFilter !== undefined)
+            url_ += "PictureIdFilter=" + encodeURIComponent("" + pictureIdFilter) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetMasterTagCategoriesToExcel(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetMasterTagCategoriesToExcel(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<FileDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<FileDto>;
+        }));
+    }
+
+    protected processGetMasterTagCategoriesToExcel(response: HttpResponseBase): Observable<FileDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = FileDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+}
+
+@Injectable()
+export class MasterTagsServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param nameFilter (optional) 
+     * @param descriptionFilter (optional) 
+     * @param synonymsFilter (optional) 
+     * @param pictureIdFilter (optional) 
+     * @param maxDisplaySequenceFilter (optional) 
+     * @param minDisplaySequenceFilter (optional) 
+     * @param masterTagCategoryNameFilter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
+     * @return Success
+     */
+    getAll(filter: string | undefined, nameFilter: string | undefined, descriptionFilter: string | undefined, synonymsFilter: string | undefined, pictureIdFilter: string | undefined, maxDisplaySequenceFilter: number | undefined, minDisplaySequenceFilter: number | undefined, masterTagCategoryNameFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetMasterTagForViewDto> {
+        let url_ = this.baseUrl + "/api/services/app/MasterTags/GetAll?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (nameFilter === null)
+            throw new Error("The parameter 'nameFilter' cannot be null.");
+        else if (nameFilter !== undefined)
+            url_ += "NameFilter=" + encodeURIComponent("" + nameFilter) + "&";
+        if (descriptionFilter === null)
+            throw new Error("The parameter 'descriptionFilter' cannot be null.");
+        else if (descriptionFilter !== undefined)
+            url_ += "DescriptionFilter=" + encodeURIComponent("" + descriptionFilter) + "&";
+        if (synonymsFilter === null)
+            throw new Error("The parameter 'synonymsFilter' cannot be null.");
+        else if (synonymsFilter !== undefined)
+            url_ += "SynonymsFilter=" + encodeURIComponent("" + synonymsFilter) + "&";
+        if (pictureIdFilter === null)
+            throw new Error("The parameter 'pictureIdFilter' cannot be null.");
+        else if (pictureIdFilter !== undefined)
+            url_ += "PictureIdFilter=" + encodeURIComponent("" + pictureIdFilter) + "&";
+        if (maxDisplaySequenceFilter === null)
+            throw new Error("The parameter 'maxDisplaySequenceFilter' cannot be null.");
+        else if (maxDisplaySequenceFilter !== undefined)
+            url_ += "MaxDisplaySequenceFilter=" + encodeURIComponent("" + maxDisplaySequenceFilter) + "&";
+        if (minDisplaySequenceFilter === null)
+            throw new Error("The parameter 'minDisplaySequenceFilter' cannot be null.");
+        else if (minDisplaySequenceFilter !== undefined)
+            url_ += "MinDisplaySequenceFilter=" + encodeURIComponent("" + minDisplaySequenceFilter) + "&";
+        if (masterTagCategoryNameFilter === null)
+            throw new Error("The parameter 'masterTagCategoryNameFilter' cannot be null.");
+        else if (masterTagCategoryNameFilter !== undefined)
+            url_ += "MasterTagCategoryNameFilter=" + encodeURIComponent("" + masterTagCategoryNameFilter) + "&";
+        if (sorting === null)
+            throw new Error("The parameter 'sorting' cannot be null.");
+        else if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
+        if (skipCount === null)
+            throw new Error("The parameter 'skipCount' cannot be null.");
+        else if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
+        if (maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' cannot be null.");
+        else if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAll(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAll(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<PagedResultDtoOfGetMasterTagForViewDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<PagedResultDtoOfGetMasterTagForViewDto>;
+        }));
+    }
+
+    protected processGetAll(response: HttpResponseBase): Observable<PagedResultDtoOfGetMasterTagForViewDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PagedResultDtoOfGetMasterTagForViewDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getMasterTagForView(id: number | undefined): Observable<GetMasterTagForViewDto> {
+        let url_ = this.baseUrl + "/api/services/app/MasterTags/GetMasterTagForView?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetMasterTagForView(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetMasterTagForView(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<GetMasterTagForViewDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<GetMasterTagForViewDto>;
+        }));
+    }
+
+    protected processGetMasterTagForView(response: HttpResponseBase): Observable<GetMasterTagForViewDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = GetMasterTagForViewDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getMasterTagForEdit(id: number | undefined): Observable<GetMasterTagForEditOutput> {
+        let url_ = this.baseUrl + "/api/services/app/MasterTags/GetMasterTagForEdit?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetMasterTagForEdit(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetMasterTagForEdit(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<GetMasterTagForEditOutput>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<GetMasterTagForEditOutput>;
+        }));
+    }
+
+    protected processGetMasterTagForEdit(response: HttpResponseBase): Observable<GetMasterTagForEditOutput> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = GetMasterTagForEditOutput.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    createOrEdit(body: CreateOrEditMasterTagDto | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/MasterTags/CreateOrEdit";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreateOrEdit(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreateOrEdit(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processCreateOrEdit(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    delete(id: number | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/MasterTags/Delete?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDelete(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDelete(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processDelete(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param nameFilter (optional) 
+     * @param descriptionFilter (optional) 
+     * @param synonymsFilter (optional) 
+     * @param pictureIdFilter (optional) 
+     * @param maxDisplaySequenceFilter (optional) 
+     * @param minDisplaySequenceFilter (optional) 
+     * @param masterTagCategoryNameFilter (optional) 
+     * @return Success
+     */
+    getMasterTagsToExcel(filter: string | undefined, nameFilter: string | undefined, descriptionFilter: string | undefined, synonymsFilter: string | undefined, pictureIdFilter: string | undefined, maxDisplaySequenceFilter: number | undefined, minDisplaySequenceFilter: number | undefined, masterTagCategoryNameFilter: string | undefined): Observable<FileDto> {
+        let url_ = this.baseUrl + "/api/services/app/MasterTags/GetMasterTagsToExcel?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (nameFilter === null)
+            throw new Error("The parameter 'nameFilter' cannot be null.");
+        else if (nameFilter !== undefined)
+            url_ += "NameFilter=" + encodeURIComponent("" + nameFilter) + "&";
+        if (descriptionFilter === null)
+            throw new Error("The parameter 'descriptionFilter' cannot be null.");
+        else if (descriptionFilter !== undefined)
+            url_ += "DescriptionFilter=" + encodeURIComponent("" + descriptionFilter) + "&";
+        if (synonymsFilter === null)
+            throw new Error("The parameter 'synonymsFilter' cannot be null.");
+        else if (synonymsFilter !== undefined)
+            url_ += "SynonymsFilter=" + encodeURIComponent("" + synonymsFilter) + "&";
+        if (pictureIdFilter === null)
+            throw new Error("The parameter 'pictureIdFilter' cannot be null.");
+        else if (pictureIdFilter !== undefined)
+            url_ += "PictureIdFilter=" + encodeURIComponent("" + pictureIdFilter) + "&";
+        if (maxDisplaySequenceFilter === null)
+            throw new Error("The parameter 'maxDisplaySequenceFilter' cannot be null.");
+        else if (maxDisplaySequenceFilter !== undefined)
+            url_ += "MaxDisplaySequenceFilter=" + encodeURIComponent("" + maxDisplaySequenceFilter) + "&";
+        if (minDisplaySequenceFilter === null)
+            throw new Error("The parameter 'minDisplaySequenceFilter' cannot be null.");
+        else if (minDisplaySequenceFilter !== undefined)
+            url_ += "MinDisplaySequenceFilter=" + encodeURIComponent("" + minDisplaySequenceFilter) + "&";
+        if (masterTagCategoryNameFilter === null)
+            throw new Error("The parameter 'masterTagCategoryNameFilter' cannot be null.");
+        else if (masterTagCategoryNameFilter !== undefined)
+            url_ += "MasterTagCategoryNameFilter=" + encodeURIComponent("" + masterTagCategoryNameFilter) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetMasterTagsToExcel(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetMasterTagsToExcel(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<FileDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<FileDto>;
+        }));
+    }
+
+    protected processGetMasterTagsToExcel(response: HttpResponseBase): Observable<FileDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = FileDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @return Success
+     */
+    getAllMasterTagCategoryForTableDropdown(): Observable<MasterTagMasterTagCategoryLookupTableDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/MasterTags/GetAllMasterTagCategoryForTableDropdown";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllMasterTagCategoryForTableDropdown(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllMasterTagCategoryForTableDropdown(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<MasterTagMasterTagCategoryLookupTableDto[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<MasterTagMasterTagCategoryLookupTableDto[]>;
+        }));
+    }
+
+    protected processGetAllMasterTagCategoryForTableDropdown(response: HttpResponseBase): Observable<MasterTagMasterTagCategoryLookupTableDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(MasterTagMasterTagCategoryLookupTableDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+}
+
+@Injectable()
+export class MeasurementUnitsServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param nameFilter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
+     * @return Success
+     */
+    getAll(filter: string | undefined, nameFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetMeasurementUnitForViewDto> {
+        let url_ = this.baseUrl + "/api/services/app/MeasurementUnits/GetAll?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (nameFilter === null)
+            throw new Error("The parameter 'nameFilter' cannot be null.");
+        else if (nameFilter !== undefined)
+            url_ += "NameFilter=" + encodeURIComponent("" + nameFilter) + "&";
+        if (sorting === null)
+            throw new Error("The parameter 'sorting' cannot be null.");
+        else if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
+        if (skipCount === null)
+            throw new Error("The parameter 'skipCount' cannot be null.");
+        else if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
+        if (maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' cannot be null.");
+        else if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAll(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAll(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<PagedResultDtoOfGetMeasurementUnitForViewDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<PagedResultDtoOfGetMeasurementUnitForViewDto>;
+        }));
+    }
+
+    protected processGetAll(response: HttpResponseBase): Observable<PagedResultDtoOfGetMeasurementUnitForViewDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PagedResultDtoOfGetMeasurementUnitForViewDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getMeasurementUnitForView(id: number | undefined): Observable<GetMeasurementUnitForViewDto> {
+        let url_ = this.baseUrl + "/api/services/app/MeasurementUnits/GetMeasurementUnitForView?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetMeasurementUnitForView(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetMeasurementUnitForView(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<GetMeasurementUnitForViewDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<GetMeasurementUnitForViewDto>;
+        }));
+    }
+
+    protected processGetMeasurementUnitForView(response: HttpResponseBase): Observable<GetMeasurementUnitForViewDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = GetMeasurementUnitForViewDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getMeasurementUnitForEdit(id: number | undefined): Observable<GetMeasurementUnitForEditOutput> {
+        let url_ = this.baseUrl + "/api/services/app/MeasurementUnits/GetMeasurementUnitForEdit?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetMeasurementUnitForEdit(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetMeasurementUnitForEdit(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<GetMeasurementUnitForEditOutput>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<GetMeasurementUnitForEditOutput>;
+        }));
+    }
+
+    protected processGetMeasurementUnitForEdit(response: HttpResponseBase): Observable<GetMeasurementUnitForEditOutput> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = GetMeasurementUnitForEditOutput.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    createOrEdit(body: CreateOrEditMeasurementUnitDto | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/MeasurementUnits/CreateOrEdit";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreateOrEdit(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreateOrEdit(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processCreateOrEdit(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    delete(id: number | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/MeasurementUnits/Delete?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDelete(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDelete(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processDelete(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param nameFilter (optional) 
+     * @return Success
+     */
+    getMeasurementUnitsToExcel(filter: string | undefined, nameFilter: string | undefined): Observable<FileDto> {
+        let url_ = this.baseUrl + "/api/services/app/MeasurementUnits/GetMeasurementUnitsToExcel?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (nameFilter === null)
+            throw new Error("The parameter 'nameFilter' cannot be null.");
+        else if (nameFilter !== undefined)
+            url_ += "NameFilter=" + encodeURIComponent("" + nameFilter) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetMeasurementUnitsToExcel(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetMeasurementUnitsToExcel(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<FileDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<FileDto>;
+        }));
+    }
+
+    protected processGetMeasurementUnitsToExcel(response: HttpResponseBase): Observable<FileDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = FileDto.fromJS(resultData200);
+            return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
@@ -10094,6 +13927,401 @@ export class ProfileServiceProxy {
 }
 
 @Injectable()
+export class RatingLikesServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param nameFilter (optional) 
+     * @param maxScoreFilter (optional) 
+     * @param minScoreFilter (optional) 
+     * @param iconLinkFilter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
+     * @return Success
+     */
+    getAll(filter: string | undefined, nameFilter: string | undefined, maxScoreFilter: number | undefined, minScoreFilter: number | undefined, iconLinkFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetRatingLikeForViewDto> {
+        let url_ = this.baseUrl + "/api/services/app/RatingLikes/GetAll?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (nameFilter === null)
+            throw new Error("The parameter 'nameFilter' cannot be null.");
+        else if (nameFilter !== undefined)
+            url_ += "NameFilter=" + encodeURIComponent("" + nameFilter) + "&";
+        if (maxScoreFilter === null)
+            throw new Error("The parameter 'maxScoreFilter' cannot be null.");
+        else if (maxScoreFilter !== undefined)
+            url_ += "MaxScoreFilter=" + encodeURIComponent("" + maxScoreFilter) + "&";
+        if (minScoreFilter === null)
+            throw new Error("The parameter 'minScoreFilter' cannot be null.");
+        else if (minScoreFilter !== undefined)
+            url_ += "MinScoreFilter=" + encodeURIComponent("" + minScoreFilter) + "&";
+        if (iconLinkFilter === null)
+            throw new Error("The parameter 'iconLinkFilter' cannot be null.");
+        else if (iconLinkFilter !== undefined)
+            url_ += "IconLinkFilter=" + encodeURIComponent("" + iconLinkFilter) + "&";
+        if (sorting === null)
+            throw new Error("The parameter 'sorting' cannot be null.");
+        else if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
+        if (skipCount === null)
+            throw new Error("The parameter 'skipCount' cannot be null.");
+        else if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
+        if (maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' cannot be null.");
+        else if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAll(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAll(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<PagedResultDtoOfGetRatingLikeForViewDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<PagedResultDtoOfGetRatingLikeForViewDto>;
+        }));
+    }
+
+    protected processGetAll(response: HttpResponseBase): Observable<PagedResultDtoOfGetRatingLikeForViewDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PagedResultDtoOfGetRatingLikeForViewDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getRatingLikeForView(id: number | undefined): Observable<GetRatingLikeForViewDto> {
+        let url_ = this.baseUrl + "/api/services/app/RatingLikes/GetRatingLikeForView?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetRatingLikeForView(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetRatingLikeForView(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<GetRatingLikeForViewDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<GetRatingLikeForViewDto>;
+        }));
+    }
+
+    protected processGetRatingLikeForView(response: HttpResponseBase): Observable<GetRatingLikeForViewDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = GetRatingLikeForViewDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getRatingLikeForEdit(id: number | undefined): Observable<GetRatingLikeForEditOutput> {
+        let url_ = this.baseUrl + "/api/services/app/RatingLikes/GetRatingLikeForEdit?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetRatingLikeForEdit(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetRatingLikeForEdit(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<GetRatingLikeForEditOutput>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<GetRatingLikeForEditOutput>;
+        }));
+    }
+
+    protected processGetRatingLikeForEdit(response: HttpResponseBase): Observable<GetRatingLikeForEditOutput> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = GetRatingLikeForEditOutput.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    createOrEdit(body: CreateOrEditRatingLikeDto | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/RatingLikes/CreateOrEdit";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreateOrEdit(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreateOrEdit(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processCreateOrEdit(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    delete(id: number | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/RatingLikes/Delete?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDelete(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDelete(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processDelete(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param nameFilter (optional) 
+     * @param maxScoreFilter (optional) 
+     * @param minScoreFilter (optional) 
+     * @param iconLinkFilter (optional) 
+     * @return Success
+     */
+    getRatingLikesToExcel(filter: string | undefined, nameFilter: string | undefined, maxScoreFilter: number | undefined, minScoreFilter: number | undefined, iconLinkFilter: string | undefined): Observable<FileDto> {
+        let url_ = this.baseUrl + "/api/services/app/RatingLikes/GetRatingLikesToExcel?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (nameFilter === null)
+            throw new Error("The parameter 'nameFilter' cannot be null.");
+        else if (nameFilter !== undefined)
+            url_ += "NameFilter=" + encodeURIComponent("" + nameFilter) + "&";
+        if (maxScoreFilter === null)
+            throw new Error("The parameter 'maxScoreFilter' cannot be null.");
+        else if (maxScoreFilter !== undefined)
+            url_ += "MaxScoreFilter=" + encodeURIComponent("" + maxScoreFilter) + "&";
+        if (minScoreFilter === null)
+            throw new Error("The parameter 'minScoreFilter' cannot be null.");
+        else if (minScoreFilter !== undefined)
+            url_ += "MinScoreFilter=" + encodeURIComponent("" + minScoreFilter) + "&";
+        if (iconLinkFilter === null)
+            throw new Error("The parameter 'iconLinkFilter' cannot be null.");
+        else if (iconLinkFilter !== undefined)
+            url_ += "IconLinkFilter=" + encodeURIComponent("" + iconLinkFilter) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetRatingLikesToExcel(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetRatingLikesToExcel(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<FileDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<FileDto>;
+        }));
+    }
+
+    protected processGetRatingLikesToExcel(response: HttpResponseBase): Observable<FileDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = FileDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+}
+
+@Injectable()
 export class RoleServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
@@ -10424,6 +14652,834 @@ export class SessionServiceProxy {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             result200 = UpdateUserSignInTokenOutput.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+}
+
+@Injectable()
+export class SmsTemplatesServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param titleFilter (optional) 
+     * @param contentFilter (optional) 
+     * @param publishedFilter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
+     * @return Success
+     */
+    getAll(filter: string | undefined, titleFilter: string | undefined, contentFilter: string | undefined, publishedFilter: number | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetSmsTemplateForViewDto> {
+        let url_ = this.baseUrl + "/api/services/app/SmsTemplates/GetAll?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (titleFilter === null)
+            throw new Error("The parameter 'titleFilter' cannot be null.");
+        else if (titleFilter !== undefined)
+            url_ += "TitleFilter=" + encodeURIComponent("" + titleFilter) + "&";
+        if (contentFilter === null)
+            throw new Error("The parameter 'contentFilter' cannot be null.");
+        else if (contentFilter !== undefined)
+            url_ += "ContentFilter=" + encodeURIComponent("" + contentFilter) + "&";
+        if (publishedFilter === null)
+            throw new Error("The parameter 'publishedFilter' cannot be null.");
+        else if (publishedFilter !== undefined)
+            url_ += "PublishedFilter=" + encodeURIComponent("" + publishedFilter) + "&";
+        if (sorting === null)
+            throw new Error("The parameter 'sorting' cannot be null.");
+        else if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
+        if (skipCount === null)
+            throw new Error("The parameter 'skipCount' cannot be null.");
+        else if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
+        if (maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' cannot be null.");
+        else if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAll(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAll(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<PagedResultDtoOfGetSmsTemplateForViewDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<PagedResultDtoOfGetSmsTemplateForViewDto>;
+        }));
+    }
+
+    protected processGetAll(response: HttpResponseBase): Observable<PagedResultDtoOfGetSmsTemplateForViewDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PagedResultDtoOfGetSmsTemplateForViewDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getSmsTemplateForView(id: number | undefined): Observable<GetSmsTemplateForViewDto> {
+        let url_ = this.baseUrl + "/api/services/app/SmsTemplates/GetSmsTemplateForView?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetSmsTemplateForView(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetSmsTemplateForView(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<GetSmsTemplateForViewDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<GetSmsTemplateForViewDto>;
+        }));
+    }
+
+    protected processGetSmsTemplateForView(response: HttpResponseBase): Observable<GetSmsTemplateForViewDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = GetSmsTemplateForViewDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getSmsTemplateForEdit(id: number | undefined): Observable<GetSmsTemplateForEditOutput> {
+        let url_ = this.baseUrl + "/api/services/app/SmsTemplates/GetSmsTemplateForEdit?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetSmsTemplateForEdit(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetSmsTemplateForEdit(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<GetSmsTemplateForEditOutput>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<GetSmsTemplateForEditOutput>;
+        }));
+    }
+
+    protected processGetSmsTemplateForEdit(response: HttpResponseBase): Observable<GetSmsTemplateForEditOutput> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = GetSmsTemplateForEditOutput.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    createOrEdit(body: CreateOrEditSmsTemplateDto | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/SmsTemplates/CreateOrEdit";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreateOrEdit(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreateOrEdit(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processCreateOrEdit(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    delete(id: number | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/SmsTemplates/Delete?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDelete(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDelete(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processDelete(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param titleFilter (optional) 
+     * @param contentFilter (optional) 
+     * @param publishedFilter (optional) 
+     * @return Success
+     */
+    getSmsTemplatesToExcel(filter: string | undefined, titleFilter: string | undefined, contentFilter: string | undefined, publishedFilter: number | undefined): Observable<FileDto> {
+        let url_ = this.baseUrl + "/api/services/app/SmsTemplates/GetSmsTemplatesToExcel?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (titleFilter === null)
+            throw new Error("The parameter 'titleFilter' cannot be null.");
+        else if (titleFilter !== undefined)
+            url_ += "TitleFilter=" + encodeURIComponent("" + titleFilter) + "&";
+        if (contentFilter === null)
+            throw new Error("The parameter 'contentFilter' cannot be null.");
+        else if (contentFilter !== undefined)
+            url_ += "ContentFilter=" + encodeURIComponent("" + contentFilter) + "&";
+        if (publishedFilter === null)
+            throw new Error("The parameter 'publishedFilter' cannot be null.");
+        else if (publishedFilter !== undefined)
+            url_ += "PublishedFilter=" + encodeURIComponent("" + publishedFilter) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetSmsTemplatesToExcel(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetSmsTemplatesToExcel(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<FileDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<FileDto>;
+        }));
+    }
+
+    protected processGetSmsTemplatesToExcel(response: HttpResponseBase): Observable<FileDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = FileDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+}
+
+@Injectable()
+export class StatesServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param nameFilter (optional) 
+     * @param tickerFilter (optional) 
+     * @param countryNameFilter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
+     * @return Success
+     */
+    getAll(filter: string | undefined, nameFilter: string | undefined, tickerFilter: string | undefined, countryNameFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetStateForViewDto> {
+        let url_ = this.baseUrl + "/api/services/app/States/GetAll?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (nameFilter === null)
+            throw new Error("The parameter 'nameFilter' cannot be null.");
+        else if (nameFilter !== undefined)
+            url_ += "NameFilter=" + encodeURIComponent("" + nameFilter) + "&";
+        if (tickerFilter === null)
+            throw new Error("The parameter 'tickerFilter' cannot be null.");
+        else if (tickerFilter !== undefined)
+            url_ += "TickerFilter=" + encodeURIComponent("" + tickerFilter) + "&";
+        if (countryNameFilter === null)
+            throw new Error("The parameter 'countryNameFilter' cannot be null.");
+        else if (countryNameFilter !== undefined)
+            url_ += "CountryNameFilter=" + encodeURIComponent("" + countryNameFilter) + "&";
+        if (sorting === null)
+            throw new Error("The parameter 'sorting' cannot be null.");
+        else if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
+        if (skipCount === null)
+            throw new Error("The parameter 'skipCount' cannot be null.");
+        else if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
+        if (maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' cannot be null.");
+        else if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAll(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAll(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<PagedResultDtoOfGetStateForViewDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<PagedResultDtoOfGetStateForViewDto>;
+        }));
+    }
+
+    protected processGetAll(response: HttpResponseBase): Observable<PagedResultDtoOfGetStateForViewDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PagedResultDtoOfGetStateForViewDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getStateForView(id: number | undefined): Observable<GetStateForViewDto> {
+        let url_ = this.baseUrl + "/api/services/app/States/GetStateForView?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetStateForView(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetStateForView(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<GetStateForViewDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<GetStateForViewDto>;
+        }));
+    }
+
+    protected processGetStateForView(response: HttpResponseBase): Observable<GetStateForViewDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = GetStateForViewDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getStateForEdit(id: number | undefined): Observable<GetStateForEditOutput> {
+        let url_ = this.baseUrl + "/api/services/app/States/GetStateForEdit?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetStateForEdit(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetStateForEdit(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<GetStateForEditOutput>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<GetStateForEditOutput>;
+        }));
+    }
+
+    protected processGetStateForEdit(response: HttpResponseBase): Observable<GetStateForEditOutput> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = GetStateForEditOutput.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    createOrEdit(body: CreateOrEditStateDto | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/States/CreateOrEdit";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreateOrEdit(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreateOrEdit(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processCreateOrEdit(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    delete(id: number | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/States/Delete?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDelete(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDelete(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processDelete(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param nameFilter (optional) 
+     * @param tickerFilter (optional) 
+     * @param countryNameFilter (optional) 
+     * @return Success
+     */
+    getStatesToExcel(filter: string | undefined, nameFilter: string | undefined, tickerFilter: string | undefined, countryNameFilter: string | undefined): Observable<FileDto> {
+        let url_ = this.baseUrl + "/api/services/app/States/GetStatesToExcel?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (nameFilter === null)
+            throw new Error("The parameter 'nameFilter' cannot be null.");
+        else if (nameFilter !== undefined)
+            url_ += "NameFilter=" + encodeURIComponent("" + nameFilter) + "&";
+        if (tickerFilter === null)
+            throw new Error("The parameter 'tickerFilter' cannot be null.");
+        else if (tickerFilter !== undefined)
+            url_ += "TickerFilter=" + encodeURIComponent("" + tickerFilter) + "&";
+        if (countryNameFilter === null)
+            throw new Error("The parameter 'countryNameFilter' cannot be null.");
+        else if (countryNameFilter !== undefined)
+            url_ += "CountryNameFilter=" + encodeURIComponent("" + countryNameFilter) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetStatesToExcel(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetStatesToExcel(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<FileDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<FileDto>;
+        }));
+    }
+
+    protected processGetStatesToExcel(response: HttpResponseBase): Observable<FileDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = FileDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @return Success
+     */
+    getAllCountryForTableDropdown(): Observable<StateCountryLookupTableDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/States/GetAllCountryForTableDropdown";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllCountryForTableDropdown(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllCountryForTableDropdown(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<StateCountryLookupTableDto[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<StateCountryLookupTableDto[]>;
+        }));
+    }
+
+    protected processGetAllCountryForTableDropdown(response: HttpResponseBase): Observable<StateCountryLookupTableDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(StateCountryLookupTableDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -15389,6 +20445,1223 @@ export class WebLogServiceProxy {
     }
 }
 
+@Injectable()
+export class ZipCodesServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param nameFilter (optional) 
+     * @param areaCodeFilter (optional) 
+     * @param asianPopulationFilter (optional) 
+     * @param averageHouseValueFilter (optional) 
+     * @param blackPopulationFilter (optional) 
+     * @param cBSAFilter (optional) 
+     * @param cBSA_DivFilter (optional) 
+     * @param cBSA_Div_NameFilter (optional) 
+     * @param cBSA_NameFilter (optional) 
+     * @param cBSA_TypeFilter (optional) 
+     * @param cSAFilter (optional) 
+     * @param cSANameFilter (optional) 
+     * @param carrierRouteRateSortationFilter (optional) 
+     * @param cityFilter (optional) 
+     * @param cityAliasCodeFilter (optional) 
+     * @param cityAliasMixedCaseFilter (optional) 
+     * @param cityAliasNameFilter (optional) 
+     * @param cityDeliveryIndicatorFilter (optional) 
+     * @param cityMixedCaseFilter (optional) 
+     * @param cityStateKeyFilter (optional) 
+     * @param cityTypeFilter (optional) 
+     * @param classificationCodeFilter (optional) 
+     * @param countyFilter (optional) 
+     * @param countyANSIFilter (optional) 
+     * @param countyFIPSFilter (optional) 
+     * @param countyMixedCaseFilter (optional) 
+     * @param dayLightSavingFilter (optional) 
+     * @param divisionFilter (optional) 
+     * @param elevationFilter (optional) 
+     * @param facilityCodeFilter (optional) 
+     * @param femalePopulationFilter (optional) 
+     * @param financeNumberFilter (optional) 
+     * @param hawaiianPopulationFilter (optional) 
+     * @param hispanicPopulationFilter (optional) 
+     * @param householdsPerZipCodeFilter (optional) 
+     * @param incomePerHouseholdFilter (optional) 
+     * @param indianPopulationFilter (optional) 
+     * @param latitudeFilter (optional) 
+     * @param longitudeFilter (optional) 
+     * @param mSAFilter (optional) 
+     * @param mSA_NameFilter (optional) 
+     * @param mailingNameFilter (optional) 
+     * @param malePopulationFilter (optional) 
+     * @param multiCountyFilter (optional) 
+     * @param otherPopulationFilter (optional) 
+     * @param pMSAFilter (optional) 
+     * @param pMSA_NameFilter (optional) 
+     * @param personsPerHouseholdFilter (optional) 
+     * @param populationFilter (optional) 
+     * @param preferredLastLineKeyFilter (optional) 
+     * @param primaryRecordFilter (optional) 
+     * @param regionFilter (optional) 
+     * @param stateFilter (optional) 
+     * @param stateANSIFilter (optional) 
+     * @param stateFIPSFilter (optional) 
+     * @param stateFullNameFilter (optional) 
+     * @param timeZoneFilter (optional) 
+     * @param uniqueZIPNameFilter (optional) 
+     * @param whitePopulationFilter (optional) 
+     * @param countryNameFilter (optional) 
+     * @param stateNameFilter (optional) 
+     * @param cityNameFilter (optional) 
+     * @param countyNameFilter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
+     * @return Success
+     */
+    getAll(filter: string | undefined, nameFilter: string | undefined, areaCodeFilter: string | undefined, asianPopulationFilter: string | undefined, averageHouseValueFilter: string | undefined, blackPopulationFilter: string | undefined, cBSAFilter: string | undefined, cBSA_DivFilter: string | undefined, cBSA_Div_NameFilter: string | undefined, cBSA_NameFilter: string | undefined, cBSA_TypeFilter: string | undefined, cSAFilter: string | undefined, cSANameFilter: string | undefined, carrierRouteRateSortationFilter: string | undefined, cityFilter: string | undefined, cityAliasCodeFilter: string | undefined, cityAliasMixedCaseFilter: string | undefined, cityAliasNameFilter: string | undefined, cityDeliveryIndicatorFilter: string | undefined, cityMixedCaseFilter: string | undefined, cityStateKeyFilter: string | undefined, cityTypeFilter: string | undefined, classificationCodeFilter: string | undefined, countyFilter: string | undefined, countyANSIFilter: string | undefined, countyFIPSFilter: string | undefined, countyMixedCaseFilter: string | undefined, dayLightSavingFilter: string | undefined, divisionFilter: string | undefined, elevationFilter: string | undefined, facilityCodeFilter: string | undefined, femalePopulationFilter: string | undefined, financeNumberFilter: string | undefined, hawaiianPopulationFilter: string | undefined, hispanicPopulationFilter: string | undefined, householdsPerZipCodeFilter: string | undefined, incomePerHouseholdFilter: string | undefined, indianPopulationFilter: string | undefined, latitudeFilter: string | undefined, longitudeFilter: string | undefined, mSAFilter: string | undefined, mSA_NameFilter: string | undefined, mailingNameFilter: string | undefined, malePopulationFilter: string | undefined, multiCountyFilter: string | undefined, otherPopulationFilter: string | undefined, pMSAFilter: string | undefined, pMSA_NameFilter: string | undefined, personsPerHouseholdFilter: string | undefined, populationFilter: string | undefined, preferredLastLineKeyFilter: string | undefined, primaryRecordFilter: string | undefined, regionFilter: string | undefined, stateFilter: string | undefined, stateANSIFilter: string | undefined, stateFIPSFilter: string | undefined, stateFullNameFilter: string | undefined, timeZoneFilter: string | undefined, uniqueZIPNameFilter: string | undefined, whitePopulationFilter: string | undefined, countryNameFilter: string | undefined, stateNameFilter: string | undefined, cityNameFilter: string | undefined, countyNameFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetZipCodeForViewDto> {
+        let url_ = this.baseUrl + "/api/services/app/ZipCodes/GetAll?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (nameFilter === null)
+            throw new Error("The parameter 'nameFilter' cannot be null.");
+        else if (nameFilter !== undefined)
+            url_ += "NameFilter=" + encodeURIComponent("" + nameFilter) + "&";
+        if (areaCodeFilter === null)
+            throw new Error("The parameter 'areaCodeFilter' cannot be null.");
+        else if (areaCodeFilter !== undefined)
+            url_ += "AreaCodeFilter=" + encodeURIComponent("" + areaCodeFilter) + "&";
+        if (asianPopulationFilter === null)
+            throw new Error("The parameter 'asianPopulationFilter' cannot be null.");
+        else if (asianPopulationFilter !== undefined)
+            url_ += "AsianPopulationFilter=" + encodeURIComponent("" + asianPopulationFilter) + "&";
+        if (averageHouseValueFilter === null)
+            throw new Error("The parameter 'averageHouseValueFilter' cannot be null.");
+        else if (averageHouseValueFilter !== undefined)
+            url_ += "AverageHouseValueFilter=" + encodeURIComponent("" + averageHouseValueFilter) + "&";
+        if (blackPopulationFilter === null)
+            throw new Error("The parameter 'blackPopulationFilter' cannot be null.");
+        else if (blackPopulationFilter !== undefined)
+            url_ += "BlackPopulationFilter=" + encodeURIComponent("" + blackPopulationFilter) + "&";
+        if (cBSAFilter === null)
+            throw new Error("The parameter 'cBSAFilter' cannot be null.");
+        else if (cBSAFilter !== undefined)
+            url_ += "CBSAFilter=" + encodeURIComponent("" + cBSAFilter) + "&";
+        if (cBSA_DivFilter === null)
+            throw new Error("The parameter 'cBSA_DivFilter' cannot be null.");
+        else if (cBSA_DivFilter !== undefined)
+            url_ += "CBSA_DivFilter=" + encodeURIComponent("" + cBSA_DivFilter) + "&";
+        if (cBSA_Div_NameFilter === null)
+            throw new Error("The parameter 'cBSA_Div_NameFilter' cannot be null.");
+        else if (cBSA_Div_NameFilter !== undefined)
+            url_ += "CBSA_Div_NameFilter=" + encodeURIComponent("" + cBSA_Div_NameFilter) + "&";
+        if (cBSA_NameFilter === null)
+            throw new Error("The parameter 'cBSA_NameFilter' cannot be null.");
+        else if (cBSA_NameFilter !== undefined)
+            url_ += "CBSA_NameFilter=" + encodeURIComponent("" + cBSA_NameFilter) + "&";
+        if (cBSA_TypeFilter === null)
+            throw new Error("The parameter 'cBSA_TypeFilter' cannot be null.");
+        else if (cBSA_TypeFilter !== undefined)
+            url_ += "CBSA_TypeFilter=" + encodeURIComponent("" + cBSA_TypeFilter) + "&";
+        if (cSAFilter === null)
+            throw new Error("The parameter 'cSAFilter' cannot be null.");
+        else if (cSAFilter !== undefined)
+            url_ += "CSAFilter=" + encodeURIComponent("" + cSAFilter) + "&";
+        if (cSANameFilter === null)
+            throw new Error("The parameter 'cSANameFilter' cannot be null.");
+        else if (cSANameFilter !== undefined)
+            url_ += "CSANameFilter=" + encodeURIComponent("" + cSANameFilter) + "&";
+        if (carrierRouteRateSortationFilter === null)
+            throw new Error("The parameter 'carrierRouteRateSortationFilter' cannot be null.");
+        else if (carrierRouteRateSortationFilter !== undefined)
+            url_ += "CarrierRouteRateSortationFilter=" + encodeURIComponent("" + carrierRouteRateSortationFilter) + "&";
+        if (cityFilter === null)
+            throw new Error("The parameter 'cityFilter' cannot be null.");
+        else if (cityFilter !== undefined)
+            url_ += "CityFilter=" + encodeURIComponent("" + cityFilter) + "&";
+        if (cityAliasCodeFilter === null)
+            throw new Error("The parameter 'cityAliasCodeFilter' cannot be null.");
+        else if (cityAliasCodeFilter !== undefined)
+            url_ += "CityAliasCodeFilter=" + encodeURIComponent("" + cityAliasCodeFilter) + "&";
+        if (cityAliasMixedCaseFilter === null)
+            throw new Error("The parameter 'cityAliasMixedCaseFilter' cannot be null.");
+        else if (cityAliasMixedCaseFilter !== undefined)
+            url_ += "CityAliasMixedCaseFilter=" + encodeURIComponent("" + cityAliasMixedCaseFilter) + "&";
+        if (cityAliasNameFilter === null)
+            throw new Error("The parameter 'cityAliasNameFilter' cannot be null.");
+        else if (cityAliasNameFilter !== undefined)
+            url_ += "CityAliasNameFilter=" + encodeURIComponent("" + cityAliasNameFilter) + "&";
+        if (cityDeliveryIndicatorFilter === null)
+            throw new Error("The parameter 'cityDeliveryIndicatorFilter' cannot be null.");
+        else if (cityDeliveryIndicatorFilter !== undefined)
+            url_ += "CityDeliveryIndicatorFilter=" + encodeURIComponent("" + cityDeliveryIndicatorFilter) + "&";
+        if (cityMixedCaseFilter === null)
+            throw new Error("The parameter 'cityMixedCaseFilter' cannot be null.");
+        else if (cityMixedCaseFilter !== undefined)
+            url_ += "CityMixedCaseFilter=" + encodeURIComponent("" + cityMixedCaseFilter) + "&";
+        if (cityStateKeyFilter === null)
+            throw new Error("The parameter 'cityStateKeyFilter' cannot be null.");
+        else if (cityStateKeyFilter !== undefined)
+            url_ += "CityStateKeyFilter=" + encodeURIComponent("" + cityStateKeyFilter) + "&";
+        if (cityTypeFilter === null)
+            throw new Error("The parameter 'cityTypeFilter' cannot be null.");
+        else if (cityTypeFilter !== undefined)
+            url_ += "CityTypeFilter=" + encodeURIComponent("" + cityTypeFilter) + "&";
+        if (classificationCodeFilter === null)
+            throw new Error("The parameter 'classificationCodeFilter' cannot be null.");
+        else if (classificationCodeFilter !== undefined)
+            url_ += "ClassificationCodeFilter=" + encodeURIComponent("" + classificationCodeFilter) + "&";
+        if (countyFilter === null)
+            throw new Error("The parameter 'countyFilter' cannot be null.");
+        else if (countyFilter !== undefined)
+            url_ += "CountyFilter=" + encodeURIComponent("" + countyFilter) + "&";
+        if (countyANSIFilter === null)
+            throw new Error("The parameter 'countyANSIFilter' cannot be null.");
+        else if (countyANSIFilter !== undefined)
+            url_ += "CountyANSIFilter=" + encodeURIComponent("" + countyANSIFilter) + "&";
+        if (countyFIPSFilter === null)
+            throw new Error("The parameter 'countyFIPSFilter' cannot be null.");
+        else if (countyFIPSFilter !== undefined)
+            url_ += "CountyFIPSFilter=" + encodeURIComponent("" + countyFIPSFilter) + "&";
+        if (countyMixedCaseFilter === null)
+            throw new Error("The parameter 'countyMixedCaseFilter' cannot be null.");
+        else if (countyMixedCaseFilter !== undefined)
+            url_ += "CountyMixedCaseFilter=" + encodeURIComponent("" + countyMixedCaseFilter) + "&";
+        if (dayLightSavingFilter === null)
+            throw new Error("The parameter 'dayLightSavingFilter' cannot be null.");
+        else if (dayLightSavingFilter !== undefined)
+            url_ += "DayLightSavingFilter=" + encodeURIComponent("" + dayLightSavingFilter) + "&";
+        if (divisionFilter === null)
+            throw new Error("The parameter 'divisionFilter' cannot be null.");
+        else if (divisionFilter !== undefined)
+            url_ += "DivisionFilter=" + encodeURIComponent("" + divisionFilter) + "&";
+        if (elevationFilter === null)
+            throw new Error("The parameter 'elevationFilter' cannot be null.");
+        else if (elevationFilter !== undefined)
+            url_ += "ElevationFilter=" + encodeURIComponent("" + elevationFilter) + "&";
+        if (facilityCodeFilter === null)
+            throw new Error("The parameter 'facilityCodeFilter' cannot be null.");
+        else if (facilityCodeFilter !== undefined)
+            url_ += "FacilityCodeFilter=" + encodeURIComponent("" + facilityCodeFilter) + "&";
+        if (femalePopulationFilter === null)
+            throw new Error("The parameter 'femalePopulationFilter' cannot be null.");
+        else if (femalePopulationFilter !== undefined)
+            url_ += "FemalePopulationFilter=" + encodeURIComponent("" + femalePopulationFilter) + "&";
+        if (financeNumberFilter === null)
+            throw new Error("The parameter 'financeNumberFilter' cannot be null.");
+        else if (financeNumberFilter !== undefined)
+            url_ += "FinanceNumberFilter=" + encodeURIComponent("" + financeNumberFilter) + "&";
+        if (hawaiianPopulationFilter === null)
+            throw new Error("The parameter 'hawaiianPopulationFilter' cannot be null.");
+        else if (hawaiianPopulationFilter !== undefined)
+            url_ += "HawaiianPopulationFilter=" + encodeURIComponent("" + hawaiianPopulationFilter) + "&";
+        if (hispanicPopulationFilter === null)
+            throw new Error("The parameter 'hispanicPopulationFilter' cannot be null.");
+        else if (hispanicPopulationFilter !== undefined)
+            url_ += "HispanicPopulationFilter=" + encodeURIComponent("" + hispanicPopulationFilter) + "&";
+        if (householdsPerZipCodeFilter === null)
+            throw new Error("The parameter 'householdsPerZipCodeFilter' cannot be null.");
+        else if (householdsPerZipCodeFilter !== undefined)
+            url_ += "HouseholdsPerZipCodeFilter=" + encodeURIComponent("" + householdsPerZipCodeFilter) + "&";
+        if (incomePerHouseholdFilter === null)
+            throw new Error("The parameter 'incomePerHouseholdFilter' cannot be null.");
+        else if (incomePerHouseholdFilter !== undefined)
+            url_ += "IncomePerHouseholdFilter=" + encodeURIComponent("" + incomePerHouseholdFilter) + "&";
+        if (indianPopulationFilter === null)
+            throw new Error("The parameter 'indianPopulationFilter' cannot be null.");
+        else if (indianPopulationFilter !== undefined)
+            url_ += "IndianPopulationFilter=" + encodeURIComponent("" + indianPopulationFilter) + "&";
+        if (latitudeFilter === null)
+            throw new Error("The parameter 'latitudeFilter' cannot be null.");
+        else if (latitudeFilter !== undefined)
+            url_ += "LatitudeFilter=" + encodeURIComponent("" + latitudeFilter) + "&";
+        if (longitudeFilter === null)
+            throw new Error("The parameter 'longitudeFilter' cannot be null.");
+        else if (longitudeFilter !== undefined)
+            url_ += "LongitudeFilter=" + encodeURIComponent("" + longitudeFilter) + "&";
+        if (mSAFilter === null)
+            throw new Error("The parameter 'mSAFilter' cannot be null.");
+        else if (mSAFilter !== undefined)
+            url_ += "MSAFilter=" + encodeURIComponent("" + mSAFilter) + "&";
+        if (mSA_NameFilter === null)
+            throw new Error("The parameter 'mSA_NameFilter' cannot be null.");
+        else if (mSA_NameFilter !== undefined)
+            url_ += "MSA_NameFilter=" + encodeURIComponent("" + mSA_NameFilter) + "&";
+        if (mailingNameFilter === null)
+            throw new Error("The parameter 'mailingNameFilter' cannot be null.");
+        else if (mailingNameFilter !== undefined)
+            url_ += "MailingNameFilter=" + encodeURIComponent("" + mailingNameFilter) + "&";
+        if (malePopulationFilter === null)
+            throw new Error("The parameter 'malePopulationFilter' cannot be null.");
+        else if (malePopulationFilter !== undefined)
+            url_ += "MalePopulationFilter=" + encodeURIComponent("" + malePopulationFilter) + "&";
+        if (multiCountyFilter === null)
+            throw new Error("The parameter 'multiCountyFilter' cannot be null.");
+        else if (multiCountyFilter !== undefined)
+            url_ += "MultiCountyFilter=" + encodeURIComponent("" + multiCountyFilter) + "&";
+        if (otherPopulationFilter === null)
+            throw new Error("The parameter 'otherPopulationFilter' cannot be null.");
+        else if (otherPopulationFilter !== undefined)
+            url_ += "OtherPopulationFilter=" + encodeURIComponent("" + otherPopulationFilter) + "&";
+        if (pMSAFilter === null)
+            throw new Error("The parameter 'pMSAFilter' cannot be null.");
+        else if (pMSAFilter !== undefined)
+            url_ += "PMSAFilter=" + encodeURIComponent("" + pMSAFilter) + "&";
+        if (pMSA_NameFilter === null)
+            throw new Error("The parameter 'pMSA_NameFilter' cannot be null.");
+        else if (pMSA_NameFilter !== undefined)
+            url_ += "PMSA_NameFilter=" + encodeURIComponent("" + pMSA_NameFilter) + "&";
+        if (personsPerHouseholdFilter === null)
+            throw new Error("The parameter 'personsPerHouseholdFilter' cannot be null.");
+        else if (personsPerHouseholdFilter !== undefined)
+            url_ += "PersonsPerHouseholdFilter=" + encodeURIComponent("" + personsPerHouseholdFilter) + "&";
+        if (populationFilter === null)
+            throw new Error("The parameter 'populationFilter' cannot be null.");
+        else if (populationFilter !== undefined)
+            url_ += "PopulationFilter=" + encodeURIComponent("" + populationFilter) + "&";
+        if (preferredLastLineKeyFilter === null)
+            throw new Error("The parameter 'preferredLastLineKeyFilter' cannot be null.");
+        else if (preferredLastLineKeyFilter !== undefined)
+            url_ += "PreferredLastLineKeyFilter=" + encodeURIComponent("" + preferredLastLineKeyFilter) + "&";
+        if (primaryRecordFilter === null)
+            throw new Error("The parameter 'primaryRecordFilter' cannot be null.");
+        else if (primaryRecordFilter !== undefined)
+            url_ += "PrimaryRecordFilter=" + encodeURIComponent("" + primaryRecordFilter) + "&";
+        if (regionFilter === null)
+            throw new Error("The parameter 'regionFilter' cannot be null.");
+        else if (regionFilter !== undefined)
+            url_ += "RegionFilter=" + encodeURIComponent("" + regionFilter) + "&";
+        if (stateFilter === null)
+            throw new Error("The parameter 'stateFilter' cannot be null.");
+        else if (stateFilter !== undefined)
+            url_ += "StateFilter=" + encodeURIComponent("" + stateFilter) + "&";
+        if (stateANSIFilter === null)
+            throw new Error("The parameter 'stateANSIFilter' cannot be null.");
+        else if (stateANSIFilter !== undefined)
+            url_ += "StateANSIFilter=" + encodeURIComponent("" + stateANSIFilter) + "&";
+        if (stateFIPSFilter === null)
+            throw new Error("The parameter 'stateFIPSFilter' cannot be null.");
+        else if (stateFIPSFilter !== undefined)
+            url_ += "StateFIPSFilter=" + encodeURIComponent("" + stateFIPSFilter) + "&";
+        if (stateFullNameFilter === null)
+            throw new Error("The parameter 'stateFullNameFilter' cannot be null.");
+        else if (stateFullNameFilter !== undefined)
+            url_ += "StateFullNameFilter=" + encodeURIComponent("" + stateFullNameFilter) + "&";
+        if (timeZoneFilter === null)
+            throw new Error("The parameter 'timeZoneFilter' cannot be null.");
+        else if (timeZoneFilter !== undefined)
+            url_ += "TimeZoneFilter=" + encodeURIComponent("" + timeZoneFilter) + "&";
+        if (uniqueZIPNameFilter === null)
+            throw new Error("The parameter 'uniqueZIPNameFilter' cannot be null.");
+        else if (uniqueZIPNameFilter !== undefined)
+            url_ += "UniqueZIPNameFilter=" + encodeURIComponent("" + uniqueZIPNameFilter) + "&";
+        if (whitePopulationFilter === null)
+            throw new Error("The parameter 'whitePopulationFilter' cannot be null.");
+        else if (whitePopulationFilter !== undefined)
+            url_ += "WhitePopulationFilter=" + encodeURIComponent("" + whitePopulationFilter) + "&";
+        if (countryNameFilter === null)
+            throw new Error("The parameter 'countryNameFilter' cannot be null.");
+        else if (countryNameFilter !== undefined)
+            url_ += "CountryNameFilter=" + encodeURIComponent("" + countryNameFilter) + "&";
+        if (stateNameFilter === null)
+            throw new Error("The parameter 'stateNameFilter' cannot be null.");
+        else if (stateNameFilter !== undefined)
+            url_ += "StateNameFilter=" + encodeURIComponent("" + stateNameFilter) + "&";
+        if (cityNameFilter === null)
+            throw new Error("The parameter 'cityNameFilter' cannot be null.");
+        else if (cityNameFilter !== undefined)
+            url_ += "CityNameFilter=" + encodeURIComponent("" + cityNameFilter) + "&";
+        if (countyNameFilter === null)
+            throw new Error("The parameter 'countyNameFilter' cannot be null.");
+        else if (countyNameFilter !== undefined)
+            url_ += "CountyNameFilter=" + encodeURIComponent("" + countyNameFilter) + "&";
+        if (sorting === null)
+            throw new Error("The parameter 'sorting' cannot be null.");
+        else if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
+        if (skipCount === null)
+            throw new Error("The parameter 'skipCount' cannot be null.");
+        else if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
+        if (maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' cannot be null.");
+        else if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAll(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAll(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<PagedResultDtoOfGetZipCodeForViewDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<PagedResultDtoOfGetZipCodeForViewDto>;
+        }));
+    }
+
+    protected processGetAll(response: HttpResponseBase): Observable<PagedResultDtoOfGetZipCodeForViewDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PagedResultDtoOfGetZipCodeForViewDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getZipCodeForView(id: number | undefined): Observable<GetZipCodeForViewDto> {
+        let url_ = this.baseUrl + "/api/services/app/ZipCodes/GetZipCodeForView?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetZipCodeForView(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetZipCodeForView(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<GetZipCodeForViewDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<GetZipCodeForViewDto>;
+        }));
+    }
+
+    protected processGetZipCodeForView(response: HttpResponseBase): Observable<GetZipCodeForViewDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = GetZipCodeForViewDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getZipCodeForEdit(id: number | undefined): Observable<GetZipCodeForEditOutput> {
+        let url_ = this.baseUrl + "/api/services/app/ZipCodes/GetZipCodeForEdit?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetZipCodeForEdit(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetZipCodeForEdit(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<GetZipCodeForEditOutput>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<GetZipCodeForEditOutput>;
+        }));
+    }
+
+    protected processGetZipCodeForEdit(response: HttpResponseBase): Observable<GetZipCodeForEditOutput> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = GetZipCodeForEditOutput.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    createOrEdit(body: CreateOrEditZipCodeDto | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/ZipCodes/CreateOrEdit";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreateOrEdit(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreateOrEdit(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processCreateOrEdit(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    delete(id: number | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/ZipCodes/Delete?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDelete(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDelete(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processDelete(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param nameFilter (optional) 
+     * @param areaCodeFilter (optional) 
+     * @param asianPopulationFilter (optional) 
+     * @param averageHouseValueFilter (optional) 
+     * @param blackPopulationFilter (optional) 
+     * @param cBSAFilter (optional) 
+     * @param cBSA_DivFilter (optional) 
+     * @param cBSA_Div_NameFilter (optional) 
+     * @param cBSA_NameFilter (optional) 
+     * @param cBSA_TypeFilter (optional) 
+     * @param cSAFilter (optional) 
+     * @param cSANameFilter (optional) 
+     * @param carrierRouteRateSortationFilter (optional) 
+     * @param cityFilter (optional) 
+     * @param cityAliasCodeFilter (optional) 
+     * @param cityAliasMixedCaseFilter (optional) 
+     * @param cityAliasNameFilter (optional) 
+     * @param cityDeliveryIndicatorFilter (optional) 
+     * @param cityMixedCaseFilter (optional) 
+     * @param cityStateKeyFilter (optional) 
+     * @param cityTypeFilter (optional) 
+     * @param classificationCodeFilter (optional) 
+     * @param countyFilter (optional) 
+     * @param countyANSIFilter (optional) 
+     * @param countyFIPSFilter (optional) 
+     * @param countyMixedCaseFilter (optional) 
+     * @param dayLightSavingFilter (optional) 
+     * @param divisionFilter (optional) 
+     * @param elevationFilter (optional) 
+     * @param facilityCodeFilter (optional) 
+     * @param femalePopulationFilter (optional) 
+     * @param financeNumberFilter (optional) 
+     * @param hawaiianPopulationFilter (optional) 
+     * @param hispanicPopulationFilter (optional) 
+     * @param householdsPerZipCodeFilter (optional) 
+     * @param incomePerHouseholdFilter (optional) 
+     * @param indianPopulationFilter (optional) 
+     * @param latitudeFilter (optional) 
+     * @param longitudeFilter (optional) 
+     * @param mSAFilter (optional) 
+     * @param mSA_NameFilter (optional) 
+     * @param mailingNameFilter (optional) 
+     * @param malePopulationFilter (optional) 
+     * @param multiCountyFilter (optional) 
+     * @param otherPopulationFilter (optional) 
+     * @param pMSAFilter (optional) 
+     * @param pMSA_NameFilter (optional) 
+     * @param personsPerHouseholdFilter (optional) 
+     * @param populationFilter (optional) 
+     * @param preferredLastLineKeyFilter (optional) 
+     * @param primaryRecordFilter (optional) 
+     * @param regionFilter (optional) 
+     * @param stateFilter (optional) 
+     * @param stateANSIFilter (optional) 
+     * @param stateFIPSFilter (optional) 
+     * @param stateFullNameFilter (optional) 
+     * @param timeZoneFilter (optional) 
+     * @param uniqueZIPNameFilter (optional) 
+     * @param whitePopulationFilter (optional) 
+     * @param countryNameFilter (optional) 
+     * @param stateNameFilter (optional) 
+     * @param cityNameFilter (optional) 
+     * @param countyNameFilter (optional) 
+     * @return Success
+     */
+    getZipCodesToExcel(filter: string | undefined, nameFilter: string | undefined, areaCodeFilter: string | undefined, asianPopulationFilter: string | undefined, averageHouseValueFilter: string | undefined, blackPopulationFilter: string | undefined, cBSAFilter: string | undefined, cBSA_DivFilter: string | undefined, cBSA_Div_NameFilter: string | undefined, cBSA_NameFilter: string | undefined, cBSA_TypeFilter: string | undefined, cSAFilter: string | undefined, cSANameFilter: string | undefined, carrierRouteRateSortationFilter: string | undefined, cityFilter: string | undefined, cityAliasCodeFilter: string | undefined, cityAliasMixedCaseFilter: string | undefined, cityAliasNameFilter: string | undefined, cityDeliveryIndicatorFilter: string | undefined, cityMixedCaseFilter: string | undefined, cityStateKeyFilter: string | undefined, cityTypeFilter: string | undefined, classificationCodeFilter: string | undefined, countyFilter: string | undefined, countyANSIFilter: string | undefined, countyFIPSFilter: string | undefined, countyMixedCaseFilter: string | undefined, dayLightSavingFilter: string | undefined, divisionFilter: string | undefined, elevationFilter: string | undefined, facilityCodeFilter: string | undefined, femalePopulationFilter: string | undefined, financeNumberFilter: string | undefined, hawaiianPopulationFilter: string | undefined, hispanicPopulationFilter: string | undefined, householdsPerZipCodeFilter: string | undefined, incomePerHouseholdFilter: string | undefined, indianPopulationFilter: string | undefined, latitudeFilter: string | undefined, longitudeFilter: string | undefined, mSAFilter: string | undefined, mSA_NameFilter: string | undefined, mailingNameFilter: string | undefined, malePopulationFilter: string | undefined, multiCountyFilter: string | undefined, otherPopulationFilter: string | undefined, pMSAFilter: string | undefined, pMSA_NameFilter: string | undefined, personsPerHouseholdFilter: string | undefined, populationFilter: string | undefined, preferredLastLineKeyFilter: string | undefined, primaryRecordFilter: string | undefined, regionFilter: string | undefined, stateFilter: string | undefined, stateANSIFilter: string | undefined, stateFIPSFilter: string | undefined, stateFullNameFilter: string | undefined, timeZoneFilter: string | undefined, uniqueZIPNameFilter: string | undefined, whitePopulationFilter: string | undefined, countryNameFilter: string | undefined, stateNameFilter: string | undefined, cityNameFilter: string | undefined, countyNameFilter: string | undefined): Observable<FileDto> {
+        let url_ = this.baseUrl + "/api/services/app/ZipCodes/GetZipCodesToExcel?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (nameFilter === null)
+            throw new Error("The parameter 'nameFilter' cannot be null.");
+        else if (nameFilter !== undefined)
+            url_ += "NameFilter=" + encodeURIComponent("" + nameFilter) + "&";
+        if (areaCodeFilter === null)
+            throw new Error("The parameter 'areaCodeFilter' cannot be null.");
+        else if (areaCodeFilter !== undefined)
+            url_ += "AreaCodeFilter=" + encodeURIComponent("" + areaCodeFilter) + "&";
+        if (asianPopulationFilter === null)
+            throw new Error("The parameter 'asianPopulationFilter' cannot be null.");
+        else if (asianPopulationFilter !== undefined)
+            url_ += "AsianPopulationFilter=" + encodeURIComponent("" + asianPopulationFilter) + "&";
+        if (averageHouseValueFilter === null)
+            throw new Error("The parameter 'averageHouseValueFilter' cannot be null.");
+        else if (averageHouseValueFilter !== undefined)
+            url_ += "AverageHouseValueFilter=" + encodeURIComponent("" + averageHouseValueFilter) + "&";
+        if (blackPopulationFilter === null)
+            throw new Error("The parameter 'blackPopulationFilter' cannot be null.");
+        else if (blackPopulationFilter !== undefined)
+            url_ += "BlackPopulationFilter=" + encodeURIComponent("" + blackPopulationFilter) + "&";
+        if (cBSAFilter === null)
+            throw new Error("The parameter 'cBSAFilter' cannot be null.");
+        else if (cBSAFilter !== undefined)
+            url_ += "CBSAFilter=" + encodeURIComponent("" + cBSAFilter) + "&";
+        if (cBSA_DivFilter === null)
+            throw new Error("The parameter 'cBSA_DivFilter' cannot be null.");
+        else if (cBSA_DivFilter !== undefined)
+            url_ += "CBSA_DivFilter=" + encodeURIComponent("" + cBSA_DivFilter) + "&";
+        if (cBSA_Div_NameFilter === null)
+            throw new Error("The parameter 'cBSA_Div_NameFilter' cannot be null.");
+        else if (cBSA_Div_NameFilter !== undefined)
+            url_ += "CBSA_Div_NameFilter=" + encodeURIComponent("" + cBSA_Div_NameFilter) + "&";
+        if (cBSA_NameFilter === null)
+            throw new Error("The parameter 'cBSA_NameFilter' cannot be null.");
+        else if (cBSA_NameFilter !== undefined)
+            url_ += "CBSA_NameFilter=" + encodeURIComponent("" + cBSA_NameFilter) + "&";
+        if (cBSA_TypeFilter === null)
+            throw new Error("The parameter 'cBSA_TypeFilter' cannot be null.");
+        else if (cBSA_TypeFilter !== undefined)
+            url_ += "CBSA_TypeFilter=" + encodeURIComponent("" + cBSA_TypeFilter) + "&";
+        if (cSAFilter === null)
+            throw new Error("The parameter 'cSAFilter' cannot be null.");
+        else if (cSAFilter !== undefined)
+            url_ += "CSAFilter=" + encodeURIComponent("" + cSAFilter) + "&";
+        if (cSANameFilter === null)
+            throw new Error("The parameter 'cSANameFilter' cannot be null.");
+        else if (cSANameFilter !== undefined)
+            url_ += "CSANameFilter=" + encodeURIComponent("" + cSANameFilter) + "&";
+        if (carrierRouteRateSortationFilter === null)
+            throw new Error("The parameter 'carrierRouteRateSortationFilter' cannot be null.");
+        else if (carrierRouteRateSortationFilter !== undefined)
+            url_ += "CarrierRouteRateSortationFilter=" + encodeURIComponent("" + carrierRouteRateSortationFilter) + "&";
+        if (cityFilter === null)
+            throw new Error("The parameter 'cityFilter' cannot be null.");
+        else if (cityFilter !== undefined)
+            url_ += "CityFilter=" + encodeURIComponent("" + cityFilter) + "&";
+        if (cityAliasCodeFilter === null)
+            throw new Error("The parameter 'cityAliasCodeFilter' cannot be null.");
+        else if (cityAliasCodeFilter !== undefined)
+            url_ += "CityAliasCodeFilter=" + encodeURIComponent("" + cityAliasCodeFilter) + "&";
+        if (cityAliasMixedCaseFilter === null)
+            throw new Error("The parameter 'cityAliasMixedCaseFilter' cannot be null.");
+        else if (cityAliasMixedCaseFilter !== undefined)
+            url_ += "CityAliasMixedCaseFilter=" + encodeURIComponent("" + cityAliasMixedCaseFilter) + "&";
+        if (cityAliasNameFilter === null)
+            throw new Error("The parameter 'cityAliasNameFilter' cannot be null.");
+        else if (cityAliasNameFilter !== undefined)
+            url_ += "CityAliasNameFilter=" + encodeURIComponent("" + cityAliasNameFilter) + "&";
+        if (cityDeliveryIndicatorFilter === null)
+            throw new Error("The parameter 'cityDeliveryIndicatorFilter' cannot be null.");
+        else if (cityDeliveryIndicatorFilter !== undefined)
+            url_ += "CityDeliveryIndicatorFilter=" + encodeURIComponent("" + cityDeliveryIndicatorFilter) + "&";
+        if (cityMixedCaseFilter === null)
+            throw new Error("The parameter 'cityMixedCaseFilter' cannot be null.");
+        else if (cityMixedCaseFilter !== undefined)
+            url_ += "CityMixedCaseFilter=" + encodeURIComponent("" + cityMixedCaseFilter) + "&";
+        if (cityStateKeyFilter === null)
+            throw new Error("The parameter 'cityStateKeyFilter' cannot be null.");
+        else if (cityStateKeyFilter !== undefined)
+            url_ += "CityStateKeyFilter=" + encodeURIComponent("" + cityStateKeyFilter) + "&";
+        if (cityTypeFilter === null)
+            throw new Error("The parameter 'cityTypeFilter' cannot be null.");
+        else if (cityTypeFilter !== undefined)
+            url_ += "CityTypeFilter=" + encodeURIComponent("" + cityTypeFilter) + "&";
+        if (classificationCodeFilter === null)
+            throw new Error("The parameter 'classificationCodeFilter' cannot be null.");
+        else if (classificationCodeFilter !== undefined)
+            url_ += "ClassificationCodeFilter=" + encodeURIComponent("" + classificationCodeFilter) + "&";
+        if (countyFilter === null)
+            throw new Error("The parameter 'countyFilter' cannot be null.");
+        else if (countyFilter !== undefined)
+            url_ += "CountyFilter=" + encodeURIComponent("" + countyFilter) + "&";
+        if (countyANSIFilter === null)
+            throw new Error("The parameter 'countyANSIFilter' cannot be null.");
+        else if (countyANSIFilter !== undefined)
+            url_ += "CountyANSIFilter=" + encodeURIComponent("" + countyANSIFilter) + "&";
+        if (countyFIPSFilter === null)
+            throw new Error("The parameter 'countyFIPSFilter' cannot be null.");
+        else if (countyFIPSFilter !== undefined)
+            url_ += "CountyFIPSFilter=" + encodeURIComponent("" + countyFIPSFilter) + "&";
+        if (countyMixedCaseFilter === null)
+            throw new Error("The parameter 'countyMixedCaseFilter' cannot be null.");
+        else if (countyMixedCaseFilter !== undefined)
+            url_ += "CountyMixedCaseFilter=" + encodeURIComponent("" + countyMixedCaseFilter) + "&";
+        if (dayLightSavingFilter === null)
+            throw new Error("The parameter 'dayLightSavingFilter' cannot be null.");
+        else if (dayLightSavingFilter !== undefined)
+            url_ += "DayLightSavingFilter=" + encodeURIComponent("" + dayLightSavingFilter) + "&";
+        if (divisionFilter === null)
+            throw new Error("The parameter 'divisionFilter' cannot be null.");
+        else if (divisionFilter !== undefined)
+            url_ += "DivisionFilter=" + encodeURIComponent("" + divisionFilter) + "&";
+        if (elevationFilter === null)
+            throw new Error("The parameter 'elevationFilter' cannot be null.");
+        else if (elevationFilter !== undefined)
+            url_ += "ElevationFilter=" + encodeURIComponent("" + elevationFilter) + "&";
+        if (facilityCodeFilter === null)
+            throw new Error("The parameter 'facilityCodeFilter' cannot be null.");
+        else if (facilityCodeFilter !== undefined)
+            url_ += "FacilityCodeFilter=" + encodeURIComponent("" + facilityCodeFilter) + "&";
+        if (femalePopulationFilter === null)
+            throw new Error("The parameter 'femalePopulationFilter' cannot be null.");
+        else if (femalePopulationFilter !== undefined)
+            url_ += "FemalePopulationFilter=" + encodeURIComponent("" + femalePopulationFilter) + "&";
+        if (financeNumberFilter === null)
+            throw new Error("The parameter 'financeNumberFilter' cannot be null.");
+        else if (financeNumberFilter !== undefined)
+            url_ += "FinanceNumberFilter=" + encodeURIComponent("" + financeNumberFilter) + "&";
+        if (hawaiianPopulationFilter === null)
+            throw new Error("The parameter 'hawaiianPopulationFilter' cannot be null.");
+        else if (hawaiianPopulationFilter !== undefined)
+            url_ += "HawaiianPopulationFilter=" + encodeURIComponent("" + hawaiianPopulationFilter) + "&";
+        if (hispanicPopulationFilter === null)
+            throw new Error("The parameter 'hispanicPopulationFilter' cannot be null.");
+        else if (hispanicPopulationFilter !== undefined)
+            url_ += "HispanicPopulationFilter=" + encodeURIComponent("" + hispanicPopulationFilter) + "&";
+        if (householdsPerZipCodeFilter === null)
+            throw new Error("The parameter 'householdsPerZipCodeFilter' cannot be null.");
+        else if (householdsPerZipCodeFilter !== undefined)
+            url_ += "HouseholdsPerZipCodeFilter=" + encodeURIComponent("" + householdsPerZipCodeFilter) + "&";
+        if (incomePerHouseholdFilter === null)
+            throw new Error("The parameter 'incomePerHouseholdFilter' cannot be null.");
+        else if (incomePerHouseholdFilter !== undefined)
+            url_ += "IncomePerHouseholdFilter=" + encodeURIComponent("" + incomePerHouseholdFilter) + "&";
+        if (indianPopulationFilter === null)
+            throw new Error("The parameter 'indianPopulationFilter' cannot be null.");
+        else if (indianPopulationFilter !== undefined)
+            url_ += "IndianPopulationFilter=" + encodeURIComponent("" + indianPopulationFilter) + "&";
+        if (latitudeFilter === null)
+            throw new Error("The parameter 'latitudeFilter' cannot be null.");
+        else if (latitudeFilter !== undefined)
+            url_ += "LatitudeFilter=" + encodeURIComponent("" + latitudeFilter) + "&";
+        if (longitudeFilter === null)
+            throw new Error("The parameter 'longitudeFilter' cannot be null.");
+        else if (longitudeFilter !== undefined)
+            url_ += "LongitudeFilter=" + encodeURIComponent("" + longitudeFilter) + "&";
+        if (mSAFilter === null)
+            throw new Error("The parameter 'mSAFilter' cannot be null.");
+        else if (mSAFilter !== undefined)
+            url_ += "MSAFilter=" + encodeURIComponent("" + mSAFilter) + "&";
+        if (mSA_NameFilter === null)
+            throw new Error("The parameter 'mSA_NameFilter' cannot be null.");
+        else if (mSA_NameFilter !== undefined)
+            url_ += "MSA_NameFilter=" + encodeURIComponent("" + mSA_NameFilter) + "&";
+        if (mailingNameFilter === null)
+            throw new Error("The parameter 'mailingNameFilter' cannot be null.");
+        else if (mailingNameFilter !== undefined)
+            url_ += "MailingNameFilter=" + encodeURIComponent("" + mailingNameFilter) + "&";
+        if (malePopulationFilter === null)
+            throw new Error("The parameter 'malePopulationFilter' cannot be null.");
+        else if (malePopulationFilter !== undefined)
+            url_ += "MalePopulationFilter=" + encodeURIComponent("" + malePopulationFilter) + "&";
+        if (multiCountyFilter === null)
+            throw new Error("The parameter 'multiCountyFilter' cannot be null.");
+        else if (multiCountyFilter !== undefined)
+            url_ += "MultiCountyFilter=" + encodeURIComponent("" + multiCountyFilter) + "&";
+        if (otherPopulationFilter === null)
+            throw new Error("The parameter 'otherPopulationFilter' cannot be null.");
+        else if (otherPopulationFilter !== undefined)
+            url_ += "OtherPopulationFilter=" + encodeURIComponent("" + otherPopulationFilter) + "&";
+        if (pMSAFilter === null)
+            throw new Error("The parameter 'pMSAFilter' cannot be null.");
+        else if (pMSAFilter !== undefined)
+            url_ += "PMSAFilter=" + encodeURIComponent("" + pMSAFilter) + "&";
+        if (pMSA_NameFilter === null)
+            throw new Error("The parameter 'pMSA_NameFilter' cannot be null.");
+        else if (pMSA_NameFilter !== undefined)
+            url_ += "PMSA_NameFilter=" + encodeURIComponent("" + pMSA_NameFilter) + "&";
+        if (personsPerHouseholdFilter === null)
+            throw new Error("The parameter 'personsPerHouseholdFilter' cannot be null.");
+        else if (personsPerHouseholdFilter !== undefined)
+            url_ += "PersonsPerHouseholdFilter=" + encodeURIComponent("" + personsPerHouseholdFilter) + "&";
+        if (populationFilter === null)
+            throw new Error("The parameter 'populationFilter' cannot be null.");
+        else if (populationFilter !== undefined)
+            url_ += "PopulationFilter=" + encodeURIComponent("" + populationFilter) + "&";
+        if (preferredLastLineKeyFilter === null)
+            throw new Error("The parameter 'preferredLastLineKeyFilter' cannot be null.");
+        else if (preferredLastLineKeyFilter !== undefined)
+            url_ += "PreferredLastLineKeyFilter=" + encodeURIComponent("" + preferredLastLineKeyFilter) + "&";
+        if (primaryRecordFilter === null)
+            throw new Error("The parameter 'primaryRecordFilter' cannot be null.");
+        else if (primaryRecordFilter !== undefined)
+            url_ += "PrimaryRecordFilter=" + encodeURIComponent("" + primaryRecordFilter) + "&";
+        if (regionFilter === null)
+            throw new Error("The parameter 'regionFilter' cannot be null.");
+        else if (regionFilter !== undefined)
+            url_ += "RegionFilter=" + encodeURIComponent("" + regionFilter) + "&";
+        if (stateFilter === null)
+            throw new Error("The parameter 'stateFilter' cannot be null.");
+        else if (stateFilter !== undefined)
+            url_ += "StateFilter=" + encodeURIComponent("" + stateFilter) + "&";
+        if (stateANSIFilter === null)
+            throw new Error("The parameter 'stateANSIFilter' cannot be null.");
+        else if (stateANSIFilter !== undefined)
+            url_ += "StateANSIFilter=" + encodeURIComponent("" + stateANSIFilter) + "&";
+        if (stateFIPSFilter === null)
+            throw new Error("The parameter 'stateFIPSFilter' cannot be null.");
+        else if (stateFIPSFilter !== undefined)
+            url_ += "StateFIPSFilter=" + encodeURIComponent("" + stateFIPSFilter) + "&";
+        if (stateFullNameFilter === null)
+            throw new Error("The parameter 'stateFullNameFilter' cannot be null.");
+        else if (stateFullNameFilter !== undefined)
+            url_ += "StateFullNameFilter=" + encodeURIComponent("" + stateFullNameFilter) + "&";
+        if (timeZoneFilter === null)
+            throw new Error("The parameter 'timeZoneFilter' cannot be null.");
+        else if (timeZoneFilter !== undefined)
+            url_ += "TimeZoneFilter=" + encodeURIComponent("" + timeZoneFilter) + "&";
+        if (uniqueZIPNameFilter === null)
+            throw new Error("The parameter 'uniqueZIPNameFilter' cannot be null.");
+        else if (uniqueZIPNameFilter !== undefined)
+            url_ += "UniqueZIPNameFilter=" + encodeURIComponent("" + uniqueZIPNameFilter) + "&";
+        if (whitePopulationFilter === null)
+            throw new Error("The parameter 'whitePopulationFilter' cannot be null.");
+        else if (whitePopulationFilter !== undefined)
+            url_ += "WhitePopulationFilter=" + encodeURIComponent("" + whitePopulationFilter) + "&";
+        if (countryNameFilter === null)
+            throw new Error("The parameter 'countryNameFilter' cannot be null.");
+        else if (countryNameFilter !== undefined)
+            url_ += "CountryNameFilter=" + encodeURIComponent("" + countryNameFilter) + "&";
+        if (stateNameFilter === null)
+            throw new Error("The parameter 'stateNameFilter' cannot be null.");
+        else if (stateNameFilter !== undefined)
+            url_ += "StateNameFilter=" + encodeURIComponent("" + stateNameFilter) + "&";
+        if (cityNameFilter === null)
+            throw new Error("The parameter 'cityNameFilter' cannot be null.");
+        else if (cityNameFilter !== undefined)
+            url_ += "CityNameFilter=" + encodeURIComponent("" + cityNameFilter) + "&";
+        if (countyNameFilter === null)
+            throw new Error("The parameter 'countyNameFilter' cannot be null.");
+        else if (countyNameFilter !== undefined)
+            url_ += "CountyNameFilter=" + encodeURIComponent("" + countyNameFilter) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetZipCodesToExcel(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetZipCodesToExcel(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<FileDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<FileDto>;
+        }));
+    }
+
+    protected processGetZipCodesToExcel(response: HttpResponseBase): Observable<FileDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = FileDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @return Success
+     */
+    getAllCountryForTableDropdown(): Observable<ZipCodeCountryLookupTableDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/ZipCodes/GetAllCountryForTableDropdown";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllCountryForTableDropdown(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllCountryForTableDropdown(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ZipCodeCountryLookupTableDto[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ZipCodeCountryLookupTableDto[]>;
+        }));
+    }
+
+    protected processGetAllCountryForTableDropdown(response: HttpResponseBase): Observable<ZipCodeCountryLookupTableDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(ZipCodeCountryLookupTableDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @return Success
+     */
+    getAllStateForTableDropdown(): Observable<ZipCodeStateLookupTableDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/ZipCodes/GetAllStateForTableDropdown";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllStateForTableDropdown(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllStateForTableDropdown(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ZipCodeStateLookupTableDto[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ZipCodeStateLookupTableDto[]>;
+        }));
+    }
+
+    protected processGetAllStateForTableDropdown(response: HttpResponseBase): Observable<ZipCodeStateLookupTableDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(ZipCodeStateLookupTableDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @return Success
+     */
+    getAllCityForTableDropdown(): Observable<ZipCodeCityLookupTableDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/ZipCodes/GetAllCityForTableDropdown";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllCityForTableDropdown(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllCityForTableDropdown(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ZipCodeCityLookupTableDto[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ZipCodeCityLookupTableDto[]>;
+        }));
+    }
+
+    protected processGetAllCityForTableDropdown(response: HttpResponseBase): Observable<ZipCodeCityLookupTableDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(ZipCodeCityLookupTableDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @return Success
+     */
+    getAllCountyForTableDropdown(): Observable<ZipCodeCountyLookupTableDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/ZipCodes/GetAllCountyForTableDropdown";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllCountyForTableDropdown(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllCountyForTableDropdown(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ZipCodeCountyLookupTableDto[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ZipCodeCountyLookupTableDto[]>;
+        }));
+    }
+
+    protected processGetAllCountyForTableDropdown(response: HttpResponseBase): Observable<ZipCodeCountyLookupTableDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(ZipCodeCountyLookupTableDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+}
+
 export enum AbpLoginResultType {
     Success = 1,
     InvalidUserNameOrEmailAddress = 2,
@@ -16490,6 +22763,178 @@ export interface ICheckDatabaseOutput {
     isDatabaseExist: boolean;
 }
 
+export class CityCountryLookupTableDto implements ICityCountryLookupTableDto {
+    id!: number;
+    displayName!: string | undefined;
+
+    constructor(data?: ICityCountryLookupTableDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.displayName = _data["displayName"];
+        }
+    }
+
+    static fromJS(data: any): CityCountryLookupTableDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CityCountryLookupTableDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["displayName"] = this.displayName;
+        return data;
+    }
+}
+
+export interface ICityCountryLookupTableDto {
+    id: number;
+    displayName: string | undefined;
+}
+
+export class CityCountyLookupTableDto implements ICityCountyLookupTableDto {
+    id!: number;
+    displayName!: string | undefined;
+
+    constructor(data?: ICityCountyLookupTableDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.displayName = _data["displayName"];
+        }
+    }
+
+    static fromJS(data: any): CityCountyLookupTableDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CityCountyLookupTableDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["displayName"] = this.displayName;
+        return data;
+    }
+}
+
+export interface ICityCountyLookupTableDto {
+    id: number;
+    displayName: string | undefined;
+}
+
+export class CityDto implements ICityDto {
+    name!: string | undefined;
+    countryId!: number | undefined;
+    stateId!: number | undefined;
+    countyId!: number | undefined;
+    id!: number;
+
+    constructor(data?: ICityDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"];
+            this.countryId = _data["countryId"];
+            this.stateId = _data["stateId"];
+            this.countyId = _data["countyId"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): CityDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CityDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["countryId"] = this.countryId;
+        data["stateId"] = this.stateId;
+        data["countyId"] = this.countyId;
+        data["id"] = this.id;
+        return data;
+    }
+}
+
+export interface ICityDto {
+    name: string | undefined;
+    countryId: number | undefined;
+    stateId: number | undefined;
+    countyId: number | undefined;
+    id: number;
+}
+
+export class CityStateLookupTableDto implements ICityStateLookupTableDto {
+    id!: number;
+    displayName!: string | undefined;
+
+    constructor(data?: ICityStateLookupTableDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.displayName = _data["displayName"];
+        }
+    }
+
+    static fromJS(data: any): CityStateLookupTableDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CityStateLookupTableDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["displayName"] = this.displayName;
+        return data;
+    }
+}
+
+export interface ICityStateLookupTableDto {
+    id: number;
+    displayName: string | undefined;
+}
+
 export class CleanValuesInput implements ICleanValuesInput {
     dynamicEntityPropertyId!: number;
     entityId!: string | undefined;
@@ -16572,6 +23017,226 @@ export interface IComboboxItemDto {
     value: string | undefined;
     displayText: string | undefined;
     isSelected: boolean;
+}
+
+export class ConnectChannelDto implements IConnectChannelDto {
+    name!: string | undefined;
+    id!: number;
+
+    constructor(data?: IConnectChannelDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): ConnectChannelDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ConnectChannelDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["id"] = this.id;
+        return data;
+    }
+}
+
+export interface IConnectChannelDto {
+    name: string | undefined;
+    id: number;
+}
+
+export class CountryDto implements ICountryDto {
+    name!: string | undefined;
+    ticker!: string | undefined;
+    flagIcon!: string | undefined;
+    phoneCode!: string | undefined;
+    id!: number;
+
+    constructor(data?: ICountryDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"];
+            this.ticker = _data["ticker"];
+            this.flagIcon = _data["flagIcon"];
+            this.phoneCode = _data["phoneCode"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): CountryDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CountryDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["ticker"] = this.ticker;
+        data["flagIcon"] = this.flagIcon;
+        data["phoneCode"] = this.phoneCode;
+        data["id"] = this.id;
+        return data;
+    }
+}
+
+export interface ICountryDto {
+    name: string | undefined;
+    ticker: string | undefined;
+    flagIcon: string | undefined;
+    phoneCode: string | undefined;
+    id: number;
+}
+
+export class CountyCountryLookupTableDto implements ICountyCountryLookupTableDto {
+    id!: number;
+    displayName!: string | undefined;
+
+    constructor(data?: ICountyCountryLookupTableDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.displayName = _data["displayName"];
+        }
+    }
+
+    static fromJS(data: any): CountyCountryLookupTableDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CountyCountryLookupTableDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["displayName"] = this.displayName;
+        return data;
+    }
+}
+
+export interface ICountyCountryLookupTableDto {
+    id: number;
+    displayName: string | undefined;
+}
+
+export class CountyDto implements ICountyDto {
+    name!: string | undefined;
+    countryId!: number | undefined;
+    stateId!: number | undefined;
+    id!: number;
+
+    constructor(data?: ICountyDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"];
+            this.countryId = _data["countryId"];
+            this.stateId = _data["stateId"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): CountyDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CountyDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["countryId"] = this.countryId;
+        data["stateId"] = this.stateId;
+        data["id"] = this.id;
+        return data;
+    }
+}
+
+export interface ICountyDto {
+    name: string | undefined;
+    countryId: number | undefined;
+    stateId: number | undefined;
+    id: number;
+}
+
+export class CountyStateLookupTableDto implements ICountyStateLookupTableDto {
+    id!: number;
+    displayName!: string | undefined;
+
+    constructor(data?: ICountyStateLookupTableDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.displayName = _data["displayName"];
+        }
+    }
+
+    static fromJS(data: any): CountyStateLookupTableDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CountyStateLookupTableDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["displayName"] = this.displayName;
+        return data;
+    }
+}
+
+export interface ICountyStateLookupTableDto {
+    id: number;
+    displayName: string | undefined;
 }
 
 export class CreateEditionDto implements ICreateEditionDto {
@@ -16816,6 +23481,874 @@ export interface ICreateMassNotificationInput {
     userIds: number[] | undefined;
     organizationUnitIds: number[] | undefined;
     targetNotifiers: string[] | undefined;
+}
+
+export class CreateOrEditCityDto implements ICreateOrEditCityDto {
+    name!: string;
+    countryId!: number | undefined;
+    stateId!: number | undefined;
+    countyId!: number | undefined;
+    id!: number | undefined;
+
+    constructor(data?: ICreateOrEditCityDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"];
+            this.countryId = _data["countryId"];
+            this.stateId = _data["stateId"];
+            this.countyId = _data["countyId"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): CreateOrEditCityDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateOrEditCityDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["countryId"] = this.countryId;
+        data["stateId"] = this.stateId;
+        data["countyId"] = this.countyId;
+        data["id"] = this.id;
+        return data;
+    }
+}
+
+export interface ICreateOrEditCityDto {
+    name: string;
+    countryId: number | undefined;
+    stateId: number | undefined;
+    countyId: number | undefined;
+    id: number | undefined;
+}
+
+export class CreateOrEditConnectChannelDto implements ICreateOrEditConnectChannelDto {
+    name!: string | undefined;
+    id!: number | undefined;
+
+    constructor(data?: ICreateOrEditConnectChannelDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): CreateOrEditConnectChannelDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateOrEditConnectChannelDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["id"] = this.id;
+        return data;
+    }
+}
+
+export interface ICreateOrEditConnectChannelDto {
+    name: string | undefined;
+    id: number | undefined;
+}
+
+export class CreateOrEditCountryDto implements ICreateOrEditCountryDto {
+    name!: string;
+    ticker!: string | undefined;
+    flagIcon!: string | undefined;
+    phoneCode!: string | undefined;
+    id!: number | undefined;
+
+    constructor(data?: ICreateOrEditCountryDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"];
+            this.ticker = _data["ticker"];
+            this.flagIcon = _data["flagIcon"];
+            this.phoneCode = _data["phoneCode"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): CreateOrEditCountryDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateOrEditCountryDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["ticker"] = this.ticker;
+        data["flagIcon"] = this.flagIcon;
+        data["phoneCode"] = this.phoneCode;
+        data["id"] = this.id;
+        return data;
+    }
+}
+
+export interface ICreateOrEditCountryDto {
+    name: string;
+    ticker: string | undefined;
+    flagIcon: string | undefined;
+    phoneCode: string | undefined;
+    id: number | undefined;
+}
+
+export class CreateOrEditCountyDto implements ICreateOrEditCountyDto {
+    name!: string;
+    countryId!: number | undefined;
+    stateId!: number | undefined;
+    id!: number | undefined;
+
+    constructor(data?: ICreateOrEditCountyDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"];
+            this.countryId = _data["countryId"];
+            this.stateId = _data["stateId"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): CreateOrEditCountyDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateOrEditCountyDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["countryId"] = this.countryId;
+        data["stateId"] = this.stateId;
+        data["id"] = this.id;
+        return data;
+    }
+}
+
+export interface ICreateOrEditCountyDto {
+    name: string;
+    countryId: number | undefined;
+    stateId: number | undefined;
+    id: number | undefined;
+}
+
+export class CreateOrEditCurrencyDto implements ICreateOrEditCurrencyDto {
+    name!: string;
+    ticker!: string | undefined;
+    icon!: string | undefined;
+    id!: number | undefined;
+
+    constructor(data?: ICreateOrEditCurrencyDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"];
+            this.ticker = _data["ticker"];
+            this.icon = _data["icon"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): CreateOrEditCurrencyDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateOrEditCurrencyDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["ticker"] = this.ticker;
+        data["icon"] = this.icon;
+        data["id"] = this.id;
+        return data;
+    }
+}
+
+export interface ICreateOrEditCurrencyDto {
+    name: string;
+    ticker: string | undefined;
+    icon: string | undefined;
+    id: number | undefined;
+}
+
+export class CreateOrEditEmailTemplateDto implements ICreateOrEditEmailTemplateDto {
+    subject!: string;
+    content!: string;
+    published!: boolean;
+    id!: number | undefined;
+
+    constructor(data?: ICreateOrEditEmailTemplateDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.subject = _data["subject"];
+            this.content = _data["content"];
+            this.published = _data["published"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): CreateOrEditEmailTemplateDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateOrEditEmailTemplateDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["subject"] = this.subject;
+        data["content"] = this.content;
+        data["published"] = this.published;
+        data["id"] = this.id;
+        return data;
+    }
+}
+
+export interface ICreateOrEditEmailTemplateDto {
+    subject: string;
+    content: string;
+    published: boolean;
+    id: number | undefined;
+}
+
+export class CreateOrEditMasterTagCategoryDto implements ICreateOrEditMasterTagCategoryDto {
+    name!: string;
+    description!: string | undefined;
+    pictureId!: string;
+    id!: number | undefined;
+
+    constructor(data?: ICreateOrEditMasterTagCategoryDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"];
+            this.description = _data["description"];
+            this.pictureId = _data["pictureId"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): CreateOrEditMasterTagCategoryDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateOrEditMasterTagCategoryDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["description"] = this.description;
+        data["pictureId"] = this.pictureId;
+        data["id"] = this.id;
+        return data;
+    }
+}
+
+export interface ICreateOrEditMasterTagCategoryDto {
+    name: string;
+    description: string | undefined;
+    pictureId: string;
+    id: number | undefined;
+}
+
+export class CreateOrEditMasterTagDto implements ICreateOrEditMasterTagDto {
+    name!: string;
+    description!: string | undefined;
+    synonyms!: string | undefined;
+    pictureId!: string;
+    displaySequence!: number | undefined;
+    masterTagCategoryId!: number;
+    id!: number | undefined;
+
+    constructor(data?: ICreateOrEditMasterTagDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"];
+            this.description = _data["description"];
+            this.synonyms = _data["synonyms"];
+            this.pictureId = _data["pictureId"];
+            this.displaySequence = _data["displaySequence"];
+            this.masterTagCategoryId = _data["masterTagCategoryId"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): CreateOrEditMasterTagDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateOrEditMasterTagDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["description"] = this.description;
+        data["synonyms"] = this.synonyms;
+        data["pictureId"] = this.pictureId;
+        data["displaySequence"] = this.displaySequence;
+        data["masterTagCategoryId"] = this.masterTagCategoryId;
+        data["id"] = this.id;
+        return data;
+    }
+}
+
+export interface ICreateOrEditMasterTagDto {
+    name: string;
+    description: string | undefined;
+    synonyms: string | undefined;
+    pictureId: string;
+    displaySequence: number | undefined;
+    masterTagCategoryId: number;
+    id: number | undefined;
+}
+
+export class CreateOrEditMeasurementUnitDto implements ICreateOrEditMeasurementUnitDto {
+    name!: string;
+    id!: number | undefined;
+
+    constructor(data?: ICreateOrEditMeasurementUnitDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): CreateOrEditMeasurementUnitDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateOrEditMeasurementUnitDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["id"] = this.id;
+        return data;
+    }
+}
+
+export interface ICreateOrEditMeasurementUnitDto {
+    name: string;
+    id: number | undefined;
+}
+
+export class CreateOrEditRatingLikeDto implements ICreateOrEditRatingLikeDto {
+    name!: string;
+    score!: number | undefined;
+    iconLink!: string | undefined;
+    id!: number | undefined;
+
+    constructor(data?: ICreateOrEditRatingLikeDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"];
+            this.score = _data["score"];
+            this.iconLink = _data["iconLink"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): CreateOrEditRatingLikeDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateOrEditRatingLikeDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["score"] = this.score;
+        data["iconLink"] = this.iconLink;
+        data["id"] = this.id;
+        return data;
+    }
+}
+
+export interface ICreateOrEditRatingLikeDto {
+    name: string;
+    score: number | undefined;
+    iconLink: string | undefined;
+    id: number | undefined;
+}
+
+export class CreateOrEditSmsTemplateDto implements ICreateOrEditSmsTemplateDto {
+    title!: string;
+    content!: string;
+    published!: boolean;
+    id!: number | undefined;
+
+    constructor(data?: ICreateOrEditSmsTemplateDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.title = _data["title"];
+            this.content = _data["content"];
+            this.published = _data["published"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): CreateOrEditSmsTemplateDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateOrEditSmsTemplateDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["title"] = this.title;
+        data["content"] = this.content;
+        data["published"] = this.published;
+        data["id"] = this.id;
+        return data;
+    }
+}
+
+export interface ICreateOrEditSmsTemplateDto {
+    title: string;
+    content: string;
+    published: boolean;
+    id: number | undefined;
+}
+
+export class CreateOrEditStateDto implements ICreateOrEditStateDto {
+    name!: string;
+    ticker!: string | undefined;
+    countryId!: number;
+    id!: number | undefined;
+
+    constructor(data?: ICreateOrEditStateDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"];
+            this.ticker = _data["ticker"];
+            this.countryId = _data["countryId"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): CreateOrEditStateDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateOrEditStateDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["ticker"] = this.ticker;
+        data["countryId"] = this.countryId;
+        data["id"] = this.id;
+        return data;
+    }
+}
+
+export interface ICreateOrEditStateDto {
+    name: string;
+    ticker: string | undefined;
+    countryId: number;
+    id: number | undefined;
+}
+
+export class CreateOrEditZipCodeDto implements ICreateOrEditZipCodeDto {
+    name!: string;
+    areaCode!: string | undefined;
+    asianPopulation!: string | undefined;
+    averageHouseValue!: string | undefined;
+    blackPopulation!: string | undefined;
+    cbsa!: string | undefined;
+    cbsA_Div!: string | undefined;
+    cbsA_Div_Name!: string | undefined;
+    cbsA_Name!: string | undefined;
+    cbsA_Type!: string | undefined;
+    csa!: string | undefined;
+    csaName!: string | undefined;
+    carrierRouteRateSortation!: string | undefined;
+    city!: string | undefined;
+    cityAliasCode!: string | undefined;
+    cityAliasMixedCase!: string | undefined;
+    cityAliasName!: string | undefined;
+    cityDeliveryIndicator!: string | undefined;
+    cityMixedCase!: string | undefined;
+    cityStateKey!: string | undefined;
+    cityType!: string | undefined;
+    classificationCode!: string | undefined;
+    county!: string | undefined;
+    countyANSI!: string | undefined;
+    countyFIPS!: string | undefined;
+    countyMixedCase!: string | undefined;
+    dayLightSaving!: string | undefined;
+    division!: string | undefined;
+    elevation!: string | undefined;
+    facilityCode!: string | undefined;
+    femalePopulation!: string | undefined;
+    financeNumber!: string | undefined;
+    hawaiianPopulation!: string | undefined;
+    hispanicPopulation!: string | undefined;
+    householdsPerZipCode!: string | undefined;
+    incomePerHousehold!: string | undefined;
+    indianPopulation!: string | undefined;
+    latitude!: string | undefined;
+    longitude!: string | undefined;
+    msa!: string | undefined;
+    msA_Name!: string | undefined;
+    mailingName!: string | undefined;
+    malePopulation!: string | undefined;
+    multiCounty!: string | undefined;
+    otherPopulation!: string | undefined;
+    pmsa!: string | undefined;
+    pmsA_Name!: string | undefined;
+    personsPerHousehold!: string | undefined;
+    population!: string | undefined;
+    preferredLastLineKey!: string | undefined;
+    primaryRecord!: string | undefined;
+    region!: string | undefined;
+    state!: string | undefined;
+    stateANSI!: string | undefined;
+    stateFIPS!: string | undefined;
+    stateFullName!: string | undefined;
+    timeZone!: string | undefined;
+    uniqueZIPName!: string | undefined;
+    whitePopulation!: string | undefined;
+    countryId!: number | undefined;
+    stateId!: number | undefined;
+    cityId!: number | undefined;
+    countyId!: number | undefined;
+    id!: number | undefined;
+
+    constructor(data?: ICreateOrEditZipCodeDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"];
+            this.areaCode = _data["areaCode"];
+            this.asianPopulation = _data["asianPopulation"];
+            this.averageHouseValue = _data["averageHouseValue"];
+            this.blackPopulation = _data["blackPopulation"];
+            this.cbsa = _data["cbsa"];
+            this.cbsA_Div = _data["cbsA_Div"];
+            this.cbsA_Div_Name = _data["cbsA_Div_Name"];
+            this.cbsA_Name = _data["cbsA_Name"];
+            this.cbsA_Type = _data["cbsA_Type"];
+            this.csa = _data["csa"];
+            this.csaName = _data["csaName"];
+            this.carrierRouteRateSortation = _data["carrierRouteRateSortation"];
+            this.city = _data["city"];
+            this.cityAliasCode = _data["cityAliasCode"];
+            this.cityAliasMixedCase = _data["cityAliasMixedCase"];
+            this.cityAliasName = _data["cityAliasName"];
+            this.cityDeliveryIndicator = _data["cityDeliveryIndicator"];
+            this.cityMixedCase = _data["cityMixedCase"];
+            this.cityStateKey = _data["cityStateKey"];
+            this.cityType = _data["cityType"];
+            this.classificationCode = _data["classificationCode"];
+            this.county = _data["county"];
+            this.countyANSI = _data["countyANSI"];
+            this.countyFIPS = _data["countyFIPS"];
+            this.countyMixedCase = _data["countyMixedCase"];
+            this.dayLightSaving = _data["dayLightSaving"];
+            this.division = _data["division"];
+            this.elevation = _data["elevation"];
+            this.facilityCode = _data["facilityCode"];
+            this.femalePopulation = _data["femalePopulation"];
+            this.financeNumber = _data["financeNumber"];
+            this.hawaiianPopulation = _data["hawaiianPopulation"];
+            this.hispanicPopulation = _data["hispanicPopulation"];
+            this.householdsPerZipCode = _data["householdsPerZipCode"];
+            this.incomePerHousehold = _data["incomePerHousehold"];
+            this.indianPopulation = _data["indianPopulation"];
+            this.latitude = _data["latitude"];
+            this.longitude = _data["longitude"];
+            this.msa = _data["msa"];
+            this.msA_Name = _data["msA_Name"];
+            this.mailingName = _data["mailingName"];
+            this.malePopulation = _data["malePopulation"];
+            this.multiCounty = _data["multiCounty"];
+            this.otherPopulation = _data["otherPopulation"];
+            this.pmsa = _data["pmsa"];
+            this.pmsA_Name = _data["pmsA_Name"];
+            this.personsPerHousehold = _data["personsPerHousehold"];
+            this.population = _data["population"];
+            this.preferredLastLineKey = _data["preferredLastLineKey"];
+            this.primaryRecord = _data["primaryRecord"];
+            this.region = _data["region"];
+            this.state = _data["state"];
+            this.stateANSI = _data["stateANSI"];
+            this.stateFIPS = _data["stateFIPS"];
+            this.stateFullName = _data["stateFullName"];
+            this.timeZone = _data["timeZone"];
+            this.uniqueZIPName = _data["uniqueZIPName"];
+            this.whitePopulation = _data["whitePopulation"];
+            this.countryId = _data["countryId"];
+            this.stateId = _data["stateId"];
+            this.cityId = _data["cityId"];
+            this.countyId = _data["countyId"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): CreateOrEditZipCodeDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateOrEditZipCodeDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["areaCode"] = this.areaCode;
+        data["asianPopulation"] = this.asianPopulation;
+        data["averageHouseValue"] = this.averageHouseValue;
+        data["blackPopulation"] = this.blackPopulation;
+        data["cbsa"] = this.cbsa;
+        data["cbsA_Div"] = this.cbsA_Div;
+        data["cbsA_Div_Name"] = this.cbsA_Div_Name;
+        data["cbsA_Name"] = this.cbsA_Name;
+        data["cbsA_Type"] = this.cbsA_Type;
+        data["csa"] = this.csa;
+        data["csaName"] = this.csaName;
+        data["carrierRouteRateSortation"] = this.carrierRouteRateSortation;
+        data["city"] = this.city;
+        data["cityAliasCode"] = this.cityAliasCode;
+        data["cityAliasMixedCase"] = this.cityAliasMixedCase;
+        data["cityAliasName"] = this.cityAliasName;
+        data["cityDeliveryIndicator"] = this.cityDeliveryIndicator;
+        data["cityMixedCase"] = this.cityMixedCase;
+        data["cityStateKey"] = this.cityStateKey;
+        data["cityType"] = this.cityType;
+        data["classificationCode"] = this.classificationCode;
+        data["county"] = this.county;
+        data["countyANSI"] = this.countyANSI;
+        data["countyFIPS"] = this.countyFIPS;
+        data["countyMixedCase"] = this.countyMixedCase;
+        data["dayLightSaving"] = this.dayLightSaving;
+        data["division"] = this.division;
+        data["elevation"] = this.elevation;
+        data["facilityCode"] = this.facilityCode;
+        data["femalePopulation"] = this.femalePopulation;
+        data["financeNumber"] = this.financeNumber;
+        data["hawaiianPopulation"] = this.hawaiianPopulation;
+        data["hispanicPopulation"] = this.hispanicPopulation;
+        data["householdsPerZipCode"] = this.householdsPerZipCode;
+        data["incomePerHousehold"] = this.incomePerHousehold;
+        data["indianPopulation"] = this.indianPopulation;
+        data["latitude"] = this.latitude;
+        data["longitude"] = this.longitude;
+        data["msa"] = this.msa;
+        data["msA_Name"] = this.msA_Name;
+        data["mailingName"] = this.mailingName;
+        data["malePopulation"] = this.malePopulation;
+        data["multiCounty"] = this.multiCounty;
+        data["otherPopulation"] = this.otherPopulation;
+        data["pmsa"] = this.pmsa;
+        data["pmsA_Name"] = this.pmsA_Name;
+        data["personsPerHousehold"] = this.personsPerHousehold;
+        data["population"] = this.population;
+        data["preferredLastLineKey"] = this.preferredLastLineKey;
+        data["primaryRecord"] = this.primaryRecord;
+        data["region"] = this.region;
+        data["state"] = this.state;
+        data["stateANSI"] = this.stateANSI;
+        data["stateFIPS"] = this.stateFIPS;
+        data["stateFullName"] = this.stateFullName;
+        data["timeZone"] = this.timeZone;
+        data["uniqueZIPName"] = this.uniqueZIPName;
+        data["whitePopulation"] = this.whitePopulation;
+        data["countryId"] = this.countryId;
+        data["stateId"] = this.stateId;
+        data["cityId"] = this.cityId;
+        data["countyId"] = this.countyId;
+        data["id"] = this.id;
+        return data;
+    }
+}
+
+export interface ICreateOrEditZipCodeDto {
+    name: string;
+    areaCode: string | undefined;
+    asianPopulation: string | undefined;
+    averageHouseValue: string | undefined;
+    blackPopulation: string | undefined;
+    cbsa: string | undefined;
+    cbsA_Div: string | undefined;
+    cbsA_Div_Name: string | undefined;
+    cbsA_Name: string | undefined;
+    cbsA_Type: string | undefined;
+    csa: string | undefined;
+    csaName: string | undefined;
+    carrierRouteRateSortation: string | undefined;
+    city: string | undefined;
+    cityAliasCode: string | undefined;
+    cityAliasMixedCase: string | undefined;
+    cityAliasName: string | undefined;
+    cityDeliveryIndicator: string | undefined;
+    cityMixedCase: string | undefined;
+    cityStateKey: string | undefined;
+    cityType: string | undefined;
+    classificationCode: string | undefined;
+    county: string | undefined;
+    countyANSI: string | undefined;
+    countyFIPS: string | undefined;
+    countyMixedCase: string | undefined;
+    dayLightSaving: string | undefined;
+    division: string | undefined;
+    elevation: string | undefined;
+    facilityCode: string | undefined;
+    femalePopulation: string | undefined;
+    financeNumber: string | undefined;
+    hawaiianPopulation: string | undefined;
+    hispanicPopulation: string | undefined;
+    householdsPerZipCode: string | undefined;
+    incomePerHousehold: string | undefined;
+    indianPopulation: string | undefined;
+    latitude: string | undefined;
+    longitude: string | undefined;
+    msa: string | undefined;
+    msA_Name: string | undefined;
+    mailingName: string | undefined;
+    malePopulation: string | undefined;
+    multiCounty: string | undefined;
+    otherPopulation: string | undefined;
+    pmsa: string | undefined;
+    pmsA_Name: string | undefined;
+    personsPerHousehold: string | undefined;
+    population: string | undefined;
+    preferredLastLineKey: string | undefined;
+    primaryRecord: string | undefined;
+    region: string | undefined;
+    state: string | undefined;
+    stateANSI: string | undefined;
+    stateFIPS: string | undefined;
+    stateFullName: string | undefined;
+    timeZone: string | undefined;
+    uniqueZIPName: string | undefined;
+    whitePopulation: string | undefined;
+    countryId: number | undefined;
+    stateId: number | undefined;
+    cityId: number | undefined;
+    countyId: number | undefined;
+    id: number | undefined;
 }
 
 export class CreateOrUpdateLanguageInput implements ICreateOrUpdateLanguageInput {
@@ -17207,6 +24740,54 @@ export interface ICreateUserDelegationDto {
     targetUserId: number;
     startTime: DateTime;
     endTime: DateTime;
+}
+
+export class CurrencyDto implements ICurrencyDto {
+    name!: string | undefined;
+    ticker!: string | undefined;
+    icon!: string | undefined;
+    id!: number;
+
+    constructor(data?: ICurrencyDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"];
+            this.ticker = _data["ticker"];
+            this.icon = _data["icon"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): CurrencyDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CurrencyDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["ticker"] = this.ticker;
+        data["icon"] = this.icon;
+        data["id"] = this.id;
+        return data;
+    }
+}
+
+export interface ICurrencyDto {
+    name: string | undefined;
+    ticker: string | undefined;
+    icon: string | undefined;
+    id: number;
 }
 
 export class CurrentUserProfileEditDto implements ICurrentUserProfileEditDto {
@@ -18226,6 +25807,54 @@ export interface IEmailSettingsEditDto {
     smtpDomain: string | undefined;
     smtpEnableSsl: boolean;
     smtpUseDefaultCredentials: boolean;
+}
+
+export class EmailTemplateDto implements IEmailTemplateDto {
+    subject!: string | undefined;
+    content!: string | undefined;
+    published!: boolean;
+    id!: number;
+
+    constructor(data?: IEmailTemplateDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.subject = _data["subject"];
+            this.content = _data["content"];
+            this.published = _data["published"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): EmailTemplateDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new EmailTemplateDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["subject"] = this.subject;
+        data["content"] = this.content;
+        data["published"] = this.published;
+        data["id"] = this.id;
+        return data;
+    }
+}
+
+export interface IEmailTemplateDto {
+    subject: string | undefined;
+    content: string | undefined;
+    published: boolean;
+    id: number;
 }
 
 export class EntityChangeListDto implements IEntityChangeListDto {
@@ -19891,6 +27520,406 @@ export interface IGetAllSubscriptionsOutput {
     id: string;
 }
 
+export class GetCityForEditOutput implements IGetCityForEditOutput {
+    city!: CreateOrEditCityDto;
+    countryName!: string | undefined;
+    stateName!: string | undefined;
+    countyName!: string | undefined;
+
+    constructor(data?: IGetCityForEditOutput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.city = _data["city"] ? CreateOrEditCityDto.fromJS(_data["city"]) : <any>undefined;
+            this.countryName = _data["countryName"];
+            this.stateName = _data["stateName"];
+            this.countyName = _data["countyName"];
+        }
+    }
+
+    static fromJS(data: any): GetCityForEditOutput {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetCityForEditOutput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["city"] = this.city ? this.city.toJSON() : <any>undefined;
+        data["countryName"] = this.countryName;
+        data["stateName"] = this.stateName;
+        data["countyName"] = this.countyName;
+        return data;
+    }
+}
+
+export interface IGetCityForEditOutput {
+    city: CreateOrEditCityDto;
+    countryName: string | undefined;
+    stateName: string | undefined;
+    countyName: string | undefined;
+}
+
+export class GetCityForViewDto implements IGetCityForViewDto {
+    city!: CityDto;
+    countryName!: string | undefined;
+    stateName!: string | undefined;
+    countyName!: string | undefined;
+
+    constructor(data?: IGetCityForViewDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.city = _data["city"] ? CityDto.fromJS(_data["city"]) : <any>undefined;
+            this.countryName = _data["countryName"];
+            this.stateName = _data["stateName"];
+            this.countyName = _data["countyName"];
+        }
+    }
+
+    static fromJS(data: any): GetCityForViewDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetCityForViewDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["city"] = this.city ? this.city.toJSON() : <any>undefined;
+        data["countryName"] = this.countryName;
+        data["stateName"] = this.stateName;
+        data["countyName"] = this.countyName;
+        return data;
+    }
+}
+
+export interface IGetCityForViewDto {
+    city: CityDto;
+    countryName: string | undefined;
+    stateName: string | undefined;
+    countyName: string | undefined;
+}
+
+export class GetConnectChannelForEditOutput implements IGetConnectChannelForEditOutput {
+    connectChannel!: CreateOrEditConnectChannelDto;
+
+    constructor(data?: IGetConnectChannelForEditOutput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.connectChannel = _data["connectChannel"] ? CreateOrEditConnectChannelDto.fromJS(_data["connectChannel"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): GetConnectChannelForEditOutput {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetConnectChannelForEditOutput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["connectChannel"] = this.connectChannel ? this.connectChannel.toJSON() : <any>undefined;
+        return data;
+    }
+}
+
+export interface IGetConnectChannelForEditOutput {
+    connectChannel: CreateOrEditConnectChannelDto;
+}
+
+export class GetConnectChannelForViewDto implements IGetConnectChannelForViewDto {
+    connectChannel!: ConnectChannelDto;
+
+    constructor(data?: IGetConnectChannelForViewDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.connectChannel = _data["connectChannel"] ? ConnectChannelDto.fromJS(_data["connectChannel"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): GetConnectChannelForViewDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetConnectChannelForViewDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["connectChannel"] = this.connectChannel ? this.connectChannel.toJSON() : <any>undefined;
+        return data;
+    }
+}
+
+export interface IGetConnectChannelForViewDto {
+    connectChannel: ConnectChannelDto;
+}
+
+export class GetCountryForEditOutput implements IGetCountryForEditOutput {
+    country!: CreateOrEditCountryDto;
+
+    constructor(data?: IGetCountryForEditOutput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.country = _data["country"] ? CreateOrEditCountryDto.fromJS(_data["country"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): GetCountryForEditOutput {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetCountryForEditOutput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["country"] = this.country ? this.country.toJSON() : <any>undefined;
+        return data;
+    }
+}
+
+export interface IGetCountryForEditOutput {
+    country: CreateOrEditCountryDto;
+}
+
+export class GetCountryForViewDto implements IGetCountryForViewDto {
+    country!: CountryDto;
+
+    constructor(data?: IGetCountryForViewDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.country = _data["country"] ? CountryDto.fromJS(_data["country"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): GetCountryForViewDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetCountryForViewDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["country"] = this.country ? this.country.toJSON() : <any>undefined;
+        return data;
+    }
+}
+
+export interface IGetCountryForViewDto {
+    country: CountryDto;
+}
+
+export class GetCountyForEditOutput implements IGetCountyForEditOutput {
+    county!: CreateOrEditCountyDto;
+    countryName!: string | undefined;
+    stateName!: string | undefined;
+
+    constructor(data?: IGetCountyForEditOutput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.county = _data["county"] ? CreateOrEditCountyDto.fromJS(_data["county"]) : <any>undefined;
+            this.countryName = _data["countryName"];
+            this.stateName = _data["stateName"];
+        }
+    }
+
+    static fromJS(data: any): GetCountyForEditOutput {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetCountyForEditOutput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["county"] = this.county ? this.county.toJSON() : <any>undefined;
+        data["countryName"] = this.countryName;
+        data["stateName"] = this.stateName;
+        return data;
+    }
+}
+
+export interface IGetCountyForEditOutput {
+    county: CreateOrEditCountyDto;
+    countryName: string | undefined;
+    stateName: string | undefined;
+}
+
+export class GetCountyForViewDto implements IGetCountyForViewDto {
+    county!: CountyDto;
+    countryName!: string | undefined;
+    stateName!: string | undefined;
+
+    constructor(data?: IGetCountyForViewDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.county = _data["county"] ? CountyDto.fromJS(_data["county"]) : <any>undefined;
+            this.countryName = _data["countryName"];
+            this.stateName = _data["stateName"];
+        }
+    }
+
+    static fromJS(data: any): GetCountyForViewDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetCountyForViewDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["county"] = this.county ? this.county.toJSON() : <any>undefined;
+        data["countryName"] = this.countryName;
+        data["stateName"] = this.stateName;
+        return data;
+    }
+}
+
+export interface IGetCountyForViewDto {
+    county: CountyDto;
+    countryName: string | undefined;
+    stateName: string | undefined;
+}
+
+export class GetCurrencyForEditOutput implements IGetCurrencyForEditOutput {
+    currency!: CreateOrEditCurrencyDto;
+
+    constructor(data?: IGetCurrencyForEditOutput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.currency = _data["currency"] ? CreateOrEditCurrencyDto.fromJS(_data["currency"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): GetCurrencyForEditOutput {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetCurrencyForEditOutput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["currency"] = this.currency ? this.currency.toJSON() : <any>undefined;
+        return data;
+    }
+}
+
+export interface IGetCurrencyForEditOutput {
+    currency: CreateOrEditCurrencyDto;
+}
+
+export class GetCurrencyForViewDto implements IGetCurrencyForViewDto {
+    currency!: CurrencyDto;
+
+    constructor(data?: IGetCurrencyForViewDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.currency = _data["currency"] ? CurrencyDto.fromJS(_data["currency"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): GetCurrencyForViewDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetCurrencyForViewDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["currency"] = this.currency ? this.currency.toJSON() : <any>undefined;
+        return data;
+    }
+}
+
+export interface IGetCurrencyForViewDto {
+    currency: CurrencyDto;
+}
+
 export class GetCurrentLoginInformationsOutput implements IGetCurrentLoginInformationsOutput {
     user!: UserLoginInfoDto;
     impersonatorUser!: UserLoginInfoDto;
@@ -20243,6 +28272,78 @@ export interface IGetEditionTenantStatisticsOutput {
     editionStatistics: TenantEdition[] | undefined;
 }
 
+export class GetEmailTemplateForEditOutput implements IGetEmailTemplateForEditOutput {
+    emailTemplate!: CreateOrEditEmailTemplateDto;
+
+    constructor(data?: IGetEmailTemplateForEditOutput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.emailTemplate = _data["emailTemplate"] ? CreateOrEditEmailTemplateDto.fromJS(_data["emailTemplate"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): GetEmailTemplateForEditOutput {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetEmailTemplateForEditOutput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["emailTemplate"] = this.emailTemplate ? this.emailTemplate.toJSON() : <any>undefined;
+        return data;
+    }
+}
+
+export interface IGetEmailTemplateForEditOutput {
+    emailTemplate: CreateOrEditEmailTemplateDto;
+}
+
+export class GetEmailTemplateForViewDto implements IGetEmailTemplateForViewDto {
+    emailTemplate!: EmailTemplateDto;
+
+    constructor(data?: IGetEmailTemplateForViewDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.emailTemplate = _data["emailTemplate"] ? EmailTemplateDto.fromJS(_data["emailTemplate"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): GetEmailTemplateForViewDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetEmailTemplateForViewDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["emailTemplate"] = this.emailTemplate ? this.emailTemplate.toJSON() : <any>undefined;
+        return data;
+    }
+}
+
+export interface IGetEmailTemplateForViewDto {
+    emailTemplate: EmailTemplateDto;
+}
+
 export class GetExpiringTenantsOutput implements IGetExpiringTenantsOutput {
     expiringTenants!: ExpiringTenant[] | undefined;
     subscriptionEndAlertDayCount!: number;
@@ -20541,6 +28642,230 @@ export class GetLatestWebLogsOutput implements IGetLatestWebLogsOutput {
 
 export interface IGetLatestWebLogsOutput {
     latestWebLogLines: string[] | undefined;
+}
+
+export class GetMasterTagCategoryForEditOutput implements IGetMasterTagCategoryForEditOutput {
+    masterTagCategory!: CreateOrEditMasterTagCategoryDto;
+
+    constructor(data?: IGetMasterTagCategoryForEditOutput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.masterTagCategory = _data["masterTagCategory"] ? CreateOrEditMasterTagCategoryDto.fromJS(_data["masterTagCategory"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): GetMasterTagCategoryForEditOutput {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetMasterTagCategoryForEditOutput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["masterTagCategory"] = this.masterTagCategory ? this.masterTagCategory.toJSON() : <any>undefined;
+        return data;
+    }
+}
+
+export interface IGetMasterTagCategoryForEditOutput {
+    masterTagCategory: CreateOrEditMasterTagCategoryDto;
+}
+
+export class GetMasterTagCategoryForViewDto implements IGetMasterTagCategoryForViewDto {
+    masterTagCategory!: MasterTagCategoryDto;
+
+    constructor(data?: IGetMasterTagCategoryForViewDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.masterTagCategory = _data["masterTagCategory"] ? MasterTagCategoryDto.fromJS(_data["masterTagCategory"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): GetMasterTagCategoryForViewDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetMasterTagCategoryForViewDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["masterTagCategory"] = this.masterTagCategory ? this.masterTagCategory.toJSON() : <any>undefined;
+        return data;
+    }
+}
+
+export interface IGetMasterTagCategoryForViewDto {
+    masterTagCategory: MasterTagCategoryDto;
+}
+
+export class GetMasterTagForEditOutput implements IGetMasterTagForEditOutput {
+    masterTag!: CreateOrEditMasterTagDto;
+    masterTagCategoryName!: string | undefined;
+
+    constructor(data?: IGetMasterTagForEditOutput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.masterTag = _data["masterTag"] ? CreateOrEditMasterTagDto.fromJS(_data["masterTag"]) : <any>undefined;
+            this.masterTagCategoryName = _data["masterTagCategoryName"];
+        }
+    }
+
+    static fromJS(data: any): GetMasterTagForEditOutput {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetMasterTagForEditOutput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["masterTag"] = this.masterTag ? this.masterTag.toJSON() : <any>undefined;
+        data["masterTagCategoryName"] = this.masterTagCategoryName;
+        return data;
+    }
+}
+
+export interface IGetMasterTagForEditOutput {
+    masterTag: CreateOrEditMasterTagDto;
+    masterTagCategoryName: string | undefined;
+}
+
+export class GetMasterTagForViewDto implements IGetMasterTagForViewDto {
+    masterTag!: MasterTagDto;
+    masterTagCategoryName!: string | undefined;
+
+    constructor(data?: IGetMasterTagForViewDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.masterTag = _data["masterTag"] ? MasterTagDto.fromJS(_data["masterTag"]) : <any>undefined;
+            this.masterTagCategoryName = _data["masterTagCategoryName"];
+        }
+    }
+
+    static fromJS(data: any): GetMasterTagForViewDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetMasterTagForViewDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["masterTag"] = this.masterTag ? this.masterTag.toJSON() : <any>undefined;
+        data["masterTagCategoryName"] = this.masterTagCategoryName;
+        return data;
+    }
+}
+
+export interface IGetMasterTagForViewDto {
+    masterTag: MasterTagDto;
+    masterTagCategoryName: string | undefined;
+}
+
+export class GetMeasurementUnitForEditOutput implements IGetMeasurementUnitForEditOutput {
+    measurementUnit!: CreateOrEditMeasurementUnitDto;
+
+    constructor(data?: IGetMeasurementUnitForEditOutput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.measurementUnit = _data["measurementUnit"] ? CreateOrEditMeasurementUnitDto.fromJS(_data["measurementUnit"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): GetMeasurementUnitForEditOutput {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetMeasurementUnitForEditOutput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["measurementUnit"] = this.measurementUnit ? this.measurementUnit.toJSON() : <any>undefined;
+        return data;
+    }
+}
+
+export interface IGetMeasurementUnitForEditOutput {
+    measurementUnit: CreateOrEditMeasurementUnitDto;
+}
+
+export class GetMeasurementUnitForViewDto implements IGetMeasurementUnitForViewDto {
+    measurementUnit!: MeasurementUnitDto;
+
+    constructor(data?: IGetMeasurementUnitForViewDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.measurementUnit = _data["measurementUnit"] ? MeasurementUnitDto.fromJS(_data["measurementUnit"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): GetMeasurementUnitForViewDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetMeasurementUnitForViewDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["measurementUnit"] = this.measurementUnit ? this.measurementUnit.toJSON() : <any>undefined;
+        return data;
+    }
+}
+
+export interface IGetMeasurementUnitForViewDto {
+    measurementUnit: MeasurementUnitDto;
 }
 
 export class GetMemberActivityOutput implements IGetMemberActivityOutput {
@@ -20907,6 +29232,78 @@ export interface IGetPublishedNotificationsOutput {
     items: GetNotificationsCreatedByUserOutput[] | undefined;
 }
 
+export class GetRatingLikeForEditOutput implements IGetRatingLikeForEditOutput {
+    ratingLike!: CreateOrEditRatingLikeDto;
+
+    constructor(data?: IGetRatingLikeForEditOutput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.ratingLike = _data["ratingLike"] ? CreateOrEditRatingLikeDto.fromJS(_data["ratingLike"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): GetRatingLikeForEditOutput {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetRatingLikeForEditOutput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["ratingLike"] = this.ratingLike ? this.ratingLike.toJSON() : <any>undefined;
+        return data;
+    }
+}
+
+export interface IGetRatingLikeForEditOutput {
+    ratingLike: CreateOrEditRatingLikeDto;
+}
+
+export class GetRatingLikeForViewDto implements IGetRatingLikeForViewDto {
+    ratingLike!: RatingLikeDto;
+
+    constructor(data?: IGetRatingLikeForViewDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.ratingLike = _data["ratingLike"] ? RatingLikeDto.fromJS(_data["ratingLike"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): GetRatingLikeForViewDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetRatingLikeForViewDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["ratingLike"] = this.ratingLike ? this.ratingLike.toJSON() : <any>undefined;
+        return data;
+    }
+}
+
+export interface IGetRatingLikeForViewDto {
+    ratingLike: RatingLikeDto;
+}
+
 export class GetRecentTenantsOutput implements IGetRecentTenantsOutput {
     recentTenantsDayCount!: number;
     maxRecentTenantsShownCount!: number;
@@ -21169,6 +29566,158 @@ export interface IGetSalesSummaryOutput {
     expenses: number;
     growth: number;
     salesSummary: SalesSummaryData[] | undefined;
+}
+
+export class GetSmsTemplateForEditOutput implements IGetSmsTemplateForEditOutput {
+    smsTemplate!: CreateOrEditSmsTemplateDto;
+
+    constructor(data?: IGetSmsTemplateForEditOutput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.smsTemplate = _data["smsTemplate"] ? CreateOrEditSmsTemplateDto.fromJS(_data["smsTemplate"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): GetSmsTemplateForEditOutput {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetSmsTemplateForEditOutput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["smsTemplate"] = this.smsTemplate ? this.smsTemplate.toJSON() : <any>undefined;
+        return data;
+    }
+}
+
+export interface IGetSmsTemplateForEditOutput {
+    smsTemplate: CreateOrEditSmsTemplateDto;
+}
+
+export class GetSmsTemplateForViewDto implements IGetSmsTemplateForViewDto {
+    smsTemplate!: SmsTemplateDto;
+
+    constructor(data?: IGetSmsTemplateForViewDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.smsTemplate = _data["smsTemplate"] ? SmsTemplateDto.fromJS(_data["smsTemplate"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): GetSmsTemplateForViewDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetSmsTemplateForViewDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["smsTemplate"] = this.smsTemplate ? this.smsTemplate.toJSON() : <any>undefined;
+        return data;
+    }
+}
+
+export interface IGetSmsTemplateForViewDto {
+    smsTemplate: SmsTemplateDto;
+}
+
+export class GetStateForEditOutput implements IGetStateForEditOutput {
+    state!: CreateOrEditStateDto;
+    countryName!: string | undefined;
+
+    constructor(data?: IGetStateForEditOutput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.state = _data["state"] ? CreateOrEditStateDto.fromJS(_data["state"]) : <any>undefined;
+            this.countryName = _data["countryName"];
+        }
+    }
+
+    static fromJS(data: any): GetStateForEditOutput {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetStateForEditOutput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["state"] = this.state ? this.state.toJSON() : <any>undefined;
+        data["countryName"] = this.countryName;
+        return data;
+    }
+}
+
+export interface IGetStateForEditOutput {
+    state: CreateOrEditStateDto;
+    countryName: string | undefined;
+}
+
+export class GetStateForViewDto implements IGetStateForViewDto {
+    state!: StateDto;
+    countryName!: string | undefined;
+
+    constructor(data?: IGetStateForViewDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.state = _data["state"] ? StateDto.fromJS(_data["state"]) : <any>undefined;
+            this.countryName = _data["countryName"];
+        }
+    }
+
+    static fromJS(data: any): GetStateForViewDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetStateForViewDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["state"] = this.state ? this.state.toJSON() : <any>undefined;
+        data["countryName"] = this.countryName;
+        return data;
+    }
+}
+
+export interface IGetStateForViewDto {
+    state: StateDto;
+    countryName: string | undefined;
 }
 
 export class GetTenantFeaturesEditOutput implements IGetTenantFeaturesEditOutput {
@@ -21529,6 +30078,110 @@ export interface IGetUsersInput {
     sorting: string | undefined;
     maxResultCount: number;
     skipCount: number;
+}
+
+export class GetZipCodeForEditOutput implements IGetZipCodeForEditOutput {
+    zipCode!: CreateOrEditZipCodeDto;
+    countryName!: string | undefined;
+    stateName!: string | undefined;
+    cityName!: string | undefined;
+    countyName!: string | undefined;
+
+    constructor(data?: IGetZipCodeForEditOutput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.zipCode = _data["zipCode"] ? CreateOrEditZipCodeDto.fromJS(_data["zipCode"]) : <any>undefined;
+            this.countryName = _data["countryName"];
+            this.stateName = _data["stateName"];
+            this.cityName = _data["cityName"];
+            this.countyName = _data["countyName"];
+        }
+    }
+
+    static fromJS(data: any): GetZipCodeForEditOutput {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetZipCodeForEditOutput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["zipCode"] = this.zipCode ? this.zipCode.toJSON() : <any>undefined;
+        data["countryName"] = this.countryName;
+        data["stateName"] = this.stateName;
+        data["cityName"] = this.cityName;
+        data["countyName"] = this.countyName;
+        return data;
+    }
+}
+
+export interface IGetZipCodeForEditOutput {
+    zipCode: CreateOrEditZipCodeDto;
+    countryName: string | undefined;
+    stateName: string | undefined;
+    cityName: string | undefined;
+    countyName: string | undefined;
+}
+
+export class GetZipCodeForViewDto implements IGetZipCodeForViewDto {
+    zipCode!: ZipCodeDto;
+    countryName!: string | undefined;
+    stateName!: string | undefined;
+    cityName!: string | undefined;
+    countyName!: string | undefined;
+
+    constructor(data?: IGetZipCodeForViewDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.zipCode = _data["zipCode"] ? ZipCodeDto.fromJS(_data["zipCode"]) : <any>undefined;
+            this.countryName = _data["countryName"];
+            this.stateName = _data["stateName"];
+            this.cityName = _data["cityName"];
+            this.countyName = _data["countyName"];
+        }
+    }
+
+    static fromJS(data: any): GetZipCodeForViewDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetZipCodeForViewDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["zipCode"] = this.zipCode ? this.zipCode.toJSON() : <any>undefined;
+        data["countryName"] = this.countryName;
+        data["stateName"] = this.stateName;
+        data["cityName"] = this.cityName;
+        data["countyName"] = this.countyName;
+        return data;
+    }
+}
+
+export interface IGetZipCodeForViewDto {
+    zipCode: ZipCodeDto;
+    countryName: string | undefined;
+    stateName: string | undefined;
+    cityName: string | undefined;
+    countyName: string | undefined;
 }
 
 export class GoogleExternalLoginProviderSettings implements IGoogleExternalLoginProviderSettings {
@@ -23630,6 +32283,194 @@ export interface IMassNotificationUserLookupTableDto {
     displayName: string | undefined;
 }
 
+export class MasterTagCategoryDto implements IMasterTagCategoryDto {
+    name!: string | undefined;
+    description!: string | undefined;
+    pictureId!: string;
+    id!: number;
+
+    constructor(data?: IMasterTagCategoryDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"];
+            this.description = _data["description"];
+            this.pictureId = _data["pictureId"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): MasterTagCategoryDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new MasterTagCategoryDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["description"] = this.description;
+        data["pictureId"] = this.pictureId;
+        data["id"] = this.id;
+        return data;
+    }
+}
+
+export interface IMasterTagCategoryDto {
+    name: string | undefined;
+    description: string | undefined;
+    pictureId: string;
+    id: number;
+}
+
+export class MasterTagDto implements IMasterTagDto {
+    name!: string | undefined;
+    description!: string | undefined;
+    synonyms!: string | undefined;
+    pictureId!: string;
+    displaySequence!: number | undefined;
+    masterTagCategoryId!: number;
+    id!: number;
+
+    constructor(data?: IMasterTagDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"];
+            this.description = _data["description"];
+            this.synonyms = _data["synonyms"];
+            this.pictureId = _data["pictureId"];
+            this.displaySequence = _data["displaySequence"];
+            this.masterTagCategoryId = _data["masterTagCategoryId"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): MasterTagDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new MasterTagDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["description"] = this.description;
+        data["synonyms"] = this.synonyms;
+        data["pictureId"] = this.pictureId;
+        data["displaySequence"] = this.displaySequence;
+        data["masterTagCategoryId"] = this.masterTagCategoryId;
+        data["id"] = this.id;
+        return data;
+    }
+}
+
+export interface IMasterTagDto {
+    name: string | undefined;
+    description: string | undefined;
+    synonyms: string | undefined;
+    pictureId: string;
+    displaySequence: number | undefined;
+    masterTagCategoryId: number;
+    id: number;
+}
+
+export class MasterTagMasterTagCategoryLookupTableDto implements IMasterTagMasterTagCategoryLookupTableDto {
+    id!: number;
+    displayName!: string | undefined;
+
+    constructor(data?: IMasterTagMasterTagCategoryLookupTableDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.displayName = _data["displayName"];
+        }
+    }
+
+    static fromJS(data: any): MasterTagMasterTagCategoryLookupTableDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new MasterTagMasterTagCategoryLookupTableDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["displayName"] = this.displayName;
+        return data;
+    }
+}
+
+export interface IMasterTagMasterTagCategoryLookupTableDto {
+    id: number;
+    displayName: string | undefined;
+}
+
+export class MeasurementUnitDto implements IMeasurementUnitDto {
+    name!: string | undefined;
+    id!: number;
+
+    constructor(data?: IMeasurementUnitDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): MeasurementUnitDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new MeasurementUnitDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["id"] = this.id;
+        return data;
+    }
+}
+
+export interface IMeasurementUnitDto {
+    name: string | undefined;
+    id: number;
+}
+
 export class MemberActivity implements IMemberActivity {
     name!: string | undefined;
     earnings!: string | undefined;
@@ -24542,6 +33383,630 @@ export interface IPagedResultDtoOfGetAllSendAttemptsOutput {
     items: GetAllSendAttemptsOutput[] | undefined;
 }
 
+export class PagedResultDtoOfGetCityForViewDto implements IPagedResultDtoOfGetCityForViewDto {
+    totalCount!: number;
+    items!: GetCityForViewDto[] | undefined;
+
+    constructor(data?: IPagedResultDtoOfGetCityForViewDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.totalCount = _data["totalCount"];
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items!.push(GetCityForViewDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): PagedResultDtoOfGetCityForViewDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PagedResultDtoOfGetCityForViewDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["totalCount"] = this.totalCount;
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface IPagedResultDtoOfGetCityForViewDto {
+    totalCount: number;
+    items: GetCityForViewDto[] | undefined;
+}
+
+export class PagedResultDtoOfGetConnectChannelForViewDto implements IPagedResultDtoOfGetConnectChannelForViewDto {
+    totalCount!: number;
+    items!: GetConnectChannelForViewDto[] | undefined;
+
+    constructor(data?: IPagedResultDtoOfGetConnectChannelForViewDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.totalCount = _data["totalCount"];
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items!.push(GetConnectChannelForViewDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): PagedResultDtoOfGetConnectChannelForViewDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PagedResultDtoOfGetConnectChannelForViewDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["totalCount"] = this.totalCount;
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface IPagedResultDtoOfGetConnectChannelForViewDto {
+    totalCount: number;
+    items: GetConnectChannelForViewDto[] | undefined;
+}
+
+export class PagedResultDtoOfGetCountryForViewDto implements IPagedResultDtoOfGetCountryForViewDto {
+    totalCount!: number;
+    items!: GetCountryForViewDto[] | undefined;
+
+    constructor(data?: IPagedResultDtoOfGetCountryForViewDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.totalCount = _data["totalCount"];
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items!.push(GetCountryForViewDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): PagedResultDtoOfGetCountryForViewDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PagedResultDtoOfGetCountryForViewDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["totalCount"] = this.totalCount;
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface IPagedResultDtoOfGetCountryForViewDto {
+    totalCount: number;
+    items: GetCountryForViewDto[] | undefined;
+}
+
+export class PagedResultDtoOfGetCountyForViewDto implements IPagedResultDtoOfGetCountyForViewDto {
+    totalCount!: number;
+    items!: GetCountyForViewDto[] | undefined;
+
+    constructor(data?: IPagedResultDtoOfGetCountyForViewDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.totalCount = _data["totalCount"];
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items!.push(GetCountyForViewDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): PagedResultDtoOfGetCountyForViewDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PagedResultDtoOfGetCountyForViewDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["totalCount"] = this.totalCount;
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface IPagedResultDtoOfGetCountyForViewDto {
+    totalCount: number;
+    items: GetCountyForViewDto[] | undefined;
+}
+
+export class PagedResultDtoOfGetCurrencyForViewDto implements IPagedResultDtoOfGetCurrencyForViewDto {
+    totalCount!: number;
+    items!: GetCurrencyForViewDto[] | undefined;
+
+    constructor(data?: IPagedResultDtoOfGetCurrencyForViewDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.totalCount = _data["totalCount"];
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items!.push(GetCurrencyForViewDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): PagedResultDtoOfGetCurrencyForViewDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PagedResultDtoOfGetCurrencyForViewDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["totalCount"] = this.totalCount;
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface IPagedResultDtoOfGetCurrencyForViewDto {
+    totalCount: number;
+    items: GetCurrencyForViewDto[] | undefined;
+}
+
+export class PagedResultDtoOfGetEmailTemplateForViewDto implements IPagedResultDtoOfGetEmailTemplateForViewDto {
+    totalCount!: number;
+    items!: GetEmailTemplateForViewDto[] | undefined;
+
+    constructor(data?: IPagedResultDtoOfGetEmailTemplateForViewDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.totalCount = _data["totalCount"];
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items!.push(GetEmailTemplateForViewDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): PagedResultDtoOfGetEmailTemplateForViewDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PagedResultDtoOfGetEmailTemplateForViewDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["totalCount"] = this.totalCount;
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface IPagedResultDtoOfGetEmailTemplateForViewDto {
+    totalCount: number;
+    items: GetEmailTemplateForViewDto[] | undefined;
+}
+
+export class PagedResultDtoOfGetMasterTagCategoryForViewDto implements IPagedResultDtoOfGetMasterTagCategoryForViewDto {
+    totalCount!: number;
+    items!: GetMasterTagCategoryForViewDto[] | undefined;
+
+    constructor(data?: IPagedResultDtoOfGetMasterTagCategoryForViewDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.totalCount = _data["totalCount"];
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items!.push(GetMasterTagCategoryForViewDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): PagedResultDtoOfGetMasterTagCategoryForViewDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PagedResultDtoOfGetMasterTagCategoryForViewDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["totalCount"] = this.totalCount;
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface IPagedResultDtoOfGetMasterTagCategoryForViewDto {
+    totalCount: number;
+    items: GetMasterTagCategoryForViewDto[] | undefined;
+}
+
+export class PagedResultDtoOfGetMasterTagForViewDto implements IPagedResultDtoOfGetMasterTagForViewDto {
+    totalCount!: number;
+    items!: GetMasterTagForViewDto[] | undefined;
+
+    constructor(data?: IPagedResultDtoOfGetMasterTagForViewDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.totalCount = _data["totalCount"];
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items!.push(GetMasterTagForViewDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): PagedResultDtoOfGetMasterTagForViewDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PagedResultDtoOfGetMasterTagForViewDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["totalCount"] = this.totalCount;
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface IPagedResultDtoOfGetMasterTagForViewDto {
+    totalCount: number;
+    items: GetMasterTagForViewDto[] | undefined;
+}
+
+export class PagedResultDtoOfGetMeasurementUnitForViewDto implements IPagedResultDtoOfGetMeasurementUnitForViewDto {
+    totalCount!: number;
+    items!: GetMeasurementUnitForViewDto[] | undefined;
+
+    constructor(data?: IPagedResultDtoOfGetMeasurementUnitForViewDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.totalCount = _data["totalCount"];
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items!.push(GetMeasurementUnitForViewDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): PagedResultDtoOfGetMeasurementUnitForViewDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PagedResultDtoOfGetMeasurementUnitForViewDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["totalCount"] = this.totalCount;
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface IPagedResultDtoOfGetMeasurementUnitForViewDto {
+    totalCount: number;
+    items: GetMeasurementUnitForViewDto[] | undefined;
+}
+
+export class PagedResultDtoOfGetRatingLikeForViewDto implements IPagedResultDtoOfGetRatingLikeForViewDto {
+    totalCount!: number;
+    items!: GetRatingLikeForViewDto[] | undefined;
+
+    constructor(data?: IPagedResultDtoOfGetRatingLikeForViewDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.totalCount = _data["totalCount"];
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items!.push(GetRatingLikeForViewDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): PagedResultDtoOfGetRatingLikeForViewDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PagedResultDtoOfGetRatingLikeForViewDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["totalCount"] = this.totalCount;
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface IPagedResultDtoOfGetRatingLikeForViewDto {
+    totalCount: number;
+    items: GetRatingLikeForViewDto[] | undefined;
+}
+
+export class PagedResultDtoOfGetSmsTemplateForViewDto implements IPagedResultDtoOfGetSmsTemplateForViewDto {
+    totalCount!: number;
+    items!: GetSmsTemplateForViewDto[] | undefined;
+
+    constructor(data?: IPagedResultDtoOfGetSmsTemplateForViewDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.totalCount = _data["totalCount"];
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items!.push(GetSmsTemplateForViewDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): PagedResultDtoOfGetSmsTemplateForViewDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PagedResultDtoOfGetSmsTemplateForViewDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["totalCount"] = this.totalCount;
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface IPagedResultDtoOfGetSmsTemplateForViewDto {
+    totalCount: number;
+    items: GetSmsTemplateForViewDto[] | undefined;
+}
+
+export class PagedResultDtoOfGetStateForViewDto implements IPagedResultDtoOfGetStateForViewDto {
+    totalCount!: number;
+    items!: GetStateForViewDto[] | undefined;
+
+    constructor(data?: IPagedResultDtoOfGetStateForViewDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.totalCount = _data["totalCount"];
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items!.push(GetStateForViewDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): PagedResultDtoOfGetStateForViewDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PagedResultDtoOfGetStateForViewDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["totalCount"] = this.totalCount;
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface IPagedResultDtoOfGetStateForViewDto {
+    totalCount: number;
+    items: GetStateForViewDto[] | undefined;
+}
+
+export class PagedResultDtoOfGetZipCodeForViewDto implements IPagedResultDtoOfGetZipCodeForViewDto {
+    totalCount!: number;
+    items!: GetZipCodeForViewDto[] | undefined;
+
+    constructor(data?: IPagedResultDtoOfGetZipCodeForViewDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.totalCount = _data["totalCount"];
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items!.push(GetZipCodeForViewDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): PagedResultDtoOfGetZipCodeForViewDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PagedResultDtoOfGetZipCodeForViewDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["totalCount"] = this.totalCount;
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface IPagedResultDtoOfGetZipCodeForViewDto {
+    totalCount: number;
+    items: GetZipCodeForViewDto[] | undefined;
+}
+
 export class PagedResultDtoOfLanguageTextListDto implements IPagedResultDtoOfLanguageTextListDto {
     totalCount!: number;
     items!: LanguageTextListDto[] | undefined;
@@ -25315,6 +34780,54 @@ export enum PaymentPeriodType {
     Weekly = 7,
     Monthly = 30,
     Annual = 365,
+}
+
+export class RatingLikeDto implements IRatingLikeDto {
+    name!: string | undefined;
+    score!: number | undefined;
+    iconLink!: string | undefined;
+    id!: number;
+
+    constructor(data?: IRatingLikeDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"];
+            this.score = _data["score"];
+            this.iconLink = _data["iconLink"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): RatingLikeDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new RatingLikeDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["score"] = this.score;
+        data["iconLink"] = this.iconLink;
+        data["id"] = this.id;
+        return data;
+    }
+}
+
+export interface IRatingLikeDto {
+    name: string | undefined;
+    score: number | undefined;
+    iconLink: string | undefined;
+    id: number;
 }
 
 export class RecentTenant implements IRecentTenant {
@@ -26528,6 +36041,142 @@ export enum SettingScopes {
     Tenant = 2,
     User = 4,
     All = 7,
+}
+
+export class SmsTemplateDto implements ISmsTemplateDto {
+    title!: string | undefined;
+    content!: string | undefined;
+    published!: boolean;
+    id!: number;
+
+    constructor(data?: ISmsTemplateDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.title = _data["title"];
+            this.content = _data["content"];
+            this.published = _data["published"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): SmsTemplateDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new SmsTemplateDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["title"] = this.title;
+        data["content"] = this.content;
+        data["published"] = this.published;
+        data["id"] = this.id;
+        return data;
+    }
+}
+
+export interface ISmsTemplateDto {
+    title: string | undefined;
+    content: string | undefined;
+    published: boolean;
+    id: number;
+}
+
+export class StateCountryLookupTableDto implements IStateCountryLookupTableDto {
+    id!: number;
+    displayName!: string | undefined;
+
+    constructor(data?: IStateCountryLookupTableDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.displayName = _data["displayName"];
+        }
+    }
+
+    static fromJS(data: any): StateCountryLookupTableDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new StateCountryLookupTableDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["displayName"] = this.displayName;
+        return data;
+    }
+}
+
+export interface IStateCountryLookupTableDto {
+    id: number;
+    displayName: string | undefined;
+}
+
+export class StateDto implements IStateDto {
+    name!: string | undefined;
+    ticker!: string | undefined;
+    countryId!: number;
+    id!: number;
+
+    constructor(data?: IStateDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"];
+            this.ticker = _data["ticker"];
+            this.countryId = _data["countryId"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): StateDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new StateDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["ticker"] = this.ticker;
+        data["countryId"] = this.countryId;
+        data["id"] = this.id;
+        return data;
+    }
+}
+
+export interface IStateDto {
+    name: string | undefined;
+    ticker: string | undefined;
+    countryId: number;
+    id: number;
 }
 
 export class StringOutput implements IStringOutput {
@@ -29962,6 +39611,454 @@ export interface IWsFederationExternalLoginProviderSettings {
     metaDataAddress: string | undefined;
     wtrealm: string | undefined;
     authority: string | undefined;
+}
+
+export class ZipCodeCityLookupTableDto implements IZipCodeCityLookupTableDto {
+    id!: number;
+    displayName!: string | undefined;
+
+    constructor(data?: IZipCodeCityLookupTableDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.displayName = _data["displayName"];
+        }
+    }
+
+    static fromJS(data: any): ZipCodeCityLookupTableDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ZipCodeCityLookupTableDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["displayName"] = this.displayName;
+        return data;
+    }
+}
+
+export interface IZipCodeCityLookupTableDto {
+    id: number;
+    displayName: string | undefined;
+}
+
+export class ZipCodeCountryLookupTableDto implements IZipCodeCountryLookupTableDto {
+    id!: number;
+    displayName!: string | undefined;
+
+    constructor(data?: IZipCodeCountryLookupTableDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.displayName = _data["displayName"];
+        }
+    }
+
+    static fromJS(data: any): ZipCodeCountryLookupTableDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ZipCodeCountryLookupTableDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["displayName"] = this.displayName;
+        return data;
+    }
+}
+
+export interface IZipCodeCountryLookupTableDto {
+    id: number;
+    displayName: string | undefined;
+}
+
+export class ZipCodeCountyLookupTableDto implements IZipCodeCountyLookupTableDto {
+    id!: number;
+    displayName!: string | undefined;
+
+    constructor(data?: IZipCodeCountyLookupTableDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.displayName = _data["displayName"];
+        }
+    }
+
+    static fromJS(data: any): ZipCodeCountyLookupTableDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ZipCodeCountyLookupTableDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["displayName"] = this.displayName;
+        return data;
+    }
+}
+
+export interface IZipCodeCountyLookupTableDto {
+    id: number;
+    displayName: string | undefined;
+}
+
+export class ZipCodeDto implements IZipCodeDto {
+    name!: string | undefined;
+    areaCode!: string | undefined;
+    asianPopulation!: string | undefined;
+    averageHouseValue!: string | undefined;
+    blackPopulation!: string | undefined;
+    cbsa!: string | undefined;
+    cbsA_Div!: string | undefined;
+    cbsA_Div_Name!: string | undefined;
+    cbsA_Name!: string | undefined;
+    cbsA_Type!: string | undefined;
+    csa!: string | undefined;
+    csaName!: string | undefined;
+    carrierRouteRateSortation!: string | undefined;
+    city!: string | undefined;
+    cityAliasCode!: string | undefined;
+    cityAliasMixedCase!: string | undefined;
+    cityAliasName!: string | undefined;
+    cityDeliveryIndicator!: string | undefined;
+    cityMixedCase!: string | undefined;
+    cityStateKey!: string | undefined;
+    cityType!: string | undefined;
+    classificationCode!: string | undefined;
+    county!: string | undefined;
+    countyANSI!: string | undefined;
+    countyFIPS!: string | undefined;
+    countyMixedCase!: string | undefined;
+    dayLightSaving!: string | undefined;
+    division!: string | undefined;
+    elevation!: string | undefined;
+    facilityCode!: string | undefined;
+    femalePopulation!: string | undefined;
+    financeNumber!: string | undefined;
+    hawaiianPopulation!: string | undefined;
+    hispanicPopulation!: string | undefined;
+    householdsPerZipCode!: string | undefined;
+    incomePerHousehold!: string | undefined;
+    indianPopulation!: string | undefined;
+    latitude!: string | undefined;
+    longitude!: string | undefined;
+    msa!: string | undefined;
+    msA_Name!: string | undefined;
+    mailingName!: string | undefined;
+    malePopulation!: string | undefined;
+    multiCounty!: string | undefined;
+    otherPopulation!: string | undefined;
+    pmsa!: string | undefined;
+    pmsA_Name!: string | undefined;
+    personsPerHousehold!: string | undefined;
+    population!: string | undefined;
+    preferredLastLineKey!: string | undefined;
+    primaryRecord!: string | undefined;
+    region!: string | undefined;
+    state!: string | undefined;
+    stateANSI!: string | undefined;
+    stateFIPS!: string | undefined;
+    stateFullName!: string | undefined;
+    timeZone!: string | undefined;
+    uniqueZIPName!: string | undefined;
+    whitePopulation!: string | undefined;
+    countryId!: number | undefined;
+    stateId!: number | undefined;
+    cityId!: number | undefined;
+    countyId!: number | undefined;
+    id!: number;
+
+    constructor(data?: IZipCodeDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"];
+            this.areaCode = _data["areaCode"];
+            this.asianPopulation = _data["asianPopulation"];
+            this.averageHouseValue = _data["averageHouseValue"];
+            this.blackPopulation = _data["blackPopulation"];
+            this.cbsa = _data["cbsa"];
+            this.cbsA_Div = _data["cbsA_Div"];
+            this.cbsA_Div_Name = _data["cbsA_Div_Name"];
+            this.cbsA_Name = _data["cbsA_Name"];
+            this.cbsA_Type = _data["cbsA_Type"];
+            this.csa = _data["csa"];
+            this.csaName = _data["csaName"];
+            this.carrierRouteRateSortation = _data["carrierRouteRateSortation"];
+            this.city = _data["city"];
+            this.cityAliasCode = _data["cityAliasCode"];
+            this.cityAliasMixedCase = _data["cityAliasMixedCase"];
+            this.cityAliasName = _data["cityAliasName"];
+            this.cityDeliveryIndicator = _data["cityDeliveryIndicator"];
+            this.cityMixedCase = _data["cityMixedCase"];
+            this.cityStateKey = _data["cityStateKey"];
+            this.cityType = _data["cityType"];
+            this.classificationCode = _data["classificationCode"];
+            this.county = _data["county"];
+            this.countyANSI = _data["countyANSI"];
+            this.countyFIPS = _data["countyFIPS"];
+            this.countyMixedCase = _data["countyMixedCase"];
+            this.dayLightSaving = _data["dayLightSaving"];
+            this.division = _data["division"];
+            this.elevation = _data["elevation"];
+            this.facilityCode = _data["facilityCode"];
+            this.femalePopulation = _data["femalePopulation"];
+            this.financeNumber = _data["financeNumber"];
+            this.hawaiianPopulation = _data["hawaiianPopulation"];
+            this.hispanicPopulation = _data["hispanicPopulation"];
+            this.householdsPerZipCode = _data["householdsPerZipCode"];
+            this.incomePerHousehold = _data["incomePerHousehold"];
+            this.indianPopulation = _data["indianPopulation"];
+            this.latitude = _data["latitude"];
+            this.longitude = _data["longitude"];
+            this.msa = _data["msa"];
+            this.msA_Name = _data["msA_Name"];
+            this.mailingName = _data["mailingName"];
+            this.malePopulation = _data["malePopulation"];
+            this.multiCounty = _data["multiCounty"];
+            this.otherPopulation = _data["otherPopulation"];
+            this.pmsa = _data["pmsa"];
+            this.pmsA_Name = _data["pmsA_Name"];
+            this.personsPerHousehold = _data["personsPerHousehold"];
+            this.population = _data["population"];
+            this.preferredLastLineKey = _data["preferredLastLineKey"];
+            this.primaryRecord = _data["primaryRecord"];
+            this.region = _data["region"];
+            this.state = _data["state"];
+            this.stateANSI = _data["stateANSI"];
+            this.stateFIPS = _data["stateFIPS"];
+            this.stateFullName = _data["stateFullName"];
+            this.timeZone = _data["timeZone"];
+            this.uniqueZIPName = _data["uniqueZIPName"];
+            this.whitePopulation = _data["whitePopulation"];
+            this.countryId = _data["countryId"];
+            this.stateId = _data["stateId"];
+            this.cityId = _data["cityId"];
+            this.countyId = _data["countyId"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): ZipCodeDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ZipCodeDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["areaCode"] = this.areaCode;
+        data["asianPopulation"] = this.asianPopulation;
+        data["averageHouseValue"] = this.averageHouseValue;
+        data["blackPopulation"] = this.blackPopulation;
+        data["cbsa"] = this.cbsa;
+        data["cbsA_Div"] = this.cbsA_Div;
+        data["cbsA_Div_Name"] = this.cbsA_Div_Name;
+        data["cbsA_Name"] = this.cbsA_Name;
+        data["cbsA_Type"] = this.cbsA_Type;
+        data["csa"] = this.csa;
+        data["csaName"] = this.csaName;
+        data["carrierRouteRateSortation"] = this.carrierRouteRateSortation;
+        data["city"] = this.city;
+        data["cityAliasCode"] = this.cityAliasCode;
+        data["cityAliasMixedCase"] = this.cityAliasMixedCase;
+        data["cityAliasName"] = this.cityAliasName;
+        data["cityDeliveryIndicator"] = this.cityDeliveryIndicator;
+        data["cityMixedCase"] = this.cityMixedCase;
+        data["cityStateKey"] = this.cityStateKey;
+        data["cityType"] = this.cityType;
+        data["classificationCode"] = this.classificationCode;
+        data["county"] = this.county;
+        data["countyANSI"] = this.countyANSI;
+        data["countyFIPS"] = this.countyFIPS;
+        data["countyMixedCase"] = this.countyMixedCase;
+        data["dayLightSaving"] = this.dayLightSaving;
+        data["division"] = this.division;
+        data["elevation"] = this.elevation;
+        data["facilityCode"] = this.facilityCode;
+        data["femalePopulation"] = this.femalePopulation;
+        data["financeNumber"] = this.financeNumber;
+        data["hawaiianPopulation"] = this.hawaiianPopulation;
+        data["hispanicPopulation"] = this.hispanicPopulation;
+        data["householdsPerZipCode"] = this.householdsPerZipCode;
+        data["incomePerHousehold"] = this.incomePerHousehold;
+        data["indianPopulation"] = this.indianPopulation;
+        data["latitude"] = this.latitude;
+        data["longitude"] = this.longitude;
+        data["msa"] = this.msa;
+        data["msA_Name"] = this.msA_Name;
+        data["mailingName"] = this.mailingName;
+        data["malePopulation"] = this.malePopulation;
+        data["multiCounty"] = this.multiCounty;
+        data["otherPopulation"] = this.otherPopulation;
+        data["pmsa"] = this.pmsa;
+        data["pmsA_Name"] = this.pmsA_Name;
+        data["personsPerHousehold"] = this.personsPerHousehold;
+        data["population"] = this.population;
+        data["preferredLastLineKey"] = this.preferredLastLineKey;
+        data["primaryRecord"] = this.primaryRecord;
+        data["region"] = this.region;
+        data["state"] = this.state;
+        data["stateANSI"] = this.stateANSI;
+        data["stateFIPS"] = this.stateFIPS;
+        data["stateFullName"] = this.stateFullName;
+        data["timeZone"] = this.timeZone;
+        data["uniqueZIPName"] = this.uniqueZIPName;
+        data["whitePopulation"] = this.whitePopulation;
+        data["countryId"] = this.countryId;
+        data["stateId"] = this.stateId;
+        data["cityId"] = this.cityId;
+        data["countyId"] = this.countyId;
+        data["id"] = this.id;
+        return data;
+    }
+}
+
+export interface IZipCodeDto {
+    name: string | undefined;
+    areaCode: string | undefined;
+    asianPopulation: string | undefined;
+    averageHouseValue: string | undefined;
+    blackPopulation: string | undefined;
+    cbsa: string | undefined;
+    cbsA_Div: string | undefined;
+    cbsA_Div_Name: string | undefined;
+    cbsA_Name: string | undefined;
+    cbsA_Type: string | undefined;
+    csa: string | undefined;
+    csaName: string | undefined;
+    carrierRouteRateSortation: string | undefined;
+    city: string | undefined;
+    cityAliasCode: string | undefined;
+    cityAliasMixedCase: string | undefined;
+    cityAliasName: string | undefined;
+    cityDeliveryIndicator: string | undefined;
+    cityMixedCase: string | undefined;
+    cityStateKey: string | undefined;
+    cityType: string | undefined;
+    classificationCode: string | undefined;
+    county: string | undefined;
+    countyANSI: string | undefined;
+    countyFIPS: string | undefined;
+    countyMixedCase: string | undefined;
+    dayLightSaving: string | undefined;
+    division: string | undefined;
+    elevation: string | undefined;
+    facilityCode: string | undefined;
+    femalePopulation: string | undefined;
+    financeNumber: string | undefined;
+    hawaiianPopulation: string | undefined;
+    hispanicPopulation: string | undefined;
+    householdsPerZipCode: string | undefined;
+    incomePerHousehold: string | undefined;
+    indianPopulation: string | undefined;
+    latitude: string | undefined;
+    longitude: string | undefined;
+    msa: string | undefined;
+    msA_Name: string | undefined;
+    mailingName: string | undefined;
+    malePopulation: string | undefined;
+    multiCounty: string | undefined;
+    otherPopulation: string | undefined;
+    pmsa: string | undefined;
+    pmsA_Name: string | undefined;
+    personsPerHousehold: string | undefined;
+    population: string | undefined;
+    preferredLastLineKey: string | undefined;
+    primaryRecord: string | undefined;
+    region: string | undefined;
+    state: string | undefined;
+    stateANSI: string | undefined;
+    stateFIPS: string | undefined;
+    stateFullName: string | undefined;
+    timeZone: string | undefined;
+    uniqueZIPName: string | undefined;
+    whitePopulation: string | undefined;
+    countryId: number | undefined;
+    stateId: number | undefined;
+    cityId: number | undefined;
+    countyId: number | undefined;
+    id: number;
+}
+
+export class ZipCodeStateLookupTableDto implements IZipCodeStateLookupTableDto {
+    id!: number;
+    displayName!: string | undefined;
+
+    constructor(data?: IZipCodeStateLookupTableDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.displayName = _data["displayName"];
+        }
+    }
+
+    static fromJS(data: any): ZipCodeStateLookupTableDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ZipCodeStateLookupTableDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["displayName"] = this.displayName;
+        return data;
+    }
+}
+
+export interface IZipCodeStateLookupTableDto {
+    id: number;
+    displayName: string | undefined;
 }
 
 export class ApiException extends Error {

@@ -1,3 +1,9 @@
+﻿using SoftGrid.CRM.Dtos;
+using SoftGrid.CRM;
+using SoftGrid.Territory.Dtos;
+using SoftGrid.Territory;
+using SoftGrid.LookupData.Dtos;
+using SoftGrid.LookupData;
 using Abp.Application.Editions;
 using Abp.Application.Features;
 using Abp.Auditing;
@@ -48,6 +54,44 @@ namespace SoftGrid
     {
         public static void CreateMappings(IMapperConfigurationExpression configuration)
         {
+            configuration.CreateMap<CreateOrEditContactDto, Contact>().ReverseMap();
+            configuration.CreateMap<ContactDto, Contact>().ReverseMap();
+            configuration.CreateMap<CreateOrEditHubDto, Hub>().ReverseMap();
+            configuration.CreateMap<HubDto, Hub>().ReverseMap();
+            configuration.CreateMap<CreateOrEditHubTypeDto, HubType>().ReverseMap();
+            configuration.CreateMap<HubTypeDto, HubType>().ReverseMap();
+            configuration.CreateMap<CreateOrEditMembershipTypeDto, MembershipType>().ReverseMap();
+            configuration.CreateMap<MembershipTypeDto, MembershipType>().ReverseMap();
+            configuration.CreateMap<CreateOrEditContractTypeDto, ContractType>().ReverseMap();
+            configuration.CreateMap<ContractTypeDto, ContractType>().ReverseMap();
+            configuration.CreateMap<CreateOrEditDocumentTypeDto, DocumentType>().ReverseMap();
+            configuration.CreateMap<DocumentTypeDto, DocumentType>().ReverseMap();
+            configuration.CreateMap<CreateOrEditSmsTemplateDto, SmsTemplate>().ReverseMap();
+            configuration.CreateMap<SmsTemplateDto, SmsTemplate>().ReverseMap();
+            configuration.CreateMap<CreateOrEditEmailTemplateDto, EmailTemplate>().ReverseMap();
+            configuration.CreateMap<EmailTemplateDto, EmailTemplate>().ReverseMap();
+            configuration.CreateMap<CreateOrEditConnectChannelDto, ConnectChannel>().ReverseMap();
+            configuration.CreateMap<ConnectChannelDto, ConnectChannel>().ReverseMap();
+            configuration.CreateMap<CreateOrEditZipCodeDto, ZipCode>().ReverseMap();
+            configuration.CreateMap<ZipCodeDto, ZipCode>().ReverseMap();
+            configuration.CreateMap<CreateOrEditRatingLikeDto, RatingLike>().ReverseMap();
+            configuration.CreateMap<RatingLikeDto, RatingLike>().ReverseMap();
+            configuration.CreateMap<CreateOrEditMeasurementUnitDto, MeasurementUnit>().ReverseMap();
+            configuration.CreateMap<MeasurementUnitDto, MeasurementUnit>().ReverseMap();
+            configuration.CreateMap<CreateOrEditMasterTagDto, MasterTag>().ReverseMap();
+            configuration.CreateMap<MasterTagDto, MasterTag>().ReverseMap();
+            configuration.CreateMap<CreateOrEditMasterTagCategoryDto, MasterTagCategory>().ReverseMap();
+            configuration.CreateMap<MasterTagCategoryDto, MasterTagCategory>().ReverseMap();
+            configuration.CreateMap<CreateOrEditCityDto, City>().ReverseMap();
+            configuration.CreateMap<CityDto, City>().ReverseMap();
+            configuration.CreateMap<CreateOrEditCountyDto, County>().ReverseMap();
+            configuration.CreateMap<CountyDto, County>().ReverseMap();
+            configuration.CreateMap<CreateOrEditStateDto, State>().ReverseMap();
+            configuration.CreateMap<StateDto, State>().ReverseMap();
+            configuration.CreateMap<CreateOrEditCountryDto, Country>().ReverseMap();
+            configuration.CreateMap<CountryDto, Country>().ReverseMap();
+            configuration.CreateMap<CreateOrEditCurrencyDto, Currency>().ReverseMap();
+            configuration.CreateMap<CurrencyDto, Currency>().ReverseMap();
             //Inputs
             configuration.CreateMap<CheckboxInputType, FeatureInputTypeDto>();
             configuration.CreateMap<SingleLineStringInputType, FeatureInputTypeDto>();
@@ -76,8 +120,6 @@ namespace SoftGrid
             configuration.CreateMap<Role, RoleListDto>();
             configuration.CreateMap<UserRole, UserListRoleDto>();
 
-            
-
             //Edition
             configuration.CreateMap<EditionEditDto, SubscribableEdition>().ReverseMap();
             configuration.CreateMap<EditionCreateDto, SubscribableEdition>();
@@ -90,7 +132,6 @@ namespace SoftGrid
             configuration.CreateMap<Edition, EditionEditDto>();
             configuration.CreateMap<Edition, SubscribableEdition>();
             configuration.CreateMap<Edition, EditionSelectDto>();
-
 
             //Payment
             configuration.CreateMap<SubscriptionPaymentDto, SubscriptionPayment>().ReverseMap();
@@ -159,7 +200,7 @@ namespace SoftGrid
             configuration.CreateMap<DynamicEntityPropertyDto, DynamicEntityProperty>();
 
             configuration.CreateMap<DynamicEntityPropertyValue, DynamicEntityPropertyValueDto>().ReverseMap();
-            
+
             //User Delegations
             configuration.CreateMap<CreateUserDelegationDto, UserDelegation>();
 

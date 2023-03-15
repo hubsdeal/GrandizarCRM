@@ -50,7 +50,10 @@ export class {{Entity_Name_Plural_Here}}Component extends AppComponentBase {
     get{{Entity_Name_Plural_Here}}(event?: LazyLoadEvent) {
         if (this.{{DataTable_Primenghelper_Here}}{{TruboTable_Primenghelper_Here}}.shouldResetPaging(event)) {
             this.paginator.changePage(0);
-            return;
+            if (this.{{DataTable_Primenghelper_Here}}{{TruboTable_Primenghelper_Here}}.records &&
+                this.{{DataTable_Primenghelper_Here}}{{TruboTable_Primenghelper_Here}}.records.length > 0) {
+                return;
+            }
         }
 
         this.{{DataTable_Primenghelper_Here}}{{TruboTable_Primenghelper_Here}}.showLoadingIndicator();
@@ -96,4 +99,10 @@ export class {{Entity_Name_Plural_Here}}Component extends AppComponentBase {
     {{Master_Detail_Table_Row_Opener_Here}}
     {{Master_Detail_Table_Close_All_Child_Rows_Here}}
     {{Get_Download_Url_Here}}
+
+    resetFilters(): void {
+        this.filterText = '';
+        {{Property_Filter_Def_Clear_Here}}{{NP_Filter_Def_Clear_Here}}
+        this.get{{Entity_Name_Plural_Here}}();
+    }
 }

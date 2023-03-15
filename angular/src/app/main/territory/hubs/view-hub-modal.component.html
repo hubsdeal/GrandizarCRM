@@ -1,0 +1,137 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span>{{ l('Details') }}</span>
+                </h4>
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    (click)="close()"
+                    aria-label="Close"
+                    [disabled]="saving"
+                ></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Name') }} :</h6>
+                        {{ item.hub.name }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Description') }} :</h6>
+                        {{ item.hub.description }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('EstimatedPopulation') }} :</h6>
+                        {{ item.hub.estimatedPopulation }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('HasParentHub') }} :</h6>
+                        <div *ngIf="item.hub.hasParentHub" class="text-left">
+                            <i class="fa fa-check-circle text-success" title="True"></i>
+                        </div>
+                        <div *ngIf="!item.hub.hasParentHub" class="text-left">
+                            <i class="fa fa-times-circle" title="False"></i>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('ParentHubId') }} :</h6>
+                        {{ item.hub.parentHubId }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Latitude') }} :</h6>
+                        {{ item.hub.latitude }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Longitude') }} :</h6>
+                        {{ item.hub.longitude }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Live') }} :</h6>
+                        <div *ngIf="item.hub.live" class="text-left">
+                            <i class="fa fa-check-circle text-success" title="True"></i>
+                        </div>
+                        <div *ngIf="!item.hub.live" class="text-left">
+                            <i class="fa fa-times-circle" title="False"></i>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Url') }} :</h6>
+                        {{ item.hub.url }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('OfficeFullAddress') }} :</h6>
+                        {{ item.hub.officeFullAddress }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('PartnerOrOwned') }} :</h6>
+                        <div *ngIf="item.hub.partnerOrOwned" class="text-left">
+                            <i class="fa fa-check-circle text-success" title="True"></i>
+                        </div>
+                        <div *ngIf="!item.hub.partnerOrOwned" class="text-left">
+                            <i class="fa fa-times-circle" title="False"></i>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('PictureId') }} :</h6>
+                        {{ item.hub.pictureId }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Phone') }} :</h6>
+                        {{ item.hub.phone }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('YearlyRevenue') }} :</h6>
+                        {{ item.hub.yearlyRevenue }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('DisplaySequence') }} :</h6>
+                        {{ item.hub.displaySequence }}
+                    </div>
+
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('Country') }}) {{ l('Name') }} :</h6>
+                        {{ item.countryName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('State') }}) {{ l('Name') }} :</h6>
+                        {{ item.stateName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('City') }}) {{ l('Name') }} :</h6>
+                        {{ item.cityName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('County') }}) {{ l('Name') }} :</h6>
+                        {{ item.countyName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('HubType') }}) {{ l('Name') }} :</h6>
+                        {{ item.hubTypeName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('Currency') }}) {{ l('Name') }} :</h6>
+                        {{ item.currencyName }}
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button [disabled]="saving" type="button" class="btn btn-primary blue" (click)="close()">
+                    {{ l('Close') }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

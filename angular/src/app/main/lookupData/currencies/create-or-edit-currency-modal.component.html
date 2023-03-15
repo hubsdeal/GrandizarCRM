@@ -1,0 +1,93 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #currencyForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="currency.id">{{ l('EditCurrency') }}</span>
+                        <span *ngIf="!currency.id">{{ l('CreateNewCurrency') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="Currency_Name">{{ l('Name') }} *</label>
+                        <input
+                            type="text"
+                            #Currency_Name="ngModel"
+                            id="Currency_Name"
+                            class="form-control"
+                            [(ngModel)]="currency.name"
+                            name="Name"
+                            minlength="1"
+                            maxlength="128"
+                            required
+                        />
+                        <validation-messages [formCtrl]="Currency_Name"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Currency_Ticker">{{ l('Ticker') }}</label>
+                        <input
+                            type="text"
+                            #Currency_Ticker="ngModel"
+                            id="Currency_Ticker"
+                            class="form-control"
+                            [(ngModel)]="currency.ticker"
+                            name="Ticker"
+                            minlength="1"
+                            maxlength="50"
+                        />
+                        <validation-messages [formCtrl]="Currency_Ticker"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Currency_Icon">{{ l('Icon') }}</label>
+                        <input
+                            type="text"
+                            #Currency_Icon="ngModel"
+                            id="Currency_Icon"
+                            class="form-control"
+                            [(ngModel)]="currency.icon"
+                            name="Icon"
+                            minlength="1"
+                            maxlength="50"
+                        />
+                        <validation-messages [formCtrl]="Currency_Icon"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!currencyForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

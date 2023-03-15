@@ -1,4 +1,4 @@
-import { PermissionCheckerService } from 'abp-ng2-module';
+﻿import { PermissionCheckerService } from 'abp-ng2-module';
 import { AppSessionService } from '@shared/common/session/app-session.service';
 
 import { Injectable } from '@angular/core';
@@ -22,7 +22,45 @@ export class AppNavigationService {
             ),
             new AppMenuItem('Dashboard', 'Pages.Tenant.Dashboard', 'flaticon-line-graph', '/app/main/dashboard'),
             new AppMenuItem('Tenants', 'Pages.Tenants', 'flaticon-list-3', '/app/admin/tenants'),
-            new AppMenuItem('Editions', 'Pages.Editions', 'flaticon-app', '/app/admin/editions'),
+           
+            new AppMenuItem('Currencies', 'Pages.Currencies', 'flaticon-more', '/app/main/lookupData/currencies'),
+            
+            new AppMenuItem('Countries', 'Pages.Countries', 'flaticon-more', '/app/main/lookupData/countries'),
+            
+            new AppMenuItem('States', 'Pages.States', 'flaticon-more', '/app/main/lookupData/states'),
+            
+            new AppMenuItem('Counties', 'Pages.Counties', 'flaticon-more', '/app/main/lookupData/counties'),
+            
+            new AppMenuItem('Cities', 'Pages.Cities', 'flaticon-more', '/app/main/lookupData/cities'),
+            
+            new AppMenuItem('MasterTagCategories', 'Pages.MasterTagCategories', 'flaticon-more', '/app/main/lookupData/masterTagCategories'),
+            
+            new AppMenuItem('MasterTags', 'Pages.MasterTags', 'flaticon-more', '/app/main/lookupData/masterTags'),
+            
+            new AppMenuItem('MeasurementUnits', 'Pages.MeasurementUnits', 'flaticon-more', '/app/main/lookupData/measurementUnits'),
+            
+            new AppMenuItem('RatingLikes', 'Pages.RatingLikes', 'flaticon-more', '/app/main/lookupData/ratingLikes'),
+            
+            new AppMenuItem('ZipCodes', 'Pages.ZipCodes', 'flaticon-more', '/app/main/lookupData/zipCodes'),
+            
+            new AppMenuItem('ConnectChannels', 'Pages.ConnectChannels', 'flaticon-more', '/app/main/lookupData/connectChannels'),
+            
+            new AppMenuItem('EmailTemplates', 'Pages.EmailTemplates', 'flaticon-more', '/app/main/lookupData/emailTemplates'),
+            
+            new AppMenuItem('SmsTemplates', 'Pages.SmsTemplates', 'flaticon-more', '/app/main/lookupData/smsTemplates'),
+            
+            new AppMenuItem('DocumentTypes', 'Pages.DocumentTypes', 'flaticon-more', '/app/main/lookupData/documentTypes'),
+            
+            new AppMenuItem('ContractTypes', 'Pages.ContractTypes', 'flaticon-more', '/app/main/lookupData/contractTypes'),
+            
+            new AppMenuItem('MembershipTypes', 'Pages.MembershipTypes', 'flaticon-more', '/app/main/lookupData/membershipTypes'),
+            
+            new AppMenuItem('HubTypes', 'Pages.HubTypes', 'flaticon-more', '/app/main/lookupData/hubTypes'),
+            
+            new AppMenuItem('Hubs', 'Pages.Hubs', 'flaticon-more', '/app/main/territory/hubs'),
+            
+            new AppMenuItem('Contacts', 'Pages.Contacts', 'flaticon-more', '/app/main/crm/contacts'),
+             new AppMenuItem('Editions', 'Pages.Editions', 'flaticon-app', '/app/admin/editions'),
             new AppMenuItem(
                 'Administration',
                 '',

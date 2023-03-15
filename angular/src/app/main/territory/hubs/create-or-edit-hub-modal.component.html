@@ -1,0 +1,316 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #hubForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="hub.id">{{ l('EditHub') }}</span>
+                        <span *ngIf="!hub.id">{{ l('CreateNewHub') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="CountryName">{{ l('Country') }}</label>
+                        <select name="hub.countryId" [(ngModel)]="hub.countryId" class="form-select">
+                            <option value="">{{ l('SelectACountry') }}</option>
+                            <option *ngFor="let item of allCountrys" value="{{ item.id }}">
+                                {{ item.displayName }}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="StateName">{{ l('State') }}</label>
+                        <select name="hub.stateId" [(ngModel)]="hub.stateId" class="form-select">
+                            <option value="">{{ l('SelectAState') }}</option>
+                            <option *ngFor="let item of allStates" value="{{ item.id }}">{{ item.displayName }}</option>
+                        </select>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="CityName">{{ l('City') }}</label>
+                        <select name="hub.cityId" [(ngModel)]="hub.cityId" class="form-select">
+                            <option value="">{{ l('SelectACity') }}</option>
+                            <option *ngFor="let item of allCitys" value="{{ item.id }}">{{ item.displayName }}</option>
+                        </select>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="CountyName">{{ l('County') }}</label>
+                        <select name="hub.countyId" [(ngModel)]="hub.countyId" class="form-select">
+                            <option value="">{{ l('SelectACounty') }}</option>
+                            <option *ngFor="let item of allCountys" value="{{ item.id }}">
+                                {{ item.displayName }}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="HubTypeName">{{ l('HubType') }}</label>
+                        <select name="hub.hubTypeId" [(ngModel)]="hub.hubTypeId" class="form-select" required>
+                            <option value="">{{ l('SelectAHubType') }}</option>
+                            <option *ngFor="let item of allHubTypes" value="{{ item.id }}">
+                                {{ item.displayName }}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="CurrencyName">{{ l('Currency') }}</label>
+                        <select name="hub.currencyId" [(ngModel)]="hub.currencyId" class="form-select">
+                            <option value="">{{ l('SelectACurrency') }}</option>
+                            <option *ngFor="let item of allCurrencys" value="{{ item.id }}">
+                                {{ item.displayName }}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Hub_Name">{{ l('Name') }} *</label>
+                        <input
+                            type="text"
+                            #Hub_Name="ngModel"
+                            id="Hub_Name"
+                            class="form-control"
+                            [(ngModel)]="hub.name"
+                            name="Name"
+                            minlength="1"
+                            maxlength="128"
+                            required
+                        />
+                        <validation-messages [formCtrl]="Hub_Name"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Hub_Description">{{ l('Description') }}</label>
+                        <input
+                            type="text"
+                            #Hub_Description="ngModel"
+                            id="Hub_Description"
+                            class="form-control"
+                            [(ngModel)]="hub.description"
+                            name="Description"
+                        />
+                        <validation-messages [formCtrl]="Hub_Description"></validation-messages>
+                    </div>
+
+                    <div class="my5">
+                        <label class="form-label" for="Hub_EstimatedPopulation">{{ l('EstimatedPopulation') }}</label>
+                        <input
+                            type="number"
+                            #Hub_EstimatedPopulation="ngModel"
+                            id="Hub_EstimatedPopulation"
+                            class="form-control"
+                            [(ngModel)]="hub.estimatedPopulation"
+                            name="EstimatedPopulation"
+                        />
+                        <validation-messages [formCtrl]="Hub_EstimatedPopulation"></validation-messages>
+                    </div>
+
+                    <br />
+                    <label class="form-check form-check-custom form-check-solid">
+                        <input
+                            id="Hub_HasParentHub"
+                            #Hub_HasParentHub="ngModel"
+                            name="HasParentHub"
+                            [(ngModel)]="hub.hasParentHub"
+                            type="checkbox"
+                            class="form-check-input"
+                        />
+                        <span class="form-check-label">
+                            {{ l('HasParentHub') }}
+                        </span>
+                    </label>
+                    <validation-messages [formCtrl]="Hub_HasParentHub"></validation-messages>
+
+                    <div class="my5">
+                        <label class="form-label" for="Hub_ParentHubId">{{ l('ParentHubId') }}</label>
+                        <input
+                            type="number"
+                            #Hub_ParentHubId="ngModel"
+                            id="Hub_ParentHubId"
+                            class="form-control"
+                            [(ngModel)]="hub.parentHubId"
+                            name="ParentHubId"
+                        />
+                        <validation-messages [formCtrl]="Hub_ParentHubId"></validation-messages>
+                    </div>
+
+                    <div class="my5">
+                        <label class="form-label" for="Hub_Latitude">{{ l('Latitude') }}</label>
+                        <input
+                            type="number"
+                            #Hub_Latitude="ngModel"
+                            id="Hub_Latitude"
+                            class="form-control"
+                            [(ngModel)]="hub.latitude"
+                            name="Latitude"
+                        />
+                        <validation-messages [formCtrl]="Hub_Latitude"></validation-messages>
+                    </div>
+
+                    <div class="my5">
+                        <label class="form-label" for="Hub_Longitude">{{ l('Longitude') }}</label>
+                        <input
+                            type="number"
+                            #Hub_Longitude="ngModel"
+                            id="Hub_Longitude"
+                            class="form-control"
+                            [(ngModel)]="hub.longitude"
+                            name="Longitude"
+                        />
+                        <validation-messages [formCtrl]="Hub_Longitude"></validation-messages>
+                    </div>
+
+                    <br />
+                    <label class="form-check form-check-custom form-check-solid">
+                        <input
+                            id="Hub_Live"
+                            #Hub_Live="ngModel"
+                            name="Live"
+                            [(ngModel)]="hub.live"
+                            type="checkbox"
+                            class="form-check-input"
+                        />
+                        <span class="form-check-label">
+                            {{ l('Live') }}
+                        </span>
+                    </label>
+                    <validation-messages [formCtrl]="Hub_Live"></validation-messages>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Hub_Url">{{ l('Url') }}</label>
+                        <input
+                            type="text"
+                            #Hub_Url="ngModel"
+                            id="Hub_Url"
+                            class="form-control"
+                            [(ngModel)]="hub.url"
+                            name="Url"
+                            minlength="1"
+                            maxlength="512"
+                        />
+                        <validation-messages [formCtrl]="Hub_Url"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Hub_OfficeFullAddress">{{ l('OfficeFullAddress') }}</label>
+                        <input
+                            type="text"
+                            #Hub_OfficeFullAddress="ngModel"
+                            id="Hub_OfficeFullAddress"
+                            class="form-control"
+                            [(ngModel)]="hub.officeFullAddress"
+                            name="OfficeFullAddress"
+                            minlength="1"
+                            maxlength="1500"
+                        />
+                        <validation-messages [formCtrl]="Hub_OfficeFullAddress"></validation-messages>
+                    </div>
+
+                    <br />
+                    <label class="form-check form-check-custom form-check-solid">
+                        <input
+                            id="Hub_PartnerOrOwned"
+                            #Hub_PartnerOrOwned="ngModel"
+                            name="PartnerOrOwned"
+                            [(ngModel)]="hub.partnerOrOwned"
+                            type="checkbox"
+                            class="form-check-input"
+                        />
+                        <span class="form-check-label">
+                            {{ l('PartnerOrOwned') }}
+                        </span>
+                    </label>
+                    <validation-messages [formCtrl]="Hub_PartnerOrOwned"></validation-messages>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Hub_PictureId">{{ l('PictureId') }}</label>
+                        <input
+                            type="text"
+                            #Hub_PictureId="ngModel"
+                            id="Hub_PictureId"
+                            class="form-control"
+                            [(ngModel)]="hub.pictureId"
+                            name="PictureId"
+                        />
+                        <validation-messages [formCtrl]="Hub_PictureId"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Hub_Phone">{{ l('Phone') }}</label>
+                        <input
+                            type="text"
+                            #Hub_Phone="ngModel"
+                            id="Hub_Phone"
+                            class="form-control"
+                            [(ngModel)]="hub.phone"
+                            name="Phone"
+                            minlength="1"
+                            maxlength="50"
+                        />
+                        <validation-messages [formCtrl]="Hub_Phone"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Hub_YearlyRevenue">{{ l('YearlyRevenue') }}</label>
+                        <input
+                            type="text"
+                            #Hub_YearlyRevenue="ngModel"
+                            id="Hub_YearlyRevenue"
+                            class="form-control"
+                            [(ngModel)]="hub.yearlyRevenue"
+                            name="YearlyRevenue"
+                        />
+                        <validation-messages [formCtrl]="Hub_YearlyRevenue"></validation-messages>
+                    </div>
+
+                    <div class="my5">
+                        <label class="form-label" for="Hub_DisplaySequence">{{ l('DisplaySequence') }}</label>
+                        <input
+                            type="number"
+                            #Hub_DisplaySequence="ngModel"
+                            id="Hub_DisplaySequence"
+                            class="form-control"
+                            [(ngModel)]="hub.displaySequence"
+                            name="DisplaySequence"
+                        />
+                        <validation-messages [formCtrl]="Hub_DisplaySequence"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!hubForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

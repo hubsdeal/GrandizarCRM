@@ -1,0 +1,91 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #ratingLikeForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="ratingLike.id">{{ l('EditRatingLike') }}</span>
+                        <span *ngIf="!ratingLike.id">{{ l('CreateNewRatingLike') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="RatingLike_Name">{{ l('Name') }} *</label>
+                        <input
+                            type="text"
+                            #RatingLike_Name="ngModel"
+                            id="RatingLike_Name"
+                            class="form-control"
+                            [(ngModel)]="ratingLike.name"
+                            name="Name"
+                            minlength="1"
+                            maxlength="128"
+                            required
+                        />
+                        <validation-messages [formCtrl]="RatingLike_Name"></validation-messages>
+                    </div>
+
+                    <div class="my5">
+                        <label class="form-label" for="RatingLike_Score">{{ l('Score') }}</label>
+                        <input
+                            type="number"
+                            #RatingLike_Score="ngModel"
+                            id="RatingLike_Score"
+                            class="form-control"
+                            [(ngModel)]="ratingLike.score"
+                            name="Score"
+                        />
+                        <validation-messages [formCtrl]="RatingLike_Score"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="RatingLike_IconLink">{{ l('IconLink') }}</label>
+                        <input
+                            type="text"
+                            #RatingLike_IconLink="ngModel"
+                            id="RatingLike_IconLink"
+                            class="form-control"
+                            [(ngModel)]="ratingLike.iconLink"
+                            name="IconLink"
+                            minlength="1"
+                            maxlength="1024"
+                        />
+                        <validation-messages [formCtrl]="RatingLike_IconLink"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!ratingLikeForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,1542 @@
+﻿<div [@routerTransition]>
+    <sub-header [title]="'ZipCodes' | localize" [description]="'ZipCodesHeaderInfo' | localize">
+        <div role="actions">
+            <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1">
+                <i class="fa fa-file-excel"></i>
+                {{ l('ExportToExcel') }}
+            </button>
+
+            <button *ngIf="isGranted('Pages.ZipCodes.Create')" (click)="createZipCode()" class="btn btn-primary blue">
+                <i class="fa fa-plus"></i>
+                {{ l('CreateNewZipCode') }}
+            </button>
+        </div>
+    </sub-header>
+
+    <div [class]="containerClass">
+        <div class="card card-custom gutter-b">
+            <div class="card-body">
+                <form class="form" autocomplete="off">
+                    <div>
+                        <div class="row align-items-center">
+                            <div class="col-xl-12">
+                                <div class="my-3">
+                                    <div class="input-group mb-3">
+                                        <input
+                                            [(ngModel)]="filterText"
+                                            (ngModelChange)="getZipCodes()"
+                                            name="filterText"
+                                            autoFocus
+                                            type="text"
+                                            class="form-control"
+                                            [placeholder]="l('SearchWithThreeDot')"
+                                        />
+                                        <button class="btn btn-primary" type="submit" (click)="getZipCodes()">
+                                            <i class="flaticon-search-1"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" [hidden]="!advancedFiltersAreShown">
+                            <div class="col-md-12"></div>
+
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="NameFilter">{{ l('Name') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="NameFilter"
+                                        name="nameFilter"
+                                        [(ngModel)]="nameFilter"
+                                        (ngModelChange)="getZipCodes()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="AreaCodeFilter">{{ l('AreaCode') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="AreaCodeFilter"
+                                        name="areaCodeFilter"
+                                        [(ngModel)]="areaCodeFilter"
+                                        (ngModelChange)="getZipCodes()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="AsianPopulationFilter">
+                                        {{ l('AsianPopulation') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="AsianPopulationFilter"
+                                        name="asianPopulationFilter"
+                                        [(ngModel)]="asianPopulationFilter"
+                                        (ngModelChange)="getZipCodes()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="AverageHouseValueFilter">
+                                        {{ l('AverageHouseValue') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="AverageHouseValueFilter"
+                                        name="averageHouseValueFilter"
+                                        [(ngModel)]="averageHouseValueFilter"
+                                        (ngModelChange)="getZipCodes()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="BlackPopulationFilter">
+                                        {{ l('BlackPopulation') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="BlackPopulationFilter"
+                                        name="blackPopulationFilter"
+                                        [(ngModel)]="blackPopulationFilter"
+                                        (ngModelChange)="getZipCodes()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="CBSAFilter">{{ l('CBSA') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="CBSAFilter"
+                                        name="cbsaFilter"
+                                        [(ngModel)]="cbsaFilter"
+                                        (ngModelChange)="getZipCodes()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="CBSA_DivFilter">{{ l('CBSA_Div') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="CBSA_DivFilter"
+                                        name="cbsA_DivFilter"
+                                        [(ngModel)]="cbsA_DivFilter"
+                                        (ngModelChange)="getZipCodes()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="CBSA_Div_NameFilter">{{ l('CBSA_Div_Name') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="CBSA_Div_NameFilter"
+                                        name="cbsA_Div_NameFilter"
+                                        [(ngModel)]="cbsA_Div_NameFilter"
+                                        (ngModelChange)="getZipCodes()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="CBSA_NameFilter">{{ l('CBSA_Name') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="CBSA_NameFilter"
+                                        name="cbsA_NameFilter"
+                                        [(ngModel)]="cbsA_NameFilter"
+                                        (ngModelChange)="getZipCodes()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="CBSA_TypeFilter">{{ l('CBSA_Type') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="CBSA_TypeFilter"
+                                        name="cbsA_TypeFilter"
+                                        [(ngModel)]="cbsA_TypeFilter"
+                                        (ngModelChange)="getZipCodes()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="CSAFilter">{{ l('CSA') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="CSAFilter"
+                                        name="csaFilter"
+                                        [(ngModel)]="csaFilter"
+                                        (ngModelChange)="getZipCodes()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="CSANameFilter">{{ l('CSAName') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="CSANameFilter"
+                                        name="csaNameFilter"
+                                        [(ngModel)]="csaNameFilter"
+                                        (ngModelChange)="getZipCodes()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="CarrierRouteRateSortationFilter">
+                                        {{ l('CarrierRouteRateSortation') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="CarrierRouteRateSortationFilter"
+                                        name="carrierRouteRateSortationFilter"
+                                        [(ngModel)]="carrierRouteRateSortationFilter"
+                                        (ngModelChange)="getZipCodes()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="CityFilter">{{ l('City') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="CityFilter"
+                                        name="cityFilter"
+                                        [(ngModel)]="cityFilter"
+                                        (ngModelChange)="getZipCodes()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="CityAliasCodeFilter">{{ l('CityAliasCode') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="CityAliasCodeFilter"
+                                        name="cityAliasCodeFilter"
+                                        [(ngModel)]="cityAliasCodeFilter"
+                                        (ngModelChange)="getZipCodes()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="CityAliasMixedCaseFilter">
+                                        {{ l('CityAliasMixedCase') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="CityAliasMixedCaseFilter"
+                                        name="cityAliasMixedCaseFilter"
+                                        [(ngModel)]="cityAliasMixedCaseFilter"
+                                        (ngModelChange)="getZipCodes()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="CityAliasNameFilter">{{ l('CityAliasName') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="CityAliasNameFilter"
+                                        name="cityAliasNameFilter"
+                                        [(ngModel)]="cityAliasNameFilter"
+                                        (ngModelChange)="getZipCodes()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="CityDeliveryIndicatorFilter">
+                                        {{ l('CityDeliveryIndicator') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="CityDeliveryIndicatorFilter"
+                                        name="cityDeliveryIndicatorFilter"
+                                        [(ngModel)]="cityDeliveryIndicatorFilter"
+                                        (ngModelChange)="getZipCodes()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="CityMixedCaseFilter">{{ l('CityMixedCase') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="CityMixedCaseFilter"
+                                        name="cityMixedCaseFilter"
+                                        [(ngModel)]="cityMixedCaseFilter"
+                                        (ngModelChange)="getZipCodes()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="CityStateKeyFilter">{{ l('CityStateKey') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="CityStateKeyFilter"
+                                        name="cityStateKeyFilter"
+                                        [(ngModel)]="cityStateKeyFilter"
+                                        (ngModelChange)="getZipCodes()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="CityTypeFilter">{{ l('CityType') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="CityTypeFilter"
+                                        name="cityTypeFilter"
+                                        [(ngModel)]="cityTypeFilter"
+                                        (ngModelChange)="getZipCodes()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="ClassificationCodeFilter">
+                                        {{ l('ClassificationCode') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="ClassificationCodeFilter"
+                                        name="classificationCodeFilter"
+                                        [(ngModel)]="classificationCodeFilter"
+                                        (ngModelChange)="getZipCodes()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="CountyFilter">{{ l('County') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="CountyFilter"
+                                        name="countyFilter"
+                                        [(ngModel)]="countyFilter"
+                                        (ngModelChange)="getZipCodes()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="CountyANSIFilter">{{ l('CountyANSI') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="CountyANSIFilter"
+                                        name="countyANSIFilter"
+                                        [(ngModel)]="countyANSIFilter"
+                                        (ngModelChange)="getZipCodes()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="CountyFIPSFilter">{{ l('CountyFIPS') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="CountyFIPSFilter"
+                                        name="countyFIPSFilter"
+                                        [(ngModel)]="countyFIPSFilter"
+                                        (ngModelChange)="getZipCodes()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="CountyMixedCaseFilter">
+                                        {{ l('CountyMixedCase') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="CountyMixedCaseFilter"
+                                        name="countyMixedCaseFilter"
+                                        [(ngModel)]="countyMixedCaseFilter"
+                                        (ngModelChange)="getZipCodes()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="DayLightSavingFilter">
+                                        {{ l('DayLightSaving') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="DayLightSavingFilter"
+                                        name="dayLightSavingFilter"
+                                        [(ngModel)]="dayLightSavingFilter"
+                                        (ngModelChange)="getZipCodes()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="DivisionFilter">{{ l('Division') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="DivisionFilter"
+                                        name="divisionFilter"
+                                        [(ngModel)]="divisionFilter"
+                                        (ngModelChange)="getZipCodes()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="ElevationFilter">{{ l('Elevation') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="ElevationFilter"
+                                        name="elevationFilter"
+                                        [(ngModel)]="elevationFilter"
+                                        (ngModelChange)="getZipCodes()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="FacilityCodeFilter">{{ l('FacilityCode') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="FacilityCodeFilter"
+                                        name="facilityCodeFilter"
+                                        [(ngModel)]="facilityCodeFilter"
+                                        (ngModelChange)="getZipCodes()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="FemalePopulationFilter">
+                                        {{ l('FemalePopulation') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="FemalePopulationFilter"
+                                        name="femalePopulationFilter"
+                                        [(ngModel)]="femalePopulationFilter"
+                                        (ngModelChange)="getZipCodes()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="FinanceNumberFilter">{{ l('FinanceNumber') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="FinanceNumberFilter"
+                                        name="financeNumberFilter"
+                                        [(ngModel)]="financeNumberFilter"
+                                        (ngModelChange)="getZipCodes()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="HawaiianPopulationFilter">
+                                        {{ l('HawaiianPopulation') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="HawaiianPopulationFilter"
+                                        name="hawaiianPopulationFilter"
+                                        [(ngModel)]="hawaiianPopulationFilter"
+                                        (ngModelChange)="getZipCodes()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="HispanicPopulationFilter">
+                                        {{ l('HispanicPopulation') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="HispanicPopulationFilter"
+                                        name="hispanicPopulationFilter"
+                                        [(ngModel)]="hispanicPopulationFilter"
+                                        (ngModelChange)="getZipCodes()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="HouseholdsPerZipCodeFilter">
+                                        {{ l('HouseholdsPerZipCode') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="HouseholdsPerZipCodeFilter"
+                                        name="householdsPerZipCodeFilter"
+                                        [(ngModel)]="householdsPerZipCodeFilter"
+                                        (ngModelChange)="getZipCodes()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="IncomePerHouseholdFilter">
+                                        {{ l('IncomePerHousehold') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="IncomePerHouseholdFilter"
+                                        name="incomePerHouseholdFilter"
+                                        [(ngModel)]="incomePerHouseholdFilter"
+                                        (ngModelChange)="getZipCodes()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="IndianPopulationFilter">
+                                        {{ l('IndianPopulation') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="IndianPopulationFilter"
+                                        name="indianPopulationFilter"
+                                        [(ngModel)]="indianPopulationFilter"
+                                        (ngModelChange)="getZipCodes()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="LatitudeFilter">{{ l('Latitude') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="LatitudeFilter"
+                                        name="latitudeFilter"
+                                        [(ngModel)]="latitudeFilter"
+                                        (ngModelChange)="getZipCodes()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="LongitudeFilter">{{ l('Longitude') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="LongitudeFilter"
+                                        name="longitudeFilter"
+                                        [(ngModel)]="longitudeFilter"
+                                        (ngModelChange)="getZipCodes()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="MSAFilter">{{ l('MSA') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="MSAFilter"
+                                        name="msaFilter"
+                                        [(ngModel)]="msaFilter"
+                                        (ngModelChange)="getZipCodes()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="MSA_NameFilter">{{ l('MSA_Name') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="MSA_NameFilter"
+                                        name="msA_NameFilter"
+                                        [(ngModel)]="msA_NameFilter"
+                                        (ngModelChange)="getZipCodes()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="MailingNameFilter">{{ l('MailingName') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="MailingNameFilter"
+                                        name="mailingNameFilter"
+                                        [(ngModel)]="mailingNameFilter"
+                                        (ngModelChange)="getZipCodes()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="MalePopulationFilter">
+                                        {{ l('MalePopulation') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="MalePopulationFilter"
+                                        name="malePopulationFilter"
+                                        [(ngModel)]="malePopulationFilter"
+                                        (ngModelChange)="getZipCodes()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="MultiCountyFilter">{{ l('MultiCounty') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="MultiCountyFilter"
+                                        name="multiCountyFilter"
+                                        [(ngModel)]="multiCountyFilter"
+                                        (ngModelChange)="getZipCodes()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="OtherPopulationFilter">
+                                        {{ l('OtherPopulation') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="OtherPopulationFilter"
+                                        name="otherPopulationFilter"
+                                        [(ngModel)]="otherPopulationFilter"
+                                        (ngModelChange)="getZipCodes()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="PMSAFilter">{{ l('PMSA') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="PMSAFilter"
+                                        name="pmsaFilter"
+                                        [(ngModel)]="pmsaFilter"
+                                        (ngModelChange)="getZipCodes()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="PMSA_NameFilter">{{ l('PMSA_Name') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="PMSA_NameFilter"
+                                        name="pmsA_NameFilter"
+                                        [(ngModel)]="pmsA_NameFilter"
+                                        (ngModelChange)="getZipCodes()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="PersonsPerHouseholdFilter">
+                                        {{ l('PersonsPerHousehold') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="PersonsPerHouseholdFilter"
+                                        name="personsPerHouseholdFilter"
+                                        [(ngModel)]="personsPerHouseholdFilter"
+                                        (ngModelChange)="getZipCodes()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="PopulationFilter">{{ l('Population') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="PopulationFilter"
+                                        name="populationFilter"
+                                        [(ngModel)]="populationFilter"
+                                        (ngModelChange)="getZipCodes()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="PreferredLastLineKeyFilter">
+                                        {{ l('PreferredLastLineKey') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="PreferredLastLineKeyFilter"
+                                        name="preferredLastLineKeyFilter"
+                                        [(ngModel)]="preferredLastLineKeyFilter"
+                                        (ngModelChange)="getZipCodes()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="PrimaryRecordFilter">{{ l('PrimaryRecord') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="PrimaryRecordFilter"
+                                        name="primaryRecordFilter"
+                                        [(ngModel)]="primaryRecordFilter"
+                                        (ngModelChange)="getZipCodes()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="RegionFilter">{{ l('Region') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="RegionFilter"
+                                        name="regionFilter"
+                                        [(ngModel)]="regionFilter"
+                                        (ngModelChange)="getZipCodes()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="StateFilter">{{ l('State') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="StateFilter"
+                                        name="stateFilter"
+                                        [(ngModel)]="stateFilter"
+                                        (ngModelChange)="getZipCodes()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="StateANSIFilter">{{ l('StateANSI') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="StateANSIFilter"
+                                        name="stateANSIFilter"
+                                        [(ngModel)]="stateANSIFilter"
+                                        (ngModelChange)="getZipCodes()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="StateFIPSFilter">{{ l('StateFIPS') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="StateFIPSFilter"
+                                        name="stateFIPSFilter"
+                                        [(ngModel)]="stateFIPSFilter"
+                                        (ngModelChange)="getZipCodes()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="StateFullNameFilter">{{ l('StateFullName') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="StateFullNameFilter"
+                                        name="stateFullNameFilter"
+                                        [(ngModel)]="stateFullNameFilter"
+                                        (ngModelChange)="getZipCodes()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="TimeZoneFilter">{{ l('TimeZone') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="TimeZoneFilter"
+                                        name="timeZoneFilter"
+                                        [(ngModel)]="timeZoneFilter"
+                                        (ngModelChange)="getZipCodes()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="UniqueZIPNameFilter">{{ l('UniqueZIPName') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="UniqueZIPNameFilter"
+                                        name="uniqueZIPNameFilter"
+                                        [(ngModel)]="uniqueZIPNameFilter"
+                                        (ngModelChange)="getZipCodes()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="WhitePopulationFilter">
+                                        {{ l('WhitePopulation') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="WhitePopulationFilter"
+                                        name="whitePopulationFilter"
+                                        [(ngModel)]="whitePopulationFilter"
+                                        (ngModelChange)="getZipCodes()"
+                                    />
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="CountryNameFilter">
+                                        ({{ l('Country') }}) {{ l('Name') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="CountryNameFilter"
+                                        name="countryNameFilter"
+                                        [(ngModel)]="countryNameFilter"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="StateNameFilter">
+                                        ({{ l('State') }}) {{ l('Name') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="StateNameFilter"
+                                        name="stateNameFilter"
+                                        [(ngModel)]="stateNameFilter"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="CityNameFilter">
+                                        ({{ l('City') }}) {{ l('Name') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="CityNameFilter"
+                                        name="cityNameFilter"
+                                        [(ngModel)]="cityNameFilter"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="CountyNameFilter">
+                                        ({{ l('County') }}) {{ l('Name') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="CountyNameFilter"
+                                        name="countyNameFilter"
+                                        [(ngModel)]="countyNameFilter"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-12 mt-5">
+                                <button
+                                    (click)="resetFilters()"
+                                    class="btn btn-secondary btn-sm"
+                                    id="btn-reset-filters"
+                                >
+                                    Reset
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row my-4">
+                            <div class="col-sm-12">
+                                <span
+                                    class="clickable-item text-muted"
+                                    *ngIf="!advancedFiltersAreShown"
+                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown"
+                                >
+                                    <i class="fa fa-angle-down"></i>
+                                    {{ l('ShowAdvancedFilters') }}
+                                </span>
+                                <span
+                                    class="clickable-item text-muted"
+                                    *ngIf="advancedFiltersAreShown"
+                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown"
+                                >
+                                    <i class="fa fa-angle-up"></i>
+                                    {{ l('HideAdvancedFilters') }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="row align-items-center">
+                    <!--<Primeng-Datatable-Start>-->
+                    <div class="primeng-datatable-container col-12" [busyIf]="primengTableHelper.isLoading">
+                        <p-table
+                            #dataTable
+                            (onLazyLoad)="getZipCodes($event)"
+                            [value]="primengTableHelper.records"
+                            rows="{{ primengTableHelper.defaultRecordsCountPerPage }}"
+                            [paginator]="false"
+                            [lazy]="true"
+                            [scrollable]="true"
+                            ScrollWidth="100%"
+                            [responsive]="primengTableHelper.isResponsive"
+                            [resizableColumns]="primengTableHelper.resizableColumns"
+                        >
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th
+                                        style="width: 130px"
+                                        [hidden]="!isGrantedAny('Pages.ZipCodes.Edit', 'Pages.ZipCodes.Delete')"
+                                    >
+                                        {{ l('Actions') }}
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="countryFk.name">
+                                        {{ l('Name') }}
+                                        <p-sortIcon field="countryName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="stateFk.name">
+                                        {{ l('Name') }}
+                                        <p-sortIcon field="stateName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="cityFk.name">
+                                        {{ l('Name') }}
+                                        <p-sortIcon field="cityName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="countyFk.name">
+                                        {{ l('Name') }}
+                                        <p-sortIcon field="countyName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="name">
+                                        {{ l('Name') }}
+                                        <p-sortIcon field="zipCode.name"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="areaCode">
+                                        {{ l('AreaCode') }}
+                                        <p-sortIcon field="zipCode.areaCode"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="asianPopulation">
+                                        {{ l('AsianPopulation') }}
+                                        <p-sortIcon field="zipCode.asianPopulation"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="averageHouseValue">
+                                        {{ l('AverageHouseValue') }}
+                                        <p-sortIcon field="zipCode.averageHouseValue"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="blackPopulation">
+                                        {{ l('BlackPopulation') }}
+                                        <p-sortIcon field="zipCode.blackPopulation"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="cbsa">
+                                        {{ l('CBSA') }}
+                                        <p-sortIcon field="zipCode.cbsa"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="cbsA_Div">
+                                        {{ l('CBSA_Div') }}
+                                        <p-sortIcon field="zipCode.cbsA_Div"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="cbsA_Div_Name">
+                                        {{ l('CBSA_Div_Name') }}
+                                        <p-sortIcon field="zipCode.cbsA_Div_Name"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="cbsA_Name">
+                                        {{ l('CBSA_Name') }}
+                                        <p-sortIcon field="zipCode.cbsA_Name"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="cbsA_Type">
+                                        {{ l('CBSA_Type') }}
+                                        <p-sortIcon field="zipCode.cbsA_Type"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="csa">
+                                        {{ l('CSA') }}
+                                        <p-sortIcon field="zipCode.csa"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="csaName">
+                                        {{ l('CSAName') }}
+                                        <p-sortIcon field="zipCode.csaName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="carrierRouteRateSortation">
+                                        {{ l('CarrierRouteRateSortation') }}
+                                        <p-sortIcon field="zipCode.carrierRouteRateSortation"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="city">
+                                        {{ l('City') }}
+                                        <p-sortIcon field="zipCode.city"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="cityAliasCode">
+                                        {{ l('CityAliasCode') }}
+                                        <p-sortIcon field="zipCode.cityAliasCode"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="cityAliasMixedCase">
+                                        {{ l('CityAliasMixedCase') }}
+                                        <p-sortIcon field="zipCode.cityAliasMixedCase"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="cityAliasName">
+                                        {{ l('CityAliasName') }}
+                                        <p-sortIcon field="zipCode.cityAliasName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="cityDeliveryIndicator">
+                                        {{ l('CityDeliveryIndicator') }}
+                                        <p-sortIcon field="zipCode.cityDeliveryIndicator"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="cityMixedCase">
+                                        {{ l('CityMixedCase') }}
+                                        <p-sortIcon field="zipCode.cityMixedCase"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="cityStateKey">
+                                        {{ l('CityStateKey') }}
+                                        <p-sortIcon field="zipCode.cityStateKey"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="cityType">
+                                        {{ l('CityType') }}
+                                        <p-sortIcon field="zipCode.cityType"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="classificationCode">
+                                        {{ l('ClassificationCode') }}
+                                        <p-sortIcon field="zipCode.classificationCode"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="county">
+                                        {{ l('County') }}
+                                        <p-sortIcon field="zipCode.county"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="countyANSI">
+                                        {{ l('CountyANSI') }}
+                                        <p-sortIcon field="zipCode.countyANSI"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="countyFIPS">
+                                        {{ l('CountyFIPS') }}
+                                        <p-sortIcon field="zipCode.countyFIPS"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="countyMixedCase">
+                                        {{ l('CountyMixedCase') }}
+                                        <p-sortIcon field="zipCode.countyMixedCase"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="dayLightSaving">
+                                        {{ l('DayLightSaving') }}
+                                        <p-sortIcon field="zipCode.dayLightSaving"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="division">
+                                        {{ l('Division') }}
+                                        <p-sortIcon field="zipCode.division"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="elevation">
+                                        {{ l('Elevation') }}
+                                        <p-sortIcon field="zipCode.elevation"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="facilityCode">
+                                        {{ l('FacilityCode') }}
+                                        <p-sortIcon field="zipCode.facilityCode"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="femalePopulation">
+                                        {{ l('FemalePopulation') }}
+                                        <p-sortIcon field="zipCode.femalePopulation"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="financeNumber">
+                                        {{ l('FinanceNumber') }}
+                                        <p-sortIcon field="zipCode.financeNumber"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="hawaiianPopulation">
+                                        {{ l('HawaiianPopulation') }}
+                                        <p-sortIcon field="zipCode.hawaiianPopulation"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="hispanicPopulation">
+                                        {{ l('HispanicPopulation') }}
+                                        <p-sortIcon field="zipCode.hispanicPopulation"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="householdsPerZipCode">
+                                        {{ l('HouseholdsPerZipCode') }}
+                                        <p-sortIcon field="zipCode.householdsPerZipCode"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="incomePerHousehold">
+                                        {{ l('IncomePerHousehold') }}
+                                        <p-sortIcon field="zipCode.incomePerHousehold"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="indianPopulation">
+                                        {{ l('IndianPopulation') }}
+                                        <p-sortIcon field="zipCode.indianPopulation"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="latitude">
+                                        {{ l('Latitude') }}
+                                        <p-sortIcon field="zipCode.latitude"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="longitude">
+                                        {{ l('Longitude') }}
+                                        <p-sortIcon field="zipCode.longitude"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="msa">
+                                        {{ l('MSA') }}
+                                        <p-sortIcon field="zipCode.msa"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="msA_Name">
+                                        {{ l('MSA_Name') }}
+                                        <p-sortIcon field="zipCode.msA_Name"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="mailingName">
+                                        {{ l('MailingName') }}
+                                        <p-sortIcon field="zipCode.mailingName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="malePopulation">
+                                        {{ l('MalePopulation') }}
+                                        <p-sortIcon field="zipCode.malePopulation"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="multiCounty">
+                                        {{ l('MultiCounty') }}
+                                        <p-sortIcon field="zipCode.multiCounty"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="otherPopulation">
+                                        {{ l('OtherPopulation') }}
+                                        <p-sortIcon field="zipCode.otherPopulation"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="pmsa">
+                                        {{ l('PMSA') }}
+                                        <p-sortIcon field="zipCode.pmsa"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="pmsA_Name">
+                                        {{ l('PMSA_Name') }}
+                                        <p-sortIcon field="zipCode.pmsA_Name"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="personsPerHousehold">
+                                        {{ l('PersonsPerHousehold') }}
+                                        <p-sortIcon field="zipCode.personsPerHousehold"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="population">
+                                        {{ l('Population') }}
+                                        <p-sortIcon field="zipCode.population"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="preferredLastLineKey">
+                                        {{ l('PreferredLastLineKey') }}
+                                        <p-sortIcon field="zipCode.preferredLastLineKey"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="primaryRecord">
+                                        {{ l('PrimaryRecord') }}
+                                        <p-sortIcon field="zipCode.primaryRecord"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="region">
+                                        {{ l('Region') }}
+                                        <p-sortIcon field="zipCode.region"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="state">
+                                        {{ l('State') }}
+                                        <p-sortIcon field="zipCode.state"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="stateANSI">
+                                        {{ l('StateANSI') }}
+                                        <p-sortIcon field="zipCode.stateANSI"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="stateFIPS">
+                                        {{ l('StateFIPS') }}
+                                        <p-sortIcon field="zipCode.stateFIPS"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="stateFullName">
+                                        {{ l('StateFullName') }}
+                                        <p-sortIcon field="zipCode.stateFullName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="timeZone">
+                                        {{ l('TimeZone') }}
+                                        <p-sortIcon field="zipCode.timeZone"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="uniqueZIPName">
+                                        {{ l('UniqueZIPName') }}
+                                        <p-sortIcon field="zipCode.uniqueZIPName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="whitePopulation">
+                                        {{ l('WhitePopulation') }}
+                                        <p-sortIcon field="zipCode.whitePopulation"></p-sortIcon>
+                                    </th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
+                                <tr>
+                                    <td
+                                        style="width: 130px"
+                                        [hidden]="!isGrantedAny('Pages.ZipCodes.Edit', 'Pages.ZipCodes.Delete')"
+                                    >
+                                        <div class="btn-group dropdown" dropdown container="body">
+                                            <button class="dropdown-toggle btn btn-sm btn-primary" dropdownToggle>
+                                                <i class="fa fa-cog"></i>
+                                                <span class="caret"></span>
+                                                {{ l('Actions') }}
+                                            </button>
+                                            <ul class="dropdown-menu" *dropdownMenu>
+                                                <li>
+                                                    <a
+                                                        href="javascript:;"
+                                                        class="dropdown-item"
+                                                        (click)="viewZipCodeModal.show(record)"
+                                                    >
+                                                        {{ l('View') }}
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a
+                                                        href="javascript:;"
+                                                        *ngIf="permission.isGranted('Pages.ZipCodes.Edit')"
+                                                        class="dropdown-item"
+                                                        (click)="createOrEditZipCodeModal.show(record.zipCode.id)"
+                                                    >
+                                                        {{ l('Edit') }}
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a
+                                                        class="dropdown-item"
+                                                        href="javascript:;"
+                                                        *ngIf="permission.isGranted('Pages.ZipCodes.Delete')"
+                                                        (click)="deleteZipCode(record.zipCode)"
+                                                    >
+                                                        {{ l('Delete') }}
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Name') }}</span>
+                                        {{ record.countryName }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Name') }}</span>
+                                        {{ record.stateName }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Name') }}</span>
+                                        {{ record.cityName }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Name') }}</span>
+                                        {{ record.countyName }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Name') }}</span>
+                                        {{ record.zipCode.name }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('AreaCode') }}</span>
+                                        {{ record.zipCode.areaCode }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('AsianPopulation') }}</span>
+                                        {{ record.zipCode.asianPopulation }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('AverageHouseValue') }}</span>
+                                        {{ record.zipCode.averageHouseValue }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('BlackPopulation') }}</span>
+                                        {{ record.zipCode.blackPopulation }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('CBSA') }}</span>
+                                        {{ record.zipCode.cbsa }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('CBSA_Div') }}</span>
+                                        {{ record.zipCode.cbsA_Div }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('CBSA_Div_Name') }}</span>
+                                        {{ record.zipCode.cbsA_Div_Name }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('CBSA_Name') }}</span>
+                                        {{ record.zipCode.cbsA_Name }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('CBSA_Type') }}</span>
+                                        {{ record.zipCode.cbsA_Type }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('CSA') }}</span>
+                                        {{ record.zipCode.csa }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('CSAName') }}</span>
+                                        {{ record.zipCode.csaName }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('CarrierRouteRateSortation') }}</span>
+                                        {{ record.zipCode.carrierRouteRateSortation }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('City') }}</span>
+                                        {{ record.zipCode.city }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('CityAliasCode') }}</span>
+                                        {{ record.zipCode.cityAliasCode }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('CityAliasMixedCase') }}</span>
+                                        {{ record.zipCode.cityAliasMixedCase }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('CityAliasName') }}</span>
+                                        {{ record.zipCode.cityAliasName }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('CityDeliveryIndicator') }}</span>
+                                        {{ record.zipCode.cityDeliveryIndicator }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('CityMixedCase') }}</span>
+                                        {{ record.zipCode.cityMixedCase }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('CityStateKey') }}</span>
+                                        {{ record.zipCode.cityStateKey }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('CityType') }}</span>
+                                        {{ record.zipCode.cityType }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('ClassificationCode') }}</span>
+                                        {{ record.zipCode.classificationCode }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('County') }}</span>
+                                        {{ record.zipCode.county }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('CountyANSI') }}</span>
+                                        {{ record.zipCode.countyANSI }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('CountyFIPS') }}</span>
+                                        {{ record.zipCode.countyFIPS }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('CountyMixedCase') }}</span>
+                                        {{ record.zipCode.countyMixedCase }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('DayLightSaving') }}</span>
+                                        {{ record.zipCode.dayLightSaving }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Division') }}</span>
+                                        {{ record.zipCode.division }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Elevation') }}</span>
+                                        {{ record.zipCode.elevation }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('FacilityCode') }}</span>
+                                        {{ record.zipCode.facilityCode }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('FemalePopulation') }}</span>
+                                        {{ record.zipCode.femalePopulation }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('FinanceNumber') }}</span>
+                                        {{ record.zipCode.financeNumber }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('HawaiianPopulation') }}</span>
+                                        {{ record.zipCode.hawaiianPopulation }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('HispanicPopulation') }}</span>
+                                        {{ record.zipCode.hispanicPopulation }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('HouseholdsPerZipCode') }}</span>
+                                        {{ record.zipCode.householdsPerZipCode }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('IncomePerHousehold') }}</span>
+                                        {{ record.zipCode.incomePerHousehold }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('IndianPopulation') }}</span>
+                                        {{ record.zipCode.indianPopulation }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Latitude') }}</span>
+                                        {{ record.zipCode.latitude }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Longitude') }}</span>
+                                        {{ record.zipCode.longitude }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('MSA') }}</span>
+                                        {{ record.zipCode.msa }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('MSA_Name') }}</span>
+                                        {{ record.zipCode.msA_Name }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('MailingName') }}</span>
+                                        {{ record.zipCode.mailingName }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('MalePopulation') }}</span>
+                                        {{ record.zipCode.malePopulation }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('MultiCounty') }}</span>
+                                        {{ record.zipCode.multiCounty }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('OtherPopulation') }}</span>
+                                        {{ record.zipCode.otherPopulation }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('PMSA') }}</span>
+                                        {{ record.zipCode.pmsa }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('PMSA_Name') }}</span>
+                                        {{ record.zipCode.pmsA_Name }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('PersonsPerHousehold') }}</span>
+                                        {{ record.zipCode.personsPerHousehold }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Population') }}</span>
+                                        {{ record.zipCode.population }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('PreferredLastLineKey') }}</span>
+                                        {{ record.zipCode.preferredLastLineKey }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('PrimaryRecord') }}</span>
+                                        {{ record.zipCode.primaryRecord }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Region') }}</span>
+                                        {{ record.zipCode.region }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('State') }}</span>
+                                        {{ record.zipCode.state }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('StateANSI') }}</span>
+                                        {{ record.zipCode.stateANSI }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('StateFIPS') }}</span>
+                                        {{ record.zipCode.stateFIPS }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('StateFullName') }}</span>
+                                        {{ record.zipCode.stateFullName }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('TimeZone') }}</span>
+                                        {{ record.zipCode.timeZone }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('UniqueZIPName') }}</span>
+                                        {{ record.zipCode.uniqueZIPName }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('WhitePopulation') }}</span>
+                                        {{ record.zipCode.whitePopulation }}
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                        <div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
+                            {{ l('NoData') }}
+                        </div>
+                        <div class="primeng-paging-container">
+                            <p-paginator
+                                [rows]="primengTableHelper.defaultRecordsCountPerPage"
+                                #paginator
+                                (onPageChange)="getZipCodes($event)"
+                                [totalRecords]="primengTableHelper.totalRecordsCount"
+                                [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
+                                [showCurrentPageReport]="true"
+                                [currentPageReportTemplate]="
+                                    'TotalRecordsCount' | localize : primengTableHelper.totalRecordsCount
+                                "
+                            ></p-paginator>
+                        </div>
+                    </div>
+                    <!--<Primeng-Datatable-End>-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <createOrEditZipCodeModal #createOrEditZipCodeModal (modalSave)="getZipCodes()"></createOrEditZipCodeModal>
+    <viewZipCodeModal #viewZipCodeModal></viewZipCodeModal>
+</div>

@@ -1,0 +1,134 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #masterTagForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="masterTag.id">{{ l('EditMasterTag') }}</span>
+                        <span *ngIf="!masterTag.id">{{ l('CreateNewMasterTag') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="MasterTagCategoryName">{{ l('MasterTagCategory') }}</label>
+                        <select
+                            name="masterTag.masterTagCategoryId"
+                            [(ngModel)]="masterTag.masterTagCategoryId"
+                            class="form-select"
+                            required
+                        >
+                            <option value="">{{ l('SelectAMasterTagCategory') }}</option>
+                            <option *ngFor="let item of allMasterTagCategorys" value="{{ item.id }}">
+                                {{ item.displayName }}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="MasterTag_Name">{{ l('Name') }} *</label>
+                        <input
+                            type="text"
+                            #MasterTag_Name="ngModel"
+                            id="MasterTag_Name"
+                            class="form-control"
+                            [(ngModel)]="masterTag.name"
+                            name="Name"
+                            minlength="1"
+                            maxlength="128"
+                            required
+                        />
+                        <validation-messages [formCtrl]="MasterTag_Name"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="MasterTag_Description">{{ l('Description') }}</label>
+                        <input
+                            type="text"
+                            #MasterTag_Description="ngModel"
+                            id="MasterTag_Description"
+                            class="form-control"
+                            [(ngModel)]="masterTag.description"
+                            name="Description"
+                            minlength="1"
+                            maxlength="2500"
+                        />
+                        <validation-messages [formCtrl]="MasterTag_Description"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="MasterTag_Synonyms">{{ l('Synonyms') }}</label>
+                        <input
+                            type="text"
+                            #MasterTag_Synonyms="ngModel"
+                            id="MasterTag_Synonyms"
+                            class="form-control"
+                            [(ngModel)]="masterTag.synonyms"
+                            name="Synonyms"
+                            minlength="1"
+                            maxlength="1500"
+                        />
+                        <validation-messages [formCtrl]="MasterTag_Synonyms"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="MasterTag_PictureId">{{ l('PictureId') }}</label>
+                        <input
+                            type="text"
+                            #MasterTag_PictureId="ngModel"
+                            id="MasterTag_PictureId"
+                            class="form-control"
+                            [(ngModel)]="masterTag.pictureId"
+                            name="PictureId"
+                        />
+                        <validation-messages [formCtrl]="MasterTag_PictureId"></validation-messages>
+                    </div>
+
+                    <div class="my5">
+                        <label class="form-label" for="MasterTag_DisplaySequence">{{ l('DisplaySequence') }}</label>
+                        <input
+                            type="number"
+                            #MasterTag_DisplaySequence="ngModel"
+                            id="MasterTag_DisplaySequence"
+                            class="form-control"
+                            [(ngModel)]="masterTag.displaySequence"
+                            name="DisplaySequence"
+                        />
+                        <validation-messages [formCtrl]="MasterTag_DisplaySequence"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!masterTagForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
