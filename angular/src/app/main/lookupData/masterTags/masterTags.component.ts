@@ -36,12 +36,12 @@ export class MasterTagsComponent extends AppComponentBase {
     nameFilter = '';
     descriptionFilter = '';
     synonymsFilter = '';
-    pictureIdFilter = '';
     maxDisplaySequenceFilter: number;
     maxDisplaySequenceFilterEmpty: number;
     minDisplaySequenceFilter: number;
     minDisplaySequenceFilterEmpty: number;
     masterTagCategoryNameFilter = '';
+    mediaLibraryNameFilter = '';
 
     constructor(
         injector: Injector,
@@ -71,7 +71,6 @@ export class MasterTagsComponent extends AppComponentBase {
                 this.nameFilter,
                 this.descriptionFilter,
                 this.synonymsFilter,
-                this.pictureIdFilter,
                 this.maxDisplaySequenceFilter == null
                     ? this.maxDisplaySequenceFilterEmpty
                     : this.maxDisplaySequenceFilter,
@@ -79,6 +78,7 @@ export class MasterTagsComponent extends AppComponentBase {
                     ? this.minDisplaySequenceFilterEmpty
                     : this.minDisplaySequenceFilter,
                 this.masterTagCategoryNameFilter,
+                this.mediaLibraryNameFilter,
                 this.primengTableHelper.getSorting(this.dataTable),
                 this.primengTableHelper.getSkipCount(this.paginator, event),
                 this.primengTableHelper.getMaxResultCount(this.paginator, event)
@@ -116,14 +116,14 @@ export class MasterTagsComponent extends AppComponentBase {
                 this.nameFilter,
                 this.descriptionFilter,
                 this.synonymsFilter,
-                this.pictureIdFilter,
                 this.maxDisplaySequenceFilter == null
                     ? this.maxDisplaySequenceFilterEmpty
                     : this.maxDisplaySequenceFilter,
                 this.minDisplaySequenceFilter == null
                     ? this.minDisplaySequenceFilterEmpty
                     : this.minDisplaySequenceFilter,
-                this.masterTagCategoryNameFilter
+                this.masterTagCategoryNameFilter,
+                this.mediaLibraryNameFilter
             )
             .subscribe((result) => {
                 this._fileDownloadService.downloadTempFile(result);
@@ -135,10 +135,10 @@ export class MasterTagsComponent extends AppComponentBase {
         this.nameFilter = '';
         this.descriptionFilter = '';
         this.synonymsFilter = '';
-        this.pictureIdFilter = '';
         this.maxDisplaySequenceFilter = this.maxDisplaySequenceFilterEmpty;
         this.minDisplaySequenceFilter = this.maxDisplaySequenceFilterEmpty;
         this.masterTagCategoryNameFilter = '';
+        this.mediaLibraryNameFilter = '';
 
         this.getMasterTags();
     }

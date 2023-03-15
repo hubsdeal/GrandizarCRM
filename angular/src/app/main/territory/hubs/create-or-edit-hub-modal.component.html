@@ -83,6 +83,38 @@
                     </div>
 
                     <div class="my-3">
+                        <label class="form-label" for="MediaLibraryName">{{ l('MediaLibrary') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="MediaLibraryName"
+                                name="mediaLibraryName"
+                                [(ngModel)]="mediaLibraryName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectMediaLibraryModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button
+                                class="btn btn-danger btn-icon"
+                                type="button"
+                                (click)="setPictureMediaLibraryIdNull()"
+                            >
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="hub.pictureMediaLibraryId"
+                        [(ngModel)]="hub.pictureMediaLibraryId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
                         <label class="form-label" for="Hub_Name">{{ l('Name') }} *</label>
                         <input
                             type="text"
@@ -242,19 +274,6 @@
                     <validation-messages [formCtrl]="Hub_PartnerOrOwned"></validation-messages>
 
                     <div class="my-3">
-                        <label class="form-label" for="Hub_PictureId">{{ l('PictureId') }}</label>
-                        <input
-                            type="text"
-                            #Hub_PictureId="ngModel"
-                            id="Hub_PictureId"
-                            class="form-control"
-                            [(ngModel)]="hub.pictureId"
-                            name="PictureId"
-                        />
-                        <validation-messages [formCtrl]="Hub_PictureId"></validation-messages>
-                    </div>
-
-                    <div class="my-3">
                         <label class="form-label" for="Hub_Phone">{{ l('Phone') }}</label>
                         <input
                             type="text"
@@ -313,4 +332,8 @@
             </form>
         </div>
     </div>
+    <hubMediaLibraryLookupTableModal
+        #hubMediaLibraryLookupTableModal
+        (modalSave)="getNewPictureMediaLibraryId()"
+    ></hubMediaLibraryLookupTableModal>
 </div>

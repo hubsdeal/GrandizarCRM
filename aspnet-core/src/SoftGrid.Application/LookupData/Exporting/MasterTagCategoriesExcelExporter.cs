@@ -37,14 +37,14 @@ namespace SoftGrid.LookupData.Exporting
                         sheet,
                         L("Name"),
                         L("Description"),
-                        L("PictureId")
+                        (L("MediaLibrary")) + L("Name")
                         );
 
                     AddObjects(
                         sheet, masterTagCategories,
                         _ => _.MasterTagCategory.Name,
                         _ => _.MasterTagCategory.Description,
-                        _ => _.MasterTagCategory.PictureId
+                        _ => _.MediaLibraryName
                         );
 
                 });

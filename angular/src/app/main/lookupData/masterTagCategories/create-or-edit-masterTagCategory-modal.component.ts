@@ -9,6 +9,7 @@ import { AppComponentBase } from '@shared/common/app-component-base';
 import { DateTime } from 'luxon';
 
 import { DateTimeService } from '@app/shared/common/timing/date-time.service';
+import { MasterTagCategoryMediaLibraryLookupTableModalComponent } from './masterTagCategory-mediaLibrary-lookup-table-modal.component';
 
 @Component({
     selector: 'createOrEditMasterTagCategoryModal',
@@ -16,6 +17,8 @@ import { DateTimeService } from '@app/shared/common/timing/date-time.service';
 })
 export class CreateOrEditMasterTagCategoryModalComponent extends AppComponentBase implements OnInit {
     @ViewChild('createOrEditModal', { static: true }) modal: ModalDirective;
+    @ViewChild('masterTagCategoryMediaLibraryLookupTableModal', { static: true })
+    masterTagCategoryMediaLibraryLookupTableModal: MasterTagCategoryMediaLibraryLookupTableModalComponent;
 
     @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
 
@@ -23,6 +26,8 @@ export class CreateOrEditMasterTagCategoryModalComponent extends AppComponentBas
     saving = false;
 
     masterTagCategory: CreateOrEditMasterTagCategoryDto = new CreateOrEditMasterTagCategoryDto();
+
+    mediaLibraryName = '';
 
     constructor(
         injector: Injector,
@@ -36,6 +41,7 @@ export class CreateOrEditMasterTagCategoryModalComponent extends AppComponentBas
         if (!masterTagCategoryId) {
             this.masterTagCategory = new CreateOrEditMasterTagCategoryDto();
             this.masterTagCategory.id = masterTagCategoryId;
+            this.mediaLibraryName = '';
 
             this.active = true;
             this.modal.show();
@@ -44,6 +50,8 @@ export class CreateOrEditMasterTagCategoryModalComponent extends AppComponentBas
                 .getMasterTagCategoryForEdit(masterTagCategoryId)
                 .subscribe((result) => {
                     this.masterTagCategory = result.masterTagCategory;
+
+                    this.mediaLibraryName = result.mediaLibraryName;
 
                     this.active = true;
                     this.modal.show();
@@ -66,6 +74,22 @@ export class CreateOrEditMasterTagCategoryModalComponent extends AppComponentBas
                 this.close();
                 this.modalSave.emit(null);
             });
+    }
+
+    openSelectMediaLibraryModal() {
+        this.masterTagCategoryMediaLibraryLookupTableModal.id = this.masterTagCategory.pictureMediaLibraryId;
+        this.masterTagCategoryMediaLibraryLookupTableModal.displayName = this.mediaLibraryName;
+        this.masterTagCategoryMediaLibraryLookupTableModal.show();
+    }
+
+    setPictureMediaLibraryIdNull() {
+        this.masterTagCategory.pictureMediaLibraryId = null;
+        this.mediaLibraryName = '';
+    }
+
+    getNewPictureMediaLibraryId() {
+        this.masterTagCategory.pictureMediaLibraryId = this.masterTagCategoryMediaLibraryLookupTableModal.id;
+        this.mediaLibraryName = this.masterTagCategoryMediaLibraryLookupTableModal.displayName;
     }
 
     close(): void {

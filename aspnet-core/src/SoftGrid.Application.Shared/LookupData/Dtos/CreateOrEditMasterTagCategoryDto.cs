@@ -14,7 +14,7 @@ namespace SoftGrid.LookupData.Dtos
         [StringLength(MasterTagCategoryConsts.MaxDescriptionLength, MinimumLength = MasterTagCategoryConsts.MinDescriptionLength)]
         public string Description { get; set; }
 
-        public Guid PictureId { get; set; }
+        public long? PictureMediaLibraryId { get; set; }
 
     }
 }

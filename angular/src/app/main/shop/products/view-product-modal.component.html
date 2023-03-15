@@ -1,0 +1,211 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span>{{ l('Details') }}</span>
+                </h4>
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    (click)="close()"
+                    aria-label="Close"
+                    [disabled]="saving"
+                ></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Name') }} :</h6>
+                        {{ item.product.name }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('ShortDescription') }} :</h6>
+                        {{ item.product.shortDescription }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Description') }} :</h6>
+                        {{ item.product.description }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Sku') }} :</h6>
+                        {{ item.product.sku }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Url') }} :</h6>
+                        {{ item.product.url }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('SeoTitle') }} :</h6>
+                        {{ item.product.seoTitle }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('MetaKeywords') }} :</h6>
+                        {{ item.product.metaKeywords }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('MetaDescription') }} :</h6>
+                        {{ item.product.metaDescription }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('RegularPrice') }} :</h6>
+                        {{ item.product.regularPrice }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('SalePrice') }} :</h6>
+                        {{ item.product.salePrice }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('PriceDiscountPercentage') }} :</h6>
+                        {{ item.product.priceDiscountPercentage }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('CallForPrice') }} :</h6>
+                        <div *ngIf="item.product.callForPrice" class="text-left">
+                            <i class="fa fa-check-circle text-success" title="True"></i>
+                        </div>
+                        <div *ngIf="!item.product.callForPrice" class="text-left">
+                            <i class="fa fa-times-circle" title="False"></i>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('UnitPrice') }} :</h6>
+                        {{ item.product.unitPrice }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('MeasurementAmount') }} :</h6>
+                        {{ item.product.measurementAmount }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('IsTaxExempt') }} :</h6>
+                        <div *ngIf="item.product.isTaxExempt" class="text-left">
+                            <i class="fa fa-check-circle text-success" title="True"></i>
+                        </div>
+                        <div *ngIf="!item.product.isTaxExempt" class="text-left">
+                            <i class="fa fa-times-circle" title="False"></i>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('StockQuantity') }} :</h6>
+                        {{ item.product.stockQuantity }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('IsDisplayStockQuantity') }} :</h6>
+                        <div *ngIf="item.product.isDisplayStockQuantity" class="text-left">
+                            <i class="fa fa-check-circle text-success" title="True"></i>
+                        </div>
+                        <div *ngIf="!item.product.isDisplayStockQuantity" class="text-left">
+                            <i class="fa fa-times-circle" title="False"></i>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('IsPublished') }} :</h6>
+                        <div *ngIf="item.product.isPublished" class="text-left">
+                            <i class="fa fa-check-circle text-success" title="True"></i>
+                        </div>
+                        <div *ngIf="!item.product.isPublished" class="text-left">
+                            <i class="fa fa-times-circle" title="False"></i>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('IsPackageProduct') }} :</h6>
+                        <div *ngIf="item.product.isPackageProduct" class="text-left">
+                            <i class="fa fa-check-circle text-success" title="True"></i>
+                        </div>
+                        <div *ngIf="!item.product.isPackageProduct" class="text-left">
+                            <i class="fa fa-times-circle" title="False"></i>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('InternalNotes') }} :</h6>
+                        {{ item.product.internalNotes }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('IsTemplate') }} :</h6>
+                        <div *ngIf="item.product.isTemplate" class="text-left">
+                            <i class="fa fa-check-circle text-success" title="True"></i>
+                        </div>
+                        <div *ngIf="!item.product.isTemplate" class="text-left">
+                            <i class="fa fa-times-circle" title="False"></i>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('PriceDiscountAmount') }} :</h6>
+                        {{ item.product.priceDiscountAmount }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('IsService') }} :</h6>
+                        <div *ngIf="item.product.isService" class="text-left">
+                            <i class="fa fa-check-circle text-success" title="True"></i>
+                        </div>
+                        <div *ngIf="!item.product.isService" class="text-left">
+                            <i class="fa fa-times-circle" title="False"></i>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('IsWholeSaleProduct') }} :</h6>
+                        <div *ngIf="item.product.isWholeSaleProduct" class="text-left">
+                            <i class="fa fa-check-circle text-success" title="True"></i>
+                        </div>
+                        <div *ngIf="!item.product.isWholeSaleProduct" class="text-left">
+                            <i class="fa fa-times-circle" title="False"></i>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('ProductManufacturerSku') }} :</h6>
+                        {{ item.product.productManufacturerSku }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('ByOrderOnly') }} :</h6>
+                        <div *ngIf="item.product.byOrderOnly" class="text-left">
+                            <i class="fa fa-check-circle text-success" title="True"></i>
+                        </div>
+                        <div *ngIf="!item.product.byOrderOnly" class="text-left">
+                            <i class="fa fa-times-circle" title="False"></i>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Score') }} :</h6>
+                        {{ item.product.score }}
+                    </div>
+
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('ProductCategory') }}) {{ l('Name') }} :</h6>
+                        {{ item.productCategoryName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('MediaLibrary') }}) {{ l('Name') }} :</h6>
+                        {{ item.mediaLibraryName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('MeasurementUnit') }}) {{ l('Name') }} :</h6>
+                        {{ item.measurementUnitName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('Currency') }}) {{ l('Name') }} :</h6>
+                        {{ item.currencyName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('RatingLike') }}) {{ l('Name') }} :</h6>
+                        {{ item.ratingLikeName }}
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button [disabled]="saving" type="button" class="btn btn-primary blue" (click)="close()">
+                    {{ l('Close') }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

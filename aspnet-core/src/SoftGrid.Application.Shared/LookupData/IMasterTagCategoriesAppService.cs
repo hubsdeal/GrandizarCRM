@@ -21,5 +21,7 @@ namespace SoftGrid.LookupData
 
         Task<FileDto> GetMasterTagCategoriesToExcel(GetAllMasterTagCategoriesForExcelInput input);
 
+        Task<PagedResultDto<MasterTagCategoryMediaLibraryLookupTableDto>> GetAllMediaLibraryForLookupTable(GetAllForLookupTableInput input);
+
     }
 }

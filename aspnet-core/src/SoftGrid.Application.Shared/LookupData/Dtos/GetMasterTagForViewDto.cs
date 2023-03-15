@@ -6,5 +6,7 @@
 
         public string MasterTagCategoryName { get; set; }
 
+        public string MediaLibraryName { get; set; }
+
     }
 }

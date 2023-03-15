@@ -1,0 +1,446 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #businessForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="business.id">{{ l('EditBusiness') }}</span>
+                        <span *ngIf="!business.id">{{ l('CreateNewBusiness') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="CountryName">{{ l('Country') }}</label>
+                        <select name="business.countryId" [(ngModel)]="business.countryId" class="form-select">
+                            <option value="">{{ l('SelectACountry') }}</option>
+                            <option *ngFor="let item of allCountrys" value="{{ item.id }}">
+                                {{ item.displayName }}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="StateName">{{ l('State') }}</label>
+                        <select name="business.stateId" [(ngModel)]="business.stateId" class="form-select">
+                            <option value="">{{ l('SelectAState') }}</option>
+                            <option *ngFor="let item of allStates" value="{{ item.id }}">{{ item.displayName }}</option>
+                        </select>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="CityName">{{ l('City') }}</label>
+                        <select name="business.cityId" [(ngModel)]="business.cityId" class="form-select">
+                            <option value="">{{ l('SelectACity') }}</option>
+                            <option *ngFor="let item of allCitys" value="{{ item.id }}">{{ item.displayName }}</option>
+                        </select>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="MediaLibraryName">{{ l('MediaLibrary') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="MediaLibraryName"
+                                name="mediaLibraryName"
+                                [(ngModel)]="mediaLibraryName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectMediaLibraryModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setLogoMediaLibraryIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="business.logoMediaLibraryId"
+                        [(ngModel)]="business.logoMediaLibraryId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="Business_Name">{{ l('Name') }} *</label>
+                        <input
+                            type="text"
+                            #Business_Name="ngModel"
+                            id="Business_Name"
+                            class="form-control"
+                            [(ngModel)]="business.name"
+                            name="Name"
+                            minlength="1"
+                            maxlength="256"
+                            required
+                        />
+                        <validation-messages [formCtrl]="Business_Name"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Business_TradeName">{{ l('TradeName') }}</label>
+                        <input
+                            type="text"
+                            #Business_TradeName="ngModel"
+                            id="Business_TradeName"
+                            class="form-control"
+                            [(ngModel)]="business.tradeName"
+                            name="TradeName"
+                            minlength="1"
+                            maxlength="256"
+                        />
+                        <validation-messages [formCtrl]="Business_TradeName"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Business_Description">{{ l('Description') }}</label>
+                        <input
+                            type="text"
+                            #Business_Description="ngModel"
+                            id="Business_Description"
+                            class="form-control"
+                            [(ngModel)]="business.description"
+                            name="Description"
+                        />
+                        <validation-messages [formCtrl]="Business_Description"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Business_CustomId">{{ l('CustomId') }}</label>
+                        <input
+                            type="text"
+                            #Business_CustomId="ngModel"
+                            id="Business_CustomId"
+                            class="form-control"
+                            [(ngModel)]="business.customId"
+                            name="CustomId"
+                            minlength="1"
+                            maxlength="128"
+                        />
+                        <validation-messages [formCtrl]="Business_CustomId"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Business_YearOfEstablishment">
+                            {{ l('YearOfEstablishment') }}
+                        </label>
+                        <input
+                            type="text"
+                            #Business_YearOfEstablishment="ngModel"
+                            id="Business_YearOfEstablishment"
+                            class="form-control"
+                            [(ngModel)]="business.yearOfEstablishment"
+                            name="YearOfEstablishment"
+                            minlength="1"
+                            maxlength="50"
+                        />
+                        <validation-messages [formCtrl]="Business_YearOfEstablishment"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Business_LocationTitle">{{ l('LocationTitle') }}</label>
+                        <input
+                            type="text"
+                            #Business_LocationTitle="ngModel"
+                            id="Business_LocationTitle"
+                            class="form-control"
+                            [(ngModel)]="business.locationTitle"
+                            name="LocationTitle"
+                            minlength="1"
+                            maxlength="128"
+                        />
+                        <validation-messages [formCtrl]="Business_LocationTitle"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Business_FullAddress">{{ l('FullAddress') }}</label>
+                        <input
+                            type="text"
+                            #Business_FullAddress="ngModel"
+                            id="Business_FullAddress"
+                            class="form-control"
+                            [(ngModel)]="business.fullAddress"
+                            name="FullAddress"
+                            minlength="1"
+                            maxlength="2056"
+                        />
+                        <validation-messages [formCtrl]="Business_FullAddress"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Business_Address1">{{ l('Address1') }}</label>
+                        <input
+                            type="text"
+                            #Business_Address1="ngModel"
+                            id="Business_Address1"
+                            class="form-control"
+                            [(ngModel)]="business.address1"
+                            name="Address1"
+                            minlength="1"
+                            maxlength="1024"
+                        />
+                        <validation-messages [formCtrl]="Business_Address1"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Business_Address2">{{ l('Address2') }}</label>
+                        <input
+                            type="text"
+                            #Business_Address2="ngModel"
+                            id="Business_Address2"
+                            class="form-control"
+                            [(ngModel)]="business.address2"
+                            name="Address2"
+                            minlength="1"
+                            maxlength="1024"
+                        />
+                        <validation-messages [formCtrl]="Business_Address2"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Business_City">{{ l('City') }}</label>
+                        <input
+                            type="text"
+                            #Business_City="ngModel"
+                            id="Business_City"
+                            class="form-control"
+                            [(ngModel)]="business.city"
+                            name="City"
+                            minlength="1"
+                            maxlength="128"
+                        />
+                        <validation-messages [formCtrl]="Business_City"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Business_ZipCode">{{ l('ZipCode') }}</label>
+                        <input
+                            type="text"
+                            #Business_ZipCode="ngModel"
+                            id="Business_ZipCode"
+                            class="form-control"
+                            [(ngModel)]="business.zipCode"
+                            name="ZipCode"
+                            minlength="1"
+                            maxlength="50"
+                        />
+                        <validation-messages [formCtrl]="Business_ZipCode"></validation-messages>
+                    </div>
+
+                    <div class="my5">
+                        <label class="form-label" for="Business_Latitude">{{ l('Latitude') }}</label>
+                        <input
+                            type="number"
+                            #Business_Latitude="ngModel"
+                            id="Business_Latitude"
+                            class="form-control"
+                            [(ngModel)]="business.latitude"
+                            name="Latitude"
+                        />
+                        <validation-messages [formCtrl]="Business_Latitude"></validation-messages>
+                    </div>
+
+                    <div class="my5">
+                        <label class="form-label" for="Business_Longitude">{{ l('Longitude') }}</label>
+                        <input
+                            type="number"
+                            #Business_Longitude="ngModel"
+                            id="Business_Longitude"
+                            class="form-control"
+                            [(ngModel)]="business.longitude"
+                            name="Longitude"
+                        />
+                        <validation-messages [formCtrl]="Business_Longitude"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Business_Phone">{{ l('Phone') }}</label>
+                        <input
+                            type="text"
+                            #Business_Phone="ngModel"
+                            id="Business_Phone"
+                            class="form-control"
+                            [(ngModel)]="business.phone"
+                            name="Phone"
+                            minlength="1"
+                            maxlength="50"
+                        />
+                        <validation-messages [formCtrl]="Business_Phone"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Business_Fax">{{ l('Fax') }}</label>
+                        <input
+                            type="text"
+                            #Business_Fax="ngModel"
+                            id="Business_Fax"
+                            class="form-control"
+                            [(ngModel)]="business.fax"
+                            name="Fax"
+                            minlength="1"
+                            maxlength="50"
+                        />
+                        <validation-messages [formCtrl]="Business_Fax"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Business_Email">{{ l('Email') }}</label>
+                        <input
+                            type="text"
+                            #Business_Email="ngModel"
+                            id="Business_Email"
+                            class="form-control"
+                            [(ngModel)]="business.email"
+                            name="Email"
+                            minlength="1"
+                            maxlength="256"
+                        />
+                        <validation-messages [formCtrl]="Business_Email"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Business_Website">{{ l('Website') }}</label>
+                        <input
+                            type="text"
+                            #Business_Website="ngModel"
+                            id="Business_Website"
+                            class="form-control"
+                            [(ngModel)]="business.website"
+                            name="Website"
+                            minlength="1"
+                            maxlength="1024"
+                        />
+                        <validation-messages [formCtrl]="Business_Website"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Business_EinTaxId">{{ l('EinTaxId') }}</label>
+                        <input
+                            type="text"
+                            #Business_EinTaxId="ngModel"
+                            id="Business_EinTaxId"
+                            class="form-control"
+                            [(ngModel)]="business.einTaxId"
+                            name="EinTaxId"
+                            minlength="1"
+                            maxlength="128"
+                        />
+                        <validation-messages [formCtrl]="Business_EinTaxId"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Business_Industry">{{ l('Industry') }}</label>
+                        <input
+                            type="text"
+                            #Business_Industry="ngModel"
+                            id="Business_Industry"
+                            class="form-control"
+                            [(ngModel)]="business.industry"
+                            name="Industry"
+                            minlength="1"
+                            maxlength="256"
+                        />
+                        <validation-messages [formCtrl]="Business_Industry"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Business_InternalRemarks">{{ l('InternalRemarks') }}</label>
+                        <input
+                            type="text"
+                            #Business_InternalRemarks="ngModel"
+                            id="Business_InternalRemarks"
+                            class="form-control"
+                            [(ngModel)]="business.internalRemarks"
+                            name="InternalRemarks"
+                        />
+                        <validation-messages [formCtrl]="Business_InternalRemarks"></validation-messages>
+                    </div>
+
+                    <br />
+                    <label class="form-check form-check-custom form-check-solid">
+                        <input
+                            id="Business_Verified"
+                            #Business_Verified="ngModel"
+                            name="Verified"
+                            [(ngModel)]="business.verified"
+                            type="checkbox"
+                            class="form-check-input"
+                        />
+                        <span class="form-check-label">
+                            {{ l('Verified') }}
+                        </span>
+                    </label>
+                    <validation-messages [formCtrl]="Business_Verified"></validation-messages>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Business_Facebook">{{ l('Facebook') }}</label>
+                        <input
+                            type="text"
+                            #Business_Facebook="ngModel"
+                            id="Business_Facebook"
+                            class="form-control"
+                            [(ngModel)]="business.facebook"
+                            name="Facebook"
+                            minlength="1"
+                            maxlength="1024"
+                        />
+                        <validation-messages [formCtrl]="Business_Facebook"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Business_LinkedIn">{{ l('LinkedIn') }}</label>
+                        <input
+                            type="text"
+                            #Business_LinkedIn="ngModel"
+                            id="Business_LinkedIn"
+                            class="form-control"
+                            [(ngModel)]="business.linkedIn"
+                            name="LinkedIn"
+                            minlength="1"
+                            maxlength="1024"
+                        />
+                        <validation-messages [formCtrl]="Business_LinkedIn"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!businessForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <businessMediaLibraryLookupTableModal
+        #businessMediaLibraryLookupTableModal
+        (modalSave)="getNewLogoMediaLibraryId()"
+    ></businessMediaLibraryLookupTableModal>
+</div>

@@ -20,5 +20,7 @@ namespace SoftGrid.Territory.Dtos
 
         public string CurrencyName { get; set; }
 
+        public string MediaLibraryName { get; set; }
+
     }
 }

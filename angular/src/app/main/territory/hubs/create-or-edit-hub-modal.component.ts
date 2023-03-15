@@ -15,6 +15,7 @@ import { AppComponentBase } from '@shared/common/app-component-base';
 import { DateTime } from 'luxon';
 
 import { DateTimeService } from '@app/shared/common/timing/date-time.service';
+import { HubMediaLibraryLookupTableModalComponent } from './hub-mediaLibrary-lookup-table-modal.component';
 
 @Component({
     selector: 'createOrEditHubModal',
@@ -22,6 +23,8 @@ import { DateTimeService } from '@app/shared/common/timing/date-time.service';
 })
 export class CreateOrEditHubModalComponent extends AppComponentBase implements OnInit {
     @ViewChild('createOrEditModal', { static: true }) modal: ModalDirective;
+    @ViewChild('hubMediaLibraryLookupTableModal', { static: true })
+    hubMediaLibraryLookupTableModal: HubMediaLibraryLookupTableModalComponent;
 
     @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
 
@@ -36,6 +39,7 @@ export class CreateOrEditHubModalComponent extends AppComponentBase implements O
     countyName = '';
     hubTypeName = '';
     currencyName = '';
+    mediaLibraryName = '';
 
     allCountrys: HubCountryLookupTableDto[];
     allStates: HubStateLookupTableDto[];
@@ -62,6 +66,7 @@ export class CreateOrEditHubModalComponent extends AppComponentBase implements O
             this.countyName = '';
             this.hubTypeName = '';
             this.currencyName = '';
+            this.mediaLibraryName = '';
 
             this.active = true;
             this.modal.show();
@@ -75,6 +80,7 @@ export class CreateOrEditHubModalComponent extends AppComponentBase implements O
                 this.countyName = result.countyName;
                 this.hubTypeName = result.hubTypeName;
                 this.currencyName = result.currencyName;
+                this.mediaLibraryName = result.mediaLibraryName;
 
                 this.active = true;
                 this.modal.show();
@@ -115,6 +121,22 @@ export class CreateOrEditHubModalComponent extends AppComponentBase implements O
                 this.close();
                 this.modalSave.emit(null);
             });
+    }
+
+    openSelectMediaLibraryModal() {
+        this.hubMediaLibraryLookupTableModal.id = this.hub.pictureMediaLibraryId;
+        this.hubMediaLibraryLookupTableModal.displayName = this.mediaLibraryName;
+        this.hubMediaLibraryLookupTableModal.show();
+    }
+
+    setPictureMediaLibraryIdNull() {
+        this.hub.pictureMediaLibraryId = null;
+        this.mediaLibraryName = '';
+    }
+
+    getNewPictureMediaLibraryId() {
+        this.hub.pictureMediaLibraryId = this.hubMediaLibraryLookupTableModal.id;
+        this.mediaLibraryName = this.hubMediaLibraryLookupTableModal.displayName;
     }
 
     close(): void {

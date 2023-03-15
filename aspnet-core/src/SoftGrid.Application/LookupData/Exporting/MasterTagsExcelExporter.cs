@@ -38,9 +38,9 @@ namespace SoftGrid.LookupData.Exporting
                         L("Name"),
                         L("Description"),
                         L("Synonyms"),
-                        L("PictureId"),
                         L("DisplaySequence"),
-                        (L("MasterTagCategory")) + L("Name")
+                        (L("MasterTagCategory")) + L("Name"),
+                        (L("MediaLibrary")) + L("Name")
                         );
 
                     AddObjects(
@@ -48,9 +48,9 @@ namespace SoftGrid.LookupData.Exporting
                         _ => _.MasterTag.Name,
                         _ => _.MasterTag.Description,
                         _ => _.MasterTag.Synonyms,
-                        _ => _.MasterTag.PictureId,
                         _ => _.MasterTag.DisplaySequence,
-                        _ => _.MasterTagCategoryName
+                        _ => _.MasterTagCategoryName,
+                        _ => _.MediaLibraryName
                         );
 
                 });

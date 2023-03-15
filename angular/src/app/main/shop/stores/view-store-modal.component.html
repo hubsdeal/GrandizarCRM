@@ -1,0 +1,180 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span>{{ l('Details') }}</span>
+                </h4>
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    (click)="close()"
+                    aria-label="Close"
+                    [disabled]="saving"
+                ></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Name') }} :</h6>
+                        {{ item.store.name }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('StoreUrl') }} :</h6>
+                        {{ item.store.storeUrl }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Description') }} :</h6>
+                        {{ item.store.description }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('MetaTag') }} :</h6>
+                        {{ item.store.metaTag }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('MetaDescription') }} :</h6>
+                        {{ item.store.metaDescription }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('FullAddress') }} :</h6>
+                        {{ item.store.fullAddress }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Address') }} :</h6>
+                        {{ item.store.address }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('City') }} :</h6>
+                        {{ item.store.city }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Latitude') }} :</h6>
+                        {{ item.store.latitude }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Longitude') }} :</h6>
+                        {{ item.store.longitude }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Phone') }} :</h6>
+                        {{ item.store.phone }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Mobile') }} :</h6>
+                        {{ item.store.mobile }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Email') }} :</h6>
+                        {{ item.store.email }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('IsPublished') }} :</h6>
+                        <div *ngIf="item.store.isPublished" class="text-left">
+                            <i class="fa fa-check-circle text-success" title="True"></i>
+                        </div>
+                        <div *ngIf="!item.store.isPublished" class="text-left">
+                            <i class="fa fa-times-circle" title="False"></i>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Facebook') }} :</h6>
+                        {{ item.store.facebook }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Instagram') }} :</h6>
+                        {{ item.store.instagram }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('LinkedIn') }} :</h6>
+                        {{ item.store.linkedIn }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Youtube') }} :</h6>
+                        {{ item.store.youtube }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Fax') }} :</h6>
+                        {{ item.store.fax }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('ZipCode') }} :</h6>
+                        {{ item.store.zipCode }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Website') }} :</h6>
+                        {{ item.store.website }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('YearOfEstablishment') }} :</h6>
+                        {{ item.store.yearOfEstablishment }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('DisplaySequence') }} :</h6>
+                        {{ item.store.displaySequence }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Score') }} :</h6>
+                        {{ item.store.score }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('LegalName') }} :</h6>
+                        {{ item.store.legalName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('IsLocalOrOnlineStore') }} :</h6>
+                        <div *ngIf="item.store.isLocalOrOnlineStore" class="text-left">
+                            <i class="fa fa-check-circle text-success" title="True"></i>
+                        </div>
+                        <div *ngIf="!item.store.isLocalOrOnlineStore" class="text-left">
+                            <i class="fa fa-times-circle" title="False"></i>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('IsVerified') }} :</h6>
+                        <div *ngIf="item.store.isVerified" class="text-left">
+                            <i class="fa fa-check-circle text-success" title="True"></i>
+                        </div>
+                        <div *ngIf="!item.store.isVerified" class="text-left">
+                            <i class="fa fa-times-circle" title="False"></i>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('MediaLibrary') }}) {{ l('Name') }} :</h6>
+                        {{ item.mediaLibraryName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('Country') }}) {{ l('Name') }} :</h6>
+                        {{ item.countryName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('State') }}) {{ l('Name') }} :</h6>
+                        {{ item.stateName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('RatingLike') }}) {{ l('Name') }} :</h6>
+                        {{ item.ratingLikeName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('MasterTag') }}) {{ l('Name') }} :</h6>
+                        {{ item.masterTagName }}
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button [disabled]="saving" type="button" class="btn btn-primary blue" (click)="close()">
+                    {{ l('Close') }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

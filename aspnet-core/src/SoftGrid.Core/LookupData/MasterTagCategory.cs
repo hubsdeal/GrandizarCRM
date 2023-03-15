@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SoftGrid.LookupData;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Abp.Domain.Entities.Auditing;
@@ -18,7 +19,10 @@ namespace SoftGrid.LookupData
         [StringLength(MasterTagCategoryConsts.MaxDescriptionLength, MinimumLength = MasterTagCategoryConsts.MinDescriptionLength)]
         public virtual string Description { get; set; }
 
-        public virtual Guid PictureId { get; set; }
+        public virtual long? PictureMediaLibraryId { get; set; }
+
+        [ForeignKey("PictureMediaLibraryId")]
+        public MediaLibrary PictureMediaLibraryFk { get; set; }
 
     }
 }

@@ -33,8 +33,6 @@ namespace SoftGrid.Territory.Dtos
 
         public bool PartnerOrOwned { get; set; }
 
-        public Guid PictureId { get; set; }
-
         [StringLength(HubConsts.MaxPhoneLength, MinimumLength = HubConsts.MinPhoneLength)]
         public string Phone { get; set; }
 
@@ -53,6 +51,8 @@ namespace SoftGrid.Territory.Dtos
         public long HubTypeId { get; set; }
 
         public long? CurrencyId { get; set; }
+
+        public long? PictureMediaLibraryId { get; set; }
 
     }
 }

@@ -10,6 +10,7 @@ import { AppComponentBase } from '@shared/common/app-component-base';
 import { DateTime } from 'luxon';
 
 import { DateTimeService } from '@app/shared/common/timing/date-time.service';
+import { MasterTagMediaLibraryLookupTableModalComponent } from './masterTag-mediaLibrary-lookup-table-modal.component';
 
 @Component({
     selector: 'createOrEditMasterTagModal',
@@ -17,6 +18,8 @@ import { DateTimeService } from '@app/shared/common/timing/date-time.service';
 })
 export class CreateOrEditMasterTagModalComponent extends AppComponentBase implements OnInit {
     @ViewChild('createOrEditModal', { static: true }) modal: ModalDirective;
+    @ViewChild('masterTagMediaLibraryLookupTableModal', { static: true })
+    masterTagMediaLibraryLookupTableModal: MasterTagMediaLibraryLookupTableModalComponent;
 
     @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
 
@@ -26,6 +29,7 @@ export class CreateOrEditMasterTagModalComponent extends AppComponentBase implem
     masterTag: CreateOrEditMasterTagDto = new CreateOrEditMasterTagDto();
 
     masterTagCategoryName = '';
+    mediaLibraryName = '';
 
     allMasterTagCategorys: MasterTagMasterTagCategoryLookupTableDto[];
 
@@ -42,6 +46,7 @@ export class CreateOrEditMasterTagModalComponent extends AppComponentBase implem
             this.masterTag = new CreateOrEditMasterTagDto();
             this.masterTag.id = masterTagId;
             this.masterTagCategoryName = '';
+            this.mediaLibraryName = '';
 
             this.active = true;
             this.modal.show();
@@ -50,6 +55,7 @@ export class CreateOrEditMasterTagModalComponent extends AppComponentBase implem
                 this.masterTag = result.masterTag;
 
                 this.masterTagCategoryName = result.masterTagCategoryName;
+                this.mediaLibraryName = result.mediaLibraryName;
 
                 this.active = true;
                 this.modal.show();
@@ -75,6 +81,22 @@ export class CreateOrEditMasterTagModalComponent extends AppComponentBase implem
                 this.close();
                 this.modalSave.emit(null);
             });
+    }
+
+    openSelectMediaLibraryModal() {
+        this.masterTagMediaLibraryLookupTableModal.id = this.masterTag.pictureMediaLibraryId;
+        this.masterTagMediaLibraryLookupTableModal.displayName = this.mediaLibraryName;
+        this.masterTagMediaLibraryLookupTableModal.show();
+    }
+
+    setPictureMediaLibraryIdNull() {
+        this.masterTag.pictureMediaLibraryId = null;
+        this.mediaLibraryName = '';
+    }
+
+    getNewPictureMediaLibraryId() {
+        this.masterTag.pictureMediaLibraryId = this.masterTagMediaLibraryLookupTableModal.id;
+        this.mediaLibraryName = this.masterTagMediaLibraryLookupTableModal.displayName;
     }
 
     close(): void {

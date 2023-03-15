@@ -1,0 +1,422 @@
+﻿<div [@routerTransition]>
+    <sub-header [title]="'MediaLibraries' | localize" [description]="'MediaLibrariesHeaderInfo' | localize">
+        <div role="actions">
+            <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1">
+                <i class="fa fa-file-excel"></i>
+                {{ l('ExportToExcel') }}
+            </button>
+
+            <button
+                *ngIf="isGranted('Pages.MediaLibraries.Create')"
+                (click)="createMediaLibrary()"
+                class="btn btn-primary blue"
+            >
+                <i class="fa fa-plus"></i>
+                {{ l('CreateNewMediaLibrary') }}
+            </button>
+        </div>
+    </sub-header>
+
+    <div [class]="containerClass">
+        <div class="card card-custom gutter-b">
+            <div class="card-body">
+                <form class="form" autocomplete="off">
+                    <div>
+                        <div class="row align-items-center">
+                            <div class="col-xl-12">
+                                <div class="my-3">
+                                    <div class="input-group mb-3">
+                                        <input
+                                            [(ngModel)]="filterText"
+                                            (ngModelChange)="getMediaLibraries()"
+                                            name="filterText"
+                                            autoFocus
+                                            type="text"
+                                            class="form-control"
+                                            [placeholder]="l('SearchWithThreeDot')"
+                                        />
+                                        <button class="btn btn-primary" type="submit" (click)="getMediaLibraries()">
+                                            <i class="flaticon-search-1"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" [hidden]="!advancedFiltersAreShown">
+                            <div class="col-md-12"></div>
+
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="NameFilter">{{ l('Name') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="NameFilter"
+                                        name="nameFilter"
+                                        [(ngModel)]="nameFilter"
+                                        (ngModelChange)="getMediaLibraries()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="SizeFilter">{{ l('Size') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="SizeFilter"
+                                        name="sizeFilter"
+                                        [(ngModel)]="sizeFilter"
+                                        (ngModelChange)="getMediaLibraries()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="FileExtensionFilter">{{ l('FileExtension') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="FileExtensionFilter"
+                                        name="fileExtensionFilter"
+                                        [(ngModel)]="fileExtensionFilter"
+                                        (ngModelChange)="getMediaLibraries()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="DimensionFilter">{{ l('Dimension') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="DimensionFilter"
+                                        name="dimensionFilter"
+                                        [(ngModel)]="dimensionFilter"
+                                        (ngModelChange)="getMediaLibraries()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="VideoLinkFilter">{{ l('VideoLink') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="VideoLinkFilter"
+                                        name="videoLinkFilter"
+                                        [(ngModel)]="videoLinkFilter"
+                                        (ngModelChange)="getMediaLibraries()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="SeoTagFilter">{{ l('SeoTag') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="SeoTagFilter"
+                                        name="seoTagFilter"
+                                        [(ngModel)]="seoTagFilter"
+                                        (ngModelChange)="getMediaLibraries()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="AltTagFilter">{{ l('AltTag') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="AltTagFilter"
+                                        name="altTagFilter"
+                                        [(ngModel)]="altTagFilter"
+                                        (ngModelChange)="getMediaLibraries()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="VirtualPathFilter">{{ l('VirtualPath') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="VirtualPathFilter"
+                                        name="virtualPathFilter"
+                                        [(ngModel)]="virtualPathFilter"
+                                        (ngModelChange)="getMediaLibraries()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="BinaryObjectIdFilter">
+                                        {{ l('BinaryObjectId') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="BinaryObjectIdFilter"
+                                        name="binaryObjectIdFilter"
+                                        [(ngModel)]="binaryObjectIdFilter"
+                                    />
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="MasterTagCategoryNameFilter">
+                                        ({{ l('MasterTagCategory') }}) {{ l('Name') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="MasterTagCategoryNameFilter"
+                                        name="masterTagCategoryNameFilter"
+                                        [(ngModel)]="masterTagCategoryNameFilter"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="MasterTagNameFilter">
+                                        ({{ l('MasterTag') }}) {{ l('Name') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="MasterTagNameFilter"
+                                        name="masterTagNameFilter"
+                                        [(ngModel)]="masterTagNameFilter"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-12 mt-5">
+                                <button
+                                    (click)="resetFilters()"
+                                    class="btn btn-secondary btn-sm"
+                                    id="btn-reset-filters"
+                                >
+                                    Reset
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row my-4">
+                            <div class="col-sm-12">
+                                <span
+                                    class="clickable-item text-muted"
+                                    *ngIf="!advancedFiltersAreShown"
+                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown"
+                                >
+                                    <i class="fa fa-angle-down"></i>
+                                    {{ l('ShowAdvancedFilters') }}
+                                </span>
+                                <span
+                                    class="clickable-item text-muted"
+                                    *ngIf="advancedFiltersAreShown"
+                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown"
+                                >
+                                    <i class="fa fa-angle-up"></i>
+                                    {{ l('HideAdvancedFilters') }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="row align-items-center">
+                    <!--<Primeng-Datatable-Start>-->
+                    <div class="primeng-datatable-container col-12" [busyIf]="primengTableHelper.isLoading">
+                        <p-table
+                            #dataTable
+                            (onLazyLoad)="getMediaLibraries($event)"
+                            [value]="primengTableHelper.records"
+                            rows="{{ primengTableHelper.defaultRecordsCountPerPage }}"
+                            [paginator]="false"
+                            [lazy]="true"
+                            [scrollable]="true"
+                            ScrollWidth="100%"
+                            [responsive]="primengTableHelper.isResponsive"
+                            [resizableColumns]="primengTableHelper.resizableColumns"
+                        >
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th
+                                        style="width: 130px"
+                                        [hidden]="
+                                            !isGrantedAny('Pages.MediaLibraries.Edit', 'Pages.MediaLibraries.Delete')
+                                        "
+                                    >
+                                        {{ l('Actions') }}
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="masterTagCategoryFk.name">
+                                        {{ l('Name') }}
+                                        <p-sortIcon field="masterTagCategoryName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="masterTagFk.name">
+                                        {{ l('Name') }}
+                                        <p-sortIcon field="masterTagName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="name">
+                                        {{ l('Name') }}
+                                        <p-sortIcon field="mediaLibrary.name"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="size">
+                                        {{ l('Size') }}
+                                        <p-sortIcon field="mediaLibrary.size"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="fileExtension">
+                                        {{ l('FileExtension') }}
+                                        <p-sortIcon field="mediaLibrary.fileExtension"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="dimension">
+                                        {{ l('Dimension') }}
+                                        <p-sortIcon field="mediaLibrary.dimension"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="videoLink">
+                                        {{ l('VideoLink') }}
+                                        <p-sortIcon field="mediaLibrary.videoLink"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="seoTag">
+                                        {{ l('SeoTag') }}
+                                        <p-sortIcon field="mediaLibrary.seoTag"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="altTag">
+                                        {{ l('AltTag') }}
+                                        <p-sortIcon field="mediaLibrary.altTag"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="virtualPath">
+                                        {{ l('VirtualPath') }}
+                                        <p-sortIcon field="mediaLibrary.virtualPath"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="binaryObjectId">
+                                        {{ l('BinaryObjectId') }}
+                                        <p-sortIcon field="mediaLibrary.binaryObjectId"></p-sortIcon>
+                                    </th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
+                                <tr>
+                                    <td
+                                        style="width: 130px"
+                                        [hidden]="
+                                            !isGrantedAny('Pages.MediaLibraries.Edit', 'Pages.MediaLibraries.Delete')
+                                        "
+                                    >
+                                        <div class="btn-group dropdown" dropdown container="body">
+                                            <button class="dropdown-toggle btn btn-sm btn-primary" dropdownToggle>
+                                                <i class="fa fa-cog"></i>
+                                                <span class="caret"></span>
+                                                {{ l('Actions') }}
+                                            </button>
+                                            <ul class="dropdown-menu" *dropdownMenu>
+                                                <li>
+                                                    <a
+                                                        href="javascript:;"
+                                                        class="dropdown-item"
+                                                        (click)="viewMediaLibraryModal.show(record)"
+                                                    >
+                                                        {{ l('View') }}
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a
+                                                        href="javascript:;"
+                                                        *ngIf="permission.isGranted('Pages.MediaLibraries.Edit')"
+                                                        class="dropdown-item"
+                                                        (click)="
+                                                            createOrEditMediaLibraryModal.show(record.mediaLibrary.id)
+                                                        "
+                                                    >
+                                                        {{ l('Edit') }}
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a
+                                                        class="dropdown-item"
+                                                        href="javascript:;"
+                                                        *ngIf="permission.isGranted('Pages.MediaLibraries.Delete')"
+                                                        (click)="deleteMediaLibrary(record.mediaLibrary)"
+                                                    >
+                                                        {{ l('Delete') }}
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Name') }}</span>
+                                        {{ record.masterTagCategoryName }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Name') }}</span>
+                                        {{ record.masterTagName }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Name') }}</span>
+                                        {{ record.mediaLibrary.name }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Size') }}</span>
+                                        {{ record.mediaLibrary.size }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('FileExtension') }}</span>
+                                        {{ record.mediaLibrary.fileExtension }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Dimension') }}</span>
+                                        {{ record.mediaLibrary.dimension }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('VideoLink') }}</span>
+                                        {{ record.mediaLibrary.videoLink }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('SeoTag') }}</span>
+                                        {{ record.mediaLibrary.seoTag }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('AltTag') }}</span>
+                                        {{ record.mediaLibrary.altTag }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('VirtualPath') }}</span>
+                                        {{ record.mediaLibrary.virtualPath }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('BinaryObjectId') }}</span>
+                                        {{ record.mediaLibrary.binaryObjectId }}
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                        <div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
+                            {{ l('NoData') }}
+                        </div>
+                        <div class="primeng-paging-container">
+                            <p-paginator
+                                [rows]="primengTableHelper.defaultRecordsCountPerPage"
+                                #paginator
+                                (onPageChange)="getMediaLibraries($event)"
+                                [totalRecords]="primengTableHelper.totalRecordsCount"
+                                [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
+                                [showCurrentPageReport]="true"
+                                [currentPageReportTemplate]="
+                                    'TotalRecordsCount' | localize : primengTableHelper.totalRecordsCount
+                                "
+                            ></p-paginator>
+                        </div>
+                    </div>
+                    <!--<Primeng-Datatable-End>-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <createOrEditMediaLibraryModal
+        #createOrEditMediaLibraryModal
+        (modalSave)="getMediaLibraries()"
+    ></createOrEditMediaLibraryModal>
+    <viewMediaLibraryModal #viewMediaLibraryModal></viewMediaLibraryModal>
+</div>

@@ -13,12 +13,12 @@ namespace SoftGrid.LookupData.Dtos
 
         public string SynonymsFilter { get; set; }
 
-        public Guid? PictureIdFilter { get; set; }
-
         public int? MaxDisplaySequenceFilter { get; set; }
         public int? MinDisplaySequenceFilter { get; set; }
 
         public string MasterTagCategoryNameFilter { get; set; }
+
+        public string MediaLibraryNameFilter { get; set; }
 
     }
 }

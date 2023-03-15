@@ -42,6 +42,38 @@
                     </div>
 
                     <div class="my-3">
+                        <label class="form-label" for="MediaLibraryName">{{ l('MediaLibrary') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="MediaLibraryName"
+                                name="mediaLibraryName"
+                                [(ngModel)]="mediaLibraryName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectMediaLibraryModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button
+                                class="btn btn-danger btn-icon"
+                                type="button"
+                                (click)="setPictureMediaLibraryIdNull()"
+                            >
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="masterTag.pictureMediaLibraryId"
+                        [(ngModel)]="masterTag.pictureMediaLibraryId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
                         <label class="form-label" for="MasterTag_Name">{{ l('Name') }} *</label>
                         <input
                             type="text"
@@ -87,19 +119,6 @@
                         <validation-messages [formCtrl]="MasterTag_Synonyms"></validation-messages>
                     </div>
 
-                    <div class="my-3">
-                        <label class="form-label" for="MasterTag_PictureId">{{ l('PictureId') }}</label>
-                        <input
-                            type="text"
-                            #MasterTag_PictureId="ngModel"
-                            id="MasterTag_PictureId"
-                            class="form-control"
-                            [(ngModel)]="masterTag.pictureId"
-                            name="PictureId"
-                        />
-                        <validation-messages [formCtrl]="MasterTag_PictureId"></validation-messages>
-                    </div>
-
                     <div class="my5">
                         <label class="form-label" for="MasterTag_DisplaySequence">{{ l('DisplaySequence') }}</label>
                         <input
@@ -131,4 +150,8 @@
             </form>
         </div>
     </div>
+    <masterTagMediaLibraryLookupTableModal
+        #masterTagMediaLibraryLookupTableModal
+        (modalSave)="getNewPictureMediaLibraryId()"
+    ></masterTagMediaLibraryLookupTableModal>
 </div>

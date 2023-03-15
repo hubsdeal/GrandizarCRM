@@ -1,5 +1,5 @@
 {
-  "IsRegenerate": false,
+  "IsRegenerate": true,
   "MenuPosition": "main",
   "RelativeNamespace": "Territory",
   "EntityName": "Hub",
@@ -65,8 +65,8 @@
     {
       "Name": "EstimatedPopulation",
       "Type": "int",
-      "MaxLength": 0,
-      "MinLength": 0,
+      "MaxLength": -1,
+      "MinLength": -1,
       "Range": {
         "IsRangeSet": false,
         "MinimumValue": 0.0,
@@ -86,8 +86,8 @@
     {
       "Name": "HasParentHub",
       "Type": "bool",
-      "MaxLength": 0,
-      "MinLength": 0,
+      "MaxLength": -1,
+      "MinLength": -1,
       "Range": {
         "IsRangeSet": false,
         "MinimumValue": 0.0,
@@ -107,8 +107,8 @@
     {
       "Name": "ParentHubId",
       "Type": "long",
-      "MaxLength": 0,
-      "MinLength": 0,
+      "MaxLength": -1,
+      "MinLength": -1,
       "Range": {
         "IsRangeSet": false,
         "MinimumValue": 0.0,
@@ -128,8 +128,8 @@
     {
       "Name": "Latitude",
       "Type": "decimal",
-      "MaxLength": 0,
-      "MinLength": 0,
+      "MaxLength": -1,
+      "MinLength": -1,
       "Range": {
         "IsRangeSet": false,
         "MinimumValue": 0.0,
@@ -170,8 +170,8 @@
     {
       "Name": "Live",
       "Type": "bool",
-      "MaxLength": 0,
-      "MinLength": 0,
+      "MaxLength": -1,
+      "MinLength": -1,
       "Range": {
         "IsRangeSet": false,
         "MinimumValue": 0.0,
@@ -233,29 +233,8 @@
     {
       "Name": "PartnerOrOwned",
       "Type": "bool",
-      "MaxLength": 0,
-      "MinLength": 0,
-      "Range": {
-        "IsRangeSet": false,
-        "MinimumValue": 0.0,
-        "MaximumValue": 0.0
-      },
-      "Required": false,
-      "Nullable": false,
-      "Regex": "",
-      "UserInterface": {
-        "AdvancedFilter": true,
-        "List": true,
-        "CreateOrUpdate": true
-      },
-      "ViewType": null,
-      "AdditionalData": {}
-    },
-    {
-      "Name": "PictureId",
-      "Type": "Guid",
-      "MaxLength": 0,
-      "MinLength": 0,
+      "MaxLength": -1,
+      "MinLength": -1,
       "Range": {
         "IsRangeSet": false,
         "MinimumValue": 0.0,
@@ -317,8 +296,8 @@
     {
       "Name": "DisplaySequence",
       "Type": "int",
-      "MaxLength": 0,
-      "MinLength": 0,
+      "MaxLength": -1,
+      "MinLength": -1,
       "Range": {
         "IsRangeSet": false,
         "MinimumValue": 0.0,
@@ -426,6 +405,22 @@
       "DuplicationNumber": 0,
       "RelationType": "single",
       "ViewType": "Dropdown",
+      "DisplayPropertyNameInfos": {
+        "MergeFormat": "{0}",
+        "DisplayPropertyNames": [
+          "Name"
+        ]
+      }
+    },
+    {
+      "Namespace": "SoftGrid.LookupData",
+      "ForeignEntityName": "MediaLibrary",
+      "IdType": "long",
+      "IsNullable": true,
+      "PropertyName": "PictureMediaLibraryId",
+      "DuplicationNumber": 0,
+      "RelationType": "single",
+      "ViewType": "LookupTable",
       "DisplayPropertyNameInfos": {
         "MergeFormat": "{0}",
         "DisplayPropertyNames": [

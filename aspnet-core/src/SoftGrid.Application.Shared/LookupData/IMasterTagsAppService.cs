@@ -24,5 +24,7 @@ namespace SoftGrid.LookupData
 
         Task<List<MasterTagMasterTagCategoryLookupTableDto>> GetAllMasterTagCategoryForTableDropdown();
 
+        Task<PagedResultDto<MasterTagMediaLibraryLookupTableDto>> GetAllMediaLibraryForLookupTable(GetAllForLookupTableInput input);
+
     }
 }

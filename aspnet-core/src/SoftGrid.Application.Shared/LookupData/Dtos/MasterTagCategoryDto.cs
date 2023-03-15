@@ -9,7 +9,7 @@ namespace SoftGrid.LookupData.Dtos
 
         public string Description { get; set; }
 
-        public Guid PictureId { get; set; }
+        public long? PictureMediaLibraryId { get; set; }
 
     }
 }

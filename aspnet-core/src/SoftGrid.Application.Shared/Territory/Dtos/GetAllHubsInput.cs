@@ -33,8 +33,6 @@ namespace SoftGrid.Territory.Dtos
 
         public int? PartnerOrOwnedFilter { get; set; }
 
-        public Guid? PictureIdFilter { get; set; }
-
         public string PhoneFilter { get; set; }
 
         public string YearlyRevenueFilter { get; set; }
@@ -53,6 +51,8 @@ namespace SoftGrid.Territory.Dtos
         public string HubTypeNameFilter { get; set; }
 
         public string CurrencyNameFilter { get; set; }
+
+        public string MediaLibraryNameFilter { get; set; }
 
     }
 }

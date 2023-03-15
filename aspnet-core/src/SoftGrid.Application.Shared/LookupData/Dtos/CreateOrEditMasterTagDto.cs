@@ -17,11 +17,11 @@ namespace SoftGrid.LookupData.Dtos
         [StringLength(MasterTagConsts.MaxSynonymsLength, MinimumLength = MasterTagConsts.MinSynonymsLength)]
         public string Synonyms { get; set; }
 
-        public Guid PictureId { get; set; }
-
         public int? DisplaySequence { get; set; }
 
         public long MasterTagCategoryId { get; set; }
+
+        public long? PictureMediaLibraryId { get; set; }
 
     }
 }

@@ -1730,6 +1730,153 @@ namespace SoftGrid.Migrations
                     b.ToTable("AbpUsers");
                 });
 
+            modelBuilder.Entity("SoftGrid.CRM.Business", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Address1")
+                        .HasMaxLength(1024)
+                        .HasColumnType("nvarchar(1024)");
+
+                    b.Property<string>("Address2")
+                        .HasMaxLength(1024)
+                        .HasColumnType("nvarchar(1024)");
+
+                    b.Property<string>("City")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<long?>("CityId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("CountryId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("CustomId")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<long?>("DeleterUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EinTaxId")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("Facebook")
+                        .HasMaxLength(1024)
+                        .HasColumnType("nvarchar(1024)");
+
+                    b.Property<string>("Fax")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("FullAddress")
+                        .HasMaxLength(2056)
+                        .HasColumnType("nvarchar(2056)");
+
+                    b.Property<string>("Industry")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("InternalRemarks")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("LastModifierUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal?>("Latitude")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("LinkedIn")
+                        .HasMaxLength(1024)
+                        .HasColumnType("nvarchar(1024)");
+
+                    b.Property<string>("LocationTitle")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<long?>("LogoMediaLibraryId")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal?>("Longitude")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("Phone")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<long?>("StateId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TradeName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("Verified")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Website")
+                        .HasMaxLength(1024)
+                        .HasColumnType("nvarchar(1024)");
+
+                    b.Property<string>("YearOfEstablishment")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("ZipCode")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CityId");
+
+                    b.HasIndex("CountryId");
+
+                    b.HasIndex("LogoMediaLibraryId");
+
+                    b.HasIndex("StateId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("Businesses");
+                });
+
             modelBuilder.Entity("SoftGrid.CRM.Contact", b =>
                 {
                     b.Property<long>("Id")
@@ -1851,6 +1998,9 @@ namespace SoftGrid.Migrations
 
                     b.Property<long?>("ReferredByUserId")
                         .HasColumnType("bigint");
+
+                    b.Property<int?>("Score")
+                        .HasColumnType("int");
 
                     b.Property<long?>("StateId")
                         .HasColumnType("bigint");
@@ -2269,8 +2419,8 @@ namespace SoftGrid.Migrations
                         .HasMaxLength(128)
                         .HasColumnType("nvarchar(128)");
 
-                    b.Property<Guid>("PictureId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<long?>("PictureMediaLibraryId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Synonyms")
                         .HasMaxLength(1500)
@@ -2282,6 +2432,10 @@ namespace SoftGrid.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("MasterTagCategoryId");
+
+                    b.HasIndex("PictureMediaLibraryId")
+                        .IsUnique()
+                        .HasFilter("[PictureMediaLibraryId] IS NOT NULL");
 
                     b.HasIndex("TenantId");
 
@@ -2305,13 +2459,17 @@ namespace SoftGrid.Migrations
                         .HasMaxLength(128)
                         .HasColumnType("nvarchar(128)");
 
-                    b.Property<Guid>("PictureId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<long?>("PictureMediaLibraryId")
+                        .HasColumnType("bigint");
 
                     b.Property<int?>("TenantId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PictureMediaLibraryId")
+                        .IsUnique()
+                        .HasFilter("[PictureMediaLibraryId] IS NOT NULL");
 
                     b.HasIndex("TenantId");
 
@@ -2339,6 +2497,75 @@ namespace SoftGrid.Migrations
                     b.HasIndex("TenantId");
 
                     b.ToTable("MeasurementUnits");
+                });
+
+            modelBuilder.Entity("SoftGrid.LookupData.MediaLibrary", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("AltTag")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<Guid>("BinaryObjectId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Dimension")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<string>("FileExtension")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<long?>("MasterTagCategoryId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("MasterTagId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
+
+                    b.Property<string>("SeoTag")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("Size")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("VideoLink")
+                        .HasMaxLength(1500)
+                        .HasColumnType("nvarchar(1500)");
+
+                    b.Property<string>("VirtualPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MasterTagCategoryId");
+
+                    b.HasIndex("MasterTagId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("MediaLibraries");
                 });
 
             modelBuilder.Entity("SoftGrid.LookupData.MembershipType", b =>
@@ -2916,6 +3143,398 @@ namespace SoftGrid.Migrations
                     b.ToTable("AbpTenants");
                 });
 
+            modelBuilder.Entity("SoftGrid.Shop.Product", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<bool>("ByOrderOnly")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("CallForPrice")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("CurrencyId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("DeleterUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("InternalNotes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDisplayStockQuantity")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsPackageProduct")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsPublished")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsService")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsTaxExempt")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsTemplate")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsWholeSaleProduct")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("LastModifierUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("MeasurementAmount")
+                        .HasColumnType("int");
+
+                    b.Property<long?>("MeasurementUnitId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("MediaLibraryId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("MetaDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MetaKeywords")
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(1024)
+                        .HasColumnType("nvarchar(1024)");
+
+                    b.Property<double?>("PriceDiscountAmount")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("PriceDiscountPercentage")
+                        .HasColumnType("float");
+
+                    b.Property<long>("ProductCategoryId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("ProductManufacturerSku")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<long?>("RatingLikeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<double?>("RegularPrice")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("SalePrice")
+                        .HasColumnType("float");
+
+                    b.Property<int?>("Score")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SeoTitle")
+                        .HasMaxLength(1024)
+                        .HasColumnType("nvarchar(1024)");
+
+                    b.Property<string>("ShortDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Sku")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<int?>("StockQuantity")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.Property<double?>("UnitPrice")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Url")
+                        .HasMaxLength(1024)
+                        .HasColumnType("nvarchar(1024)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CurrencyId");
+
+                    b.HasIndex("MeasurementUnitId");
+
+                    b.HasIndex("MediaLibraryId");
+
+                    b.HasIndex("ProductCategoryId");
+
+                    b.HasIndex("RatingLikeId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("SoftGrid.Shop.ProductCategory", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("DeleterUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("DisplaySequence")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("HasParentCategory")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("LastModifierUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("MediaLibraryId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("MetaKeywords")
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
+
+                    b.Property<string>("MetaTitle")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<long?>("ParentCategoryId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("ProductOrService")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Url")
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MediaLibraryId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("ProductCategories");
+                });
+
+            modelBuilder.Entity("SoftGrid.Shop.Store", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Address")
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
+
+                    b.Property<string>("City")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<long?>("CountryId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("DeleterUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("DisplaySequence")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("Facebook")
+                        .HasMaxLength(1024)
+                        .HasColumnType("nvarchar(1024)");
+
+                    b.Property<string>("Fax")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("FullAddress")
+                        .HasMaxLength(1500)
+                        .HasColumnType("nvarchar(1500)");
+
+                    b.Property<string>("Instagram")
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsLocalOrOnlineStore")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsPublished")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsVerified")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("LastModifierUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal?>("Latitude")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("LegalName")
+                        .HasMaxLength(1024)
+                        .HasColumnType("nvarchar(1024)");
+
+                    b.Property<string>("LinkedIn")
+                        .HasMaxLength(1024)
+                        .HasColumnType("nvarchar(1024)");
+
+                    b.Property<long?>("LogoMediaLibraryId")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal?>("Longitude")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("MetaDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MetaTag")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("Mobile")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(1024)
+                        .HasColumnType("nvarchar(1024)");
+
+                    b.Property<string>("Phone")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<long?>("RatingLikeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("Score")
+                        .HasColumnType("int");
+
+                    b.Property<long?>("StateId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("StoreCategoryId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("StoreUrl")
+                        .HasMaxLength(1024)
+                        .HasColumnType("nvarchar(1024)");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Website")
+                        .HasMaxLength(1024)
+                        .HasColumnType("nvarchar(1024)");
+
+                    b.Property<string>("YearOfEstablishment")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Youtube")
+                        .HasMaxLength(1024)
+                        .HasColumnType("nvarchar(1024)");
+
+                    b.Property<string>("ZipCode")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CountryId");
+
+                    b.HasIndex("LogoMediaLibraryId");
+
+                    b.HasIndex("RatingLikeId");
+
+                    b.HasIndex("StateId");
+
+                    b.HasIndex("StoreCategoryId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("Stores");
+                });
+
             modelBuilder.Entity("SoftGrid.Storage.BinaryObject", b =>
                 {
                     b.Property<Guid>("Id")
@@ -3024,8 +3643,8 @@ namespace SoftGrid.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<Guid>("PictureId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<long?>("PictureMediaLibraryId")
+                        .HasColumnType("bigint");
 
                     b.Property<long?>("StateId")
                         .HasColumnType("bigint");
@@ -3051,6 +3670,8 @@ namespace SoftGrid.Migrations
                     b.HasIndex("CurrencyId");
 
                     b.HasIndex("HubTypeId");
+
+                    b.HasIndex("PictureMediaLibraryId");
 
                     b.HasIndex("StateId");
 
@@ -3316,6 +3937,33 @@ namespace SoftGrid.Migrations
                     b.Navigation("LastModifierUser");
                 });
 
+            modelBuilder.Entity("SoftGrid.CRM.Business", b =>
+                {
+                    b.HasOne("SoftGrid.LookupData.City", "CityFk")
+                        .WithMany()
+                        .HasForeignKey("CityId");
+
+                    b.HasOne("SoftGrid.LookupData.Country", "CountryFk")
+                        .WithMany()
+                        .HasForeignKey("CountryId");
+
+                    b.HasOne("SoftGrid.LookupData.MediaLibrary", "LogoMediaLibraryFk")
+                        .WithMany()
+                        .HasForeignKey("LogoMediaLibraryId");
+
+                    b.HasOne("SoftGrid.LookupData.State", "StateFk")
+                        .WithMany()
+                        .HasForeignKey("StateId");
+
+                    b.Navigation("CityFk");
+
+                    b.Navigation("CountryFk");
+
+                    b.Navigation("LogoMediaLibraryFk");
+
+                    b.Navigation("StateFk");
+                });
+
             modelBuilder.Entity("SoftGrid.CRM.Contact", b =>
                 {
                     b.HasOne("SoftGrid.LookupData.Country", "CountryFk")
@@ -3387,7 +4035,37 @@ namespace SoftGrid.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("SoftGrid.LookupData.MediaLibrary", "PictureMediaLibraryFk")
+                        .WithOne()
+                        .HasForeignKey("SoftGrid.LookupData.MasterTag", "PictureMediaLibraryId");
+
                     b.Navigation("MasterTagCategoryFk");
+
+                    b.Navigation("PictureMediaLibraryFk");
+                });
+
+            modelBuilder.Entity("SoftGrid.LookupData.MasterTagCategory", b =>
+                {
+                    b.HasOne("SoftGrid.LookupData.MediaLibrary", "PictureMediaLibraryFk")
+                        .WithOne()
+                        .HasForeignKey("SoftGrid.LookupData.MasterTagCategory", "PictureMediaLibraryId");
+
+                    b.Navigation("PictureMediaLibraryFk");
+                });
+
+            modelBuilder.Entity("SoftGrid.LookupData.MediaLibrary", b =>
+                {
+                    b.HasOne("SoftGrid.LookupData.MasterTagCategory", "MasterTagCategoryFk")
+                        .WithMany()
+                        .HasForeignKey("MasterTagCategoryId");
+
+                    b.HasOne("SoftGrid.LookupData.MasterTag", "MasterTagFk")
+                        .WithMany()
+                        .HasForeignKey("MasterTagId");
+
+                    b.Navigation("MasterTagCategoryFk");
+
+                    b.Navigation("MasterTagFk");
                 });
 
             modelBuilder.Entity("SoftGrid.LookupData.State", b =>
@@ -3466,6 +4144,83 @@ namespace SoftGrid.Migrations
                     b.Navigation("LastModifierUser");
                 });
 
+            modelBuilder.Entity("SoftGrid.Shop.Product", b =>
+                {
+                    b.HasOne("SoftGrid.LookupData.Currency", "CurrencyFk")
+                        .WithMany()
+                        .HasForeignKey("CurrencyId");
+
+                    b.HasOne("SoftGrid.LookupData.MeasurementUnit", "MeasurementUnitFk")
+                        .WithMany()
+                        .HasForeignKey("MeasurementUnitId");
+
+                    b.HasOne("SoftGrid.LookupData.MediaLibrary", "MediaLibraryFk")
+                        .WithMany()
+                        .HasForeignKey("MediaLibraryId");
+
+                    b.HasOne("SoftGrid.Shop.ProductCategory", "ProductCategoryFk")
+                        .WithMany()
+                        .HasForeignKey("ProductCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SoftGrid.LookupData.RatingLike", "RatingLikeFk")
+                        .WithMany()
+                        .HasForeignKey("RatingLikeId");
+
+                    b.Navigation("CurrencyFk");
+
+                    b.Navigation("MeasurementUnitFk");
+
+                    b.Navigation("MediaLibraryFk");
+
+                    b.Navigation("ProductCategoryFk");
+
+                    b.Navigation("RatingLikeFk");
+                });
+
+            modelBuilder.Entity("SoftGrid.Shop.ProductCategory", b =>
+                {
+                    b.HasOne("SoftGrid.LookupData.MediaLibrary", "MediaLibraryFk")
+                        .WithMany()
+                        .HasForeignKey("MediaLibraryId");
+
+                    b.Navigation("MediaLibraryFk");
+                });
+
+            modelBuilder.Entity("SoftGrid.Shop.Store", b =>
+                {
+                    b.HasOne("SoftGrid.LookupData.Country", "CountryFk")
+                        .WithMany()
+                        .HasForeignKey("CountryId");
+
+                    b.HasOne("SoftGrid.LookupData.MediaLibrary", "LogoMediaLibraryFk")
+                        .WithMany()
+                        .HasForeignKey("LogoMediaLibraryId");
+
+                    b.HasOne("SoftGrid.LookupData.RatingLike", "RatingLikeFk")
+                        .WithMany()
+                        .HasForeignKey("RatingLikeId");
+
+                    b.HasOne("SoftGrid.LookupData.State", "StateFk")
+                        .WithMany()
+                        .HasForeignKey("StateId");
+
+                    b.HasOne("SoftGrid.LookupData.MasterTag", "StoreCategoryFk")
+                        .WithMany()
+                        .HasForeignKey("StoreCategoryId");
+
+                    b.Navigation("CountryFk");
+
+                    b.Navigation("LogoMediaLibraryFk");
+
+                    b.Navigation("RatingLikeFk");
+
+                    b.Navigation("StateFk");
+
+                    b.Navigation("StoreCategoryFk");
+                });
+
             modelBuilder.Entity("SoftGrid.Territory.Hub", b =>
                 {
                     b.HasOne("SoftGrid.LookupData.City", "CityFk")
@@ -3490,6 +4245,10 @@ namespace SoftGrid.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("SoftGrid.LookupData.MediaLibrary", "PictureMediaLibraryFk")
+                        .WithMany()
+                        .HasForeignKey("PictureMediaLibraryId");
+
                     b.HasOne("SoftGrid.LookupData.State", "StateFk")
                         .WithMany()
                         .HasForeignKey("StateId");
@@ -3503,6 +4262,8 @@ namespace SoftGrid.Migrations
                     b.Navigation("CurrencyFk");
 
                     b.Navigation("HubTypeFk");
+
+                    b.Navigation("PictureMediaLibraryFk");
 
                     b.Navigation("StateFk");
                 });

@@ -1,4 +1,5 @@
-﻿using SoftGrid.CRM;
+﻿using SoftGrid.Shop;
+using SoftGrid.CRM;
 using SoftGrid.Territory;
 using SoftGrid.LookupData;
 using Abp.IdentityServer4vNext;
@@ -19,6 +20,16 @@ namespace SoftGrid.EntityFrameworkCore
 {
     public class SoftGridDbContext : AbpZeroDbContext<Tenant, Role, User, SoftGridDbContext>, IAbpPersistedGrantDbContext
     {
+        public virtual DbSet<Store> Stores { get; set; }
+
+        public virtual DbSet<Product> Products { get; set; }
+
+        public virtual DbSet<ProductCategory> ProductCategories { get; set; }
+
+        public virtual DbSet<MediaLibrary> MediaLibraries { get; set; }
+
+        public virtual DbSet<Business> Businesses { get; set; }
+
         public virtual DbSet<Contact> Contacts { get; set; }
 
         public virtual DbSet<Hub> Hubs { get; set; }
@@ -89,10 +100,46 @@ namespace SoftGrid.EntityFrameworkCore
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Contact>(c =>
+            modelBuilder.Entity<Store>(s =>
             {
-                c.HasIndex(e => new { e.TenantId });
+                s.HasIndex(e => new { e.TenantId });
             });
+            modelBuilder.Entity<Product>(p =>
+                       {
+                           p.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<ProductCategory>(p =>
+                       {
+                           p.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<MasterTag>(m =>
+                       {
+                           m.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<MasterTagCategory>(m =>
+                       {
+                           m.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<Hub>(h =>
+                       {
+                           h.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<Business>(b =>
+                       {
+                           b.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<MediaLibrary>(m =>
+                       {
+                           m.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<Business>(b =>
+                       {
+                           b.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<Contact>(c =>
+                       {
+                           c.HasIndex(e => new { e.TenantId });
+                       });
             modelBuilder.Entity<Hub>(h =>
                        {
                            h.HasIndex(e => new { e.TenantId });

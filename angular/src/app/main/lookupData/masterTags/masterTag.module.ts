@@ -5,9 +5,16 @@ import { MasterTagRoutingModule } from './masterTag-routing.module';
 import { MasterTagsComponent } from './masterTags.component';
 import { CreateOrEditMasterTagModalComponent } from './create-or-edit-masterTag-modal.component';
 import { ViewMasterTagModalComponent } from './view-masterTag-modal.component';
+import { MasterTagMediaLibraryLookupTableModalComponent } from './masterTag-mediaLibrary-lookup-table-modal.component';
 
 @NgModule({
-    declarations: [MasterTagsComponent, CreateOrEditMasterTagModalComponent, ViewMasterTagModalComponent],
+    declarations: [
+        MasterTagsComponent,
+        CreateOrEditMasterTagModalComponent,
+        ViewMasterTagModalComponent,
+
+        MasterTagMediaLibraryLookupTableModalComponent,
+    ],
     imports: [AppSharedModule, MasterTagRoutingModule, AdminSharedModule],
 })
 export class MasterTagModule {}

@@ -1,0 +1,788 @@
+﻿<div [@routerTransition]>
+    <sub-header [title]="'Businesses' | localize" [description]="'BusinessesHeaderInfo' | localize">
+        <div role="actions">
+            <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1">
+                <i class="fa fa-file-excel"></i>
+                {{ l('ExportToExcel') }}
+            </button>
+
+            <button
+                *ngIf="isGranted('Pages.Businesses.Create')"
+                (click)="createBusiness()"
+                class="btn btn-primary blue"
+            >
+                <i class="fa fa-plus"></i>
+                {{ l('CreateNewBusiness') }}
+            </button>
+        </div>
+    </sub-header>
+
+    <div [class]="containerClass">
+        <div class="card card-custom gutter-b">
+            <div class="card-body">
+                <form class="form" autocomplete="off">
+                    <div>
+                        <div class="row align-items-center">
+                            <div class="col-xl-12">
+                                <div class="my-3">
+                                    <div class="input-group mb-3">
+                                        <input
+                                            [(ngModel)]="filterText"
+                                            (ngModelChange)="getBusinesses()"
+                                            name="filterText"
+                                            autoFocus
+                                            type="text"
+                                            class="form-control"
+                                            [placeholder]="l('SearchWithThreeDot')"
+                                        />
+                                        <button class="btn btn-primary" type="submit" (click)="getBusinesses()">
+                                            <i class="flaticon-search-1"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" [hidden]="!advancedFiltersAreShown">
+                            <div class="col-md-12"></div>
+
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="NameFilter">{{ l('Name') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="NameFilter"
+                                        name="nameFilter"
+                                        [(ngModel)]="nameFilter"
+                                        (ngModelChange)="getBusinesses()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="TradeNameFilter">{{ l('TradeName') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="TradeNameFilter"
+                                        name="tradeNameFilter"
+                                        [(ngModel)]="tradeNameFilter"
+                                        (ngModelChange)="getBusinesses()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="DescriptionFilter">{{ l('Description') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="DescriptionFilter"
+                                        name="descriptionFilter"
+                                        [(ngModel)]="descriptionFilter"
+                                        (ngModelChange)="getBusinesses()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="CustomIdFilter">{{ l('CustomId') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="CustomIdFilter"
+                                        name="customIdFilter"
+                                        [(ngModel)]="customIdFilter"
+                                        (ngModelChange)="getBusinesses()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="YearOfEstablishmentFilter">
+                                        {{ l('YearOfEstablishment') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="YearOfEstablishmentFilter"
+                                        name="yearOfEstablishmentFilter"
+                                        [(ngModel)]="yearOfEstablishmentFilter"
+                                        (ngModelChange)="getBusinesses()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="LocationTitleFilter">{{ l('LocationTitle') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="LocationTitleFilter"
+                                        name="locationTitleFilter"
+                                        [(ngModel)]="locationTitleFilter"
+                                        (ngModelChange)="getBusinesses()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="FullAddressFilter">{{ l('FullAddress') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="FullAddressFilter"
+                                        name="fullAddressFilter"
+                                        [(ngModel)]="fullAddressFilter"
+                                        (ngModelChange)="getBusinesses()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="Address1Filter">{{ l('Address1') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="Address1Filter"
+                                        name="address1Filter"
+                                        [(ngModel)]="address1Filter"
+                                        (ngModelChange)="getBusinesses()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="Address2Filter">{{ l('Address2') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="Address2Filter"
+                                        name="address2Filter"
+                                        [(ngModel)]="address2Filter"
+                                        (ngModelChange)="getBusinesses()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="CityFilter">{{ l('City') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="CityFilter"
+                                        name="cityFilter"
+                                        [(ngModel)]="cityFilter"
+                                        (ngModelChange)="getBusinesses()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="ZipCodeFilter">{{ l('ZipCode') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="ZipCodeFilter"
+                                        name="zipCodeFilter"
+                                        [(ngModel)]="zipCodeFilter"
+                                        (ngModelChange)="getBusinesses()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="MinLatitudeFilter">
+                                        {{ l('MinMax') }} {{ l('Latitude') }}
+                                    </label>
+                                    <div class="input-group">
+                                        <input
+                                            type="number"
+                                            class="form-control"
+                                            id="MinLatitudeFilter"
+                                            [(ngModel)]="minLatitudeFilter"
+                                            placeholder="{{ l('MinValue') }}"
+                                            name="minLatitudeFilter"
+                                            (ngModelChange)="getBusinesses()"
+                                        />
+                                        <input
+                                            type="number"
+                                            class="form-control"
+                                            [(ngModel)]="maxLatitudeFilter"
+                                            placeholder="{{ l('MaxValue') }}"
+                                            name="maxLatitudeFilter"
+                                            (ngModelChange)="getBusinesses()"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="MinLongitudeFilter">
+                                        {{ l('MinMax') }} {{ l('Longitude') }}
+                                    </label>
+                                    <div class="input-group">
+                                        <input
+                                            type="number"
+                                            class="form-control"
+                                            id="MinLongitudeFilter"
+                                            [(ngModel)]="minLongitudeFilter"
+                                            placeholder="{{ l('MinValue') }}"
+                                            name="minLongitudeFilter"
+                                            (ngModelChange)="getBusinesses()"
+                                        />
+                                        <input
+                                            type="number"
+                                            class="form-control"
+                                            [(ngModel)]="maxLongitudeFilter"
+                                            placeholder="{{ l('MaxValue') }}"
+                                            name="maxLongitudeFilter"
+                                            (ngModelChange)="getBusinesses()"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="PhoneFilter">{{ l('Phone') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="PhoneFilter"
+                                        name="phoneFilter"
+                                        [(ngModel)]="phoneFilter"
+                                        (ngModelChange)="getBusinesses()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="FaxFilter">{{ l('Fax') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="FaxFilter"
+                                        name="faxFilter"
+                                        [(ngModel)]="faxFilter"
+                                        (ngModelChange)="getBusinesses()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="EmailFilter">{{ l('Email') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="EmailFilter"
+                                        name="emailFilter"
+                                        [(ngModel)]="emailFilter"
+                                        (ngModelChange)="getBusinesses()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="WebsiteFilter">{{ l('Website') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="WebsiteFilter"
+                                        name="websiteFilter"
+                                        [(ngModel)]="websiteFilter"
+                                        (ngModelChange)="getBusinesses()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="EinTaxIdFilter">{{ l('EinTaxId') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="EinTaxIdFilter"
+                                        name="einTaxIdFilter"
+                                        [(ngModel)]="einTaxIdFilter"
+                                        (ngModelChange)="getBusinesses()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="IndustryFilter">{{ l('Industry') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="IndustryFilter"
+                                        name="industryFilter"
+                                        [(ngModel)]="industryFilter"
+                                        (ngModelChange)="getBusinesses()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="InternalRemarksFilter">
+                                        {{ l('InternalRemarks') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="InternalRemarksFilter"
+                                        name="internalRemarksFilter"
+                                        [(ngModel)]="internalRemarksFilter"
+                                        (ngModelChange)="getBusinesses()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="VerifiedFilterSelect">{{ l('Verified') }}</label>
+                                    <select
+                                        class="form-select"
+                                        name="VerifiedFilter"
+                                        id="VerifiedFilterSelect"
+                                        [(ngModel)]="verifiedFilter"
+                                        (ngModelChange)="getBusinesses()"
+                                    >
+                                        <option value="-1">{{ l('All') }}</option>
+                                        <option value="0">{{ l('False') }}</option>
+                                        <option value="1">{{ l('True') }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="FacebookFilter">{{ l('Facebook') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="FacebookFilter"
+                                        name="facebookFilter"
+                                        [(ngModel)]="facebookFilter"
+                                        (ngModelChange)="getBusinesses()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="LinkedInFilter">{{ l('LinkedIn') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="LinkedInFilter"
+                                        name="linkedInFilter"
+                                        [(ngModel)]="linkedInFilter"
+                                        (ngModelChange)="getBusinesses()"
+                                    />
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="CountryNameFilter">
+                                        ({{ l('Country') }}) {{ l('Name') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="CountryNameFilter"
+                                        name="countryNameFilter"
+                                        [(ngModel)]="countryNameFilter"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="StateNameFilter">
+                                        ({{ l('State') }}) {{ l('Name') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="StateNameFilter"
+                                        name="stateNameFilter"
+                                        [(ngModel)]="stateNameFilter"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="CityNameFilter">
+                                        ({{ l('City') }}) {{ l('Name') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="CityNameFilter"
+                                        name="cityNameFilter"
+                                        [(ngModel)]="cityNameFilter"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="MediaLibraryNameFilter">
+                                        ({{ l('MediaLibrary') }}) {{ l('Name') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="MediaLibraryNameFilter"
+                                        name="mediaLibraryNameFilter"
+                                        [(ngModel)]="mediaLibraryNameFilter"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-12 mt-5">
+                                <button
+                                    (click)="resetFilters()"
+                                    class="btn btn-secondary btn-sm"
+                                    id="btn-reset-filters"
+                                >
+                                    Reset
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row my-4">
+                            <div class="col-sm-12">
+                                <span
+                                    class="clickable-item text-muted"
+                                    *ngIf="!advancedFiltersAreShown"
+                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown"
+                                >
+                                    <i class="fa fa-angle-down"></i>
+                                    {{ l('ShowAdvancedFilters') }}
+                                </span>
+                                <span
+                                    class="clickable-item text-muted"
+                                    *ngIf="advancedFiltersAreShown"
+                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown"
+                                >
+                                    <i class="fa fa-angle-up"></i>
+                                    {{ l('HideAdvancedFilters') }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="row align-items-center">
+                    <!--<Primeng-Datatable-Start>-->
+                    <div class="primeng-datatable-container col-12" [busyIf]="primengTableHelper.isLoading">
+                        <p-table
+                            #dataTable
+                            (onLazyLoad)="getBusinesses($event)"
+                            [value]="primengTableHelper.records"
+                            rows="{{ primengTableHelper.defaultRecordsCountPerPage }}"
+                            [paginator]="false"
+                            [lazy]="true"
+                            [scrollable]="true"
+                            ScrollWidth="100%"
+                            [responsive]="primengTableHelper.isResponsive"
+                            [resizableColumns]="primengTableHelper.resizableColumns"
+                        >
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th
+                                        style="width: 130px"
+                                        [hidden]="!isGrantedAny('Pages.Businesses.Edit', 'Pages.Businesses.Delete')"
+                                    >
+                                        {{ l('Actions') }}
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="countryFk.name">
+                                        {{ l('Name') }}
+                                        <p-sortIcon field="countryName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="stateFk.name">
+                                        {{ l('Name') }}
+                                        <p-sortIcon field="stateName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="cityFk.name">
+                                        {{ l('Name') }}
+                                        <p-sortIcon field="cityName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="logoMediaLibraryFk.name">
+                                        {{ l('Name') }}
+                                        <p-sortIcon field="mediaLibraryName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="name">
+                                        {{ l('Name') }}
+                                        <p-sortIcon field="business.name"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="tradeName">
+                                        {{ l('TradeName') }}
+                                        <p-sortIcon field="business.tradeName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="description">
+                                        {{ l('Description') }}
+                                        <p-sortIcon field="business.description"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="customId">
+                                        {{ l('CustomId') }}
+                                        <p-sortIcon field="business.customId"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="yearOfEstablishment">
+                                        {{ l('YearOfEstablishment') }}
+                                        <p-sortIcon field="business.yearOfEstablishment"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="locationTitle">
+                                        {{ l('LocationTitle') }}
+                                        <p-sortIcon field="business.locationTitle"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="fullAddress">
+                                        {{ l('FullAddress') }}
+                                        <p-sortIcon field="business.fullAddress"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="address1">
+                                        {{ l('Address1') }}
+                                        <p-sortIcon field="business.address1"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="address2">
+                                        {{ l('Address2') }}
+                                        <p-sortIcon field="business.address2"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="city">
+                                        {{ l('City') }}
+                                        <p-sortIcon field="business.city"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="zipCode">
+                                        {{ l('ZipCode') }}
+                                        <p-sortIcon field="business.zipCode"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="latitude">
+                                        {{ l('Latitude') }}
+                                        <p-sortIcon field="business.latitude"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="longitude">
+                                        {{ l('Longitude') }}
+                                        <p-sortIcon field="business.longitude"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="phone">
+                                        {{ l('Phone') }}
+                                        <p-sortIcon field="business.phone"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="fax">
+                                        {{ l('Fax') }}
+                                        <p-sortIcon field="business.fax"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="email">
+                                        {{ l('Email') }}
+                                        <p-sortIcon field="business.email"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="website">
+                                        {{ l('Website') }}
+                                        <p-sortIcon field="business.website"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="einTaxId">
+                                        {{ l('EinTaxId') }}
+                                        <p-sortIcon field="business.einTaxId"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="industry">
+                                        {{ l('Industry') }}
+                                        <p-sortIcon field="business.industry"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="internalRemarks">
+                                        {{ l('InternalRemarks') }}
+                                        <p-sortIcon field="business.internalRemarks"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="verified">
+                                        {{ l('Verified') }}
+                                        <p-sortIcon field="business.verified"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="facebook">
+                                        {{ l('Facebook') }}
+                                        <p-sortIcon field="business.facebook"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="linkedIn">
+                                        {{ l('LinkedIn') }}
+                                        <p-sortIcon field="business.linkedIn"></p-sortIcon>
+                                    </th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
+                                <tr>
+                                    <td
+                                        style="width: 130px"
+                                        [hidden]="!isGrantedAny('Pages.Businesses.Edit', 'Pages.Businesses.Delete')"
+                                    >
+                                        <div class="btn-group dropdown" dropdown container="body">
+                                            <button class="dropdown-toggle btn btn-sm btn-primary" dropdownToggle>
+                                                <i class="fa fa-cog"></i>
+                                                <span class="caret"></span>
+                                                {{ l('Actions') }}
+                                            </button>
+                                            <ul class="dropdown-menu" *dropdownMenu>
+                                                <li>
+                                                    <a
+                                                        href="javascript:;"
+                                                        class="dropdown-item"
+                                                        (click)="viewBusinessModal.show(record)"
+                                                    >
+                                                        {{ l('View') }}
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a
+                                                        href="javascript:;"
+                                                        *ngIf="permission.isGranted('Pages.Businesses.Edit')"
+                                                        class="dropdown-item"
+                                                        (click)="createOrEditBusinessModal.show(record.business.id)"
+                                                    >
+                                                        {{ l('Edit') }}
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a
+                                                        class="dropdown-item"
+                                                        href="javascript:;"
+                                                        *ngIf="permission.isGranted('Pages.Businesses.Delete')"
+                                                        (click)="deleteBusiness(record.business)"
+                                                    >
+                                                        {{ l('Delete') }}
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Name') }}</span>
+                                        {{ record.countryName }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Name') }}</span>
+                                        {{ record.stateName }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Name') }}</span>
+                                        {{ record.cityName }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Name') }}</span>
+                                        {{ record.mediaLibraryName }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Name') }}</span>
+                                        {{ record.business.name }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('TradeName') }}</span>
+                                        {{ record.business.tradeName }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Description') }}</span>
+                                        {{ record.business.description }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('CustomId') }}</span>
+                                        {{ record.business.customId }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('YearOfEstablishment') }}</span>
+                                        {{ record.business.yearOfEstablishment }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('LocationTitle') }}</span>
+                                        {{ record.business.locationTitle }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('FullAddress') }}</span>
+                                        {{ record.business.fullAddress }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Address1') }}</span>
+                                        {{ record.business.address1 }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Address2') }}</span>
+                                        {{ record.business.address2 }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('City') }}</span>
+                                        {{ record.business.city }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('ZipCode') }}</span>
+                                        {{ record.business.zipCode }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Latitude') }}</span>
+                                        {{ record.business.latitude }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Longitude') }}</span>
+                                        {{ record.business.longitude }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Phone') }}</span>
+                                        {{ record.business.phone }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Fax') }}</span>
+                                        {{ record.business.fax }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Email') }}</span>
+                                        {{ record.business.email }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Website') }}</span>
+                                        {{ record.business.website }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('EinTaxId') }}</span>
+                                        {{ record.business.einTaxId }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Industry') }}</span>
+                                        {{ record.business.industry }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('InternalRemarks') }}</span>
+                                        {{ record.business.internalRemarks }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Verified') }}</span>
+                                        <div *ngIf="record.business.verified" class="text-center">
+                                            <i class="fa fa-check-circle text-success" title="True"></i>
+                                        </div>
+                                        <div *ngIf="!record.business.verified" class="text-center">
+                                            <i class="fa fa-times-circle" title="False"></i>
+                                        </div>
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Facebook') }}</span>
+                                        {{ record.business.facebook }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('LinkedIn') }}</span>
+                                        {{ record.business.linkedIn }}
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                        <div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
+                            {{ l('NoData') }}
+                        </div>
+                        <div class="primeng-paging-container">
+                            <p-paginator
+                                [rows]="primengTableHelper.defaultRecordsCountPerPage"
+                                #paginator
+                                (onPageChange)="getBusinesses($event)"
+                                [totalRecords]="primengTableHelper.totalRecordsCount"
+                                [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
+                                [showCurrentPageReport]="true"
+                                [currentPageReportTemplate]="
+                                    'TotalRecordsCount' | localize : primengTableHelper.totalRecordsCount
+                                "
+                            ></p-paginator>
+                        </div>
+                    </div>
+                    <!--<Primeng-Datatable-End>-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <createOrEditBusinessModal #createOrEditBusinessModal (modalSave)="getBusinesses()"></createOrEditBusinessModal>
+    <viewBusinessModal #viewBusinessModal></viewBusinessModal>
+</div>

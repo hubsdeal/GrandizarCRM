@@ -5,9 +5,16 @@ import { HubRoutingModule } from './hub-routing.module';
 import { HubsComponent } from './hubs.component';
 import { CreateOrEditHubModalComponent } from './create-or-edit-hub-modal.component';
 import { ViewHubModalComponent } from './view-hub-modal.component';
+import { HubMediaLibraryLookupTableModalComponent } from './hub-mediaLibrary-lookup-table-modal.component';
 
 @NgModule({
-    declarations: [HubsComponent, CreateOrEditHubModalComponent, ViewHubModalComponent],
+    declarations: [
+        HubsComponent,
+        CreateOrEditHubModalComponent,
+        ViewHubModalComponent,
+
+        HubMediaLibraryLookupTableModalComponent,
+    ],
     imports: [AppSharedModule, HubRoutingModule, AdminSharedModule],
 })
 export class HubModule {}

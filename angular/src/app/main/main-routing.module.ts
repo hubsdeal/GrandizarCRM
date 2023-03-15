@@ -9,6 +9,41 @@ import { RouterModule } from '@angular/router';
                 children: [
                     
                     {
+                        path: 'shop/stores',
+                        loadChildren: () => import('./shop/stores/store.module').then(m => m.StoreModule),
+                        data: { permission: 'Pages.Stores' }
+                    },
+                
+                    
+                    {
+                        path: 'shop/products',
+                        loadChildren: () => import('./shop/products/product.module').then(m => m.ProductModule),
+                        data: { permission: 'Pages.Products' }
+                    },
+                
+                    
+                    {
+                        path: 'shop/productCategories',
+                        loadChildren: () => import('./shop/productCategories/productCategory.module').then(m => m.ProductCategoryModule),
+                        data: { permission: 'Pages.ProductCategories' }
+                    },
+                
+                    
+                    {
+                        path: 'lookupData/mediaLibraries',
+                        loadChildren: () => import('./lookupData/mediaLibraries/mediaLibrary.module').then(m => m.MediaLibraryModule),
+                        data: { permission: 'Pages.MediaLibraries' }
+                    },
+                
+                    
+                    {
+                        path: 'crm/businesses',
+                        loadChildren: () => import('./crm/businesses/business.module').then(m => m.BusinessModule),
+                        data: { permission: 'Pages.Businesses' }
+                    },
+                
+                    
+                    {
                         path: 'crm/contacts',
                         loadChildren: () => import('./crm/contacts/contact.module').then(m => m.ContactModule),
                         data: { permission: 'Pages.Contacts' }

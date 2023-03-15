@@ -10,5 +10,7 @@ namespace SoftGrid.LookupData.Dtos
 
         public string MasterTagCategoryName { get; set; }
 
+        public string MediaLibraryName { get; set; }
+
     }
 }

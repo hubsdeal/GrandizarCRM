@@ -38,10 +38,6 @@
                         {{ item.masterTag.synonyms }}
                     </div>
                     <div class="col-6 mb-3">
-                        <h6>{{ l('PictureId') }} :</h6>
-                        {{ item.masterTag.pictureId }}
-                    </div>
-                    <div class="col-6 mb-3">
                         <h6>{{ l('DisplaySequence') }} :</h6>
                         {{ item.masterTag.displaySequence }}
                     </div>
@@ -49,6 +45,10 @@
                     <div class="col-6 mb-3">
                         <h6>({{ l('MasterTagCategory') }}) {{ l('Name') }} :</h6>
                         {{ item.masterTagCategoryName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('MediaLibrary') }}) {{ l('Name') }} :</h6>
+                        {{ item.mediaLibraryName }}
                     </div>
                 </div>
             </div>

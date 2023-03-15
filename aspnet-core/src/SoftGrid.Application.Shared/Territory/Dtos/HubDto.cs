@@ -27,8 +27,6 @@ namespace SoftGrid.Territory.Dtos
 
         public bool PartnerOrOwned { get; set; }
 
-        public Guid PictureId { get; set; }
-
         public string Phone { get; set; }
 
         public string YearlyRevenue { get; set; }
@@ -46,6 +44,8 @@ namespace SoftGrid.Territory.Dtos
         public long HubTypeId { get; set; }
 
         public long? CurrencyId { get; set; }
+
+        public long? PictureMediaLibraryId { get; set; }
 
     }
 }

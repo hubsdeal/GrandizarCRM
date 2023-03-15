@@ -1,4 +1,6 @@
-﻿using SoftGrid.CRM.Dtos;
+﻿using SoftGrid.Shop.Dtos;
+using SoftGrid.Shop;
+using SoftGrid.CRM.Dtos;
 using SoftGrid.CRM;
 using SoftGrid.Territory.Dtos;
 using SoftGrid.Territory;
@@ -54,6 +56,16 @@ namespace SoftGrid
     {
         public static void CreateMappings(IMapperConfigurationExpression configuration)
         {
+            configuration.CreateMap<CreateOrEditStoreDto, Store>().ReverseMap();
+            configuration.CreateMap<StoreDto, Store>().ReverseMap();
+            configuration.CreateMap<CreateOrEditProductDto, Product>().ReverseMap();
+            configuration.CreateMap<ProductDto, Product>().ReverseMap();
+            configuration.CreateMap<CreateOrEditProductCategoryDto, ProductCategory>().ReverseMap();
+            configuration.CreateMap<ProductCategoryDto, ProductCategory>().ReverseMap();
+            configuration.CreateMap<CreateOrEditMediaLibraryDto, MediaLibrary>().ReverseMap();
+            configuration.CreateMap<MediaLibraryDto, MediaLibrary>().ReverseMap();
+            configuration.CreateMap<CreateOrEditBusinessDto, Business>().ReverseMap();
+            configuration.CreateMap<BusinessDto, Business>().ReverseMap();
             configuration.CreateMap<CreateOrEditContactDto, Contact>().ReverseMap();
             configuration.CreateMap<ContactDto, Contact>().ReverseMap();
             configuration.CreateMap<CreateOrEditHubDto, Hub>().ReverseMap();

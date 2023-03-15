@@ -1,4 +1,5 @@
 ﻿using SoftGrid.LookupData;
+using SoftGrid.LookupData;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -22,14 +23,17 @@ namespace SoftGrid.LookupData
         [StringLength(MasterTagConsts.MaxSynonymsLength, MinimumLength = MasterTagConsts.MinSynonymsLength)]
         public virtual string Synonyms { get; set; }
 
-        public virtual Guid PictureId { get; set; }
-
         public virtual int? DisplaySequence { get; set; }
 
         public virtual long MasterTagCategoryId { get; set; }
 
         [ForeignKey("MasterTagCategoryId")]
         public MasterTagCategory MasterTagCategoryFk { get; set; }
+
+        public virtual long? PictureMediaLibraryId { get; set; }
+
+        [ForeignKey("PictureMediaLibraryId")]
+        public MediaLibrary PictureMediaLibraryFk { get; set; }
 
     }
 }

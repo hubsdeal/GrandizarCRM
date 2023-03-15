@@ -1,0 +1,536 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #storeForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="store.id">{{ l('EditStore') }}</span>
+                        <span *ngIf="!store.id">{{ l('CreateNewStore') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="MediaLibraryName">{{ l('MediaLibrary') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="MediaLibraryName"
+                                name="mediaLibraryName"
+                                [(ngModel)]="mediaLibraryName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectMediaLibraryModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setLogoMediaLibraryIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="store.logoMediaLibraryId"
+                        [(ngModel)]="store.logoMediaLibraryId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="CountryName">{{ l('Country') }}</label>
+                        <select name="store.countryId" [(ngModel)]="store.countryId" class="form-select">
+                            <option value="">{{ l('SelectACountry') }}</option>
+                            <option *ngFor="let item of allCountrys" value="{{ item.id }}">
+                                {{ item.displayName }}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="StateName">{{ l('State') }}</label>
+                        <select name="store.stateId" [(ngModel)]="store.stateId" class="form-select">
+                            <option value="">{{ l('SelectAState') }}</option>
+                            <option *ngFor="let item of allStates" value="{{ item.id }}">{{ item.displayName }}</option>
+                        </select>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="RatingLikeName">{{ l('RatingLike') }}</label>
+                        <select name="store.ratingLikeId" [(ngModel)]="store.ratingLikeId" class="form-select">
+                            <option value="">{{ l('SelectARatingLike') }}</option>
+                            <option *ngFor="let item of allRatingLikes" value="{{ item.id }}">
+                                {{ item.displayName }}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="MasterTagName">{{ l('MasterTag') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="MasterTagName"
+                                name="masterTagName"
+                                [(ngModel)]="masterTagName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectMasterTagModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setStoreCategoryIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="store.storeCategoryId"
+                        [(ngModel)]="store.storeCategoryId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="Store_Name">{{ l('Name') }} *</label>
+                        <input
+                            type="text"
+                            #Store_Name="ngModel"
+                            id="Store_Name"
+                            class="form-control"
+                            [(ngModel)]="store.name"
+                            name="Name"
+                            minlength="1"
+                            maxlength="1024"
+                            required
+                        />
+                        <validation-messages [formCtrl]="Store_Name"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Store_StoreUrl">{{ l('StoreUrl') }}</label>
+                        <input
+                            type="text"
+                            #Store_StoreUrl="ngModel"
+                            id="Store_StoreUrl"
+                            class="form-control"
+                            [(ngModel)]="store.storeUrl"
+                            name="StoreUrl"
+                            minlength="1"
+                            maxlength="1024"
+                        />
+                        <validation-messages [formCtrl]="Store_StoreUrl"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Store_Description">{{ l('Description') }}</label>
+                        <input
+                            type="text"
+                            #Store_Description="ngModel"
+                            id="Store_Description"
+                            class="form-control"
+                            [(ngModel)]="store.description"
+                            name="Description"
+                        />
+                        <validation-messages [formCtrl]="Store_Description"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Store_MetaTag">{{ l('MetaTag') }}</label>
+                        <input
+                            type="text"
+                            #Store_MetaTag="ngModel"
+                            id="Store_MetaTag"
+                            class="form-control"
+                            [(ngModel)]="store.metaTag"
+                            name="MetaTag"
+                            minlength="1"
+                            maxlength="256"
+                        />
+                        <validation-messages [formCtrl]="Store_MetaTag"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Store_MetaDescription">{{ l('MetaDescription') }}</label>
+                        <input
+                            type="text"
+                            #Store_MetaDescription="ngModel"
+                            id="Store_MetaDescription"
+                            class="form-control"
+                            [(ngModel)]="store.metaDescription"
+                            name="MetaDescription"
+                        />
+                        <validation-messages [formCtrl]="Store_MetaDescription"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Store_FullAddress">{{ l('FullAddress') }}</label>
+                        <input
+                            type="text"
+                            #Store_FullAddress="ngModel"
+                            id="Store_FullAddress"
+                            class="form-control"
+                            [(ngModel)]="store.fullAddress"
+                            name="FullAddress"
+                            minlength="1"
+                            maxlength="1500"
+                        />
+                        <validation-messages [formCtrl]="Store_FullAddress"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Store_Address">{{ l('Address') }}</label>
+                        <input
+                            type="text"
+                            #Store_Address="ngModel"
+                            id="Store_Address"
+                            class="form-control"
+                            [(ngModel)]="store.address"
+                            name="Address"
+                            minlength="1"
+                            maxlength="512"
+                        />
+                        <validation-messages [formCtrl]="Store_Address"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Store_City">{{ l('City') }}</label>
+                        <input
+                            type="text"
+                            #Store_City="ngModel"
+                            id="Store_City"
+                            class="form-control"
+                            [(ngModel)]="store.city"
+                            name="City"
+                            minlength="1"
+                            maxlength="128"
+                        />
+                        <validation-messages [formCtrl]="Store_City"></validation-messages>
+                    </div>
+
+                    <div class="my5">
+                        <label class="form-label" for="Store_Latitude">{{ l('Latitude') }}</label>
+                        <input
+                            type="number"
+                            #Store_Latitude="ngModel"
+                            id="Store_Latitude"
+                            class="form-control"
+                            [(ngModel)]="store.latitude"
+                            name="Latitude"
+                        />
+                        <validation-messages [formCtrl]="Store_Latitude"></validation-messages>
+                    </div>
+
+                    <div class="my5">
+                        <label class="form-label" for="Store_Longitude">{{ l('Longitude') }}</label>
+                        <input
+                            type="number"
+                            #Store_Longitude="ngModel"
+                            id="Store_Longitude"
+                            class="form-control"
+                            [(ngModel)]="store.longitude"
+                            name="Longitude"
+                        />
+                        <validation-messages [formCtrl]="Store_Longitude"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Store_Phone">{{ l('Phone') }}</label>
+                        <input
+                            type="text"
+                            #Store_Phone="ngModel"
+                            id="Store_Phone"
+                            class="form-control"
+                            [(ngModel)]="store.phone"
+                            name="Phone"
+                            minlength="1"
+                            maxlength="50"
+                        />
+                        <validation-messages [formCtrl]="Store_Phone"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Store_Mobile">{{ l('Mobile') }}</label>
+                        <input
+                            type="text"
+                            #Store_Mobile="ngModel"
+                            id="Store_Mobile"
+                            class="form-control"
+                            [(ngModel)]="store.mobile"
+                            name="Mobile"
+                            minlength="1"
+                            maxlength="50"
+                        />
+                        <validation-messages [formCtrl]="Store_Mobile"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Store_Email">{{ l('Email') }}</label>
+                        <input
+                            type="text"
+                            #Store_Email="ngModel"
+                            id="Store_Email"
+                            class="form-control"
+                            [(ngModel)]="store.email"
+                            name="Email"
+                            minlength="1"
+                            maxlength="256"
+                        />
+                        <validation-messages [formCtrl]="Store_Email"></validation-messages>
+                    </div>
+
+                    <br />
+                    <label class="form-check form-check-custom form-check-solid">
+                        <input
+                            id="Store_IsPublished"
+                            #Store_IsPublished="ngModel"
+                            name="IsPublished"
+                            [(ngModel)]="store.isPublished"
+                            type="checkbox"
+                            class="form-check-input"
+                        />
+                        <span class="form-check-label">
+                            {{ l('IsPublished') }}
+                        </span>
+                    </label>
+                    <validation-messages [formCtrl]="Store_IsPublished"></validation-messages>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Store_Facebook">{{ l('Facebook') }}</label>
+                        <input
+                            type="text"
+                            #Store_Facebook="ngModel"
+                            id="Store_Facebook"
+                            class="form-control"
+                            [(ngModel)]="store.facebook"
+                            name="Facebook"
+                            minlength="1"
+                            maxlength="1024"
+                        />
+                        <validation-messages [formCtrl]="Store_Facebook"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Store_Instagram">{{ l('Instagram') }}</label>
+                        <input
+                            type="text"
+                            #Store_Instagram="ngModel"
+                            id="Store_Instagram"
+                            class="form-control"
+                            [(ngModel)]="store.instagram"
+                            name="Instagram"
+                            minlength="1"
+                            maxlength="512"
+                        />
+                        <validation-messages [formCtrl]="Store_Instagram"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Store_LinkedIn">{{ l('LinkedIn') }}</label>
+                        <input
+                            type="text"
+                            #Store_LinkedIn="ngModel"
+                            id="Store_LinkedIn"
+                            class="form-control"
+                            [(ngModel)]="store.linkedIn"
+                            name="LinkedIn"
+                            minlength="1"
+                            maxlength="1024"
+                        />
+                        <validation-messages [formCtrl]="Store_LinkedIn"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Store_Youtube">{{ l('Youtube') }}</label>
+                        <input
+                            type="text"
+                            #Store_Youtube="ngModel"
+                            id="Store_Youtube"
+                            class="form-control"
+                            [(ngModel)]="store.youtube"
+                            name="Youtube"
+                            minlength="1"
+                            maxlength="1024"
+                        />
+                        <validation-messages [formCtrl]="Store_Youtube"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Store_Fax">{{ l('Fax') }}</label>
+                        <input
+                            type="text"
+                            #Store_Fax="ngModel"
+                            id="Store_Fax"
+                            class="form-control"
+                            [(ngModel)]="store.fax"
+                            name="Fax"
+                            minlength="1"
+                            maxlength="50"
+                        />
+                        <validation-messages [formCtrl]="Store_Fax"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Store_ZipCode">{{ l('ZipCode') }}</label>
+                        <input
+                            type="text"
+                            #Store_ZipCode="ngModel"
+                            id="Store_ZipCode"
+                            class="form-control"
+                            [(ngModel)]="store.zipCode"
+                            name="ZipCode"
+                            minlength="1"
+                            maxlength="50"
+                        />
+                        <validation-messages [formCtrl]="Store_ZipCode"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Store_Website">{{ l('Website') }}</label>
+                        <input
+                            type="text"
+                            #Store_Website="ngModel"
+                            id="Store_Website"
+                            class="form-control"
+                            [(ngModel)]="store.website"
+                            name="Website"
+                            minlength="1"
+                            maxlength="1024"
+                        />
+                        <validation-messages [formCtrl]="Store_Website"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Store_YearOfEstablishment">{{ l('YearOfEstablishment') }}</label>
+                        <input
+                            type="text"
+                            #Store_YearOfEstablishment="ngModel"
+                            id="Store_YearOfEstablishment"
+                            class="form-control"
+                            [(ngModel)]="store.yearOfEstablishment"
+                            name="YearOfEstablishment"
+                            minlength="1"
+                            maxlength="50"
+                        />
+                        <validation-messages [formCtrl]="Store_YearOfEstablishment"></validation-messages>
+                    </div>
+
+                    <div class="my5">
+                        <label class="form-label" for="Store_DisplaySequence">{{ l('DisplaySequence') }}</label>
+                        <input
+                            type="number"
+                            #Store_DisplaySequence="ngModel"
+                            id="Store_DisplaySequence"
+                            class="form-control"
+                            [(ngModel)]="store.displaySequence"
+                            name="DisplaySequence"
+                        />
+                        <validation-messages [formCtrl]="Store_DisplaySequence"></validation-messages>
+                    </div>
+
+                    <div class="my5">
+                        <label class="form-label" for="Store_Score">{{ l('Score') }}</label>
+                        <input
+                            type="number"
+                            #Store_Score="ngModel"
+                            id="Store_Score"
+                            class="form-control"
+                            [(ngModel)]="store.score"
+                            name="Score"
+                        />
+                        <validation-messages [formCtrl]="Store_Score"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Store_LegalName">{{ l('LegalName') }}</label>
+                        <input
+                            type="text"
+                            #Store_LegalName="ngModel"
+                            id="Store_LegalName"
+                            class="form-control"
+                            [(ngModel)]="store.legalName"
+                            name="LegalName"
+                            minlength="1"
+                            maxlength="1024"
+                        />
+                        <validation-messages [formCtrl]="Store_LegalName"></validation-messages>
+                    </div>
+
+                    <br />
+                    <label class="form-check form-check-custom form-check-solid">
+                        <input
+                            id="Store_IsLocalOrOnlineStore"
+                            #Store_IsLocalOrOnlineStore="ngModel"
+                            name="IsLocalOrOnlineStore"
+                            [(ngModel)]="store.isLocalOrOnlineStore"
+                            type="checkbox"
+                            class="form-check-input"
+                        />
+                        <span class="form-check-label">
+                            {{ l('IsLocalOrOnlineStore') }}
+                        </span>
+                    </label>
+                    <validation-messages [formCtrl]="Store_IsLocalOrOnlineStore"></validation-messages>
+
+                    <br />
+                    <label class="form-check form-check-custom form-check-solid">
+                        <input
+                            id="Store_IsVerified"
+                            #Store_IsVerified="ngModel"
+                            name="IsVerified"
+                            [(ngModel)]="store.isVerified"
+                            type="checkbox"
+                            class="form-check-input"
+                        />
+                        <span class="form-check-label">
+                            {{ l('IsVerified') }}
+                        </span>
+                    </label>
+                    <validation-messages [formCtrl]="Store_IsVerified"></validation-messages>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!storeForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <storeMediaLibraryLookupTableModal
+        #storeMediaLibraryLookupTableModal
+        (modalSave)="getNewLogoMediaLibraryId()"
+    ></storeMediaLibraryLookupTableModal>
+    <storeMasterTagLookupTableModal
+        #storeMasterTagLookupTableModal
+        (modalSave)="getNewStoreCategoryId()"
+    ></storeMasterTagLookupTableModal>
+</div>

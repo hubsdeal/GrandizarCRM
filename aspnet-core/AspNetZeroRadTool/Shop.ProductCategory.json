@@ -1,0 +1,234 @@
+{
+  "IsRegenerate": false,
+  "MenuPosition": "main",
+  "RelativeNamespace": "Shop",
+  "EntityName": "ProductCategory",
+  "EntityNamePlural": "ProductCategories",
+  "TableName": "ProductCategories",
+  "PrimaryKeyType": "long",
+  "BaseClass": "FullAuditedEntity",
+  "EntityHistory": false,
+  "AutoMigration": true,
+  "UpdateDatabase": true,
+  "CreateUserInterface": true,
+  "CreateViewOnly": true,
+  "CreateExcelExport": true,
+  "IsNonModalCRUDPage": false,
+  "IsMasterDetailPage": false,
+  "PagePermission": {
+    "Host": true,
+    "Tenant": true
+  },
+  "Properties": [
+    {
+      "Name": "Name",
+      "Type": "string",
+      "MaxLength": 128,
+      "MinLength": 1,
+      "Range": {
+        "IsRangeSet": false,
+        "MinimumValue": 0.0,
+        "MaximumValue": 0.0
+      },
+      "Required": true,
+      "Nullable": false,
+      "Regex": "",
+      "UserInterface": {
+        "AdvancedFilter": true,
+        "List": true,
+        "CreateOrUpdate": true
+      },
+      "ViewType": null,
+      "AdditionalData": {}
+    },
+    {
+      "Name": "Description",
+      "Type": "string",
+      "MaxLength": -1,
+      "MinLength": -1,
+      "Range": {
+        "IsRangeSet": false,
+        "MinimumValue": 0.0,
+        "MaximumValue": 0.0
+      },
+      "Required": false,
+      "Nullable": false,
+      "Regex": "",
+      "UserInterface": {
+        "AdvancedFilter": true,
+        "List": true,
+        "CreateOrUpdate": true
+      },
+      "ViewType": null,
+      "AdditionalData": {}
+    },
+    {
+      "Name": "HasParentCategory",
+      "Type": "bool",
+      "MaxLength": 0,
+      "MinLength": 0,
+      "Range": {
+        "IsRangeSet": false,
+        "MinimumValue": 0.0,
+        "MaximumValue": 0.0
+      },
+      "Required": false,
+      "Nullable": false,
+      "Regex": "",
+      "UserInterface": {
+        "AdvancedFilter": true,
+        "List": true,
+        "CreateOrUpdate": true
+      },
+      "ViewType": null,
+      "AdditionalData": {}
+    },
+    {
+      "Name": "ParentCategoryId",
+      "Type": "long",
+      "MaxLength": 0,
+      "MinLength": 0,
+      "Range": {
+        "IsRangeSet": false,
+        "MinimumValue": 0.0,
+        "MaximumValue": 0.0
+      },
+      "Required": false,
+      "Nullable": true,
+      "Regex": "",
+      "UserInterface": {
+        "AdvancedFilter": true,
+        "List": true,
+        "CreateOrUpdate": true
+      },
+      "ViewType": null,
+      "AdditionalData": {}
+    },
+    {
+      "Name": "Url",
+      "Type": "string",
+      "MaxLength": 512,
+      "MinLength": 1,
+      "Range": {
+        "IsRangeSet": false,
+        "MinimumValue": 0.0,
+        "MaximumValue": 0.0
+      },
+      "Required": false,
+      "Nullable": false,
+      "Regex": "",
+      "UserInterface": {
+        "AdvancedFilter": true,
+        "List": true,
+        "CreateOrUpdate": true
+      },
+      "ViewType": null,
+      "AdditionalData": {}
+    },
+    {
+      "Name": "MetaTitle",
+      "Type": "string",
+      "MaxLength": 128,
+      "MinLength": 1,
+      "Range": {
+        "IsRangeSet": false,
+        "MinimumValue": 0.0,
+        "MaximumValue": 0.0
+      },
+      "Required": false,
+      "Nullable": false,
+      "Regex": "",
+      "UserInterface": {
+        "AdvancedFilter": true,
+        "List": true,
+        "CreateOrUpdate": true
+      },
+      "ViewType": null,
+      "AdditionalData": {}
+    },
+    {
+      "Name": "MetaKeywords",
+      "Type": "string",
+      "MaxLength": 512,
+      "MinLength": 1,
+      "Range": {
+        "IsRangeSet": false,
+        "MinimumValue": 0.0,
+        "MaximumValue": 0.0
+      },
+      "Required": false,
+      "Nullable": false,
+      "Regex": "",
+      "UserInterface": {
+        "AdvancedFilter": true,
+        "List": true,
+        "CreateOrUpdate": true
+      },
+      "ViewType": null,
+      "AdditionalData": {}
+    },
+    {
+      "Name": "DisplaySequence",
+      "Type": "int",
+      "MaxLength": 0,
+      "MinLength": 0,
+      "Range": {
+        "IsRangeSet": false,
+        "MinimumValue": 0.0,
+        "MaximumValue": 0.0
+      },
+      "Required": false,
+      "Nullable": true,
+      "Regex": "",
+      "UserInterface": {
+        "AdvancedFilter": true,
+        "List": true,
+        "CreateOrUpdate": true
+      },
+      "ViewType": null,
+      "AdditionalData": {}
+    },
+    {
+      "Name": "ProductOrService",
+      "Type": "bool",
+      "MaxLength": 0,
+      "MinLength": 0,
+      "Range": {
+        "IsRangeSet": false,
+        "MinimumValue": 0.0,
+        "MaximumValue": 0.0
+      },
+      "Required": false,
+      "Nullable": false,
+      "Regex": "",
+      "UserInterface": {
+        "AdvancedFilter": true,
+        "List": true,
+        "CreateOrUpdate": true
+      },
+      "ViewType": null,
+      "AdditionalData": {}
+    }
+  ],
+  "NavigationProperties": [
+    {
+      "Namespace": "SoftGrid.LookupData",
+      "ForeignEntityName": "MediaLibrary",
+      "IdType": "long",
+      "IsNullable": true,
+      "PropertyName": "MediaLibraryId",
+      "DuplicationNumber": 0,
+      "RelationType": "single",
+      "ViewType": "LookupTable",
+      "DisplayPropertyNameInfos": {
+        "MergeFormat": "{0}",
+        "DisplayPropertyNames": [
+          "Name"
+        ]
+      }
+    }
+  ],
+  "NavigationPropertyOneToManyTables": [],
+  "EnumDefinitions": [],
+  "DbContext": null
+}

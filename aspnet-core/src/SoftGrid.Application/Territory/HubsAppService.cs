@@ -1,4 +1,5 @@
 ﻿using SoftGrid.LookupData;
+using SoftGrid.LookupData;
 
 using System;
 using System.Linq;
@@ -31,8 +32,9 @@ namespace SoftGrid.Territory
         private readonly IRepository<County, long> _lookup_countyRepository;
         private readonly IRepository<HubType, long> _lookup_hubTypeRepository;
         private readonly IRepository<Currency, long> _lookup_currencyRepository;
+        private readonly IRepository<MediaLibrary, long> _lookup_mediaLibraryRepository;
 
-        public HubsAppService(IRepository<Hub, long> hubRepository, IHubsExcelExporter hubsExcelExporter, IRepository<Country, long> lookup_countryRepository, IRepository<State, long> lookup_stateRepository, IRepository<City, long> lookup_cityRepository, IRepository<County, long> lookup_countyRepository, IRepository<HubType, long> lookup_hubTypeRepository, IRepository<Currency, long> lookup_currencyRepository)
+        public HubsAppService(IRepository<Hub, long> hubRepository, IHubsExcelExporter hubsExcelExporter, IRepository<Country, long> lookup_countryRepository, IRepository<State, long> lookup_stateRepository, IRepository<City, long> lookup_cityRepository, IRepository<County, long> lookup_countyRepository, IRepository<HubType, long> lookup_hubTypeRepository, IRepository<Currency, long> lookup_currencyRepository, IRepository<MediaLibrary, long> lookup_mediaLibraryRepository)
         {
             _hubRepository = hubRepository;
             _hubsExcelExporter = hubsExcelExporter;
@@ -42,6 +44,7 @@ namespace SoftGrid.Territory
             _lookup_countyRepository = lookup_countyRepository;
             _lookup_hubTypeRepository = lookup_hubTypeRepository;
             _lookup_currencyRepository = lookup_currencyRepository;
+            _lookup_mediaLibraryRepository = lookup_mediaLibraryRepository;
 
         }
 
@@ -55,6 +58,7 @@ namespace SoftGrid.Territory
                         .Include(e => e.CountyFk)
                         .Include(e => e.HubTypeFk)
                         .Include(e => e.CurrencyFk)
+                        .Include(e => e.PictureMediaLibraryFk)
                         .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false || e.Name.Contains(input.Filter) || e.Description.Contains(input.Filter) || e.Url.Contains(input.Filter) || e.OfficeFullAddress.Contains(input.Filter) || e.Phone.Contains(input.Filter) || e.YearlyRevenue.Contains(input.Filter))
                         .WhereIf(!string.IsNullOrWhiteSpace(input.NameFilter), e => e.Name.Contains(input.NameFilter))
                         .WhereIf(!string.IsNullOrWhiteSpace(input.DescriptionFilter), e => e.Description.Contains(input.DescriptionFilter))
@@ -71,7 +75,6 @@ namespace SoftGrid.Territory
                         .WhereIf(!string.IsNullOrWhiteSpace(input.UrlFilter), e => e.Url.Contains(input.UrlFilter))
                         .WhereIf(!string.IsNullOrWhiteSpace(input.OfficeFullAddressFilter), e => e.OfficeFullAddress.Contains(input.OfficeFullAddressFilter))
                         .WhereIf(input.PartnerOrOwnedFilter.HasValue && input.PartnerOrOwnedFilter > -1, e => (input.PartnerOrOwnedFilter == 1 && e.PartnerOrOwned) || (input.PartnerOrOwnedFilter == 0 && !e.PartnerOrOwned))
-                        .WhereIf(!string.IsNullOrWhiteSpace(input.PictureIdFilter.ToString()), e => e.PictureId.ToString() == input.PictureIdFilter.ToString())
                         .WhereIf(!string.IsNullOrWhiteSpace(input.PhoneFilter), e => e.Phone.Contains(input.PhoneFilter))
                         .WhereIf(!string.IsNullOrWhiteSpace(input.YearlyRevenueFilter), e => e.YearlyRevenue.Contains(input.YearlyRevenueFilter))
                         .WhereIf(input.MinDisplaySequenceFilter != null, e => e.DisplaySequence >= input.MinDisplaySequenceFilter)
@@ -81,7 +84,8 @@ namespace SoftGrid.Territory
                         .WhereIf(!string.IsNullOrWhiteSpace(input.CityNameFilter), e => e.CityFk != null && e.CityFk.Name == input.CityNameFilter)
                         .WhereIf(!string.IsNullOrWhiteSpace(input.CountyNameFilter), e => e.CountyFk != null && e.CountyFk.Name == input.CountyNameFilter)
                         .WhereIf(!string.IsNullOrWhiteSpace(input.HubTypeNameFilter), e => e.HubTypeFk != null && e.HubTypeFk.Name == input.HubTypeNameFilter)
-                        .WhereIf(!string.IsNullOrWhiteSpace(input.CurrencyNameFilter), e => e.CurrencyFk != null && e.CurrencyFk.Name == input.CurrencyNameFilter);
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.CurrencyNameFilter), e => e.CurrencyFk != null && e.CurrencyFk.Name == input.CurrencyNameFilter)
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.MediaLibraryNameFilter), e => e.PictureMediaLibraryFk != null && e.PictureMediaLibraryFk.Name == input.MediaLibraryNameFilter);
 
             var pagedAndFilteredHubs = filteredHubs
                 .OrderBy(input.Sorting ?? "id asc")
@@ -106,6 +110,9 @@ namespace SoftGrid.Territory
                        join o6 in _lookup_currencyRepository.GetAll() on o.CurrencyId equals o6.Id into j6
                        from s6 in j6.DefaultIfEmpty()
 
+                       join o7 in _lookup_mediaLibraryRepository.GetAll() on o.PictureMediaLibraryId equals o7.Id into j7
+                       from s7 in j7.DefaultIfEmpty()
+
                        select new
                        {
 
@@ -120,7 +127,6 @@ namespace SoftGrid.Territory
                            o.Url,
                            o.OfficeFullAddress,
                            o.PartnerOrOwned,
-                           o.PictureId,
                            o.Phone,
                            o.YearlyRevenue,
                            o.DisplaySequence,
@@ -130,7 +136,8 @@ namespace SoftGrid.Territory
                            CityName = s3 == null || s3.Name == null ? "" : s3.Name.ToString(),
                            CountyName = s4 == null || s4.Name == null ? "" : s4.Name.ToString(),
                            HubTypeName = s5 == null || s5.Name == null ? "" : s5.Name.ToString(),
-                           CurrencyName = s6 == null || s6.Name == null ? "" : s6.Name.ToString()
+                           CurrencyName = s6 == null || s6.Name == null ? "" : s6.Name.ToString(),
+                           MediaLibraryName = s7 == null || s7.Name == null ? "" : s7.Name.ToString()
                        };
 
             var totalCount = await filteredHubs.CountAsync();
@@ -156,7 +163,6 @@ namespace SoftGrid.Territory
                         Url = o.Url,
                         OfficeFullAddress = o.OfficeFullAddress,
                         PartnerOrOwned = o.PartnerOrOwned,
-                        PictureId = o.PictureId,
                         Phone = o.Phone,
                         YearlyRevenue = o.YearlyRevenue,
                         DisplaySequence = o.DisplaySequence,
@@ -167,7 +173,8 @@ namespace SoftGrid.Territory
                     CityName = o.CityName,
                     CountyName = o.CountyName,
                     HubTypeName = o.HubTypeName,
-                    CurrencyName = o.CurrencyName
+                    CurrencyName = o.CurrencyName,
+                    MediaLibraryName = o.MediaLibraryName
                 };
 
                 results.Add(res);
@@ -222,6 +229,12 @@ namespace SoftGrid.Territory
                 output.CurrencyName = _lookupCurrency?.Name?.ToString();
             }
 
+            if (output.Hub.PictureMediaLibraryId != null)
+            {
+                var _lookupMediaLibrary = await _lookup_mediaLibraryRepository.FirstOrDefaultAsync((long)output.Hub.PictureMediaLibraryId);
+                output.MediaLibraryName = _lookupMediaLibrary?.Name?.ToString();
+            }
+
             return output;
         }
 
@@ -266,6 +279,12 @@ namespace SoftGrid.Territory
             {
                 var _lookupCurrency = await _lookup_currencyRepository.FirstOrDefaultAsync((long)output.Hub.CurrencyId);
                 output.CurrencyName = _lookupCurrency?.Name?.ToString();
+            }
+
+            if (output.Hub.PictureMediaLibraryId != null)
+            {
+                var _lookupMediaLibrary = await _lookup_mediaLibraryRepository.FirstOrDefaultAsync((long)output.Hub.PictureMediaLibraryId);
+                output.MediaLibraryName = _lookupMediaLibrary?.Name?.ToString();
             }
 
             return output;
@@ -321,6 +340,7 @@ namespace SoftGrid.Territory
                         .Include(e => e.CountyFk)
                         .Include(e => e.HubTypeFk)
                         .Include(e => e.CurrencyFk)
+                        .Include(e => e.PictureMediaLibraryFk)
                         .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false || e.Name.Contains(input.Filter) || e.Description.Contains(input.Filter) || e.Url.Contains(input.Filter) || e.OfficeFullAddress.Contains(input.Filter) || e.Phone.Contains(input.Filter) || e.YearlyRevenue.Contains(input.Filter))
                         .WhereIf(!string.IsNullOrWhiteSpace(input.NameFilter), e => e.Name.Contains(input.NameFilter))
                         .WhereIf(!string.IsNullOrWhiteSpace(input.DescriptionFilter), e => e.Description.Contains(input.DescriptionFilter))
@@ -337,7 +357,6 @@ namespace SoftGrid.Territory
                         .WhereIf(!string.IsNullOrWhiteSpace(input.UrlFilter), e => e.Url.Contains(input.UrlFilter))
                         .WhereIf(!string.IsNullOrWhiteSpace(input.OfficeFullAddressFilter), e => e.OfficeFullAddress.Contains(input.OfficeFullAddressFilter))
                         .WhereIf(input.PartnerOrOwnedFilter.HasValue && input.PartnerOrOwnedFilter > -1, e => (input.PartnerOrOwnedFilter == 1 && e.PartnerOrOwned) || (input.PartnerOrOwnedFilter == 0 && !e.PartnerOrOwned))
-                        .WhereIf(!string.IsNullOrWhiteSpace(input.PictureIdFilter.ToString()), e => e.PictureId.ToString() == input.PictureIdFilter.ToString())
                         .WhereIf(!string.IsNullOrWhiteSpace(input.PhoneFilter), e => e.Phone.Contains(input.PhoneFilter))
                         .WhereIf(!string.IsNullOrWhiteSpace(input.YearlyRevenueFilter), e => e.YearlyRevenue.Contains(input.YearlyRevenueFilter))
                         .WhereIf(input.MinDisplaySequenceFilter != null, e => e.DisplaySequence >= input.MinDisplaySequenceFilter)
@@ -347,7 +366,8 @@ namespace SoftGrid.Territory
                         .WhereIf(!string.IsNullOrWhiteSpace(input.CityNameFilter), e => e.CityFk != null && e.CityFk.Name == input.CityNameFilter)
                         .WhereIf(!string.IsNullOrWhiteSpace(input.CountyNameFilter), e => e.CountyFk != null && e.CountyFk.Name == input.CountyNameFilter)
                         .WhereIf(!string.IsNullOrWhiteSpace(input.HubTypeNameFilter), e => e.HubTypeFk != null && e.HubTypeFk.Name == input.HubTypeNameFilter)
-                        .WhereIf(!string.IsNullOrWhiteSpace(input.CurrencyNameFilter), e => e.CurrencyFk != null && e.CurrencyFk.Name == input.CurrencyNameFilter);
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.CurrencyNameFilter), e => e.CurrencyFk != null && e.CurrencyFk.Name == input.CurrencyNameFilter)
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.MediaLibraryNameFilter), e => e.PictureMediaLibraryFk != null && e.PictureMediaLibraryFk.Name == input.MediaLibraryNameFilter);
 
             var query = (from o in filteredHubs
                          join o1 in _lookup_countryRepository.GetAll() on o.CountryId equals o1.Id into j1
@@ -368,6 +388,9 @@ namespace SoftGrid.Territory
                          join o6 in _lookup_currencyRepository.GetAll() on o.CurrencyId equals o6.Id into j6
                          from s6 in j6.DefaultIfEmpty()
 
+                         join o7 in _lookup_mediaLibraryRepository.GetAll() on o.PictureMediaLibraryId equals o7.Id into j7
+                         from s7 in j7.DefaultIfEmpty()
+
                          select new GetHubForViewDto()
                          {
                              Hub = new HubDto
@@ -383,7 +406,6 @@ namespace SoftGrid.Territory
                                  Url = o.Url,
                                  OfficeFullAddress = o.OfficeFullAddress,
                                  PartnerOrOwned = o.PartnerOrOwned,
-                                 PictureId = o.PictureId,
                                  Phone = o.Phone,
                                  YearlyRevenue = o.YearlyRevenue,
                                  DisplaySequence = o.DisplaySequence,
@@ -394,7 +416,8 @@ namespace SoftGrid.Territory
                              CityName = s3 == null || s3.Name == null ? "" : s3.Name.ToString(),
                              CountyName = s4 == null || s4.Name == null ? "" : s4.Name.ToString(),
                              HubTypeName = s5 == null || s5.Name == null ? "" : s5.Name.ToString(),
-                             CurrencyName = s6 == null || s6.Name == null ? "" : s6.Name.ToString()
+                             CurrencyName = s6 == null || s6.Name == null ? "" : s6.Name.ToString(),
+                             MediaLibraryName = s7 == null || s7.Name == null ? "" : s7.Name.ToString()
                          });
 
             var hubListDtos = await query.ToListAsync();
@@ -466,6 +489,36 @@ namespace SoftGrid.Territory
                     Id = currency.Id,
                     DisplayName = currency == null || currency.Name == null ? "" : currency.Name.ToString()
                 }).ToListAsync();
+        }
+
+        [AbpAuthorize(AppPermissions.Pages_Hubs)]
+        public async Task<PagedResultDto<HubMediaLibraryLookupTableDto>> GetAllMediaLibraryForLookupTable(GetAllForLookupTableInput input)
+        {
+            var query = _lookup_mediaLibraryRepository.GetAll().WhereIf(
+                   !string.IsNullOrWhiteSpace(input.Filter),
+                  e => e.Name != null && e.Name.Contains(input.Filter)
+               );
+
+            var totalCount = await query.CountAsync();
+
+            var mediaLibraryList = await query
+                .PageBy(input)
+                .ToListAsync();
+
+            var lookupTableDtoList = new List<HubMediaLibraryLookupTableDto>();
+            foreach (var mediaLibrary in mediaLibraryList)
+            {
+                lookupTableDtoList.Add(new HubMediaLibraryLookupTableDto
+                {
+                    Id = mediaLibrary.Id,
+                    DisplayName = mediaLibrary.Name?.ToString()
+                });
+            }
+
+            return new PagedResultDto<HubMediaLibraryLookupTableDto>(
+                totalCount,
+                lookupTableDtoList
+            );
         }
 
     }

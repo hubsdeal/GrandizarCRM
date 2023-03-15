@@ -253,18 +253,6 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="my-3">
-                                    <label class="form-label" for="PictureIdFilter">{{ l('PictureId') }}</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="PictureIdFilter"
-                                        name="pictureIdFilter"
-                                        [(ngModel)]="pictureIdFilter"
-                                    />
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="my-3">
                                     <label class="form-label" for="PhoneFilter">{{ l('Phone') }}</label>
                                     <input
                                         type="text"
@@ -400,6 +388,20 @@
                                     />
                                 </div>
                             </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="MediaLibraryNameFilter">
+                                        ({{ l('MediaLibrary') }}) {{ l('Name') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="MediaLibraryNameFilter"
+                                        name="mediaLibraryNameFilter"
+                                        [(ngModel)]="mediaLibraryNameFilter"
+                                    />
+                                </div>
+                            </div>
                             <div class="col-md-12 mt-5">
                                 <button
                                     (click)="resetFilters()"
@@ -480,6 +482,10 @@
                                         {{ l('Name') }}
                                         <p-sortIcon field="currencyName"></p-sortIcon>
                                     </th>
+                                    <th style="width: 150px" pSortableColumn="pictureMediaLibraryFk.name">
+                                        {{ l('Name') }}
+                                        <p-sortIcon field="mediaLibraryName"></p-sortIcon>
+                                    </th>
                                     <th style="width: 150px" pSortableColumn="name">
                                         {{ l('Name') }}
                                         <p-sortIcon field="hub.name"></p-sortIcon>
@@ -523,10 +529,6 @@
                                     <th style="width: 150px" pSortableColumn="partnerOrOwned">
                                         {{ l('PartnerOrOwned') }}
                                         <p-sortIcon field="hub.partnerOrOwned"></p-sortIcon>
-                                    </th>
-                                    <th style="width: 150px" pSortableColumn="pictureId">
-                                        {{ l('PictureId') }}
-                                        <p-sortIcon field="hub.pictureId"></p-sortIcon>
                                     </th>
                                     <th style="width: 150px" pSortableColumn="phone">
                                         {{ l('Phone') }}
@@ -613,6 +615,10 @@
                                     </td>
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('Name') }}</span>
+                                        {{ record.mediaLibraryName }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Name') }}</span>
                                         {{ record.hub.name }}
                                     </td>
                                     <td style="width: 150px">
@@ -669,10 +675,6 @@
                                         <div *ngIf="!record.hub.partnerOrOwned" class="text-center">
                                             <i class="fa fa-times-circle" title="False"></i>
                                         </div>
-                                    </td>
-                                    <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('PictureId') }}</span>
-                                        {{ record.hub.pictureId }}
                                     </td>
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('Phone') }}</span>

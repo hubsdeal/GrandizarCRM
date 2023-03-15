@@ -6,6 +6,31 @@
     /// </summary>
     public static class AppPermissions
     {
+        public const string Pages_Stores = "Pages.Stores";
+        public const string Pages_Stores_Create = "Pages.Stores.Create";
+        public const string Pages_Stores_Edit = "Pages.Stores.Edit";
+        public const string Pages_Stores_Delete = "Pages.Stores.Delete";
+
+        public const string Pages_Products = "Pages.Products";
+        public const string Pages_Products_Create = "Pages.Products.Create";
+        public const string Pages_Products_Edit = "Pages.Products.Edit";
+        public const string Pages_Products_Delete = "Pages.Products.Delete";
+
+        public const string Pages_ProductCategories = "Pages.ProductCategories";
+        public const string Pages_ProductCategories_Create = "Pages.ProductCategories.Create";
+        public const string Pages_ProductCategories_Edit = "Pages.ProductCategories.Edit";
+        public const string Pages_ProductCategories_Delete = "Pages.ProductCategories.Delete";
+
+        public const string Pages_MediaLibraries = "Pages.MediaLibraries";
+        public const string Pages_MediaLibraries_Create = "Pages.MediaLibraries.Create";
+        public const string Pages_MediaLibraries_Edit = "Pages.MediaLibraries.Edit";
+        public const string Pages_MediaLibraries_Delete = "Pages.MediaLibraries.Delete";
+
+        public const string Pages_Businesses = "Pages.Businesses";
+        public const string Pages_Businesses_Create = "Pages.Businesses.Create";
+        public const string Pages_Businesses_Edit = "Pages.Businesses.Edit";
+        public const string Pages_Businesses_Delete = "Pages.Businesses.Delete";
+
         public const string Pages_Contacts = "Pages.Contacts";
         public const string Pages_Contacts_Create = "Pages.Contacts.Create";
         public const string Pages_Contacts_Edit = "Pages.Contacts.Edit";

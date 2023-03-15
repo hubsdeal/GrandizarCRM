@@ -46,7 +46,6 @@ namespace SoftGrid.Territory.Exporting
                         L("Url"),
                         L("OfficeFullAddress"),
                         L("PartnerOrOwned"),
-                        L("PictureId"),
                         L("Phone"),
                         L("YearlyRevenue"),
                         L("DisplaySequence"),
@@ -55,7 +54,8 @@ namespace SoftGrid.Territory.Exporting
                         (L("City")) + L("Name"),
                         (L("County")) + L("Name"),
                         (L("HubType")) + L("Name"),
-                        (L("Currency")) + L("Name")
+                        (L("Currency")) + L("Name"),
+                        (L("MediaLibrary")) + L("Name")
                         );
 
                     AddObjects(
@@ -71,7 +71,6 @@ namespace SoftGrid.Territory.Exporting
                         _ => _.Hub.Url,
                         _ => _.Hub.OfficeFullAddress,
                         _ => _.Hub.PartnerOrOwned,
-                        _ => _.Hub.PictureId,
                         _ => _.Hub.Phone,
                         _ => _.Hub.YearlyRevenue,
                         _ => _.Hub.DisplaySequence,
@@ -80,7 +79,8 @@ namespace SoftGrid.Territory.Exporting
                         _ => _.CityName,
                         _ => _.CountyName,
                         _ => _.HubTypeName,
-                        _ => _.CurrencyName
+                        _ => _.CurrencyName,
+                        _ => _.MediaLibraryName
                         );
 
                 });

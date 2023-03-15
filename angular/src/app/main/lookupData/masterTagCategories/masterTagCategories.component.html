@@ -75,19 +75,21 @@
                                     />
                                 </div>
                             </div>
+
                             <div class="col-md-3">
                                 <div class="my-3">
-                                    <label class="form-label" for="PictureIdFilter">{{ l('PictureId') }}</label>
+                                    <label class="form-label" for="MediaLibraryNameFilter">
+                                        ({{ l('MediaLibrary') }}) {{ l('Name') }}
+                                    </label>
                                     <input
                                         type="text"
                                         class="form-control"
-                                        id="PictureIdFilter"
-                                        name="pictureIdFilter"
-                                        [(ngModel)]="pictureIdFilter"
+                                        id="MediaLibraryNameFilter"
+                                        name="mediaLibraryNameFilter"
+                                        [(ngModel)]="mediaLibraryNameFilter"
                                     />
                                 </div>
                             </div>
-
                             <div class="col-md-12 mt-5">
                                 <button
                                     (click)="resetFilters()"
@@ -149,6 +151,10 @@
                                     >
                                         {{ l('Actions') }}
                                     </th>
+                                    <th style="width: 150px" pSortableColumn="pictureMediaLibraryFk.name">
+                                        {{ l('Name') }}
+                                        <p-sortIcon field="mediaLibraryName"></p-sortIcon>
+                                    </th>
                                     <th style="width: 150px" pSortableColumn="name">
                                         {{ l('Name') }}
                                         <p-sortIcon field="masterTagCategory.name"></p-sortIcon>
@@ -156,10 +162,6 @@
                                     <th style="width: 150px" pSortableColumn="description">
                                         {{ l('Description') }}
                                         <p-sortIcon field="masterTagCategory.description"></p-sortIcon>
-                                    </th>
-                                    <th style="width: 150px" pSortableColumn="pictureId">
-                                        {{ l('PictureId') }}
-                                        <p-sortIcon field="masterTagCategory.pictureId"></p-sortIcon>
                                     </th>
                                 </tr>
                             </ng-template>
@@ -219,15 +221,15 @@
                                     </td>
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('Name') }}</span>
+                                        {{ record.mediaLibraryName }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Name') }}</span>
                                         {{ record.masterTagCategory.name }}
                                     </td>
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('Description') }}</span>
                                         {{ record.masterTagCategory.description }}
-                                    </td>
-                                    <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('PictureId') }}</span>
-                                        {{ record.masterTagCategory.pictureId }}
                                     </td>
                                 </tr>
                             </ng-template>

@@ -1,4 +1,5 @@
 ﻿using SoftGrid.LookupData;
+using SoftGrid.LookupData;
 
 using System;
 using System.Linq;
@@ -26,12 +27,14 @@ namespace SoftGrid.LookupData
         private readonly IRepository<MasterTag, long> _masterTagRepository;
         private readonly IMasterTagsExcelExporter _masterTagsExcelExporter;
         private readonly IRepository<MasterTagCategory, long> _lookup_masterTagCategoryRepository;
+        private readonly IRepository<MediaLibrary, long> _lookup_mediaLibraryRepository;
 
-        public MasterTagsAppService(IRepository<MasterTag, long> masterTagRepository, IMasterTagsExcelExporter masterTagsExcelExporter, IRepository<MasterTagCategory, long> lookup_masterTagCategoryRepository)
+        public MasterTagsAppService(IRepository<MasterTag, long> masterTagRepository, IMasterTagsExcelExporter masterTagsExcelExporter, IRepository<MasterTagCategory, long> lookup_masterTagCategoryRepository, IRepository<MediaLibrary, long> lookup_mediaLibraryRepository)
         {
             _masterTagRepository = masterTagRepository;
             _masterTagsExcelExporter = masterTagsExcelExporter;
             _lookup_masterTagCategoryRepository = lookup_masterTagCategoryRepository;
+            _lookup_mediaLibraryRepository = lookup_mediaLibraryRepository;
 
         }
 
@@ -40,14 +43,15 @@ namespace SoftGrid.LookupData
 
             var filteredMasterTags = _masterTagRepository.GetAll()
                         .Include(e => e.MasterTagCategoryFk)
+                        .Include(e => e.PictureMediaLibraryFk)
                         .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false || e.Name.Contains(input.Filter) || e.Description.Contains(input.Filter) || e.Synonyms.Contains(input.Filter))
                         .WhereIf(!string.IsNullOrWhiteSpace(input.NameFilter), e => e.Name.Contains(input.NameFilter))
                         .WhereIf(!string.IsNullOrWhiteSpace(input.DescriptionFilter), e => e.Description.Contains(input.DescriptionFilter))
                         .WhereIf(!string.IsNullOrWhiteSpace(input.SynonymsFilter), e => e.Synonyms.Contains(input.SynonymsFilter))
-                        .WhereIf(!string.IsNullOrWhiteSpace(input.PictureIdFilter.ToString()), e => e.PictureId.ToString() == input.PictureIdFilter.ToString())
                         .WhereIf(input.MinDisplaySequenceFilter != null, e => e.DisplaySequence >= input.MinDisplaySequenceFilter)
                         .WhereIf(input.MaxDisplaySequenceFilter != null, e => e.DisplaySequence <= input.MaxDisplaySequenceFilter)
-                        .WhereIf(!string.IsNullOrWhiteSpace(input.MasterTagCategoryNameFilter), e => e.MasterTagCategoryFk != null && e.MasterTagCategoryFk.Name == input.MasterTagCategoryNameFilter);
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.MasterTagCategoryNameFilter), e => e.MasterTagCategoryFk != null && e.MasterTagCategoryFk.Name == input.MasterTagCategoryNameFilter)
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.MediaLibraryNameFilter), e => e.PictureMediaLibraryFk != null && e.PictureMediaLibraryFk.Name == input.MediaLibraryNameFilter);
 
             var pagedAndFilteredMasterTags = filteredMasterTags
                 .OrderBy(input.Sorting ?? "id asc")
@@ -57,16 +61,19 @@ namespace SoftGrid.LookupData
                              join o1 in _lookup_masterTagCategoryRepository.GetAll() on o.MasterTagCategoryId equals o1.Id into j1
                              from s1 in j1.DefaultIfEmpty()
 
+                             join o2 in _lookup_mediaLibraryRepository.GetAll() on o.PictureMediaLibraryId equals o2.Id into j2
+                             from s2 in j2.DefaultIfEmpty()
+
                              select new
                              {
 
                                  o.Name,
                                  o.Description,
                                  o.Synonyms,
-                                 o.PictureId,
                                  o.DisplaySequence,
                                  Id = o.Id,
-                                 MasterTagCategoryName = s1 == null || s1.Name == null ? "" : s1.Name.ToString()
+                                 MasterTagCategoryName = s1 == null || s1.Name == null ? "" : s1.Name.ToString(),
+                                 MediaLibraryName = s2 == null || s2.Name == null ? "" : s2.Name.ToString()
                              };
 
             var totalCount = await filteredMasterTags.CountAsync();
@@ -84,11 +91,11 @@ namespace SoftGrid.LookupData
                         Name = o.Name,
                         Description = o.Description,
                         Synonyms = o.Synonyms,
-                        PictureId = o.PictureId,
                         DisplaySequence = o.DisplaySequence,
                         Id = o.Id,
                     },
-                    MasterTagCategoryName = o.MasterTagCategoryName
+                    MasterTagCategoryName = o.MasterTagCategoryName,
+                    MediaLibraryName = o.MediaLibraryName
                 };
 
                 results.Add(res);
@@ -113,6 +120,12 @@ namespace SoftGrid.LookupData
                 output.MasterTagCategoryName = _lookupMasterTagCategory?.Name?.ToString();
             }
 
+            if (output.MasterTag.PictureMediaLibraryId != null)
+            {
+                var _lookupMediaLibrary = await _lookup_mediaLibraryRepository.FirstOrDefaultAsync((long)output.MasterTag.PictureMediaLibraryId);
+                output.MediaLibraryName = _lookupMediaLibrary?.Name?.ToString();
+            }
+
             return output;
         }
 
@@ -127,6 +140,12 @@ namespace SoftGrid.LookupData
             {
                 var _lookupMasterTagCategory = await _lookup_masterTagCategoryRepository.FirstOrDefaultAsync((long)output.MasterTag.MasterTagCategoryId);
                 output.MasterTagCategoryName = _lookupMasterTagCategory?.Name?.ToString();
+            }
+
+            if (output.MasterTag.PictureMediaLibraryId != null)
+            {
+                var _lookupMediaLibrary = await _lookup_mediaLibraryRepository.FirstOrDefaultAsync((long)output.MasterTag.PictureMediaLibraryId);
+                output.MediaLibraryName = _lookupMediaLibrary?.Name?.ToString();
             }
 
             return output;
@@ -177,18 +196,22 @@ namespace SoftGrid.LookupData
 
             var filteredMasterTags = _masterTagRepository.GetAll()
                         .Include(e => e.MasterTagCategoryFk)
+                        .Include(e => e.PictureMediaLibraryFk)
                         .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false || e.Name.Contains(input.Filter) || e.Description.Contains(input.Filter) || e.Synonyms.Contains(input.Filter))
                         .WhereIf(!string.IsNullOrWhiteSpace(input.NameFilter), e => e.Name.Contains(input.NameFilter))
                         .WhereIf(!string.IsNullOrWhiteSpace(input.DescriptionFilter), e => e.Description.Contains(input.DescriptionFilter))
                         .WhereIf(!string.IsNullOrWhiteSpace(input.SynonymsFilter), e => e.Synonyms.Contains(input.SynonymsFilter))
-                        .WhereIf(!string.IsNullOrWhiteSpace(input.PictureIdFilter.ToString()), e => e.PictureId.ToString() == input.PictureIdFilter.ToString())
                         .WhereIf(input.MinDisplaySequenceFilter != null, e => e.DisplaySequence >= input.MinDisplaySequenceFilter)
                         .WhereIf(input.MaxDisplaySequenceFilter != null, e => e.DisplaySequence <= input.MaxDisplaySequenceFilter)
-                        .WhereIf(!string.IsNullOrWhiteSpace(input.MasterTagCategoryNameFilter), e => e.MasterTagCategoryFk != null && e.MasterTagCategoryFk.Name == input.MasterTagCategoryNameFilter);
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.MasterTagCategoryNameFilter), e => e.MasterTagCategoryFk != null && e.MasterTagCategoryFk.Name == input.MasterTagCategoryNameFilter)
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.MediaLibraryNameFilter), e => e.PictureMediaLibraryFk != null && e.PictureMediaLibraryFk.Name == input.MediaLibraryNameFilter);
 
             var query = (from o in filteredMasterTags
                          join o1 in _lookup_masterTagCategoryRepository.GetAll() on o.MasterTagCategoryId equals o1.Id into j1
                          from s1 in j1.DefaultIfEmpty()
+
+                         join o2 in _lookup_mediaLibraryRepository.GetAll() on o.PictureMediaLibraryId equals o2.Id into j2
+                         from s2 in j2.DefaultIfEmpty()
 
                          select new GetMasterTagForViewDto()
                          {
@@ -197,11 +220,11 @@ namespace SoftGrid.LookupData
                                  Name = o.Name,
                                  Description = o.Description,
                                  Synonyms = o.Synonyms,
-                                 PictureId = o.PictureId,
                                  DisplaySequence = o.DisplaySequence,
                                  Id = o.Id
                              },
-                             MasterTagCategoryName = s1 == null || s1.Name == null ? "" : s1.Name.ToString()
+                             MasterTagCategoryName = s1 == null || s1.Name == null ? "" : s1.Name.ToString(),
+                             MediaLibraryName = s2 == null || s2.Name == null ? "" : s2.Name.ToString()
                          });
 
             var masterTagListDtos = await query.ToListAsync();
@@ -218,6 +241,36 @@ namespace SoftGrid.LookupData
                     Id = masterTagCategory.Id,
                     DisplayName = masterTagCategory == null || masterTagCategory.Name == null ? "" : masterTagCategory.Name.ToString()
                 }).ToListAsync();
+        }
+
+        [AbpAuthorize(AppPermissions.Pages_MasterTags)]
+        public async Task<PagedResultDto<MasterTagMediaLibraryLookupTableDto>> GetAllMediaLibraryForLookupTable(GetAllForLookupTableInput input)
+        {
+            var query = _lookup_mediaLibraryRepository.GetAll().WhereIf(
+                   !string.IsNullOrWhiteSpace(input.Filter),
+                  e => e.Name != null && e.Name.Contains(input.Filter)
+               );
+
+            var totalCount = await query.CountAsync();
+
+            var mediaLibraryList = await query
+                .PageBy(input)
+                .ToListAsync();
+
+            var lookupTableDtoList = new List<MasterTagMediaLibraryLookupTableDto>();
+            foreach (var mediaLibrary in mediaLibraryList)
+            {
+                lookupTableDtoList.Add(new MasterTagMediaLibraryLookupTableDto
+                {
+                    Id = mediaLibrary.Id,
+                    DisplayName = mediaLibrary.Name?.ToString()
+                });
+            }
+
+            return new PagedResultDto<MasterTagMediaLibraryLookupTableDto>(
+                totalCount,
+                lookupTableDtoList
+            );
         }
 
     }

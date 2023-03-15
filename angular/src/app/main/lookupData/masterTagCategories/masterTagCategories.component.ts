@@ -36,7 +36,7 @@ export class MasterTagCategoriesComponent extends AppComponentBase {
     filterText = '';
     nameFilter = '';
     descriptionFilter = '';
-    pictureIdFilter = '';
+    mediaLibraryNameFilter = '';
 
     constructor(
         injector: Injector,
@@ -65,7 +65,7 @@ export class MasterTagCategoriesComponent extends AppComponentBase {
                 this.filterText,
                 this.nameFilter,
                 this.descriptionFilter,
-                this.pictureIdFilter,
+                this.mediaLibraryNameFilter,
                 this.primengTableHelper.getSorting(this.dataTable),
                 this.primengTableHelper.getSkipCount(this.paginator, event),
                 this.primengTableHelper.getMaxResultCount(this.paginator, event)
@@ -102,7 +102,7 @@ export class MasterTagCategoriesComponent extends AppComponentBase {
                 this.filterText,
                 this.nameFilter,
                 this.descriptionFilter,
-                this.pictureIdFilter
+                this.mediaLibraryNameFilter
             )
             .subscribe((result) => {
                 this._fileDownloadService.downloadTempFile(result);
@@ -113,7 +113,7 @@ export class MasterTagCategoriesComponent extends AppComponentBase {
         this.filterText = '';
         this.nameFilter = '';
         this.descriptionFilter = '';
-        this.pictureIdFilter = '';
+        this.mediaLibraryNameFilter = '';
 
         this.getMasterTagCategories();
     }

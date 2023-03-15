@@ -30,6 +30,31 @@ namespace SoftGrid.Authorization
 
             var pages = context.GetPermissionOrNull(AppPermissions.Pages) ?? context.CreatePermission(AppPermissions.Pages, L("Pages"));
 
+            var stores = pages.CreateChildPermission(AppPermissions.Pages_Stores, L("Stores"));
+            stores.CreateChildPermission(AppPermissions.Pages_Stores_Create, L("CreateNewStore"));
+            stores.CreateChildPermission(AppPermissions.Pages_Stores_Edit, L("EditStore"));
+            stores.CreateChildPermission(AppPermissions.Pages_Stores_Delete, L("DeleteStore"));
+
+            var products = pages.CreateChildPermission(AppPermissions.Pages_Products, L("Products"));
+            products.CreateChildPermission(AppPermissions.Pages_Products_Create, L("CreateNewProduct"));
+            products.CreateChildPermission(AppPermissions.Pages_Products_Edit, L("EditProduct"));
+            products.CreateChildPermission(AppPermissions.Pages_Products_Delete, L("DeleteProduct"));
+
+            var productCategories = pages.CreateChildPermission(AppPermissions.Pages_ProductCategories, L("ProductCategories"));
+            productCategories.CreateChildPermission(AppPermissions.Pages_ProductCategories_Create, L("CreateNewProductCategory"));
+            productCategories.CreateChildPermission(AppPermissions.Pages_ProductCategories_Edit, L("EditProductCategory"));
+            productCategories.CreateChildPermission(AppPermissions.Pages_ProductCategories_Delete, L("DeleteProductCategory"));
+
+            var mediaLibraries = pages.CreateChildPermission(AppPermissions.Pages_MediaLibraries, L("MediaLibraries"));
+            mediaLibraries.CreateChildPermission(AppPermissions.Pages_MediaLibraries_Create, L("CreateNewMediaLibrary"));
+            mediaLibraries.CreateChildPermission(AppPermissions.Pages_MediaLibraries_Edit, L("EditMediaLibrary"));
+            mediaLibraries.CreateChildPermission(AppPermissions.Pages_MediaLibraries_Delete, L("DeleteMediaLibrary"));
+
+            var businesses = pages.CreateChildPermission(AppPermissions.Pages_Businesses, L("Businesses"));
+            businesses.CreateChildPermission(AppPermissions.Pages_Businesses_Create, L("CreateNewBusiness"));
+            businesses.CreateChildPermission(AppPermissions.Pages_Businesses_Edit, L("EditBusiness"));
+            businesses.CreateChildPermission(AppPermissions.Pages_Businesses_Delete, L("DeleteBusiness"));
+
             var contacts = pages.CreateChildPermission(AppPermissions.Pages_Contacts, L("Contacts"));
             contacts.CreateChildPermission(AppPermissions.Pages_Contacts_Create, L("CreateNewContact"));
             contacts.CreateChildPermission(AppPermissions.Pages_Contacts_Edit, L("EditContact"));

@@ -1,0 +1,151 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span>{{ l('Details') }}</span>
+                </h4>
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    (click)="close()"
+                    aria-label="Close"
+                    [disabled]="saving"
+                ></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Name') }} :</h6>
+                        {{ item.business.name }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('TradeName') }} :</h6>
+                        {{ item.business.tradeName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Description') }} :</h6>
+                        {{ item.business.description }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('CustomId') }} :</h6>
+                        {{ item.business.customId }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('YearOfEstablishment') }} :</h6>
+                        {{ item.business.yearOfEstablishment }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('LocationTitle') }} :</h6>
+                        {{ item.business.locationTitle }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('FullAddress') }} :</h6>
+                        {{ item.business.fullAddress }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Address1') }} :</h6>
+                        {{ item.business.address1 }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Address2') }} :</h6>
+                        {{ item.business.address2 }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('City') }} :</h6>
+                        {{ item.business.city }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('ZipCode') }} :</h6>
+                        {{ item.business.zipCode }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Latitude') }} :</h6>
+                        {{ item.business.latitude }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Longitude') }} :</h6>
+                        {{ item.business.longitude }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Phone') }} :</h6>
+                        {{ item.business.phone }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Fax') }} :</h6>
+                        {{ item.business.fax }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Email') }} :</h6>
+                        {{ item.business.email }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Website') }} :</h6>
+                        {{ item.business.website }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('EinTaxId') }} :</h6>
+                        {{ item.business.einTaxId }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Industry') }} :</h6>
+                        {{ item.business.industry }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('InternalRemarks') }} :</h6>
+                        {{ item.business.internalRemarks }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Verified') }} :</h6>
+                        <div *ngIf="item.business.verified" class="text-left">
+                            <i class="fa fa-check-circle text-success" title="True"></i>
+                        </div>
+                        <div *ngIf="!item.business.verified" class="text-left">
+                            <i class="fa fa-times-circle" title="False"></i>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Facebook') }} :</h6>
+                        {{ item.business.facebook }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('LinkedIn') }} :</h6>
+                        {{ item.business.linkedIn }}
+                    </div>
+
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('Country') }}) {{ l('Name') }} :</h6>
+                        {{ item.countryName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('State') }}) {{ l('Name') }} :</h6>
+                        {{ item.stateName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('City') }}) {{ l('Name') }} :</h6>
+                        {{ item.cityName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('MediaLibrary') }}) {{ l('Name') }} :</h6>
+                        {{ item.mediaLibraryName }}
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button [disabled]="saving" type="button" class="btn btn-primary blue" (click)="close()">
+                    {{ l('Close') }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

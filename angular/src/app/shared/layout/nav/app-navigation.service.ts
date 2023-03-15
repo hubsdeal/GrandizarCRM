@@ -60,6 +60,16 @@ export class AppNavigationService {
             new AppMenuItem('Hubs', 'Pages.Hubs', 'flaticon-more', '/app/main/territory/hubs'),
             
             new AppMenuItem('Contacts', 'Pages.Contacts', 'flaticon-more', '/app/main/crm/contacts'),
+            
+            new AppMenuItem('Businesses', 'Pages.Businesses', 'flaticon-more', '/app/main/crm/businesses'),
+            
+            new AppMenuItem('MediaLibraries', 'Pages.MediaLibraries', 'flaticon-more', '/app/main/lookupData/mediaLibraries'),
+            
+            new AppMenuItem('ProductCategories', 'Pages.ProductCategories', 'flaticon-more', '/app/main/shop/productCategories'),
+            
+            new AppMenuItem('Products', 'Pages.Products', 'flaticon-more', '/app/main/shop/products'),
+            
+            new AppMenuItem('Stores', 'Pages.Stores', 'flaticon-more', '/app/main/shop/stores'),
              new AppMenuItem('Editions', 'Pages.Editions', 'flaticon-app', '/app/admin/editions'),
             new AppMenuItem(
                 'Administration',

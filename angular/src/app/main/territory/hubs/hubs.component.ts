@@ -55,7 +55,6 @@ export class HubsComponent extends AppComponentBase {
     urlFilter = '';
     officeFullAddressFilter = '';
     partnerOrOwnedFilter = -1;
-    pictureIdFilter = '';
     phoneFilter = '';
     yearlyRevenueFilter = '';
     maxDisplaySequenceFilter: number;
@@ -68,6 +67,7 @@ export class HubsComponent extends AppComponentBase {
     countyNameFilter = '';
     hubTypeNameFilter = '';
     currencyNameFilter = '';
+    mediaLibraryNameFilter = '';
 
     constructor(
         injector: Injector,
@@ -113,7 +113,6 @@ export class HubsComponent extends AppComponentBase {
                 this.urlFilter,
                 this.officeFullAddressFilter,
                 this.partnerOrOwnedFilter,
-                this.pictureIdFilter,
                 this.phoneFilter,
                 this.yearlyRevenueFilter,
                 this.maxDisplaySequenceFilter == null
@@ -128,6 +127,7 @@ export class HubsComponent extends AppComponentBase {
                 this.countyNameFilter,
                 this.hubTypeNameFilter,
                 this.currencyNameFilter,
+                this.mediaLibraryNameFilter,
                 this.primengTableHelper.getSorting(this.dataTable),
                 this.primengTableHelper.getSkipCount(this.paginator, event),
                 this.primengTableHelper.getMaxResultCount(this.paginator, event)
@@ -181,7 +181,6 @@ export class HubsComponent extends AppComponentBase {
                 this.urlFilter,
                 this.officeFullAddressFilter,
                 this.partnerOrOwnedFilter,
-                this.pictureIdFilter,
                 this.phoneFilter,
                 this.yearlyRevenueFilter,
                 this.maxDisplaySequenceFilter == null
@@ -195,7 +194,8 @@ export class HubsComponent extends AppComponentBase {
                 this.cityNameFilter,
                 this.countyNameFilter,
                 this.hubTypeNameFilter,
-                this.currencyNameFilter
+                this.currencyNameFilter,
+                this.mediaLibraryNameFilter
             )
             .subscribe((result) => {
                 this._fileDownloadService.downloadTempFile(result);
@@ -219,7 +219,6 @@ export class HubsComponent extends AppComponentBase {
         this.urlFilter = '';
         this.officeFullAddressFilter = '';
         this.partnerOrOwnedFilter = -1;
-        this.pictureIdFilter = '';
         this.phoneFilter = '';
         this.yearlyRevenueFilter = '';
         this.maxDisplaySequenceFilter = this.maxDisplaySequenceFilterEmpty;
@@ -230,6 +229,7 @@ export class HubsComponent extends AppComponentBase {
         this.countyNameFilter = '';
         this.hubTypeNameFilter = '';
         this.currencyNameFilter = '';
+        this.mediaLibraryNameFilter = '';
 
         this.getHubs();
     }

@@ -11,7 +11,7 @@ namespace SoftGrid.LookupData.Dtos
 
         public string DescriptionFilter { get; set; }
 
-        public Guid? PictureIdFilter { get; set; }
+        public string MediaLibraryNameFilter { get; set; }
 
     }
 }

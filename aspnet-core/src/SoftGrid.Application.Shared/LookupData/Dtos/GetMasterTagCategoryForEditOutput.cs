@@ -8,5 +8,7 @@ namespace SoftGrid.LookupData.Dtos
     {
         public CreateOrEditMasterTagCategoryDto MasterTagCategory { get; set; }
 
+        public string MediaLibraryName { get; set; }
+
     }
 }

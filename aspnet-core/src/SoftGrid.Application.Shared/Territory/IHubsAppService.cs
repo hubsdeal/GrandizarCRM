@@ -39,5 +39,7 @@ namespace SoftGrid.Territory
 
         Task<List<HubCurrencyLookupTableDto>> GetAllCurrencyForTableDropdown();
 
+        Task<PagedResultDto<HubMediaLibraryLookupTableDto>> GetAllMediaLibraryForLookupTable(GetAllForLookupTableInput input);
+
     }
 }

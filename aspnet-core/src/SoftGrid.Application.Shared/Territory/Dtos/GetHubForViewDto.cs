@@ -16,5 +16,7 @@
 
         public string CurrencyName { get; set; }
 
+        public string MediaLibraryName { get; set; }
+
     }
 }

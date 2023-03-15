@@ -4,6 +4,7 @@ using SoftGrid.LookupData;
 using SoftGrid.LookupData;
 using SoftGrid.LookupData;
 using SoftGrid.LookupData;
+using SoftGrid.LookupData;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -43,8 +44,6 @@ namespace SoftGrid.Territory
 
         public virtual bool PartnerOrOwned { get; set; }
 
-        public virtual Guid PictureId { get; set; }
-
         [StringLength(HubConsts.MaxPhoneLength, MinimumLength = HubConsts.MinPhoneLength)]
         public virtual string Phone { get; set; }
 
@@ -81,6 +80,11 @@ namespace SoftGrid.Territory
 
         [ForeignKey("CurrencyId")]
         public Currency CurrencyFk { get; set; }
+
+        public virtual long? PictureMediaLibraryId { get; set; }
+
+        [ForeignKey("PictureMediaLibraryId")]
+        public MediaLibrary PictureMediaLibraryFk { get; set; }
 
     }
 }

@@ -1,0 +1,82 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span>{{ l('Details') }}</span>
+                </h4>
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    (click)="close()"
+                    aria-label="Close"
+                    [disabled]="saving"
+                ></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Name') }} :</h6>
+                        {{ item.mediaLibrary.name }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Size') }} :</h6>
+                        {{ item.mediaLibrary.size }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('FileExtension') }} :</h6>
+                        {{ item.mediaLibrary.fileExtension }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Dimension') }} :</h6>
+                        {{ item.mediaLibrary.dimension }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('VideoLink') }} :</h6>
+                        {{ item.mediaLibrary.videoLink }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('SeoTag') }} :</h6>
+                        {{ item.mediaLibrary.seoTag }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('AltTag') }} :</h6>
+                        {{ item.mediaLibrary.altTag }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('VirtualPath') }} :</h6>
+                        {{ item.mediaLibrary.virtualPath }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('BinaryObjectId') }} :</h6>
+                        {{ item.mediaLibrary.binaryObjectId }}
+                    </div>
+
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('MasterTagCategory') }}) {{ l('Name') }} :</h6>
+                        {{ item.masterTagCategoryName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('MasterTag') }}) {{ l('Name') }} :</h6>
+                        {{ item.masterTagName }}
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button [disabled]="saving" type="button" class="btn btn-primary blue" (click)="close()">
+                    {{ l('Close') }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
