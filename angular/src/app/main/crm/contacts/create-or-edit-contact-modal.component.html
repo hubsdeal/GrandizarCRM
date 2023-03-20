@@ -1,13 +1,5 @@
-﻿<div
-    bsModal
-    #createOrEditModal="bs-modal"
-    class="modal fade"
-    tabindex="-1"
-    role="dialog"
-    aria-labelledby="createOrEditModal"
-    aria-hidden="true"
-    [config]="{ backdrop: 'static' }"
->
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{ backdrop: 'static' }">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <form *ngIf="active" #contactForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
@@ -17,26 +9,15 @@
                         <span *ngIf="!contact.id">{{ l('CreateNewContact') }}</span>
                     </h4>
 
-                    <button
-                        type="button"
-                        class="btn-close"
-                        (click)="close()"
-                        aria-label="Close"
-                        [disabled]="saving"
-                    ></button>
+                    <button type="button" class="btn-close" (click)="close()" aria-label="Close"
+                        [disabled]="saving"></button>
                 </div>
                 <div class="modal-body">
                     <div class="my-3">
                         <label class="form-label" for="UserName">{{ l('User') }}</label>
                         <div class="input-group">
-                            <input
-                                class="form-control"
-                                id="UserName"
-                                name="userName"
-                                [(ngModel)]="userName"
-                                type="text"
-                                disabled
-                            />
+                            <input class="form-control" id="UserName" name="userName" [(ngModel)]="userName" type="text"
+                                disabled />
                             <button class="btn btn-primary blue" (click)="openSelectUserModal()" type="button">
                                 <i class="fa fa-search"></i>
                                 {{ l('Pick') }}
@@ -46,13 +27,8 @@
                             </button>
                         </div>
                     </div>
-                    <input
-                        class="form-control"
-                        name="contact.referredByUserId"
-                        [(ngModel)]="contact.referredByUserId"
-                        type="text"
-                        hidden
-                    />
+                    <input class="form-control" name="contact.referredByUserId" [(ngModel)]="contact.referredByUserId"
+                        type="text" hidden />
 
                     <div class="my-3">
                         <label class="form-label" for="CountryName">{{ l('Country') }}</label>
@@ -74,11 +50,8 @@
 
                     <div class="my-3">
                         <label class="form-label" for="MembershipTypeName">{{ l('MembershipType') }}</label>
-                        <select
-                            name="contact.membershipTypeId"
-                            [(ngModel)]="contact.membershipTypeId"
-                            class="form-select"
-                        >
+                        <select name="contact.membershipTypeId" [(ngModel)]="contact.membershipTypeId"
+                            class="form-select">
                             <option value="">{{ l('SelectAMembershipType') }}</option>
                             <option *ngFor="let item of allMembershipTypes" value="{{ item.id }}">
                                 {{ item.displayName }}
@@ -88,327 +61,158 @@
 
                     <div class="my-3">
                         <label class="form-label" for="Contact_FullName">{{ l('FullName') }} *</label>
-                        <input
-                            type="text"
-                            #Contact_FullName="ngModel"
-                            id="Contact_FullName"
-                            class="form-control"
-                            [(ngModel)]="contact.fullName"
-                            name="FullName"
-                            minlength="1"
-                            maxlength="256"
-                            required
-                        />
+                        <input type="text" #Contact_FullName="ngModel" id="Contact_FullName" class="form-control"
+                            [(ngModel)]="contact.fullName" name="FullName" minlength="1" maxlength="256" required />
                         <validation-messages [formCtrl]="Contact_FullName"></validation-messages>
                     </div>
 
                     <div class="my-3">
                         <label class="form-label" for="Contact_FirstName">{{ l('FirstName') }} *</label>
-                        <input
-                            type="text"
-                            #Contact_FirstName="ngModel"
-                            id="Contact_FirstName"
-                            class="form-control"
-                            [(ngModel)]="contact.firstName"
-                            name="FirstName"
-                            minlength="1"
-                            maxlength="128"
-                            required
-                        />
+                        <input type="text" #Contact_FirstName="ngModel" id="Contact_FirstName" class="form-control"
+                            [(ngModel)]="contact.firstName" name="FirstName" minlength="1" maxlength="128" required />
                         <validation-messages [formCtrl]="Contact_FirstName"></validation-messages>
                     </div>
 
                     <div class="my-3">
                         <label class="form-label" for="Contact_LastName">{{ l('LastName') }}</label>
-                        <input
-                            type="text"
-                            #Contact_LastName="ngModel"
-                            id="Contact_LastName"
-                            class="form-control"
-                            [(ngModel)]="contact.lastName"
-                            name="LastName"
-                            minlength="1"
-                            maxlength="128"
-                        />
+                        <input type="text" #Contact_LastName="ngModel" id="Contact_LastName" class="form-control"
+                            [(ngModel)]="contact.lastName" name="LastName" minlength="1" maxlength="128" />
                         <validation-messages [formCtrl]="Contact_LastName"></validation-messages>
                     </div>
 
                     <div class="my-3">
                         <label class="form-label" for="Contact_FullAddress">{{ l('FullAddress') }}</label>
-                        <input
-                            type="text"
-                            #Contact_FullAddress="ngModel"
-                            id="Contact_FullAddress"
-                            class="form-control"
-                            [(ngModel)]="contact.fullAddress"
-                            name="FullAddress"
-                            minlength="1"
-                            maxlength="2048"
-                        />
+                        <input type="text" #Contact_FullAddress="ngModel" id="Contact_FullAddress" class="form-control"
+                            [(ngModel)]="contact.fullAddress" name="FullAddress" minlength="1" maxlength="2048" />
                         <validation-messages [formCtrl]="Contact_FullAddress"></validation-messages>
                     </div>
 
                     <div class="my-3">
                         <label class="form-label" for="Contact_Address">{{ l('Address') }}</label>
-                        <input
-                            type="text"
-                            #Contact_Address="ngModel"
-                            id="Contact_Address"
-                            class="form-control"
-                            [(ngModel)]="contact.address"
-                            name="Address"
-                            minlength="1"
-                            maxlength="1024"
-                        />
+                        <input type="text" #Contact_Address="ngModel" id="Contact_Address" class="form-control"
+                            [(ngModel)]="contact.address" name="Address" minlength="1" maxlength="1024" />
                         <validation-messages [formCtrl]="Contact_Address"></validation-messages>
                     </div>
 
                     <div class="my-3">
                         <label class="form-label" for="Contact_ZipCode">{{ l('ZipCode') }}</label>
-                        <input
-                            type="text"
-                            #Contact_ZipCode="ngModel"
-                            id="Contact_ZipCode"
-                            class="form-control"
-                            [(ngModel)]="contact.zipCode"
-                            name="ZipCode"
-                            minlength="1"
-                            maxlength="50"
-                        />
+                        <input type="text" #Contact_ZipCode="ngModel" id="Contact_ZipCode" class="form-control"
+                            [(ngModel)]="contact.zipCode" name="ZipCode" minlength="1" maxlength="50" />
                         <validation-messages [formCtrl]="Contact_ZipCode"></validation-messages>
                     </div>
 
                     <div class="my-3">
                         <label class="form-label" for="Contact_City">{{ l('City') }}</label>
-                        <input
-                            type="text"
-                            #Contact_City="ngModel"
-                            id="Contact_City"
-                            class="form-control"
-                            [(ngModel)]="contact.city"
-                            name="City"
-                            minlength="1"
-                            maxlength="128"
-                        />
+                        <input type="text" #Contact_City="ngModel" id="Contact_City" class="form-control"
+                            [(ngModel)]="contact.city" name="City" minlength="1" maxlength="128" />
                         <validation-messages [formCtrl]="Contact_City"></validation-messages>
                     </div>
 
                     <div class="my-3">
                         <label class="form-label" for="Contact_DateOfBirth">{{ l('DateOfBirth') }}</label>
-                        <input
-                            class="form-control m-input"
-                            #Contact_DateOfBirth
-                            type="datetime"
-                            bsDatepicker
-                            datePickerLuxonModifier
-                            [(date)]="contact.dateOfBirth"
-                            id="Contact_DateOfBirth"
-                            name="Contact_DateOfBirth"
-                        />
+                        <input class="form-control m-input" #Contact_DateOfBirth type="datetime" bsDatepicker
+                            datePickerLuxonModifier [(date)]="contact.dateOfBirth" id="Contact_DateOfBirth"
+                            name="Contact_DateOfBirth" />
                         <validation-messages [formCtrl]="Contact_DateOfBirth"></validation-messages>
                     </div>
 
                     <div class="my-3">
                         <label class="form-label" for="Contact_Mobile">{{ l('Mobile') }}</label>
-                        <input
-                            type="text"
-                            #Contact_Mobile="ngModel"
-                            id="Contact_Mobile"
-                            class="form-control"
-                            [(ngModel)]="contact.mobile"
-                            name="Mobile"
-                            minlength="1"
-                            maxlength="50"
-                        />
+                        <input type="text" #Contact_Mobile="ngModel" id="Contact_Mobile" class="form-control"
+                            [(ngModel)]="contact.mobile" name="Mobile" minlength="1" maxlength="50" />
                         <validation-messages [formCtrl]="Contact_Mobile"></validation-messages>
                     </div>
 
                     <div class="my-3">
                         <label class="form-label" for="Contact_OfficePhone">{{ l('OfficePhone') }}</label>
-                        <input
-                            type="text"
-                            #Contact_OfficePhone="ngModel"
-                            id="Contact_OfficePhone"
-                            class="form-control"
-                            [(ngModel)]="contact.officePhone"
-                            name="OfficePhone"
-                            minlength="1"
-                            maxlength="50"
-                        />
+                        <input type="text" #Contact_OfficePhone="ngModel" id="Contact_OfficePhone" class="form-control"
+                            [(ngModel)]="contact.officePhone" name="OfficePhone" minlength="1" maxlength="50" />
                         <validation-messages [formCtrl]="Contact_OfficePhone"></validation-messages>
                     </div>
 
                     <div class="my-3">
                         <label class="form-label" for="Contact_CountryCode">{{ l('CountryCode') }}</label>
-                        <input
-                            type="text"
-                            #Contact_CountryCode="ngModel"
-                            id="Contact_CountryCode"
-                            class="form-control"
-                            [(ngModel)]="contact.countryCode"
-                            name="CountryCode"
-                            minlength="1"
-                            maxlength="10"
-                        />
+                        <input type="text" #Contact_CountryCode="ngModel" id="Contact_CountryCode" class="form-control"
+                            [(ngModel)]="contact.countryCode" name="CountryCode" minlength="1" maxlength="10" />
                         <validation-messages [formCtrl]="Contact_CountryCode"></validation-messages>
                     </div>
 
                     <div class="my-3">
                         <label class="form-label" for="Contact_PersonalEmail">{{ l('PersonalEmail') }}</label>
-                        <input
-                            type="text"
-                            #Contact_PersonalEmail="ngModel"
-                            id="Contact_PersonalEmail"
-                            class="form-control"
-                            [(ngModel)]="contact.personalEmail"
-                            name="PersonalEmail"
-                            pattern="/^(([^<>()\[\]\\.,;:\s@\"
-                            ]+(\.[^<
-                        />
-                        ()\[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/"
-                        minlength="1" maxlength="128" />
+                        <input type="text" #Contact_PersonalEmail="ngModel" id="Contact_PersonalEmail"
+                            class="form-control" [(ngModel)]="contact.personalEmail" name="PersonalEmail" minlength="1"
+                            maxlength="128" />
                         <validation-messages [formCtrl]="Contact_PersonalEmail"></validation-messages>
                     </div>
 
                     <div class="my-3">
                         <label class="form-label" for="Contact_BusinessEmail">{{ l('BusinessEmail') }}</label>
-                        <input
-                            type="text"
-                            #Contact_BusinessEmail="ngModel"
-                            id="Contact_BusinessEmail"
-                            class="form-control"
-                            [(ngModel)]="contact.businessEmail"
-                            name="BusinessEmail"
-                            pattern="/^(([^<>()\[\]\\.,;:\s@\"
-                            ]+(\.[^<
-                        />
-                        ()\[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/"
-                        minlength="1" maxlength="128" />
+                        <input type="text" #Contact_BusinessEmail="ngModel" id="Contact_BusinessEmail"
+                            class="form-control" [(ngModel)]="contact.businessEmail" name="BusinessEmail" minlength="1"
+                            maxlength="128" />
                         <validation-messages [formCtrl]="Contact_BusinessEmail"></validation-messages>
                     </div>
 
                     <div class="my-3">
                         <label class="form-label" for="Contact_JobTitle">{{ l('JobTitle') }}</label>
-                        <input
-                            type="text"
-                            #Contact_JobTitle="ngModel"
-                            id="Contact_JobTitle"
-                            class="form-control"
-                            [(ngModel)]="contact.jobTitle"
-                            name="JobTitle"
-                            minlength="1"
-                            maxlength="128"
-                        />
+                        <input type="text" #Contact_JobTitle="ngModel" id="Contact_JobTitle" class="form-control"
+                            [(ngModel)]="contact.jobTitle" name="JobTitle" minlength="1" maxlength="128" />
                         <validation-messages [formCtrl]="Contact_JobTitle"></validation-messages>
                     </div>
 
                     <div class="my-3">
                         <label class="form-label" for="Contact_CompanyName">{{ l('CompanyName') }}</label>
-                        <input
-                            type="text"
-                            #Contact_CompanyName="ngModel"
-                            id="Contact_CompanyName"
-                            class="form-control"
-                            [(ngModel)]="contact.companyName"
-                            name="CompanyName"
-                            minlength="1"
-                            maxlength="128"
-                        />
+                        <input type="text" #Contact_CompanyName="ngModel" id="Contact_CompanyName" class="form-control"
+                            [(ngModel)]="contact.companyName" name="CompanyName" minlength="1" maxlength="128" />
                         <validation-messages [formCtrl]="Contact_CompanyName"></validation-messages>
                     </div>
 
                     <div class="my-3">
                         <label class="form-label" for="Contact_Profile">{{ l('Profile') }}</label>
-                        <input
-                            type="text"
-                            #Contact_Profile="ngModel"
-                            id="Contact_Profile"
-                            class="form-control"
-                            [(ngModel)]="contact.profile"
-                            name="Profile"
-                        />
+                        <input type="text" #Contact_Profile="ngModel" id="Contact_Profile" class="form-control"
+                            [(ngModel)]="contact.profile" name="Profile" />
                         <validation-messages [formCtrl]="Contact_Profile"></validation-messages>
                     </div>
 
                     <div class="my-3">
                         <label class="form-label" for="Contact_AiDataTag">{{ l('AiDataTag') }}</label>
-                        <input
-                            type="text"
-                            #Contact_AiDataTag="ngModel"
-                            id="Contact_AiDataTag"
-                            class="form-control"
-                            [(ngModel)]="contact.aiDataTag"
-                            name="AiDataTag"
-                        />
+                        <input type="text" #Contact_AiDataTag="ngModel" id="Contact_AiDataTag" class="form-control"
+                            [(ngModel)]="contact.aiDataTag" name="AiDataTag" />
                         <validation-messages [formCtrl]="Contact_AiDataTag"></validation-messages>
                     </div>
 
                     <div class="my-3">
                         <label class="form-label" for="Contact_Facebook">{{ l('Facebook') }}</label>
-                        <input
-                            type="text"
-                            #Contact_Facebook="ngModel"
-                            id="Contact_Facebook"
-                            class="form-control"
-                            [(ngModel)]="contact.facebook"
-                            name="Facebook"
-                            minlength="1"
-                            maxlength="256"
-                        />
+                        <input type="text" #Contact_Facebook="ngModel" id="Contact_Facebook" class="form-control"
+                            [(ngModel)]="contact.facebook" name="Facebook" minlength="1" maxlength="256" />
                         <validation-messages [formCtrl]="Contact_Facebook"></validation-messages>
                     </div>
 
                     <div class="my-3">
                         <label class="form-label" for="Contact_LinkedIn">{{ l('LinkedIn') }}</label>
-                        <input
-                            type="text"
-                            #Contact_LinkedIn="ngModel"
-                            id="Contact_LinkedIn"
-                            class="form-control"
-                            [(ngModel)]="contact.linkedIn"
-                            name="LinkedIn"
-                            minlength="1"
-                            maxlength="256"
-                        />
+                        <input type="text" #Contact_LinkedIn="ngModel" id="Contact_LinkedIn" class="form-control"
+                            [(ngModel)]="contact.linkedIn" name="LinkedIn" minlength="1" maxlength="256" />
                         <validation-messages [formCtrl]="Contact_LinkedIn"></validation-messages>
                     </div>
 
                     <div class="my5">
                         <label class="form-label" for="Contact_Latitude">{{ l('Latitude') }}</label>
-                        <input
-                            type="number"
-                            #Contact_Latitude="ngModel"
-                            id="Contact_Latitude"
-                            class="form-control"
-                            [(ngModel)]="contact.latitude"
-                            name="Latitude"
-                        />
+                        <input type="number" #Contact_Latitude="ngModel" id="Contact_Latitude" class="form-control"
+                            [(ngModel)]="contact.latitude" name="Latitude" />
                         <validation-messages [formCtrl]="Contact_Latitude"></validation-messages>
                     </div>
 
                     <div class="my5">
                         <label class="form-label" for="Contact_Longitude">{{ l('Longitude') }}</label>
-                        <input
-                            type="number"
-                            #Contact_Longitude="ngModel"
-                            id="Contact_Longitude"
-                            class="form-control"
-                            [(ngModel)]="contact.longitude"
-                            name="Longitude"
-                        />
+                        <input type="number" #Contact_Longitude="ngModel" id="Contact_Longitude" class="form-control"
+                            [(ngModel)]="contact.longitude" name="Longitude" />
                         <validation-messages [formCtrl]="Contact_Longitude"></validation-messages>
                     </div>
 
                     <br />
                     <label class="form-check form-check-custom form-check-solid">
-                        <input
-                            id="Contact_Referred"
-                            #Contact_Referred="ngModel"
-                            name="Referred"
-                            [(ngModel)]="contact.referred"
-                            type="checkbox"
-                            class="form-check-input"
-                        />
+                        <input id="Contact_Referred" #Contact_Referred="ngModel" name="Referred"
+                            [(ngModel)]="contact.referred" type="checkbox" class="form-check-input" />
                         <span class="form-check-label">
                             {{ l('Referred') }}
                         </span>
@@ -417,29 +221,15 @@
 
                     <div class="my-3">
                         <label class="form-label" for="Contact_Fax">{{ l('Fax') }}</label>
-                        <input
-                            type="text"
-                            #Contact_Fax="ngModel"
-                            id="Contact_Fax"
-                            class="form-control"
-                            [(ngModel)]="contact.fax"
-                            name="Fax"
-                            minlength="1"
-                            maxlength="50"
-                        />
+                        <input type="text" #Contact_Fax="ngModel" id="Contact_Fax" class="form-control"
+                            [(ngModel)]="contact.fax" name="Fax" minlength="1" maxlength="50" />
                         <validation-messages [formCtrl]="Contact_Fax"></validation-messages>
                     </div>
 
                     <br />
                     <label class="form-check form-check-custom form-check-solid">
-                        <input
-                            id="Contact_Verified"
-                            #Contact_Verified="ngModel"
-                            name="Verified"
-                            [(ngModel)]="contact.verified"
-                            type="checkbox"
-                            class="form-check-input"
-                        />
+                        <input id="Contact_Verified" #Contact_Verified="ngModel" name="Verified"
+                            [(ngModel)]="contact.verified" type="checkbox" class="form-check-input" />
                         <span class="form-check-label">
                             {{ l('Verified') }}
                         </span>
@@ -448,14 +238,8 @@
 
                     <div class="my5">
                         <label class="form-label" for="Contact_Score">{{ l('Score') }}</label>
-                        <input
-                            type="number"
-                            #Contact_Score="ngModel"
-                            id="Contact_Score"
-                            class="form-control"
-                            [(ngModel)]="contact.score"
-                            name="Score"
-                        />
+                        <input type="number" #Contact_Score="ngModel" id="Contact_Score" class="form-control"
+                            [(ngModel)]="contact.score" name="Score" />
                         <validation-messages [formCtrl]="Contact_Score"></validation-messages>
                     </div>
                 </div>
@@ -463,13 +247,8 @@
                     <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
                         {{ l('Cancel') }}
                     </button>
-                    <button
-                        type="submit"
-                        class="btn btn-primary blue"
-                        [disabled]="!contactForm.form.valid"
-                        [buttonBusy]="saving"
-                        [busyText]="l('SavingWithThreeDot')"
-                    >
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!contactForm.form.valid"
+                        [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')">
                         <i class="fa fa-save"></i>
                         <span>{{ l('Save') }}</span>
                     </button>
@@ -477,8 +256,6 @@
             </form>
         </div>
     </div>
-    <contactUserLookupTableModal
-        #contactUserLookupTableModal
-        (modalSave)="getNewReferredByUserId()"
-    ></contactUserLookupTableModal>
+    <contactUserLookupTableModal #contactUserLookupTableModal (modalSave)="getNewReferredByUserId()">
+    </contactUserLookupTableModal>
 </div>
