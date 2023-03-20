@@ -17,4 +17,22 @@ namespace SoftGrid.Authorization.Users.Profile.Dto
             ValidationErrors = error.ValidationErrors;
         }
     }
+
+    public class UploadMediaPictureOutput : ErrorInfo
+    {
+        public string FileToken { get; set; }
+
+        public UploadMediaPictureOutput()
+        {
+
+        }
+
+        public UploadMediaPictureOutput(ErrorInfo error)
+        {
+            Code = error.Code;
+            Details = error.Details;
+            Message = error.Message;
+            ValidationErrors = error.ValidationErrors;
+        }
+    }
 }

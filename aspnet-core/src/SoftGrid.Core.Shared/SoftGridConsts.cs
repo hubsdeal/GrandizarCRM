@@ -6,6 +6,8 @@
 
         public const string ConnectionStringName = "Default";
 
+        public const string FileStorageDbConnectionStringName = "FileStorage";//connection string name for filestorage db
+
         public const bool MultiTenancyEnabled = true;
         
         /// <summary>

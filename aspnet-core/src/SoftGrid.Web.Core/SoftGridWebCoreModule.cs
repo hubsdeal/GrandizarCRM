@@ -40,6 +40,7 @@ using SoftGrid.Web.Common;
 using SoftGrid.Web.Configuration;
 using SoftGrid.Web.DashboardCustomization;
 using Abp.Extensions;
+using Microsoft.Extensions.Hosting;
 
 namespace SoftGrid.Web
 {
@@ -142,6 +143,34 @@ namespace SoftGrid.Web
             appFolders.SampleProfileImagesFolder = Path.Combine(_env.WebRootPath,
                 $"Common{Path.DirectorySeparatorChar}Images{Path.DirectorySeparatorChar}SampleProfilePics");
             appFolders.WebLogsFolder = Path.Combine(_env.ContentRootPath, $"App_Data{Path.DirectorySeparatorChar}Logs");
+
+            //custom added
+            appFolders.ProductImagesFolder = Path.Combine(_env.WebRootPath, $"Common{Path.DirectorySeparatorChar}Images{Path.DirectorySeparatorChar}Products");
+            appFolders.ProductImagesFolderUrl = Path.Combine($"Common{Path.AltDirectorySeparatorChar}Images{Path.AltDirectorySeparatorChar}Products");
+
+            appFolders.StoreImagesFolder = Path.Combine(_env.WebRootPath, $"Common{Path.DirectorySeparatorChar}Images{Path.DirectorySeparatorChar}Stores");
+            appFolders.StoreImagesFolderUrl = Path.Combine($"Common{Path.AltDirectorySeparatorChar}Images{Path.AltDirectorySeparatorChar}Stores");
+
+            appFolders.OthersImagesFolder = Path.Combine(_env.WebRootPath, $"Common{Path.DirectorySeparatorChar}Images{Path.DirectorySeparatorChar}Others");
+            appFolders.OthersImagesFolderUrl = Path.Combine($"Common{Path.AltDirectorySeparatorChar}Images{Path.AltDirectorySeparatorChar}Others");
+
+            appFolders.FileFolder = Path.Combine(_env.WebRootPath, $"Common{Path.DirectorySeparatorChar}Files");
+            appFolders.FileFolderUrl = Path.Combine($"Common{Path.AltDirectorySeparatorChar}Files");
+
+            if (_env.IsDevelopment())
+            {
+                var currentAssemblyDirectoryPath = typeof(SoftGridWebCoreModule).GetAssembly().GetDirectoryPathOrNull();
+                if (currentAssemblyDirectoryPath != null)
+                {
+                    appFolders.WebLogsFolder = Path.Combine(currentAssemblyDirectoryPath, $"App_Data{Path.DirectorySeparatorChar}Logs");
+
+                    appFolders.ProductImagesFolder = Path.Combine(_appConfiguration["App:ServerRootAddress"], $"Common{Path.DirectorySeparatorChar}Images{Path.DirectorySeparatorChar}Products");
+                    appFolders.StoreImagesFolder = Path.Combine(_appConfiguration["App:ServerRootAddress"], $"Common{Path.DirectorySeparatorChar}Images{Path.DirectorySeparatorChar}Stores");
+                    appFolders.OthersImagesFolder = Path.Combine(_appConfiguration["App:ServerRootAddress"], $"Common{Path.DirectorySeparatorChar}Images{Path.DirectorySeparatorChar}Others");
+                    appFolders.FileFolder = Path.Combine(_appConfiguration["App:ServerRootAddress"], $"Common{Path.DirectorySeparatorChar}Files");
+
+                }
+            }
         }
     }
 }

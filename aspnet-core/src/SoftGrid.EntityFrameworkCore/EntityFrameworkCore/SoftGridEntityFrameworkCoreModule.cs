@@ -1,5 +1,7 @@
 ﻿using Abp;
+using Abp.Configuration.Startup;
 using Abp.Dependency;
+using Abp.Domain.Uow;
 using Abp.EntityFrameworkCore.Configuration;
 using Abp.IdentityServer4vNext;
 using Abp.Modules;
@@ -25,6 +27,7 @@ namespace SoftGrid.EntityFrameworkCore
 
         public override void PreInitialize()
         {
+            Configuration.ReplaceService<IConnectionStringResolver, ConnectionStringResolver>();
             if (!SkipDbContextRegistration)
             {
                 Configuration.Modules.AbpEfCore().AddDbContext<SoftGridDbContext>(options =>
@@ -36,6 +39,18 @@ namespace SoftGrid.EntityFrameworkCore
                     else
                     {
                         SoftGridDbContextConfigurer.Configure(options.DbContextOptions, options.ConnectionString);
+                    }
+                });
+                //initialize filestorage dbcontext
+                Configuration.Modules.AbpEfCore().AddDbContext<SoftGridFileStorageDbContext>(options =>
+                {
+                    if (options.ExistingConnection != null)
+                    {
+                        SoftGridFileStorageDbContextConfigurer.Configure(options.DbContextOptions, options.ExistingConnection);
+                    }
+                    else
+                    {
+                        SoftGridFileStorageDbContextConfigurer.Configure(options.DbContextOptions, options.ConnectionString);
                     }
                 });
             }

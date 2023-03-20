@@ -13,7 +13,7 @@ namespace SoftGrid.Storage
 
         public virtual string Description { get; set; }
 
-        [Required]
+        //[Required]
         [MaxLength(BinaryObjectConsts.BytesMaxSize)]
         public virtual byte[] Bytes { get; set; }
 
