@@ -37,6 +37,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SoftGrid.EntityFrameworkCore\SoftGrid.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\SoftGrid.Web.Core\SoftGrid.Web.Core.csproj" />
   </ItemGroup>
   <ItemGroup>

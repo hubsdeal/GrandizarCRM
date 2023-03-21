@@ -20,6 +20,7 @@ import { DateTimeService } from '@app/shared/common/timing/date-time.service';
 
 @Component({
     templateUrl: './products.component.html',
+    styleUrls: ['./products.component.scss'],
     encapsulation: ViewEncapsulation.None,
     animations: [appModuleAnimation()],
 })
