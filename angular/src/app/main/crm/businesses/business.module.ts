@@ -6,6 +6,7 @@ import { BusinessesComponent } from './businesses.component';
 import { CreateOrEditBusinessModalComponent } from './create-or-edit-business-modal.component';
 import { ViewBusinessModalComponent } from './view-business-modal.component';
 import { BusinessMediaLibraryLookupTableModalComponent } from './business-mediaLibrary-lookup-table-modal.component';
+import { BusinessDashboardComponent } from './business-dashboard/business-dashboard.component';
 
 @NgModule({
     declarations: [
@@ -14,6 +15,7 @@ import { BusinessMediaLibraryLookupTableModalComponent } from './business-mediaL
         ViewBusinessModalComponent,
 
         BusinessMediaLibraryLookupTableModalComponent,
+          BusinessDashboardComponent,
     ],
     imports: [AppSharedModule, BusinessRoutingModule, AdminSharedModule],
 })
