@@ -7,6 +7,7 @@ import { CreateOrEditStoreModalComponent } from './create-or-edit-store-modal.co
 import { ViewStoreModalComponent } from './view-store-modal.component';
 import { StoreMediaLibraryLookupTableModalComponent } from './store-mediaLibrary-lookup-table-modal.component';
 import { StoreMasterTagLookupTableModalComponent } from './store-masterTag-lookup-table-modal.component';
+import { StoreDashboardComponent } from './store-dashboard/store-dashboard.component';
 
 @NgModule({
     declarations: [
@@ -16,6 +17,7 @@ import { StoreMasterTagLookupTableModalComponent } from './store-masterTag-looku
 
         StoreMediaLibraryLookupTableModalComponent,
         StoreMasterTagLookupTableModalComponent,
+        StoreDashboardComponent,
     ],
     imports: [AppSharedModule, StoreRoutingModule, AdminSharedModule],
 })
