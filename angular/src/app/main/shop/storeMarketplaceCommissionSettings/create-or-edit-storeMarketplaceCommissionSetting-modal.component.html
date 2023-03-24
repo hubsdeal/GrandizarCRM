@@ -1,0 +1,272 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form
+                *ngIf="active"
+                #storeMarketplaceCommissionSettingForm="ngForm"
+                novalidate
+                (ngSubmit)="save()"
+                autocomplete="off"
+            >
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="storeMarketplaceCommissionSetting.id">
+                            {{ l('EditStoreMarketplaceCommissionSetting') }}
+                        </span>
+                        <span *ngIf="!storeMarketplaceCommissionSetting.id">
+                            {{ l('CreateNewStoreMarketplaceCommissionSetting') }}
+                        </span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="StoreName">{{ l('Store') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="StoreName"
+                                name="storeName"
+                                [(ngModel)]="storeName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectStoreModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setStoreIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="storeMarketplaceCommissionSetting.storeId"
+                        [(ngModel)]="storeMarketplaceCommissionSetting.storeId"
+                        type="text"
+                        required
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="MarketplaceCommissionTypeName">
+                            {{ l('MarketplaceCommissionType') }}
+                        </label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="MarketplaceCommissionTypeName"
+                                name="marketplaceCommissionTypeName"
+                                [(ngModel)]="marketplaceCommissionTypeName"
+                                type="text"
+                                disabled
+                            />
+                            <button
+                                class="btn btn-primary blue"
+                                (click)="openSelectMarketplaceCommissionTypeModal()"
+                                type="button"
+                            >
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button
+                                class="btn btn-danger btn-icon"
+                                type="button"
+                                (click)="setMarketplaceCommissionTypeIdNull()"
+                            >
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="storeMarketplaceCommissionSetting.marketplaceCommissionTypeId"
+                        [(ngModel)]="storeMarketplaceCommissionSetting.marketplaceCommissionTypeId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="ProductCategoryName">{{ l('ProductCategory') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="ProductCategoryName"
+                                name="productCategoryName"
+                                [(ngModel)]="productCategoryName"
+                                type="text"
+                                disabled
+                            />
+                            <button
+                                class="btn btn-primary blue"
+                                (click)="openSelectProductCategoryModal()"
+                                type="button"
+                            >
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setProductCategoryIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="storeMarketplaceCommissionSetting.productCategoryId"
+                        [(ngModel)]="storeMarketplaceCommissionSetting.productCategoryId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="ProductName">{{ l('Product') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="ProductName"
+                                name="productName"
+                                [(ngModel)]="productName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectProductModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setProductIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="storeMarketplaceCommissionSetting.productId"
+                        [(ngModel)]="storeMarketplaceCommissionSetting.productId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my5">
+                        <label class="form-label" for="StoreMarketplaceCommissionSetting_Percentage">
+                            {{ l('Percentage') }}
+                        </label>
+                        <input
+                            type="number"
+                            #StoreMarketplaceCommissionSetting_Percentage="ngModel"
+                            id="StoreMarketplaceCommissionSetting_Percentage"
+                            class="form-control"
+                            [(ngModel)]="storeMarketplaceCommissionSetting.percentage"
+                            name="Percentage"
+                        />
+                        <validation-messages
+                            [formCtrl]="StoreMarketplaceCommissionSetting_Percentage"
+                        ></validation-messages>
+                    </div>
+
+                    <div class="my5">
+                        <label class="form-label" for="StoreMarketplaceCommissionSetting_FixedAmount">
+                            {{ l('FixedAmount') }}
+                        </label>
+                        <input
+                            type="number"
+                            #StoreMarketplaceCommissionSetting_FixedAmount="ngModel"
+                            id="StoreMarketplaceCommissionSetting_FixedAmount"
+                            class="form-control"
+                            [(ngModel)]="storeMarketplaceCommissionSetting.fixedAmount"
+                            name="FixedAmount"
+                        />
+                        <validation-messages
+                            [formCtrl]="StoreMarketplaceCommissionSetting_FixedAmount"
+                        ></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="StoreMarketplaceCommissionSetting_StartDate">
+                            {{ l('StartDate') }}
+                        </label>
+                        <input
+                            class="form-control m-input"
+                            #StoreMarketplaceCommissionSetting_StartDate
+                            type="datetime"
+                            bsDatepicker
+                            datePickerLuxonModifier
+                            [(date)]="storeMarketplaceCommissionSetting.startDate"
+                            id="StoreMarketplaceCommissionSetting_StartDate"
+                            name="StoreMarketplaceCommissionSetting_StartDate"
+                        />
+                        <validation-messages
+                            [formCtrl]="StoreMarketplaceCommissionSetting_StartDate"
+                        ></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="StoreMarketplaceCommissionSetting_EndDate">
+                            {{ l('EndDate') }}
+                        </label>
+                        <input
+                            class="form-control m-input"
+                            #StoreMarketplaceCommissionSetting_EndDate
+                            type="datetime"
+                            bsDatepicker
+                            datePickerLuxonModifier
+                            [(date)]="storeMarketplaceCommissionSetting.endDate"
+                            id="StoreMarketplaceCommissionSetting_EndDate"
+                            name="StoreMarketplaceCommissionSetting_EndDate"
+                        />
+                        <validation-messages
+                            [formCtrl]="StoreMarketplaceCommissionSetting_EndDate"
+                        ></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!storeMarketplaceCommissionSettingForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <storeMarketplaceCommissionSettingStoreLookupTableModal
+        #storeMarketplaceCommissionSettingStoreLookupTableModal
+        (modalSave)="getNewStoreId()"
+    ></storeMarketplaceCommissionSettingStoreLookupTableModal>
+    <storeMarketplaceCommissionSettingMarketplaceCommissionTypeLookupTableModal
+        #storeMarketplaceCommissionSettingMarketplaceCommissionTypeLookupTableModal
+        (modalSave)="getNewMarketplaceCommissionTypeId()"
+    ></storeMarketplaceCommissionSettingMarketplaceCommissionTypeLookupTableModal>
+    <storeMarketplaceCommissionSettingProductCategoryLookupTableModal
+        #storeMarketplaceCommissionSettingProductCategoryLookupTableModal
+        (modalSave)="getNewProductCategoryId()"
+    ></storeMarketplaceCommissionSettingProductCategoryLookupTableModal>
+    <storeMarketplaceCommissionSettingProductLookupTableModal
+        #storeMarketplaceCommissionSettingProductLookupTableModal
+        (modalSave)="getNewProductId()"
+    ></storeMarketplaceCommissionSettingProductLookupTableModal>
+</div>

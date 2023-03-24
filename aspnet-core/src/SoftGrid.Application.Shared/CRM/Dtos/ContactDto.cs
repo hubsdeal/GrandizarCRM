@@ -55,5 +55,9 @@ namespace SoftGrid.CRM.Dtos
 
         public long? MembershipTypeId { get; set; }
 
+        public bool? IsApplicant { get; set; }
+        public bool? Active { get; set; }
+        public Guid? PictureId { get; set; }
+
     }
 }

@@ -1,4 +1,6 @@
-﻿using SoftGrid.Shop;
+﻿using SoftGrid.TaskManagement;
+using SoftGrid.JobManagement;
+using SoftGrid.Shop;
 using SoftGrid.CRM;
 using SoftGrid.Territory;
 using SoftGrid.LookupData;
@@ -20,6 +22,76 @@ namespace SoftGrid.EntityFrameworkCore
 {
     public class SoftGridDbContext : AbpZeroDbContext<Tenant, Role, User, SoftGridDbContext>, IAbpPersistedGrantDbContext
     {
+        public virtual DbSet<StoreMarketplaceCommissionSetting> StoreMarketplaceCommissionSettings { get; set; }
+
+        public virtual DbSet<MarketplaceCommissionType> MarketplaceCommissionTypes { get; set; }
+
+        public virtual DbSet<StoreSalesAlert> StoreSalesAlerts { get; set; }
+
+        public virtual DbSet<StoreTax> StoreTaxes { get; set; }
+
+        public virtual DbSet<StoreBankAccount> StoreBankAccounts { get; set; }
+
+        public virtual DbSet<StoreNote> StoreNotes { get; set; }
+
+        public virtual DbSet<StoreMedia> StoreMedias { get; set; }
+
+        public virtual DbSet<StoreLocation> StoreLocations { get; set; }
+
+        public virtual DbSet<StoreBusinessHour> StoreBusinessHours { get; set; }
+
+        public virtual DbSet<StoreContactMap> StoreContactMaps { get; set; }
+
+        public virtual DbSet<StoreBusinessCustomerMap> StoreBusinessCustomerMaps { get; set; }
+
+        public virtual DbSet<StoreOwnerTeam> StoreOwnerTeams { get; set; }
+
+        public virtual DbSet<StoreAccountTeam> StoreAccountTeams { get; set; }
+
+        public virtual DbSet<StoreProductMap> StoreProductMaps { get; set; }
+
+        public virtual DbSet<StoreProductCategoryMap> StoreProductCategoryMaps { get; set; }
+
+        public virtual DbSet<EmployeeTag> EmployeeTags { get; set; }
+
+        public virtual DbSet<BusinessTaskMap> BusinessTaskMaps { get; set; }
+
+        public virtual DbSet<BusinessProductMap> BusinessProductMaps { get; set; }
+
+        public virtual DbSet<BusinessStoreMap> BusinessStoreMaps { get; set; }
+
+        public virtual DbSet<BusinessJobMap> BusinessJobMaps { get; set; }
+
+        public virtual DbSet<BusinessNote> BusinessNotes { get; set; }
+
+        public virtual DbSet<BusinessUser> BusinessUsers { get; set; }
+
+        public virtual DbSet<BusinessAccountTeam> BusinessAccountTeams { get; set; }
+
+        public virtual DbSet<BusinessContactMap> BusinessContactMaps { get; set; }
+
+        public virtual DbSet<TaskTag> TaskTags { get; set; }
+
+        public virtual DbSet<TaskEvent> TaskEvents { get; set; }
+
+        public virtual DbSet<TaskStatus> TaskStatuses { get; set; }
+
+        public virtual DbSet<Employee> Employees { get; set; }
+
+        public virtual DbSet<JobTag> JobTags { get; set; }
+
+        public virtual DbSet<Job> Jobs { get; set; }
+
+        public virtual DbSet<JobStatusType> JobStatusTypes { get; set; }
+
+        public virtual DbSet<StoreTag> StoreTags { get; set; }
+
+        public virtual DbSet<ProductTag> ProductTags { get; set; }
+
+        public virtual DbSet<BusinessTag> BusinessTags { get; set; }
+
+        public virtual DbSet<ContactTag> ContactTags { get; set; }
+
         public virtual DbSet<Store> Stores { get; set; }
 
         public virtual DbSet<Product> Products { get; set; }
@@ -100,10 +172,150 @@ namespace SoftGrid.EntityFrameworkCore
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Store>(s =>
+            modelBuilder.Entity<StoreMarketplaceCommissionSetting>(s =>
             {
                 s.HasIndex(e => new { e.TenantId });
             });
+            modelBuilder.Entity<MarketplaceCommissionType>(m =>
+                       {
+                           m.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<StoreSalesAlert>(s =>
+                       {
+                           s.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<StoreTax>(s =>
+                       {
+                           s.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<StoreBankAccount>(s =>
+                       {
+                           s.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<StoreNote>(s =>
+                       {
+                           s.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<StoreMedia>(s =>
+                       {
+                           s.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<StoreLocation>(s =>
+                       {
+                           s.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<StoreBusinessHour>(s =>
+                       {
+                           s.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<StoreContactMap>(s =>
+                       {
+                           s.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<StoreBusinessCustomerMap>(s =>
+                       {
+                           s.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<StoreOwnerTeam>(s =>
+                       {
+                           s.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<StoreAccountTeam>(s =>
+                       {
+                           s.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<StoreProductMap>(s =>
+                       {
+                           s.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<StoreProductCategoryMap>(s =>
+                       {
+                           s.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<EmployeeTag>(x =>
+                       {
+                           x.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<BusinessTaskMap>(b =>
+                       {
+                           b.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<BusinessProductMap>(b =>
+                       {
+                           b.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<BusinessStoreMap>(b =>
+                       {
+                           b.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<BusinessJobMap>(b =>
+                       {
+                           b.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<BusinessNote>(b =>
+                       {
+                           b.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<BusinessUser>(b =>
+                       {
+                           b.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<BusinessAccountTeam>(b =>
+                       {
+                           b.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<BusinessContactMap>(b =>
+                       {
+                           b.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<TaskTag>(t =>
+                       {
+                           t.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<TaskEvent>(t =>
+                       {
+                           t.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<TaskStatus>(t =>
+                       {
+                           t.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<Employee>(x =>
+                       {
+                           x.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<JobTag>(j =>
+                       {
+                           j.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<Job>(j =>
+                       {
+                           j.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<JobStatusType>(j =>
+                       {
+                           j.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<StoreTag>(s =>
+                       {
+                           s.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<ProductTag>(p =>
+                       {
+                           p.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<BusinessTag>(b =>
+                       {
+                           b.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<ContactTag>(c =>
+                       {
+                           c.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<Store>(s =>
+                       {
+                           s.HasIndex(e => new { e.TenantId });
+                       });
             modelBuilder.Entity<Product>(p =>
                        {
                            p.HasIndex(e => new { e.TenantId });

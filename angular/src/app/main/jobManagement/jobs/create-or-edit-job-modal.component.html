@@ -1,0 +1,677 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #jobForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="job.id">{{ l('EditJob') }}</span>
+                        <span *ngIf="!job.id">{{ l('CreateNewJob') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="MasterTagCategoryName">{{ l('MasterTagCategory') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="MasterTagCategoryName"
+                                name="masterTagCategoryName"
+                                [(ngModel)]="masterTagCategoryName"
+                                type="text"
+                                disabled
+                            />
+                            <button
+                                class="btn btn-primary blue"
+                                (click)="openSelectMasterTagCategoryModal()"
+                                type="button"
+                            >
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button
+                                class="btn btn-danger btn-icon"
+                                type="button"
+                                (click)="setMasterTagCategoryIdNull()"
+                            >
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="job.masterTagCategoryId"
+                        [(ngModel)]="job.masterTagCategoryId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="MasterTagName">{{ l('MasterTag') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="MasterTagName"
+                                name="masterTagName"
+                                [(ngModel)]="masterTagName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectMasterTagModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setMasterTagIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="job.masterTagId"
+                        [(ngModel)]="job.masterTagId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="ProductCategoryName">{{ l('ProductCategory') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="ProductCategoryName"
+                                name="productCategoryName"
+                                [(ngModel)]="productCategoryName"
+                                type="text"
+                                disabled
+                            />
+                            <button
+                                class="btn btn-primary blue"
+                                (click)="openSelectProductCategoryModal()"
+                                type="button"
+                            >
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setProductCategoryIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="job.productCategoryId"
+                        [(ngModel)]="job.productCategoryId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="CurrencyName">{{ l('Currency') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="CurrencyName"
+                                name="currencyName"
+                                [(ngModel)]="currencyName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectCurrencyModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setCurrencyIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input class="form-control" name="job.currencyId" [(ngModel)]="job.currencyId" type="text" hidden />
+
+                    <div class="my-3">
+                        <label class="form-label" for="BusinessName">{{ l('Business') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="BusinessName"
+                                name="businessName"
+                                [(ngModel)]="businessName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectBusinessModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setBusinessIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input class="form-control" name="job.businessId" [(ngModel)]="job.businessId" type="text" hidden />
+
+                    <div class="my-3">
+                        <label class="form-label" for="CountryName">{{ l('Country') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="CountryName"
+                                name="countryName"
+                                [(ngModel)]="countryName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectCountryModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setCountryIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input class="form-control" name="job.countryId" [(ngModel)]="job.countryId" type="text" hidden />
+
+                    <div class="my-3">
+                        <label class="form-label" for="StateName">{{ l('State') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="StateName"
+                                name="stateName"
+                                [(ngModel)]="stateName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectStateModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setStateIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input class="form-control" name="job.stateId" [(ngModel)]="job.stateId" type="text" hidden />
+
+                    <div class="my-3">
+                        <label class="form-label" for="CityName">{{ l('City') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="CityName"
+                                name="cityName"
+                                [(ngModel)]="cityName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectCityModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setCityIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input class="form-control" name="job.cityId" [(ngModel)]="job.cityId" type="text" hidden />
+
+                    <div class="my-3">
+                        <label class="form-label" for="JobStatusTypeName">{{ l('JobStatusType') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="JobStatusTypeName"
+                                name="jobStatusTypeName"
+                                [(ngModel)]="jobStatusTypeName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectJobStatusTypeModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setJobStatusTypeIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="job.jobStatusTypeId"
+                        [(ngModel)]="job.jobStatusTypeId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="StoreName">{{ l('Store') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="StoreName"
+                                name="storeName"
+                                [(ngModel)]="storeName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectStoreModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setStoreIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input class="form-control" name="job.storeId" [(ngModel)]="job.storeId" type="text" hidden />
+
+                    <div class="my-3">
+                        <label class="form-label" for="Job_Title">{{ l('Title') }} *</label>
+                        <input
+                            type="text"
+                            #Job_Title="ngModel"
+                            id="Job_Title"
+                            class="form-control"
+                            [(ngModel)]="job.title"
+                            name="Title"
+                            minlength="1"
+                            maxlength="2048"
+                            required
+                        />
+                        <validation-messages [formCtrl]="Job_Title"></validation-messages>
+                    </div>
+
+                    <br />
+                    <label class="form-check form-check-custom form-check-solid">
+                        <input
+                            id="Job_FullTimeJobOrGigWorkProject"
+                            #Job_FullTimeJobOrGigWorkProject="ngModel"
+                            name="FullTimeJobOrGigWorkProject"
+                            [(ngModel)]="job.fullTimeJobOrGigWorkProject"
+                            type="checkbox"
+                            class="form-check-input"
+                        />
+                        <span class="form-check-label">
+                            {{ l('FullTimeJobOrGigWorkProject') }}
+                        </span>
+                    </label>
+                    <validation-messages [formCtrl]="Job_FullTimeJobOrGigWorkProject"></validation-messages>
+
+                    <br />
+                    <label class="form-check form-check-custom form-check-solid">
+                        <input
+                            id="Job_RemoteWorkOrOnSiteWork"
+                            #Job_RemoteWorkOrOnSiteWork="ngModel"
+                            name="RemoteWorkOrOnSiteWork"
+                            [(ngModel)]="job.remoteWorkOrOnSiteWork"
+                            type="checkbox"
+                            class="form-check-input"
+                        />
+                        <span class="form-check-label">
+                            {{ l('RemoteWorkOrOnSiteWork') }}
+                        </span>
+                    </label>
+                    <validation-messages [formCtrl]="Job_RemoteWorkOrOnSiteWork"></validation-messages>
+
+                    <br />
+                    <label class="form-check form-check-custom form-check-solid">
+                        <input
+                            id="Job_SalaryBasedOrFixedPrice"
+                            #Job_SalaryBasedOrFixedPrice="ngModel"
+                            name="SalaryBasedOrFixedPrice"
+                            [(ngModel)]="job.salaryBasedOrFixedPrice"
+                            type="checkbox"
+                            class="form-check-input"
+                        />
+                        <span class="form-check-label">
+                            {{ l('SalaryBasedOrFixedPrice') }}
+                        </span>
+                    </label>
+                    <validation-messages [formCtrl]="Job_SalaryBasedOrFixedPrice"></validation-messages>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Job_SalaryOrStaffingRate">{{ l('SalaryOrStaffingRate') }}</label>
+                        <input
+                            type="text"
+                            #Job_SalaryOrStaffingRate="ngModel"
+                            id="Job_SalaryOrStaffingRate"
+                            class="form-control"
+                            [(ngModel)]="job.salaryOrStaffingRate"
+                            name="SalaryOrStaffingRate"
+                            minlength="1"
+                            maxlength="128"
+                        />
+                        <validation-messages [formCtrl]="Job_SalaryOrStaffingRate"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Job_ReferralPoints">{{ l('ReferralPoints') }}</label>
+                        <input
+                            type="text"
+                            #Job_ReferralPoints="ngModel"
+                            id="Job_ReferralPoints"
+                            class="form-control"
+                            [(ngModel)]="job.referralPoints"
+                            name="ReferralPoints"
+                            minlength="1"
+                            maxlength="128"
+                        />
+                        <validation-messages [formCtrl]="Job_ReferralPoints"></validation-messages>
+                    </div>
+
+                    <br />
+                    <label class="form-check form-check-custom form-check-solid">
+                        <input
+                            id="Job_Template"
+                            #Job_Template="ngModel"
+                            name="Template"
+                            [(ngModel)]="job.template"
+                            type="checkbox"
+                            class="form-check-input"
+                        />
+                        <span class="form-check-label">
+                            {{ l('Template') }}
+                        </span>
+                    </label>
+                    <validation-messages [formCtrl]="Job_Template"></validation-messages>
+
+                    <div class="my5">
+                        <label class="form-label" for="Job_NumberOfJobs">{{ l('NumberOfJobs') }}</label>
+                        <input
+                            type="number"
+                            #Job_NumberOfJobs="ngModel"
+                            id="Job_NumberOfJobs"
+                            class="form-control"
+                            [(ngModel)]="job.numberOfJobs"
+                            name="NumberOfJobs"
+                        />
+                        <validation-messages [formCtrl]="Job_NumberOfJobs"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Job_MinimumExperience">{{ l('MinimumExperience') }}</label>
+                        <input
+                            type="text"
+                            #Job_MinimumExperience="ngModel"
+                            id="Job_MinimumExperience"
+                            class="form-control"
+                            [(ngModel)]="job.minimumExperience"
+                            name="MinimumExperience"
+                            minlength="1"
+                            maxlength="128"
+                        />
+                        <validation-messages [formCtrl]="Job_MinimumExperience"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Job_MaximumExperience">{{ l('MaximumExperience') }}</label>
+                        <input
+                            type="text"
+                            #Job_MaximumExperience="ngModel"
+                            id="Job_MaximumExperience"
+                            class="form-control"
+                            [(ngModel)]="job.maximumExperience"
+                            name="MaximumExperience"
+                            minlength="1"
+                            maxlength="128"
+                        />
+                        <validation-messages [formCtrl]="Job_MaximumExperience"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Job_JobDescription">{{ l('JobDescription') }}</label>
+                        <input
+                            type="text"
+                            #Job_JobDescription="ngModel"
+                            id="Job_JobDescription"
+                            class="form-control"
+                            [(ngModel)]="job.jobDescription"
+                            name="JobDescription"
+                        />
+                        <validation-messages [formCtrl]="Job_JobDescription"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Job_JobLocationFullAddress">
+                            {{ l('JobLocationFullAddress') }}
+                        </label>
+                        <input
+                            type="text"
+                            #Job_JobLocationFullAddress="ngModel"
+                            id="Job_JobLocationFullAddress"
+                            class="form-control"
+                            [(ngModel)]="job.jobLocationFullAddress"
+                            name="JobLocationFullAddress"
+                            minlength="1"
+                            maxlength="1024"
+                        />
+                        <validation-messages [formCtrl]="Job_JobLocationFullAddress"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Job_ZipCode">{{ l('ZipCode') }}</label>
+                        <input
+                            type="text"
+                            #Job_ZipCode="ngModel"
+                            id="Job_ZipCode"
+                            class="form-control"
+                            [(ngModel)]="job.zipCode"
+                            name="ZipCode"
+                            minlength="1"
+                            maxlength="50"
+                        />
+                        <validation-messages [formCtrl]="Job_ZipCode"></validation-messages>
+                    </div>
+
+                    <div class="my5">
+                        <label class="form-label" for="Job_Latitude">{{ l('Latitude') }}</label>
+                        <input
+                            type="number"
+                            #Job_Latitude="ngModel"
+                            id="Job_Latitude"
+                            class="form-control"
+                            [(ngModel)]="job.latitude"
+                            name="Latitude"
+                        />
+                        <validation-messages [formCtrl]="Job_Latitude"></validation-messages>
+                    </div>
+
+                    <div class="my5">
+                        <label class="form-label" for="Job_Longitude">{{ l('Longitude') }}</label>
+                        <input
+                            type="number"
+                            #Job_Longitude="ngModel"
+                            id="Job_Longitude"
+                            class="form-control"
+                            [(ngModel)]="job.longitude"
+                            name="Longitude"
+                        />
+                        <validation-messages [formCtrl]="Job_Longitude"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Job_StartDate">{{ l('StartDate') }}</label>
+                        <input
+                            class="form-control m-input"
+                            #Job_StartDate
+                            type="datetime"
+                            bsDatepicker
+                            datePickerLuxonModifier
+                            [(date)]="job.startDate"
+                            id="Job_StartDate"
+                            name="Job_StartDate"
+                        />
+                        <validation-messages [formCtrl]="Job_StartDate"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Job_HireByDate">{{ l('HireByDate') }}</label>
+                        <input
+                            class="form-control m-input"
+                            #Job_HireByDate
+                            type="datetime"
+                            bsDatepicker
+                            datePickerLuxonModifier
+                            [(date)]="job.hireByDate"
+                            id="Job_HireByDate"
+                            name="Job_HireByDate"
+                        />
+                        <validation-messages [formCtrl]="Job_HireByDate"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Job_PublishDate">{{ l('PublishDate') }}</label>
+                        <input
+                            class="form-control m-input"
+                            #Job_PublishDate
+                            type="datetime"
+                            bsDatepicker
+                            datePickerLuxonModifier
+                            [(date)]="job.publishDate"
+                            id="Job_PublishDate"
+                            name="Job_PublishDate"
+                        />
+                        <validation-messages [formCtrl]="Job_PublishDate"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Job_ExpirationDate">{{ l('ExpirationDate') }}</label>
+                        <input
+                            class="form-control m-input"
+                            #Job_ExpirationDate
+                            type="datetime"
+                            bsDatepicker
+                            datePickerLuxonModifier
+                            [(date)]="job.expirationDate"
+                            id="Job_ExpirationDate"
+                            name="Job_ExpirationDate"
+                        />
+                        <validation-messages [formCtrl]="Job_ExpirationDate"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Job_InternalJobDescription">
+                            {{ l('InternalJobDescription') }}
+                        </label>
+                        <input
+                            type="text"
+                            #Job_InternalJobDescription="ngModel"
+                            id="Job_InternalJobDescription"
+                            class="form-control"
+                            [(ngModel)]="job.internalJobDescription"
+                            name="InternalJobDescription"
+                        />
+                        <validation-messages [formCtrl]="Job_InternalJobDescription"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Job_CityLocation">{{ l('CityLocation') }}</label>
+                        <input
+                            type="text"
+                            #Job_CityLocation="ngModel"
+                            id="Job_CityLocation"
+                            class="form-control"
+                            [(ngModel)]="job.cityLocation"
+                            name="CityLocation"
+                            minlength="1"
+                            maxlength="128"
+                        />
+                        <validation-messages [formCtrl]="Job_CityLocation"></validation-messages>
+                    </div>
+
+                    <br />
+                    <label class="form-check form-check-custom form-check-solid">
+                        <input
+                            id="Job_Published"
+                            #Job_Published="ngModel"
+                            name="Published"
+                            [(ngModel)]="job.published"
+                            type="checkbox"
+                            class="form-check-input"
+                        />
+                        <span class="form-check-label">
+                            {{ l('Published') }}
+                        </span>
+                    </label>
+                    <validation-messages [formCtrl]="Job_Published"></validation-messages>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Job_Url">{{ l('Url') }}</label>
+                        <input
+                            type="text"
+                            #Job_Url="ngModel"
+                            id="Job_Url"
+                            class="form-control"
+                            [(ngModel)]="job.url"
+                            name="Url"
+                        />
+                        <validation-messages [formCtrl]="Job_Url"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!jobForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <jobMasterTagCategoryLookupTableModal
+        #jobMasterTagCategoryLookupTableModal
+        (modalSave)="getNewMasterTagCategoryId()"
+    ></jobMasterTagCategoryLookupTableModal>
+    <jobMasterTagLookupTableModal
+        #jobMasterTagLookupTableModal
+        (modalSave)="getNewMasterTagId()"
+    ></jobMasterTagLookupTableModal>
+    <jobProductCategoryLookupTableModal
+        #jobProductCategoryLookupTableModal
+        (modalSave)="getNewProductCategoryId()"
+    ></jobProductCategoryLookupTableModal>
+    <jobCurrencyLookupTableModal
+        #jobCurrencyLookupTableModal
+        (modalSave)="getNewCurrencyId()"
+    ></jobCurrencyLookupTableModal>
+    <jobBusinessLookupTableModal
+        #jobBusinessLookupTableModal
+        (modalSave)="getNewBusinessId()"
+    ></jobBusinessLookupTableModal>
+    <jobCountryLookupTableModal
+        #jobCountryLookupTableModal
+        (modalSave)="getNewCountryId()"
+    ></jobCountryLookupTableModal>
+    <jobStateLookupTableModal #jobStateLookupTableModal (modalSave)="getNewStateId()"></jobStateLookupTableModal>
+    <jobCityLookupTableModal #jobCityLookupTableModal (modalSave)="getNewCityId()"></jobCityLookupTableModal>
+    <jobJobStatusTypeLookupTableModal
+        #jobJobStatusTypeLookupTableModal
+        (modalSave)="getNewJobStatusTypeId()"
+    ></jobJobStatusTypeLookupTableModal>
+    <jobStoreLookupTableModal #jobStoreLookupTableModal (modalSave)="getNewStoreId()"></jobStoreLookupTableModal>
+</div>

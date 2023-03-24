@@ -70,6 +70,76 @@ export class AppNavigationService {
             new AppMenuItem('Products', 'Pages.Products', 'flaticon-more', '/app/main/shop/products'),
             
             new AppMenuItem('Stores', 'Pages.Stores', 'flaticon-more', '/app/main/shop/stores'),
+            
+            new AppMenuItem('ContactTags', 'Pages.ContactTags', 'flaticon-more', '/app/main/crm/contactTags'),
+            
+            new AppMenuItem('BusinessTags', 'Pages.BusinessTags', 'flaticon-more', '/app/main/crm/businessTags'),
+            
+            new AppMenuItem('ProductTags', 'Pages.ProductTags', 'flaticon-more', '/app/main/shop/productTags'),
+            
+            new AppMenuItem('StoreTags', 'Pages.StoreTags', 'flaticon-more', '/app/main/shop/storeTags'),
+            
+            new AppMenuItem('JobStatusTypes', 'Pages.JobStatusTypes', 'flaticon-more', '/app/main/jobManagement/jobStatusTypes'),
+            
+            new AppMenuItem('Jobs', 'Pages.Jobs', 'flaticon-more', '/app/main/jobManagement/jobs'),
+            
+            new AppMenuItem('JobTags', 'Pages.JobTags', 'flaticon-more', '/app/main/jobManagement/jobTags'),
+            
+            new AppMenuItem('Employees', 'Pages.Employees', 'flaticon-more', '/app/main/crm/employees'),
+            
+            new AppMenuItem('TaskStatuses', 'Pages.TaskStatuses', 'flaticon-more', '/app/main/taskManagement/taskStatuses'),
+            
+            new AppMenuItem('TaskEvents', 'Pages.TaskEvents', 'flaticon-more', '/app/main/taskManagement/taskEvents'),
+            
+            new AppMenuItem('TaskTags', 'Pages.TaskTags', 'flaticon-more', '/app/main/taskManagement/taskTags'),
+            
+            new AppMenuItem('BusinessContactMaps', 'Pages.BusinessContactMaps', 'flaticon-more', '/app/main/crm/businessContactMaps'),
+            
+            new AppMenuItem('BusinessAccountTeams', 'Pages.BusinessAccountTeams', 'flaticon-more', '/app/main/crm/businessAccountTeams'),
+            
+            new AppMenuItem('BusinessUsers', 'Pages.BusinessUsers', 'flaticon-more', '/app/main/crm/businessUsers'),
+            
+            new AppMenuItem('BusinessNotes', 'Pages.BusinessNotes', 'flaticon-more', '/app/main/crm/businessNotes'),
+            
+            new AppMenuItem('BusinessJobMaps', 'Pages.BusinessJobMaps', 'flaticon-more', '/app/main/crm/businessJobMaps'),
+            
+            new AppMenuItem('BusinessStoreMaps', 'Pages.BusinessStoreMaps', 'flaticon-more', '/app/main/crm/businessStoreMaps'),
+            
+            new AppMenuItem('BusinessProductMaps', 'Pages.BusinessProductMaps', 'flaticon-more', '/app/main/crm/businessProductMaps'),
+            
+            new AppMenuItem('BusinessTaskMaps', 'Pages.BusinessTaskMaps', 'flaticon-more', '/app/main/crm/businessTaskMaps'),
+            
+            new AppMenuItem('EmployeeTags', 'Pages.EmployeeTags', 'flaticon-more', '/app/main/crm/employeeTags'),
+            
+            new AppMenuItem('StoreProductCategoryMaps', 'Pages.StoreProductCategoryMaps', 'flaticon-more', '/app/main/shop/storeProductCategoryMaps'),
+            
+            new AppMenuItem('StoreProductMaps', 'Pages.StoreProductMaps', 'flaticon-more', '/app/main/shop/storeProductMaps'),
+            
+            new AppMenuItem('StoreAccountTeams', 'Pages.StoreAccountTeams', 'flaticon-more', '/app/main/shop/storeAccountTeams'),
+            
+            new AppMenuItem('StoreOwnerTeams', 'Pages.StoreOwnerTeams', 'flaticon-more', '/app/main/shop/storeOwnerTeams'),
+            
+            new AppMenuItem('StoreBusinessCustomerMaps', 'Pages.StoreBusinessCustomerMaps', 'flaticon-more', '/app/main/shop/storeBusinessCustomerMaps'),
+            
+            new AppMenuItem('StoreContactMaps', 'Pages.StoreContactMaps', 'flaticon-more', '/app/main/shop/storeContactMaps'),
+            
+            new AppMenuItem('StoreBusinessHours', 'Pages.StoreBusinessHours', 'flaticon-more', '/app/main/shop/storeBusinessHours'),
+            
+            new AppMenuItem('StoreLocations', 'Pages.StoreLocations', 'flaticon-more', '/app/main/shop/storeLocations'),
+            
+            new AppMenuItem('StoreMedias', 'Pages.StoreMedias', 'flaticon-more', '/app/main/shop/storeMedias'),
+            
+            new AppMenuItem('StoreNotes', 'Pages.StoreNotes', 'flaticon-more', '/app/main/shop/storeNotes'),
+            
+            new AppMenuItem('StoreBankAccounts', 'Pages.StoreBankAccounts', 'flaticon-more', '/app/main/shop/storeBankAccounts'),
+            
+            new AppMenuItem('StoreTaxes', 'Pages.StoreTaxes', 'flaticon-more', '/app/main/shop/storeTaxes'),
+            
+            new AppMenuItem('StoreSalesAlerts', 'Pages.StoreSalesAlerts', 'flaticon-more', '/app/main/shop/storeSalesAlerts'),
+            
+            new AppMenuItem('MarketplaceCommissionTypes', 'Pages.MarketplaceCommissionTypes', 'flaticon-more', '/app/main/shop/marketplaceCommissionTypes'),
+            
+            new AppMenuItem('StoreMarketplaceCommissionSettings', 'Pages.StoreMarketplaceCommissionSettings', 'flaticon-more', '/app/main/shop/storeMarketplaceCommissionSettings'),
              new AppMenuItem('Editions', 'Pages.Editions', 'flaticon-app', '/app/admin/editions'),
             new AppMenuItem(
                 'Administration',

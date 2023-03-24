@@ -30,6 +30,181 @@ namespace SoftGrid.Authorization
 
             var pages = context.GetPermissionOrNull(AppPermissions.Pages) ?? context.CreatePermission(AppPermissions.Pages, L("Pages"));
 
+            var storeMarketplaceCommissionSettings = pages.CreateChildPermission(AppPermissions.Pages_StoreMarketplaceCommissionSettings, L("StoreMarketplaceCommissionSettings"));
+            storeMarketplaceCommissionSettings.CreateChildPermission(AppPermissions.Pages_StoreMarketplaceCommissionSettings_Create, L("CreateNewStoreMarketplaceCommissionSetting"));
+            storeMarketplaceCommissionSettings.CreateChildPermission(AppPermissions.Pages_StoreMarketplaceCommissionSettings_Edit, L("EditStoreMarketplaceCommissionSetting"));
+            storeMarketplaceCommissionSettings.CreateChildPermission(AppPermissions.Pages_StoreMarketplaceCommissionSettings_Delete, L("DeleteStoreMarketplaceCommissionSetting"));
+
+            var marketplaceCommissionTypes = pages.CreateChildPermission(AppPermissions.Pages_MarketplaceCommissionTypes, L("MarketplaceCommissionTypes"));
+            marketplaceCommissionTypes.CreateChildPermission(AppPermissions.Pages_MarketplaceCommissionTypes_Create, L("CreateNewMarketplaceCommissionType"));
+            marketplaceCommissionTypes.CreateChildPermission(AppPermissions.Pages_MarketplaceCommissionTypes_Edit, L("EditMarketplaceCommissionType"));
+            marketplaceCommissionTypes.CreateChildPermission(AppPermissions.Pages_MarketplaceCommissionTypes_Delete, L("DeleteMarketplaceCommissionType"));
+
+            var storeSalesAlerts = pages.CreateChildPermission(AppPermissions.Pages_StoreSalesAlerts, L("StoreSalesAlerts"));
+            storeSalesAlerts.CreateChildPermission(AppPermissions.Pages_StoreSalesAlerts_Create, L("CreateNewStoreSalesAlert"));
+            storeSalesAlerts.CreateChildPermission(AppPermissions.Pages_StoreSalesAlerts_Edit, L("EditStoreSalesAlert"));
+            storeSalesAlerts.CreateChildPermission(AppPermissions.Pages_StoreSalesAlerts_Delete, L("DeleteStoreSalesAlert"));
+
+            var storeTaxes = pages.CreateChildPermission(AppPermissions.Pages_StoreTaxes, L("StoreTaxes"));
+            storeTaxes.CreateChildPermission(AppPermissions.Pages_StoreTaxes_Create, L("CreateNewStoreTax"));
+            storeTaxes.CreateChildPermission(AppPermissions.Pages_StoreTaxes_Edit, L("EditStoreTax"));
+            storeTaxes.CreateChildPermission(AppPermissions.Pages_StoreTaxes_Delete, L("DeleteStoreTax"));
+
+            var storeBankAccounts = pages.CreateChildPermission(AppPermissions.Pages_StoreBankAccounts, L("StoreBankAccounts"));
+            storeBankAccounts.CreateChildPermission(AppPermissions.Pages_StoreBankAccounts_Create, L("CreateNewStoreBankAccount"));
+            storeBankAccounts.CreateChildPermission(AppPermissions.Pages_StoreBankAccounts_Edit, L("EditStoreBankAccount"));
+            storeBankAccounts.CreateChildPermission(AppPermissions.Pages_StoreBankAccounts_Delete, L("DeleteStoreBankAccount"));
+
+            var storeNotes = pages.CreateChildPermission(AppPermissions.Pages_StoreNotes, L("StoreNotes"));
+            storeNotes.CreateChildPermission(AppPermissions.Pages_StoreNotes_Create, L("CreateNewStoreNote"));
+            storeNotes.CreateChildPermission(AppPermissions.Pages_StoreNotes_Edit, L("EditStoreNote"));
+            storeNotes.CreateChildPermission(AppPermissions.Pages_StoreNotes_Delete, L("DeleteStoreNote"));
+
+            var storeMedias = pages.CreateChildPermission(AppPermissions.Pages_StoreMedias, L("StoreMedias"));
+            storeMedias.CreateChildPermission(AppPermissions.Pages_StoreMedias_Create, L("CreateNewStoreMedia"));
+            storeMedias.CreateChildPermission(AppPermissions.Pages_StoreMedias_Edit, L("EditStoreMedia"));
+            storeMedias.CreateChildPermission(AppPermissions.Pages_StoreMedias_Delete, L("DeleteStoreMedia"));
+
+            var storeLocations = pages.CreateChildPermission(AppPermissions.Pages_StoreLocations, L("StoreLocations"));
+            storeLocations.CreateChildPermission(AppPermissions.Pages_StoreLocations_Create, L("CreateNewStoreLocation"));
+            storeLocations.CreateChildPermission(AppPermissions.Pages_StoreLocations_Edit, L("EditStoreLocation"));
+            storeLocations.CreateChildPermission(AppPermissions.Pages_StoreLocations_Delete, L("DeleteStoreLocation"));
+
+            var storeBusinessHours = pages.CreateChildPermission(AppPermissions.Pages_StoreBusinessHours, L("StoreBusinessHours"));
+            storeBusinessHours.CreateChildPermission(AppPermissions.Pages_StoreBusinessHours_Create, L("CreateNewStoreBusinessHour"));
+            storeBusinessHours.CreateChildPermission(AppPermissions.Pages_StoreBusinessHours_Edit, L("EditStoreBusinessHour"));
+            storeBusinessHours.CreateChildPermission(AppPermissions.Pages_StoreBusinessHours_Delete, L("DeleteStoreBusinessHour"));
+
+            var storeContactMaps = pages.CreateChildPermission(AppPermissions.Pages_StoreContactMaps, L("StoreContactMaps"));
+            storeContactMaps.CreateChildPermission(AppPermissions.Pages_StoreContactMaps_Create, L("CreateNewStoreContactMap"));
+            storeContactMaps.CreateChildPermission(AppPermissions.Pages_StoreContactMaps_Edit, L("EditStoreContactMap"));
+            storeContactMaps.CreateChildPermission(AppPermissions.Pages_StoreContactMaps_Delete, L("DeleteStoreContactMap"));
+
+            var storeBusinessCustomerMaps = pages.CreateChildPermission(AppPermissions.Pages_StoreBusinessCustomerMaps, L("StoreBusinessCustomerMaps"));
+            storeBusinessCustomerMaps.CreateChildPermission(AppPermissions.Pages_StoreBusinessCustomerMaps_Create, L("CreateNewStoreBusinessCustomerMap"));
+            storeBusinessCustomerMaps.CreateChildPermission(AppPermissions.Pages_StoreBusinessCustomerMaps_Edit, L("EditStoreBusinessCustomerMap"));
+            storeBusinessCustomerMaps.CreateChildPermission(AppPermissions.Pages_StoreBusinessCustomerMaps_Delete, L("DeleteStoreBusinessCustomerMap"));
+
+            var storeOwnerTeams = pages.CreateChildPermission(AppPermissions.Pages_StoreOwnerTeams, L("StoreOwnerTeams"));
+            storeOwnerTeams.CreateChildPermission(AppPermissions.Pages_StoreOwnerTeams_Create, L("CreateNewStoreOwnerTeam"));
+            storeOwnerTeams.CreateChildPermission(AppPermissions.Pages_StoreOwnerTeams_Edit, L("EditStoreOwnerTeam"));
+            storeOwnerTeams.CreateChildPermission(AppPermissions.Pages_StoreOwnerTeams_Delete, L("DeleteStoreOwnerTeam"));
+
+            var storeAccountTeams = pages.CreateChildPermission(AppPermissions.Pages_StoreAccountTeams, L("StoreAccountTeams"));
+            storeAccountTeams.CreateChildPermission(AppPermissions.Pages_StoreAccountTeams_Create, L("CreateNewStoreAccountTeam"));
+            storeAccountTeams.CreateChildPermission(AppPermissions.Pages_StoreAccountTeams_Edit, L("EditStoreAccountTeam"));
+            storeAccountTeams.CreateChildPermission(AppPermissions.Pages_StoreAccountTeams_Delete, L("DeleteStoreAccountTeam"));
+
+            var storeProductMaps = pages.CreateChildPermission(AppPermissions.Pages_StoreProductMaps, L("StoreProductMaps"));
+            storeProductMaps.CreateChildPermission(AppPermissions.Pages_StoreProductMaps_Create, L("CreateNewStoreProductMap"));
+            storeProductMaps.CreateChildPermission(AppPermissions.Pages_StoreProductMaps_Edit, L("EditStoreProductMap"));
+            storeProductMaps.CreateChildPermission(AppPermissions.Pages_StoreProductMaps_Delete, L("DeleteStoreProductMap"));
+
+            var storeProductCategoryMaps = pages.CreateChildPermission(AppPermissions.Pages_StoreProductCategoryMaps, L("StoreProductCategoryMaps"));
+            storeProductCategoryMaps.CreateChildPermission(AppPermissions.Pages_StoreProductCategoryMaps_Create, L("CreateNewStoreProductCategoryMap"));
+            storeProductCategoryMaps.CreateChildPermission(AppPermissions.Pages_StoreProductCategoryMaps_Edit, L("EditStoreProductCategoryMap"));
+            storeProductCategoryMaps.CreateChildPermission(AppPermissions.Pages_StoreProductCategoryMaps_Delete, L("DeleteStoreProductCategoryMap"));
+
+            var employeeTags = pages.CreateChildPermission(AppPermissions.Pages_EmployeeTags, L("EmployeeTags"));
+            employeeTags.CreateChildPermission(AppPermissions.Pages_EmployeeTags_Create, L("CreateNewEmployeeTag"));
+            employeeTags.CreateChildPermission(AppPermissions.Pages_EmployeeTags_Edit, L("EditEmployeeTag"));
+            employeeTags.CreateChildPermission(AppPermissions.Pages_EmployeeTags_Delete, L("DeleteEmployeeTag"));
+
+            var businessTaskMaps = pages.CreateChildPermission(AppPermissions.Pages_BusinessTaskMaps, L("BusinessTaskMaps"));
+            businessTaskMaps.CreateChildPermission(AppPermissions.Pages_BusinessTaskMaps_Create, L("CreateNewBusinessTaskMap"));
+            businessTaskMaps.CreateChildPermission(AppPermissions.Pages_BusinessTaskMaps_Edit, L("EditBusinessTaskMap"));
+            businessTaskMaps.CreateChildPermission(AppPermissions.Pages_BusinessTaskMaps_Delete, L("DeleteBusinessTaskMap"));
+
+            var businessProductMaps = pages.CreateChildPermission(AppPermissions.Pages_BusinessProductMaps, L("BusinessProductMaps"));
+            businessProductMaps.CreateChildPermission(AppPermissions.Pages_BusinessProductMaps_Create, L("CreateNewBusinessProductMap"));
+            businessProductMaps.CreateChildPermission(AppPermissions.Pages_BusinessProductMaps_Edit, L("EditBusinessProductMap"));
+            businessProductMaps.CreateChildPermission(AppPermissions.Pages_BusinessProductMaps_Delete, L("DeleteBusinessProductMap"));
+
+            var businessStoreMaps = pages.CreateChildPermission(AppPermissions.Pages_BusinessStoreMaps, L("BusinessStoreMaps"));
+            businessStoreMaps.CreateChildPermission(AppPermissions.Pages_BusinessStoreMaps_Create, L("CreateNewBusinessStoreMap"));
+            businessStoreMaps.CreateChildPermission(AppPermissions.Pages_BusinessStoreMaps_Edit, L("EditBusinessStoreMap"));
+            businessStoreMaps.CreateChildPermission(AppPermissions.Pages_BusinessStoreMaps_Delete, L("DeleteBusinessStoreMap"));
+
+            var businessJobMaps = pages.CreateChildPermission(AppPermissions.Pages_BusinessJobMaps, L("BusinessJobMaps"));
+            businessJobMaps.CreateChildPermission(AppPermissions.Pages_BusinessJobMaps_Create, L("CreateNewBusinessJobMap"));
+            businessJobMaps.CreateChildPermission(AppPermissions.Pages_BusinessJobMaps_Edit, L("EditBusinessJobMap"));
+            businessJobMaps.CreateChildPermission(AppPermissions.Pages_BusinessJobMaps_Delete, L("DeleteBusinessJobMap"));
+
+            var businessNotes = pages.CreateChildPermission(AppPermissions.Pages_BusinessNotes, L("BusinessNotes"));
+            businessNotes.CreateChildPermission(AppPermissions.Pages_BusinessNotes_Create, L("CreateNewBusinessNote"));
+            businessNotes.CreateChildPermission(AppPermissions.Pages_BusinessNotes_Edit, L("EditBusinessNote"));
+            businessNotes.CreateChildPermission(AppPermissions.Pages_BusinessNotes_Delete, L("DeleteBusinessNote"));
+
+            var businessUsers = pages.CreateChildPermission(AppPermissions.Pages_BusinessUsers, L("BusinessUsers"));
+            businessUsers.CreateChildPermission(AppPermissions.Pages_BusinessUsers_Create, L("CreateNewBusinessUser"));
+            businessUsers.CreateChildPermission(AppPermissions.Pages_BusinessUsers_Edit, L("EditBusinessUser"));
+            businessUsers.CreateChildPermission(AppPermissions.Pages_BusinessUsers_Delete, L("DeleteBusinessUser"));
+
+            var businessAccountTeams = pages.CreateChildPermission(AppPermissions.Pages_BusinessAccountTeams, L("BusinessAccountTeams"));
+            businessAccountTeams.CreateChildPermission(AppPermissions.Pages_BusinessAccountTeams_Create, L("CreateNewBusinessAccountTeam"));
+            businessAccountTeams.CreateChildPermission(AppPermissions.Pages_BusinessAccountTeams_Edit, L("EditBusinessAccountTeam"));
+            businessAccountTeams.CreateChildPermission(AppPermissions.Pages_BusinessAccountTeams_Delete, L("DeleteBusinessAccountTeam"));
+
+            var businessContactMaps = pages.CreateChildPermission(AppPermissions.Pages_BusinessContactMaps, L("BusinessContactMaps"));
+            businessContactMaps.CreateChildPermission(AppPermissions.Pages_BusinessContactMaps_Create, L("CreateNewBusinessContactMap"));
+            businessContactMaps.CreateChildPermission(AppPermissions.Pages_BusinessContactMaps_Edit, L("EditBusinessContactMap"));
+            businessContactMaps.CreateChildPermission(AppPermissions.Pages_BusinessContactMaps_Delete, L("DeleteBusinessContactMap"));
+
+            var taskTags = pages.CreateChildPermission(AppPermissions.Pages_TaskTags, L("TaskTags"));
+            taskTags.CreateChildPermission(AppPermissions.Pages_TaskTags_Create, L("CreateNewTaskTag"));
+            taskTags.CreateChildPermission(AppPermissions.Pages_TaskTags_Edit, L("EditTaskTag"));
+            taskTags.CreateChildPermission(AppPermissions.Pages_TaskTags_Delete, L("DeleteTaskTag"));
+
+            var taskEvents = pages.CreateChildPermission(AppPermissions.Pages_TaskEvents, L("TaskEvents"));
+            taskEvents.CreateChildPermission(AppPermissions.Pages_TaskEvents_Create, L("CreateNewTaskEvent"));
+            taskEvents.CreateChildPermission(AppPermissions.Pages_TaskEvents_Edit, L("EditTaskEvent"));
+            taskEvents.CreateChildPermission(AppPermissions.Pages_TaskEvents_Delete, L("DeleteTaskEvent"));
+
+            var taskStatuses = pages.CreateChildPermission(AppPermissions.Pages_TaskStatuses, L("TaskStatuses"));
+            taskStatuses.CreateChildPermission(AppPermissions.Pages_TaskStatuses_Create, L("CreateNewTaskStatus"));
+            taskStatuses.CreateChildPermission(AppPermissions.Pages_TaskStatuses_Edit, L("EditTaskStatus"));
+            taskStatuses.CreateChildPermission(AppPermissions.Pages_TaskStatuses_Delete, L("DeleteTaskStatus"));
+
+            var employees = pages.CreateChildPermission(AppPermissions.Pages_Employees, L("Employees"));
+            employees.CreateChildPermission(AppPermissions.Pages_Employees_Create, L("CreateNewEmployee"));
+            employees.CreateChildPermission(AppPermissions.Pages_Employees_Edit, L("EditEmployee"));
+            employees.CreateChildPermission(AppPermissions.Pages_Employees_Delete, L("DeleteEmployee"));
+
+            var jobTags = pages.CreateChildPermission(AppPermissions.Pages_JobTags, L("JobTags"));
+            jobTags.CreateChildPermission(AppPermissions.Pages_JobTags_Create, L("CreateNewJobTag"));
+            jobTags.CreateChildPermission(AppPermissions.Pages_JobTags_Edit, L("EditJobTag"));
+            jobTags.CreateChildPermission(AppPermissions.Pages_JobTags_Delete, L("DeleteJobTag"));
+
+            var jobs = pages.CreateChildPermission(AppPermissions.Pages_Jobs, L("Jobs"));
+            jobs.CreateChildPermission(AppPermissions.Pages_Jobs_Create, L("CreateNewJob"));
+            jobs.CreateChildPermission(AppPermissions.Pages_Jobs_Edit, L("EditJob"));
+            jobs.CreateChildPermission(AppPermissions.Pages_Jobs_Delete, L("DeleteJob"));
+
+            var jobStatusTypes = pages.CreateChildPermission(AppPermissions.Pages_JobStatusTypes, L("JobStatusTypes"));
+            jobStatusTypes.CreateChildPermission(AppPermissions.Pages_JobStatusTypes_Create, L("CreateNewJobStatusType"));
+            jobStatusTypes.CreateChildPermission(AppPermissions.Pages_JobStatusTypes_Edit, L("EditJobStatusType"));
+            jobStatusTypes.CreateChildPermission(AppPermissions.Pages_JobStatusTypes_Delete, L("DeleteJobStatusType"));
+
+            var storeTags = pages.CreateChildPermission(AppPermissions.Pages_StoreTags, L("StoreTags"));
+            storeTags.CreateChildPermission(AppPermissions.Pages_StoreTags_Create, L("CreateNewStoreTag"));
+            storeTags.CreateChildPermission(AppPermissions.Pages_StoreTags_Edit, L("EditStoreTag"));
+            storeTags.CreateChildPermission(AppPermissions.Pages_StoreTags_Delete, L("DeleteStoreTag"));
+
+            var productTags = pages.CreateChildPermission(AppPermissions.Pages_ProductTags, L("ProductTags"));
+            productTags.CreateChildPermission(AppPermissions.Pages_ProductTags_Create, L("CreateNewProductTag"));
+            productTags.CreateChildPermission(AppPermissions.Pages_ProductTags_Edit, L("EditProductTag"));
+            productTags.CreateChildPermission(AppPermissions.Pages_ProductTags_Delete, L("DeleteProductTag"));
+
+            var businessTags = pages.CreateChildPermission(AppPermissions.Pages_BusinessTags, L("BusinessTags"));
+            businessTags.CreateChildPermission(AppPermissions.Pages_BusinessTags_Create, L("CreateNewBusinessTag"));
+            businessTags.CreateChildPermission(AppPermissions.Pages_BusinessTags_Edit, L("EditBusinessTag"));
+            businessTags.CreateChildPermission(AppPermissions.Pages_BusinessTags_Delete, L("DeleteBusinessTag"));
+
+            var contactTags = pages.CreateChildPermission(AppPermissions.Pages_ContactTags, L("ContactTags"));
+            contactTags.CreateChildPermission(AppPermissions.Pages_ContactTags_Create, L("CreateNewContactTag"));
+            contactTags.CreateChildPermission(AppPermissions.Pages_ContactTags_Edit, L("EditContactTag"));
+            contactTags.CreateChildPermission(AppPermissions.Pages_ContactTags_Delete, L("DeleteContactTag"));
+
             var stores = pages.CreateChildPermission(AppPermissions.Pages_Stores, L("Stores"));
             stores.CreateChildPermission(AppPermissions.Pages_Stores_Create, L("CreateNewStore"));
             stores.CreateChildPermission(AppPermissions.Pages_Stores_Edit, L("EditStore"));

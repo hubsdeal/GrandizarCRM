@@ -106,5 +106,9 @@ namespace SoftGrid.CRM
         [ForeignKey("MembershipTypeId")]
         public MembershipType MembershipTypeFk { get; set; }
 
+        public virtual bool? IsApplicant { get; set; }
+        public virtual bool? Active { get; set; }
+        public virtual Guid? PictureId { get; set; }
+
     }
 }

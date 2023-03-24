@@ -1,0 +1,195 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span>{{ l('Details') }}</span>
+                </h4>
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    (click)="close()"
+                    aria-label="Close"
+                    [disabled]="saving"
+                ></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Title') }} :</h6>
+                        {{ item.job.title }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('FullTimeJobOrGigWorkProject') }} :</h6>
+                        <div *ngIf="item.job.fullTimeJobOrGigWorkProject" class="text-left">
+                            <i class="fa fa-check-circle text-success" title="True"></i>
+                        </div>
+                        <div *ngIf="!item.job.fullTimeJobOrGigWorkProject" class="text-left">
+                            <i class="fa fa-times-circle" title="False"></i>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('RemoteWorkOrOnSiteWork') }} :</h6>
+                        <div *ngIf="item.job.remoteWorkOrOnSiteWork" class="text-left">
+                            <i class="fa fa-check-circle text-success" title="True"></i>
+                        </div>
+                        <div *ngIf="!item.job.remoteWorkOrOnSiteWork" class="text-left">
+                            <i class="fa fa-times-circle" title="False"></i>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('SalaryBasedOrFixedPrice') }} :</h6>
+                        <div *ngIf="item.job.salaryBasedOrFixedPrice" class="text-left">
+                            <i class="fa fa-check-circle text-success" title="True"></i>
+                        </div>
+                        <div *ngIf="!item.job.salaryBasedOrFixedPrice" class="text-left">
+                            <i class="fa fa-times-circle" title="False"></i>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('SalaryOrStaffingRate') }} :</h6>
+                        {{ item.job.salaryOrStaffingRate }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('ReferralPoints') }} :</h6>
+                        {{ item.job.referralPoints }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Template') }} :</h6>
+                        <div *ngIf="item.job.template" class="text-left">
+                            <i class="fa fa-check-circle text-success" title="True"></i>
+                        </div>
+                        <div *ngIf="!item.job.template" class="text-left">
+                            <i class="fa fa-times-circle" title="False"></i>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('NumberOfJobs') }} :</h6>
+                        {{ item.job.numberOfJobs }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('MinimumExperience') }} :</h6>
+                        {{ item.job.minimumExperience }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('MaximumExperience') }} :</h6>
+                        {{ item.job.maximumExperience }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('JobDescription') }} :</h6>
+                        {{ item.job.jobDescription }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('JobLocationFullAddress') }} :</h6>
+                        {{ item.job.jobLocationFullAddress }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('ZipCode') }} :</h6>
+                        {{ item.job.zipCode }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Latitude') }} :</h6>
+                        {{ item.job.latitude }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Longitude') }} :</h6>
+                        {{ item.job.longitude }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('StartDate') }} :</h6>
+                        {{ item.job.startDate | luxonFormat : 'yyyy-LL-dd HH:mm:ss' }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('HireByDate') }} :</h6>
+                        {{ item.job.hireByDate | luxonFormat : 'yyyy-LL-dd HH:mm:ss' }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('PublishDate') }} :</h6>
+                        {{ item.job.publishDate | luxonFormat : 'yyyy-LL-dd HH:mm:ss' }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('ExpirationDate') }} :</h6>
+                        {{ item.job.expirationDate | luxonFormat : 'yyyy-LL-dd HH:mm:ss' }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('InternalJobDescription') }} :</h6>
+                        {{ item.job.internalJobDescription }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('CityLocation') }} :</h6>
+                        {{ item.job.cityLocation }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Published') }} :</h6>
+                        <div *ngIf="item.job.published" class="text-left">
+                            <i class="fa fa-check-circle text-success" title="True"></i>
+                        </div>
+                        <div *ngIf="!item.job.published" class="text-left">
+                            <i class="fa fa-times-circle" title="False"></i>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Url') }} :</h6>
+                        {{ item.job.url }}
+                    </div>
+
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('MasterTagCategory') }}) {{ l('Name') }} :</h6>
+                        {{ item.masterTagCategoryName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('MasterTag') }}) {{ l('Name') }} :</h6>
+                        {{ item.masterTagName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('ProductCategory') }}) {{ l('Name') }} :</h6>
+                        {{ item.productCategoryName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('Currency') }}) {{ l('Name') }} :</h6>
+                        {{ item.currencyName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('Business') }}) {{ l('Name') }} :</h6>
+                        {{ item.businessName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('Country') }}) {{ l('Name') }} :</h6>
+                        {{ item.countryName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('State') }}) {{ l('Name') }} :</h6>
+                        {{ item.stateName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('City') }}) {{ l('Name') }} :</h6>
+                        {{ item.cityName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('JobStatusType') }}) {{ l('Name') }} :</h6>
+                        {{ item.jobStatusTypeName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('Store') }}) {{ l('Name') }} :</h6>
+                        {{ item.storeName }}
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button [disabled]="saving" type="button" class="btn btn-primary blue" (click)="close()">
+                    {{ l('Close') }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

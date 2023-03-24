@@ -1,0 +1,138 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span>{{ l('Details') }}</span>
+                </h4>
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    (click)="close()"
+                    aria-label="Close"
+                    [disabled]="saving"
+                ></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Name') }} :</h6>
+                        {{ item.employee.name }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('FirstName') }} :</h6>
+                        {{ item.employee.firstName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('LastName') }} :</h6>
+                        {{ item.employee.lastName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('FullAddress') }} :</h6>
+                        {{ item.employee.fullAddress }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Address') }} :</h6>
+                        {{ item.employee.address }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('ZipCode') }} :</h6>
+                        {{ item.employee.zipCode }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('City') }} :</h6>
+                        {{ item.employee.city }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('DateOfBirth') }} :</h6>
+                        {{ item.employee.dateOfBirth | luxonFormat : 'yyyy-LL-dd HH:mm:ss' }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Mobile') }} :</h6>
+                        {{ item.employee.mobile }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('OfficePhone') }} :</h6>
+                        {{ item.employee.officePhone }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('PersonalEmail') }} :</h6>
+                        {{ item.employee.personalEmail }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('BusinessEmail') }} :</h6>
+                        {{ item.employee.businessEmail }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('JobTitle') }} :</h6>
+                        {{ item.employee.jobTitle }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('CompanyName') }} :</h6>
+                        {{ item.employee.companyName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Profile') }} :</h6>
+                        {{ item.employee.profile }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('HireDate') }} :</h6>
+                        {{ item.employee.hireDate | luxonFormat : 'yyyy-LL-dd HH:mm:ss' }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Facebook') }} :</h6>
+                        {{ item.employee.facebook }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('LinkedIn') }} :</h6>
+                        {{ item.employee.linkedIn }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Fax') }} :</h6>
+                        {{ item.employee.fax }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('ProfilePictureId') }} :</h6>
+                        {{ item.employee.profilePictureId }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('CurrentEmployee') }} :</h6>
+                        <div *ngIf="item.employee.currentEmployee" class="text-left">
+                            <i class="fa fa-check-circle text-success" title="True"></i>
+                        </div>
+                        <div *ngIf="!item.employee.currentEmployee" class="text-left">
+                            <i class="fa fa-times-circle" title="False"></i>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('State') }}) {{ l('Name') }} :</h6>
+                        {{ item.stateName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('Country') }}) {{ l('Name') }} :</h6>
+                        {{ item.countryName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('Contact') }}) {{ l('FullName') }} :</h6>
+                        {{ item.contactFullName }}
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button [disabled]="saving" type="button" class="btn btn-primary blue" (click)="close()">
+                    {{ l('Close') }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

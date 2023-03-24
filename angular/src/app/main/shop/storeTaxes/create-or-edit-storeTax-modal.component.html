@@ -1,0 +1,137 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #storeTaxForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="storeTax.id">{{ l('EditStoreTax') }}</span>
+                        <span *ngIf="!storeTax.id">{{ l('CreateNewStoreTax') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="StoreName">{{ l('Store') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="StoreName"
+                                name="storeName"
+                                [(ngModel)]="storeName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectStoreModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setStoreIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="storeTax.storeId"
+                        [(ngModel)]="storeTax.storeId"
+                        type="text"
+                        required
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="StoreTax_TaxName">{{ l('TaxName') }}</label>
+                        <input
+                            type="text"
+                            #StoreTax_TaxName="ngModel"
+                            id="StoreTax_TaxName"
+                            class="form-control"
+                            [(ngModel)]="storeTax.taxName"
+                            name="TaxName"
+                            minlength="1"
+                            maxlength="128"
+                        />
+                        <validation-messages [formCtrl]="StoreTax_TaxName"></validation-messages>
+                    </div>
+
+                    <br />
+                    <label class="form-check form-check-custom form-check-solid">
+                        <input
+                            id="StoreTax_PercentageOrAmount"
+                            #StoreTax_PercentageOrAmount="ngModel"
+                            name="PercentageOrAmount"
+                            [(ngModel)]="storeTax.percentageOrAmount"
+                            type="checkbox"
+                            class="form-check-input"
+                        />
+                        <span class="form-check-label">
+                            {{ l('PercentageOrAmount') }}
+                        </span>
+                    </label>
+                    <validation-messages [formCtrl]="StoreTax_PercentageOrAmount"></validation-messages>
+
+                    <div class="my5">
+                        <label class="form-label" for="StoreTax_TaxRatePercentage">{{ l('TaxRatePercentage') }}</label>
+                        <input
+                            type="number"
+                            #StoreTax_TaxRatePercentage="ngModel"
+                            id="StoreTax_TaxRatePercentage"
+                            class="form-control"
+                            [(ngModel)]="storeTax.taxRatePercentage"
+                            name="TaxRatePercentage"
+                        />
+                        <validation-messages [formCtrl]="StoreTax_TaxRatePercentage"></validation-messages>
+                    </div>
+
+                    <div class="my5">
+                        <label class="form-label" for="StoreTax_TaxAmount">{{ l('TaxAmount') }}</label>
+                        <input
+                            type="number"
+                            #StoreTax_TaxAmount="ngModel"
+                            id="StoreTax_TaxAmount"
+                            class="form-control"
+                            [(ngModel)]="storeTax.taxAmount"
+                            name="TaxAmount"
+                        />
+                        <validation-messages [formCtrl]="StoreTax_TaxAmount"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!storeTaxForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <storeTaxStoreLookupTableModal
+        #storeTaxStoreLookupTableModal
+        (modalSave)="getNewStoreId()"
+    ></storeTaxStoreLookupTableModal>
+</div>

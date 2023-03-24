@@ -1,0 +1,211 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #taskTagForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="taskTag.id">{{ l('EditTaskTag') }}</span>
+                        <span *ngIf="!taskTag.id">{{ l('CreateNewTaskTag') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="TaskEventName">{{ l('TaskEvent') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="TaskEventName"
+                                name="taskEventName"
+                                [(ngModel)]="taskEventName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectTaskEventModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setTaskEventIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="taskTag.taskEventId"
+                        [(ngModel)]="taskTag.taskEventId"
+                        type="text"
+                        required
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="MasterTagCategoryName">{{ l('MasterTagCategory') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="MasterTagCategoryName"
+                                name="masterTagCategoryName"
+                                [(ngModel)]="masterTagCategoryName"
+                                type="text"
+                                disabled
+                            />
+                            <button
+                                class="btn btn-primary blue"
+                                (click)="openSelectMasterTagCategoryModal()"
+                                type="button"
+                            >
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button
+                                class="btn btn-danger btn-icon"
+                                type="button"
+                                (click)="setMasterTagCategoryIdNull()"
+                            >
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="taskTag.masterTagCategoryId"
+                        [(ngModel)]="taskTag.masterTagCategoryId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="MasterTagName">{{ l('MasterTag') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="MasterTagName"
+                                name="masterTagName"
+                                [(ngModel)]="masterTagName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectMasterTagModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setMasterTagIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="taskTag.masterTagId"
+                        [(ngModel)]="taskTag.masterTagId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="TaskTag_CustomTag">{{ l('CustomTag') }}</label>
+                        <input
+                            type="text"
+                            #TaskTag_CustomTag="ngModel"
+                            id="TaskTag_CustomTag"
+                            class="form-control"
+                            [(ngModel)]="taskTag.customTag"
+                            name="CustomTag"
+                            minlength="1"
+                            maxlength="128"
+                        />
+                        <validation-messages [formCtrl]="TaskTag_CustomTag"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="TaskTag_TagValue">{{ l('TagValue') }}</label>
+                        <input
+                            type="text"
+                            #TaskTag_TagValue="ngModel"
+                            id="TaskTag_TagValue"
+                            class="form-control"
+                            [(ngModel)]="taskTag.tagValue"
+                            name="TagValue"
+                            minlength="1"
+                            maxlength="128"
+                        />
+                        <validation-messages [formCtrl]="TaskTag_TagValue"></validation-messages>
+                    </div>
+
+                    <br />
+                    <label class="form-check form-check-custom form-check-solid">
+                        <input
+                            id="TaskTag_Verfied"
+                            #TaskTag_Verfied="ngModel"
+                            name="Verfied"
+                            [(ngModel)]="taskTag.verfied"
+                            type="checkbox"
+                            class="form-check-input"
+                        />
+                        <span class="form-check-label">
+                            {{ l('Verfied') }}
+                        </span>
+                    </label>
+                    <validation-messages [formCtrl]="TaskTag_Verfied"></validation-messages>
+
+                    <div class="my5">
+                        <label class="form-label" for="TaskTag_Sequence">{{ l('Sequence') }}</label>
+                        <input
+                            type="number"
+                            #TaskTag_Sequence="ngModel"
+                            id="TaskTag_Sequence"
+                            class="form-control"
+                            [(ngModel)]="taskTag.sequence"
+                            name="Sequence"
+                        />
+                        <validation-messages [formCtrl]="TaskTag_Sequence"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!taskTagForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <taskTagTaskEventLookupTableModal
+        #taskTagTaskEventLookupTableModal
+        (modalSave)="getNewTaskEventId()"
+    ></taskTagTaskEventLookupTableModal>
+    <taskTagMasterTagCategoryLookupTableModal
+        #taskTagMasterTagCategoryLookupTableModal
+        (modalSave)="getNewMasterTagCategoryId()"
+    ></taskTagMasterTagCategoryLookupTableModal>
+    <taskTagMasterTagLookupTableModal
+        #taskTagMasterTagLookupTableModal
+        (modalSave)="getNewMasterTagId()"
+    ></taskTagMasterTagLookupTableModal>
+</div>

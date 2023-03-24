@@ -1,0 +1,105 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span>{{ l('Details') }}</span>
+                </h4>
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    (click)="close()"
+                    aria-label="Close"
+                    [disabled]="saving"
+                ></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Name') }} :</h6>
+                        {{ item.taskEvent.name }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Description') }} :</h6>
+                        {{ item.taskEvent.description }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Status') }} :</h6>
+                        <div *ngIf="item.taskEvent.status" class="text-left">
+                            <i class="fa fa-check-circle text-success" title="True"></i>
+                        </div>
+                        <div *ngIf="!item.taskEvent.status" class="text-left">
+                            <i class="fa fa-times-circle" title="False"></i>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Priority') }} :</h6>
+                        <div *ngIf="item.taskEvent.priority" class="text-left">
+                            <i class="fa fa-check-circle text-success" title="True"></i>
+                        </div>
+                        <div *ngIf="!item.taskEvent.priority" class="text-left">
+                            <i class="fa fa-times-circle" title="False"></i>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('EventDate') }} :</h6>
+                        {{ item.taskEvent.eventDate | luxonFormat : 'yyyy-LL-dd HH:mm:ss' }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('StartTime') }} :</h6>
+                        {{ item.taskEvent.startTime }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('EndTime') }} :</h6>
+                        {{ item.taskEvent.endTime }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Template') }} :</h6>
+                        <div *ngIf="item.taskEvent.template" class="text-left">
+                            <i class="fa fa-check-circle text-success" title="True"></i>
+                        </div>
+                        <div *ngIf="!item.taskEvent.template" class="text-left">
+                            <i class="fa fa-times-circle" title="False"></i>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('ActualTime') }} :</h6>
+                        {{ item.taskEvent.actualTime }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('EndDate') }} :</h6>
+                        {{ item.taskEvent.endDate | luxonFormat : 'yyyy-LL-dd HH:mm:ss' }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('EstimatedTime') }} :</h6>
+                        {{ item.taskEvent.estimatedTime }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('HourAndMinutes') }} :</h6>
+                        {{ item.taskEvent.hourAndMinutes }}
+                    </div>
+
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('TaskStatus') }}) {{ l('Name') }} :</h6>
+                        {{ item.taskStatusName }}
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button [disabled]="saving" type="button" class="btn btn-primary blue" (click)="close()">
+                    {{ l('Close') }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

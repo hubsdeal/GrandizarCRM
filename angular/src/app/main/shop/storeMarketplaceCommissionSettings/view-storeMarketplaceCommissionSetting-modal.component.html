@@ -1,0 +1,70 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span>{{ l('Details') }}</span>
+                </h4>
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    (click)="close()"
+                    aria-label="Close"
+                    [disabled]="saving"
+                ></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Percentage') }} :</h6>
+                        {{ item.storeMarketplaceCommissionSetting.percentage }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('FixedAmount') }} :</h6>
+                        {{ item.storeMarketplaceCommissionSetting.fixedAmount }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('StartDate') }} :</h6>
+                        {{ item.storeMarketplaceCommissionSetting.startDate | luxonFormat : 'yyyy-LL-dd HH:mm:ss' }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('EndDate') }} :</h6>
+                        {{ item.storeMarketplaceCommissionSetting.endDate | luxonFormat : 'yyyy-LL-dd HH:mm:ss' }}
+                    </div>
+
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('Store') }}) {{ l('Name') }} :</h6>
+                        {{ item.storeName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('MarketplaceCommissionType') }}) {{ l('Name') }} :</h6>
+                        {{ item.marketplaceCommissionTypeName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('ProductCategory') }}) {{ l('Name') }} :</h6>
+                        {{ item.productCategoryName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('Product') }}) {{ l('Name') }} :</h6>
+                        {{ item.productName }}
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button [disabled]="saving" type="button" class="btn btn-primary blue" (click)="close()">
+                    {{ l('Close') }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

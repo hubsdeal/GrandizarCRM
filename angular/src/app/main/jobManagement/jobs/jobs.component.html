@@ -1,0 +1,1055 @@
+﻿<div [@routerTransition]>
+    <sub-header [title]="'Jobs' | localize" [description]="'JobsHeaderInfo' | localize">
+        <div role="actions">
+            <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1">
+                <i class="fa fa-file-excel"></i>
+                {{ l('ExportToExcel') }}
+            </button>
+
+            <button *ngIf="isGranted('Pages.Jobs.Create')" (click)="createJob()" class="btn btn-primary blue">
+                <i class="fa fa-plus"></i>
+                {{ l('CreateNewJob') }}
+            </button>
+        </div>
+    </sub-header>
+
+    <div [class]="containerClass">
+        <div class="card card-custom gutter-b">
+            <div class="card-body">
+                <form class="form" autocomplete="off">
+                    <div>
+                        <div class="row align-items-center">
+                            <div class="col-xl-12">
+                                <div class="my-3">
+                                    <div class="input-group mb-3">
+                                        <input
+                                            [(ngModel)]="filterText"
+                                            (ngModelChange)="getJobs()"
+                                            name="filterText"
+                                            autoFocus
+                                            type="text"
+                                            class="form-control"
+                                            [placeholder]="l('SearchWithThreeDot')"
+                                        />
+                                        <button class="btn btn-primary" type="submit" (click)="getJobs()">
+                                            <i class="flaticon-search-1"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" [hidden]="!advancedFiltersAreShown">
+                            <div class="col-md-12"></div>
+
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="TitleFilter">{{ l('Title') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="TitleFilter"
+                                        name="titleFilter"
+                                        [(ngModel)]="titleFilter"
+                                        (ngModelChange)="getJobs()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="FullTimeJobOrGigWorkProjectFilterSelect">
+                                        {{ l('FullTimeJobOrGigWorkProject') }}
+                                    </label>
+                                    <select
+                                        class="form-select"
+                                        name="FullTimeJobOrGigWorkProjectFilter"
+                                        id="FullTimeJobOrGigWorkProjectFilterSelect"
+                                        [(ngModel)]="fullTimeJobOrGigWorkProjectFilter"
+                                        (ngModelChange)="getJobs()"
+                                    >
+                                        <option value="-1">{{ l('All') }}</option>
+                                        <option value="0">{{ l('False') }}</option>
+                                        <option value="1">{{ l('True') }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="RemoteWorkOrOnSiteWorkFilterSelect">
+                                        {{ l('RemoteWorkOrOnSiteWork') }}
+                                    </label>
+                                    <select
+                                        class="form-select"
+                                        name="RemoteWorkOrOnSiteWorkFilter"
+                                        id="RemoteWorkOrOnSiteWorkFilterSelect"
+                                        [(ngModel)]="remoteWorkOrOnSiteWorkFilter"
+                                        (ngModelChange)="getJobs()"
+                                    >
+                                        <option value="-1">{{ l('All') }}</option>
+                                        <option value="0">{{ l('False') }}</option>
+                                        <option value="1">{{ l('True') }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="SalaryBasedOrFixedPriceFilterSelect">
+                                        {{ l('SalaryBasedOrFixedPrice') }}
+                                    </label>
+                                    <select
+                                        class="form-select"
+                                        name="SalaryBasedOrFixedPriceFilter"
+                                        id="SalaryBasedOrFixedPriceFilterSelect"
+                                        [(ngModel)]="salaryBasedOrFixedPriceFilter"
+                                        (ngModelChange)="getJobs()"
+                                    >
+                                        <option value="-1">{{ l('All') }}</option>
+                                        <option value="0">{{ l('False') }}</option>
+                                        <option value="1">{{ l('True') }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="SalaryOrStaffingRateFilter">
+                                        {{ l('SalaryOrStaffingRate') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="SalaryOrStaffingRateFilter"
+                                        name="salaryOrStaffingRateFilter"
+                                        [(ngModel)]="salaryOrStaffingRateFilter"
+                                        (ngModelChange)="getJobs()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="ReferralPointsFilter">
+                                        {{ l('ReferralPoints') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="ReferralPointsFilter"
+                                        name="referralPointsFilter"
+                                        [(ngModel)]="referralPointsFilter"
+                                        (ngModelChange)="getJobs()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="TemplateFilterSelect">{{ l('Template') }}</label>
+                                    <select
+                                        class="form-select"
+                                        name="TemplateFilter"
+                                        id="TemplateFilterSelect"
+                                        [(ngModel)]="templateFilter"
+                                        (ngModelChange)="getJobs()"
+                                    >
+                                        <option value="-1">{{ l('All') }}</option>
+                                        <option value="0">{{ l('False') }}</option>
+                                        <option value="1">{{ l('True') }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="MinNumberOfJobsFilter">
+                                        {{ l('MinMax') }} {{ l('NumberOfJobs') }}
+                                    </label>
+                                    <div class="input-group">
+                                        <input
+                                            type="number"
+                                            class="form-control"
+                                            id="MinNumberOfJobsFilter"
+                                            [(ngModel)]="minNumberOfJobsFilter"
+                                            placeholder="{{ l('MinValue') }}"
+                                            name="minNumberOfJobsFilter"
+                                            (ngModelChange)="getJobs()"
+                                        />
+                                        <input
+                                            type="number"
+                                            class="form-control"
+                                            [(ngModel)]="maxNumberOfJobsFilter"
+                                            placeholder="{{ l('MaxValue') }}"
+                                            name="maxNumberOfJobsFilter"
+                                            (ngModelChange)="getJobs()"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="MinimumExperienceFilter">
+                                        {{ l('MinimumExperience') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="MinimumExperienceFilter"
+                                        name="minimumExperienceFilter"
+                                        [(ngModel)]="minimumExperienceFilter"
+                                        (ngModelChange)="getJobs()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="MaximumExperienceFilter">
+                                        {{ l('MaximumExperience') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="MaximumExperienceFilter"
+                                        name="maximumExperienceFilter"
+                                        [(ngModel)]="maximumExperienceFilter"
+                                        (ngModelChange)="getJobs()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="JobDescriptionFilter">
+                                        {{ l('JobDescription') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="JobDescriptionFilter"
+                                        name="jobDescriptionFilter"
+                                        [(ngModel)]="jobDescriptionFilter"
+                                        (ngModelChange)="getJobs()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="JobLocationFullAddressFilter">
+                                        {{ l('JobLocationFullAddress') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="JobLocationFullAddressFilter"
+                                        name="jobLocationFullAddressFilter"
+                                        [(ngModel)]="jobLocationFullAddressFilter"
+                                        (ngModelChange)="getJobs()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="ZipCodeFilter">{{ l('ZipCode') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="ZipCodeFilter"
+                                        name="zipCodeFilter"
+                                        [(ngModel)]="zipCodeFilter"
+                                        (ngModelChange)="getJobs()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="MinLatitudeFilter">
+                                        {{ l('MinMax') }} {{ l('Latitude') }}
+                                    </label>
+                                    <div class="input-group">
+                                        <input
+                                            type="number"
+                                            class="form-control"
+                                            id="MinLatitudeFilter"
+                                            [(ngModel)]="minLatitudeFilter"
+                                            placeholder="{{ l('MinValue') }}"
+                                            name="minLatitudeFilter"
+                                            (ngModelChange)="getJobs()"
+                                        />
+                                        <input
+                                            type="number"
+                                            class="form-control"
+                                            [(ngModel)]="maxLatitudeFilter"
+                                            placeholder="{{ l('MaxValue') }}"
+                                            name="maxLatitudeFilter"
+                                            (ngModelChange)="getJobs()"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="MinLongitudeFilter">
+                                        {{ l('MinMax') }} {{ l('Longitude') }}
+                                    </label>
+                                    <div class="input-group">
+                                        <input
+                                            type="number"
+                                            class="form-control"
+                                            id="MinLongitudeFilter"
+                                            [(ngModel)]="minLongitudeFilter"
+                                            placeholder="{{ l('MinValue') }}"
+                                            name="minLongitudeFilter"
+                                            (ngModelChange)="getJobs()"
+                                        />
+                                        <input
+                                            type="number"
+                                            class="form-control"
+                                            [(ngModel)]="maxLongitudeFilter"
+                                            placeholder="{{ l('MaxValue') }}"
+                                            name="maxLongitudeFilter"
+                                            (ngModelChange)="getJobs()"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="MinStartDateFilter">{{ l('StartDateRange') }}</label>
+                                    <div class="input-group">
+                                        <input
+                                            class="form-control m-input"
+                                            id="MinStartDateFilter"
+                                            name="MinStartDateFilter"
+                                            type="datetime"
+                                            bsDatepicker
+                                            placeholder="{{ l('MinValue') }}"
+                                            [(ngModel)]="minStartDateFilter"
+                                            (ngModelChange)="getJobs()"
+                                        />
+                                        <span style="line-height: 40px; padding: 0 15px 0 15px">&mdash;</span>
+                                        <input
+                                            class="form-control m-input"
+                                            id="MaxStartDateFilter"
+                                            name="MaxStartDateFilter"
+                                            type="datetime"
+                                            bsDatepicker
+                                            placeholder="{{ l('MaxValue') }}"
+                                            [(ngModel)]="maxStartDateFilter"
+                                            (ngModelChange)="getJobs()"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="MinHireByDateFilter">
+                                        {{ l('HireByDateRange') }}
+                                    </label>
+                                    <div class="input-group">
+                                        <input
+                                            class="form-control m-input"
+                                            id="MinHireByDateFilter"
+                                            name="MinHireByDateFilter"
+                                            type="datetime"
+                                            bsDatepicker
+                                            placeholder="{{ l('MinValue') }}"
+                                            [(ngModel)]="minHireByDateFilter"
+                                            (ngModelChange)="getJobs()"
+                                        />
+                                        <span style="line-height: 40px; padding: 0 15px 0 15px">&mdash;</span>
+                                        <input
+                                            class="form-control m-input"
+                                            id="MaxHireByDateFilter"
+                                            name="MaxHireByDateFilter"
+                                            type="datetime"
+                                            bsDatepicker
+                                            placeholder="{{ l('MaxValue') }}"
+                                            [(ngModel)]="maxHireByDateFilter"
+                                            (ngModelChange)="getJobs()"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="MinPublishDateFilter">
+                                        {{ l('PublishDateRange') }}
+                                    </label>
+                                    <div class="input-group">
+                                        <input
+                                            class="form-control m-input"
+                                            id="MinPublishDateFilter"
+                                            name="MinPublishDateFilter"
+                                            type="datetime"
+                                            bsDatepicker
+                                            placeholder="{{ l('MinValue') }}"
+                                            [(ngModel)]="minPublishDateFilter"
+                                            (ngModelChange)="getJobs()"
+                                        />
+                                        <span style="line-height: 40px; padding: 0 15px 0 15px">&mdash;</span>
+                                        <input
+                                            class="form-control m-input"
+                                            id="MaxPublishDateFilter"
+                                            name="MaxPublishDateFilter"
+                                            type="datetime"
+                                            bsDatepicker
+                                            placeholder="{{ l('MaxValue') }}"
+                                            [(ngModel)]="maxPublishDateFilter"
+                                            (ngModelChange)="getJobs()"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="MinExpirationDateFilter">
+                                        {{ l('ExpirationDateRange') }}
+                                    </label>
+                                    <div class="input-group">
+                                        <input
+                                            class="form-control m-input"
+                                            id="MinExpirationDateFilter"
+                                            name="MinExpirationDateFilter"
+                                            type="datetime"
+                                            bsDatepicker
+                                            placeholder="{{ l('MinValue') }}"
+                                            [(ngModel)]="minExpirationDateFilter"
+                                            (ngModelChange)="getJobs()"
+                                        />
+                                        <span style="line-height: 40px; padding: 0 15px 0 15px">&mdash;</span>
+                                        <input
+                                            class="form-control m-input"
+                                            id="MaxExpirationDateFilter"
+                                            name="MaxExpirationDateFilter"
+                                            type="datetime"
+                                            bsDatepicker
+                                            placeholder="{{ l('MaxValue') }}"
+                                            [(ngModel)]="maxExpirationDateFilter"
+                                            (ngModelChange)="getJobs()"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="InternalJobDescriptionFilter">
+                                        {{ l('InternalJobDescription') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="InternalJobDescriptionFilter"
+                                        name="internalJobDescriptionFilter"
+                                        [(ngModel)]="internalJobDescriptionFilter"
+                                        (ngModelChange)="getJobs()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="CityLocationFilter">{{ l('CityLocation') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="CityLocationFilter"
+                                        name="cityLocationFilter"
+                                        [(ngModel)]="cityLocationFilter"
+                                        (ngModelChange)="getJobs()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="PublishedFilterSelect">{{ l('Published') }}</label>
+                                    <select
+                                        class="form-select"
+                                        name="PublishedFilter"
+                                        id="PublishedFilterSelect"
+                                        [(ngModel)]="publishedFilter"
+                                        (ngModelChange)="getJobs()"
+                                    >
+                                        <option value="-1">{{ l('All') }}</option>
+                                        <option value="0">{{ l('False') }}</option>
+                                        <option value="1">{{ l('True') }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="UrlFilter">{{ l('Url') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="UrlFilter"
+                                        name="urlFilter"
+                                        [(ngModel)]="urlFilter"
+                                        (ngModelChange)="getJobs()"
+                                    />
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="MasterTagCategoryNameFilter">
+                                        ({{ l('MasterTagCategory') }}) {{ l('Name') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="MasterTagCategoryNameFilter"
+                                        name="masterTagCategoryNameFilter"
+                                        [(ngModel)]="masterTagCategoryNameFilter"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="MasterTagNameFilter">
+                                        ({{ l('MasterTag') }}) {{ l('Name') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="MasterTagNameFilter"
+                                        name="masterTagNameFilter"
+                                        [(ngModel)]="masterTagNameFilter"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="ProductCategoryNameFilter">
+                                        ({{ l('ProductCategory') }}) {{ l('Name') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="ProductCategoryNameFilter"
+                                        name="productCategoryNameFilter"
+                                        [(ngModel)]="productCategoryNameFilter"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="CurrencyNameFilter">
+                                        ({{ l('Currency') }}) {{ l('Name') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="CurrencyNameFilter"
+                                        name="currencyNameFilter"
+                                        [(ngModel)]="currencyNameFilter"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="BusinessNameFilter">
+                                        ({{ l('Business') }}) {{ l('Name') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="BusinessNameFilter"
+                                        name="businessNameFilter"
+                                        [(ngModel)]="businessNameFilter"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="CountryNameFilter">
+                                        ({{ l('Country') }}) {{ l('Name') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="CountryNameFilter"
+                                        name="countryNameFilter"
+                                        [(ngModel)]="countryNameFilter"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="StateNameFilter">
+                                        ({{ l('State') }}) {{ l('Name') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="StateNameFilter"
+                                        name="stateNameFilter"
+                                        [(ngModel)]="stateNameFilter"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="CityNameFilter">
+                                        ({{ l('City') }}) {{ l('Name') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="CityNameFilter"
+                                        name="cityNameFilter"
+                                        [(ngModel)]="cityNameFilter"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="JobStatusTypeNameFilter">
+                                        ({{ l('JobStatusType') }}) {{ l('Name') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="JobStatusTypeNameFilter"
+                                        name="jobStatusTypeNameFilter"
+                                        [(ngModel)]="jobStatusTypeNameFilter"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="StoreNameFilter">
+                                        ({{ l('Store') }}) {{ l('Name') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="StoreNameFilter"
+                                        name="storeNameFilter"
+                                        [(ngModel)]="storeNameFilter"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-12 mt-5">
+                                <button
+                                    (click)="resetFilters()"
+                                    class="btn btn-secondary btn-sm"
+                                    id="btn-reset-filters"
+                                >
+                                    Reset
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row my-4">
+                            <div class="col-sm-12">
+                                <span
+                                    class="clickable-item text-muted"
+                                    *ngIf="!advancedFiltersAreShown"
+                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown"
+                                >
+                                    <i class="fa fa-angle-down"></i>
+                                    {{ l('ShowAdvancedFilters') }}
+                                </span>
+                                <span
+                                    class="clickable-item text-muted"
+                                    *ngIf="advancedFiltersAreShown"
+                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown"
+                                >
+                                    <i class="fa fa-angle-up"></i>
+                                    {{ l('HideAdvancedFilters') }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="row align-items-center">
+                    <!--<Primeng-Datatable-Start>-->
+                    <div class="primeng-datatable-container col-12" [busyIf]="primengTableHelper.isLoading">
+                        <p-table
+                            #dataTable
+                            (onLazyLoad)="getJobs($event)"
+                            [value]="primengTableHelper.records"
+                            rows="{{ primengTableHelper.defaultRecordsCountPerPage }}"
+                            [paginator]="false"
+                            [lazy]="true"
+                            [scrollable]="true"
+                            ScrollWidth="100%"
+                            [responsive]="primengTableHelper.isResponsive"
+                            [resizableColumns]="primengTableHelper.resizableColumns"
+                        >
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th
+                                        style="width: 130px"
+                                        [hidden]="!isGrantedAny('Pages.Jobs.Edit', 'Pages.Jobs.Delete')"
+                                    >
+                                        {{ l('Actions') }}
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="masterTagCategoryFk.name">
+                                        {{ l('Name') }}
+                                        <p-sortIcon field="masterTagCategoryName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="masterTagFk.name">
+                                        {{ l('Name') }}
+                                        <p-sortIcon field="masterTagName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="productCategoryFk.name">
+                                        {{ l('Name') }}
+                                        <p-sortIcon field="productCategoryName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="currencyFk.name">
+                                        {{ l('Name') }}
+                                        <p-sortIcon field="currencyName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="businessFk.name">
+                                        {{ l('Name') }}
+                                        <p-sortIcon field="businessName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="countryFk.name">
+                                        {{ l('Name') }}
+                                        <p-sortIcon field="countryName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="stateFk.name">
+                                        {{ l('Name') }}
+                                        <p-sortIcon field="stateName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="cityFk.name">
+                                        {{ l('Name') }}
+                                        <p-sortIcon field="cityName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="jobStatusTypeFk.name">
+                                        {{ l('Name') }}
+                                        <p-sortIcon field="jobStatusTypeName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="storeFk.name">
+                                        {{ l('Name') }}
+                                        <p-sortIcon field="storeName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="title">
+                                        {{ l('Title') }}
+                                        <p-sortIcon field="job.title"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="fullTimeJobOrGigWorkProject">
+                                        {{ l('FullTimeJobOrGigWorkProject') }}
+                                        <p-sortIcon field="job.fullTimeJobOrGigWorkProject"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="remoteWorkOrOnSiteWork">
+                                        {{ l('RemoteWorkOrOnSiteWork') }}
+                                        <p-sortIcon field="job.remoteWorkOrOnSiteWork"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="salaryBasedOrFixedPrice">
+                                        {{ l('SalaryBasedOrFixedPrice') }}
+                                        <p-sortIcon field="job.salaryBasedOrFixedPrice"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="salaryOrStaffingRate">
+                                        {{ l('SalaryOrStaffingRate') }}
+                                        <p-sortIcon field="job.salaryOrStaffingRate"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="referralPoints">
+                                        {{ l('ReferralPoints') }}
+                                        <p-sortIcon field="job.referralPoints"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="template">
+                                        {{ l('Template') }}
+                                        <p-sortIcon field="job.template"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="numberOfJobs">
+                                        {{ l('NumberOfJobs') }}
+                                        <p-sortIcon field="job.numberOfJobs"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="minimumExperience">
+                                        {{ l('MinimumExperience') }}
+                                        <p-sortIcon field="job.minimumExperience"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="maximumExperience">
+                                        {{ l('MaximumExperience') }}
+                                        <p-sortIcon field="job.maximumExperience"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="jobDescription">
+                                        {{ l('JobDescription') }}
+                                        <p-sortIcon field="job.jobDescription"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="jobLocationFullAddress">
+                                        {{ l('JobLocationFullAddress') }}
+                                        <p-sortIcon field="job.jobLocationFullAddress"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="zipCode">
+                                        {{ l('ZipCode') }}
+                                        <p-sortIcon field="job.zipCode"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="latitude">
+                                        {{ l('Latitude') }}
+                                        <p-sortIcon field="job.latitude"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="longitude">
+                                        {{ l('Longitude') }}
+                                        <p-sortIcon field="job.longitude"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="startDate">
+                                        {{ l('StartDate') }}
+                                        <p-sortIcon field="job.startDate"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="hireByDate">
+                                        {{ l('HireByDate') }}
+                                        <p-sortIcon field="job.hireByDate"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="publishDate">
+                                        {{ l('PublishDate') }}
+                                        <p-sortIcon field="job.publishDate"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="expirationDate">
+                                        {{ l('ExpirationDate') }}
+                                        <p-sortIcon field="job.expirationDate"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="internalJobDescription">
+                                        {{ l('InternalJobDescription') }}
+                                        <p-sortIcon field="job.internalJobDescription"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="cityLocation">
+                                        {{ l('CityLocation') }}
+                                        <p-sortIcon field="job.cityLocation"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="published">
+                                        {{ l('Published') }}
+                                        <p-sortIcon field="job.published"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="url">
+                                        {{ l('Url') }}
+                                        <p-sortIcon field="job.url"></p-sortIcon>
+                                    </th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
+                                <tr>
+                                    <td
+                                        style="width: 130px"
+                                        [hidden]="!isGrantedAny('Pages.Jobs.Edit', 'Pages.Jobs.Delete')"
+                                    >
+                                        <div class="btn-group dropdown" dropdown container="body">
+                                            <button class="dropdown-toggle btn btn-sm btn-primary" dropdownToggle>
+                                                <i class="fa fa-cog"></i>
+                                                <span class="caret"></span>
+                                                {{ l('Actions') }}
+                                            </button>
+                                            <ul class="dropdown-menu" *dropdownMenu>
+                                                <li>
+                                                    <a
+                                                        href="javascript:;"
+                                                        class="dropdown-item"
+                                                        (click)="viewJobModal.show(record)"
+                                                    >
+                                                        {{ l('View') }}
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a
+                                                        href="javascript:;"
+                                                        *ngIf="permission.isGranted('Pages.Jobs.Edit')"
+                                                        class="dropdown-item"
+                                                        (click)="createOrEditJobModal.show(record.job.id)"
+                                                    >
+                                                        {{ l('Edit') }}
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a
+                                                        class="dropdown-item"
+                                                        href="javascript:;"
+                                                        *ngIf="permission.isGranted('Pages.Jobs.Delete')"
+                                                        (click)="deleteJob(record.job)"
+                                                    >
+                                                        {{ l('Delete') }}
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Name') }}</span>
+                                        {{ record.masterTagCategoryName }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Name') }}</span>
+                                        {{ record.masterTagName }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Name') }}</span>
+                                        {{ record.productCategoryName }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Name') }}</span>
+                                        {{ record.currencyName }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Name') }}</span>
+                                        {{ record.businessName }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Name') }}</span>
+                                        {{ record.countryName }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Name') }}</span>
+                                        {{ record.stateName }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Name') }}</span>
+                                        {{ record.cityName }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Name') }}</span>
+                                        {{ record.jobStatusTypeName }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Name') }}</span>
+                                        {{ record.storeName }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Title') }}</span>
+                                        {{ record.job.title }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('FullTimeJobOrGigWorkProject') }}</span>
+                                        <div *ngIf="record.job.fullTimeJobOrGigWorkProject" class="text-center">
+                                            <i class="fa fa-check-circle text-success" title="True"></i>
+                                        </div>
+                                        <div *ngIf="!record.job.fullTimeJobOrGigWorkProject" class="text-center">
+                                            <i class="fa fa-times-circle" title="False"></i>
+                                        </div>
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('RemoteWorkOrOnSiteWork') }}</span>
+                                        <div *ngIf="record.job.remoteWorkOrOnSiteWork" class="text-center">
+                                            <i class="fa fa-check-circle text-success" title="True"></i>
+                                        </div>
+                                        <div *ngIf="!record.job.remoteWorkOrOnSiteWork" class="text-center">
+                                            <i class="fa fa-times-circle" title="False"></i>
+                                        </div>
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('SalaryBasedOrFixedPrice') }}</span>
+                                        <div *ngIf="record.job.salaryBasedOrFixedPrice" class="text-center">
+                                            <i class="fa fa-check-circle text-success" title="True"></i>
+                                        </div>
+                                        <div *ngIf="!record.job.salaryBasedOrFixedPrice" class="text-center">
+                                            <i class="fa fa-times-circle" title="False"></i>
+                                        </div>
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('SalaryOrStaffingRate') }}</span>
+                                        {{ record.job.salaryOrStaffingRate }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('ReferralPoints') }}</span>
+                                        {{ record.job.referralPoints }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Template') }}</span>
+                                        <div *ngIf="record.job.template" class="text-center">
+                                            <i class="fa fa-check-circle text-success" title="True"></i>
+                                        </div>
+                                        <div *ngIf="!record.job.template" class="text-center">
+                                            <i class="fa fa-times-circle" title="False"></i>
+                                        </div>
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('NumberOfJobs') }}</span>
+                                        {{ record.job.numberOfJobs }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('MinimumExperience') }}</span>
+                                        {{ record.job.minimumExperience }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('MaximumExperience') }}</span>
+                                        {{ record.job.maximumExperience }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('JobDescription') }}</span>
+                                        {{ record.job.jobDescription }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('JobLocationFullAddress') }}</span>
+                                        {{ record.job.jobLocationFullAddress }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('ZipCode') }}</span>
+                                        {{ record.job.zipCode }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Latitude') }}</span>
+                                        {{ record.job.latitude }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Longitude') }}</span>
+                                        {{ record.job.longitude }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('StartDate') }}</span>
+                                        <span *ngIf="record.job.startDate">
+                                            {{ record.job.startDate | luxonFormat : 'F' }}
+                                        </span>
+                                        <span *ngIf="!record.job.startDate">-</span>
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('HireByDate') }}</span>
+                                        <span *ngIf="record.job.hireByDate">
+                                            {{ record.job.hireByDate | luxonFormat : 'F' }}
+                                        </span>
+                                        <span *ngIf="!record.job.hireByDate">-</span>
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('PublishDate') }}</span>
+                                        <span *ngIf="record.job.publishDate">
+                                            {{ record.job.publishDate | luxonFormat : 'F' }}
+                                        </span>
+                                        <span *ngIf="!record.job.publishDate">-</span>
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('ExpirationDate') }}</span>
+                                        <span *ngIf="record.job.expirationDate">
+                                            {{ record.job.expirationDate | luxonFormat : 'F' }}
+                                        </span>
+                                        <span *ngIf="!record.job.expirationDate">-</span>
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('InternalJobDescription') }}</span>
+                                        {{ record.job.internalJobDescription }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('CityLocation') }}</span>
+                                        {{ record.job.cityLocation }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Published') }}</span>
+                                        <div *ngIf="record.job.published" class="text-center">
+                                            <i class="fa fa-check-circle text-success" title="True"></i>
+                                        </div>
+                                        <div *ngIf="!record.job.published" class="text-center">
+                                            <i class="fa fa-times-circle" title="False"></i>
+                                        </div>
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Url') }}</span>
+                                        {{ record.job.url }}
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                        <div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
+                            {{ l('NoData') }}
+                        </div>
+                        <div class="primeng-paging-container">
+                            <p-paginator
+                                [rows]="primengTableHelper.defaultRecordsCountPerPage"
+                                #paginator
+                                (onPageChange)="getJobs($event)"
+                                [totalRecords]="primengTableHelper.totalRecordsCount"
+                                [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
+                                [showCurrentPageReport]="true"
+                                [currentPageReportTemplate]="
+                                    'TotalRecordsCount' | localize : primengTableHelper.totalRecordsCount
+                                "
+                            ></p-paginator>
+                        </div>
+                    </div>
+                    <!--<Primeng-Datatable-End>-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <createOrEditJobModal #createOrEditJobModal (modalSave)="getJobs()"></createOrEditJobModal>
+    <viewJobModal #viewJobModal></viewJobModal>
+</div>

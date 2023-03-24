@@ -1,0 +1,211 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #businessTagForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="businessTag.id">{{ l('EditBusinessTag') }}</span>
+                        <span *ngIf="!businessTag.id">{{ l('CreateNewBusinessTag') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="BusinessName">{{ l('Business') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="BusinessName"
+                                name="businessName"
+                                [(ngModel)]="businessName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectBusinessModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setBusinessIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="businessTag.businessId"
+                        [(ngModel)]="businessTag.businessId"
+                        type="text"
+                        required
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="MasterTagCategoryName">{{ l('MasterTagCategory') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="MasterTagCategoryName"
+                                name="masterTagCategoryName"
+                                [(ngModel)]="masterTagCategoryName"
+                                type="text"
+                                disabled
+                            />
+                            <button
+                                class="btn btn-primary blue"
+                                (click)="openSelectMasterTagCategoryModal()"
+                                type="button"
+                            >
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button
+                                class="btn btn-danger btn-icon"
+                                type="button"
+                                (click)="setMasterTagCategoryIdNull()"
+                            >
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="businessTag.masterTagCategoryId"
+                        [(ngModel)]="businessTag.masterTagCategoryId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="MasterTagName">{{ l('MasterTag') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="MasterTagName"
+                                name="masterTagName"
+                                [(ngModel)]="masterTagName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectMasterTagModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setMasterTagIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="businessTag.masterTagId"
+                        [(ngModel)]="businessTag.masterTagId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="BusinessTag_CustomTag">{{ l('CustomTag') }}</label>
+                        <input
+                            type="text"
+                            #BusinessTag_CustomTag="ngModel"
+                            id="BusinessTag_CustomTag"
+                            class="form-control"
+                            [(ngModel)]="businessTag.customTag"
+                            name="CustomTag"
+                            minlength="1"
+                            maxlength="128"
+                        />
+                        <validation-messages [formCtrl]="BusinessTag_CustomTag"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="BusinessTag_TagValue">{{ l('TagValue') }}</label>
+                        <input
+                            type="text"
+                            #BusinessTag_TagValue="ngModel"
+                            id="BusinessTag_TagValue"
+                            class="form-control"
+                            [(ngModel)]="businessTag.tagValue"
+                            name="TagValue"
+                            minlength="1"
+                            maxlength="128"
+                        />
+                        <validation-messages [formCtrl]="BusinessTag_TagValue"></validation-messages>
+                    </div>
+
+                    <br />
+                    <label class="form-check form-check-custom form-check-solid">
+                        <input
+                            id="BusinessTag_Verified"
+                            #BusinessTag_Verified="ngModel"
+                            name="Verified"
+                            [(ngModel)]="businessTag.verified"
+                            type="checkbox"
+                            class="form-check-input"
+                        />
+                        <span class="form-check-label">
+                            {{ l('Verified') }}
+                        </span>
+                    </label>
+                    <validation-messages [formCtrl]="BusinessTag_Verified"></validation-messages>
+
+                    <div class="my5">
+                        <label class="form-label" for="BusinessTag_Sequence">{{ l('Sequence') }}</label>
+                        <input
+                            type="number"
+                            #BusinessTag_Sequence="ngModel"
+                            id="BusinessTag_Sequence"
+                            class="form-control"
+                            [(ngModel)]="businessTag.sequence"
+                            name="Sequence"
+                        />
+                        <validation-messages [formCtrl]="BusinessTag_Sequence"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!businessTagForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <businessTagBusinessLookupTableModal
+        #businessTagBusinessLookupTableModal
+        (modalSave)="getNewBusinessId()"
+    ></businessTagBusinessLookupTableModal>
+    <businessTagMasterTagCategoryLookupTableModal
+        #businessTagMasterTagCategoryLookupTableModal
+        (modalSave)="getNewMasterTagCategoryId()"
+    ></businessTagMasterTagCategoryLookupTableModal>
+    <businessTagMasterTagLookupTableModal
+        #businessTagMasterTagLookupTableModal
+        (modalSave)="getNewMasterTagId()"
+    ></businessTagMasterTagLookupTableModal>
+</div>

@@ -1,0 +1,113 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #businessUserForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="businessUser.id">{{ l('EditBusinessUser') }}</span>
+                        <span *ngIf="!businessUser.id">{{ l('CreateNewBusinessUser') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="BusinessName">{{ l('Business') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="BusinessName"
+                                name="businessName"
+                                [(ngModel)]="businessName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectBusinessModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setBusinessIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="businessUser.businessId"
+                        [(ngModel)]="businessUser.businessId"
+                        type="text"
+                        required
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="UserName">{{ l('User') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="UserName"
+                                name="userName"
+                                [(ngModel)]="userName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectUserModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setUserIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="businessUser.userId"
+                        [(ngModel)]="businessUser.userId"
+                        type="text"
+                        required
+                        hidden
+                    />
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!businessUserForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <businessUserBusinessLookupTableModal
+        #businessUserBusinessLookupTableModal
+        (modalSave)="getNewBusinessId()"
+    ></businessUserBusinessLookupTableModal>
+    <businessUserUserLookupTableModal
+        #businessUserUserLookupTableModal
+        (modalSave)="getNewUserId()"
+    ></businessUserUserLookupTableModal>
+</div>

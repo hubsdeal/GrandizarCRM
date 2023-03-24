@@ -1,0 +1,293 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #storeLocationForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="storeLocation.id">{{ l('EditStoreLocation') }}</span>
+                        <span *ngIf="!storeLocation.id">{{ l('CreateNewStoreLocation') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="CityName">{{ l('City') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="CityName"
+                                name="cityName"
+                                [(ngModel)]="cityName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectCityModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setCityIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="storeLocation.cityId"
+                        [(ngModel)]="storeLocation.cityId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="StateName">{{ l('State') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="StateName"
+                                name="stateName"
+                                [(ngModel)]="stateName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectStateModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setStateIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="storeLocation.stateId"
+                        [(ngModel)]="storeLocation.stateId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="CountryName">{{ l('Country') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="CountryName"
+                                name="countryName"
+                                [(ngModel)]="countryName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectCountryModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setCountryIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="storeLocation.countryId"
+                        [(ngModel)]="storeLocation.countryId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="StoreName">{{ l('Store') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="StoreName"
+                                name="storeName"
+                                [(ngModel)]="storeName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectStoreModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setStoreIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="storeLocation.storeId"
+                        [(ngModel)]="storeLocation.storeId"
+                        type="text"
+                        required
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="StoreLocation_LocationName">{{ l('LocationName') }} *</label>
+                        <input
+                            type="text"
+                            #StoreLocation_LocationName="ngModel"
+                            id="StoreLocation_LocationName"
+                            class="form-control"
+                            [(ngModel)]="storeLocation.locationName"
+                            name="LocationName"
+                            minlength="1"
+                            maxlength="512"
+                            required
+                        />
+                        <validation-messages [formCtrl]="StoreLocation_LocationName"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="StoreLocation_FullAddress">{{ l('FullAddress') }}</label>
+                        <input
+                            type="text"
+                            #StoreLocation_FullAddress="ngModel"
+                            id="StoreLocation_FullAddress"
+                            class="form-control"
+                            [(ngModel)]="storeLocation.fullAddress"
+                            name="FullAddress"
+                            minlength="1"
+                            maxlength="2048"
+                        />
+                        <validation-messages [formCtrl]="StoreLocation_FullAddress"></validation-messages>
+                    </div>
+
+                    <div class="my5">
+                        <label class="form-label" for="StoreLocation_Latitude">{{ l('Latitude') }}</label>
+                        <input
+                            type="number"
+                            #StoreLocation_Latitude="ngModel"
+                            id="StoreLocation_Latitude"
+                            class="form-control"
+                            [(ngModel)]="storeLocation.latitude"
+                            name="Latitude"
+                        />
+                        <validation-messages [formCtrl]="StoreLocation_Latitude"></validation-messages>
+                    </div>
+
+                    <div class="my5">
+                        <label class="form-label" for="StoreLocation_Longitude">{{ l('Longitude') }}</label>
+                        <input
+                            type="number"
+                            #StoreLocation_Longitude="ngModel"
+                            id="StoreLocation_Longitude"
+                            class="form-control"
+                            [(ngModel)]="storeLocation.longitude"
+                            name="Longitude"
+                        />
+                        <validation-messages [formCtrl]="StoreLocation_Longitude"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="StoreLocation_Address">{{ l('Address') }}</label>
+                        <input
+                            type="text"
+                            #StoreLocation_Address="ngModel"
+                            id="StoreLocation_Address"
+                            class="form-control"
+                            [(ngModel)]="storeLocation.address"
+                            name="Address"
+                            minlength="1"
+                            maxlength="1024"
+                        />
+                        <validation-messages [formCtrl]="StoreLocation_Address"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="StoreLocation_Mobile">{{ l('Mobile') }}</label>
+                        <input
+                            type="text"
+                            #StoreLocation_Mobile="ngModel"
+                            id="StoreLocation_Mobile"
+                            class="form-control"
+                            [(ngModel)]="storeLocation.mobile"
+                            name="Mobile"
+                            minlength="1"
+                            maxlength="50"
+                        />
+                        <validation-messages [formCtrl]="StoreLocation_Mobile"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="StoreLocation_Email">{{ l('Email') }}</label>
+                        <input
+                            type="text"
+                            #StoreLocation_Email="ngModel"
+                            id="StoreLocation_Email"
+                            class="form-control"
+                            [(ngModel)]="storeLocation.email"
+                            name="Email"
+                            minlength="1"
+                            maxlength="256"
+                        />
+                        <validation-messages [formCtrl]="StoreLocation_Email"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="StoreLocation_ZipCode">{{ l('ZipCode') }}</label>
+                        <input
+                            type="text"
+                            #StoreLocation_ZipCode="ngModel"
+                            id="StoreLocation_ZipCode"
+                            class="form-control"
+                            [(ngModel)]="storeLocation.zipCode"
+                            name="ZipCode"
+                            minlength="1"
+                            maxlength="50"
+                        />
+                        <validation-messages [formCtrl]="StoreLocation_ZipCode"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!storeLocationForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <storeLocationCityLookupTableModal
+        #storeLocationCityLookupTableModal
+        (modalSave)="getNewCityId()"
+    ></storeLocationCityLookupTableModal>
+    <storeLocationStateLookupTableModal
+        #storeLocationStateLookupTableModal
+        (modalSave)="getNewStateId()"
+    ></storeLocationStateLookupTableModal>
+    <storeLocationCountryLookupTableModal
+        #storeLocationCountryLookupTableModal
+        (modalSave)="getNewCountryId()"
+    ></storeLocationCountryLookupTableModal>
+    <storeLocationStoreLookupTableModal
+        #storeLocationStoreLookupTableModal
+        (modalSave)="getNewStoreId()"
+    ></storeLocationStoreLookupTableModal>
+</div>

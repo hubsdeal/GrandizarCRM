@@ -1,0 +1,141 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #storeSalesAlertForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="storeSalesAlert.id">{{ l('EditStoreSalesAlert') }}</span>
+                        <span *ngIf="!storeSalesAlert.id">{{ l('CreateNewStoreSalesAlert') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="StoreName">{{ l('Store') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="StoreName"
+                                name="storeName"
+                                [(ngModel)]="storeName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectStoreModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setStoreIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="storeSalesAlert.storeId"
+                        [(ngModel)]="storeSalesAlert.storeId"
+                        type="text"
+                        required
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="StoreSalesAlert_Message">{{ l('Message') }}</label>
+                        <input
+                            type="text"
+                            #StoreSalesAlert_Message="ngModel"
+                            id="StoreSalesAlert_Message"
+                            class="form-control"
+                            [(ngModel)]="storeSalesAlert.message"
+                            name="Message"
+                            minlength="1"
+                            maxlength="3000"
+                        />
+                        <validation-messages [formCtrl]="StoreSalesAlert_Message"></validation-messages>
+                    </div>
+
+                    <br />
+                    <label class="form-check form-check-custom form-check-solid">
+                        <input
+                            id="StoreSalesAlert_Current"
+                            #StoreSalesAlert_Current="ngModel"
+                            name="Current"
+                            [(ngModel)]="storeSalesAlert.current"
+                            type="checkbox"
+                            class="form-check-input"
+                        />
+                        <span class="form-check-label">
+                            {{ l('Current') }}
+                        </span>
+                    </label>
+                    <validation-messages [formCtrl]="StoreSalesAlert_Current"></validation-messages>
+
+                    <div class="my-3">
+                        <label class="form-label" for="StoreSalesAlert_StartDate">{{ l('StartDate') }}</label>
+                        <input
+                            class="form-control m-input"
+                            #StoreSalesAlert_StartDate
+                            type="datetime"
+                            bsDatepicker
+                            datePickerLuxonModifier
+                            [(date)]="storeSalesAlert.startDate"
+                            id="StoreSalesAlert_StartDate"
+                            name="StoreSalesAlert_StartDate"
+                        />
+                        <validation-messages [formCtrl]="StoreSalesAlert_StartDate"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="StoreSalesAlert_EndDate">{{ l('EndDate') }}</label>
+                        <input
+                            class="form-control m-input"
+                            #StoreSalesAlert_EndDate
+                            type="datetime"
+                            bsDatepicker
+                            datePickerLuxonModifier
+                            [(date)]="storeSalesAlert.endDate"
+                            id="StoreSalesAlert_EndDate"
+                            name="StoreSalesAlert_EndDate"
+                        />
+                        <validation-messages [formCtrl]="StoreSalesAlert_EndDate"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!storeSalesAlertForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <storeSalesAlertStoreLookupTableModal
+        #storeSalesAlertStoreLookupTableModal
+        (modalSave)="getNewStoreId()"
+    ></storeSalesAlertStoreLookupTableModal>
+</div>

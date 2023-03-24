@@ -1,0 +1,98 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form
+                *ngIf="active"
+                #marketplaceCommissionTypeForm="ngForm"
+                novalidate
+                (ngSubmit)="save()"
+                autocomplete="off"
+            >
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="marketplaceCommissionType.id">{{ l('EditMarketplaceCommissionType') }}</span>
+                        <span *ngIf="!marketplaceCommissionType.id">{{ l('CreateNewMarketplaceCommissionType') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="MarketplaceCommissionType_Name">{{ l('Name') }}</label>
+                        <input
+                            type="text"
+                            #MarketplaceCommissionType_Name="ngModel"
+                            id="MarketplaceCommissionType_Name"
+                            class="form-control"
+                            [(ngModel)]="marketplaceCommissionType.name"
+                            name="Name"
+                            minlength="1"
+                            maxlength="128"
+                        />
+                        <validation-messages [formCtrl]="MarketplaceCommissionType_Name"></validation-messages>
+                    </div>
+
+                    <div class="my5">
+                        <label class="form-label" for="MarketplaceCommissionType_Percentage">
+                            {{ l('Percentage') }}
+                        </label>
+                        <input
+                            type="number"
+                            #MarketplaceCommissionType_Percentage="ngModel"
+                            id="MarketplaceCommissionType_Percentage"
+                            class="form-control"
+                            [(ngModel)]="marketplaceCommissionType.percentage"
+                            name="Percentage"
+                        />
+                        <validation-messages [formCtrl]="MarketplaceCommissionType_Percentage"></validation-messages>
+                    </div>
+
+                    <div class="my5">
+                        <label class="form-label" for="MarketplaceCommissionType_FixedAmount">
+                            {{ l('FixedAmount') }}
+                        </label>
+                        <input
+                            type="number"
+                            #MarketplaceCommissionType_FixedAmount="ngModel"
+                            id="MarketplaceCommissionType_FixedAmount"
+                            class="form-control"
+                            [(ngModel)]="marketplaceCommissionType.fixedAmount"
+                            name="FixedAmount"
+                        />
+                        <validation-messages [formCtrl]="MarketplaceCommissionType_FixedAmount"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!marketplaceCommissionTypeForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,211 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #storeTagForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="storeTag.id">{{ l('EditStoreTag') }}</span>
+                        <span *ngIf="!storeTag.id">{{ l('CreateNewStoreTag') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="StoreName">{{ l('Store') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="StoreName"
+                                name="storeName"
+                                [(ngModel)]="storeName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectStoreModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setStoreIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="storeTag.storeId"
+                        [(ngModel)]="storeTag.storeId"
+                        type="text"
+                        required
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="MasterTagCategoryName">{{ l('MasterTagCategory') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="MasterTagCategoryName"
+                                name="masterTagCategoryName"
+                                [(ngModel)]="masterTagCategoryName"
+                                type="text"
+                                disabled
+                            />
+                            <button
+                                class="btn btn-primary blue"
+                                (click)="openSelectMasterTagCategoryModal()"
+                                type="button"
+                            >
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button
+                                class="btn btn-danger btn-icon"
+                                type="button"
+                                (click)="setMasterTagCategoryIdNull()"
+                            >
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="storeTag.masterTagCategoryId"
+                        [(ngModel)]="storeTag.masterTagCategoryId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="MasterTagName">{{ l('MasterTag') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="MasterTagName"
+                                name="masterTagName"
+                                [(ngModel)]="masterTagName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectMasterTagModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setMasterTagIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="storeTag.masterTagId"
+                        [(ngModel)]="storeTag.masterTagId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="StoreTag_CustomTag">{{ l('CustomTag') }}</label>
+                        <input
+                            type="text"
+                            #StoreTag_CustomTag="ngModel"
+                            id="StoreTag_CustomTag"
+                            class="form-control"
+                            [(ngModel)]="storeTag.customTag"
+                            name="CustomTag"
+                            minlength="1"
+                            maxlength="128"
+                        />
+                        <validation-messages [formCtrl]="StoreTag_CustomTag"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="StoreTag_TagValue">{{ l('TagValue') }}</label>
+                        <input
+                            type="text"
+                            #StoreTag_TagValue="ngModel"
+                            id="StoreTag_TagValue"
+                            class="form-control"
+                            [(ngModel)]="storeTag.tagValue"
+                            name="TagValue"
+                            minlength="1"
+                            maxlength="128"
+                        />
+                        <validation-messages [formCtrl]="StoreTag_TagValue"></validation-messages>
+                    </div>
+
+                    <br />
+                    <label class="form-check form-check-custom form-check-solid">
+                        <input
+                            id="StoreTag_Verified"
+                            #StoreTag_Verified="ngModel"
+                            name="Verified"
+                            [(ngModel)]="storeTag.verified"
+                            type="checkbox"
+                            class="form-check-input"
+                        />
+                        <span class="form-check-label">
+                            {{ l('Verified') }}
+                        </span>
+                    </label>
+                    <validation-messages [formCtrl]="StoreTag_Verified"></validation-messages>
+
+                    <div class="my5">
+                        <label class="form-label" for="StoreTag_Sequence">{{ l('Sequence') }}</label>
+                        <input
+                            type="number"
+                            #StoreTag_Sequence="ngModel"
+                            id="StoreTag_Sequence"
+                            class="form-control"
+                            [(ngModel)]="storeTag.sequence"
+                            name="Sequence"
+                        />
+                        <validation-messages [formCtrl]="StoreTag_Sequence"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!storeTagForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <storeTagStoreLookupTableModal
+        #storeTagStoreLookupTableModal
+        (modalSave)="getNewStoreId()"
+    ></storeTagStoreLookupTableModal>
+    <storeTagMasterTagCategoryLookupTableModal
+        #storeTagMasterTagCategoryLookupTableModal
+        (modalSave)="getNewMasterTagCategoryId()"
+    ></storeTagMasterTagCategoryLookupTableModal>
+    <storeTagMasterTagLookupTableModal
+        #storeTagMasterTagLookupTableModal
+        (modalSave)="getNewMasterTagId()"
+    ></storeTagMasterTagLookupTableModal>
+</div>

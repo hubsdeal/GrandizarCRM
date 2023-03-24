@@ -1,0 +1,132 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span>{{ l('Details') }}</span>
+                </h4>
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    (click)="close()"
+                    aria-label="Close"
+                    [disabled]="saving"
+                ></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('NowOpenOrClosed') }} :</h6>
+                        <div *ngIf="item.storeBusinessHour.nowOpenOrClosed" class="text-left">
+                            <i class="fa fa-check-circle text-success" title="True"></i>
+                        </div>
+                        <div *ngIf="!item.storeBusinessHour.nowOpenOrClosed" class="text-left">
+                            <i class="fa fa-times-circle" title="False"></i>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('IsOpen24Hours') }} :</h6>
+                        <div *ngIf="item.storeBusinessHour.isOpen24Hours" class="text-left">
+                            <i class="fa fa-check-circle text-success" title="True"></i>
+                        </div>
+                        <div *ngIf="!item.storeBusinessHour.isOpen24Hours" class="text-left">
+                            <i class="fa fa-times-circle" title="False"></i>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('MondayStartTime') }} :</h6>
+                        {{ item.storeBusinessHour.mondayStartTime }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('MondayEndTime') }} :</h6>
+                        {{ item.storeBusinessHour.mondayEndTime }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('TuesdayStartTime') }} :</h6>
+                        {{ item.storeBusinessHour.tuesdayStartTime }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('TuesdayEndTime') }} :</h6>
+                        {{ item.storeBusinessHour.tuesdayEndTime }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('WednesdayStartTime') }} :</h6>
+                        {{ item.storeBusinessHour.wednesdayStartTime }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('WednesdayEndTime') }} :</h6>
+                        {{ item.storeBusinessHour.wednesdayEndTime }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('ThursdayStartTime') }} :</h6>
+                        {{ item.storeBusinessHour.thursdayStartTime }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('ThursdayEndTime') }} :</h6>
+                        {{ item.storeBusinessHour.thursdayEndTime }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('FridayStartTime') }} :</h6>
+                        {{ item.storeBusinessHour.fridayStartTime }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('FridayEndTime') }} :</h6>
+                        {{ item.storeBusinessHour.fridayEndTime }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('SaturdayStartTime') }} :</h6>
+                        {{ item.storeBusinessHour.saturdayStartTime }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('SaturdayEndTime') }} :</h6>
+                        {{ item.storeBusinessHour.saturdayEndTime }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('SundayStartTime') }} :</h6>
+                        {{ item.storeBusinessHour.sundayStartTime }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('SundayEndTime') }} :</h6>
+                        {{ item.storeBusinessHour.sundayEndTime }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('IsAcceptOnlyBusinessHour') }} :</h6>
+                        <div *ngIf="item.storeBusinessHour.isAcceptOnlyBusinessHour" class="text-left">
+                            <i class="fa fa-check-circle text-success" title="True"></i>
+                        </div>
+                        <div *ngIf="!item.storeBusinessHour.isAcceptOnlyBusinessHour" class="text-left">
+                            <i class="fa fa-times-circle" title="False"></i>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('Store') }}) {{ l('Name') }} :</h6>
+                        {{ item.storeName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('MasterTagCategory') }}) {{ l('Name') }} :</h6>
+                        {{ item.masterTagCategoryName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('MasterTag') }}) {{ l('Name') }} :</h6>
+                        {{ item.masterTagName }}
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button [disabled]="saving" type="button" class="btn btn-primary blue" (click)="close()">
+                    {{ l('Close') }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,155 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #storeBankAccountForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="storeBankAccount.id">{{ l('EditStoreBankAccount') }}</span>
+                        <span *ngIf="!storeBankAccount.id">{{ l('CreateNewStoreBankAccount') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="StoreName">{{ l('Store') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="StoreName"
+                                name="storeName"
+                                [(ngModel)]="storeName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectStoreModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setStoreIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="storeBankAccount.storeId"
+                        [(ngModel)]="storeBankAccount.storeId"
+                        type="text"
+                        required
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="StoreBankAccount_AccountName">{{ l('AccountName') }}</label>
+                        <input
+                            type="text"
+                            #StoreBankAccount_AccountName="ngModel"
+                            id="StoreBankAccount_AccountName"
+                            class="form-control"
+                            [(ngModel)]="storeBankAccount.accountName"
+                            name="AccountName"
+                            minlength="1"
+                            maxlength="128"
+                        />
+                        <validation-messages [formCtrl]="StoreBankAccount_AccountName"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="StoreBankAccount_AccountNo">{{ l('AccountNo') }}</label>
+                        <input
+                            type="text"
+                            #StoreBankAccount_AccountNo="ngModel"
+                            id="StoreBankAccount_AccountNo"
+                            class="form-control"
+                            [(ngModel)]="storeBankAccount.accountNo"
+                            name="AccountNo"
+                            minlength="1"
+                            maxlength="128"
+                        />
+                        <validation-messages [formCtrl]="StoreBankAccount_AccountNo"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="StoreBankAccount_BankName">{{ l('BankName') }}</label>
+                        <input
+                            type="text"
+                            #StoreBankAccount_BankName="ngModel"
+                            id="StoreBankAccount_BankName"
+                            class="form-control"
+                            [(ngModel)]="storeBankAccount.bankName"
+                            name="BankName"
+                            minlength="1"
+                            maxlength="128"
+                        />
+                        <validation-messages [formCtrl]="StoreBankAccount_BankName"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="StoreBankAccount_RoutingNo">{{ l('RoutingNo') }}</label>
+                        <input
+                            type="text"
+                            #StoreBankAccount_RoutingNo="ngModel"
+                            id="StoreBankAccount_RoutingNo"
+                            class="form-control"
+                            [(ngModel)]="storeBankAccount.routingNo"
+                            name="RoutingNo"
+                            minlength="1"
+                            maxlength="128"
+                        />
+                        <validation-messages [formCtrl]="StoreBankAccount_RoutingNo"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="StoreBankAccount_BankAddress">{{ l('BankAddress') }}</label>
+                        <input
+                            type="text"
+                            #StoreBankAccount_BankAddress="ngModel"
+                            id="StoreBankAccount_BankAddress"
+                            class="form-control"
+                            [(ngModel)]="storeBankAccount.bankAddress"
+                            name="BankAddress"
+                            minlength="1"
+                            maxlength="1024"
+                        />
+                        <validation-messages [formCtrl]="StoreBankAccount_BankAddress"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!storeBankAccountForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <storeBankAccountStoreLookupTableModal
+        #storeBankAccountStoreLookupTableModal
+        (modalSave)="getNewStoreId()"
+    ></storeBankAccountStoreLookupTableModal>
+</div>
