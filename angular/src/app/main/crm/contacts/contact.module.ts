@@ -6,6 +6,7 @@ import { ContactsComponent } from './contacts.component';
 import { CreateOrEditContactModalComponent } from './create-or-edit-contact-modal.component';
 import { ViewContactModalComponent } from './view-contact-modal.component';
 import { ContactUserLookupTableModalComponent } from './contact-user-lookup-table-modal.component';
+import { ContactDashboardComponent } from './contact-dashboard/contact-dashboard.component';
 
 @NgModule({
     declarations: [
@@ -14,6 +15,7 @@ import { ContactUserLookupTableModalComponent } from './contact-user-lookup-tabl
         ViewContactModalComponent,
 
         ContactUserLookupTableModalComponent,
+          ContactDashboardComponent,
     ],
     imports: [AppSharedModule, ContactRoutingModule, AdminSharedModule],
 })

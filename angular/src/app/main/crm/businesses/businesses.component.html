@@ -1,16 +1,13 @@
 ﻿<div [@routerTransition]>
-    <sub-header [title]="'Businesses' | localize" [description]="'BusinessesHeaderInfo' | localize">
+    <sub-header [title]="'Businesses' | localize" [description]="">
         <div role="actions">
             <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1">
                 <i class="fa fa-file-excel"></i>
                 {{ l('ExportToExcel') }}
             </button>
 
-            <button
-                *ngIf="isGranted('Pages.Businesses.Create')"
-                (click)="createBusiness()"
-                class="btn btn-primary blue"
-            >
+            <button *ngIf="isGranted('Pages.Businesses.Create')" (click)="createBusiness()"
+                class="btn btn-primary blue">
                 <i class="fa fa-plus"></i>
                 {{ l('CreateNewBusiness') }}
             </button>
@@ -26,15 +23,9 @@
                             <div class="col-xl-12">
                                 <div class="my-3">
                                     <div class="input-group mb-3">
-                                        <input
-                                            [(ngModel)]="filterText"
-                                            (ngModelChange)="getBusinesses()"
-                                            name="filterText"
-                                            autoFocus
-                                            type="text"
-                                            class="form-control"
-                                            [placeholder]="l('SearchWithThreeDot')"
-                                        />
+                                        <input [(ngModel)]="filterText" (ngModelChange)="getBusinesses()"
+                                            name="filterText" autoFocus type="text" class="form-control"
+                                            [placeholder]="l('SearchWithThreeDot')" />
                                         <button class="btn btn-primary" type="submit" (click)="getBusinesses()">
                                             <i class="flaticon-search-1"></i>
                                         </button>
@@ -48,53 +39,30 @@
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="NameFilter">{{ l('Name') }}</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="NameFilter"
-                                        name="nameFilter"
-                                        [(ngModel)]="nameFilter"
-                                        (ngModelChange)="getBusinesses()"
-                                    />
+                                    <input type="text" class="form-control" id="NameFilter" name="nameFilter"
+                                        [(ngModel)]="nameFilter" (ngModelChange)="getBusinesses()" />
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="TradeNameFilter">{{ l('TradeName') }}</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="TradeNameFilter"
-                                        name="tradeNameFilter"
-                                        [(ngModel)]="tradeNameFilter"
-                                        (ngModelChange)="getBusinesses()"
-                                    />
+                                    <input type="text" class="form-control" id="TradeNameFilter" name="tradeNameFilter"
+                                        [(ngModel)]="tradeNameFilter" (ngModelChange)="getBusinesses()" />
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="DescriptionFilter">{{ l('Description') }}</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="DescriptionFilter"
-                                        name="descriptionFilter"
-                                        [(ngModel)]="descriptionFilter"
-                                        (ngModelChange)="getBusinesses()"
-                                    />
+                                    <input type="text" class="form-control" id="DescriptionFilter"
+                                        name="descriptionFilter" [(ngModel)]="descriptionFilter"
+                                        (ngModelChange)="getBusinesses()" />
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="CustomIdFilter">{{ l('CustomId') }}</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="CustomIdFilter"
-                                        name="customIdFilter"
-                                        [(ngModel)]="customIdFilter"
-                                        (ngModelChange)="getBusinesses()"
-                                    />
+                                    <input type="text" class="form-control" id="CustomIdFilter" name="customIdFilter"
+                                        [(ngModel)]="customIdFilter" (ngModelChange)="getBusinesses()" />
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -102,92 +70,53 @@
                                     <label class="form-label" for="YearOfEstablishmentFilter">
                                         {{ l('YearOfEstablishment') }}
                                     </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="YearOfEstablishmentFilter"
-                                        name="yearOfEstablishmentFilter"
-                                        [(ngModel)]="yearOfEstablishmentFilter"
-                                        (ngModelChange)="getBusinesses()"
-                                    />
+                                    <input type="text" class="form-control" id="YearOfEstablishmentFilter"
+                                        name="yearOfEstablishmentFilter" [(ngModel)]="yearOfEstablishmentFilter"
+                                        (ngModelChange)="getBusinesses()" />
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="LocationTitleFilter">{{ l('LocationTitle') }}</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="LocationTitleFilter"
-                                        name="locationTitleFilter"
-                                        [(ngModel)]="locationTitleFilter"
-                                        (ngModelChange)="getBusinesses()"
-                                    />
+                                    <input type="text" class="form-control" id="LocationTitleFilter"
+                                        name="locationTitleFilter" [(ngModel)]="locationTitleFilter"
+                                        (ngModelChange)="getBusinesses()" />
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="FullAddressFilter">{{ l('FullAddress') }}</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="FullAddressFilter"
-                                        name="fullAddressFilter"
-                                        [(ngModel)]="fullAddressFilter"
-                                        (ngModelChange)="getBusinesses()"
-                                    />
+                                    <input type="text" class="form-control" id="FullAddressFilter"
+                                        name="fullAddressFilter" [(ngModel)]="fullAddressFilter"
+                                        (ngModelChange)="getBusinesses()" />
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="Address1Filter">{{ l('Address1') }}</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="Address1Filter"
-                                        name="address1Filter"
-                                        [(ngModel)]="address1Filter"
-                                        (ngModelChange)="getBusinesses()"
-                                    />
+                                    <input type="text" class="form-control" id="Address1Filter" name="address1Filter"
+                                        [(ngModel)]="address1Filter" (ngModelChange)="getBusinesses()" />
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="Address2Filter">{{ l('Address2') }}</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="Address2Filter"
-                                        name="address2Filter"
-                                        [(ngModel)]="address2Filter"
-                                        (ngModelChange)="getBusinesses()"
-                                    />
+                                    <input type="text" class="form-control" id="Address2Filter" name="address2Filter"
+                                        [(ngModel)]="address2Filter" (ngModelChange)="getBusinesses()" />
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="CityFilter">{{ l('City') }}</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="CityFilter"
-                                        name="cityFilter"
-                                        [(ngModel)]="cityFilter"
-                                        (ngModelChange)="getBusinesses()"
-                                    />
+                                    <input type="text" class="form-control" id="CityFilter" name="cityFilter"
+                                        [(ngModel)]="cityFilter" (ngModelChange)="getBusinesses()" />
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="ZipCodeFilter">{{ l('ZipCode') }}</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="ZipCodeFilter"
-                                        name="zipCodeFilter"
-                                        [(ngModel)]="zipCodeFilter"
-                                        (ngModelChange)="getBusinesses()"
-                                    />
+                                    <input type="text" class="form-control" id="ZipCodeFilter" name="zipCodeFilter"
+                                        [(ngModel)]="zipCodeFilter" (ngModelChange)="getBusinesses()" />
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -196,23 +125,12 @@
                                         {{ l('MinMax') }} {{ l('Latitude') }}
                                     </label>
                                     <div class="input-group">
-                                        <input
-                                            type="number"
-                                            class="form-control"
-                                            id="MinLatitudeFilter"
-                                            [(ngModel)]="minLatitudeFilter"
-                                            placeholder="{{ l('MinValue') }}"
-                                            name="minLatitudeFilter"
-                                            (ngModelChange)="getBusinesses()"
-                                        />
-                                        <input
-                                            type="number"
-                                            class="form-control"
-                                            [(ngModel)]="maxLatitudeFilter"
-                                            placeholder="{{ l('MaxValue') }}"
-                                            name="maxLatitudeFilter"
-                                            (ngModelChange)="getBusinesses()"
-                                        />
+                                        <input type="number" class="form-control" id="MinLatitudeFilter"
+                                            [(ngModel)]="minLatitudeFilter" placeholder="{{ l('MinValue') }}"
+                                            name="minLatitudeFilter" (ngModelChange)="getBusinesses()" />
+                                        <input type="number" class="form-control" [(ngModel)]="maxLatitudeFilter"
+                                            placeholder="{{ l('MaxValue') }}" name="maxLatitudeFilter"
+                                            (ngModelChange)="getBusinesses()" />
                                     </div>
                                 </div>
                             </div>
@@ -222,102 +140,55 @@
                                         {{ l('MinMax') }} {{ l('Longitude') }}
                                     </label>
                                     <div class="input-group">
-                                        <input
-                                            type="number"
-                                            class="form-control"
-                                            id="MinLongitudeFilter"
-                                            [(ngModel)]="minLongitudeFilter"
-                                            placeholder="{{ l('MinValue') }}"
-                                            name="minLongitudeFilter"
-                                            (ngModelChange)="getBusinesses()"
-                                        />
-                                        <input
-                                            type="number"
-                                            class="form-control"
-                                            [(ngModel)]="maxLongitudeFilter"
-                                            placeholder="{{ l('MaxValue') }}"
-                                            name="maxLongitudeFilter"
-                                            (ngModelChange)="getBusinesses()"
-                                        />
+                                        <input type="number" class="form-control" id="MinLongitudeFilter"
+                                            [(ngModel)]="minLongitudeFilter" placeholder="{{ l('MinValue') }}"
+                                            name="minLongitudeFilter" (ngModelChange)="getBusinesses()" />
+                                        <input type="number" class="form-control" [(ngModel)]="maxLongitudeFilter"
+                                            placeholder="{{ l('MaxValue') }}" name="maxLongitudeFilter"
+                                            (ngModelChange)="getBusinesses()" />
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="PhoneFilter">{{ l('Phone') }}</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="PhoneFilter"
-                                        name="phoneFilter"
-                                        [(ngModel)]="phoneFilter"
-                                        (ngModelChange)="getBusinesses()"
-                                    />
+                                    <input type="text" class="form-control" id="PhoneFilter" name="phoneFilter"
+                                        [(ngModel)]="phoneFilter" (ngModelChange)="getBusinesses()" />
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="FaxFilter">{{ l('Fax') }}</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="FaxFilter"
-                                        name="faxFilter"
-                                        [(ngModel)]="faxFilter"
-                                        (ngModelChange)="getBusinesses()"
-                                    />
+                                    <input type="text" class="form-control" id="FaxFilter" name="faxFilter"
+                                        [(ngModel)]="faxFilter" (ngModelChange)="getBusinesses()" />
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="EmailFilter">{{ l('Email') }}</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="EmailFilter"
-                                        name="emailFilter"
-                                        [(ngModel)]="emailFilter"
-                                        (ngModelChange)="getBusinesses()"
-                                    />
+                                    <input type="text" class="form-control" id="EmailFilter" name="emailFilter"
+                                        [(ngModel)]="emailFilter" (ngModelChange)="getBusinesses()" />
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="WebsiteFilter">{{ l('Website') }}</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="WebsiteFilter"
-                                        name="websiteFilter"
-                                        [(ngModel)]="websiteFilter"
-                                        (ngModelChange)="getBusinesses()"
-                                    />
+                                    <input type="text" class="form-control" id="WebsiteFilter" name="websiteFilter"
+                                        [(ngModel)]="websiteFilter" (ngModelChange)="getBusinesses()" />
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="EinTaxIdFilter">{{ l('EinTaxId') }}</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="EinTaxIdFilter"
-                                        name="einTaxIdFilter"
-                                        [(ngModel)]="einTaxIdFilter"
-                                        (ngModelChange)="getBusinesses()"
-                                    />
+                                    <input type="text" class="form-control" id="EinTaxIdFilter" name="einTaxIdFilter"
+                                        [(ngModel)]="einTaxIdFilter" (ngModelChange)="getBusinesses()" />
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="IndustryFilter">{{ l('Industry') }}</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="IndustryFilter"
-                                        name="industryFilter"
-                                        [(ngModel)]="industryFilter"
-                                        (ngModelChange)="getBusinesses()"
-                                    />
+                                    <input type="text" class="form-control" id="IndustryFilter" name="industryFilter"
+                                        [(ngModel)]="industryFilter" (ngModelChange)="getBusinesses()" />
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -325,26 +196,16 @@
                                     <label class="form-label" for="InternalRemarksFilter">
                                         {{ l('InternalRemarks') }}
                                     </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="InternalRemarksFilter"
-                                        name="internalRemarksFilter"
-                                        [(ngModel)]="internalRemarksFilter"
-                                        (ngModelChange)="getBusinesses()"
-                                    />
+                                    <input type="text" class="form-control" id="InternalRemarksFilter"
+                                        name="internalRemarksFilter" [(ngModel)]="internalRemarksFilter"
+                                        (ngModelChange)="getBusinesses()" />
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="VerifiedFilterSelect">{{ l('Verified') }}</label>
-                                    <select
-                                        class="form-select"
-                                        name="VerifiedFilter"
-                                        id="VerifiedFilterSelect"
-                                        [(ngModel)]="verifiedFilter"
-                                        (ngModelChange)="getBusinesses()"
-                                    >
+                                    <select class="form-select" name="VerifiedFilter" id="VerifiedFilterSelect"
+                                        [(ngModel)]="verifiedFilter" (ngModelChange)="getBusinesses()">
                                         <option value="-1">{{ l('All') }}</option>
                                         <option value="0">{{ l('False') }}</option>
                                         <option value="1">{{ l('True') }}</option>
@@ -354,27 +215,15 @@
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="FacebookFilter">{{ l('Facebook') }}</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="FacebookFilter"
-                                        name="facebookFilter"
-                                        [(ngModel)]="facebookFilter"
-                                        (ngModelChange)="getBusinesses()"
-                                    />
+                                    <input type="text" class="form-control" id="FacebookFilter" name="facebookFilter"
+                                        [(ngModel)]="facebookFilter" (ngModelChange)="getBusinesses()" />
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="LinkedInFilter">{{ l('LinkedIn') }}</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="LinkedInFilter"
-                                        name="linkedInFilter"
-                                        [(ngModel)]="linkedInFilter"
-                                        (ngModelChange)="getBusinesses()"
-                                    />
+                                    <input type="text" class="form-control" id="LinkedInFilter" name="linkedInFilter"
+                                        [(ngModel)]="linkedInFilter" (ngModelChange)="getBusinesses()" />
                                 </div>
                             </div>
 
@@ -383,13 +232,8 @@
                                     <label class="form-label" for="CountryNameFilter">
                                         ({{ l('Country') }}) {{ l('Name') }}
                                     </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="CountryNameFilter"
-                                        name="countryNameFilter"
-                                        [(ngModel)]="countryNameFilter"
-                                    />
+                                    <input type="text" class="form-control" id="CountryNameFilter"
+                                        name="countryNameFilter" [(ngModel)]="countryNameFilter" />
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -397,13 +241,8 @@
                                     <label class="form-label" for="StateNameFilter">
                                         ({{ l('State') }}) {{ l('Name') }}
                                     </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="StateNameFilter"
-                                        name="stateNameFilter"
-                                        [(ngModel)]="stateNameFilter"
-                                    />
+                                    <input type="text" class="form-control" id="StateNameFilter" name="stateNameFilter"
+                                        [(ngModel)]="stateNameFilter" />
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -411,13 +250,8 @@
                                     <label class="form-label" for="CityNameFilter">
                                         ({{ l('City') }}) {{ l('Name') }}
                                     </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="CityNameFilter"
-                                        name="cityNameFilter"
-                                        [(ngModel)]="cityNameFilter"
-                                    />
+                                    <input type="text" class="form-control" id="CityNameFilter" name="cityNameFilter"
+                                        [(ngModel)]="cityNameFilter" />
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -425,40 +259,26 @@
                                     <label class="form-label" for="MediaLibraryNameFilter">
                                         ({{ l('MediaLibrary') }}) {{ l('Name') }}
                                     </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="MediaLibraryNameFilter"
-                                        name="mediaLibraryNameFilter"
-                                        [(ngModel)]="mediaLibraryNameFilter"
-                                    />
+                                    <input type="text" class="form-control" id="MediaLibraryNameFilter"
+                                        name="mediaLibraryNameFilter" [(ngModel)]="mediaLibraryNameFilter" />
                                 </div>
                             </div>
                             <div class="col-md-12 mt-5">
-                                <button
-                                    (click)="resetFilters()"
-                                    class="btn btn-secondary btn-sm"
-                                    id="btn-reset-filters"
-                                >
+                                <button (click)="resetFilters()" class="btn btn-secondary btn-sm"
+                                    id="btn-reset-filters">
                                     Reset
                                 </button>
                             </div>
                         </div>
                         <div class="row my-4">
                             <div class="col-sm-12">
-                                <span
-                                    class="clickable-item text-muted"
-                                    *ngIf="!advancedFiltersAreShown"
-                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown"
-                                >
+                                <span class="clickable-item text-muted" *ngIf="!advancedFiltersAreShown"
+                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown">
                                     <i class="fa fa-angle-down"></i>
                                     {{ l('ShowAdvancedFilters') }}
                                 </span>
-                                <span
-                                    class="clickable-item text-muted"
-                                    *ngIf="advancedFiltersAreShown"
-                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown"
-                                >
+                                <span class="clickable-item text-muted" *ngIf="advancedFiltersAreShown"
+                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown">
                                     <i class="fa fa-angle-up"></i>
                                     {{ l('HideAdvancedFilters') }}
                                 </span>
@@ -470,27 +290,48 @@
                 <div class="row align-items-center">
                     <!--<Primeng-Datatable-Start>-->
                     <div class="primeng-datatable-container col-12" [busyIf]="primengTableHelper.isLoading">
-                        <p-table
-                            #dataTable
-                            (onLazyLoad)="getBusinesses($event)"
-                            [value]="primengTableHelper.records"
-                            rows="{{ primengTableHelper.defaultRecordsCountPerPage }}"
-                            [paginator]="false"
-                            [lazy]="true"
-                            [scrollable]="true"
-                            ScrollWidth="100%"
-                            [responsive]="primengTableHelper.isResponsive"
-                            [resizableColumns]="primengTableHelper.resizableColumns"
-                        >
+                        <p-table #dataTable (onLazyLoad)="getBusinesses($event)" [value]="primengTableHelper.records"
+                            rows="{{ primengTableHelper.defaultRecordsCountPerPage }}" [paginator]="false" [lazy]="true"
+                            [scrollable]="true" ScrollWidth="100%" [responsive]="primengTableHelper.isResponsive"
+                            [resizableColumns]="primengTableHelper.resizableColumns">
                             <ng-template pTemplate="header">
                                 <tr>
-                                    <th
-                                        style="width: 130px"
-                                        [hidden]="!isGrantedAny('Pages.Businesses.Edit', 'Pages.Businesses.Delete')"
-                                    >
-                                        {{ l('Actions') }}
+                                    <th style="width:30px; text-align: center;">
+                                        <label
+                                            class="form-check form-check-custom form-check-inline form-check-solid is-invalid">
+                                            <input class="form-check-input" type="checkbox" value="1">
+                                            <span class="fw-semibold ps-2 fs-6">
+                                            </span>
+                                        </label>
                                     </th>
-                                    <th style="width: 150px" pSortableColumn="countryFk.name">
+                                    <th style="width: 420px">
+                                        {{l('Name')}}
+                                    </th>
+                                    <th style="width: 180px">
+                                        {{l('Phone')}}
+                                    </th>
+                                    <th style="width: 100px; text-align: center;">
+                                        {{l('Website')}}
+                                    </th>
+                                    <th style="width: 100px; text-align: center;">
+                                        {{l('#Store')}}
+                                    </th>
+                                    <th style="width: 100px; text-align: center;">
+                                        {{l('#Contact')}}
+                                    </th>
+                                    <th style="width: 130px; text-align: center;">
+                                        {{l('#Contact Repo')}}
+                                    </th>
+                                    <th style="width: 100px; text-align: center;">
+                                        {{l('#Job')}}
+                                    </th>
+                                    <th class="text-center" style="width: 160px">
+                                        {{l('Sales Status')}}
+                                    </th>
+                                    <th class="text-center" style="width: 150px">
+                                        {{l('Verified')}}
+                                    </th>
+                                    <!-- <th style="width: 150px" pSortableColumn="countryFk.name">
                                         {{ l('Name') }}
                                         <p-sortIcon field="countryName"></p-sortIcon>
                                     </th>
@@ -597,55 +438,126 @@
                                     <th style="width: 150px" pSortableColumn="linkedIn">
                                         {{ l('LinkedIn') }}
                                         <p-sortIcon field="business.linkedIn"></p-sortIcon>
+                                    </th> -->
+                                    <th style="width: 130px"
+                                        [hidden]="!isGrantedAny('Pages.Businesses.Edit', 'Pages.Businesses.Delete')">
+                                        {{ l('Actions') }}
                                     </th>
                                 </tr>
                             </ng-template>
                             <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
                                 <tr>
-                                    <td
-                                        style="width: 130px"
-                                        [hidden]="!isGrantedAny('Pages.Businesses.Edit', 'Pages.Businesses.Delete')"
-                                    >
-                                        <div class="btn-group dropdown" dropdown container="body">
-                                            <button class="dropdown-toggle btn btn-sm btn-primary" dropdownToggle>
-                                                <i class="fa fa-cog"></i>
-                                                <span class="caret"></span>
-                                                {{ l('Actions') }}
-                                            </button>
-                                            <ul class="dropdown-menu" *dropdownMenu>
-                                                <li>
-                                                    <a
-                                                        href="javascript:;"
-                                                        class="dropdown-item"
-                                                        (click)="viewBusinessModal.show(record)"
-                                                    >
-                                                        {{ l('View') }}
+                                    <td style="width: 30px;">
+                                        <label
+                                            class="form-check form-check-custom form-check-inline form-check-solid is-invalid mb-2">
+                                            <input class="form-check-input" type="checkbox" value="1">
+                                            <span class="fw-semibold ps-2 fs-6">
+                                            </span>
+                                        </label>
+                                    </td>
+                                    <td style="width: 420px">
+                                        <span class="p-column-title">{{ l('Name') }}</span>
+                                        <div class="d-flex align-items-center">
+                                            <div class="square_logo_box shadow-sm">
+                                                <!-- <img src="/assets/common/images/sampleProfilePics/noimg.png"
+                                                    class="mw-100" alt=""> -->
+                                                <span>{{ record.business.name | nameSplit}}</span>
+                                            </div>
+                                            <div class="d-flex flex-wrap flex-grow-1 mt-n2 mt-lg-n1">
+                                                <div class="d-flex flex-column flex-grow-1 my-lg-0 my-2 pe-3">
+                                                    <a href="javascript:;" title="{{ record.business.name }}"  [routerLink]="['/app/main/crm/businesses/dashboard',record.business.id]"
+                                                        class="fs-5 text-gray-800 text-hover-primary fw-bold">
+                                                        {{ record.business.name }}
+                                                        <i *ngIf="record.business.verified"
+                                                            class="fas fa-check-circle ml-1 mr-0 text-success"
+                                                            title="Verified"></i>
                                                     </a>
-                                                </li>
-                                                <li>
-                                                    <a
-                                                        href="javascript:;"
-                                                        *ngIf="permission.isGranted('Pages.Businesses.Edit')"
-                                                        class="dropdown-item"
-                                                        (click)="createOrEditBusinessModal.show(record.business.id)"
-                                                    >
-                                                        {{ l('Edit') }}
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a
-                                                        class="dropdown-item"
-                                                        href="javascript:;"
-                                                        *ngIf="permission.isGranted('Pages.Businesses.Delete')"
-                                                        (click)="deleteBusiness(record.business)"
-                                                    >
-                                                        {{ l('Delete') }}
-                                                    </a>
-                                                </li>
-                                            </ul>
+                                                    <span *ngIf="record.business.tradeName" class="text-gray-400 fw-semibold fs-7 my-0">
+                                                        <span class="text-primary">Trade Name: </span>
+                                                        {{ record.business.tradeName }}
+                                                    </span>
+                                                    <span class="text-gray-400 fw-semibold fs-7 my-1">
+                                                        <i class="fas fa-map-marked-alt mr-1"></i>
+                                                        <span>
+                                                            {{ record.cityName }}
+                                                        </span>
+                                                        <span
+                                                            *ngIf="record.cityName && (record.stateName || record.countryName || record.business.zipCode)">,
+                                                        </span>
+                                                        <span>
+                                                            {{ record.stateName }}
+                                                        </span>
+                                                        <span
+                                                            *ngIf="record.stateName && (record.countryName || record.business.zipCode)">,
+                                                        </span>
+                                                        <span>
+                                                            {{ record.countryName }}
+                                                        </span>
+                                                        <span
+                                                            *ngIf=" record.countryName && record.business.zipCode">,
+                                                        </span>
+                                                        <span>
+                                                            {{ record.business.zipCode }}
+                                                        </span>
+                                                    </span>
+                                                </div>
+                                            </div>
                                         </div>
                                     </td>
-                                    <td style="width: 150px">
+                                    <td style="width:180px">
+                                        <span class="p-column-title"> {{l('Phone')}}</span>
+                                        <span>
+                                            {{ record.business.phone }}
+                                        </span>
+                                    </td>
+                                    <td style="width:100px ;text-align: center;">
+                                        <span class="p-column-title"> {{l('Website')}}</span>
+                                        <a *ngIf="record.website" href="{{record.website}}" target="_blank">
+                                            <i class="fa fa-globe fa-2x text-primary"></i>
+                                        </a>
+                                    </td>
+                                    <td style="width:100px; text-align: center;">
+                                        <span class="p-column-title">#Store</span>
+                                       100
+                                    </td>
+                                    <td style="width:100px; text-align: center;">
+                                        <span class="p-column-title">#Store</span>
+                                        500
+                                    </td>
+
+                                    <td style="width:130px; text-align: center;">
+                                        <span class="p-column-title">#Contact Repo</span>
+                                        400
+                                    </td>
+                                    <td style="width:100px; text-align: center;">
+                                        <span class="p-column-title">#Jobs</span>
+                                        10
+                                    </td>
+                                    <td class="text-center" style="width:160px">
+                                        <span class="p-column-title">#Status</span>
+                                        <a href="javascript:;">
+                                            <div class="badge badge-primary" title="">
+                                                <div style="width: 110px;" class="text-truncate">
+                                                    Ongoing
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </td>
+                                    <td class="text-center" style="width:150px">
+                                        <span class="p-column-title"> {{l('Verified')}}</span>
+                                        <div *ngIf="record.business.verified">
+                                            <span class="badge badge-primary">
+                                                YES
+                                            </span>
+                                        </div>
+                                        <div *ngIf="!record.business.verified">
+                                            <span class="badge badge-danger">
+                                                NO
+                                            </span>
+                                        </div>
+                                    </td>
+
+                                    <!-- <td style="width: 150px">
                                         <span class="p-column-title">{{ l('Name') }}</span>
                                         {{ record.countryName }}
                                     </td>
@@ -663,7 +575,7 @@
                                     </td>
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('Name') }}</span>
-                                        {{ record.business.name }}
+                                        {{ rrecord.business.namee }}
                                     </td>
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('TradeName') }}</span>
@@ -757,6 +669,38 @@
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('LinkedIn') }}</span>
                                         {{ record.business.linkedIn }}
+                                    </td> -->
+                                    <td style="width: 130px"
+                                        [hidden]="!isGrantedAny('Pages.Businesses.Edit', 'Pages.Businesses.Delete')">
+                                        <div class="btn-group dropdown" dropdown container="body">
+                                            <button class="dropdown-toggle btn btn-sm btn-primary" dropdownToggle>
+                                                <i class="fa fa-cog"></i>
+                                                <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu" *dropdownMenu>
+                                                <li>
+                                                    <a href="javascript:;" class="dropdown-item"
+                                                        (click)="viewBusinessModal.show(record)">
+                                                        {{ l('View') }}
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:;"
+                                                        *ngIf="permission.isGranted('Pages.Businesses.Edit')"
+                                                        class="dropdown-item"
+                                                        (click)="createOrEditBusinessModal.show(record.business.id)">
+                                                        {{ l('Edit') }}
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="javascript:;"
+                                                        *ngIf="permission.isGranted('Pages.Businesses.Delete')"
+                                                        (click)="deleteBusiness(record.business)">
+                                                        {{ l('Delete') }}
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </td>
                                 </tr>
                             </ng-template>
@@ -765,17 +709,13 @@
                             {{ l('NoData') }}
                         </div>
                         <div class="primeng-paging-container">
-                            <p-paginator
-                                [rows]="primengTableHelper.defaultRecordsCountPerPage"
-                                #paginator
+                            <p-paginator [rows]="primengTableHelper.defaultRecordsCountPerPage" #paginator
                                 (onPageChange)="getBusinesses($event)"
                                 [totalRecords]="primengTableHelper.totalRecordsCount"
                                 [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
-                                [showCurrentPageReport]="true"
-                                [currentPageReportTemplate]="
+                                [showCurrentPageReport]="true" [currentPageReportTemplate]="
                                     'TotalRecordsCount' | localize : primengTableHelper.totalRecordsCount
-                                "
-                            ></p-paginator>
+                                "></p-paginator>
                         </div>
                     </div>
                     <!--<Primeng-Datatable-End>-->
