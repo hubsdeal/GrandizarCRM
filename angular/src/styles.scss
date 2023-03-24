@@ -235,6 +235,7 @@ bs-days-calendar-view {
     width: 100%;
     height: 100%;
     padding: 10px;
+    object-fit: contain;
 }
 
 .dashboard_header_name {
@@ -376,6 +377,15 @@ bs-days-calendar-view {
             height: 100%;
             object-fit: contain;
         }
+
+        a {
+            display: grid;
+            text-align: center;
+
+            i {
+                font-size: 1.5rem;
+            }
+        }
     }
 }
 
@@ -393,4 +403,9 @@ bs-days-calendar-view {
             text-align: center;
         }
     }
+}
+
+.image-input .image-input-wrapper {
+    background-size: contain !important;
+    background-position: center;
 }
