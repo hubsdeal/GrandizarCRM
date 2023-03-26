@@ -32,7 +32,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Abp.ZeroCore.IdentityServer4.vNext" Version="8.0.0" />
-    <PackageReference Include="Abp.AspNetCore" Version="8.0.0" />
+    <PackageReference Include="Abp.AspNetCore" Version="8.1.0" />
     <PackageReference Include="Abp.HangFire.AspNetCore" Version="8.0.0" />
     <PackageReference Include="Abp.RedisCache" Version="8.0.0" />
   </ItemGroup>
