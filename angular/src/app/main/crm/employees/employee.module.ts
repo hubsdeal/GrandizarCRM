@@ -8,6 +8,7 @@ import { ViewEmployeeModalComponent } from './view-employee-modal.component';
 import { EmployeeStateLookupTableModalComponent } from './employee-state-lookup-table-modal.component';
 import { EmployeeCountryLookupTableModalComponent } from './employee-country-lookup-table-modal.component';
 import { EmployeeContactLookupTableModalComponent } from './employee-contact-lookup-table-modal.component';
+import { EmployeeDashboardComponent } from './employee-dashboard/employee-dashboard.component';
 
 @NgModule({
     declarations: [
@@ -18,6 +19,7 @@ import { EmployeeContactLookupTableModalComponent } from './employee-contact-loo
         EmployeeStateLookupTableModalComponent,
         EmployeeCountryLookupTableModalComponent,
         EmployeeContactLookupTableModalComponent,
+        EmployeeDashboardComponent,
     ],
     imports: [AppSharedModule, EmployeeRoutingModule, AdminSharedModule],
 })
