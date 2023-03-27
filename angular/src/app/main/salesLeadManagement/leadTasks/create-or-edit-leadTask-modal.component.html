@@ -1,0 +1,113 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #leadTaskForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="leadTask.id">{{ l('EditLeadTask') }}</span>
+                        <span *ngIf="!leadTask.id">{{ l('CreateNewLeadTask') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="LeadTitle">{{ l('Lead') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="LeadTitle"
+                                name="leadTitle"
+                                [(ngModel)]="leadTitle"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectLeadModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setLeadIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="leadTask.leadId"
+                        [(ngModel)]="leadTask.leadId"
+                        type="text"
+                        required
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="TaskEventName">{{ l('TaskEvent') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="TaskEventName"
+                                name="taskEventName"
+                                [(ngModel)]="taskEventName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectTaskEventModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setTaskEventIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="leadTask.taskEventId"
+                        [(ngModel)]="leadTask.taskEventId"
+                        type="text"
+                        required
+                        hidden
+                    />
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!leadTaskForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <leadTaskLeadLookupTableModal
+        #leadTaskLeadLookupTableModal
+        (modalSave)="getNewLeadId()"
+    ></leadTaskLeadLookupTableModal>
+    <leadTaskTaskEventLookupTableModal
+        #leadTaskTaskEventLookupTableModal
+        (modalSave)="getNewTaskEventId()"
+    ></leadTaskTaskEventLookupTableModal>
+</div>

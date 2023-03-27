@@ -1,0 +1,127 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #storeZipCodeMapForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="storeZipCodeMap.id">{{ l('EditStoreZipCodeMap') }}</span>
+                        <span *ngIf="!storeZipCodeMap.id">{{ l('CreateNewStoreZipCodeMap') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="StoreName">{{ l('Store') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="StoreName"
+                                name="storeName"
+                                [(ngModel)]="storeName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectStoreModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setStoreIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="storeZipCodeMap.storeId"
+                        [(ngModel)]="storeZipCodeMap.storeId"
+                        type="text"
+                        required
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="ZipCodeName">{{ l('ZipCode') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="ZipCodeName"
+                                name="zipCodeName"
+                                [(ngModel)]="zipCodeName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectZipCodeModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setZipCodeIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="storeZipCodeMap.zipCodeId"
+                        [(ngModel)]="storeZipCodeMap.zipCodeId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="StoreZipCodeMap_ZipCode">{{ l('ZipCode') }}</label>
+                        <input
+                            type="text"
+                            #StoreZipCodeMap_ZipCode="ngModel"
+                            id="StoreZipCodeMap_ZipCode"
+                            class="form-control"
+                            [(ngModel)]="storeZipCodeMap.zipCode"
+                            name="ZipCode"
+                            minlength="1"
+                            maxlength="50"
+                        />
+                        <validation-messages [formCtrl]="StoreZipCodeMap_ZipCode"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!storeZipCodeMapForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <storeZipCodeMapStoreLookupTableModal
+        #storeZipCodeMapStoreLookupTableModal
+        (modalSave)="getNewStoreId()"
+    ></storeZipCodeMapStoreLookupTableModal>
+    <storeZipCodeMapZipCodeLookupTableModal
+        #storeZipCodeMapZipCodeLookupTableModal
+        (modalSave)="getNewZipCodeId()"
+    ></storeZipCodeMapZipCodeLookupTableModal>
+</div>

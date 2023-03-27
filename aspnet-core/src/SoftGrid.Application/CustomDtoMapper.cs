@@ -1,4 +1,6 @@
-﻿using SoftGrid.TaskManagement.Dtos;
+﻿using SoftGrid.SalesLeadManagement.Dtos;
+using SoftGrid.SalesLeadManagement;
+using SoftGrid.TaskManagement.Dtos;
 using SoftGrid.TaskManagement;
 using SoftGrid.JobManagement.Dtos;
 using SoftGrid.JobManagement;
@@ -60,6 +62,34 @@ namespace SoftGrid
     {
         public static void CreateMappings(IMapperConfigurationExpression configuration)
         {
+            configuration.CreateMap<CreateOrEditLeadReferralRewardDto, LeadReferralReward>().ReverseMap();
+            configuration.CreateMap<LeadReferralRewardDto, LeadReferralReward>().ReverseMap();
+            configuration.CreateMap<CreateOrEditLeadContactDto, LeadContact>().ReverseMap();
+            configuration.CreateMap<LeadContactDto, LeadContact>().ReverseMap();
+            configuration.CreateMap<CreateOrEditLeadNoteDto, LeadNote>().ReverseMap();
+            configuration.CreateMap<LeadNoteDto, LeadNote>().ReverseMap();
+            configuration.CreateMap<CreateOrEditLeadTaskDto, LeadTask>().ReverseMap();
+            configuration.CreateMap<LeadTaskDto, LeadTask>().ReverseMap();
+            configuration.CreateMap<CreateOrEditLeadTagDto, LeadTag>().ReverseMap();
+            configuration.CreateMap<LeadTagDto, LeadTag>().ReverseMap();
+            configuration.CreateMap<CreateOrEditLeadSalesTeamDto, LeadSalesTeam>().ReverseMap();
+            configuration.CreateMap<LeadSalesTeamDto, LeadSalesTeam>().ReverseMap();
+            configuration.CreateMap<CreateOrEditLeadPipelineStatusDto, LeadPipelineStatus>().ReverseMap();
+            configuration.CreateMap<LeadPipelineStatusDto, LeadPipelineStatus>().ReverseMap();
+            configuration.CreateMap<CreateOrEditLeadDto, Lead>().ReverseMap();
+            configuration.CreateMap<LeadDto, Lead>().ReverseMap();
+            configuration.CreateMap<CreateOrEditLeadPipelineStageDto, LeadPipelineStage>().ReverseMap();
+            configuration.CreateMap<LeadPipelineStageDto, LeadPipelineStage>().ReverseMap();
+            configuration.CreateMap<CreateOrEditLeadSourceDto, LeadSource>().ReverseMap();
+            configuration.CreateMap<LeadSourceDto, LeadSource>().ReverseMap();
+            configuration.CreateMap<CreateOrEditStoreZipCodeMapDto, StoreZipCodeMap>().ReverseMap();
+            configuration.CreateMap<StoreZipCodeMapDto, StoreZipCodeMap>().ReverseMap();
+            configuration.CreateMap<CreateOrEditStoreReviewFeedbackDto, StoreReviewFeedback>().ReverseMap();
+            configuration.CreateMap<StoreReviewFeedbackDto, StoreReviewFeedback>().ReverseMap();
+            configuration.CreateMap<CreateOrEditStoreReviewDto, StoreReview>().ReverseMap();
+            configuration.CreateMap<StoreReviewDto, StoreReview>().ReverseMap();
+            configuration.CreateMap<CreateOrEditStoreRelevantStoreDto, StoreRelevantStore>().ReverseMap();
+            configuration.CreateMap<StoreRelevantStoreDto, StoreRelevantStore>().ReverseMap();
             configuration.CreateMap<CreateOrEditStoreMarketplaceCommissionSettingDto, StoreMarketplaceCommissionSetting>().ReverseMap();
             configuration.CreateMap<StoreMarketplaceCommissionSettingDto, StoreMarketplaceCommissionSetting>().ReverseMap();
             configuration.CreateMap<CreateOrEditMarketplaceCommissionTypeDto, MarketplaceCommissionType>().ReverseMap();

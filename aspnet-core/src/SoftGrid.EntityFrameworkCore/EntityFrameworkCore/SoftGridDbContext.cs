@@ -1,4 +1,5 @@
-﻿using SoftGrid.TaskManagement;
+﻿using SoftGrid.SalesLeadManagement;
+using SoftGrid.TaskManagement;
 using SoftGrid.JobManagement;
 using SoftGrid.Shop;
 using SoftGrid.CRM;
@@ -22,6 +23,34 @@ namespace SoftGrid.EntityFrameworkCore
 {
     public class SoftGridDbContext : AbpZeroDbContext<Tenant, Role, User, SoftGridDbContext>, IAbpPersistedGrantDbContext
     {
+        public virtual DbSet<LeadReferralReward> LeadReferralRewards { get; set; }
+
+        public virtual DbSet<LeadContact> LeadContacts { get; set; }
+
+        public virtual DbSet<LeadNote> LeadNotes { get; set; }
+
+        public virtual DbSet<LeadTask> LeadTasks { get; set; }
+
+        public virtual DbSet<LeadTag> LeadTags { get; set; }
+
+        public virtual DbSet<LeadSalesTeam> LeadSalesTeams { get; set; }
+
+        public virtual DbSet<LeadPipelineStatus> LeadPipelineStatuses { get; set; }
+
+        public virtual DbSet<Lead> Leads { get; set; }
+
+        public virtual DbSet<LeadPipelineStage> LeadPipelineStages { get; set; }
+
+        public virtual DbSet<LeadSource> LeadSources { get; set; }
+
+        public virtual DbSet<StoreZipCodeMap> StoreZipCodeMaps { get; set; }
+
+        public virtual DbSet<StoreReviewFeedback> StoreReviewFeedbacks { get; set; }
+
+        public virtual DbSet<StoreReview> StoreReviews { get; set; }
+
+        public virtual DbSet<StoreRelevantStore> StoreRelevantStores { get; set; }
+
         public virtual DbSet<StoreMarketplaceCommissionSetting> StoreMarketplaceCommissionSettings { get; set; }
 
         public virtual DbSet<MarketplaceCommissionType> MarketplaceCommissionTypes { get; set; }
@@ -172,10 +201,66 @@ namespace SoftGrid.EntityFrameworkCore
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<StoreMarketplaceCommissionSetting>(s =>
+            modelBuilder.Entity<LeadReferralReward>(l =>
             {
-                s.HasIndex(e => new { e.TenantId });
+                l.HasIndex(e => new { e.TenantId });
             });
+            modelBuilder.Entity<LeadContact>(l =>
+                       {
+                           l.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<LeadNote>(l =>
+                       {
+                           l.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<LeadTask>(l =>
+                       {
+                           l.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<LeadTag>(l =>
+                       {
+                           l.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<LeadSalesTeam>(l =>
+                       {
+                           l.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<LeadPipelineStatus>(l =>
+                       {
+                           l.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<Lead>(l =>
+                       {
+                           l.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<LeadPipelineStage>(l =>
+                       {
+                           l.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<LeadSource>(l =>
+                       {
+                           l.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<StoreZipCodeMap>(s =>
+                       {
+                           s.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<StoreReviewFeedback>(s =>
+                       {
+                           s.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<StoreReview>(s =>
+                       {
+                           s.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<StoreRelevantStore>(s =>
+                       {
+                           s.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<StoreMarketplaceCommissionSetting>(s =>
+                       {
+                           s.HasIndex(e => new { e.TenantId });
+                       });
             modelBuilder.Entity<MarketplaceCommissionType>(m =>
                        {
                            m.HasIndex(e => new { e.TenantId });

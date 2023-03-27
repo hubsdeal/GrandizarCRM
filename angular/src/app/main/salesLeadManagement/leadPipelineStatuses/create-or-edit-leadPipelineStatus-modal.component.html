@@ -1,0 +1,196 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #leadPipelineStatusForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="leadPipelineStatus.id">{{ l('EditLeadPipelineStatus') }}</span>
+                        <span *ngIf="!leadPipelineStatus.id">{{ l('CreateNewLeadPipelineStatus') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="LeadTitle">{{ l('Lead') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="LeadTitle"
+                                name="leadTitle"
+                                [(ngModel)]="leadTitle"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectLeadModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setLeadIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="leadPipelineStatus.leadId"
+                        [(ngModel)]="leadPipelineStatus.leadId"
+                        type="text"
+                        required
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="LeadPipelineStageName">{{ l('LeadPipelineStage') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="LeadPipelineStageName"
+                                name="leadPipelineStageName"
+                                [(ngModel)]="leadPipelineStageName"
+                                type="text"
+                                disabled
+                            />
+                            <button
+                                class="btn btn-primary blue"
+                                (click)="openSelectLeadPipelineStageModal()"
+                                type="button"
+                            >
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button
+                                class="btn btn-danger btn-icon"
+                                type="button"
+                                (click)="setLeadPipelineStageIdNull()"
+                            >
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="leadPipelineStatus.leadPipelineStageId"
+                        [(ngModel)]="leadPipelineStatus.leadPipelineStageId"
+                        type="text"
+                        required
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="EmployeeName">{{ l('Employee') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="EmployeeName"
+                                name="employeeName"
+                                [(ngModel)]="employeeName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectEmployeeModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setEmployeeIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="leadPipelineStatus.employeeId"
+                        [(ngModel)]="leadPipelineStatus.employeeId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="LeadPipelineStatus_EntryDate">{{ l('EntryDate') }}</label>
+                        <input
+                            class="form-control m-input"
+                            #LeadPipelineStatus_EntryDate
+                            type="datetime"
+                            bsDatepicker
+                            datePickerLuxonModifier
+                            [(date)]="leadPipelineStatus.entryDate"
+                            id="LeadPipelineStatus_EntryDate"
+                            name="LeadPipelineStatus_EntryDate"
+                        />
+                        <validation-messages [formCtrl]="LeadPipelineStatus_EntryDate"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="LeadPipelineStatus_ExitDate">{{ l('ExitDate') }}</label>
+                        <input
+                            type="text"
+                            #LeadPipelineStatus_ExitDate="ngModel"
+                            id="LeadPipelineStatus_ExitDate"
+                            class="form-control"
+                            [(ngModel)]="leadPipelineStatus.exitDate"
+                            name="ExitDate"
+                        />
+                        <validation-messages [formCtrl]="LeadPipelineStatus_ExitDate"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="LeadPipelineStatus_EnteredAt">{{ l('EnteredAt') }}</label>
+                        <input
+                            class="form-control m-input"
+                            #LeadPipelineStatus_EnteredAt
+                            type="datetime"
+                            bsDatepicker
+                            datePickerLuxonModifier
+                            [(date)]="leadPipelineStatus.enteredAt"
+                            id="LeadPipelineStatus_EnteredAt"
+                            name="LeadPipelineStatus_EnteredAt"
+                        />
+                        <validation-messages [formCtrl]="LeadPipelineStatus_EnteredAt"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!leadPipelineStatusForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <leadPipelineStatusLeadLookupTableModal
+        #leadPipelineStatusLeadLookupTableModal
+        (modalSave)="getNewLeadId()"
+    ></leadPipelineStatusLeadLookupTableModal>
+    <leadPipelineStatusLeadPipelineStageLookupTableModal
+        #leadPipelineStatusLeadPipelineStageLookupTableModal
+        (modalSave)="getNewLeadPipelineStageId()"
+    ></leadPipelineStatusLeadPipelineStageLookupTableModal>
+    <leadPipelineStatusEmployeeLookupTableModal
+        #leadPipelineStatusEmployeeLookupTableModal
+        (modalSave)="getNewEmployeeId()"
+    ></leadPipelineStatusEmployeeLookupTableModal>
+</div>

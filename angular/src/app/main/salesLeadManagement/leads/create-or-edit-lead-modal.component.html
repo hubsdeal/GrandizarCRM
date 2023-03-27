@@ -1,0 +1,495 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #leadForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="lead.id">{{ l('EditLead') }}</span>
+                        <span *ngIf="!lead.id">{{ l('CreateNewLead') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="ContactFullName">{{ l('Contact') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="ContactFullName"
+                                name="contactFullName"
+                                [(ngModel)]="contactFullName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectContactModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setContactIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input class="form-control" name="lead.contactId" [(ngModel)]="lead.contactId" type="text" hidden />
+
+                    <div class="my-3">
+                        <label class="form-label" for="BusinessName">{{ l('Business') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="BusinessName"
+                                name="businessName"
+                                [(ngModel)]="businessName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectBusinessModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setBusinessIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="lead.businessId"
+                        [(ngModel)]="lead.businessId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="ProductName">{{ l('Product') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="ProductName"
+                                name="productName"
+                                [(ngModel)]="productName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectProductModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setProductIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input class="form-control" name="lead.productId" [(ngModel)]="lead.productId" type="text" hidden />
+
+                    <div class="my-3">
+                        <label class="form-label" for="ProductCategoryName">{{ l('ProductCategory') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="ProductCategoryName"
+                                name="productCategoryName"
+                                [(ngModel)]="productCategoryName"
+                                type="text"
+                                disabled
+                            />
+                            <button
+                                class="btn btn-primary blue"
+                                (click)="openSelectProductCategoryModal()"
+                                type="button"
+                            >
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setProductCategoryIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="lead.productCategoryId"
+                        [(ngModel)]="lead.productCategoryId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="StoreName">{{ l('Store') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="StoreName"
+                                name="storeName"
+                                [(ngModel)]="storeName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectStoreModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setStoreIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input class="form-control" name="lead.storeId" [(ngModel)]="lead.storeId" type="text" hidden />
+
+                    <div class="my-3">
+                        <label class="form-label" for="EmployeeName">{{ l('Employee') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="EmployeeName"
+                                name="employeeName"
+                                [(ngModel)]="employeeName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectEmployeeModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setEmployeeIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="lead.employeeId"
+                        [(ngModel)]="lead.employeeId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="LeadSourceName">{{ l('LeadSource') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="LeadSourceName"
+                                name="leadSourceName"
+                                [(ngModel)]="leadSourceName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectLeadSourceModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setLeadSourceIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="lead.leadSourceId"
+                        [(ngModel)]="lead.leadSourceId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="LeadPipelineStageName">{{ l('LeadPipelineStage') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="LeadPipelineStageName"
+                                name="leadPipelineStageName"
+                                [(ngModel)]="leadPipelineStageName"
+                                type="text"
+                                disabled
+                            />
+                            <button
+                                class="btn btn-primary blue"
+                                (click)="openSelectLeadPipelineStageModal()"
+                                type="button"
+                            >
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button
+                                class="btn btn-danger btn-icon"
+                                type="button"
+                                (click)="setLeadPipelineStageIdNull()"
+                            >
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="lead.leadPipelineStageId"
+                        [(ngModel)]="lead.leadPipelineStageId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="HubName">{{ l('Hub') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="HubName"
+                                name="hubName"
+                                [(ngModel)]="hubName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectHubModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setHubIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input class="form-control" name="lead.hubId" [(ngModel)]="lead.hubId" type="text" hidden />
+
+                    <div class="my-3">
+                        <label class="form-label" for="Lead_Title">{{ l('Title') }} *</label>
+                        <input
+                            type="text"
+                            #Lead_Title="ngModel"
+                            id="Lead_Title"
+                            class="form-control"
+                            [(ngModel)]="lead.title"
+                            name="Title"
+                            minlength="1"
+                            maxlength="512"
+                            required
+                        />
+                        <validation-messages [formCtrl]="Lead_Title"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Lead_FirstName">{{ l('FirstName') }} *</label>
+                        <input
+                            type="text"
+                            #Lead_FirstName="ngModel"
+                            id="Lead_FirstName"
+                            class="form-control"
+                            [(ngModel)]="lead.firstName"
+                            name="FirstName"
+                            minlength="1"
+                            maxlength="256"
+                            required
+                        />
+                        <validation-messages [formCtrl]="Lead_FirstName"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Lead_LastName">{{ l('LastName') }}</label>
+                        <input
+                            type="text"
+                            #Lead_LastName="ngModel"
+                            id="Lead_LastName"
+                            class="form-control"
+                            [(ngModel)]="lead.lastName"
+                            name="LastName"
+                            minlength="1"
+                            maxlength="128"
+                        />
+                        <validation-messages [formCtrl]="Lead_LastName"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Lead_Email">{{ l('Email') }}</label>
+                        <input
+                            type="text"
+                            #Lead_Email="ngModel"
+                            id="Lead_Email"
+                            class="form-control"
+                            [(ngModel)]="lead.email"
+                            name="Email"
+                            minlength="1"
+                            maxlength="256"
+                        />
+                        <validation-messages [formCtrl]="Lead_Email"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Lead_Phone">{{ l('Phone') }}</label>
+                        <input
+                            type="text"
+                            #Lead_Phone="ngModel"
+                            id="Lead_Phone"
+                            class="form-control"
+                            [(ngModel)]="lead.phone"
+                            name="Phone"
+                            minlength="1"
+                            maxlength="50"
+                        />
+                        <validation-messages [formCtrl]="Lead_Phone"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Lead_Company">{{ l('Company') }}</label>
+                        <input
+                            type="text"
+                            #Lead_Company="ngModel"
+                            id="Lead_Company"
+                            class="form-control"
+                            [(ngModel)]="lead.company"
+                            name="Company"
+                            minlength="1"
+                            maxlength="128"
+                        />
+                        <validation-messages [formCtrl]="Lead_Company"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Lead_JobTitle">{{ l('JobTitle') }}</label>
+                        <input
+                            type="text"
+                            #Lead_JobTitle="ngModel"
+                            id="Lead_JobTitle"
+                            class="form-control"
+                            [(ngModel)]="lead.jobTitle"
+                            name="JobTitle"
+                            minlength="1"
+                            maxlength="128"
+                        />
+                        <validation-messages [formCtrl]="Lead_JobTitle"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Lead_Industry">{{ l('Industry') }}</label>
+                        <input
+                            type="text"
+                            #Lead_Industry="ngModel"
+                            id="Lead_Industry"
+                            class="form-control"
+                            [(ngModel)]="lead.industry"
+                            name="Industry"
+                            minlength="1"
+                            maxlength="128"
+                        />
+                        <validation-messages [formCtrl]="Lead_Industry"></validation-messages>
+                    </div>
+
+                    <div class="my5">
+                        <label class="form-label" for="Lead_LeadScore">{{ l('LeadScore') }}</label>
+                        <input
+                            type="number"
+                            #Lead_LeadScore="ngModel"
+                            id="Lead_LeadScore"
+                            class="form-control"
+                            [(ngModel)]="lead.leadScore"
+                            name="LeadScore"
+                        />
+                        <validation-messages [formCtrl]="Lead_LeadScore"></validation-messages>
+                    </div>
+
+                    <div class="my5">
+                        <label class="form-label" for="Lead_ExpectedSalesAmount">{{ l('ExpectedSalesAmount') }}</label>
+                        <input
+                            type="number"
+                            #Lead_ExpectedSalesAmount="ngModel"
+                            id="Lead_ExpectedSalesAmount"
+                            class="form-control"
+                            [(ngModel)]="lead.expectedSalesAmount"
+                            name="ExpectedSalesAmount"
+                        />
+                        <validation-messages [formCtrl]="Lead_ExpectedSalesAmount"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Lead_CreatedDate">{{ l('CreatedDate') }}</label>
+                        <input
+                            class="form-control m-input"
+                            #Lead_CreatedDate
+                            type="datetime"
+                            bsDatepicker
+                            datePickerLuxonModifier
+                            [(date)]="lead.createdDate"
+                            id="Lead_CreatedDate"
+                            name="Lead_CreatedDate"
+                        />
+                        <validation-messages [formCtrl]="Lead_CreatedDate"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Lead_ExpectedClosingDate">{{ l('ExpectedClosingDate') }}</label>
+                        <input
+                            class="form-control m-input"
+                            #Lead_ExpectedClosingDate
+                            type="datetime"
+                            bsDatepicker
+                            datePickerLuxonModifier
+                            [(date)]="lead.expectedClosingDate"
+                            id="Lead_ExpectedClosingDate"
+                            name="Lead_ExpectedClosingDate"
+                        />
+                        <validation-messages [formCtrl]="Lead_ExpectedClosingDate"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!leadForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <leadContactLookupTableModal
+        #leadContactLookupTableModal
+        (modalSave)="getNewContactId()"
+    ></leadContactLookupTableModal>
+    <leadBusinessLookupTableModal
+        #leadBusinessLookupTableModal
+        (modalSave)="getNewBusinessId()"
+    ></leadBusinessLookupTableModal>
+    <leadProductLookupTableModal
+        #leadProductLookupTableModal
+        (modalSave)="getNewProductId()"
+    ></leadProductLookupTableModal>
+    <leadProductCategoryLookupTableModal
+        #leadProductCategoryLookupTableModal
+        (modalSave)="getNewProductCategoryId()"
+    ></leadProductCategoryLookupTableModal>
+    <leadStoreLookupTableModal #leadStoreLookupTableModal (modalSave)="getNewStoreId()"></leadStoreLookupTableModal>
+    <leadEmployeeLookupTableModal
+        #leadEmployeeLookupTableModal
+        (modalSave)="getNewEmployeeId()"
+    ></leadEmployeeLookupTableModal>
+    <leadLeadSourceLookupTableModal
+        #leadLeadSourceLookupTableModal
+        (modalSave)="getNewLeadSourceId()"
+    ></leadLeadSourceLookupTableModal>
+    <leadLeadPipelineStageLookupTableModal
+        #leadLeadPipelineStageLookupTableModal
+        (modalSave)="getNewLeadPipelineStageId()"
+    ></leadLeadPipelineStageLookupTableModal>
+    <leadHubLookupTableModal #leadHubLookupTableModal (modalSave)="getNewHubId()"></leadHubLookupTableModal>
+</div>

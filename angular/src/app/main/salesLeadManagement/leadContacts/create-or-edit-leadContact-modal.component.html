@@ -1,0 +1,139 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #leadContactForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="leadContact.id">{{ l('EditLeadContact') }}</span>
+                        <span *ngIf="!leadContact.id">{{ l('CreateNewLeadContact') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="LeadTitle">{{ l('Lead') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="LeadTitle"
+                                name="leadTitle"
+                                [(ngModel)]="leadTitle"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectLeadModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setLeadIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="leadContact.leadId"
+                        [(ngModel)]="leadContact.leadId"
+                        type="text"
+                        required
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="ContactFullName">{{ l('Contact') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="ContactFullName"
+                                name="contactFullName"
+                                [(ngModel)]="contactFullName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectContactModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setContactIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="leadContact.contactId"
+                        [(ngModel)]="leadContact.contactId"
+                        type="text"
+                        required
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="LeadContact_Notes">{{ l('Notes') }}</label>
+                        <input
+                            type="text"
+                            #LeadContact_Notes="ngModel"
+                            id="LeadContact_Notes"
+                            class="form-control"
+                            [(ngModel)]="leadContact.notes"
+                            name="Notes"
+                        />
+                        <validation-messages [formCtrl]="LeadContact_Notes"></validation-messages>
+                    </div>
+
+                    <div class="my5">
+                        <label class="form-label" for="LeadContact_InfluenceScore">{{ l('InfluenceScore') }}</label>
+                        <input
+                            type="number"
+                            #LeadContact_InfluenceScore="ngModel"
+                            id="LeadContact_InfluenceScore"
+                            class="form-control"
+                            [(ngModel)]="leadContact.influenceScore"
+                            name="InfluenceScore"
+                        />
+                        <validation-messages [formCtrl]="LeadContact_InfluenceScore"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!leadContactForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <leadContactLeadLookupTableModal
+        #leadContactLeadLookupTableModal
+        (modalSave)="getNewLeadId()"
+    ></leadContactLeadLookupTableModal>
+    <leadContactContactLookupTableModal
+        #leadContactContactLookupTableModal
+        (modalSave)="getNewContactId()"
+    ></leadContactContactLookupTableModal>
+</div>

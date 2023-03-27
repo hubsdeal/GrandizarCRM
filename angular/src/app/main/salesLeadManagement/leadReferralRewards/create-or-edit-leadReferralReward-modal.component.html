@@ -1,0 +1,216 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #leadReferralRewardForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="leadReferralReward.id">{{ l('EditLeadReferralReward') }}</span>
+                        <span *ngIf="!leadReferralReward.id">{{ l('CreateNewLeadReferralReward') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="LeadTitle">{{ l('Lead') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="LeadTitle"
+                                name="leadTitle"
+                                [(ngModel)]="leadTitle"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectLeadModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setLeadIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="leadReferralReward.leadId"
+                        [(ngModel)]="leadReferralReward.leadId"
+                        type="text"
+                        required
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="ContactFullName">{{ l('Contact') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="ContactFullName"
+                                name="contactFullName"
+                                [(ngModel)]="contactFullName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectContactModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setContactIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="leadReferralReward.contactId"
+                        [(ngModel)]="leadReferralReward.contactId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="LeadReferralReward_FirstName">{{ l('FirstName') }}</label>
+                        <input
+                            type="text"
+                            #LeadReferralReward_FirstName="ngModel"
+                            id="LeadReferralReward_FirstName"
+                            class="form-control"
+                            [(ngModel)]="leadReferralReward.firstName"
+                            name="FirstName"
+                            minlength="1"
+                            maxlength="256"
+                        />
+                        <validation-messages [formCtrl]="LeadReferralReward_FirstName"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="LeadReferralReward_LastName">{{ l('LastName') }}</label>
+                        <input
+                            type="text"
+                            #LeadReferralReward_LastName="ngModel"
+                            id="LeadReferralReward_LastName"
+                            class="form-control"
+                            [(ngModel)]="leadReferralReward.lastName"
+                            name="LastName"
+                            minlength="1"
+                            maxlength="128"
+                        />
+                        <validation-messages [formCtrl]="LeadReferralReward_LastName"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="LeadReferralReward_Phone">{{ l('Phone') }}</label>
+                        <input
+                            type="text"
+                            #LeadReferralReward_Phone="ngModel"
+                            id="LeadReferralReward_Phone"
+                            class="form-control"
+                            [(ngModel)]="leadReferralReward.phone"
+                            name="Phone"
+                            minlength="1"
+                            maxlength="50"
+                        />
+                        <validation-messages [formCtrl]="LeadReferralReward_Phone"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="LeadReferralReward_Email">{{ l('Email') }}</label>
+                        <input
+                            type="text"
+                            #LeadReferralReward_Email="ngModel"
+                            id="LeadReferralReward_Email"
+                            class="form-control"
+                            [(ngModel)]="leadReferralReward.email"
+                            name="Email"
+                            minlength="1"
+                            maxlength="256"
+                        />
+                        <validation-messages [formCtrl]="LeadReferralReward_Email"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="LeadReferralReward_RewardType">{{ l('RewardType') }}</label>
+                        <input
+                            type="text"
+                            #LeadReferralReward_RewardType="ngModel"
+                            id="LeadReferralReward_RewardType"
+                            class="form-control"
+                            [(ngModel)]="leadReferralReward.rewardType"
+                            name="RewardType"
+                            minlength="1"
+                            maxlength="128"
+                        />
+                        <validation-messages [formCtrl]="LeadReferralReward_RewardType"></validation-messages>
+                    </div>
+
+                    <div class="my5">
+                        <label class="form-label" for="LeadReferralReward_RewardAmount">{{ l('RewardAmount') }}</label>
+                        <input
+                            type="number"
+                            #LeadReferralReward_RewardAmount="ngModel"
+                            id="LeadReferralReward_RewardAmount"
+                            class="form-control"
+                            [(ngModel)]="leadReferralReward.rewardAmount"
+                            name="RewardAmount"
+                        />
+                        <validation-messages [formCtrl]="LeadReferralReward_RewardAmount"></validation-messages>
+                    </div>
+
+                    <br />
+                    <label class="form-check form-check-custom form-check-solid">
+                        <input
+                            id="LeadReferralReward_RewardStatus"
+                            #LeadReferralReward_RewardStatus="ngModel"
+                            name="RewardStatus"
+                            [(ngModel)]="leadReferralReward.rewardStatus"
+                            type="checkbox"
+                            class="form-check-input"
+                        />
+                        <span class="form-check-label">
+                            {{ l('RewardStatus') }}
+                        </span>
+                    </label>
+                    <validation-messages [formCtrl]="LeadReferralReward_RewardStatus"></validation-messages>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!leadReferralRewardForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <leadReferralRewardLeadLookupTableModal
+        #leadReferralRewardLeadLookupTableModal
+        (modalSave)="getNewLeadId()"
+    ></leadReferralRewardLeadLookupTableModal>
+    <leadReferralRewardContactLookupTableModal
+        #leadReferralRewardContactLookupTableModal
+        (modalSave)="getNewContactId()"
+    ></leadReferralRewardContactLookupTableModal>
+</div>

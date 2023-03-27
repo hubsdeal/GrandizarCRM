@@ -1,0 +1,122 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span>{{ l('Details') }}</span>
+                </h4>
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    (click)="close()"
+                    aria-label="Close"
+                    [disabled]="saving"
+                ></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Title') }} :</h6>
+                        {{ item.lead.title }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('FirstName') }} :</h6>
+                        {{ item.lead.firstName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('LastName') }} :</h6>
+                        {{ item.lead.lastName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Email') }} :</h6>
+                        {{ item.lead.email }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Phone') }} :</h6>
+                        {{ item.lead.phone }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Company') }} :</h6>
+                        {{ item.lead.company }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('JobTitle') }} :</h6>
+                        {{ item.lead.jobTitle }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Industry') }} :</h6>
+                        {{ item.lead.industry }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('LeadScore') }} :</h6>
+                        {{ item.lead.leadScore }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('ExpectedSalesAmount') }} :</h6>
+                        {{ item.lead.expectedSalesAmount }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('CreatedDate') }} :</h6>
+                        {{ item.lead.createdDate | luxonFormat : 'yyyy-LL-dd HH:mm:ss' }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('ExpectedClosingDate') }} :</h6>
+                        {{ item.lead.expectedClosingDate | luxonFormat : 'yyyy-LL-dd HH:mm:ss' }}
+                    </div>
+
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('Contact') }}) {{ l('FullName') }} :</h6>
+                        {{ item.contactFullName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('Business') }}) {{ l('Name') }} :</h6>
+                        {{ item.businessName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('Product') }}) {{ l('Name') }} :</h6>
+                        {{ item.productName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('ProductCategory') }}) {{ l('Name') }} :</h6>
+                        {{ item.productCategoryName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('Store') }}) {{ l('Name') }} :</h6>
+                        {{ item.storeName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('Employee') }}) {{ l('Name') }} :</h6>
+                        {{ item.employeeName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('LeadSource') }}) {{ l('Name') }} :</h6>
+                        {{ item.leadSourceName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('LeadPipelineStage') }}) {{ l('Name') }} :</h6>
+                        {{ item.leadPipelineStageName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('Hub') }}) {{ l('Name') }} :</h6>
+                        {{ item.hubName }}
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button [disabled]="saving" type="button" class="btn btn-primary blue" (click)="close()">
+                    {{ l('Close') }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

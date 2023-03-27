@@ -3977,6 +3977,490 @@ namespace SoftGrid.Migrations
                     b.ToTable("AbpTenants");
                 });
 
+            modelBuilder.Entity("SoftGrid.SalesLeadManagement.Lead", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long?>("BusinessId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Company")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<long?>("ContactId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("DeleterUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<long?>("EmployeeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("ExpectedClosingDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double?>("ExpectedSalesAmount")
+                        .HasColumnType("float");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<long?>("HubId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Industry")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("JobTitle")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("LastModifierUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("LastName")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<long?>("LeadPipelineStageId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("LeadScore")
+                        .HasColumnType("int");
+
+                    b.Property<long?>("LeadSourceId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Phone")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<long?>("ProductCategoryId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("ProductId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("StoreId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BusinessId");
+
+                    b.HasIndex("ContactId");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.HasIndex("HubId");
+
+                    b.HasIndex("LeadPipelineStageId");
+
+                    b.HasIndex("LeadSourceId");
+
+                    b.HasIndex("ProductCategoryId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("StoreId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("Leads");
+                });
+
+            modelBuilder.Entity("SoftGrid.SalesLeadManagement.LeadContact", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long>("ContactId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("InfluenceScore")
+                        .HasColumnType("int");
+
+                    b.Property<long>("LeadId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ContactId");
+
+                    b.HasIndex("LeadId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("LeadContacts");
+                });
+
+            modelBuilder.Entity("SoftGrid.SalesLeadManagement.LeadNote", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("LeadId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Notes")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LeadId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("LeadNotes");
+                });
+
+            modelBuilder.Entity("SoftGrid.SalesLeadManagement.LeadPipelineStage", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<int?>("StageOrder")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("LeadPipelineStages");
+                });
+
+            modelBuilder.Entity("SoftGrid.SalesLeadManagement.LeadPipelineStatus", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("EmployeeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("EnteredAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("EntryDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ExitDate")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("LeadId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("LeadPipelineStageId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.HasIndex("LeadId");
+
+                    b.HasIndex("LeadPipelineStageId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("LeadPipelineStatuses");
+                });
+
+            modelBuilder.Entity("SoftGrid.SalesLeadManagement.LeadReferralReward", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long?>("ContactId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("FirstName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("LastName")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<long>("LeadId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Phone")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<double?>("RewardAmount")
+                        .HasColumnType("float");
+
+                    b.Property<bool>("RewardStatus")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("RewardType")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ContactId");
+
+                    b.HasIndex("LeadId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("LeadReferralRewards");
+                });
+
+            modelBuilder.Entity("SoftGrid.SalesLeadManagement.LeadSalesTeam", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime?>("AssignedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("EmployeeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("LeadId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Primary")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.HasIndex("LeadId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("LeadSalesTeams");
+                });
+
+            modelBuilder.Entity("SoftGrid.SalesLeadManagement.LeadSource", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("LeadSources");
+                });
+
+            modelBuilder.Entity("SoftGrid.SalesLeadManagement.LeadTag", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("CustomTag")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<int?>("DisplaySequence")
+                        .HasColumnType("int");
+
+                    b.Property<long>("LeadId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("MasterTagCategoryId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("MasterTagId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("TagValue")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LeadId");
+
+                    b.HasIndex("MasterTagCategoryId");
+
+                    b.HasIndex("MasterTagId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("LeadTags");
+                });
+
+            modelBuilder.Entity("SoftGrid.SalesLeadManagement.LeadTask", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("LeadId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("TaskEventId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LeadId");
+
+                    b.HasIndex("TaskEventId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("LeadTasks");
+                });
+
             modelBuilder.Entity("SoftGrid.Shop.MarketplaceCommissionType", b =>
                 {
                     b.Property<long>("Id")
@@ -5091,6 +5575,137 @@ namespace SoftGrid.Migrations
                     b.ToTable("StoreProductMaps");
                 });
 
+            modelBuilder.Entity("SoftGrid.Shop.StoreRelevantStore", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("PrimaryStoreId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("RelevantStoreId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PrimaryStoreId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("StoreRelevantStores");
+                });
+
+            modelBuilder.Entity("SoftGrid.Shop.StoreReview", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long?>("ContactId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("IsPublish")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("PostDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PostTime")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<long?>("RatingLikeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("ReviewInfo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("StoreId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ContactId");
+
+                    b.HasIndex("RatingLikeId");
+
+                    b.HasIndex("StoreId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("StoreReviews");
+                });
+
+            modelBuilder.Entity("SoftGrid.Shop.StoreReviewFeedback", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long?>("ContactId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("IsPublished")
+                        .HasColumnType("bit");
+
+                    b.Property<long?>("RatingLikeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("ReplyText")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("StoreReviewId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ContactId");
+
+                    b.HasIndex("RatingLikeId");
+
+                    b.HasIndex("StoreReviewId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("StoreReviewFeedbacks");
+                });
+
             modelBuilder.Entity("SoftGrid.Shop.StoreSalesAlert", b =>
                 {
                     b.Property<long>("Id")
@@ -5226,6 +5841,44 @@ namespace SoftGrid.Migrations
                     b.HasIndex("TenantId");
 
                     b.ToTable("StoreTaxes");
+                });
+
+            modelBuilder.Entity("SoftGrid.Shop.StoreZipCodeMap", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("StoreId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ZipCode")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<long?>("ZipCodeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StoreId");
+
+                    b.HasIndex("TenantId");
+
+                    b.HasIndex("ZipCodeId");
+
+                    b.ToTable("StoreZipCodeMaps");
                 });
 
             modelBuilder.Entity("SoftGrid.Storage.BinaryObject", b =>
@@ -6319,6 +6972,192 @@ namespace SoftGrid.Migrations
                     b.Navigation("LastModifierUser");
                 });
 
+            modelBuilder.Entity("SoftGrid.SalesLeadManagement.Lead", b =>
+                {
+                    b.HasOne("SoftGrid.CRM.Business", "BusinessFk")
+                        .WithMany()
+                        .HasForeignKey("BusinessId");
+
+                    b.HasOne("SoftGrid.CRM.Contact", "ContactFk")
+                        .WithMany()
+                        .HasForeignKey("ContactId");
+
+                    b.HasOne("SoftGrid.CRM.Employee", "EmployeeFk")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId");
+
+                    b.HasOne("SoftGrid.Territory.Hub", "HubFk")
+                        .WithMany()
+                        .HasForeignKey("HubId");
+
+                    b.HasOne("SoftGrid.SalesLeadManagement.LeadPipelineStage", "LeadPipelineStageFk")
+                        .WithMany()
+                        .HasForeignKey("LeadPipelineStageId");
+
+                    b.HasOne("SoftGrid.SalesLeadManagement.LeadSource", "LeadSourceFk")
+                        .WithMany()
+                        .HasForeignKey("LeadSourceId");
+
+                    b.HasOne("SoftGrid.Shop.ProductCategory", "ProductCategoryFk")
+                        .WithMany()
+                        .HasForeignKey("ProductCategoryId");
+
+                    b.HasOne("SoftGrid.Shop.Product", "ProductFk")
+                        .WithMany()
+                        .HasForeignKey("ProductId");
+
+                    b.HasOne("SoftGrid.Shop.Store", "StoreFk")
+                        .WithMany()
+                        .HasForeignKey("StoreId");
+
+                    b.Navigation("BusinessFk");
+
+                    b.Navigation("ContactFk");
+
+                    b.Navigation("EmployeeFk");
+
+                    b.Navigation("HubFk");
+
+                    b.Navigation("LeadPipelineStageFk");
+
+                    b.Navigation("LeadSourceFk");
+
+                    b.Navigation("ProductCategoryFk");
+
+                    b.Navigation("ProductFk");
+
+                    b.Navigation("StoreFk");
+                });
+
+            modelBuilder.Entity("SoftGrid.SalesLeadManagement.LeadContact", b =>
+                {
+                    b.HasOne("SoftGrid.CRM.Contact", "ContactFk")
+                        .WithMany()
+                        .HasForeignKey("ContactId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SoftGrid.SalesLeadManagement.Lead", "LeadFk")
+                        .WithMany()
+                        .HasForeignKey("LeadId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ContactFk");
+
+                    b.Navigation("LeadFk");
+                });
+
+            modelBuilder.Entity("SoftGrid.SalesLeadManagement.LeadNote", b =>
+                {
+                    b.HasOne("SoftGrid.SalesLeadManagement.Lead", "LeadFk")
+                        .WithMany()
+                        .HasForeignKey("LeadId");
+
+                    b.Navigation("LeadFk");
+                });
+
+            modelBuilder.Entity("SoftGrid.SalesLeadManagement.LeadPipelineStatus", b =>
+                {
+                    b.HasOne("SoftGrid.CRM.Employee", "EmployeeFk")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId");
+
+                    b.HasOne("SoftGrid.SalesLeadManagement.Lead", "LeadFk")
+                        .WithMany()
+                        .HasForeignKey("LeadId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SoftGrid.SalesLeadManagement.LeadPipelineStage", "LeadPipelineStageFk")
+                        .WithMany()
+                        .HasForeignKey("LeadPipelineStageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("EmployeeFk");
+
+                    b.Navigation("LeadFk");
+
+                    b.Navigation("LeadPipelineStageFk");
+                });
+
+            modelBuilder.Entity("SoftGrid.SalesLeadManagement.LeadReferralReward", b =>
+                {
+                    b.HasOne("SoftGrid.CRM.Contact", "ContactFk")
+                        .WithMany()
+                        .HasForeignKey("ContactId");
+
+                    b.HasOne("SoftGrid.SalesLeadManagement.Lead", "LeadFk")
+                        .WithMany()
+                        .HasForeignKey("LeadId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ContactFk");
+
+                    b.Navigation("LeadFk");
+                });
+
+            modelBuilder.Entity("SoftGrid.SalesLeadManagement.LeadSalesTeam", b =>
+                {
+                    b.HasOne("SoftGrid.CRM.Employee", "EmployeeFk")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId");
+
+                    b.HasOne("SoftGrid.SalesLeadManagement.Lead", "LeadFk")
+                        .WithMany()
+                        .HasForeignKey("LeadId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("EmployeeFk");
+
+                    b.Navigation("LeadFk");
+                });
+
+            modelBuilder.Entity("SoftGrid.SalesLeadManagement.LeadTag", b =>
+                {
+                    b.HasOne("SoftGrid.SalesLeadManagement.Lead", "LeadFk")
+                        .WithMany()
+                        .HasForeignKey("LeadId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SoftGrid.LookupData.MasterTagCategory", "MasterTagCategoryFk")
+                        .WithMany()
+                        .HasForeignKey("MasterTagCategoryId");
+
+                    b.HasOne("SoftGrid.LookupData.MasterTag", "MasterTagFk")
+                        .WithMany()
+                        .HasForeignKey("MasterTagId");
+
+                    b.Navigation("LeadFk");
+
+                    b.Navigation("MasterTagCategoryFk");
+
+                    b.Navigation("MasterTagFk");
+                });
+
+            modelBuilder.Entity("SoftGrid.SalesLeadManagement.LeadTask", b =>
+                {
+                    b.HasOne("SoftGrid.SalesLeadManagement.Lead", "LeadFk")
+                        .WithMany()
+                        .HasForeignKey("LeadId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SoftGrid.TaskManagement.TaskEvent", "TaskEventFk")
+                        .WithMany()
+                        .HasForeignKey("TaskEventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("LeadFk");
+
+                    b.Navigation("TaskEventFk");
+                });
+
             modelBuilder.Entity("SoftGrid.Shop.Product", b =>
                 {
                     b.HasOne("SoftGrid.LookupData.Currency", "CurrencyFk")
@@ -6655,6 +7494,63 @@ namespace SoftGrid.Migrations
                     b.Navigation("StoreFk");
                 });
 
+            modelBuilder.Entity("SoftGrid.Shop.StoreRelevantStore", b =>
+                {
+                    b.HasOne("SoftGrid.Shop.Store", "PrimaryStoreFk")
+                        .WithMany()
+                        .HasForeignKey("PrimaryStoreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PrimaryStoreFk");
+                });
+
+            modelBuilder.Entity("SoftGrid.Shop.StoreReview", b =>
+                {
+                    b.HasOne("SoftGrid.CRM.Contact", "ContactFk")
+                        .WithMany()
+                        .HasForeignKey("ContactId");
+
+                    b.HasOne("SoftGrid.LookupData.RatingLike", "RatingLikeFk")
+                        .WithMany()
+                        .HasForeignKey("RatingLikeId");
+
+                    b.HasOne("SoftGrid.Shop.Store", "StoreFk")
+                        .WithMany()
+                        .HasForeignKey("StoreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ContactFk");
+
+                    b.Navigation("RatingLikeFk");
+
+                    b.Navigation("StoreFk");
+                });
+
+            modelBuilder.Entity("SoftGrid.Shop.StoreReviewFeedback", b =>
+                {
+                    b.HasOne("SoftGrid.CRM.Contact", "ContactFk")
+                        .WithMany()
+                        .HasForeignKey("ContactId");
+
+                    b.HasOne("SoftGrid.LookupData.RatingLike", "RatingLikeFk")
+                        .WithMany()
+                        .HasForeignKey("RatingLikeId");
+
+                    b.HasOne("SoftGrid.Shop.StoreReview", "StoreReviewFk")
+                        .WithMany()
+                        .HasForeignKey("StoreReviewId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ContactFk");
+
+                    b.Navigation("RatingLikeFk");
+
+                    b.Navigation("StoreReviewFk");
+                });
+
             modelBuilder.Entity("SoftGrid.Shop.StoreSalesAlert", b =>
                 {
                     b.HasOne("SoftGrid.Shop.Store", "StoreFk")
@@ -6698,6 +7594,23 @@ namespace SoftGrid.Migrations
                         .IsRequired();
 
                     b.Navigation("StoreFk");
+                });
+
+            modelBuilder.Entity("SoftGrid.Shop.StoreZipCodeMap", b =>
+                {
+                    b.HasOne("SoftGrid.Shop.Store", "StoreFk")
+                        .WithMany()
+                        .HasForeignKey("StoreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SoftGrid.LookupData.ZipCode", "ZipCodeFk")
+                        .WithMany()
+                        .HasForeignKey("ZipCodeId");
+
+                    b.Navigation("StoreFk");
+
+                    b.Navigation("ZipCodeFk");
                 });
 
             modelBuilder.Entity("SoftGrid.TaskManagement.TaskEvent", b =>

@@ -1,0 +1,360 @@
+﻿<div [@routerTransition]>
+    <sub-header [title]="'StoreReviews' | localize" [description]="'StoreReviewsHeaderInfo' | localize">
+        <div role="actions">
+            <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1">
+                <i class="fa fa-file-excel"></i>
+                {{ l('ExportToExcel') }}
+            </button>
+
+            <button
+                *ngIf="isGranted('Pages.StoreReviews.Create')"
+                (click)="createStoreReview()"
+                class="btn btn-primary blue"
+            >
+                <i class="fa fa-plus"></i>
+                {{ l('CreateNewStoreReview') }}
+            </button>
+        </div>
+    </sub-header>
+
+    <div [class]="containerClass">
+        <div class="card card-custom gutter-b">
+            <div class="card-body">
+                <form class="form" autocomplete="off">
+                    <div>
+                        <div class="row align-items-center">
+                            <div class="col-xl-12">
+                                <div class="my-3">
+                                    <div class="input-group mb-3">
+                                        <input
+                                            [(ngModel)]="filterText"
+                                            (ngModelChange)="getStoreReviews()"
+                                            name="filterText"
+                                            autoFocus
+                                            type="text"
+                                            class="form-control"
+                                            [placeholder]="l('SearchWithThreeDot')"
+                                        />
+                                        <button class="btn btn-primary" type="submit" (click)="getStoreReviews()">
+                                            <i class="flaticon-search-1"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" [hidden]="!advancedFiltersAreShown">
+                            <div class="col-md-12"></div>
+
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="ReviewInfoFilter">{{ l('ReviewInfo') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="ReviewInfoFilter"
+                                        name="reviewInfoFilter"
+                                        [(ngModel)]="reviewInfoFilter"
+                                        (ngModelChange)="getStoreReviews()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="MinPostDateFilter">{{ l('PostDateRange') }}</label>
+                                    <div class="input-group">
+                                        <input
+                                            class="form-control m-input"
+                                            id="MinPostDateFilter"
+                                            name="MinPostDateFilter"
+                                            type="datetime"
+                                            bsDatepicker
+                                            placeholder="{{ l('MinValue') }}"
+                                            [(ngModel)]="minPostDateFilter"
+                                            (ngModelChange)="getStoreReviews()"
+                                        />
+                                        <span style="line-height: 40px; padding: 0 15px 0 15px">&mdash;</span>
+                                        <input
+                                            class="form-control m-input"
+                                            id="MaxPostDateFilter"
+                                            name="MaxPostDateFilter"
+                                            type="datetime"
+                                            bsDatepicker
+                                            placeholder="{{ l('MaxValue') }}"
+                                            [(ngModel)]="maxPostDateFilter"
+                                            (ngModelChange)="getStoreReviews()"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="PostTimeFilter">{{ l('PostTime') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="PostTimeFilter"
+                                        name="postTimeFilter"
+                                        [(ngModel)]="postTimeFilter"
+                                        (ngModelChange)="getStoreReviews()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="IsPublishFilterSelect">{{ l('IsPublish') }}</label>
+                                    <select
+                                        class="form-select"
+                                        name="IsPublishFilter"
+                                        id="IsPublishFilterSelect"
+                                        [(ngModel)]="isPublishFilter"
+                                        (ngModelChange)="getStoreReviews()"
+                                    >
+                                        <option value="-1">{{ l('All') }}</option>
+                                        <option value="0">{{ l('False') }}</option>
+                                        <option value="1">{{ l('True') }}</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="StoreNameFilter">
+                                        ({{ l('Store') }}) {{ l('Name') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="StoreNameFilter"
+                                        name="storeNameFilter"
+                                        [(ngModel)]="storeNameFilter"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="ContactFullNameFilter">
+                                        ({{ l('Contact') }}) {{ l('FullName') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="ContactFullNameFilter"
+                                        name="contactFullNameFilter"
+                                        [(ngModel)]="contactFullNameFilter"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="RatingLikeNameFilter">
+                                        ({{ l('RatingLike') }}) {{ l('Name') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="RatingLikeNameFilter"
+                                        name="ratingLikeNameFilter"
+                                        [(ngModel)]="ratingLikeNameFilter"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-12 mt-5">
+                                <button
+                                    (click)="resetFilters()"
+                                    class="btn btn-secondary btn-sm"
+                                    id="btn-reset-filters"
+                                >
+                                    Reset
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row my-4">
+                            <div class="col-sm-12">
+                                <span
+                                    class="clickable-item text-muted"
+                                    *ngIf="!advancedFiltersAreShown"
+                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown"
+                                >
+                                    <i class="fa fa-angle-down"></i>
+                                    {{ l('ShowAdvancedFilters') }}
+                                </span>
+                                <span
+                                    class="clickable-item text-muted"
+                                    *ngIf="advancedFiltersAreShown"
+                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown"
+                                >
+                                    <i class="fa fa-angle-up"></i>
+                                    {{ l('HideAdvancedFilters') }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="row align-items-center">
+                    <!--<Primeng-Datatable-Start>-->
+                    <div class="primeng-datatable-container col-12" [busyIf]="primengTableHelper.isLoading">
+                        <p-table
+                            #dataTable
+                            (onLazyLoad)="getStoreReviews($event)"
+                            [value]="primengTableHelper.records"
+                            rows="{{ primengTableHelper.defaultRecordsCountPerPage }}"
+                            [paginator]="false"
+                            [lazy]="true"
+                            [scrollable]="true"
+                            ScrollWidth="100%"
+                            [responsive]="primengTableHelper.isResponsive"
+                            [resizableColumns]="primengTableHelper.resizableColumns"
+                        >
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th
+                                        style="width: 130px"
+                                        [hidden]="!isGrantedAny('Pages.StoreReviews.Edit', 'Pages.StoreReviews.Delete')"
+                                    >
+                                        {{ l('Actions') }}
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="storeFk.name">
+                                        {{ l('Name') }}
+                                        <p-sortIcon field="storeName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="contactFk.fullName">
+                                        {{ l('FullName') }}
+                                        <p-sortIcon field="contactFullName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="ratingLikeFk.name">
+                                        {{ l('Name') }}
+                                        <p-sortIcon field="ratingLikeName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="reviewInfo">
+                                        {{ l('ReviewInfo') }}
+                                        <p-sortIcon field="storeReview.reviewInfo"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="postDate">
+                                        {{ l('PostDate') }}
+                                        <p-sortIcon field="storeReview.postDate"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="postTime">
+                                        {{ l('PostTime') }}
+                                        <p-sortIcon field="storeReview.postTime"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="isPublish">
+                                        {{ l('IsPublish') }}
+                                        <p-sortIcon field="storeReview.isPublish"></p-sortIcon>
+                                    </th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
+                                <tr>
+                                    <td
+                                        style="width: 130px"
+                                        [hidden]="!isGrantedAny('Pages.StoreReviews.Edit', 'Pages.StoreReviews.Delete')"
+                                    >
+                                        <div class="btn-group dropdown" dropdown container="body">
+                                            <button class="dropdown-toggle btn btn-sm btn-primary" dropdownToggle>
+                                                <i class="fa fa-cog"></i>
+                                                <span class="caret"></span>
+                                                {{ l('Actions') }}
+                                            </button>
+                                            <ul class="dropdown-menu" *dropdownMenu>
+                                                <li>
+                                                    <a
+                                                        href="javascript:;"
+                                                        class="dropdown-item"
+                                                        (click)="viewStoreReviewModal.show(record)"
+                                                    >
+                                                        {{ l('View') }}
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a
+                                                        href="javascript:;"
+                                                        *ngIf="permission.isGranted('Pages.StoreReviews.Edit')"
+                                                        class="dropdown-item"
+                                                        (click)="
+                                                            createOrEditStoreReviewModal.show(record.storeReview.id)
+                                                        "
+                                                    >
+                                                        {{ l('Edit') }}
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a
+                                                        class="dropdown-item"
+                                                        href="javascript:;"
+                                                        *ngIf="permission.isGranted('Pages.StoreReviews.Delete')"
+                                                        (click)="deleteStoreReview(record.storeReview)"
+                                                    >
+                                                        {{ l('Delete') }}
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Name') }}</span>
+                                        {{ record.storeName }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('FullName') }}</span>
+                                        {{ record.contactFullName }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Name') }}</span>
+                                        {{ record.ratingLikeName }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('ReviewInfo') }}</span>
+                                        {{ record.storeReview.reviewInfo }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('PostDate') }}</span>
+                                        <span *ngIf="record.storeReview.postDate">
+                                            {{ record.storeReview.postDate | luxonFormat : 'F' }}
+                                        </span>
+                                        <span *ngIf="!record.storeReview.postDate">-</span>
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('PostTime') }}</span>
+                                        {{ record.storeReview.postTime }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('IsPublish') }}</span>
+                                        <div *ngIf="record.storeReview.isPublish" class="text-center">
+                                            <i class="fa fa-check-circle text-success" title="True"></i>
+                                        </div>
+                                        <div *ngIf="!record.storeReview.isPublish" class="text-center">
+                                            <i class="fa fa-times-circle" title="False"></i>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                        <div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
+                            {{ l('NoData') }}
+                        </div>
+                        <div class="primeng-paging-container">
+                            <p-paginator
+                                [rows]="primengTableHelper.defaultRecordsCountPerPage"
+                                #paginator
+                                (onPageChange)="getStoreReviews($event)"
+                                [totalRecords]="primengTableHelper.totalRecordsCount"
+                                [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
+                                [showCurrentPageReport]="true"
+                                [currentPageReportTemplate]="
+                                    'TotalRecordsCount' | localize : primengTableHelper.totalRecordsCount
+                                "
+                            ></p-paginator>
+                        </div>
+                    </div>
+                    <!--<Primeng-Datatable-End>-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <createOrEditStoreReviewModal
+        #createOrEditStoreReviewModal
+        (modalSave)="getStoreReviews()"
+    ></createOrEditStoreReviewModal>
+    <viewStoreReviewModal #viewStoreReviewModal></viewStoreReviewModal>
+</div>

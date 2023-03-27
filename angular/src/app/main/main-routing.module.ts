@@ -9,6 +9,104 @@ import { RouterModule } from '@angular/router';
                 children: [
                     
                     {
+                        path: 'salesLeadManagement/leadReferralRewards',
+                        loadChildren: () => import('./salesLeadManagement/leadReferralRewards/leadReferralReward.module').then(m => m.LeadReferralRewardModule),
+                        data: { permission: 'Pages.LeadReferralRewards' }
+                    },
+                
+                    
+                    {
+                        path: 'salesLeadManagement/leadContacts',
+                        loadChildren: () => import('./salesLeadManagement/leadContacts/leadContact.module').then(m => m.LeadContactModule),
+                        data: { permission: 'Pages.LeadContacts' }
+                    },
+                
+                    
+                    {
+                        path: 'salesLeadManagement/leadNotes',
+                        loadChildren: () => import('./salesLeadManagement/leadNotes/leadNote.module').then(m => m.LeadNoteModule),
+                        data: { permission: 'Pages.LeadNotes' }
+                    },
+                
+                    
+                    {
+                        path: 'salesLeadManagement/leadTasks',
+                        loadChildren: () => import('./salesLeadManagement/leadTasks/leadTask.module').then(m => m.LeadTaskModule),
+                        data: { permission: 'Pages.LeadTasks' }
+                    },
+                
+                    
+                    {
+                        path: 'salesLeadManagement/leadTags',
+                        loadChildren: () => import('./salesLeadManagement/leadTags/leadTag.module').then(m => m.LeadTagModule),
+                        data: { permission: 'Pages.LeadTags' }
+                    },
+                
+                    
+                    {
+                        path: 'salesLeadManagement/leadSalesTeams',
+                        loadChildren: () => import('./salesLeadManagement/leadSalesTeams/leadSalesTeam.module').then(m => m.LeadSalesTeamModule),
+                        data: { permission: 'Pages.LeadSalesTeams' }
+                    },
+                
+                    
+                    {
+                        path: 'salesLeadManagement/leadPipelineStatuses',
+                        loadChildren: () => import('./salesLeadManagement/leadPipelineStatuses/leadPipelineStatus.module').then(m => m.LeadPipelineStatusModule),
+                        data: { permission: 'Pages.LeadPipelineStatuses' }
+                    },
+                
+                    
+                    {
+                        path: 'salesLeadManagement/leads',
+                        loadChildren: () => import('./salesLeadManagement/leads/lead.module').then(m => m.LeadModule),
+                        data: { permission: 'Pages.Leads' }
+                    },
+                
+                    
+                    {
+                        path: 'salesLeadManagement/leadPipelineStages',
+                        loadChildren: () => import('./salesLeadManagement/leadPipelineStages/leadPipelineStage.module').then(m => m.LeadPipelineStageModule),
+                        data: { permission: 'Pages.LeadPipelineStages' }
+                    },
+                
+                    
+                    {
+                        path: 'salesLeadManagement/leadSources',
+                        loadChildren: () => import('./salesLeadManagement/leadSources/leadSource.module').then(m => m.LeadSourceModule),
+                        data: { permission: 'Pages.LeadSources' }
+                    },
+                
+                    
+                    {
+                        path: 'shop/storeZipCodeMaps',
+                        loadChildren: () => import('./shop/storeZipCodeMaps/storeZipCodeMap.module').then(m => m.StoreZipCodeMapModule),
+                        data: { permission: 'Pages.StoreZipCodeMaps' }
+                    },
+                
+                    
+                    {
+                        path: 'shop/storeReviewFeedbacks',
+                        loadChildren: () => import('./shop/storeReviewFeedbacks/storeReviewFeedback.module').then(m => m.StoreReviewFeedbackModule),
+                        data: { permission: 'Pages.StoreReviewFeedbacks' }
+                    },
+                
+                    
+                    {
+                        path: 'shop/storeReviews',
+                        loadChildren: () => import('./shop/storeReviews/storeReview.module').then(m => m.StoreReviewModule),
+                        data: { permission: 'Pages.StoreReviews' }
+                    },
+                
+                    
+                    {
+                        path: 'shop/storeRelevantStores',
+                        loadChildren: () => import('./shop/storeRelevantStores/storeRelevantStore.module').then(m => m.StoreRelevantStoreModule),
+                        data: { permission: 'Pages.StoreRelevantStores' }
+                    },
+                
+                    
+                    {
                         path: 'shop/storeMarketplaceCommissionSettings',
                         loadChildren: () => import('./shop/storeMarketplaceCommissionSettings/storeMarketplaceCommissionSetting.module').then(m => m.StoreMarketplaceCommissionSettingModule),
                         data: { permission: 'Pages.StoreMarketplaceCommissionSettings' }

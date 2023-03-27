@@ -1,0 +1,93 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #leadNoteForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="leadNote.id">{{ l('EditLeadNote') }}</span>
+                        <span *ngIf="!leadNote.id">{{ l('CreateNewLeadNote') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="LeadTitle">{{ l('Lead') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="LeadTitle"
+                                name="leadTitle"
+                                [(ngModel)]="leadTitle"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectLeadModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setLeadIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="leadNote.leadId"
+                        [(ngModel)]="leadNote.leadId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="LeadNote_Notes">{{ l('Notes') }} *</label>
+                        <input
+                            type="text"
+                            #LeadNote_Notes="ngModel"
+                            id="LeadNote_Notes"
+                            class="form-control"
+                            [(ngModel)]="leadNote.notes"
+                            name="Notes"
+                            required
+                        />
+                        <validation-messages [formCtrl]="LeadNote_Notes"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!leadNoteForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <leadNoteLeadLookupTableModal
+        #leadNoteLeadLookupTableModal
+        (modalSave)="getNewLeadId()"
+    ></leadNoteLeadLookupTableModal>
+</div>

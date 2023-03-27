@@ -30,6 +30,76 @@ namespace SoftGrid.Authorization
 
             var pages = context.GetPermissionOrNull(AppPermissions.Pages) ?? context.CreatePermission(AppPermissions.Pages, L("Pages"));
 
+            var leadReferralRewards = pages.CreateChildPermission(AppPermissions.Pages_LeadReferralRewards, L("LeadReferralRewards"));
+            leadReferralRewards.CreateChildPermission(AppPermissions.Pages_LeadReferralRewards_Create, L("CreateNewLeadReferralReward"));
+            leadReferralRewards.CreateChildPermission(AppPermissions.Pages_LeadReferralRewards_Edit, L("EditLeadReferralReward"));
+            leadReferralRewards.CreateChildPermission(AppPermissions.Pages_LeadReferralRewards_Delete, L("DeleteLeadReferralReward"));
+
+            var leadContacts = pages.CreateChildPermission(AppPermissions.Pages_LeadContacts, L("LeadContacts"));
+            leadContacts.CreateChildPermission(AppPermissions.Pages_LeadContacts_Create, L("CreateNewLeadContact"));
+            leadContacts.CreateChildPermission(AppPermissions.Pages_LeadContacts_Edit, L("EditLeadContact"));
+            leadContacts.CreateChildPermission(AppPermissions.Pages_LeadContacts_Delete, L("DeleteLeadContact"));
+
+            var leadNotes = pages.CreateChildPermission(AppPermissions.Pages_LeadNotes, L("LeadNotes"));
+            leadNotes.CreateChildPermission(AppPermissions.Pages_LeadNotes_Create, L("CreateNewLeadNote"));
+            leadNotes.CreateChildPermission(AppPermissions.Pages_LeadNotes_Edit, L("EditLeadNote"));
+            leadNotes.CreateChildPermission(AppPermissions.Pages_LeadNotes_Delete, L("DeleteLeadNote"));
+
+            var leadTasks = pages.CreateChildPermission(AppPermissions.Pages_LeadTasks, L("LeadTasks"));
+            leadTasks.CreateChildPermission(AppPermissions.Pages_LeadTasks_Create, L("CreateNewLeadTask"));
+            leadTasks.CreateChildPermission(AppPermissions.Pages_LeadTasks_Edit, L("EditLeadTask"));
+            leadTasks.CreateChildPermission(AppPermissions.Pages_LeadTasks_Delete, L("DeleteLeadTask"));
+
+            var leadTags = pages.CreateChildPermission(AppPermissions.Pages_LeadTags, L("LeadTags"));
+            leadTags.CreateChildPermission(AppPermissions.Pages_LeadTags_Create, L("CreateNewLeadTag"));
+            leadTags.CreateChildPermission(AppPermissions.Pages_LeadTags_Edit, L("EditLeadTag"));
+            leadTags.CreateChildPermission(AppPermissions.Pages_LeadTags_Delete, L("DeleteLeadTag"));
+
+            var leadSalesTeams = pages.CreateChildPermission(AppPermissions.Pages_LeadSalesTeams, L("LeadSalesTeams"));
+            leadSalesTeams.CreateChildPermission(AppPermissions.Pages_LeadSalesTeams_Create, L("CreateNewLeadSalesTeam"));
+            leadSalesTeams.CreateChildPermission(AppPermissions.Pages_LeadSalesTeams_Edit, L("EditLeadSalesTeam"));
+            leadSalesTeams.CreateChildPermission(AppPermissions.Pages_LeadSalesTeams_Delete, L("DeleteLeadSalesTeam"));
+
+            var leadPipelineStatuses = pages.CreateChildPermission(AppPermissions.Pages_LeadPipelineStatuses, L("LeadPipelineStatuses"));
+            leadPipelineStatuses.CreateChildPermission(AppPermissions.Pages_LeadPipelineStatuses_Create, L("CreateNewLeadPipelineStatus"));
+            leadPipelineStatuses.CreateChildPermission(AppPermissions.Pages_LeadPipelineStatuses_Edit, L("EditLeadPipelineStatus"));
+            leadPipelineStatuses.CreateChildPermission(AppPermissions.Pages_LeadPipelineStatuses_Delete, L("DeleteLeadPipelineStatus"));
+
+            var leads = pages.CreateChildPermission(AppPermissions.Pages_Leads, L("Leads"));
+            leads.CreateChildPermission(AppPermissions.Pages_Leads_Create, L("CreateNewLead"));
+            leads.CreateChildPermission(AppPermissions.Pages_Leads_Edit, L("EditLead"));
+            leads.CreateChildPermission(AppPermissions.Pages_Leads_Delete, L("DeleteLead"));
+
+            var leadPipelineStages = pages.CreateChildPermission(AppPermissions.Pages_LeadPipelineStages, L("LeadPipelineStages"));
+            leadPipelineStages.CreateChildPermission(AppPermissions.Pages_LeadPipelineStages_Create, L("CreateNewLeadPipelineStage"));
+            leadPipelineStages.CreateChildPermission(AppPermissions.Pages_LeadPipelineStages_Edit, L("EditLeadPipelineStage"));
+            leadPipelineStages.CreateChildPermission(AppPermissions.Pages_LeadPipelineStages_Delete, L("DeleteLeadPipelineStage"));
+
+            var leadSources = pages.CreateChildPermission(AppPermissions.Pages_LeadSources, L("LeadSources"));
+            leadSources.CreateChildPermission(AppPermissions.Pages_LeadSources_Create, L("CreateNewLeadSource"));
+            leadSources.CreateChildPermission(AppPermissions.Pages_LeadSources_Edit, L("EditLeadSource"));
+            leadSources.CreateChildPermission(AppPermissions.Pages_LeadSources_Delete, L("DeleteLeadSource"));
+
+            var storeZipCodeMaps = pages.CreateChildPermission(AppPermissions.Pages_StoreZipCodeMaps, L("StoreZipCodeMaps"));
+            storeZipCodeMaps.CreateChildPermission(AppPermissions.Pages_StoreZipCodeMaps_Create, L("CreateNewStoreZipCodeMap"));
+            storeZipCodeMaps.CreateChildPermission(AppPermissions.Pages_StoreZipCodeMaps_Edit, L("EditStoreZipCodeMap"));
+            storeZipCodeMaps.CreateChildPermission(AppPermissions.Pages_StoreZipCodeMaps_Delete, L("DeleteStoreZipCodeMap"));
+
+            var storeReviewFeedbacks = pages.CreateChildPermission(AppPermissions.Pages_StoreReviewFeedbacks, L("StoreReviewFeedbacks"));
+            storeReviewFeedbacks.CreateChildPermission(AppPermissions.Pages_StoreReviewFeedbacks_Create, L("CreateNewStoreReviewFeedback"));
+            storeReviewFeedbacks.CreateChildPermission(AppPermissions.Pages_StoreReviewFeedbacks_Edit, L("EditStoreReviewFeedback"));
+            storeReviewFeedbacks.CreateChildPermission(AppPermissions.Pages_StoreReviewFeedbacks_Delete, L("DeleteStoreReviewFeedback"));
+
+            var storeReviews = pages.CreateChildPermission(AppPermissions.Pages_StoreReviews, L("StoreReviews"));
+            storeReviews.CreateChildPermission(AppPermissions.Pages_StoreReviews_Create, L("CreateNewStoreReview"));
+            storeReviews.CreateChildPermission(AppPermissions.Pages_StoreReviews_Edit, L("EditStoreReview"));
+            storeReviews.CreateChildPermission(AppPermissions.Pages_StoreReviews_Delete, L("DeleteStoreReview"));
+
+            var storeRelevantStores = pages.CreateChildPermission(AppPermissions.Pages_StoreRelevantStores, L("StoreRelevantStores"));
+            storeRelevantStores.CreateChildPermission(AppPermissions.Pages_StoreRelevantStores_Create, L("CreateNewStoreRelevantStore"));
+            storeRelevantStores.CreateChildPermission(AppPermissions.Pages_StoreRelevantStores_Edit, L("EditStoreRelevantStore"));
+            storeRelevantStores.CreateChildPermission(AppPermissions.Pages_StoreRelevantStores_Delete, L("DeleteStoreRelevantStore"));
+
             var storeMarketplaceCommissionSettings = pages.CreateChildPermission(AppPermissions.Pages_StoreMarketplaceCommissionSettings, L("StoreMarketplaceCommissionSettings"));
             storeMarketplaceCommissionSettings.CreateChildPermission(AppPermissions.Pages_StoreMarketplaceCommissionSettings_Create, L("CreateNewStoreMarketplaceCommissionSetting"));
             storeMarketplaceCommissionSettings.CreateChildPermission(AppPermissions.Pages_StoreMarketplaceCommissionSettings_Edit, L("EditStoreMarketplaceCommissionSetting"));

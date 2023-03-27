@@ -1,0 +1,143 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #leadSalesTeamForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="leadSalesTeam.id">{{ l('EditLeadSalesTeam') }}</span>
+                        <span *ngIf="!leadSalesTeam.id">{{ l('CreateNewLeadSalesTeam') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="LeadFirstName">{{ l('Lead') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="LeadFirstName"
+                                name="leadFirstName"
+                                [(ngModel)]="leadFirstName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectLeadModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setLeadIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="leadSalesTeam.leadId"
+                        [(ngModel)]="leadSalesTeam.leadId"
+                        type="text"
+                        required
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="EmployeeName">{{ l('Employee') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="EmployeeName"
+                                name="employeeName"
+                                [(ngModel)]="employeeName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectEmployeeModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setEmployeeIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="leadSalesTeam.employeeId"
+                        [(ngModel)]="leadSalesTeam.employeeId"
+                        type="text"
+                        hidden
+                    />
+
+                    <br />
+                    <label class="form-check form-check-custom form-check-solid">
+                        <input
+                            id="LeadSalesTeam_Primary"
+                            #LeadSalesTeam_Primary="ngModel"
+                            name="Primary"
+                            [(ngModel)]="leadSalesTeam.primary"
+                            type="checkbox"
+                            class="form-check-input"
+                        />
+                        <span class="form-check-label">
+                            {{ l('Primary') }}
+                        </span>
+                    </label>
+                    <validation-messages [formCtrl]="LeadSalesTeam_Primary"></validation-messages>
+
+                    <div class="my-3">
+                        <label class="form-label" for="LeadSalesTeam_AssignedDate">{{ l('AssignedDate') }}</label>
+                        <input
+                            class="form-control m-input"
+                            #LeadSalesTeam_AssignedDate
+                            type="datetime"
+                            bsDatepicker
+                            datePickerLuxonModifier
+                            [(date)]="leadSalesTeam.assignedDate"
+                            id="LeadSalesTeam_AssignedDate"
+                            name="LeadSalesTeam_AssignedDate"
+                        />
+                        <validation-messages [formCtrl]="LeadSalesTeam_AssignedDate"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!leadSalesTeamForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <leadSalesTeamLeadLookupTableModal
+        #leadSalesTeamLeadLookupTableModal
+        (modalSave)="getNewLeadId()"
+    ></leadSalesTeamLeadLookupTableModal>
+    <leadSalesTeamEmployeeLookupTableModal
+        #leadSalesTeamEmployeeLookupTableModal
+        (modalSave)="getNewEmployeeId()"
+    ></leadSalesTeamEmployeeLookupTableModal>
+</div>

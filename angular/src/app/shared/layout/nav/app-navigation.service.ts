@@ -140,6 +140,34 @@ export class AppNavigationService {
             new AppMenuItem('MarketplaceCommissionTypes', 'Pages.MarketplaceCommissionTypes', 'flaticon-more', '/app/main/shop/marketplaceCommissionTypes'),
             
             new AppMenuItem('StoreMarketplaceCommissionSettings', 'Pages.StoreMarketplaceCommissionSettings', 'flaticon-more', '/app/main/shop/storeMarketplaceCommissionSettings'),
+            
+            new AppMenuItem('StoreRelevantStores', 'Pages.StoreRelevantStores', 'flaticon-more', '/app/main/shop/storeRelevantStores'),
+            
+            new AppMenuItem('StoreReviews', 'Pages.StoreReviews', 'flaticon-more', '/app/main/shop/storeReviews'),
+            
+            new AppMenuItem('StoreReviewFeedbacks', 'Pages.StoreReviewFeedbacks', 'flaticon-more', '/app/main/shop/storeReviewFeedbacks'),
+            
+            new AppMenuItem('StoreZipCodeMaps', 'Pages.StoreZipCodeMaps', 'flaticon-more', '/app/main/shop/storeZipCodeMaps'),
+            
+            new AppMenuItem('LeadSources', 'Pages.LeadSources', 'flaticon-more', '/app/main/salesLeadManagement/leadSources'),
+            
+            new AppMenuItem('LeadPipelineStages', 'Pages.LeadPipelineStages', 'flaticon-more', '/app/main/salesLeadManagement/leadPipelineStages'),
+            
+            new AppMenuItem('Leads', 'Pages.Leads', 'flaticon-more', '/app/main/salesLeadManagement/leads'),
+            
+            new AppMenuItem('LeadPipelineStatuses', 'Pages.LeadPipelineStatuses', 'flaticon-more', '/app/main/salesLeadManagement/leadPipelineStatuses'),
+            
+            new AppMenuItem('LeadSalesTeams', 'Pages.LeadSalesTeams', 'flaticon-more', '/app/main/salesLeadManagement/leadSalesTeams'),
+            
+            new AppMenuItem('LeadTags', 'Pages.LeadTags', 'flaticon-more', '/app/main/salesLeadManagement/leadTags'),
+            
+            new AppMenuItem('LeadTasks', 'Pages.LeadTasks', 'flaticon-more', '/app/main/salesLeadManagement/leadTasks'),
+            
+            new AppMenuItem('LeadNotes', 'Pages.LeadNotes', 'flaticon-more', '/app/main/salesLeadManagement/leadNotes'),
+            
+            new AppMenuItem('LeadContacts', 'Pages.LeadContacts', 'flaticon-more', '/app/main/salesLeadManagement/leadContacts'),
+            
+            new AppMenuItem('LeadReferralRewards', 'Pages.LeadReferralRewards', 'flaticon-more', '/app/main/salesLeadManagement/leadReferralRewards'),
              new AppMenuItem('Editions', 'Pages.Editions', 'flaticon-app', '/app/admin/editions'),
             new AppMenuItem(
                 'Administration',

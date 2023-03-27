@@ -6,6 +6,76 @@
     /// </summary>
     public static class AppPermissions
     {
+        public const string Pages_LeadReferralRewards = "Pages.LeadReferralRewards";
+        public const string Pages_LeadReferralRewards_Create = "Pages.LeadReferralRewards.Create";
+        public const string Pages_LeadReferralRewards_Edit = "Pages.LeadReferralRewards.Edit";
+        public const string Pages_LeadReferralRewards_Delete = "Pages.LeadReferralRewards.Delete";
+
+        public const string Pages_LeadContacts = "Pages.LeadContacts";
+        public const string Pages_LeadContacts_Create = "Pages.LeadContacts.Create";
+        public const string Pages_LeadContacts_Edit = "Pages.LeadContacts.Edit";
+        public const string Pages_LeadContacts_Delete = "Pages.LeadContacts.Delete";
+
+        public const string Pages_LeadNotes = "Pages.LeadNotes";
+        public const string Pages_LeadNotes_Create = "Pages.LeadNotes.Create";
+        public const string Pages_LeadNotes_Edit = "Pages.LeadNotes.Edit";
+        public const string Pages_LeadNotes_Delete = "Pages.LeadNotes.Delete";
+
+        public const string Pages_LeadTasks = "Pages.LeadTasks";
+        public const string Pages_LeadTasks_Create = "Pages.LeadTasks.Create";
+        public const string Pages_LeadTasks_Edit = "Pages.LeadTasks.Edit";
+        public const string Pages_LeadTasks_Delete = "Pages.LeadTasks.Delete";
+
+        public const string Pages_LeadTags = "Pages.LeadTags";
+        public const string Pages_LeadTags_Create = "Pages.LeadTags.Create";
+        public const string Pages_LeadTags_Edit = "Pages.LeadTags.Edit";
+        public const string Pages_LeadTags_Delete = "Pages.LeadTags.Delete";
+
+        public const string Pages_LeadSalesTeams = "Pages.LeadSalesTeams";
+        public const string Pages_LeadSalesTeams_Create = "Pages.LeadSalesTeams.Create";
+        public const string Pages_LeadSalesTeams_Edit = "Pages.LeadSalesTeams.Edit";
+        public const string Pages_LeadSalesTeams_Delete = "Pages.LeadSalesTeams.Delete";
+
+        public const string Pages_LeadPipelineStatuses = "Pages.LeadPipelineStatuses";
+        public const string Pages_LeadPipelineStatuses_Create = "Pages.LeadPipelineStatuses.Create";
+        public const string Pages_LeadPipelineStatuses_Edit = "Pages.LeadPipelineStatuses.Edit";
+        public const string Pages_LeadPipelineStatuses_Delete = "Pages.LeadPipelineStatuses.Delete";
+
+        public const string Pages_Leads = "Pages.Leads";
+        public const string Pages_Leads_Create = "Pages.Leads.Create";
+        public const string Pages_Leads_Edit = "Pages.Leads.Edit";
+        public const string Pages_Leads_Delete = "Pages.Leads.Delete";
+
+        public const string Pages_LeadPipelineStages = "Pages.LeadPipelineStages";
+        public const string Pages_LeadPipelineStages_Create = "Pages.LeadPipelineStages.Create";
+        public const string Pages_LeadPipelineStages_Edit = "Pages.LeadPipelineStages.Edit";
+        public const string Pages_LeadPipelineStages_Delete = "Pages.LeadPipelineStages.Delete";
+
+        public const string Pages_LeadSources = "Pages.LeadSources";
+        public const string Pages_LeadSources_Create = "Pages.LeadSources.Create";
+        public const string Pages_LeadSources_Edit = "Pages.LeadSources.Edit";
+        public const string Pages_LeadSources_Delete = "Pages.LeadSources.Delete";
+
+        public const string Pages_StoreZipCodeMaps = "Pages.StoreZipCodeMaps";
+        public const string Pages_StoreZipCodeMaps_Create = "Pages.StoreZipCodeMaps.Create";
+        public const string Pages_StoreZipCodeMaps_Edit = "Pages.StoreZipCodeMaps.Edit";
+        public const string Pages_StoreZipCodeMaps_Delete = "Pages.StoreZipCodeMaps.Delete";
+
+        public const string Pages_StoreReviewFeedbacks = "Pages.StoreReviewFeedbacks";
+        public const string Pages_StoreReviewFeedbacks_Create = "Pages.StoreReviewFeedbacks.Create";
+        public const string Pages_StoreReviewFeedbacks_Edit = "Pages.StoreReviewFeedbacks.Edit";
+        public const string Pages_StoreReviewFeedbacks_Delete = "Pages.StoreReviewFeedbacks.Delete";
+
+        public const string Pages_StoreReviews = "Pages.StoreReviews";
+        public const string Pages_StoreReviews_Create = "Pages.StoreReviews.Create";
+        public const string Pages_StoreReviews_Edit = "Pages.StoreReviews.Edit";
+        public const string Pages_StoreReviews_Delete = "Pages.StoreReviews.Delete";
+
+        public const string Pages_StoreRelevantStores = "Pages.StoreRelevantStores";
+        public const string Pages_StoreRelevantStores_Create = "Pages.StoreRelevantStores.Create";
+        public const string Pages_StoreRelevantStores_Edit = "Pages.StoreRelevantStores.Edit";
+        public const string Pages_StoreRelevantStores_Delete = "Pages.StoreRelevantStores.Delete";
+
         public const string Pages_StoreMarketplaceCommissionSettings = "Pages.StoreMarketplaceCommissionSettings";
         public const string Pages_StoreMarketplaceCommissionSettings_Create = "Pages.StoreMarketplaceCommissionSettings.Create";
         public const string Pages_StoreMarketplaceCommissionSettings_Edit = "Pages.StoreMarketplaceCommissionSettings.Edit";
