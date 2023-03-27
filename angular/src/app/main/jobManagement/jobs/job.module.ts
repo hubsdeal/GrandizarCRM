@@ -15,6 +15,7 @@ import { JobStateLookupTableModalComponent } from './job-state-lookup-table-moda
 import { JobCityLookupTableModalComponent } from './job-city-lookup-table-modal.component';
 import { JobJobStatusTypeLookupTableModalComponent } from './job-jobStatusType-lookup-table-modal.component';
 import { JobStoreLookupTableModalComponent } from './job-store-lookup-table-modal.component';
+import { JobDashboardComponent } from './job-dashboard/job-dashboard.component';
 
 @NgModule({
     declarations: [
@@ -32,6 +33,7 @@ import { JobStoreLookupTableModalComponent } from './job-store-lookup-table-moda
         JobCityLookupTableModalComponent,
         JobJobStatusTypeLookupTableModalComponent,
         JobStoreLookupTableModalComponent,
+        JobDashboardComponent,
     ],
     imports: [AppSharedModule, JobRoutingModule, AdminSharedModule],
 })
