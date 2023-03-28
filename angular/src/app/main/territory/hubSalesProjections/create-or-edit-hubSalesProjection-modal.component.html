@@ -1,0 +1,255 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #hubSalesProjectionForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="hubSalesProjection.id">{{ l('EditHubSalesProjection') }}</span>
+                        <span *ngIf="!hubSalesProjection.id">{{ l('CreateNewHubSalesProjection') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="HubName">{{ l('Hub') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="HubName"
+                                name="hubName"
+                                [(ngModel)]="hubName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectHubModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setHubIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="hubSalesProjection.hubId"
+                        [(ngModel)]="hubSalesProjection.hubId"
+                        type="text"
+                        required
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="ProductCategoryName">{{ l('ProductCategory') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="ProductCategoryName"
+                                name="productCategoryName"
+                                [(ngModel)]="productCategoryName"
+                                type="text"
+                                disabled
+                            />
+                            <button
+                                class="btn btn-primary blue"
+                                (click)="openSelectProductCategoryModal()"
+                                type="button"
+                            >
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setProductCategoryIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="hubSalesProjection.productCategoryId"
+                        [(ngModel)]="hubSalesProjection.productCategoryId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="StoreName">{{ l('Store') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="StoreName"
+                                name="storeName"
+                                [(ngModel)]="storeName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectStoreModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setStoreIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="hubSalesProjection.storeId"
+                        [(ngModel)]="hubSalesProjection.storeId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="CurrencyName">{{ l('Currency') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="CurrencyName"
+                                name="currencyName"
+                                [(ngModel)]="currencyName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectCurrencyModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setCurrencyIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="hubSalesProjection.currencyId"
+                        [(ngModel)]="hubSalesProjection.currencyId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my5">
+                        <label class="form-label" for="HubSalesProjection_DurationTypeId">
+                            {{ l('DurationTypeId') }}
+                        </label>
+                        <input
+                            type="number"
+                            #HubSalesProjection_DurationTypeId="ngModel"
+                            id="HubSalesProjection_DurationTypeId"
+                            class="form-control"
+                            [(ngModel)]="hubSalesProjection.durationTypeId"
+                            name="DurationTypeId"
+                        />
+                        <validation-messages [formCtrl]="HubSalesProjection_DurationTypeId"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="HubSalesProjection_StartDate">{{ l('StartDate') }}</label>
+                        <input
+                            class="form-control m-input"
+                            #HubSalesProjection_StartDate
+                            type="datetime"
+                            bsDatepicker
+                            datePickerLuxonModifier
+                            [(date)]="hubSalesProjection.startDate"
+                            id="HubSalesProjection_StartDate"
+                            name="HubSalesProjection_StartDate"
+                        />
+                        <validation-messages [formCtrl]="HubSalesProjection_StartDate"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="HubSalesProjection_EndDate">{{ l('EndDate') }}</label>
+                        <input
+                            class="form-control m-input"
+                            #HubSalesProjection_EndDate
+                            type="datetime"
+                            bsDatepicker
+                            datePickerLuxonModifier
+                            [(date)]="hubSalesProjection.endDate"
+                            id="HubSalesProjection_EndDate"
+                            name="HubSalesProjection_EndDate"
+                        />
+                        <validation-messages [formCtrl]="HubSalesProjection_EndDate"></validation-messages>
+                    </div>
+
+                    <div class="my5">
+                        <label class="form-label" for="HubSalesProjection_ExpectedSalesAmount">
+                            {{ l('ExpectedSalesAmount') }}
+                        </label>
+                        <input
+                            type="number"
+                            #HubSalesProjection_ExpectedSalesAmount="ngModel"
+                            id="HubSalesProjection_ExpectedSalesAmount"
+                            class="form-control"
+                            [(ngModel)]="hubSalesProjection.expectedSalesAmount"
+                            name="ExpectedSalesAmount"
+                        />
+                        <validation-messages [formCtrl]="HubSalesProjection_ExpectedSalesAmount"></validation-messages>
+                    </div>
+
+                    <div class="my5">
+                        <label class="form-label" for="HubSalesProjection_ActualSalesAmount">
+                            {{ l('ActualSalesAmount') }}
+                        </label>
+                        <input
+                            type="number"
+                            #HubSalesProjection_ActualSalesAmount="ngModel"
+                            id="HubSalesProjection_ActualSalesAmount"
+                            class="form-control"
+                            [(ngModel)]="hubSalesProjection.actualSalesAmount"
+                            name="ActualSalesAmount"
+                        />
+                        <validation-messages [formCtrl]="HubSalesProjection_ActualSalesAmount"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!hubSalesProjectionForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <hubSalesProjectionHubLookupTableModal
+        #hubSalesProjectionHubLookupTableModal
+        (modalSave)="getNewHubId()"
+    ></hubSalesProjectionHubLookupTableModal>
+    <hubSalesProjectionProductCategoryLookupTableModal
+        #hubSalesProjectionProductCategoryLookupTableModal
+        (modalSave)="getNewProductCategoryId()"
+    ></hubSalesProjectionProductCategoryLookupTableModal>
+    <hubSalesProjectionStoreLookupTableModal
+        #hubSalesProjectionStoreLookupTableModal
+        (modalSave)="getNewStoreId()"
+    ></hubSalesProjectionStoreLookupTableModal>
+    <hubSalesProjectionCurrencyLookupTableModal
+        #hubSalesProjectionCurrencyLookupTableModal
+        (modalSave)="getNewCurrencyId()"
+    ></hubSalesProjectionCurrencyLookupTableModal>
+</div>

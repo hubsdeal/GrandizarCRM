@@ -168,6 +168,26 @@ export class AppNavigationService {
             new AppMenuItem('LeadContacts', 'Pages.LeadContacts', 'flaticon-more', '/app/main/salesLeadManagement/leadContacts'),
             
             new AppMenuItem('LeadReferralRewards', 'Pages.LeadReferralRewards', 'flaticon-more', '/app/main/salesLeadManagement/leadReferralRewards'),
+            
+            new AppMenuItem('HubProductCategories', 'Pages.HubProductCategories', 'flaticon-more', '/app/main/territory/hubProductCategories'),
+            
+            new AppMenuItem('HubProducts', 'Pages.HubProducts', 'flaticon-more', '/app/main/territory/hubProducts'),
+            
+            new AppMenuItem('HubStores', 'Pages.HubStores', 'flaticon-more', '/app/main/territory/hubStores'),
+            
+            new AppMenuItem('HubBusinesses', 'Pages.HubBusinesses', 'flaticon-more', '/app/main/territory/hubBusinesses'),
+            
+            new AppMenuItem('HubContacts', 'Pages.HubContacts', 'flaticon-more', '/app/main/territory/hubContacts'),
+            
+            new AppMenuItem('HubZipCodeMaps', 'Pages.HubZipCodeMaps', 'flaticon-more', '/app/main/territory/hubZipCodeMaps'),
+            
+            new AppMenuItem('HubSalesProjections', 'Pages.HubSalesProjections', 'flaticon-more', '/app/main/territory/hubSalesProjections'),
+            
+            new AppMenuItem('HubAccountTeams', 'Pages.HubAccountTeams', 'flaticon-more', '/app/main/territory/hubAccountTeams'),
+            
+            new AppMenuItem('MasterNavigationMenus', 'Pages.MasterNavigationMenus', 'flaticon-more', '/app/main/territory/masterNavigationMenus'),
+            
+            new AppMenuItem('HubNavigationMenus', 'Pages.HubNavigationMenus', 'flaticon-more', '/app/main/territory/hubNavigationMenus'),
              new AppMenuItem('Editions', 'Pages.Editions', 'flaticon-app', '/app/admin/editions'),
             new AppMenuItem(
                 'Administration',

@@ -23,6 +23,26 @@ namespace SoftGrid.EntityFrameworkCore
 {
     public class SoftGridDbContext : AbpZeroDbContext<Tenant, Role, User, SoftGridDbContext>, IAbpPersistedGrantDbContext
     {
+        public virtual DbSet<HubNavigationMenu> HubNavigationMenus { get; set; }
+
+        public virtual DbSet<MasterNavigationMenu> MasterNavigationMenus { get; set; }
+
+        public virtual DbSet<HubAccountTeam> HubAccountTeams { get; set; }
+
+        public virtual DbSet<HubSalesProjection> HubSalesProjections { get; set; }
+
+        public virtual DbSet<HubZipCodeMap> HubZipCodeMaps { get; set; }
+
+        public virtual DbSet<HubContact> HubContacts { get; set; }
+
+        public virtual DbSet<HubBusiness> HubBusinesses { get; set; }
+
+        public virtual DbSet<HubStore> HubStores { get; set; }
+
+        public virtual DbSet<HubProduct> HubProducts { get; set; }
+
+        public virtual DbSet<HubProductCategory> HubProductCategories { get; set; }
+
         public virtual DbSet<LeadReferralReward> LeadReferralRewards { get; set; }
 
         public virtual DbSet<LeadContact> LeadContacts { get; set; }
@@ -201,10 +221,50 @@ namespace SoftGrid.EntityFrameworkCore
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<LeadReferralReward>(l =>
+            modelBuilder.Entity<HubNavigationMenu>(h =>
             {
-                l.HasIndex(e => new { e.TenantId });
+                h.HasIndex(e => new { e.TenantId });
             });
+            modelBuilder.Entity<MasterNavigationMenu>(m =>
+                       {
+                           m.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<HubAccountTeam>(h =>
+                       {
+                           h.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<HubSalesProjection>(h =>
+                       {
+                           h.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<HubZipCodeMap>(h =>
+                       {
+                           h.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<HubContact>(h =>
+                       {
+                           h.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<HubBusiness>(h =>
+                       {
+                           h.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<HubStore>(h =>
+                       {
+                           h.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<HubProduct>(h =>
+                       {
+                           h.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<HubProductCategory>(h =>
+                       {
+                           h.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<LeadReferralReward>(l =>
+                       {
+                           l.HasIndex(e => new { e.TenantId });
+                       });
             modelBuilder.Entity<LeadContact>(l =>
                        {
                            l.HasIndex(e => new { e.TenantId });

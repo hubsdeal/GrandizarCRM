@@ -7,6 +7,16 @@ import { ZeroTemplateHttpConfigurationService } from './zero-template-http-confi
 
 @NgModule({
     providers: [
+        ApiServiceProxies.HubNavigationMenusServiceProxy,        
+        ApiServiceProxies.MasterNavigationMenusServiceProxy,        
+        ApiServiceProxies.HubAccountTeamsServiceProxy,        
+        ApiServiceProxies.HubSalesProjectionsServiceProxy,        
+        ApiServiceProxies.HubZipCodeMapsServiceProxy,        
+        ApiServiceProxies.HubContactsServiceProxy,        
+        ApiServiceProxies.HubBusinessesServiceProxy,        
+        ApiServiceProxies.HubStoresServiceProxy,        
+        ApiServiceProxies.HubProductsServiceProxy,        
+        ApiServiceProxies.HubProductCategoriesServiceProxy,        
         ApiServiceProxies.LeadReferralRewardsServiceProxy,        
         ApiServiceProxies.LeadContactsServiceProxy,        
         ApiServiceProxies.LeadNotesServiceProxy,        

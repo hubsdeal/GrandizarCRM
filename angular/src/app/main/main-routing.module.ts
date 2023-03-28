@@ -9,6 +9,76 @@ import { RouterModule } from '@angular/router';
                 children: [
                     
                     {
+                        path: 'territory/hubNavigationMenus',
+                        loadChildren: () => import('./territory/hubNavigationMenus/hubNavigationMenu.module').then(m => m.HubNavigationMenuModule),
+                        data: { permission: 'Pages.HubNavigationMenus' }
+                    },
+                
+                    
+                    {
+                        path: 'territory/masterNavigationMenus',
+                        loadChildren: () => import('./territory/masterNavigationMenus/masterNavigationMenu.module').then(m => m.MasterNavigationMenuModule),
+                        data: { permission: 'Pages.MasterNavigationMenus' }
+                    },
+                
+                    
+                    {
+                        path: 'territory/hubAccountTeams',
+                        loadChildren: () => import('./territory/hubAccountTeams/hubAccountTeam.module').then(m => m.HubAccountTeamModule),
+                        data: { permission: 'Pages.HubAccountTeams' }
+                    },
+                
+                    
+                    {
+                        path: 'territory/hubSalesProjections',
+                        loadChildren: () => import('./territory/hubSalesProjections/hubSalesProjection.module').then(m => m.HubSalesProjectionModule),
+                        data: { permission: 'Pages.HubSalesProjections' }
+                    },
+                
+                    
+                    {
+                        path: 'territory/hubZipCodeMaps',
+                        loadChildren: () => import('./territory/hubZipCodeMaps/hubZipCodeMap.module').then(m => m.HubZipCodeMapModule),
+                        data: { permission: 'Pages.HubZipCodeMaps' }
+                    },
+                
+                    
+                    {
+                        path: 'territory/hubContacts',
+                        loadChildren: () => import('./territory/hubContacts/hubContact.module').then(m => m.HubContactModule),
+                        data: { permission: 'Pages.HubContacts' }
+                    },
+                
+                    
+                    {
+                        path: 'territory/hubBusinesses',
+                        loadChildren: () => import('./territory/hubBusinesses/hubBusiness.module').then(m => m.HubBusinessModule),
+                        data: { permission: 'Pages.HubBusinesses' }
+                    },
+                
+                    
+                    {
+                        path: 'territory/hubStores',
+                        loadChildren: () => import('./territory/hubStores/hubStore.module').then(m => m.HubStoreModule),
+                        data: { permission: 'Pages.HubStores' }
+                    },
+                
+                    
+                    {
+                        path: 'territory/hubProducts',
+                        loadChildren: () => import('./territory/hubProducts/hubProduct.module').then(m => m.HubProductModule),
+                        data: { permission: 'Pages.HubProducts' }
+                    },
+                
+                    
+                    {
+                        path: 'territory/hubProductCategories',
+                        loadChildren: () => import('./territory/hubProductCategories/hubProductCategory.module').then(m => m.HubProductCategoryModule),
+                        data: { permission: 'Pages.HubProductCategories' }
+                    },
+                
+                    
+                    {
                         path: 'salesLeadManagement/leadReferralRewards',
                         loadChildren: () => import('./salesLeadManagement/leadReferralRewards/leadReferralReward.module').then(m => m.LeadReferralRewardModule),
                         data: { permission: 'Pages.LeadReferralRewards' }

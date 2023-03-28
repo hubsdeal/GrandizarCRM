@@ -1,0 +1,146 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #hubProductCategoryForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="hubProductCategory.id">{{ l('EditHubProductCategory') }}</span>
+                        <span *ngIf="!hubProductCategory.id">{{ l('CreateNewHubProductCategory') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="HubName">{{ l('Hub') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="HubName"
+                                name="hubName"
+                                [(ngModel)]="hubName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectHubModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setHubIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="hubProductCategory.hubId"
+                        [(ngModel)]="hubProductCategory.hubId"
+                        type="text"
+                        required
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="ProductCategoryName">{{ l('ProductCategory') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="ProductCategoryName"
+                                name="productCategoryName"
+                                [(ngModel)]="productCategoryName"
+                                type="text"
+                                disabled
+                            />
+                            <button
+                                class="btn btn-primary blue"
+                                (click)="openSelectProductCategoryModal()"
+                                type="button"
+                            >
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setProductCategoryIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="hubProductCategory.productCategoryId"
+                        [(ngModel)]="hubProductCategory.productCategoryId"
+                        type="text"
+                        required
+                        hidden
+                    />
+
+                    <br />
+                    <label class="form-check form-check-custom form-check-solid">
+                        <input
+                            id="HubProductCategory_Published"
+                            #HubProductCategory_Published="ngModel"
+                            name="Published"
+                            [(ngModel)]="hubProductCategory.published"
+                            type="checkbox"
+                            class="form-check-input"
+                        />
+                        <span class="form-check-label">
+                            {{ l('Published') }}
+                        </span>
+                    </label>
+                    <validation-messages [formCtrl]="HubProductCategory_Published"></validation-messages>
+
+                    <div class="my5">
+                        <label class="form-label" for="HubProductCategory_DisplayScore">{{ l('DisplayScore') }}</label>
+                        <input
+                            type="number"
+                            #HubProductCategory_DisplayScore="ngModel"
+                            id="HubProductCategory_DisplayScore"
+                            class="form-control"
+                            [(ngModel)]="hubProductCategory.displayScore"
+                            name="DisplayScore"
+                        />
+                        <validation-messages [formCtrl]="HubProductCategory_DisplayScore"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!hubProductCategoryForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <hubProductCategoryHubLookupTableModal
+        #hubProductCategoryHubLookupTableModal
+        (modalSave)="getNewHubId()"
+    ></hubProductCategoryHubLookupTableModal>
+    <hubProductCategoryProductCategoryLookupTableModal
+        #hubProductCategoryProductCategoryLookupTableModal
+        (modalSave)="getNewProductCategoryId()"
+    ></hubProductCategoryProductCategoryLookupTableModal>
+</div>

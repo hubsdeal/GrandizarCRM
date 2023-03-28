@@ -62,6 +62,26 @@ namespace SoftGrid
     {
         public static void CreateMappings(IMapperConfigurationExpression configuration)
         {
+            configuration.CreateMap<CreateOrEditHubNavigationMenuDto, HubNavigationMenu>().ReverseMap();
+            configuration.CreateMap<HubNavigationMenuDto, HubNavigationMenu>().ReverseMap();
+            configuration.CreateMap<CreateOrEditMasterNavigationMenuDto, MasterNavigationMenu>().ReverseMap();
+            configuration.CreateMap<MasterNavigationMenuDto, MasterNavigationMenu>().ReverseMap();
+            configuration.CreateMap<CreateOrEditHubAccountTeamDto, HubAccountTeam>().ReverseMap();
+            configuration.CreateMap<HubAccountTeamDto, HubAccountTeam>().ReverseMap();
+            configuration.CreateMap<CreateOrEditHubSalesProjectionDto, HubSalesProjection>().ReverseMap();
+            configuration.CreateMap<HubSalesProjectionDto, HubSalesProjection>().ReverseMap();
+            configuration.CreateMap<CreateOrEditHubZipCodeMapDto, HubZipCodeMap>().ReverseMap();
+            configuration.CreateMap<HubZipCodeMapDto, HubZipCodeMap>().ReverseMap();
+            configuration.CreateMap<CreateOrEditHubContactDto, HubContact>().ReverseMap();
+            configuration.CreateMap<HubContactDto, HubContact>().ReverseMap();
+            configuration.CreateMap<CreateOrEditHubBusinessDto, HubBusiness>().ReverseMap();
+            configuration.CreateMap<HubBusinessDto, HubBusiness>().ReverseMap();
+            configuration.CreateMap<CreateOrEditHubStoreDto, HubStore>().ReverseMap();
+            configuration.CreateMap<HubStoreDto, HubStore>().ReverseMap();
+            configuration.CreateMap<CreateOrEditHubProductDto, HubProduct>().ReverseMap();
+            configuration.CreateMap<HubProductDto, HubProduct>().ReverseMap();
+            configuration.CreateMap<CreateOrEditHubProductCategoryDto, HubProductCategory>().ReverseMap();
+            configuration.CreateMap<HubProductCategoryDto, HubProductCategory>().ReverseMap();
             configuration.CreateMap<CreateOrEditLeadReferralRewardDto, LeadReferralReward>().ReverseMap();
             configuration.CreateMap<LeadReferralRewardDto, LeadReferralReward>().ReverseMap();
             configuration.CreateMap<CreateOrEditLeadContactDto, LeadContact>().ReverseMap();

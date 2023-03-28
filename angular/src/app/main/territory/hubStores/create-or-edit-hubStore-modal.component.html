@@ -1,0 +1,139 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #hubStoreForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="hubStore.id">{{ l('EditHubStore') }}</span>
+                        <span *ngIf="!hubStore.id">{{ l('CreateNewHubStore') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="HubName">{{ l('Hub') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="HubName"
+                                name="hubName"
+                                [(ngModel)]="hubName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectHubModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setHubIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="hubStore.hubId"
+                        [(ngModel)]="hubStore.hubId"
+                        type="text"
+                        required
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="StoreName">{{ l('Store') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="StoreName"
+                                name="storeName"
+                                [(ngModel)]="storeName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectStoreModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setStoreIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="hubStore.storeId"
+                        [(ngModel)]="hubStore.storeId"
+                        type="text"
+                        required
+                        hidden
+                    />
+
+                    <br />
+                    <label class="form-check form-check-custom form-check-solid">
+                        <input
+                            id="HubStore_Published"
+                            #HubStore_Published="ngModel"
+                            name="Published"
+                            [(ngModel)]="hubStore.published"
+                            type="checkbox"
+                            class="form-check-input"
+                        />
+                        <span class="form-check-label">
+                            {{ l('Published') }}
+                        </span>
+                    </label>
+                    <validation-messages [formCtrl]="HubStore_Published"></validation-messages>
+
+                    <div class="my5">
+                        <label class="form-label" for="HubStore_DisplaySequence">{{ l('DisplaySequence') }}</label>
+                        <input
+                            type="number"
+                            #HubStore_DisplaySequence="ngModel"
+                            id="HubStore_DisplaySequence"
+                            class="form-control"
+                            [(ngModel)]="hubStore.displaySequence"
+                            name="DisplaySequence"
+                        />
+                        <validation-messages [formCtrl]="HubStore_DisplaySequence"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!hubStoreForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <hubStoreHubLookupTableModal #hubStoreHubLookupTableModal (modalSave)="getNewHubId()"></hubStoreHubLookupTableModal>
+    <hubStoreStoreLookupTableModal
+        #hubStoreStoreLookupTableModal
+        (modalSave)="getNewStoreId()"
+    ></hubStoreStoreLookupTableModal>
+</div>

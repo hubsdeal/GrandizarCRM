@@ -1,0 +1,126 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #hubContactForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="hubContact.id">{{ l('EditHubContact') }}</span>
+                        <span *ngIf="!hubContact.id">{{ l('CreateNewHubContact') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="HubName">{{ l('Hub') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="HubName"
+                                name="hubName"
+                                [(ngModel)]="hubName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectHubModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setHubIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="hubContact.hubId"
+                        [(ngModel)]="hubContact.hubId"
+                        type="text"
+                        required
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="ContactFullName">{{ l('Contact') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="ContactFullName"
+                                name="contactFullName"
+                                [(ngModel)]="contactFullName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectContactModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setContactIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="hubContact.contactId"
+                        [(ngModel)]="hubContact.contactId"
+                        type="text"
+                        required
+                        hidden
+                    />
+
+                    <div class="my5">
+                        <label class="form-label" for="HubContact_DisplayScore">{{ l('DisplayScore') }}</label>
+                        <input
+                            type="number"
+                            #HubContact_DisplayScore="ngModel"
+                            id="HubContact_DisplayScore"
+                            class="form-control"
+                            [(ngModel)]="hubContact.displayScore"
+                            name="DisplayScore"
+                        />
+                        <validation-messages [formCtrl]="HubContact_DisplayScore"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!hubContactForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <hubContactHubLookupTableModal
+        #hubContactHubLookupTableModal
+        (modalSave)="getNewHubId()"
+    ></hubContactHubLookupTableModal>
+    <hubContactContactLookupTableModal
+        #hubContactContactLookupTableModal
+        (modalSave)="getNewContactId()"
+    ></hubContactContactLookupTableModal>
+</div>

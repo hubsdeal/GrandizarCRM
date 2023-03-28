@@ -30,6 +30,56 @@ namespace SoftGrid.Authorization
 
             var pages = context.GetPermissionOrNull(AppPermissions.Pages) ?? context.CreatePermission(AppPermissions.Pages, L("Pages"));
 
+            var hubNavigationMenus = pages.CreateChildPermission(AppPermissions.Pages_HubNavigationMenus, L("HubNavigationMenus"));
+            hubNavigationMenus.CreateChildPermission(AppPermissions.Pages_HubNavigationMenus_Create, L("CreateNewHubNavigationMenu"));
+            hubNavigationMenus.CreateChildPermission(AppPermissions.Pages_HubNavigationMenus_Edit, L("EditHubNavigationMenu"));
+            hubNavigationMenus.CreateChildPermission(AppPermissions.Pages_HubNavigationMenus_Delete, L("DeleteHubNavigationMenu"));
+
+            var masterNavigationMenus = pages.CreateChildPermission(AppPermissions.Pages_MasterNavigationMenus, L("MasterNavigationMenus"));
+            masterNavigationMenus.CreateChildPermission(AppPermissions.Pages_MasterNavigationMenus_Create, L("CreateNewMasterNavigationMenu"));
+            masterNavigationMenus.CreateChildPermission(AppPermissions.Pages_MasterNavigationMenus_Edit, L("EditMasterNavigationMenu"));
+            masterNavigationMenus.CreateChildPermission(AppPermissions.Pages_MasterNavigationMenus_Delete, L("DeleteMasterNavigationMenu"));
+
+            var hubAccountTeams = pages.CreateChildPermission(AppPermissions.Pages_HubAccountTeams, L("HubAccountTeams"));
+            hubAccountTeams.CreateChildPermission(AppPermissions.Pages_HubAccountTeams_Create, L("CreateNewHubAccountTeam"));
+            hubAccountTeams.CreateChildPermission(AppPermissions.Pages_HubAccountTeams_Edit, L("EditHubAccountTeam"));
+            hubAccountTeams.CreateChildPermission(AppPermissions.Pages_HubAccountTeams_Delete, L("DeleteHubAccountTeam"));
+
+            var hubSalesProjections = pages.CreateChildPermission(AppPermissions.Pages_HubSalesProjections, L("HubSalesProjections"));
+            hubSalesProjections.CreateChildPermission(AppPermissions.Pages_HubSalesProjections_Create, L("CreateNewHubSalesProjection"));
+            hubSalesProjections.CreateChildPermission(AppPermissions.Pages_HubSalesProjections_Edit, L("EditHubSalesProjection"));
+            hubSalesProjections.CreateChildPermission(AppPermissions.Pages_HubSalesProjections_Delete, L("DeleteHubSalesProjection"));
+
+            var hubZipCodeMaps = pages.CreateChildPermission(AppPermissions.Pages_HubZipCodeMaps, L("HubZipCodeMaps"));
+            hubZipCodeMaps.CreateChildPermission(AppPermissions.Pages_HubZipCodeMaps_Create, L("CreateNewHubZipCodeMap"));
+            hubZipCodeMaps.CreateChildPermission(AppPermissions.Pages_HubZipCodeMaps_Edit, L("EditHubZipCodeMap"));
+            hubZipCodeMaps.CreateChildPermission(AppPermissions.Pages_HubZipCodeMaps_Delete, L("DeleteHubZipCodeMap"));
+
+            var hubContacts = pages.CreateChildPermission(AppPermissions.Pages_HubContacts, L("HubContacts"));
+            hubContacts.CreateChildPermission(AppPermissions.Pages_HubContacts_Create, L("CreateNewHubContact"));
+            hubContacts.CreateChildPermission(AppPermissions.Pages_HubContacts_Edit, L("EditHubContact"));
+            hubContacts.CreateChildPermission(AppPermissions.Pages_HubContacts_Delete, L("DeleteHubContact"));
+
+            var hubBusinesses = pages.CreateChildPermission(AppPermissions.Pages_HubBusinesses, L("HubBusinesses"));
+            hubBusinesses.CreateChildPermission(AppPermissions.Pages_HubBusinesses_Create, L("CreateNewHubBusiness"));
+            hubBusinesses.CreateChildPermission(AppPermissions.Pages_HubBusinesses_Edit, L("EditHubBusiness"));
+            hubBusinesses.CreateChildPermission(AppPermissions.Pages_HubBusinesses_Delete, L("DeleteHubBusiness"));
+
+            var hubStores = pages.CreateChildPermission(AppPermissions.Pages_HubStores, L("HubStores"));
+            hubStores.CreateChildPermission(AppPermissions.Pages_HubStores_Create, L("CreateNewHubStore"));
+            hubStores.CreateChildPermission(AppPermissions.Pages_HubStores_Edit, L("EditHubStore"));
+            hubStores.CreateChildPermission(AppPermissions.Pages_HubStores_Delete, L("DeleteHubStore"));
+
+            var hubProducts = pages.CreateChildPermission(AppPermissions.Pages_HubProducts, L("HubProducts"));
+            hubProducts.CreateChildPermission(AppPermissions.Pages_HubProducts_Create, L("CreateNewHubProduct"));
+            hubProducts.CreateChildPermission(AppPermissions.Pages_HubProducts_Edit, L("EditHubProduct"));
+            hubProducts.CreateChildPermission(AppPermissions.Pages_HubProducts_Delete, L("DeleteHubProduct"));
+
+            var hubProductCategories = pages.CreateChildPermission(AppPermissions.Pages_HubProductCategories, L("HubProductCategories"));
+            hubProductCategories.CreateChildPermission(AppPermissions.Pages_HubProductCategories_Create, L("CreateNewHubProductCategory"));
+            hubProductCategories.CreateChildPermission(AppPermissions.Pages_HubProductCategories_Edit, L("EditHubProductCategory"));
+            hubProductCategories.CreateChildPermission(AppPermissions.Pages_HubProductCategories_Delete, L("DeleteHubProductCategory"));
+
             var leadReferralRewards = pages.CreateChildPermission(AppPermissions.Pages_LeadReferralRewards, L("LeadReferralRewards"));
             leadReferralRewards.CreateChildPermission(AppPermissions.Pages_LeadReferralRewards_Create, L("CreateNewLeadReferralReward"));
             leadReferralRewards.CreateChildPermission(AppPermissions.Pages_LeadReferralRewards_Edit, L("EditLeadReferralReward"));

@@ -1,0 +1,190 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #hubAccountTeamForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="hubAccountTeam.id">{{ l('EditHubAccountTeam') }}</span>
+                        <span *ngIf="!hubAccountTeam.id">{{ l('CreateNewHubAccountTeam') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="HubName">{{ l('Hub') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="HubName"
+                                name="hubName"
+                                [(ngModel)]="hubName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectHubModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setHubIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="hubAccountTeam.hubId"
+                        [(ngModel)]="hubAccountTeam.hubId"
+                        type="text"
+                        required
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="EmployeeName">{{ l('Employee') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="EmployeeName"
+                                name="employeeName"
+                                [(ngModel)]="employeeName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectEmployeeModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setEmployeeIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="hubAccountTeam.employeeId"
+                        [(ngModel)]="hubAccountTeam.employeeId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="UserName">{{ l('User') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="UserName"
+                                name="userName"
+                                [(ngModel)]="userName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectUserModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setUserIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="hubAccountTeam.userId"
+                        [(ngModel)]="hubAccountTeam.userId"
+                        type="text"
+                        hidden
+                    />
+
+                    <br />
+                    <label class="form-check form-check-custom form-check-solid">
+                        <input
+                            id="HubAccountTeam_PrimaryManager"
+                            #HubAccountTeam_PrimaryManager="ngModel"
+                            name="PrimaryManager"
+                            [(ngModel)]="hubAccountTeam.primaryManager"
+                            type="checkbox"
+                            class="form-check-input"
+                        />
+                        <span class="form-check-label">
+                            {{ l('PrimaryManager') }}
+                        </span>
+                    </label>
+                    <validation-messages [formCtrl]="HubAccountTeam_PrimaryManager"></validation-messages>
+
+                    <div class="my-3">
+                        <label class="form-label" for="HubAccountTeam_StartDate">{{ l('StartDate') }}</label>
+                        <input
+                            class="form-control m-input"
+                            #HubAccountTeam_StartDate
+                            type="datetime"
+                            bsDatepicker
+                            datePickerLuxonModifier
+                            [(date)]="hubAccountTeam.startDate"
+                            id="HubAccountTeam_StartDate"
+                            name="HubAccountTeam_StartDate"
+                        />
+                        <validation-messages [formCtrl]="HubAccountTeam_StartDate"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="HubAccountTeam_EndDate">{{ l('EndDate') }}</label>
+                        <input
+                            class="form-control m-input"
+                            #HubAccountTeam_EndDate
+                            type="datetime"
+                            bsDatepicker
+                            datePickerLuxonModifier
+                            [(date)]="hubAccountTeam.endDate"
+                            id="HubAccountTeam_EndDate"
+                            name="HubAccountTeam_EndDate"
+                        />
+                        <validation-messages [formCtrl]="HubAccountTeam_EndDate"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!hubAccountTeamForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <hubAccountTeamHubLookupTableModal
+        #hubAccountTeamHubLookupTableModal
+        (modalSave)="getNewHubId()"
+    ></hubAccountTeamHubLookupTableModal>
+    <hubAccountTeamEmployeeLookupTableModal
+        #hubAccountTeamEmployeeLookupTableModal
+        (modalSave)="getNewEmployeeId()"
+    ></hubAccountTeamEmployeeLookupTableModal>
+    <hubAccountTeamUserLookupTableModal
+        #hubAccountTeamUserLookupTableModal
+        (modalSave)="getNewUserId()"
+    ></hubAccountTeamUserLookupTableModal>
+</div>

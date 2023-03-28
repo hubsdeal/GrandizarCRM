@@ -1,0 +1,120 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #masterNavigationMenuForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="masterNavigationMenu.id">{{ l('EditMasterNavigationMenu') }}</span>
+                        <span *ngIf="!masterNavigationMenu.id">{{ l('CreateNewMasterNavigationMenu') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="MasterNavigationMenu_Name">{{ l('Name') }} *</label>
+                        <input
+                            type="text"
+                            #MasterNavigationMenu_Name="ngModel"
+                            id="MasterNavigationMenu_Name"
+                            class="form-control"
+                            [(ngModel)]="masterNavigationMenu.name"
+                            name="Name"
+                            minlength="1"
+                            maxlength="128"
+                            required
+                        />
+                        <validation-messages [formCtrl]="MasterNavigationMenu_Name"></validation-messages>
+                    </div>
+
+                    <br />
+                    <label class="form-check form-check-custom form-check-solid">
+                        <input
+                            id="MasterNavigationMenu_HasParentMenu"
+                            #MasterNavigationMenu_HasParentMenu="ngModel"
+                            name="HasParentMenu"
+                            [(ngModel)]="masterNavigationMenu.hasParentMenu"
+                            type="checkbox"
+                            class="form-check-input"
+                        />
+                        <span class="form-check-label">
+                            {{ l('HasParentMenu') }}
+                        </span>
+                    </label>
+                    <validation-messages [formCtrl]="MasterNavigationMenu_HasParentMenu"></validation-messages>
+
+                    <div class="my5">
+                        <label class="form-label" for="MasterNavigationMenu_ParentMenuId">
+                            {{ l('ParentMenuId') }}
+                        </label>
+                        <input
+                            type="number"
+                            #MasterNavigationMenu_ParentMenuId="ngModel"
+                            id="MasterNavigationMenu_ParentMenuId"
+                            class="form-control"
+                            [(ngModel)]="masterNavigationMenu.parentMenuId"
+                            name="ParentMenuId"
+                        />
+                        <validation-messages [formCtrl]="MasterNavigationMenu_ParentMenuId"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="MasterNavigationMenu_IconLink">{{ l('IconLink') }}</label>
+                        <input
+                            type="text"
+                            #MasterNavigationMenu_IconLink="ngModel"
+                            id="MasterNavigationMenu_IconLink"
+                            class="form-control"
+                            [(ngModel)]="masterNavigationMenu.iconLink"
+                            name="IconLink"
+                        />
+                        <validation-messages [formCtrl]="MasterNavigationMenu_IconLink"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="MasterNavigationMenu_MediaLink">{{ l('MediaLink') }}</label>
+                        <input
+                            type="text"
+                            #MasterNavigationMenu_MediaLink="ngModel"
+                            id="MasterNavigationMenu_MediaLink"
+                            class="form-control"
+                            [(ngModel)]="masterNavigationMenu.mediaLink"
+                            name="MediaLink"
+                        />
+                        <validation-messages [formCtrl]="MasterNavigationMenu_MediaLink"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!masterNavigationMenuForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
