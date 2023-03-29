@@ -3,6 +3,8 @@ using SoftGrid.LookupData;
 using SoftGrid.LookupData;
 using SoftGrid.LookupData;
 using SoftGrid.LookupData;
+using SoftGrid.CRM;
+using SoftGrid.Shop;
 
 using System;
 using System.Linq;
@@ -34,8 +36,10 @@ namespace SoftGrid.Shop
         private readonly IRepository<MeasurementUnit, long> _lookup_measurementUnitRepository;
         private readonly IRepository<Currency, long> _lookup_currencyRepository;
         private readonly IRepository<RatingLike, long> _lookup_ratingLikeRepository;
+        private readonly IRepository<Contact, long> _lookup_contactRepository;
+        private readonly IRepository<Store, long> _lookup_storeRepository;
 
-        public ProductsAppService(IRepository<Product, long> productRepository, IProductsExcelExporter productsExcelExporter, IRepository<ProductCategory, long> lookup_productCategoryRepository, IRepository<MediaLibrary, long> lookup_mediaLibraryRepository, IRepository<MeasurementUnit, long> lookup_measurementUnitRepository, IRepository<Currency, long> lookup_currencyRepository, IRepository<RatingLike, long> lookup_ratingLikeRepository)
+        public ProductsAppService(IRepository<Product, long> productRepository, IProductsExcelExporter productsExcelExporter, IRepository<ProductCategory, long> lookup_productCategoryRepository, IRepository<MediaLibrary, long> lookup_mediaLibraryRepository, IRepository<MeasurementUnit, long> lookup_measurementUnitRepository, IRepository<Currency, long> lookup_currencyRepository, IRepository<RatingLike, long> lookup_ratingLikeRepository, IRepository<Contact, long> lookup_contactRepository, IRepository<Store, long> lookup_storeRepository)
         {
             _productRepository = productRepository;
             _productsExcelExporter = productsExcelExporter;
@@ -44,6 +48,8 @@ namespace SoftGrid.Shop
             _lookup_measurementUnitRepository = lookup_measurementUnitRepository;
             _lookup_currencyRepository = lookup_currencyRepository;
             _lookup_ratingLikeRepository = lookup_ratingLikeRepository;
+            _lookup_contactRepository = lookup_contactRepository;
+            _lookup_storeRepository = lookup_storeRepository;
 
         }
 
@@ -56,6 +62,8 @@ namespace SoftGrid.Shop
                         .Include(e => e.MeasurementUnitFk)
                         .Include(e => e.CurrencyFk)
                         .Include(e => e.RatingLikeFk)
+                        .Include(e => e.ContactFk)
+                        .Include(e => e.StoreFk)
                         .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false || e.Name.Contains(input.Filter) || e.ShortDescription.Contains(input.Filter) || e.Description.Contains(input.Filter) || e.Sku.Contains(input.Filter) || e.Url.Contains(input.Filter) || e.SeoTitle.Contains(input.Filter) || e.MetaKeywords.Contains(input.Filter) || e.MetaDescription.Contains(input.Filter) || e.InternalNotes.Contains(input.Filter) || e.ProductManufacturerSku.Contains(input.Filter))
                         .WhereIf(!string.IsNullOrWhiteSpace(input.NameFilter), e => e.Name.Contains(input.NameFilter))
                         .WhereIf(!string.IsNullOrWhiteSpace(input.ShortDescriptionFilter), e => e.ShortDescription.Contains(input.ShortDescriptionFilter))
@@ -96,7 +104,9 @@ namespace SoftGrid.Shop
                         .WhereIf(!string.IsNullOrWhiteSpace(input.MediaLibraryNameFilter), e => e.MediaLibraryFk != null && e.MediaLibraryFk.Name == input.MediaLibraryNameFilter)
                         .WhereIf(!string.IsNullOrWhiteSpace(input.MeasurementUnitNameFilter), e => e.MeasurementUnitFk != null && e.MeasurementUnitFk.Name == input.MeasurementUnitNameFilter)
                         .WhereIf(!string.IsNullOrWhiteSpace(input.CurrencyNameFilter), e => e.CurrencyFk != null && e.CurrencyFk.Name == input.CurrencyNameFilter)
-                        .WhereIf(!string.IsNullOrWhiteSpace(input.RatingLikeNameFilter), e => e.RatingLikeFk != null && e.RatingLikeFk.Name == input.RatingLikeNameFilter);
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.RatingLikeNameFilter), e => e.RatingLikeFk != null && e.RatingLikeFk.Name == input.RatingLikeNameFilter)
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.ContactFullNameFilter), e => e.ContactFk != null && e.ContactFk.FullName == input.ContactFullNameFilter)
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.StoreNameFilter), e => e.StoreFk != null && e.StoreFk.Name == input.StoreNameFilter);
 
             var pagedAndFilteredProducts = filteredProducts
                 .OrderBy(input.Sorting ?? "id asc")
@@ -117,6 +127,12 @@ namespace SoftGrid.Shop
 
                            join o5 in _lookup_ratingLikeRepository.GetAll() on o.RatingLikeId equals o5.Id into j5
                            from s5 in j5.DefaultIfEmpty()
+
+                           join o6 in _lookup_contactRepository.GetAll() on o.ContactId equals o6.Id into j6
+                           from s6 in j6.DefaultIfEmpty()
+
+                           join o7 in _lookup_storeRepository.GetAll() on o.StoreId equals o7.Id into j7
+                           from s7 in j7.DefaultIfEmpty()
 
                            select new
                            {
@@ -153,7 +169,9 @@ namespace SoftGrid.Shop
                                MediaLibraryName = s2 == null || s2.Name == null ? "" : s2.Name.ToString(),
                                MeasurementUnitName = s3 == null || s3.Name == null ? "" : s3.Name.ToString(),
                                CurrencyName = s4 == null || s4.Name == null ? "" : s4.Name.ToString(),
-                               RatingLikeName = s5 == null || s5.Name == null ? "" : s5.Name.ToString()
+                               RatingLikeName = s5 == null || s5.Name == null ? "" : s5.Name.ToString(),
+                               ContactFullName = s6 == null || s6.FullName == null ? "" : s6.FullName.ToString(),
+                               StoreName = s7 == null || s7.Name == null ? "" : s7.Name.ToString()
                            };
 
             var totalCount = await filteredProducts.CountAsync();
@@ -201,7 +219,9 @@ namespace SoftGrid.Shop
                     MediaLibraryName = o.MediaLibraryName,
                     MeasurementUnitName = o.MeasurementUnitName,
                     CurrencyName = o.CurrencyName,
-                    RatingLikeName = o.RatingLikeName
+                    RatingLikeName = o.RatingLikeName,
+                    ContactFullName = o.ContactFullName,
+                    StoreName = o.StoreName
                 };
 
                 results.Add(res);
@@ -250,6 +270,18 @@ namespace SoftGrid.Shop
                 output.RatingLikeName = _lookupRatingLike?.Name?.ToString();
             }
 
+            if (output.Product.ContactId != null)
+            {
+                var _lookupContact = await _lookup_contactRepository.FirstOrDefaultAsync((long)output.Product.ContactId);
+                output.ContactFullName = _lookupContact?.FullName?.ToString();
+            }
+
+            if (output.Product.StoreId != null)
+            {
+                var _lookupStore = await _lookup_storeRepository.FirstOrDefaultAsync((long)output.Product.StoreId);
+                output.StoreName = _lookupStore?.Name?.ToString();
+            }
+
             return output;
         }
 
@@ -288,6 +320,18 @@ namespace SoftGrid.Shop
             {
                 var _lookupRatingLike = await _lookup_ratingLikeRepository.FirstOrDefaultAsync((long)output.Product.RatingLikeId);
                 output.RatingLikeName = _lookupRatingLike?.Name?.ToString();
+            }
+
+            if (output.Product.ContactId != null)
+            {
+                var _lookupContact = await _lookup_contactRepository.FirstOrDefaultAsync((long)output.Product.ContactId);
+                output.ContactFullName = _lookupContact?.FullName?.ToString();
+            }
+
+            if (output.Product.StoreId != null)
+            {
+                var _lookupStore = await _lookup_storeRepository.FirstOrDefaultAsync((long)output.Product.StoreId);
+                output.StoreName = _lookupStore?.Name?.ToString();
             }
 
             return output;
@@ -342,6 +386,8 @@ namespace SoftGrid.Shop
                         .Include(e => e.MeasurementUnitFk)
                         .Include(e => e.CurrencyFk)
                         .Include(e => e.RatingLikeFk)
+                        .Include(e => e.ContactFk)
+                        .Include(e => e.StoreFk)
                         .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false || e.Name.Contains(input.Filter) || e.ShortDescription.Contains(input.Filter) || e.Description.Contains(input.Filter) || e.Sku.Contains(input.Filter) || e.Url.Contains(input.Filter) || e.SeoTitle.Contains(input.Filter) || e.MetaKeywords.Contains(input.Filter) || e.MetaDescription.Contains(input.Filter) || e.InternalNotes.Contains(input.Filter) || e.ProductManufacturerSku.Contains(input.Filter))
                         .WhereIf(!string.IsNullOrWhiteSpace(input.NameFilter), e => e.Name.Contains(input.NameFilter))
                         .WhereIf(!string.IsNullOrWhiteSpace(input.ShortDescriptionFilter), e => e.ShortDescription.Contains(input.ShortDescriptionFilter))
@@ -382,7 +428,9 @@ namespace SoftGrid.Shop
                         .WhereIf(!string.IsNullOrWhiteSpace(input.MediaLibraryNameFilter), e => e.MediaLibraryFk != null && e.MediaLibraryFk.Name == input.MediaLibraryNameFilter)
                         .WhereIf(!string.IsNullOrWhiteSpace(input.MeasurementUnitNameFilter), e => e.MeasurementUnitFk != null && e.MeasurementUnitFk.Name == input.MeasurementUnitNameFilter)
                         .WhereIf(!string.IsNullOrWhiteSpace(input.CurrencyNameFilter), e => e.CurrencyFk != null && e.CurrencyFk.Name == input.CurrencyNameFilter)
-                        .WhereIf(!string.IsNullOrWhiteSpace(input.RatingLikeNameFilter), e => e.RatingLikeFk != null && e.RatingLikeFk.Name == input.RatingLikeNameFilter);
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.RatingLikeNameFilter), e => e.RatingLikeFk != null && e.RatingLikeFk.Name == input.RatingLikeNameFilter)
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.ContactFullNameFilter), e => e.ContactFk != null && e.ContactFk.FullName == input.ContactFullNameFilter)
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.StoreNameFilter), e => e.StoreFk != null && e.StoreFk.Name == input.StoreNameFilter);
 
             var query = (from o in filteredProducts
                          join o1 in _lookup_productCategoryRepository.GetAll() on o.ProductCategoryId equals o1.Id into j1
@@ -399,6 +447,12 @@ namespace SoftGrid.Shop
 
                          join o5 in _lookup_ratingLikeRepository.GetAll() on o.RatingLikeId equals o5.Id into j5
                          from s5 in j5.DefaultIfEmpty()
+
+                         join o6 in _lookup_contactRepository.GetAll() on o.ContactId equals o6.Id into j6
+                         from s6 in j6.DefaultIfEmpty()
+
+                         join o7 in _lookup_storeRepository.GetAll() on o.StoreId equals o7.Id into j7
+                         from s7 in j7.DefaultIfEmpty()
 
                          select new GetProductForViewDto()
                          {
@@ -437,7 +491,9 @@ namespace SoftGrid.Shop
                              MediaLibraryName = s2 == null || s2.Name == null ? "" : s2.Name.ToString(),
                              MeasurementUnitName = s3 == null || s3.Name == null ? "" : s3.Name.ToString(),
                              CurrencyName = s4 == null || s4.Name == null ? "" : s4.Name.ToString(),
-                             RatingLikeName = s5 == null || s5.Name == null ? "" : s5.Name.ToString()
+                             RatingLikeName = s5 == null || s5.Name == null ? "" : s5.Name.ToString(),
+                             ContactFullName = s6 == null || s6.FullName == null ? "" : s6.FullName.ToString(),
+                             StoreName = s7 == null || s7.Name == null ? "" : s7.Name.ToString()
                          });
 
             var productListDtos = await query.ToListAsync();
@@ -590,6 +646,66 @@ namespace SoftGrid.Shop
             }
 
             return new PagedResultDto<ProductRatingLikeLookupTableDto>(
+                totalCount,
+                lookupTableDtoList
+            );
+        }
+
+        [AbpAuthorize(AppPermissions.Pages_Products)]
+        public async Task<PagedResultDto<ProductContactLookupTableDto>> GetAllContactForLookupTable(GetAllForLookupTableInput input)
+        {
+            var query = _lookup_contactRepository.GetAll().WhereIf(
+                   !string.IsNullOrWhiteSpace(input.Filter),
+                  e => e.FullName != null && e.FullName.Contains(input.Filter)
+               );
+
+            var totalCount = await query.CountAsync();
+
+            var contactList = await query
+                .PageBy(input)
+                .ToListAsync();
+
+            var lookupTableDtoList = new List<ProductContactLookupTableDto>();
+            foreach (var contact in contactList)
+            {
+                lookupTableDtoList.Add(new ProductContactLookupTableDto
+                {
+                    Id = contact.Id,
+                    DisplayName = contact.FullName?.ToString()
+                });
+            }
+
+            return new PagedResultDto<ProductContactLookupTableDto>(
+                totalCount,
+                lookupTableDtoList
+            );
+        }
+
+        [AbpAuthorize(AppPermissions.Pages_Products)]
+        public async Task<PagedResultDto<ProductStoreLookupTableDto>> GetAllStoreForLookupTable(GetAllForLookupTableInput input)
+        {
+            var query = _lookup_storeRepository.GetAll().WhereIf(
+                   !string.IsNullOrWhiteSpace(input.Filter),
+                  e => e.Name != null && e.Name.Contains(input.Filter)
+               );
+
+            var totalCount = await query.CountAsync();
+
+            var storeList = await query
+                .PageBy(input)
+                .ToListAsync();
+
+            var lookupTableDtoList = new List<ProductStoreLookupTableDto>();
+            foreach (var store in storeList)
+            {
+                lookupTableDtoList.Add(new ProductStoreLookupTableDto
+                {
+                    Id = store.Id,
+                    DisplayName = store.Name?.ToString()
+                });
+            }
+
+            return new PagedResultDto<ProductStoreLookupTableDto>(
                 totalCount,
                 lookupTableDtoList
             );

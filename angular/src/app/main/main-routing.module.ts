@@ -9,6 +9,97 @@ import { RouterModule } from '@angular/router';
                 children: [
                     
                     {
+                        path: 'lookupData/subscriptionTypes',
+                        loadChildren: () => import('./lookupData/subscriptionTypes/subscriptionType.module').then(m => m.SubscriptionTypeModule),
+                        data: { permission: 'Pages.SubscriptionTypes' }
+                    },
+                
+                    
+                    {
+                        path: 'shop/productSubscriptionMaps',
+                        loadChildren: () => import('./shop/productSubscriptionMaps/productSubscriptionMap.module').then(m => m.ProductSubscriptionMapModule),
+                        data: { permission: 'Pages.ProductSubscriptionMaps' }
+                    },
+                
+                    
+                    {
+                        path: 'lookupData/socialMedias',
+                        loadChildren: () => import('./lookupData/socialMedias/socialMedia.module').then(m => m.SocialMediaModule),
+                        data: { permission: 'Pages.SocialMedias' }
+                    },
+                
+                    
+                    {
+                        path: 'shop/productCustomerStats',
+                        loadChildren: () => import('./shop/productCustomerStats/productCustomerStat.module').then(m => m.ProductCustomerStatModule),
+                        data: { permission: 'Pages.ProductCustomerStats' }
+                    },
+                
+                    
+                    {
+                        path: 'shop/productFaqs',
+                        loadChildren: () => import('./shop/productFaqs/productFaq.module').then(m => m.ProductFaqModule),
+                        data: { permission: 'Pages.ProductFaqs' }
+                    },
+                
+                    
+                    {
+                        path: 'shop/productCustomerQueries',
+                        loadChildren: () => import('./shop/productCustomerQueries/productCustomerQuery.module').then(m => m.ProductCustomerQueryModule),
+                        data: { permission: 'Pages.ProductCustomerQueries' }
+                    },
+                
+                    
+                    {
+                        path: 'shop/productPackages',
+                        loadChildren: () => import('./shop/productPackages/productPackage.module').then(m => m.ProductPackageModule),
+                        data: { permission: 'Pages.ProductPackages' }
+                    },
+                
+                    
+                    {
+                        path: 'shop/productNotes',
+                        loadChildren: () => import('./shop/productNotes/productNote.module').then(m => m.ProductNoteModule),
+                        data: { permission: 'Pages.ProductNotes' }
+                    },
+                
+                    
+                    {
+                        path: 'shop/productMedias',
+                        loadChildren: () => import('./shop/productMedias/productMedia.module').then(m => m.ProductMediaModule),
+                        data: { permission: 'Pages.ProductMedias' }
+                    },
+                
+                    
+                    {
+                        path: 'shop/productCategoryTeams',
+                        loadChildren: () => import('./shop/productCategoryTeams/productCategoryTeam.module').then(m => m.ProductCategoryTeamModule),
+                        data: { permission: 'Pages.ProductCategoryTeams' }
+                    },
+                
+                    
+                    {
+                        path: 'shop/productCategoryMaps',
+                        loadChildren: () => import('./shop/productCategoryMaps/productCategoryMap.module').then(m => m.ProductCategoryMapModule),
+                        data: { permission: 'Pages.ProductCategoryMaps' }
+                    },
+                
+                    
+                    {
+                        path: 'shop/productVariants',
+                        loadChildren: () => import('./shop/productVariants/productVariant.module').then(m => m.ProductVariantModule),
+                        data: { permission: 'Pages.ProductVariants' }
+                    },
+                
+                    
+                    {
+                        path: 'shop/productVariantCategories',
+                        loadChildren: () => import('./shop/productVariantCategories/productVariantCategory.module').then(m => m.ProductVariantCategoryModule),
+                        data: { permission: 'Pages.ProductVariantCategories' }
+                    },
+                
+                    
+                    {
                         path: 'territory/hubNavigationMenus',
                         loadChildren: () => import('./territory/hubNavigationMenus/hubNavigationMenu.module').then(m => m.HubNavigationMenuModule),
                         data: { permission: 'Pages.HubNavigationMenus' }

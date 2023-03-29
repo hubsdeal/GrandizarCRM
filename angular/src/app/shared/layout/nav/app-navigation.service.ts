@@ -188,6 +188,32 @@ export class AppNavigationService {
             new AppMenuItem('MasterNavigationMenus', 'Pages.MasterNavigationMenus', 'flaticon-more', '/app/main/territory/masterNavigationMenus'),
             
             new AppMenuItem('HubNavigationMenus', 'Pages.HubNavigationMenus', 'flaticon-more', '/app/main/territory/hubNavigationMenus'),
+            
+            new AppMenuItem('ProductVariantCategories', 'Pages.ProductVariantCategories', 'flaticon-more', '/app/main/shop/productVariantCategories'),
+            
+            new AppMenuItem('ProductVariants', 'Pages.ProductVariants', 'flaticon-more', '/app/main/shop/productVariants'),
+            
+            new AppMenuItem('ProductCategoryMaps', 'Pages.ProductCategoryMaps', 'flaticon-more', '/app/main/shop/productCategoryMaps'),
+            
+            new AppMenuItem('ProductCategoryTeams', 'Pages.ProductCategoryTeams', 'flaticon-more', '/app/main/shop/productCategoryTeams'),
+            
+            new AppMenuItem('ProductMedias', 'Pages.ProductMedias', 'flaticon-more', '/app/main/shop/productMedias'),
+            
+            new AppMenuItem('ProductNotes', 'Pages.ProductNotes', 'flaticon-more', '/app/main/shop/productNotes'),
+            
+            new AppMenuItem('ProductPackages', 'Pages.ProductPackages', 'flaticon-more', '/app/main/shop/productPackages'),
+            
+            new AppMenuItem('ProductCustomerQueries', 'Pages.ProductCustomerQueries', 'flaticon-more', '/app/main/shop/productCustomerQueries'),
+            
+            new AppMenuItem('ProductFaqs', 'Pages.ProductFaqs', 'flaticon-more', '/app/main/shop/productFaqs'),
+            
+            new AppMenuItem('ProductCustomerStats', 'Pages.ProductCustomerStats', 'flaticon-more', '/app/main/shop/productCustomerStats'),
+            
+            new AppMenuItem('SocialMedias', 'Pages.SocialMedias', 'flaticon-more', '/app/main/lookupData/socialMedias'),
+            
+            new AppMenuItem('ProductSubscriptionMaps', 'Pages.ProductSubscriptionMaps', 'flaticon-more', '/app/main/shop/productSubscriptionMaps'),
+            
+            new AppMenuItem('SubscriptionTypes', 'Pages.SubscriptionTypes', 'flaticon-more', '/app/main/lookupData/subscriptionTypes'),
              new AppMenuItem('Editions', 'Pages.Editions', 'flaticon-app', '/app/admin/editions'),
             new AppMenuItem(
                 'Administration',

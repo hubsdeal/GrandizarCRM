@@ -1,0 +1,218 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #productCustomerQueryForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="productCustomerQuery.id">{{ l('EditProductCustomerQuery') }}</span>
+                        <span *ngIf="!productCustomerQuery.id">{{ l('CreateNewProductCustomerQuery') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="ProductName">{{ l('Product') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="ProductName"
+                                name="productName"
+                                [(ngModel)]="productName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectProductModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setProductIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="productCustomerQuery.productId"
+                        [(ngModel)]="productCustomerQuery.productId"
+                        type="text"
+                        required
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="ContactFullName">{{ l('Contact') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="ContactFullName"
+                                name="contactFullName"
+                                [(ngModel)]="contactFullName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectContactModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setContactIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="productCustomerQuery.contactId"
+                        [(ngModel)]="productCustomerQuery.contactId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="EmployeeName">{{ l('Employee') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="EmployeeName"
+                                name="employeeName"
+                                [(ngModel)]="employeeName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectEmployeeModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setEmployeeIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="productCustomerQuery.employeeId"
+                        [(ngModel)]="productCustomerQuery.employeeId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="ProductCustomerQuery_Question">{{ l('Question') }}</label>
+                        <input
+                            type="text"
+                            #ProductCustomerQuery_Question="ngModel"
+                            id="ProductCustomerQuery_Question"
+                            class="form-control"
+                            [(ngModel)]="productCustomerQuery.question"
+                            name="Question"
+                            minlength="1"
+                            maxlength="2048"
+                        />
+                        <validation-messages [formCtrl]="ProductCustomerQuery_Question"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ProductCustomerQuery_Answer">{{ l('Answer') }}</label>
+                        <input
+                            type="text"
+                            #ProductCustomerQuery_Answer="ngModel"
+                            id="ProductCustomerQuery_Answer"
+                            class="form-control"
+                            [(ngModel)]="productCustomerQuery.answer"
+                            name="Answer"
+                        />
+                        <validation-messages [formCtrl]="ProductCustomerQuery_Answer"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ProductCustomerQuery_AnswerDate">{{ l('AnswerDate') }}</label>
+                        <input
+                            class="form-control m-input"
+                            #ProductCustomerQuery_AnswerDate
+                            type="datetime"
+                            bsDatepicker
+                            datePickerLuxonModifier
+                            [(date)]="productCustomerQuery.answerDate"
+                            id="ProductCustomerQuery_AnswerDate"
+                            name="ProductCustomerQuery_AnswerDate"
+                        />
+                        <validation-messages [formCtrl]="ProductCustomerQuery_AnswerDate"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ProductCustomerQuery_AnswerTime">{{ l('AnswerTime') }}</label>
+                        <input
+                            type="text"
+                            #ProductCustomerQuery_AnswerTime="ngModel"
+                            id="ProductCustomerQuery_AnswerTime"
+                            class="form-control"
+                            [(ngModel)]="productCustomerQuery.answerTime"
+                            name="AnswerTime"
+                            minlength="1"
+                            maxlength="50"
+                        />
+                        <validation-messages [formCtrl]="ProductCustomerQuery_AnswerTime"></validation-messages>
+                    </div>
+
+                    <br />
+                    <label class="form-check form-check-custom form-check-solid">
+                        <input
+                            id="ProductCustomerQuery_Publish"
+                            #ProductCustomerQuery_Publish="ngModel"
+                            name="Publish"
+                            [(ngModel)]="productCustomerQuery.publish"
+                            type="checkbox"
+                            class="form-check-input"
+                        />
+                        <span class="form-check-label">
+                            {{ l('Publish') }}
+                        </span>
+                    </label>
+                    <validation-messages [formCtrl]="ProductCustomerQuery_Publish"></validation-messages>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!productCustomerQueryForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <productCustomerQueryProductLookupTableModal
+        #productCustomerQueryProductLookupTableModal
+        (modalSave)="getNewProductId()"
+    ></productCustomerQueryProductLookupTableModal>
+    <productCustomerQueryContactLookupTableModal
+        #productCustomerQueryContactLookupTableModal
+        (modalSave)="getNewContactId()"
+    ></productCustomerQueryContactLookupTableModal>
+    <productCustomerQueryEmployeeLookupTableModal
+        #productCustomerQueryEmployeeLookupTableModal
+        (modalSave)="getNewEmployeeId()"
+    ></productCustomerQueryEmployeeLookupTableModal>
+</div>

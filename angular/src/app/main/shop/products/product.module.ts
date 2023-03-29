@@ -10,7 +10,8 @@ import { ProductMediaLibraryLookupTableModalComponent } from './product-mediaLib
 import { ProductMeasurementUnitLookupTableModalComponent } from './product-measurementUnit-lookup-table-modal.component';
 import { ProductCurrencyLookupTableModalComponent } from './product-currency-lookup-table-modal.component';
 import { ProductRatingLikeLookupTableModalComponent } from './product-ratingLike-lookup-table-modal.component';
-import { ProductDashboardComponent } from './product-dashboard/product-dashboard.component';
+import { ProductContactLookupTableModalComponent } from './product-contact-lookup-table-modal.component';
+import { ProductStoreLookupTableModalComponent } from './product-store-lookup-table-modal.component';
 
 @NgModule({
     declarations: [
@@ -23,7 +24,8 @@ import { ProductDashboardComponent } from './product-dashboard/product-dashboard
         ProductMeasurementUnitLookupTableModalComponent,
         ProductCurrencyLookupTableModalComponent,
         ProductRatingLikeLookupTableModalComponent,
-        ProductDashboardComponent,
+        ProductContactLookupTableModalComponent,
+        ProductStoreLookupTableModalComponent,
     ],
     imports: [AppSharedModule, ProductRoutingModule, AdminSharedModule],
 })

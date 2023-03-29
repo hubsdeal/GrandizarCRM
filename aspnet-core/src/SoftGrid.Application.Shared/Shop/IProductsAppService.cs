@@ -31,5 +31,9 @@ namespace SoftGrid.Shop
 
         Task<PagedResultDto<ProductRatingLikeLookupTableDto>> GetAllRatingLikeForLookupTable(GetAllForLookupTableInput input);
 
+        Task<PagedResultDto<ProductContactLookupTableDto>> GetAllContactForLookupTable(GetAllForLookupTableInput input);
+
+        Task<PagedResultDto<ProductStoreLookupTableDto>> GetAllStoreForLookupTable(GetAllForLookupTableInput input);
+
     }
 }

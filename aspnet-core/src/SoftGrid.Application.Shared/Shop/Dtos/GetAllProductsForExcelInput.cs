@@ -79,5 +79,9 @@ namespace SoftGrid.Shop.Dtos
 
         public string RatingLikeNameFilter { get; set; }
 
+        public string ContactFullNameFilter { get; set; }
+
+        public string StoreNameFilter { get; set; }
+
     }
 }

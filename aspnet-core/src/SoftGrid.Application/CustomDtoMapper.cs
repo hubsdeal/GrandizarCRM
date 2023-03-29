@@ -62,6 +62,32 @@ namespace SoftGrid
     {
         public static void CreateMappings(IMapperConfigurationExpression configuration)
         {
+            configuration.CreateMap<CreateOrEditSubscriptionTypeDto, SubscriptionType>().ReverseMap();
+            configuration.CreateMap<SubscriptionTypeDto, SubscriptionType>().ReverseMap();
+            configuration.CreateMap<CreateOrEditProductSubscriptionMapDto, ProductSubscriptionMap>().ReverseMap();
+            configuration.CreateMap<ProductSubscriptionMapDto, ProductSubscriptionMap>().ReverseMap();
+            configuration.CreateMap<CreateOrEditSocialMediaDto, SocialMedia>().ReverseMap();
+            configuration.CreateMap<SocialMediaDto, SocialMedia>().ReverseMap();
+            configuration.CreateMap<CreateOrEditProductCustomerStatDto, ProductCustomerStat>().ReverseMap();
+            configuration.CreateMap<ProductCustomerStatDto, ProductCustomerStat>().ReverseMap();
+            configuration.CreateMap<CreateOrEditProductFaqDto, ProductFaq>().ReverseMap();
+            configuration.CreateMap<ProductFaqDto, ProductFaq>().ReverseMap();
+            configuration.CreateMap<CreateOrEditProductCustomerQueryDto, ProductCustomerQuery>().ReverseMap();
+            configuration.CreateMap<ProductCustomerQueryDto, ProductCustomerQuery>().ReverseMap();
+            configuration.CreateMap<CreateOrEditProductPackageDto, ProductPackage>().ReverseMap();
+            configuration.CreateMap<ProductPackageDto, ProductPackage>().ReverseMap();
+            configuration.CreateMap<CreateOrEditProductNoteDto, ProductNote>().ReverseMap();
+            configuration.CreateMap<ProductNoteDto, ProductNote>().ReverseMap();
+            configuration.CreateMap<CreateOrEditProductMediaDto, ProductMedia>().ReverseMap();
+            configuration.CreateMap<ProductMediaDto, ProductMedia>().ReverseMap();
+            configuration.CreateMap<CreateOrEditProductCategoryTeamDto, ProductCategoryTeam>().ReverseMap();
+            configuration.CreateMap<ProductCategoryTeamDto, ProductCategoryTeam>().ReverseMap();
+            configuration.CreateMap<CreateOrEditProductCategoryMapDto, ProductCategoryMap>().ReverseMap();
+            configuration.CreateMap<ProductCategoryMapDto, ProductCategoryMap>().ReverseMap();
+            configuration.CreateMap<CreateOrEditProductVariantDto, ProductVariant>().ReverseMap();
+            configuration.CreateMap<ProductVariantDto, ProductVariant>().ReverseMap();
+            configuration.CreateMap<CreateOrEditProductVariantCategoryDto, ProductVariantCategory>().ReverseMap();
+            configuration.CreateMap<ProductVariantCategoryDto, ProductVariantCategory>().ReverseMap();
             configuration.CreateMap<CreateOrEditHubNavigationMenuDto, HubNavigationMenu>().ReverseMap();
             configuration.CreateMap<HubNavigationMenuDto, HubNavigationMenu>().ReverseMap();
             configuration.CreateMap<CreateOrEditMasterNavigationMenuDto, MasterNavigationMenu>().ReverseMap();

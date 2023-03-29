@@ -30,6 +30,71 @@ namespace SoftGrid.Authorization
 
             var pages = context.GetPermissionOrNull(AppPermissions.Pages) ?? context.CreatePermission(AppPermissions.Pages, L("Pages"));
 
+            var subscriptionTypes = pages.CreateChildPermission(AppPermissions.Pages_SubscriptionTypes, L("SubscriptionTypes"));
+            subscriptionTypes.CreateChildPermission(AppPermissions.Pages_SubscriptionTypes_Create, L("CreateNewSubscriptionType"));
+            subscriptionTypes.CreateChildPermission(AppPermissions.Pages_SubscriptionTypes_Edit, L("EditSubscriptionType"));
+            subscriptionTypes.CreateChildPermission(AppPermissions.Pages_SubscriptionTypes_Delete, L("DeleteSubscriptionType"));
+
+            var productSubscriptionMaps = pages.CreateChildPermission(AppPermissions.Pages_ProductSubscriptionMaps, L("ProductSubscriptionMaps"));
+            productSubscriptionMaps.CreateChildPermission(AppPermissions.Pages_ProductSubscriptionMaps_Create, L("CreateNewProductSubscriptionMap"));
+            productSubscriptionMaps.CreateChildPermission(AppPermissions.Pages_ProductSubscriptionMaps_Edit, L("EditProductSubscriptionMap"));
+            productSubscriptionMaps.CreateChildPermission(AppPermissions.Pages_ProductSubscriptionMaps_Delete, L("DeleteProductSubscriptionMap"));
+
+            var socialMedias = pages.CreateChildPermission(AppPermissions.Pages_SocialMedias, L("SocialMedias"));
+            socialMedias.CreateChildPermission(AppPermissions.Pages_SocialMedias_Create, L("CreateNewSocialMedia"));
+            socialMedias.CreateChildPermission(AppPermissions.Pages_SocialMedias_Edit, L("EditSocialMedia"));
+            socialMedias.CreateChildPermission(AppPermissions.Pages_SocialMedias_Delete, L("DeleteSocialMedia"));
+
+            var productCustomerStats = pages.CreateChildPermission(AppPermissions.Pages_ProductCustomerStats, L("ProductCustomerStats"));
+            productCustomerStats.CreateChildPermission(AppPermissions.Pages_ProductCustomerStats_Create, L("CreateNewProductCustomerStat"));
+            productCustomerStats.CreateChildPermission(AppPermissions.Pages_ProductCustomerStats_Edit, L("EditProductCustomerStat"));
+            productCustomerStats.CreateChildPermission(AppPermissions.Pages_ProductCustomerStats_Delete, L("DeleteProductCustomerStat"));
+
+            var productFaqs = pages.CreateChildPermission(AppPermissions.Pages_ProductFaqs, L("ProductFaqs"));
+            productFaqs.CreateChildPermission(AppPermissions.Pages_ProductFaqs_Create, L("CreateNewProductFaq"));
+            productFaqs.CreateChildPermission(AppPermissions.Pages_ProductFaqs_Edit, L("EditProductFaq"));
+            productFaqs.CreateChildPermission(AppPermissions.Pages_ProductFaqs_Delete, L("DeleteProductFaq"));
+
+            var productCustomerQueries = pages.CreateChildPermission(AppPermissions.Pages_ProductCustomerQueries, L("ProductCustomerQueries"));
+            productCustomerQueries.CreateChildPermission(AppPermissions.Pages_ProductCustomerQueries_Create, L("CreateNewProductCustomerQuery"));
+            productCustomerQueries.CreateChildPermission(AppPermissions.Pages_ProductCustomerQueries_Edit, L("EditProductCustomerQuery"));
+            productCustomerQueries.CreateChildPermission(AppPermissions.Pages_ProductCustomerQueries_Delete, L("DeleteProductCustomerQuery"));
+
+            var productPackages = pages.CreateChildPermission(AppPermissions.Pages_ProductPackages, L("ProductPackages"));
+            productPackages.CreateChildPermission(AppPermissions.Pages_ProductPackages_Create, L("CreateNewProductPackage"));
+            productPackages.CreateChildPermission(AppPermissions.Pages_ProductPackages_Edit, L("EditProductPackage"));
+            productPackages.CreateChildPermission(AppPermissions.Pages_ProductPackages_Delete, L("DeleteProductPackage"));
+
+            var productNotes = pages.CreateChildPermission(AppPermissions.Pages_ProductNotes, L("ProductNotes"));
+            productNotes.CreateChildPermission(AppPermissions.Pages_ProductNotes_Create, L("CreateNewProductNote"));
+            productNotes.CreateChildPermission(AppPermissions.Pages_ProductNotes_Edit, L("EditProductNote"));
+            productNotes.CreateChildPermission(AppPermissions.Pages_ProductNotes_Delete, L("DeleteProductNote"));
+
+            var productMedias = pages.CreateChildPermission(AppPermissions.Pages_ProductMedias, L("ProductMedias"));
+            productMedias.CreateChildPermission(AppPermissions.Pages_ProductMedias_Create, L("CreateNewProductMedia"));
+            productMedias.CreateChildPermission(AppPermissions.Pages_ProductMedias_Edit, L("EditProductMedia"));
+            productMedias.CreateChildPermission(AppPermissions.Pages_ProductMedias_Delete, L("DeleteProductMedia"));
+
+            var productCategoryTeams = pages.CreateChildPermission(AppPermissions.Pages_ProductCategoryTeams, L("ProductCategoryTeams"));
+            productCategoryTeams.CreateChildPermission(AppPermissions.Pages_ProductCategoryTeams_Create, L("CreateNewProductCategoryTeam"));
+            productCategoryTeams.CreateChildPermission(AppPermissions.Pages_ProductCategoryTeams_Edit, L("EditProductCategoryTeam"));
+            productCategoryTeams.CreateChildPermission(AppPermissions.Pages_ProductCategoryTeams_Delete, L("DeleteProductCategoryTeam"));
+
+            var productCategoryMaps = pages.CreateChildPermission(AppPermissions.Pages_ProductCategoryMaps, L("ProductCategoryMaps"));
+            productCategoryMaps.CreateChildPermission(AppPermissions.Pages_ProductCategoryMaps_Create, L("CreateNewProductCategoryMap"));
+            productCategoryMaps.CreateChildPermission(AppPermissions.Pages_ProductCategoryMaps_Edit, L("EditProductCategoryMap"));
+            productCategoryMaps.CreateChildPermission(AppPermissions.Pages_ProductCategoryMaps_Delete, L("DeleteProductCategoryMap"));
+
+            var productVariants = pages.CreateChildPermission(AppPermissions.Pages_ProductVariants, L("ProductVariants"));
+            productVariants.CreateChildPermission(AppPermissions.Pages_ProductVariants_Create, L("CreateNewProductVariant"));
+            productVariants.CreateChildPermission(AppPermissions.Pages_ProductVariants_Edit, L("EditProductVariant"));
+            productVariants.CreateChildPermission(AppPermissions.Pages_ProductVariants_Delete, L("DeleteProductVariant"));
+
+            var productVariantCategories = pages.CreateChildPermission(AppPermissions.Pages_ProductVariantCategories, L("ProductVariantCategories"));
+            productVariantCategories.CreateChildPermission(AppPermissions.Pages_ProductVariantCategories_Create, L("CreateNewProductVariantCategory"));
+            productVariantCategories.CreateChildPermission(AppPermissions.Pages_ProductVariantCategories_Edit, L("EditProductVariantCategory"));
+            productVariantCategories.CreateChildPermission(AppPermissions.Pages_ProductVariantCategories_Delete, L("DeleteProductVariantCategory"));
+
             var hubNavigationMenus = pages.CreateChildPermission(AppPermissions.Pages_HubNavigationMenus, L("HubNavigationMenus"));
             hubNavigationMenus.CreateChildPermission(AppPermissions.Pages_HubNavigationMenus_Create, L("CreateNewHubNavigationMenu"));
             hubNavigationMenus.CreateChildPermission(AppPermissions.Pages_HubNavigationMenus_Edit, L("EditHubNavigationMenu"));

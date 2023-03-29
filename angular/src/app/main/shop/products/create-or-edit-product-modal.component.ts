@@ -11,6 +11,8 @@ import { ProductMediaLibraryLookupTableModalComponent } from './product-mediaLib
 import { ProductMeasurementUnitLookupTableModalComponent } from './product-measurementUnit-lookup-table-modal.component';
 import { ProductCurrencyLookupTableModalComponent } from './product-currency-lookup-table-modal.component';
 import { ProductRatingLikeLookupTableModalComponent } from './product-ratingLike-lookup-table-modal.component';
+import { ProductContactLookupTableModalComponent } from './product-contact-lookup-table-modal.component';
+import { ProductStoreLookupTableModalComponent } from './product-store-lookup-table-modal.component';
 
 @Component({
     selector: 'createOrEditProductModal',
@@ -28,6 +30,10 @@ export class CreateOrEditProductModalComponent extends AppComponentBase implemen
     productCurrencyLookupTableModal: ProductCurrencyLookupTableModalComponent;
     @ViewChild('productRatingLikeLookupTableModal', { static: true })
     productRatingLikeLookupTableModal: ProductRatingLikeLookupTableModalComponent;
+    @ViewChild('productContactLookupTableModal', { static: true })
+    productContactLookupTableModal: ProductContactLookupTableModalComponent;
+    @ViewChild('productStoreLookupTableModal', { static: true })
+    productStoreLookupTableModal: ProductStoreLookupTableModalComponent;
 
     @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
 
@@ -41,6 +47,8 @@ export class CreateOrEditProductModalComponent extends AppComponentBase implemen
     measurementUnitName = '';
     currencyName = '';
     ratingLikeName = '';
+    contactFullName = '';
+    storeName = '';
 
     constructor(
         injector: Injector,
@@ -59,6 +67,8 @@ export class CreateOrEditProductModalComponent extends AppComponentBase implemen
             this.measurementUnitName = '';
             this.currencyName = '';
             this.ratingLikeName = '';
+            this.contactFullName = '';
+            this.storeName = '';
 
             this.active = true;
             this.modal.show();
@@ -71,6 +81,8 @@ export class CreateOrEditProductModalComponent extends AppComponentBase implemen
                 this.measurementUnitName = result.measurementUnitName;
                 this.currencyName = result.currencyName;
                 this.ratingLikeName = result.ratingLikeName;
+                this.contactFullName = result.contactFullName;
+                this.storeName = result.storeName;
 
                 this.active = true;
                 this.modal.show();
@@ -120,6 +132,16 @@ export class CreateOrEditProductModalComponent extends AppComponentBase implemen
         this.productRatingLikeLookupTableModal.displayName = this.ratingLikeName;
         this.productRatingLikeLookupTableModal.show();
     }
+    openSelectContactModal() {
+        this.productContactLookupTableModal.id = this.product.contactId;
+        this.productContactLookupTableModal.displayName = this.contactFullName;
+        this.productContactLookupTableModal.show();
+    }
+    openSelectStoreModal() {
+        this.productStoreLookupTableModal.id = this.product.storeId;
+        this.productStoreLookupTableModal.displayName = this.storeName;
+        this.productStoreLookupTableModal.show();
+    }
 
     setProductCategoryIdNull() {
         this.product.productCategoryId = null;
@@ -141,6 +163,14 @@ export class CreateOrEditProductModalComponent extends AppComponentBase implemen
         this.product.ratingLikeId = null;
         this.ratingLikeName = '';
     }
+    setContactIdNull() {
+        this.product.contactId = null;
+        this.contactFullName = '';
+    }
+    setStoreIdNull() {
+        this.product.storeId = null;
+        this.storeName = '';
+    }
 
     getNewProductCategoryId() {
         this.product.productCategoryId = this.productProductCategoryLookupTableModal.id;
@@ -161,6 +191,14 @@ export class CreateOrEditProductModalComponent extends AppComponentBase implemen
     getNewRatingLikeId() {
         this.product.ratingLikeId = this.productRatingLikeLookupTableModal.id;
         this.ratingLikeName = this.productRatingLikeLookupTableModal.displayName;
+    }
+    getNewContactId() {
+        this.product.contactId = this.productContactLookupTableModal.id;
+        this.contactFullName = this.productContactLookupTableModal.displayName;
+    }
+    getNewStoreId() {
+        this.product.storeId = this.productStoreLookupTableModal.id;
+        this.storeName = this.productStoreLookupTableModal.displayName;
     }
 
     close(): void {

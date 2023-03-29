@@ -19,9 +19,7 @@ import { DateTime } from 'luxon';
 import { DateTimeService } from '@app/shared/common/timing/date-time.service';
 
 @Component({
-    selector:'appProductList',
     templateUrl: './products.component.html',
-    styleUrls: ['./products.component.scss'],
     encapsulation: ViewEncapsulation.None,
     animations: [appModuleAnimation()],
 })
@@ -91,6 +89,8 @@ export class ProductsComponent extends AppComponentBase {
     measurementUnitNameFilter = '';
     currencyNameFilter = '';
     ratingLikeNameFilter = '';
+    contactFullNameFilter = '';
+    storeNameFilter = '';
 
     constructor(
         injector: Injector,
@@ -169,6 +169,8 @@ export class ProductsComponent extends AppComponentBase {
                 this.measurementUnitNameFilter,
                 this.currencyNameFilter,
                 this.ratingLikeNameFilter,
+                this.contactFullNameFilter,
+                this.storeNameFilter,
                 this.primengTableHelper.getSorting(this.dataTable),
                 this.primengTableHelper.getSkipCount(this.paginator, event),
                 this.primengTableHelper.getMaxResultCount(this.paginator, event)
@@ -254,7 +256,9 @@ export class ProductsComponent extends AppComponentBase {
                 this.mediaLibraryNameFilter,
                 this.measurementUnitNameFilter,
                 this.currencyNameFilter,
-                this.ratingLikeNameFilter
+                this.ratingLikeNameFilter,
+                this.contactFullNameFilter,
+                this.storeNameFilter
             )
             .subscribe((result) => {
                 this._fileDownloadService.downloadTempFile(result);
@@ -303,6 +307,8 @@ export class ProductsComponent extends AppComponentBase {
         this.measurementUnitNameFilter = '';
         this.currencyNameFilter = '';
         this.ratingLikeNameFilter = '';
+        this.contactFullNameFilter = '';
+        this.storeNameFilter = '';
 
         this.getProducts();
     }
