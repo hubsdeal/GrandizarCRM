@@ -1,5 +1,5 @@
 {
-  "IsRegenerate": false,
+  "IsRegenerate": true,
   "MenuPosition": "main",
   "RelativeNamespace": "Shop",
   "EntityName": "Product",
@@ -191,8 +191,8 @@
     {
       "Name": "RegularPrice",
       "Type": "double",
-      "MaxLength": 0,
-      "MinLength": 0,
+      "MaxLength": -1,
+      "MinLength": -1,
       "Range": {
         "IsRangeSet": false,
         "MinimumValue": 0.0,
@@ -212,8 +212,8 @@
     {
       "Name": "SalePrice",
       "Type": "double",
-      "MaxLength": 0,
-      "MinLength": 0,
+      "MaxLength": -1,
+      "MinLength": -1,
       "Range": {
         "IsRangeSet": false,
         "MinimumValue": 0.0,
@@ -233,8 +233,8 @@
     {
       "Name": "PriceDiscountPercentage",
       "Type": "double",
-      "MaxLength": 0,
-      "MinLength": 0,
+      "MaxLength": -1,
+      "MinLength": -1,
       "Range": {
         "IsRangeSet": false,
         "MinimumValue": 0.0,
@@ -254,8 +254,8 @@
     {
       "Name": "CallForPrice",
       "Type": "bool",
-      "MaxLength": 0,
-      "MinLength": 0,
+      "MaxLength": -1,
+      "MinLength": -1,
       "Range": {
         "IsRangeSet": false,
         "MinimumValue": 0.0,
@@ -275,8 +275,8 @@
     {
       "Name": "UnitPrice",
       "Type": "double",
-      "MaxLength": 0,
-      "MinLength": 0,
+      "MaxLength": -1,
+      "MinLength": -1,
       "Range": {
         "IsRangeSet": false,
         "MinimumValue": 0.0,
@@ -296,8 +296,8 @@
     {
       "Name": "MeasurementAmount",
       "Type": "int",
-      "MaxLength": 0,
-      "MinLength": 0,
+      "MaxLength": -1,
+      "MinLength": -1,
       "Range": {
         "IsRangeSet": false,
         "MinimumValue": 0.0,
@@ -317,8 +317,8 @@
     {
       "Name": "IsTaxExempt",
       "Type": "bool",
-      "MaxLength": 0,
-      "MinLength": 0,
+      "MaxLength": -1,
+      "MinLength": -1,
       "Range": {
         "IsRangeSet": false,
         "MinimumValue": 0.0,
@@ -338,8 +338,8 @@
     {
       "Name": "StockQuantity",
       "Type": "int",
-      "MaxLength": 0,
-      "MinLength": 0,
+      "MaxLength": -1,
+      "MinLength": -1,
       "Range": {
         "IsRangeSet": false,
         "MinimumValue": 0.0,
@@ -359,8 +359,8 @@
     {
       "Name": "IsDisplayStockQuantity",
       "Type": "bool",
-      "MaxLength": 0,
-      "MinLength": 0,
+      "MaxLength": -1,
+      "MinLength": -1,
       "Range": {
         "IsRangeSet": false,
         "MinimumValue": 0.0,
@@ -380,8 +380,8 @@
     {
       "Name": "IsPublished",
       "Type": "bool",
-      "MaxLength": 0,
-      "MinLength": 0,
+      "MaxLength": -1,
+      "MinLength": -1,
       "Range": {
         "IsRangeSet": false,
         "MinimumValue": 0.0,
@@ -401,8 +401,8 @@
     {
       "Name": "IsPackageProduct",
       "Type": "bool",
-      "MaxLength": 0,
-      "MinLength": 0,
+      "MaxLength": -1,
+      "MinLength": -1,
       "Range": {
         "IsRangeSet": false,
         "MinimumValue": 0.0,
@@ -443,8 +443,8 @@
     {
       "Name": "IsTemplate",
       "Type": "bool",
-      "MaxLength": 0,
-      "MinLength": 0,
+      "MaxLength": -1,
+      "MinLength": -1,
       "Range": {
         "IsRangeSet": false,
         "MinimumValue": 0.0,
@@ -464,8 +464,8 @@
     {
       "Name": "PriceDiscountAmount",
       "Type": "double",
-      "MaxLength": 0,
-      "MinLength": 0,
+      "MaxLength": -1,
+      "MinLength": -1,
       "Range": {
         "IsRangeSet": false,
         "MinimumValue": 0.0,
@@ -485,8 +485,8 @@
     {
       "Name": "IsService",
       "Type": "bool",
-      "MaxLength": 0,
-      "MinLength": 0,
+      "MaxLength": -1,
+      "MinLength": -1,
       "Range": {
         "IsRangeSet": false,
         "MinimumValue": 0.0,
@@ -506,8 +506,8 @@
     {
       "Name": "IsWholeSaleProduct",
       "Type": "bool",
-      "MaxLength": 0,
-      "MinLength": 0,
+      "MaxLength": -1,
+      "MinLength": -1,
       "Range": {
         "IsRangeSet": false,
         "MinimumValue": 0.0,
@@ -548,8 +548,8 @@
     {
       "Name": "ByOrderOnly",
       "Type": "bool",
-      "MaxLength": 0,
-      "MinLength": 0,
+      "MaxLength": -1,
+      "MinLength": -1,
       "Range": {
         "IsRangeSet": false,
         "MinimumValue": 0.0,
@@ -569,8 +569,8 @@
     {
       "Name": "Score",
       "Type": "int",
-      "MaxLength": 0,
-      "MinLength": 0,
+      "MaxLength": -1,
+      "MinLength": -1,
       "Range": {
         "IsRangeSet": false,
         "MinimumValue": 0.0,
@@ -659,6 +659,38 @@
       "IdType": "long",
       "IsNullable": true,
       "PropertyName": "RatingLikeId",
+      "DuplicationNumber": 0,
+      "RelationType": "single",
+      "ViewType": "LookupTable",
+      "DisplayPropertyNameInfos": {
+        "MergeFormat": "{0}",
+        "DisplayPropertyNames": [
+          "Name"
+        ]
+      }
+    },
+    {
+      "Namespace": "SoftGrid.CRM",
+      "ForeignEntityName": "Contact",
+      "IdType": "long",
+      "IsNullable": true,
+      "PropertyName": "ContactId",
+      "DuplicationNumber": 0,
+      "RelationType": "single",
+      "ViewType": "LookupTable",
+      "DisplayPropertyNameInfos": {
+        "MergeFormat": "{0}",
+        "DisplayPropertyNames": [
+          "FullName"
+        ]
+      }
+    },
+    {
+      "Namespace": "SoftGrid.Shop",
+      "ForeignEntityName": "Store",
+      "IdType": "long",
+      "IsNullable": true,
+      "PropertyName": "StoreId",
       "DuplicationNumber": 0,
       "RelationType": "single",
       "ViewType": "LookupTable",

@@ -18,5 +18,9 @@ namespace SoftGrid.Shop.Dtos
 
         public string RatingLikeName { get; set; }
 
+        public string ContactFullName { get; set; }
+
+        public string StoreName { get; set; }
+
     }
 }

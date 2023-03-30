@@ -66,7 +66,9 @@ namespace SoftGrid.Shop.Exporting
                         (L("MediaLibrary")) + L("Name"),
                         (L("MeasurementUnit")) + L("Name"),
                         (L("Currency")) + L("Name"),
-                        (L("RatingLike")) + L("Name")
+                        (L("RatingLike")) + L("Name"),
+                        (L("Contact")) + L("FullName"),
+                        (L("Store")) + L("Name")
                         );
 
                     AddObjects(
@@ -102,7 +104,9 @@ namespace SoftGrid.Shop.Exporting
                         _ => _.MediaLibraryName,
                         _ => _.MeasurementUnitName,
                         _ => _.CurrencyName,
-                        _ => _.RatingLikeName
+                        _ => _.RatingLikeName,
+                        _ => _.ContactFullName,
+                        _ => _.StoreName
                         );
 
                 });

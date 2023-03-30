@@ -1,0 +1,141 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #productFaqForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="productFaq.id">{{ l('EditProductFaq') }}</span>
+                        <span *ngIf="!productFaq.id">{{ l('CreateNewProductFaq') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="ProductName">{{ l('Product') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="ProductName"
+                                name="productName"
+                                [(ngModel)]="productName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectProductModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setProductIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="productFaq.productId"
+                        [(ngModel)]="productFaq.productId"
+                        type="text"
+                        required
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="ProductFaq_Question">{{ l('Question') }} *</label>
+                        <input
+                            type="text"
+                            #ProductFaq_Question="ngModel"
+                            id="ProductFaq_Question"
+                            class="form-control"
+                            [(ngModel)]="productFaq.question"
+                            name="Question"
+                            minlength="1"
+                            maxlength="2048"
+                            required
+                        />
+                        <validation-messages [formCtrl]="ProductFaq_Question"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ProductFaq_Answer">{{ l('Answer') }}</label>
+                        <input
+                            type="text"
+                            #ProductFaq_Answer="ngModel"
+                            id="ProductFaq_Answer"
+                            class="form-control"
+                            [(ngModel)]="productFaq.answer"
+                            name="Answer"
+                        />
+                        <validation-messages [formCtrl]="ProductFaq_Answer"></validation-messages>
+                    </div>
+
+                    <br />
+                    <label class="form-check form-check-custom form-check-solid">
+                        <input
+                            id="ProductFaq_Template"
+                            #ProductFaq_Template="ngModel"
+                            name="Template"
+                            [(ngModel)]="productFaq.template"
+                            type="checkbox"
+                            class="form-check-input"
+                        />
+                        <span class="form-check-label">
+                            {{ l('Template') }}
+                        </span>
+                    </label>
+                    <validation-messages [formCtrl]="ProductFaq_Template"></validation-messages>
+
+                    <br />
+                    <label class="form-check form-check-custom form-check-solid">
+                        <input
+                            id="ProductFaq_Publish"
+                            #ProductFaq_Publish="ngModel"
+                            name="Publish"
+                            [(ngModel)]="productFaq.publish"
+                            type="checkbox"
+                            class="form-check-input"
+                        />
+                        <span class="form-check-label">
+                            {{ l('Publish') }}
+                        </span>
+                    </label>
+                    <validation-messages [formCtrl]="ProductFaq_Publish"></validation-messages>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!productFaqForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <productFaqProductLookupTableModal
+        #productFaqProductLookupTableModal
+        (modalSave)="getNewProductId()"
+    ></productFaqProductLookupTableModal>
+</div>

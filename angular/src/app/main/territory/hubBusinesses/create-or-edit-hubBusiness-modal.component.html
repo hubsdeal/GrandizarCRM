@@ -1,0 +1,142 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #hubBusinessForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="hubBusiness.id">{{ l('EditHubBusiness') }}</span>
+                        <span *ngIf="!hubBusiness.id">{{ l('CreateNewHubBusiness') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="HubName">{{ l('Hub') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="HubName"
+                                name="hubName"
+                                [(ngModel)]="hubName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectHubModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setHubIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="hubBusiness.hubId"
+                        [(ngModel)]="hubBusiness.hubId"
+                        type="text"
+                        required
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="BusinessName">{{ l('Business') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="BusinessName"
+                                name="businessName"
+                                [(ngModel)]="businessName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectBusinessModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setBusinessIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="hubBusiness.businessId"
+                        [(ngModel)]="hubBusiness.businessId"
+                        type="text"
+                        required
+                        hidden
+                    />
+
+                    <br />
+                    <label class="form-check form-check-custom form-check-solid">
+                        <input
+                            id="HubBusiness_Published"
+                            #HubBusiness_Published="ngModel"
+                            name="Published"
+                            [(ngModel)]="hubBusiness.published"
+                            type="checkbox"
+                            class="form-check-input"
+                        />
+                        <span class="form-check-label">
+                            {{ l('Published') }}
+                        </span>
+                    </label>
+                    <validation-messages [formCtrl]="HubBusiness_Published"></validation-messages>
+
+                    <div class="my5">
+                        <label class="form-label" for="HubBusiness_DisplayScore">{{ l('DisplayScore') }}</label>
+                        <input
+                            type="number"
+                            #HubBusiness_DisplayScore="ngModel"
+                            id="HubBusiness_DisplayScore"
+                            class="form-control"
+                            [(ngModel)]="hubBusiness.displayScore"
+                            name="DisplayScore"
+                        />
+                        <validation-messages [formCtrl]="HubBusiness_DisplayScore"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!hubBusinessForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <hubBusinessHubLookupTableModal
+        #hubBusinessHubLookupTableModal
+        (modalSave)="getNewHubId()"
+    ></hubBusinessHubLookupTableModal>
+    <hubBusinessBusinessLookupTableModal
+        #hubBusinessBusinessLookupTableModal
+        (modalSave)="getNewBusinessId()"
+    ></hubBusinessBusinessLookupTableModal>
+</div>

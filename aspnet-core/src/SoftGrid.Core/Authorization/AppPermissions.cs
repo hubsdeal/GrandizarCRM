@@ -6,6 +6,121 @@
     /// </summary>
     public static class AppPermissions
     {
+        public const string Pages_SubscriptionTypes = "Pages.SubscriptionTypes";
+        public const string Pages_SubscriptionTypes_Create = "Pages.SubscriptionTypes.Create";
+        public const string Pages_SubscriptionTypes_Edit = "Pages.SubscriptionTypes.Edit";
+        public const string Pages_SubscriptionTypes_Delete = "Pages.SubscriptionTypes.Delete";
+
+        public const string Pages_ProductSubscriptionMaps = "Pages.ProductSubscriptionMaps";
+        public const string Pages_ProductSubscriptionMaps_Create = "Pages.ProductSubscriptionMaps.Create";
+        public const string Pages_ProductSubscriptionMaps_Edit = "Pages.ProductSubscriptionMaps.Edit";
+        public const string Pages_ProductSubscriptionMaps_Delete = "Pages.ProductSubscriptionMaps.Delete";
+
+        public const string Pages_SocialMedias = "Pages.SocialMedias";
+        public const string Pages_SocialMedias_Create = "Pages.SocialMedias.Create";
+        public const string Pages_SocialMedias_Edit = "Pages.SocialMedias.Edit";
+        public const string Pages_SocialMedias_Delete = "Pages.SocialMedias.Delete";
+
+        public const string Pages_ProductCustomerStats = "Pages.ProductCustomerStats";
+        public const string Pages_ProductCustomerStats_Create = "Pages.ProductCustomerStats.Create";
+        public const string Pages_ProductCustomerStats_Edit = "Pages.ProductCustomerStats.Edit";
+        public const string Pages_ProductCustomerStats_Delete = "Pages.ProductCustomerStats.Delete";
+
+        public const string Pages_ProductFaqs = "Pages.ProductFaqs";
+        public const string Pages_ProductFaqs_Create = "Pages.ProductFaqs.Create";
+        public const string Pages_ProductFaqs_Edit = "Pages.ProductFaqs.Edit";
+        public const string Pages_ProductFaqs_Delete = "Pages.ProductFaqs.Delete";
+
+        public const string Pages_ProductCustomerQueries = "Pages.ProductCustomerQueries";
+        public const string Pages_ProductCustomerQueries_Create = "Pages.ProductCustomerQueries.Create";
+        public const string Pages_ProductCustomerQueries_Edit = "Pages.ProductCustomerQueries.Edit";
+        public const string Pages_ProductCustomerQueries_Delete = "Pages.ProductCustomerQueries.Delete";
+
+        public const string Pages_ProductPackages = "Pages.ProductPackages";
+        public const string Pages_ProductPackages_Create = "Pages.ProductPackages.Create";
+        public const string Pages_ProductPackages_Edit = "Pages.ProductPackages.Edit";
+        public const string Pages_ProductPackages_Delete = "Pages.ProductPackages.Delete";
+
+        public const string Pages_ProductNotes = "Pages.ProductNotes";
+        public const string Pages_ProductNotes_Create = "Pages.ProductNotes.Create";
+        public const string Pages_ProductNotes_Edit = "Pages.ProductNotes.Edit";
+        public const string Pages_ProductNotes_Delete = "Pages.ProductNotes.Delete";
+
+        public const string Pages_ProductMedias = "Pages.ProductMedias";
+        public const string Pages_ProductMedias_Create = "Pages.ProductMedias.Create";
+        public const string Pages_ProductMedias_Edit = "Pages.ProductMedias.Edit";
+        public const string Pages_ProductMedias_Delete = "Pages.ProductMedias.Delete";
+
+        public const string Pages_ProductCategoryTeams = "Pages.ProductCategoryTeams";
+        public const string Pages_ProductCategoryTeams_Create = "Pages.ProductCategoryTeams.Create";
+        public const string Pages_ProductCategoryTeams_Edit = "Pages.ProductCategoryTeams.Edit";
+        public const string Pages_ProductCategoryTeams_Delete = "Pages.ProductCategoryTeams.Delete";
+
+        public const string Pages_ProductCategoryMaps = "Pages.ProductCategoryMaps";
+        public const string Pages_ProductCategoryMaps_Create = "Pages.ProductCategoryMaps.Create";
+        public const string Pages_ProductCategoryMaps_Edit = "Pages.ProductCategoryMaps.Edit";
+        public const string Pages_ProductCategoryMaps_Delete = "Pages.ProductCategoryMaps.Delete";
+
+        public const string Pages_ProductVariants = "Pages.ProductVariants";
+        public const string Pages_ProductVariants_Create = "Pages.ProductVariants.Create";
+        public const string Pages_ProductVariants_Edit = "Pages.ProductVariants.Edit";
+        public const string Pages_ProductVariants_Delete = "Pages.ProductVariants.Delete";
+
+        public const string Pages_ProductVariantCategories = "Pages.ProductVariantCategories";
+        public const string Pages_ProductVariantCategories_Create = "Pages.ProductVariantCategories.Create";
+        public const string Pages_ProductVariantCategories_Edit = "Pages.ProductVariantCategories.Edit";
+        public const string Pages_ProductVariantCategories_Delete = "Pages.ProductVariantCategories.Delete";
+
+        public const string Pages_HubNavigationMenus = "Pages.HubNavigationMenus";
+        public const string Pages_HubNavigationMenus_Create = "Pages.HubNavigationMenus.Create";
+        public const string Pages_HubNavigationMenus_Edit = "Pages.HubNavigationMenus.Edit";
+        public const string Pages_HubNavigationMenus_Delete = "Pages.HubNavigationMenus.Delete";
+
+        public const string Pages_MasterNavigationMenus = "Pages.MasterNavigationMenus";
+        public const string Pages_MasterNavigationMenus_Create = "Pages.MasterNavigationMenus.Create";
+        public const string Pages_MasterNavigationMenus_Edit = "Pages.MasterNavigationMenus.Edit";
+        public const string Pages_MasterNavigationMenus_Delete = "Pages.MasterNavigationMenus.Delete";
+
+        public const string Pages_HubAccountTeams = "Pages.HubAccountTeams";
+        public const string Pages_HubAccountTeams_Create = "Pages.HubAccountTeams.Create";
+        public const string Pages_HubAccountTeams_Edit = "Pages.HubAccountTeams.Edit";
+        public const string Pages_HubAccountTeams_Delete = "Pages.HubAccountTeams.Delete";
+
+        public const string Pages_HubSalesProjections = "Pages.HubSalesProjections";
+        public const string Pages_HubSalesProjections_Create = "Pages.HubSalesProjections.Create";
+        public const string Pages_HubSalesProjections_Edit = "Pages.HubSalesProjections.Edit";
+        public const string Pages_HubSalesProjections_Delete = "Pages.HubSalesProjections.Delete";
+
+        public const string Pages_HubZipCodeMaps = "Pages.HubZipCodeMaps";
+        public const string Pages_HubZipCodeMaps_Create = "Pages.HubZipCodeMaps.Create";
+        public const string Pages_HubZipCodeMaps_Edit = "Pages.HubZipCodeMaps.Edit";
+        public const string Pages_HubZipCodeMaps_Delete = "Pages.HubZipCodeMaps.Delete";
+
+        public const string Pages_HubContacts = "Pages.HubContacts";
+        public const string Pages_HubContacts_Create = "Pages.HubContacts.Create";
+        public const string Pages_HubContacts_Edit = "Pages.HubContacts.Edit";
+        public const string Pages_HubContacts_Delete = "Pages.HubContacts.Delete";
+
+        public const string Pages_HubBusinesses = "Pages.HubBusinesses";
+        public const string Pages_HubBusinesses_Create = "Pages.HubBusinesses.Create";
+        public const string Pages_HubBusinesses_Edit = "Pages.HubBusinesses.Edit";
+        public const string Pages_HubBusinesses_Delete = "Pages.HubBusinesses.Delete";
+
+        public const string Pages_HubStores = "Pages.HubStores";
+        public const string Pages_HubStores_Create = "Pages.HubStores.Create";
+        public const string Pages_HubStores_Edit = "Pages.HubStores.Edit";
+        public const string Pages_HubStores_Delete = "Pages.HubStores.Delete";
+
+        public const string Pages_HubProducts = "Pages.HubProducts";
+        public const string Pages_HubProducts_Create = "Pages.HubProducts.Create";
+        public const string Pages_HubProducts_Edit = "Pages.HubProducts.Edit";
+        public const string Pages_HubProducts_Delete = "Pages.HubProducts.Delete";
+
+        public const string Pages_HubProductCategories = "Pages.HubProductCategories";
+        public const string Pages_HubProductCategories_Create = "Pages.HubProductCategories.Create";
+        public const string Pages_HubProductCategories_Edit = "Pages.HubProductCategories.Edit";
+        public const string Pages_HubProductCategories_Delete = "Pages.HubProductCategories.Delete";
+
         public const string Pages_LeadReferralRewards = "Pages.LeadReferralRewards";
         public const string Pages_LeadReferralRewards_Create = "Pages.LeadReferralRewards.Create";
         public const string Pages_LeadReferralRewards_Edit = "Pages.LeadReferralRewards.Edit";

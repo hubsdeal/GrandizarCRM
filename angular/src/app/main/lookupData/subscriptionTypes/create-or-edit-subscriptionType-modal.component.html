@@ -1,0 +1,76 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #subscriptionTypeForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="subscriptionType.id">{{ l('EditSubscriptionType') }}</span>
+                        <span *ngIf="!subscriptionType.id">{{ l('CreateNewSubscriptionType') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="SubscriptionType_Name">{{ l('Name') }} *</label>
+                        <input
+                            type="text"
+                            #SubscriptionType_Name="ngModel"
+                            id="SubscriptionType_Name"
+                            class="form-control"
+                            [(ngModel)]="subscriptionType.name"
+                            name="Name"
+                            minlength="1"
+                            maxlength="128"
+                            required
+                        />
+                        <validation-messages [formCtrl]="SubscriptionType_Name"></validation-messages>
+                    </div>
+
+                    <div class="my5">
+                        <label class="form-label" for="SubscriptionType_NumberOfDays">{{ l('NumberOfDays') }}</label>
+                        <input
+                            type="number"
+                            #SubscriptionType_NumberOfDays="ngModel"
+                            id="SubscriptionType_NumberOfDays"
+                            class="form-control"
+                            [(ngModel)]="subscriptionType.numberOfDays"
+                            name="NumberOfDays"
+                        />
+                        <validation-messages [formCtrl]="SubscriptionType_NumberOfDays"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!subscriptionTypeForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

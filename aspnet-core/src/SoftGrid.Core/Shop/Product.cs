@@ -3,6 +3,8 @@ using SoftGrid.LookupData;
 using SoftGrid.LookupData;
 using SoftGrid.LookupData;
 using SoftGrid.LookupData;
+using SoftGrid.CRM;
+using SoftGrid.Shop;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -101,6 +103,16 @@ namespace SoftGrid.Shop
 
         [ForeignKey("RatingLikeId")]
         public RatingLike RatingLikeFk { get; set; }
+
+        public virtual long? ContactId { get; set; }
+
+        [ForeignKey("ContactId")]
+        public Contact ContactFk { get; set; }
+
+        public virtual long? StoreId { get; set; }
+
+        [ForeignKey("StoreId")]
+        public Store StoreFk { get; set; }
 
     }
 }

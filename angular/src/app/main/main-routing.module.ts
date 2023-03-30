@@ -10,6 +10,167 @@ import { MasterDataIndexComponent } from './lookupData/master-data-index/master-
                 children: [
                     
                     {
+                        path: 'lookupData/subscriptionTypes',
+                        loadChildren: () => import('./lookupData/subscriptionTypes/subscriptionType.module').then(m => m.SubscriptionTypeModule),
+                        data: { permission: 'Pages.SubscriptionTypes' }
+                    },
+                
+                    
+                    {
+                        path: 'shop/productSubscriptionMaps',
+                        loadChildren: () => import('./shop/productSubscriptionMaps/productSubscriptionMap.module').then(m => m.ProductSubscriptionMapModule),
+                        data: { permission: 'Pages.ProductSubscriptionMaps' }
+                    },
+                
+                    
+                    {
+                        path: 'lookupData/socialMedias',
+                        loadChildren: () => import('./lookupData/socialMedias/socialMedia.module').then(m => m.SocialMediaModule),
+                        data: { permission: 'Pages.SocialMedias' }
+                    },
+                
+                    
+                    {
+                        path: 'shop/productCustomerStats',
+                        loadChildren: () => import('./shop/productCustomerStats/productCustomerStat.module').then(m => m.ProductCustomerStatModule),
+                        data: { permission: 'Pages.ProductCustomerStats' }
+                    },
+                
+                    
+                    {
+                        path: 'shop/productFaqs',
+                        loadChildren: () => import('./shop/productFaqs/productFaq.module').then(m => m.ProductFaqModule),
+                        data: { permission: 'Pages.ProductFaqs' }
+                    },
+                
+                    
+                    {
+                        path: 'shop/productCustomerQueries',
+                        loadChildren: () => import('./shop/productCustomerQueries/productCustomerQuery.module').then(m => m.ProductCustomerQueryModule),
+                        data: { permission: 'Pages.ProductCustomerQueries' }
+                    },
+                
+                    
+                    {
+                        path: 'shop/productPackages',
+                        loadChildren: () => import('./shop/productPackages/productPackage.module').then(m => m.ProductPackageModule),
+                        data: { permission: 'Pages.ProductPackages' }
+                    },
+                
+                    
+                    {
+                        path: 'shop/productNotes',
+                        loadChildren: () => import('./shop/productNotes/productNote.module').then(m => m.ProductNoteModule),
+                        data: { permission: 'Pages.ProductNotes' }
+                    },
+                
+                    
+                    {
+                        path: 'shop/productMedias',
+                        loadChildren: () => import('./shop/productMedias/productMedia.module').then(m => m.ProductMediaModule),
+                        data: { permission: 'Pages.ProductMedias' }
+                    },
+                
+                    
+                    {
+                        path: 'shop/productCategoryTeams',
+                        loadChildren: () => import('./shop/productCategoryTeams/productCategoryTeam.module').then(m => m.ProductCategoryTeamModule),
+                        data: { permission: 'Pages.ProductCategoryTeams' }
+                    },
+                
+                    
+                    {
+                        path: 'shop/productCategoryMaps',
+                        loadChildren: () => import('./shop/productCategoryMaps/productCategoryMap.module').then(m => m.ProductCategoryMapModule),
+                        data: { permission: 'Pages.ProductCategoryMaps' }
+                    },
+                
+                    
+                    {
+                        path: 'shop/productVariants',
+                        loadChildren: () => import('./shop/productVariants/productVariant.module').then(m => m.ProductVariantModule),
+                        data: { permission: 'Pages.ProductVariants' }
+                    },
+                
+                    
+                    {
+                        path: 'shop/productVariantCategories',
+                        loadChildren: () => import('./shop/productVariantCategories/productVariantCategory.module').then(m => m.ProductVariantCategoryModule),
+                        data: { permission: 'Pages.ProductVariantCategories' }
+                    },
+                
+                    
+                    {
+                        path: 'territory/hubNavigationMenus',
+                        loadChildren: () => import('./territory/hubNavigationMenus/hubNavigationMenu.module').then(m => m.HubNavigationMenuModule),
+                        data: { permission: 'Pages.HubNavigationMenus' }
+                    },
+                
+                    
+                    {
+                        path: 'territory/masterNavigationMenus',
+                        loadChildren: () => import('./territory/masterNavigationMenus/masterNavigationMenu.module').then(m => m.MasterNavigationMenuModule),
+                        data: { permission: 'Pages.MasterNavigationMenus' }
+                    },
+                
+                    
+                    {
+                        path: 'territory/hubAccountTeams',
+                        loadChildren: () => import('./territory/hubAccountTeams/hubAccountTeam.module').then(m => m.HubAccountTeamModule),
+                        data: { permission: 'Pages.HubAccountTeams' }
+                    },
+                
+                    
+                    {
+                        path: 'territory/hubSalesProjections',
+                        loadChildren: () => import('./territory/hubSalesProjections/hubSalesProjection.module').then(m => m.HubSalesProjectionModule),
+                        data: { permission: 'Pages.HubSalesProjections' }
+                    },
+                
+                    
+                    {
+                        path: 'territory/hubZipCodeMaps',
+                        loadChildren: () => import('./territory/hubZipCodeMaps/hubZipCodeMap.module').then(m => m.HubZipCodeMapModule),
+                        data: { permission: 'Pages.HubZipCodeMaps' }
+                    },
+                
+                    
+                    {
+                        path: 'territory/hubContacts',
+                        loadChildren: () => import('./territory/hubContacts/hubContact.module').then(m => m.HubContactModule),
+                        data: { permission: 'Pages.HubContacts' }
+                    },
+                
+                    
+                    {
+                        path: 'territory/hubBusinesses',
+                        loadChildren: () => import('./territory/hubBusinesses/hubBusiness.module').then(m => m.HubBusinessModule),
+                        data: { permission: 'Pages.HubBusinesses' }
+                    },
+                
+                    
+                    {
+                        path: 'territory/hubStores',
+                        loadChildren: () => import('./territory/hubStores/hubStore.module').then(m => m.HubStoreModule),
+                        data: { permission: 'Pages.HubStores' }
+                    },
+                
+                    
+                    {
+                        path: 'territory/hubProducts',
+                        loadChildren: () => import('./territory/hubProducts/hubProduct.module').then(m => m.HubProductModule),
+                        data: { permission: 'Pages.HubProducts' }
+                    },
+                
+                    
+                    {
+                        path: 'territory/hubProductCategories',
+                        loadChildren: () => import('./territory/hubProductCategories/hubProductCategory.module').then(m => m.HubProductCategoryModule),
+                        data: { permission: 'Pages.HubProductCategories' }
+                    },
+                
+                    
+                    {
                         path: 'salesLeadManagement/leadReferralRewards',
                         loadChildren: () => import('./salesLeadManagement/leadReferralRewards/leadReferralReward.module').then(m => m.LeadReferralRewardModule),
                         data: { permission: 'Pages.LeadReferralRewards' }

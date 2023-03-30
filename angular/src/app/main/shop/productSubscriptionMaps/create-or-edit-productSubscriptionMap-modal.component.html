@@ -1,0 +1,160 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #productSubscriptionMapForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="productSubscriptionMap.id">{{ l('EditProductSubscriptionMap') }}</span>
+                        <span *ngIf="!productSubscriptionMap.id">{{ l('CreateNewProductSubscriptionMap') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="ProductName">{{ l('Product') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="ProductName"
+                                name="productName"
+                                [(ngModel)]="productName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectProductModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setProductIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="productSubscriptionMap.productId"
+                        [(ngModel)]="productSubscriptionMap.productId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="SubscriptionTypeName">{{ l('SubscriptionType') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="SubscriptionTypeName"
+                                name="subscriptionTypeName"
+                                [(ngModel)]="subscriptionTypeName"
+                                type="text"
+                                disabled
+                            />
+                            <button
+                                class="btn btn-primary blue"
+                                (click)="openSelectSubscriptionTypeModal()"
+                                type="button"
+                            >
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setSubscriptionTypeIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="productSubscriptionMap.subscriptionTypeId"
+                        [(ngModel)]="productSubscriptionMap.subscriptionTypeId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my5">
+                        <label class="form-label" for="ProductSubscriptionMap_DiscountPercentage">
+                            {{ l('DiscountPercentage') }}
+                        </label>
+                        <input
+                            type="number"
+                            #ProductSubscriptionMap_DiscountPercentage="ngModel"
+                            id="ProductSubscriptionMap_DiscountPercentage"
+                            class="form-control"
+                            [(ngModel)]="productSubscriptionMap.discountPercentage"
+                            name="DiscountPercentage"
+                        />
+                        <validation-messages
+                            [formCtrl]="ProductSubscriptionMap_DiscountPercentage"
+                        ></validation-messages>
+                    </div>
+
+                    <div class="my5">
+                        <label class="form-label" for="ProductSubscriptionMap_DiscountAmount">
+                            {{ l('DiscountAmount') }}
+                        </label>
+                        <input
+                            type="number"
+                            #ProductSubscriptionMap_DiscountAmount="ngModel"
+                            id="ProductSubscriptionMap_DiscountAmount"
+                            class="form-control"
+                            [(ngModel)]="productSubscriptionMap.discountAmount"
+                            name="DiscountAmount"
+                        />
+                        <validation-messages [formCtrl]="ProductSubscriptionMap_DiscountAmount"></validation-messages>
+                    </div>
+
+                    <div class="my5">
+                        <label class="form-label" for="ProductSubscriptionMap_Price">{{ l('Price') }}</label>
+                        <input
+                            type="number"
+                            #ProductSubscriptionMap_Price="ngModel"
+                            id="ProductSubscriptionMap_Price"
+                            class="form-control"
+                            [(ngModel)]="productSubscriptionMap.price"
+                            name="Price"
+                        />
+                        <validation-messages [formCtrl]="ProductSubscriptionMap_Price"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!productSubscriptionMapForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <productSubscriptionMapProductLookupTableModal
+        #productSubscriptionMapProductLookupTableModal
+        (modalSave)="getNewProductId()"
+    ></productSubscriptionMapProductLookupTableModal>
+    <productSubscriptionMapSubscriptionTypeLookupTableModal
+        #productSubscriptionMapSubscriptionTypeLookupTableModal
+        (modalSave)="getNewSubscriptionTypeId()"
+    ></productSubscriptionMapSubscriptionTypeLookupTableModal>
+</div>

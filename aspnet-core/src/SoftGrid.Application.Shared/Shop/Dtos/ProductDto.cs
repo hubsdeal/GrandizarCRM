@@ -69,5 +69,9 @@ namespace SoftGrid.Shop.Dtos
 
         public long? RatingLikeId { get; set; }
 
+        public long? ContactId { get; set; }
+
+        public long? StoreId { get; set; }
+
     }
 }

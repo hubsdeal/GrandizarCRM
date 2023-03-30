@@ -1,0 +1,260 @@
+﻿<div [@routerTransition]>
+    <sub-header [title]="'HubContacts' | localize" [description]="'HubContactsHeaderInfo' | localize">
+        <div role="actions">
+            <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1">
+                <i class="fa fa-file-excel"></i>
+                {{ l('ExportToExcel') }}
+            </button>
+
+            <button
+                *ngIf="isGranted('Pages.HubContacts.Create')"
+                (click)="createHubContact()"
+                class="btn btn-primary blue"
+            >
+                <i class="fa fa-plus"></i>
+                {{ l('CreateNewHubContact') }}
+            </button>
+        </div>
+    </sub-header>
+
+    <div [class]="containerClass">
+        <div class="card card-custom gutter-b">
+            <div class="card-body">
+                <form class="form" autocomplete="off">
+                    <div>
+                        <div class="row align-items-center">
+                            <div class="col-xl-12">
+                                <div class="my-3">
+                                    <div class="input-group mb-3">
+                                        <input
+                                            [(ngModel)]="filterText"
+                                            (ngModelChange)="getHubContacts()"
+                                            name="filterText"
+                                            autoFocus
+                                            type="text"
+                                            class="form-control"
+                                            [placeholder]="l('SearchWithThreeDot')"
+                                        />
+                                        <button class="btn btn-primary" type="submit" (click)="getHubContacts()">
+                                            <i class="flaticon-search-1"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" [hidden]="!advancedFiltersAreShown">
+                            <div class="col-md-12"></div>
+
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="MinDisplayScoreFilter">
+                                        {{ l('MinMax') }} {{ l('DisplayScore') }}
+                                    </label>
+                                    <div class="input-group">
+                                        <input
+                                            type="number"
+                                            class="form-control"
+                                            id="MinDisplayScoreFilter"
+                                            [(ngModel)]="minDisplayScoreFilter"
+                                            placeholder="{{ l('MinValue') }}"
+                                            name="minDisplayScoreFilter"
+                                            (ngModelChange)="getHubContacts()"
+                                        />
+                                        <input
+                                            type="number"
+                                            class="form-control"
+                                            [(ngModel)]="maxDisplayScoreFilter"
+                                            placeholder="{{ l('MaxValue') }}"
+                                            name="maxDisplayScoreFilter"
+                                            (ngModelChange)="getHubContacts()"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="HubNameFilter">
+                                        ({{ l('Hub') }}) {{ l('Name') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="HubNameFilter"
+                                        name="hubNameFilter"
+                                        [(ngModel)]="hubNameFilter"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="ContactFullNameFilter">
+                                        ({{ l('Contact') }}) {{ l('FullName') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="ContactFullNameFilter"
+                                        name="contactFullNameFilter"
+                                        [(ngModel)]="contactFullNameFilter"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-12 mt-5">
+                                <button
+                                    (click)="resetFilters()"
+                                    class="btn btn-secondary btn-sm"
+                                    id="btn-reset-filters"
+                                >
+                                    Reset
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row my-4">
+                            <div class="col-sm-12">
+                                <span
+                                    class="clickable-item text-muted"
+                                    *ngIf="!advancedFiltersAreShown"
+                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown"
+                                >
+                                    <i class="fa fa-angle-down"></i>
+                                    {{ l('ShowAdvancedFilters') }}
+                                </span>
+                                <span
+                                    class="clickable-item text-muted"
+                                    *ngIf="advancedFiltersAreShown"
+                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown"
+                                >
+                                    <i class="fa fa-angle-up"></i>
+                                    {{ l('HideAdvancedFilters') }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="row align-items-center">
+                    <!--<Primeng-Datatable-Start>-->
+                    <div class="primeng-datatable-container col-12" [busyIf]="primengTableHelper.isLoading">
+                        <p-table
+                            #dataTable
+                            (onLazyLoad)="getHubContacts($event)"
+                            [value]="primengTableHelper.records"
+                            rows="{{ primengTableHelper.defaultRecordsCountPerPage }}"
+                            [paginator]="false"
+                            [lazy]="true"
+                            [scrollable]="true"
+                            ScrollWidth="100%"
+                            [responsive]="primengTableHelper.isResponsive"
+                            [resizableColumns]="primengTableHelper.resizableColumns"
+                        >
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th
+                                        style="width: 130px"
+                                        [hidden]="!isGrantedAny('Pages.HubContacts.Edit', 'Pages.HubContacts.Delete')"
+                                    >
+                                        {{ l('Actions') }}
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="hubFk.name">
+                                        {{ l('Name') }}
+                                        <p-sortIcon field="hubName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="contactFk.fullName">
+                                        {{ l('FullName') }}
+                                        <p-sortIcon field="contactFullName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="displayScore">
+                                        {{ l('DisplayScore') }}
+                                        <p-sortIcon field="hubContact.displayScore"></p-sortIcon>
+                                    </th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
+                                <tr>
+                                    <td
+                                        style="width: 130px"
+                                        [hidden]="!isGrantedAny('Pages.HubContacts.Edit', 'Pages.HubContacts.Delete')"
+                                    >
+                                        <div class="btn-group dropdown" dropdown container="body">
+                                            <button class="dropdown-toggle btn btn-sm btn-primary" dropdownToggle>
+                                                <i class="fa fa-cog"></i>
+                                                <span class="caret"></span>
+                                                {{ l('Actions') }}
+                                            </button>
+                                            <ul class="dropdown-menu" *dropdownMenu>
+                                                <li>
+                                                    <a
+                                                        href="javascript:;"
+                                                        class="dropdown-item"
+                                                        (click)="viewHubContactModal.show(record)"
+                                                    >
+                                                        {{ l('View') }}
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a
+                                                        href="javascript:;"
+                                                        *ngIf="permission.isGranted('Pages.HubContacts.Edit')"
+                                                        class="dropdown-item"
+                                                        (click)="createOrEditHubContactModal.show(record.hubContact.id)"
+                                                    >
+                                                        {{ l('Edit') }}
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a
+                                                        class="dropdown-item"
+                                                        href="javascript:;"
+                                                        *ngIf="permission.isGranted('Pages.HubContacts.Delete')"
+                                                        (click)="deleteHubContact(record.hubContact)"
+                                                    >
+                                                        {{ l('Delete') }}
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Name') }}</span>
+                                        {{ record.hubName }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('FullName') }}</span>
+                                        {{ record.contactFullName }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('DisplayScore') }}</span>
+                                        {{ record.hubContact.displayScore }}
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                        <div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
+                            {{ l('NoData') }}
+                        </div>
+                        <div class="primeng-paging-container">
+                            <p-paginator
+                                [rows]="primengTableHelper.defaultRecordsCountPerPage"
+                                #paginator
+                                (onPageChange)="getHubContacts($event)"
+                                [totalRecords]="primengTableHelper.totalRecordsCount"
+                                [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
+                                [showCurrentPageReport]="true"
+                                [currentPageReportTemplate]="
+                                    'TotalRecordsCount' | localize : primengTableHelper.totalRecordsCount
+                                "
+                            ></p-paginator>
+                        </div>
+                    </div>
+                    <!--<Primeng-Datatable-End>-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <createOrEditHubContactModal
+        #createOrEditHubContactModal
+        (modalSave)="getHubContacts()"
+    ></createOrEditHubContactModal>
+    <viewHubContactModal #viewHubContactModal></viewHubContactModal>
+</div>

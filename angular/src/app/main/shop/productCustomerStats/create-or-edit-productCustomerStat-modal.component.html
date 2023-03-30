@@ -1,0 +1,328 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #productCustomerStatForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="productCustomerStat.id">{{ l('EditProductCustomerStat') }}</span>
+                        <span *ngIf="!productCustomerStat.id">{{ l('CreateNewProductCustomerStat') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="ProductName">{{ l('Product') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="ProductName"
+                                name="productName"
+                                [(ngModel)]="productName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectProductModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setProductIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="productCustomerStat.productId"
+                        [(ngModel)]="productCustomerStat.productId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="ContactFullName">{{ l('Contact') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="ContactFullName"
+                                name="contactFullName"
+                                [(ngModel)]="contactFullName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectContactModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setContactIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="productCustomerStat.contactId"
+                        [(ngModel)]="productCustomerStat.contactId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="StoreName">{{ l('Store') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="StoreName"
+                                name="storeName"
+                                [(ngModel)]="storeName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectStoreModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setStoreIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="productCustomerStat.storeId"
+                        [(ngModel)]="productCustomerStat.storeId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="HubName">{{ l('Hub') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="HubName"
+                                name="hubName"
+                                [(ngModel)]="hubName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectHubModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setHubIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="productCustomerStat.hubId"
+                        [(ngModel)]="productCustomerStat.hubId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="SocialMediaName">{{ l('SocialMedia') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="SocialMediaName"
+                                name="socialMediaName"
+                                [(ngModel)]="socialMediaName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectSocialMediaModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setSocialMediaIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="productCustomerStat.socialMediaId"
+                        [(ngModel)]="productCustomerStat.socialMediaId"
+                        type="text"
+                        hidden
+                    />
+
+                    <br />
+                    <label class="form-check form-check-custom form-check-solid">
+                        <input
+                            id="ProductCustomerStat_Clicked"
+                            #ProductCustomerStat_Clicked="ngModel"
+                            name="Clicked"
+                            [(ngModel)]="productCustomerStat.clicked"
+                            type="checkbox"
+                            class="form-check-input"
+                        />
+                        <span class="form-check-label">
+                            {{ l('Clicked') }}
+                        </span>
+                    </label>
+                    <validation-messages [formCtrl]="ProductCustomerStat_Clicked"></validation-messages>
+
+                    <br />
+                    <label class="form-check form-check-custom form-check-solid">
+                        <input
+                            id="ProductCustomerStat_WishedOrFavorite"
+                            #ProductCustomerStat_WishedOrFavorite="ngModel"
+                            name="WishedOrFavorite"
+                            [(ngModel)]="productCustomerStat.wishedOrFavorite"
+                            type="checkbox"
+                            class="form-check-input"
+                        />
+                        <span class="form-check-label">
+                            {{ l('WishedOrFavorite') }}
+                        </span>
+                    </label>
+                    <validation-messages [formCtrl]="ProductCustomerStat_WishedOrFavorite"></validation-messages>
+
+                    <br />
+                    <label class="form-check form-check-custom form-check-solid">
+                        <input
+                            id="ProductCustomerStat_Purchased"
+                            #ProductCustomerStat_Purchased="ngModel"
+                            name="Purchased"
+                            [(ngModel)]="productCustomerStat.purchased"
+                            type="checkbox"
+                            class="form-check-input"
+                        />
+                        <span class="form-check-label">
+                            {{ l('Purchased') }}
+                        </span>
+                    </label>
+                    <validation-messages [formCtrl]="ProductCustomerStat_Purchased"></validation-messages>
+
+                    <div class="my5">
+                        <label class="form-label" for="ProductCustomerStat_PurchasedQuantity">
+                            {{ l('PurchasedQuantity') }}
+                        </label>
+                        <input
+                            type="number"
+                            #ProductCustomerStat_PurchasedQuantity="ngModel"
+                            id="ProductCustomerStat_PurchasedQuantity"
+                            class="form-control"
+                            [(ngModel)]="productCustomerStat.purchasedQuantity"
+                            name="PurchasedQuantity"
+                        />
+                        <validation-messages [formCtrl]="ProductCustomerStat_PurchasedQuantity"></validation-messages>
+                    </div>
+
+                    <br />
+                    <label class="form-check form-check-custom form-check-solid">
+                        <input
+                            id="ProductCustomerStat_Shared"
+                            #ProductCustomerStat_Shared="ngModel"
+                            name="Shared"
+                            [(ngModel)]="productCustomerStat.shared"
+                            type="checkbox"
+                            class="form-check-input"
+                        />
+                        <span class="form-check-label">
+                            {{ l('Shared') }}
+                        </span>
+                    </label>
+                    <validation-messages [formCtrl]="ProductCustomerStat_Shared"></validation-messages>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ProductCustomerStat_PageLink">{{ l('PageLink') }}</label>
+                        <input
+                            type="text"
+                            #ProductCustomerStat_PageLink="ngModel"
+                            id="ProductCustomerStat_PageLink"
+                            class="form-control"
+                            [(ngModel)]="productCustomerStat.pageLink"
+                            name="PageLink"
+                        />
+                        <validation-messages [formCtrl]="ProductCustomerStat_PageLink"></validation-messages>
+                    </div>
+
+                    <br />
+                    <label class="form-check form-check-custom form-check-solid">
+                        <input
+                            id="ProductCustomerStat_AppOrWeb"
+                            #ProductCustomerStat_AppOrWeb="ngModel"
+                            name="AppOrWeb"
+                            [(ngModel)]="productCustomerStat.appOrWeb"
+                            type="checkbox"
+                            class="form-check-input"
+                        />
+                        <span class="form-check-label">
+                            {{ l('AppOrWeb') }}
+                        </span>
+                    </label>
+                    <validation-messages [formCtrl]="ProductCustomerStat_AppOrWeb"></validation-messages>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ProductCustomerStat_QuitFromLink">{{ l('QuitFromLink') }}</label>
+                        <input
+                            type="text"
+                            #ProductCustomerStat_QuitFromLink="ngModel"
+                            id="ProductCustomerStat_QuitFromLink"
+                            class="form-control"
+                            [(ngModel)]="productCustomerStat.quitFromLink"
+                            name="QuitFromLink"
+                        />
+                        <validation-messages [formCtrl]="ProductCustomerStat_QuitFromLink"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!productCustomerStatForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <productCustomerStatProductLookupTableModal
+        #productCustomerStatProductLookupTableModal
+        (modalSave)="getNewProductId()"
+    ></productCustomerStatProductLookupTableModal>
+    <productCustomerStatContactLookupTableModal
+        #productCustomerStatContactLookupTableModal
+        (modalSave)="getNewContactId()"
+    ></productCustomerStatContactLookupTableModal>
+    <productCustomerStatStoreLookupTableModal
+        #productCustomerStatStoreLookupTableModal
+        (modalSave)="getNewStoreId()"
+    ></productCustomerStatStoreLookupTableModal>
+    <productCustomerStatHubLookupTableModal
+        #productCustomerStatHubLookupTableModal
+        (modalSave)="getNewHubId()"
+    ></productCustomerStatHubLookupTableModal>
+    <productCustomerStatSocialMediaLookupTableModal
+        #productCustomerStatSocialMediaLookupTableModal
+        (modalSave)="getNewSocialMediaId()"
+    ></productCustomerStatSocialMediaLookupTableModal>
+</div>
