@@ -409,3 +409,7 @@ bs-days-calendar-view {
     background-size: contain !important;
     background-position: center;
 }
+
+.height_fluid{
+    height: calc(100% - 20px) !important;
+}

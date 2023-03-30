@@ -36,7 +36,6 @@ export class HubZipCodeMapsComponent extends AppComponentBase {
     cityNameFilter = '';
     zipCodeFilter = '';
     hubNameFilter = '';
-    cityNameFilter = '';
     zipCodeNameFilter = '';
 
     constructor(
@@ -67,7 +66,6 @@ export class HubZipCodeMapsComponent extends AppComponentBase {
                 this.cityNameFilter,
                 this.zipCodeFilter,
                 this.hubNameFilter,
-                this.cityNameFilter,
                 this.zipCodeNameFilter,
                 this.primengTableHelper.getSorting(this.dataTable),
                 this.primengTableHelper.getSkipCount(this.paginator, event),
@@ -106,7 +104,6 @@ export class HubZipCodeMapsComponent extends AppComponentBase {
                 this.cityNameFilter,
                 this.zipCodeFilter,
                 this.hubNameFilter,
-                this.cityNameFilter,
                 this.zipCodeNameFilter
             )
             .subscribe((result) => {
