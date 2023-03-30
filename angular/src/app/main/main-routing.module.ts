@@ -1,5 +1,6 @@
 ﻿import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { MasterDataIndexComponent } from './lookupData/master-data-index/master-data-index.component';
 
 @NgModule({
     imports: [
@@ -522,6 +523,10 @@ import { RouterModule } from '@angular/router';
                         path: 'dashboard',
                         loadChildren: () => import('./dashboard/dashboard.module').then((m) => m.DashboardModule),
                         data: { permission: 'Pages.Tenant.Dashboard' },
+                    },
+                    {
+                        path: 'lookupData/masterDataIndex',
+                        component: MasterDataIndexComponent,
                     },
                     { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
                     { path: '**', redirectTo: 'dashboard' },
