@@ -11,8 +11,5 @@ namespace SoftGrid.LookupData.Dtos
         [StringLength(MembershipTypeConsts.MaxNameLength, MinimumLength = MembershipTypeConsts.MinNameLength)]
         public string Name { get; set; }
 
-        [StringLength(MembershipTypeConsts.MaxDescriptionLength, MinimumLength = MembershipTypeConsts.MinDescriptionLength)]
-        public string Description { get; set; }
-
     }
 }

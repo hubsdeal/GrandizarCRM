@@ -1,0 +1,78 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span>{{ l('Details') }}</span>
+                </h4>
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    (click)="close()"
+                    aria-label="Close"
+                    [disabled]="saving"
+                ></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('FlashSalePrice') }} :</h6>
+                        {{ item.productFlashSaleProductMap.flashSalePrice }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('DiscountPercentage') }} :</h6>
+                        {{ item.productFlashSaleProductMap.discountPercentage }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('DiscountAmount') }} :</h6>
+                        {{ item.productFlashSaleProductMap.discountAmount }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('EndDate') }} :</h6>
+                        {{ item.productFlashSaleProductMap.endDate | luxonFormat : 'yyyy-LL-dd HH:mm:ss' }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('EndTime') }} :</h6>
+                        {{ item.productFlashSaleProductMap.endTime }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('StartDate') }} :</h6>
+                        {{ item.productFlashSaleProductMap.startDate | luxonFormat : 'yyyy-LL-dd HH:mm:ss' }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('StartTime') }} :</h6>
+                        {{ item.productFlashSaleProductMap.startTime }}
+                    </div>
+
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('Product') }}) {{ l('Name') }} :</h6>
+                        {{ item.productName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('Store') }}) {{ l('Name') }} :</h6>
+                        {{ item.storeName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('MembershipType') }}) {{ l('Name') }} :</h6>
+                        {{ item.membershipTypeName }}
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button [disabled]="saving" type="button" class="btn btn-primary blue" (click)="close()">
+                    {{ l('Close') }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

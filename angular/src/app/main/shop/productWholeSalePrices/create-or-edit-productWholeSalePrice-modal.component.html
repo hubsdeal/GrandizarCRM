@@ -1,0 +1,262 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #productWholeSalePriceForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="productWholeSalePrice.id">{{ l('EditProductWholeSalePrice') }}</span>
+                        <span *ngIf="!productWholeSalePrice.id">{{ l('CreateNewProductWholeSalePrice') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="ProductName">{{ l('Product') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="ProductName"
+                                name="productName"
+                                [(ngModel)]="productName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectProductModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setProductIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="productWholeSalePrice.productId"
+                        [(ngModel)]="productWholeSalePrice.productId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="ProductWholeSaleQuantityTypeName">
+                            {{ l('ProductWholeSaleQuantityType') }}
+                        </label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="ProductWholeSaleQuantityTypeName"
+                                name="productWholeSaleQuantityTypeName"
+                                [(ngModel)]="productWholeSaleQuantityTypeName"
+                                type="text"
+                                disabled
+                            />
+                            <button
+                                class="btn btn-primary blue"
+                                (click)="openSelectProductWholeSaleQuantityTypeModal()"
+                                type="button"
+                            >
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button
+                                class="btn btn-danger btn-icon"
+                                type="button"
+                                (click)="setProductWholeSaleQuantityTypeIdNull()"
+                            >
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="productWholeSalePrice.productWholeSaleQuantityTypeId"
+                        [(ngModel)]="productWholeSalePrice.productWholeSaleQuantityTypeId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="MeasurementUnitName">{{ l('MeasurementUnit') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="MeasurementUnitName"
+                                name="measurementUnitName"
+                                [(ngModel)]="measurementUnitName"
+                                type="text"
+                                disabled
+                            />
+                            <button
+                                class="btn btn-primary blue"
+                                (click)="openSelectMeasurementUnitModal()"
+                                type="button"
+                            >
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setMeasurementUnitIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="productWholeSalePrice.measurementUnitId"
+                        [(ngModel)]="productWholeSalePrice.measurementUnitId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="CurrencyName">{{ l('Currency') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="CurrencyName"
+                                name="currencyName"
+                                [(ngModel)]="currencyName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectCurrencyModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setCurrencyIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="productWholeSalePrice.currencyId"
+                        [(ngModel)]="productWholeSalePrice.currencyId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my5">
+                        <label class="form-label" for="ProductWholeSalePrice_Price">{{ l('Price') }}</label>
+                        <input
+                            type="number"
+                            #ProductWholeSalePrice_Price="ngModel"
+                            id="ProductWholeSalePrice_Price"
+                            class="form-control"
+                            [(ngModel)]="productWholeSalePrice.price"
+                            name="Price"
+                        />
+                        <validation-messages [formCtrl]="ProductWholeSalePrice_Price"></validation-messages>
+                    </div>
+
+                    <div class="my5">
+                        <label class="form-label" for="ProductWholeSalePrice_ExactQuantity">
+                            {{ l('ExactQuantity') }}
+                        </label>
+                        <input
+                            type="number"
+                            #ProductWholeSalePrice_ExactQuantity="ngModel"
+                            id="ProductWholeSalePrice_ExactQuantity"
+                            class="form-control"
+                            [(ngModel)]="productWholeSalePrice.exactQuantity"
+                            name="ExactQuantity"
+                        />
+                        <validation-messages [formCtrl]="ProductWholeSalePrice_ExactQuantity"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ProductWholeSalePrice_PackageInfo">{{ l('PackageInfo') }}</label>
+                        <input
+                            type="text"
+                            #ProductWholeSalePrice_PackageInfo="ngModel"
+                            id="ProductWholeSalePrice_PackageInfo"
+                            class="form-control"
+                            [(ngModel)]="productWholeSalePrice.packageInfo"
+                            name="PackageInfo"
+                        />
+                        <validation-messages [formCtrl]="ProductWholeSalePrice_PackageInfo"></validation-messages>
+                    </div>
+
+                    <div class="my5">
+                        <label class="form-label" for="ProductWholeSalePrice_PackageQuantity">
+                            {{ l('PackageQuantity') }}
+                        </label>
+                        <input
+                            type="number"
+                            #ProductWholeSalePrice_PackageQuantity="ngModel"
+                            id="ProductWholeSalePrice_PackageQuantity"
+                            class="form-control"
+                            [(ngModel)]="productWholeSalePrice.packageQuantity"
+                            name="PackageQuantity"
+                        />
+                        <validation-messages [formCtrl]="ProductWholeSalePrice_PackageQuantity"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ProductWholeSalePrice_WholeSaleSkuId">
+                            {{ l('WholeSaleSkuId') }}
+                        </label>
+                        <input
+                            type="text"
+                            #ProductWholeSalePrice_WholeSaleSkuId="ngModel"
+                            id="ProductWholeSalePrice_WholeSaleSkuId"
+                            class="form-control"
+                            [(ngModel)]="productWholeSalePrice.wholeSaleSkuId"
+                            name="WholeSaleSkuId"
+                            minlength="1"
+                            maxlength="128"
+                        />
+                        <validation-messages [formCtrl]="ProductWholeSalePrice_WholeSaleSkuId"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!productWholeSalePriceForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <productWholeSalePriceProductLookupTableModal
+        #productWholeSalePriceProductLookupTableModal
+        (modalSave)="getNewProductId()"
+    ></productWholeSalePriceProductLookupTableModal>
+    <productWholeSalePriceProductWholeSaleQuantityTypeLookupTableModal
+        #productWholeSalePriceProductWholeSaleQuantityTypeLookupTableModal
+        (modalSave)="getNewProductWholeSaleQuantityTypeId()"
+    ></productWholeSalePriceProductWholeSaleQuantityTypeLookupTableModal>
+    <productWholeSalePriceMeasurementUnitLookupTableModal
+        #productWholeSalePriceMeasurementUnitLookupTableModal
+        (modalSave)="getNewMeasurementUnitId()"
+    ></productWholeSalePriceMeasurementUnitLookupTableModal>
+    <productWholeSalePriceCurrencyLookupTableModal
+        #productWholeSalePriceCurrencyLookupTableModal
+        (modalSave)="getNewCurrencyId()"
+    ></productWholeSalePriceCurrencyLookupTableModal>
+</div>

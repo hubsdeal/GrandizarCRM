@@ -1,0 +1,75 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span>{{ l('Details') }}</span>
+                </h4>
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    (click)="close()"
+                    aria-label="Close"
+                    [disabled]="saving"
+                ></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('ReviewInfo') }} :</h6>
+                        {{ item.productReview.reviewInfo }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('PostDate') }} :</h6>
+                        {{ item.productReview.postDate | luxonFormat : 'yyyy-LL-dd HH:mm:ss' }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Publish') }} :</h6>
+                        <div *ngIf="item.productReview.publish" class="text-left">
+                            <i class="fa fa-check-circle text-success" title="True"></i>
+                        </div>
+                        <div *ngIf="!item.productReview.publish" class="text-left">
+                            <i class="fa fa-times-circle" title="False"></i>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('PostTime') }} :</h6>
+                        {{ item.productReview.postTime }}
+                    </div>
+
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('Contact') }}) {{ l('FullName') }} :</h6>
+                        {{ item.contactFullName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('Product') }}) {{ l('Name') }} :</h6>
+                        {{ item.productName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('Store') }}) {{ l('Name') }} :</h6>
+                        {{ item.storeName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('RatingLike') }}) {{ l('Name') }} :</h6>
+                        {{ item.ratingLikeName }}
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button [disabled]="saving" type="button" class="btn btn-primary blue" (click)="close()">
+                    {{ l('Close') }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

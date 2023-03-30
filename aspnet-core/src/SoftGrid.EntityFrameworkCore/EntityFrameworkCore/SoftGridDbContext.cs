@@ -23,6 +23,36 @@ namespace SoftGrid.EntityFrameworkCore
 {
     public class SoftGridDbContext : AbpZeroDbContext<Tenant, Role, User, SoftGridDbContext>, IAbpPersistedGrantDbContext
     {
+        public virtual DbSet<ProductWholeSalePrice> ProductWholeSalePrices { get; set; }
+
+        public virtual DbSet<ProductWholeSaleQuantityType> ProductWholeSaleQuantityTypes { get; set; }
+
+        public virtual DbSet<ProductFlashSaleProductMap> ProductFlashSaleProductMaps { get; set; }
+
+        public virtual DbSet<ProductAndGiftCardMap> ProductAndGiftCardMaps { get; set; }
+
+        public virtual DbSet<ProductCategoryVariantMap> ProductCategoryVariantMaps { get; set; }
+
+        public virtual DbSet<ProductByVariant> ProductByVariants { get; set; }
+
+        public virtual DbSet<ProductOwnerPublicContactInfo> ProductOwnerPublicContactInfos { get; set; }
+
+        public virtual DbSet<ProductReviewFeedback> ProductReviewFeedbacks { get; set; }
+
+        public virtual DbSet<ProductReview> ProductReviews { get; set; }
+
+        public virtual DbSet<ProductReturnInfo> ProductReturnInfos { get; set; }
+
+        public virtual DbSet<ReturnStatus> ReturnStatuses { get; set; }
+
+        public virtual DbSet<ReturnType> ReturnTypes { get; set; }
+
+        public virtual DbSet<ProductUpsellRelatedProduct> ProductUpsellRelatedProducts { get; set; }
+
+        public virtual DbSet<ProductCrossSellProduct> ProductCrossSellProducts { get; set; }
+
+        public virtual DbSet<ProductAccountTeam> ProductAccountTeams { get; set; }
+
         public virtual DbSet<SubscriptionType> SubscriptionTypes { get; set; }
 
         public virtual DbSet<ProductSubscriptionMap> ProductSubscriptionMaps { get; set; }
@@ -247,10 +277,78 @@ namespace SoftGrid.EntityFrameworkCore
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<ProductSubscriptionMap>(p =>
+            modelBuilder.Entity<ProductWholeSalePrice>(p =>
             {
                 p.HasIndex(e => new { e.TenantId });
             });
+            modelBuilder.Entity<ProductWholeSaleQuantityType>(p =>
+                       {
+                           p.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<ProductFlashSaleProductMap>(p =>
+                       {
+                           p.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<MembershipType>(m =>
+                       {
+                           m.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<ProductFlashSaleProductMap>(p =>
+                       {
+                           p.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<ProductAndGiftCardMap>(p =>
+                       {
+                           p.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<ProductCategoryVariantMap>(p =>
+                       {
+                           p.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<ProductByVariant>(p =>
+                       {
+                           p.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<ProductOwnerPublicContactInfo>(p =>
+                       {
+                           p.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<ProductReviewFeedback>(p =>
+                       {
+                           p.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<ProductReview>(p =>
+                       {
+                           p.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<ProductReturnInfo>(p =>
+                       {
+                           p.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<ReturnStatus>(r =>
+                       {
+                           r.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<ReturnType>(r =>
+                       {
+                           r.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<ProductUpsellRelatedProduct>(p =>
+                       {
+                           p.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<ProductCrossSellProduct>(p =>
+                       {
+                           p.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<ProductAccountTeam>(p =>
+                       {
+                           p.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<ProductSubscriptionMap>(p =>
+                       {
+                           p.HasIndex(e => new { e.TenantId });
+                       });
             modelBuilder.Entity<SubscriptionType>(s =>
                        {
                            s.HasIndex(e => new { e.TenantId });

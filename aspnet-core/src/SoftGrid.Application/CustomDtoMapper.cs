@@ -62,6 +62,36 @@ namespace SoftGrid
     {
         public static void CreateMappings(IMapperConfigurationExpression configuration)
         {
+            configuration.CreateMap<CreateOrEditProductWholeSalePriceDto, ProductWholeSalePrice>().ReverseMap();
+            configuration.CreateMap<ProductWholeSalePriceDto, ProductWholeSalePrice>().ReverseMap();
+            configuration.CreateMap<CreateOrEditProductWholeSaleQuantityTypeDto, ProductWholeSaleQuantityType>().ReverseMap();
+            configuration.CreateMap<ProductWholeSaleQuantityTypeDto, ProductWholeSaleQuantityType>().ReverseMap();
+            configuration.CreateMap<CreateOrEditProductFlashSaleProductMapDto, ProductFlashSaleProductMap>().ReverseMap();
+            configuration.CreateMap<ProductFlashSaleProductMapDto, ProductFlashSaleProductMap>().ReverseMap();
+            configuration.CreateMap<CreateOrEditProductAndGiftCardMapDto, ProductAndGiftCardMap>().ReverseMap();
+            configuration.CreateMap<ProductAndGiftCardMapDto, ProductAndGiftCardMap>().ReverseMap();
+            configuration.CreateMap<CreateOrEditProductCategoryVariantMapDto, ProductCategoryVariantMap>().ReverseMap();
+            configuration.CreateMap<ProductCategoryVariantMapDto, ProductCategoryVariantMap>().ReverseMap();
+            configuration.CreateMap<CreateOrEditProductByVariantDto, ProductByVariant>().ReverseMap();
+            configuration.CreateMap<ProductByVariantDto, ProductByVariant>().ReverseMap();
+            configuration.CreateMap<CreateOrEditProductOwnerPublicContactInfoDto, ProductOwnerPublicContactInfo>().ReverseMap();
+            configuration.CreateMap<ProductOwnerPublicContactInfoDto, ProductOwnerPublicContactInfo>().ReverseMap();
+            configuration.CreateMap<CreateOrEditProductReviewFeedbackDto, ProductReviewFeedback>().ReverseMap();
+            configuration.CreateMap<ProductReviewFeedbackDto, ProductReviewFeedback>().ReverseMap();
+            configuration.CreateMap<CreateOrEditProductReviewDto, ProductReview>().ReverseMap();
+            configuration.CreateMap<ProductReviewDto, ProductReview>().ReverseMap();
+            configuration.CreateMap<CreateOrEditProductReturnInfoDto, ProductReturnInfo>().ReverseMap();
+            configuration.CreateMap<ProductReturnInfoDto, ProductReturnInfo>().ReverseMap();
+            configuration.CreateMap<CreateOrEditReturnStatusDto, ReturnStatus>().ReverseMap();
+            configuration.CreateMap<ReturnStatusDto, ReturnStatus>().ReverseMap();
+            configuration.CreateMap<CreateOrEditReturnTypeDto, ReturnType>().ReverseMap();
+            configuration.CreateMap<ReturnTypeDto, ReturnType>().ReverseMap();
+            configuration.CreateMap<CreateOrEditProductUpsellRelatedProductDto, ProductUpsellRelatedProduct>().ReverseMap();
+            configuration.CreateMap<ProductUpsellRelatedProductDto, ProductUpsellRelatedProduct>().ReverseMap();
+            configuration.CreateMap<CreateOrEditProductCrossSellProductDto, ProductCrossSellProduct>().ReverseMap();
+            configuration.CreateMap<ProductCrossSellProductDto, ProductCrossSellProduct>().ReverseMap();
+            configuration.CreateMap<CreateOrEditProductAccountTeamDto, ProductAccountTeam>().ReverseMap();
+            configuration.CreateMap<ProductAccountTeamDto, ProductAccountTeam>().ReverseMap();
             configuration.CreateMap<CreateOrEditSubscriptionTypeDto, SubscriptionType>().ReverseMap();
             configuration.CreateMap<SubscriptionTypeDto, SubscriptionType>().ReverseMap();
             configuration.CreateMap<CreateOrEditProductSubscriptionMapDto, ProductSubscriptionMap>().ReverseMap();

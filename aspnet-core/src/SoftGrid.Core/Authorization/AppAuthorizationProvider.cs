@@ -30,6 +30,81 @@ namespace SoftGrid.Authorization
 
             var pages = context.GetPermissionOrNull(AppPermissions.Pages) ?? context.CreatePermission(AppPermissions.Pages, L("Pages"));
 
+            var productWholeSalePrices = pages.CreateChildPermission(AppPermissions.Pages_ProductWholeSalePrices, L("ProductWholeSalePrices"));
+            productWholeSalePrices.CreateChildPermission(AppPermissions.Pages_ProductWholeSalePrices_Create, L("CreateNewProductWholeSalePrice"));
+            productWholeSalePrices.CreateChildPermission(AppPermissions.Pages_ProductWholeSalePrices_Edit, L("EditProductWholeSalePrice"));
+            productWholeSalePrices.CreateChildPermission(AppPermissions.Pages_ProductWholeSalePrices_Delete, L("DeleteProductWholeSalePrice"));
+
+            var productWholeSaleQuantityTypes = pages.CreateChildPermission(AppPermissions.Pages_ProductWholeSaleQuantityTypes, L("ProductWholeSaleQuantityTypes"));
+            productWholeSaleQuantityTypes.CreateChildPermission(AppPermissions.Pages_ProductWholeSaleQuantityTypes_Create, L("CreateNewProductWholeSaleQuantityType"));
+            productWholeSaleQuantityTypes.CreateChildPermission(AppPermissions.Pages_ProductWholeSaleQuantityTypes_Edit, L("EditProductWholeSaleQuantityType"));
+            productWholeSaleQuantityTypes.CreateChildPermission(AppPermissions.Pages_ProductWholeSaleQuantityTypes_Delete, L("DeleteProductWholeSaleQuantityType"));
+
+            var productFlashSaleProductMaps = pages.CreateChildPermission(AppPermissions.Pages_ProductFlashSaleProductMaps, L("ProductFlashSaleProductMaps"));
+            productFlashSaleProductMaps.CreateChildPermission(AppPermissions.Pages_ProductFlashSaleProductMaps_Create, L("CreateNewProductFlashSaleProductMap"));
+            productFlashSaleProductMaps.CreateChildPermission(AppPermissions.Pages_ProductFlashSaleProductMaps_Edit, L("EditProductFlashSaleProductMap"));
+            productFlashSaleProductMaps.CreateChildPermission(AppPermissions.Pages_ProductFlashSaleProductMaps_Delete, L("DeleteProductFlashSaleProductMap"));
+
+            var productAndGiftCardMaps = pages.CreateChildPermission(AppPermissions.Pages_ProductAndGiftCardMaps, L("ProductAndGiftCardMaps"));
+            productAndGiftCardMaps.CreateChildPermission(AppPermissions.Pages_ProductAndGiftCardMaps_Create, L("CreateNewProductAndGiftCardMap"));
+            productAndGiftCardMaps.CreateChildPermission(AppPermissions.Pages_ProductAndGiftCardMaps_Edit, L("EditProductAndGiftCardMap"));
+            productAndGiftCardMaps.CreateChildPermission(AppPermissions.Pages_ProductAndGiftCardMaps_Delete, L("DeleteProductAndGiftCardMap"));
+
+            var productCategoryVariantMaps = pages.CreateChildPermission(AppPermissions.Pages_ProductCategoryVariantMaps, L("ProductCategoryVariantMaps"));
+            productCategoryVariantMaps.CreateChildPermission(AppPermissions.Pages_ProductCategoryVariantMaps_Create, L("CreateNewProductCategoryVariantMap"));
+            productCategoryVariantMaps.CreateChildPermission(AppPermissions.Pages_ProductCategoryVariantMaps_Edit, L("EditProductCategoryVariantMap"));
+            productCategoryVariantMaps.CreateChildPermission(AppPermissions.Pages_ProductCategoryVariantMaps_Delete, L("DeleteProductCategoryVariantMap"));
+
+            var productByVariants = pages.CreateChildPermission(AppPermissions.Pages_ProductByVariants, L("ProductByVariants"));
+            productByVariants.CreateChildPermission(AppPermissions.Pages_ProductByVariants_Create, L("CreateNewProductByVariant"));
+            productByVariants.CreateChildPermission(AppPermissions.Pages_ProductByVariants_Edit, L("EditProductByVariant"));
+            productByVariants.CreateChildPermission(AppPermissions.Pages_ProductByVariants_Delete, L("DeleteProductByVariant"));
+
+            var productOwnerPublicContactInfos = pages.CreateChildPermission(AppPermissions.Pages_ProductOwnerPublicContactInfos, L("ProductOwnerPublicContactInfos"));
+            productOwnerPublicContactInfos.CreateChildPermission(AppPermissions.Pages_ProductOwnerPublicContactInfos_Create, L("CreateNewProductOwnerPublicContactInfo"));
+            productOwnerPublicContactInfos.CreateChildPermission(AppPermissions.Pages_ProductOwnerPublicContactInfos_Edit, L("EditProductOwnerPublicContactInfo"));
+            productOwnerPublicContactInfos.CreateChildPermission(AppPermissions.Pages_ProductOwnerPublicContactInfos_Delete, L("DeleteProductOwnerPublicContactInfo"));
+
+            var productReviewFeedbacks = pages.CreateChildPermission(AppPermissions.Pages_ProductReviewFeedbacks, L("ProductReviewFeedbacks"));
+            productReviewFeedbacks.CreateChildPermission(AppPermissions.Pages_ProductReviewFeedbacks_Create, L("CreateNewProductReviewFeedback"));
+            productReviewFeedbacks.CreateChildPermission(AppPermissions.Pages_ProductReviewFeedbacks_Edit, L("EditProductReviewFeedback"));
+            productReviewFeedbacks.CreateChildPermission(AppPermissions.Pages_ProductReviewFeedbacks_Delete, L("DeleteProductReviewFeedback"));
+
+            var productReviews = pages.CreateChildPermission(AppPermissions.Pages_ProductReviews, L("ProductReviews"));
+            productReviews.CreateChildPermission(AppPermissions.Pages_ProductReviews_Create, L("CreateNewProductReview"));
+            productReviews.CreateChildPermission(AppPermissions.Pages_ProductReviews_Edit, L("EditProductReview"));
+            productReviews.CreateChildPermission(AppPermissions.Pages_ProductReviews_Delete, L("DeleteProductReview"));
+
+            var productReturnInfos = pages.CreateChildPermission(AppPermissions.Pages_ProductReturnInfos, L("ProductReturnInfos"));
+            productReturnInfos.CreateChildPermission(AppPermissions.Pages_ProductReturnInfos_Create, L("CreateNewProductReturnInfo"));
+            productReturnInfos.CreateChildPermission(AppPermissions.Pages_ProductReturnInfos_Edit, L("EditProductReturnInfo"));
+            productReturnInfos.CreateChildPermission(AppPermissions.Pages_ProductReturnInfos_Delete, L("DeleteProductReturnInfo"));
+
+            var returnStatuses = pages.CreateChildPermission(AppPermissions.Pages_ReturnStatuses, L("ReturnStatuses"));
+            returnStatuses.CreateChildPermission(AppPermissions.Pages_ReturnStatuses_Create, L("CreateNewReturnStatus"));
+            returnStatuses.CreateChildPermission(AppPermissions.Pages_ReturnStatuses_Edit, L("EditReturnStatus"));
+            returnStatuses.CreateChildPermission(AppPermissions.Pages_ReturnStatuses_Delete, L("DeleteReturnStatus"));
+
+            var returnTypes = pages.CreateChildPermission(AppPermissions.Pages_ReturnTypes, L("ReturnTypes"));
+            returnTypes.CreateChildPermission(AppPermissions.Pages_ReturnTypes_Create, L("CreateNewReturnType"));
+            returnTypes.CreateChildPermission(AppPermissions.Pages_ReturnTypes_Edit, L("EditReturnType"));
+            returnTypes.CreateChildPermission(AppPermissions.Pages_ReturnTypes_Delete, L("DeleteReturnType"));
+
+            var productUpsellRelatedProducts = pages.CreateChildPermission(AppPermissions.Pages_ProductUpsellRelatedProducts, L("ProductUpsellRelatedProducts"));
+            productUpsellRelatedProducts.CreateChildPermission(AppPermissions.Pages_ProductUpsellRelatedProducts_Create, L("CreateNewProductUpsellRelatedProduct"));
+            productUpsellRelatedProducts.CreateChildPermission(AppPermissions.Pages_ProductUpsellRelatedProducts_Edit, L("EditProductUpsellRelatedProduct"));
+            productUpsellRelatedProducts.CreateChildPermission(AppPermissions.Pages_ProductUpsellRelatedProducts_Delete, L("DeleteProductUpsellRelatedProduct"));
+
+            var productCrossSellProducts = pages.CreateChildPermission(AppPermissions.Pages_ProductCrossSellProducts, L("ProductCrossSellProducts"));
+            productCrossSellProducts.CreateChildPermission(AppPermissions.Pages_ProductCrossSellProducts_Create, L("CreateNewProductCrossSellProduct"));
+            productCrossSellProducts.CreateChildPermission(AppPermissions.Pages_ProductCrossSellProducts_Edit, L("EditProductCrossSellProduct"));
+            productCrossSellProducts.CreateChildPermission(AppPermissions.Pages_ProductCrossSellProducts_Delete, L("DeleteProductCrossSellProduct"));
+
+            var productAccountTeams = pages.CreateChildPermission(AppPermissions.Pages_ProductAccountTeams, L("ProductAccountTeams"));
+            productAccountTeams.CreateChildPermission(AppPermissions.Pages_ProductAccountTeams_Create, L("CreateNewProductAccountTeam"));
+            productAccountTeams.CreateChildPermission(AppPermissions.Pages_ProductAccountTeams_Edit, L("EditProductAccountTeam"));
+            productAccountTeams.CreateChildPermission(AppPermissions.Pages_ProductAccountTeams_Delete, L("DeleteProductAccountTeam"));
+
             var subscriptionTypes = pages.CreateChildPermission(AppPermissions.Pages_SubscriptionTypes, L("SubscriptionTypes"));
             subscriptionTypes.CreateChildPermission(AppPermissions.Pages_SubscriptionTypes_Create, L("CreateNewSubscriptionType"));
             subscriptionTypes.CreateChildPermission(AppPermissions.Pages_SubscriptionTypes_Edit, L("EditSubscriptionType"));

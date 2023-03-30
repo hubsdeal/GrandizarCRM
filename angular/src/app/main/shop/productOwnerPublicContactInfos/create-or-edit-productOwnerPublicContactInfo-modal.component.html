@@ -1,0 +1,276 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form
+                *ngIf="active"
+                #productOwnerPublicContactInfoForm="ngForm"
+                novalidate
+                (ngSubmit)="save()"
+                autocomplete="off"
+            >
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="productOwnerPublicContactInfo.id">
+                            {{ l('EditProductOwnerPublicContactInfo') }}
+                        </span>
+                        <span *ngIf="!productOwnerPublicContactInfo.id">
+                            {{ l('CreateNewProductOwnerPublicContactInfo') }}
+                        </span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="ContactFullName">{{ l('Contact') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="ContactFullName"
+                                name="contactFullName"
+                                [(ngModel)]="contactFullName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectContactModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setContactIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="productOwnerPublicContactInfo.contactId"
+                        [(ngModel)]="productOwnerPublicContactInfo.contactId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="ProductName">{{ l('Product') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="ProductName"
+                                name="productName"
+                                [(ngModel)]="productName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectProductModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setProductIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="productOwnerPublicContactInfo.productId"
+                        [(ngModel)]="productOwnerPublicContactInfo.productId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="StoreName">{{ l('Store') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="StoreName"
+                                name="storeName"
+                                [(ngModel)]="storeName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectStoreModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setStoreIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="productOwnerPublicContactInfo.storeId"
+                        [(ngModel)]="productOwnerPublicContactInfo.storeId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="UserName">{{ l('User') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="UserName"
+                                name="userName"
+                                [(ngModel)]="userName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectUserModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setUserIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="productOwnerPublicContactInfo.userId"
+                        [(ngModel)]="productOwnerPublicContactInfo.userId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="ProductOwnerPublicContactInfo_Name">{{ l('Name') }}</label>
+                        <input
+                            type="text"
+                            #ProductOwnerPublicContactInfo_Name="ngModel"
+                            id="ProductOwnerPublicContactInfo_Name"
+                            class="form-control"
+                            [(ngModel)]="productOwnerPublicContactInfo.name"
+                            name="Name"
+                            minlength="1"
+                            maxlength="128"
+                        />
+                        <validation-messages [formCtrl]="ProductOwnerPublicContactInfo_Name"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ProductOwnerPublicContactInfo_Mobile">{{ l('Mobile') }}</label>
+                        <input
+                            type="text"
+                            #ProductOwnerPublicContactInfo_Mobile="ngModel"
+                            id="ProductOwnerPublicContactInfo_Mobile"
+                            class="form-control"
+                            [(ngModel)]="productOwnerPublicContactInfo.mobile"
+                            name="Mobile"
+                            minlength="1"
+                            maxlength="50"
+                        />
+                        <validation-messages [formCtrl]="ProductOwnerPublicContactInfo_Mobile"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ProductOwnerPublicContactInfo_Email">{{ l('Email') }}</label>
+                        <input
+                            type="text"
+                            #ProductOwnerPublicContactInfo_Email="ngModel"
+                            id="ProductOwnerPublicContactInfo_Email"
+                            class="form-control"
+                            [(ngModel)]="productOwnerPublicContactInfo.email"
+                            name="Email"
+                            minlength="1"
+                            maxlength="256"
+                        />
+                        <validation-messages [formCtrl]="ProductOwnerPublicContactInfo_Email"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ProductOwnerPublicContactInfo_ShortBio">
+                            {{ l('ShortBio') }}
+                        </label>
+                        <input
+                            type="text"
+                            #ProductOwnerPublicContactInfo_ShortBio="ngModel"
+                            id="ProductOwnerPublicContactInfo_ShortBio"
+                            class="form-control"
+                            [(ngModel)]="productOwnerPublicContactInfo.shortBio"
+                            name="ShortBio"
+                            minlength="1"
+                            maxlength="3000"
+                        />
+                        <validation-messages [formCtrl]="ProductOwnerPublicContactInfo_ShortBio"></validation-messages>
+                    </div>
+
+                    <br />
+                    <label class="form-check form-check-custom form-check-solid">
+                        <input
+                            id="ProductOwnerPublicContactInfo_Publish"
+                            #ProductOwnerPublicContactInfo_Publish="ngModel"
+                            name="Publish"
+                            [(ngModel)]="productOwnerPublicContactInfo.publish"
+                            type="checkbox"
+                            class="form-check-input"
+                        />
+                        <span class="form-check-label">
+                            {{ l('Publish') }}
+                        </span>
+                    </label>
+                    <validation-messages [formCtrl]="ProductOwnerPublicContactInfo_Publish"></validation-messages>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ProductOwnerPublicContactInfo_PhotoId">{{ l('PhotoId') }}</label>
+                        <input
+                            type="text"
+                            #ProductOwnerPublicContactInfo_PhotoId="ngModel"
+                            id="ProductOwnerPublicContactInfo_PhotoId"
+                            class="form-control"
+                            [(ngModel)]="productOwnerPublicContactInfo.photoId"
+                            name="PhotoId"
+                        />
+                        <validation-messages [formCtrl]="ProductOwnerPublicContactInfo_PhotoId"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!productOwnerPublicContactInfoForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <productOwnerPublicContactInfoContactLookupTableModal
+        #productOwnerPublicContactInfoContactLookupTableModal
+        (modalSave)="getNewContactId()"
+    ></productOwnerPublicContactInfoContactLookupTableModal>
+    <productOwnerPublicContactInfoProductLookupTableModal
+        #productOwnerPublicContactInfoProductLookupTableModal
+        (modalSave)="getNewProductId()"
+    ></productOwnerPublicContactInfoProductLookupTableModal>
+    <productOwnerPublicContactInfoStoreLookupTableModal
+        #productOwnerPublicContactInfoStoreLookupTableModal
+        (modalSave)="getNewStoreId()"
+    ></productOwnerPublicContactInfoStoreLookupTableModal>
+    <productOwnerPublicContactInfoUserLookupTableModal
+        #productOwnerPublicContactInfoUserLookupTableModal
+        (modalSave)="getNewUserId()"
+    ></productOwnerPublicContactInfoUserLookupTableModal>
+</div>

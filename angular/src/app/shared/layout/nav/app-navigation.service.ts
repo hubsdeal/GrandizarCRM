@@ -214,6 +214,36 @@ export class AppNavigationService {
             new AppMenuItem('ProductSubscriptionMaps', 'Pages.ProductSubscriptionMaps', 'flaticon-more', '/app/main/shop/productSubscriptionMaps'),
             
             new AppMenuItem('SubscriptionTypes', 'Pages.SubscriptionTypes', 'flaticon-more', '/app/main/lookupData/subscriptionTypes'),
+            
+            new AppMenuItem('ProductAccountTeams', 'Pages.ProductAccountTeams', 'flaticon-more', '/app/main/shop/productAccountTeams'),
+            
+            new AppMenuItem('ProductCrossSellProducts', 'Pages.ProductCrossSellProducts', 'flaticon-more', '/app/main/shop/productCrossSellProducts'),
+            
+            new AppMenuItem('ProductUpsellRelatedProducts', 'Pages.ProductUpsellRelatedProducts', 'flaticon-more', '/app/main/shop/productUpsellRelatedProducts'),
+            
+            new AppMenuItem('ReturnTypes', 'Pages.ReturnTypes', 'flaticon-more', '/app/main/lookupData/returnTypes'),
+            
+            new AppMenuItem('ReturnStatuses', 'Pages.ReturnStatuses', 'flaticon-more', '/app/main/lookupData/returnStatuses'),
+            
+            new AppMenuItem('ProductReturnInfos', 'Pages.ProductReturnInfos', 'flaticon-more', '/app/main/shop/productReturnInfos'),
+            
+            new AppMenuItem('ProductReviews', 'Pages.ProductReviews', 'flaticon-more', '/app/main/shop/productReviews'),
+            
+            new AppMenuItem('ProductReviewFeedbacks', 'Pages.ProductReviewFeedbacks', 'flaticon-more', '/app/main/shop/productReviewFeedbacks'),
+            
+            new AppMenuItem('ProductOwnerPublicContactInfos', 'Pages.ProductOwnerPublicContactInfos', 'flaticon-more', '/app/main/shop/productOwnerPublicContactInfos'),
+            
+            new AppMenuItem('ProductByVariants', 'Pages.ProductByVariants', 'flaticon-more', '/app/main/shop/productByVariants'),
+            
+            new AppMenuItem('ProductCategoryVariantMaps', 'Pages.ProductCategoryVariantMaps', 'flaticon-more', '/app/main/shop/productCategoryVariantMaps'),
+            
+            new AppMenuItem('ProductAndGiftCardMaps', 'Pages.ProductAndGiftCardMaps', 'flaticon-more', '/app/main/shop/productAndGiftCardMaps'),
+            
+            new AppMenuItem('ProductFlashSaleProductMaps', 'Pages.ProductFlashSaleProductMaps', 'flaticon-more', '/app/main/shop/productFlashSaleProductMaps'),
+            
+            new AppMenuItem('ProductWholeSaleQuantityTypes', 'Pages.ProductWholeSaleQuantityTypes', 'flaticon-more', '/app/main/lookupData/productWholeSaleQuantityTypes'),
+            
+            new AppMenuItem('ProductWholeSalePrices', 'Pages.ProductWholeSalePrices', 'flaticon-more', '/app/main/shop/productWholeSalePrices'),
              new AppMenuItem('Editions', 'Pages.Editions', 'flaticon-app', '/app/admin/editions'),
             new AppMenuItem(
                 'Administration',

@@ -1,0 +1,97 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form
+                *ngIf="active"
+                #productWholeSaleQuantityTypeForm="ngForm"
+                novalidate
+                (ngSubmit)="save()"
+                autocomplete="off"
+            >
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="productWholeSaleQuantityType.id">{{ l('EditProductWholeSaleQuantityType') }}</span>
+                        <span *ngIf="!productWholeSaleQuantityType.id">
+                            {{ l('CreateNewProductWholeSaleQuantityType') }}
+                        </span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="ProductWholeSaleQuantityType_Name">{{ l('Name') }} *</label>
+                        <input
+                            type="text"
+                            #ProductWholeSaleQuantityType_Name="ngModel"
+                            id="ProductWholeSaleQuantityType_Name"
+                            class="form-control"
+                            [(ngModel)]="productWholeSaleQuantityType.name"
+                            name="Name"
+                            minlength="1"
+                            maxlength="128"
+                            required
+                        />
+                        <validation-messages [formCtrl]="ProductWholeSaleQuantityType_Name"></validation-messages>
+                    </div>
+
+                    <div class="my5">
+                        <label class="form-label" for="ProductWholeSaleQuantityType_MinQty">{{ l('MinQty') }}</label>
+                        <input
+                            type="number"
+                            #ProductWholeSaleQuantityType_MinQty="ngModel"
+                            id="ProductWholeSaleQuantityType_MinQty"
+                            class="form-control"
+                            [(ngModel)]="productWholeSaleQuantityType.minQty"
+                            name="MinQty"
+                        />
+                        <validation-messages [formCtrl]="ProductWholeSaleQuantityType_MinQty"></validation-messages>
+                    </div>
+
+                    <div class="my5">
+                        <label class="form-label" for="ProductWholeSaleQuantityType_MaxQty">{{ l('MaxQty') }}</label>
+                        <input
+                            type="number"
+                            #ProductWholeSaleQuantityType_MaxQty="ngModel"
+                            id="ProductWholeSaleQuantityType_MaxQty"
+                            class="form-control"
+                            [(ngModel)]="productWholeSaleQuantityType.maxQty"
+                            name="MaxQty"
+                        />
+                        <validation-messages [formCtrl]="ProductWholeSaleQuantityType_MaxQty"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!productWholeSaleQuantityTypeForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
