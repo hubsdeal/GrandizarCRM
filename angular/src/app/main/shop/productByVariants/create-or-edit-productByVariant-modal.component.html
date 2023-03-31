@@ -1,0 +1,230 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #productByVariantForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="productByVariant.id">{{ l('EditProductByVariant') }}</span>
+                        <span *ngIf="!productByVariant.id">{{ l('CreateNewProductByVariant') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="ProductName">{{ l('Product') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="ProductName"
+                                name="productName"
+                                [(ngModel)]="productName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectProductModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setProductIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="productByVariant.productId"
+                        [(ngModel)]="productByVariant.productId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="ProductVariantName">{{ l('ProductVariant') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="ProductVariantName"
+                                name="productVariantName"
+                                [(ngModel)]="productVariantName"
+                                type="text"
+                                disabled
+                            />
+                            <button
+                                class="btn btn-primary blue"
+                                (click)="openSelectProductVariantModal()"
+                                type="button"
+                            >
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setProductVariantIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="productByVariant.productVariantId"
+                        [(ngModel)]="productByVariant.productVariantId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="ProductVariantCategoryName">
+                            {{ l('ProductVariantCategory') }}
+                        </label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="ProductVariantCategoryName"
+                                name="productVariantCategoryName"
+                                [(ngModel)]="productVariantCategoryName"
+                                type="text"
+                                disabled
+                            />
+                            <button
+                                class="btn btn-primary blue"
+                                (click)="openSelectProductVariantCategoryModal()"
+                                type="button"
+                            >
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button
+                                class="btn btn-danger btn-icon"
+                                type="button"
+                                (click)="setProductVariantCategoryIdNull()"
+                            >
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="productByVariant.productVariantCategoryId"
+                        [(ngModel)]="productByVariant.productVariantCategoryId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="MediaLibraryName">{{ l('MediaLibrary') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="MediaLibraryName"
+                                name="mediaLibraryName"
+                                [(ngModel)]="mediaLibraryName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectMediaLibraryModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setMediaLibraryIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="productByVariant.mediaLibraryId"
+                        [(ngModel)]="productByVariant.mediaLibraryId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my5">
+                        <label class="form-label" for="ProductByVariant_Price">{{ l('Price') }}</label>
+                        <input
+                            type="number"
+                            #ProductByVariant_Price="ngModel"
+                            id="ProductByVariant_Price"
+                            class="form-control"
+                            [(ngModel)]="productByVariant.price"
+                            name="Price"
+                        />
+                        <validation-messages [formCtrl]="ProductByVariant_Price"></validation-messages>
+                    </div>
+
+                    <div class="my5">
+                        <label class="form-label" for="ProductByVariant_DisplaySequence">
+                            {{ l('DisplaySequence') }}
+                        </label>
+                        <input
+                            type="number"
+                            #ProductByVariant_DisplaySequence="ngModel"
+                            id="ProductByVariant_DisplaySequence"
+                            class="form-control"
+                            [(ngModel)]="productByVariant.displaySequence"
+                            name="DisplaySequence"
+                        />
+                        <validation-messages [formCtrl]="ProductByVariant_DisplaySequence"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ProductByVariant_Description">{{ l('Description') }}</label>
+                        <input
+                            type="text"
+                            #ProductByVariant_Description="ngModel"
+                            id="ProductByVariant_Description"
+                            class="form-control"
+                            [(ngModel)]="productByVariant.description"
+                            name="Description"
+                        />
+                        <validation-messages [formCtrl]="ProductByVariant_Description"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!productByVariantForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <productByVariantProductLookupTableModal
+        #productByVariantProductLookupTableModal
+        (modalSave)="getNewProductId()"
+    ></productByVariantProductLookupTableModal>
+    <productByVariantProductVariantLookupTableModal
+        #productByVariantProductVariantLookupTableModal
+        (modalSave)="getNewProductVariantId()"
+    ></productByVariantProductVariantLookupTableModal>
+    <productByVariantProductVariantCategoryLookupTableModal
+        #productByVariantProductVariantCategoryLookupTableModal
+        (modalSave)="getNewProductVariantCategoryId()"
+    ></productByVariantProductVariantCategoryLookupTableModal>
+    <productByVariantMediaLibraryLookupTableModal
+        #productByVariantMediaLibraryLookupTableModal
+        (modalSave)="getNewMediaLibraryId()"
+    ></productByVariantMediaLibraryLookupTableModal>
+</div>

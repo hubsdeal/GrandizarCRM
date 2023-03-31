@@ -41,21 +41,6 @@
                         />
                         <validation-messages [formCtrl]="MembershipType_Name"></validation-messages>
                     </div>
-
-                    <div class="my-3">
-                        <label class="form-label" for="MembershipType_Description">{{ l('Description') }}</label>
-                        <input
-                            type="text"
-                            #MembershipType_Description="ngModel"
-                            id="MembershipType_Description"
-                            class="form-control"
-                            [(ngModel)]="membershipType.description"
-                            name="Description"
-                            minlength="1"
-                            maxlength="1500"
-                        />
-                        <validation-messages [formCtrl]="MembershipType_Description"></validation-messages>
-                    </div>
                 </div>
                 <div class="modal-footer">
                     <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">

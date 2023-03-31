@@ -35,14 +35,12 @@ namespace SoftGrid.LookupData.Exporting
 
                     AddHeader(
                         sheet,
-                        L("Name"),
-                        L("Description")
+                        L("Name")
                         );
 
                     AddObjects(
                         sheet, membershipTypes,
-                        _ => _.MembershipType.Name,
-                        _ => _.MembershipType.Description
+                        _ => _.MembershipType.Name
                         );
 
                 });

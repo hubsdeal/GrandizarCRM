@@ -3410,10 +3410,6 @@ namespace SoftGrid.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<string>("Description")
-                        .HasMaxLength(1500)
-                        .HasColumnType("nvarchar(1500)");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(128)
@@ -3427,6 +3423,35 @@ namespace SoftGrid.Migrations
                     b.HasIndex("TenantId");
 
                     b.ToTable("MembershipTypes");
+                });
+
+            modelBuilder.Entity("SoftGrid.LookupData.ProductWholeSaleQuantityType", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<int?>("MaxQty")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("MinQty")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("ProductWholeSaleQuantityTypes");
                 });
 
             modelBuilder.Entity("SoftGrid.LookupData.RatingLike", b =>
@@ -3457,6 +3482,52 @@ namespace SoftGrid.Migrations
                     b.HasIndex("TenantId");
 
                     b.ToTable("RatingLikes");
+                });
+
+            modelBuilder.Entity("SoftGrid.LookupData.ReturnStatus", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("ReturnStatuses");
+                });
+
+            modelBuilder.Entity("SoftGrid.LookupData.ReturnType", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("ReturnTypes");
                 });
 
             modelBuilder.Entity("SoftGrid.LookupData.SmsTemplate", b =>
@@ -4706,6 +4777,145 @@ namespace SoftGrid.Migrations
                     b.ToTable("Products");
                 });
 
+            modelBuilder.Entity("SoftGrid.Shop.ProductAccountTeam", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("AssignDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("EmployeeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Primary")
+                        .HasColumnType("bit");
+
+                    b.Property<long>("ProductId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("RemoveDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("ProductAccountTeams");
+                });
+
+            modelBuilder.Entity("SoftGrid.Shop.ProductAndGiftCardMap", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("CurrencyId")
+                        .HasColumnType("bigint");
+
+                    b.Property<double?>("GiftAmount")
+                        .HasColumnType("float");
+
+                    b.Property<long>("ProductId")
+                        .HasColumnType("bigint");
+
+                    b.Property<double?>("PurchaseAmount")
+                        .HasColumnType("float");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CurrencyId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("ProductAndGiftCardMaps");
+                });
+
+            modelBuilder.Entity("SoftGrid.Shop.ProductByVariant", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("DisplaySequence")
+                        .HasColumnType("int");
+
+                    b.Property<long?>("MediaLibraryId")
+                        .HasColumnType("bigint");
+
+                    b.Property<double?>("Price")
+                        .HasColumnType("float");
+
+                    b.Property<long?>("ProductId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("ProductVariantCategoryId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("ProductVariantId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MediaLibraryId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("ProductVariantCategoryId");
+
+                    b.HasIndex("ProductVariantId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("ProductByVariants");
+                });
+
             modelBuilder.Entity("SoftGrid.Shop.ProductCategory", b =>
                 {
                     b.Property<long>("Id")
@@ -4851,6 +5061,75 @@ namespace SoftGrid.Migrations
                     b.HasIndex("TenantId");
 
                     b.ToTable("ProductCategoryTeams");
+                });
+
+            modelBuilder.Entity("SoftGrid.Shop.ProductCategoryVariantMap", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("ProductCategoryId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("ProductVariantCategoryId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductCategoryId");
+
+                    b.HasIndex("ProductVariantCategoryId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("ProductCategoryVariantMaps");
+                });
+
+            modelBuilder.Entity("SoftGrid.Shop.ProductCrossSellProduct", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("CrossProductId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("CrossSellScore")
+                        .HasColumnType("int");
+
+                    b.Property<long>("PrimaryProductId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PrimaryProductId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("ProductCrossSellProducts");
                 });
 
             modelBuilder.Entity("SoftGrid.Shop.ProductCustomerQuery", b =>
@@ -5025,6 +5304,66 @@ namespace SoftGrid.Migrations
                     b.ToTable("ProductFaqs");
                 });
 
+            modelBuilder.Entity("SoftGrid.Shop.ProductFlashSaleProductMap", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<double?>("DiscountAmount")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("DiscountPercentage")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime?>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("EndTime")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double?>("FlashSalePrice")
+                        .HasColumnType("float");
+
+                    b.Property<long?>("MembershipTypeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("ProductId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("StartTime")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("StoreId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MembershipTypeId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("StoreId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("ProductFlashSaleProductMaps");
+                });
+
             modelBuilder.Entity("SoftGrid.Shop.ProductMedia", b =>
                 {
                     b.Property<long>("Id")
@@ -5094,6 +5433,72 @@ namespace SoftGrid.Migrations
                     b.ToTable("ProductNotes");
                 });
 
+            modelBuilder.Entity("SoftGrid.Shop.ProductOwnerPublicContactInfo", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long?>("ContactId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("Mobile")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<Guid>("PhotoId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<long?>("ProductId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Publish")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ShortBio")
+                        .HasMaxLength(3000)
+                        .HasColumnType("nvarchar(3000)");
+
+                    b.Property<long?>("StoreId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.Property<long?>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ContactId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("StoreId");
+
+                    b.HasIndex("TenantId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ProductOwnerPublicContactInfos");
+                });
+
             modelBuilder.Entity("SoftGrid.Shop.ProductPackage", b =>
                 {
                     b.Property<long>("Id")
@@ -5138,6 +5543,185 @@ namespace SoftGrid.Migrations
                     b.HasIndex("TenantId");
 
                     b.ToTable("ProductPackages");
+                });
+
+            modelBuilder.Entity("SoftGrid.Shop.ProductReturnInfo", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("AdminNote")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("CustomerNote")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("DeleterUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("LastModifierUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("ProductId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("ReturnStatusId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("ReturnTypeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("ReturnStatusId");
+
+                    b.HasIndex("ReturnTypeId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("ProductReturnInfos");
+                });
+
+            modelBuilder.Entity("SoftGrid.Shop.ProductReview", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long?>("ContactId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("PostDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PostTime")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<long>("ProductId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Publish")
+                        .HasColumnType("bit");
+
+                    b.Property<long?>("RatingLikeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("ReviewInfo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("StoreId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ContactId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("RatingLikeId");
+
+                    b.HasIndex("StoreId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("ProductReviews");
+                });
+
+            modelBuilder.Entity("SoftGrid.Shop.ProductReviewFeedback", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long?>("ContactId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("DeleterUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("LastModifierUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("ProductReviewId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Published")
+                        .HasColumnType("bit");
+
+                    b.Property<long?>("RatingLikeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("ReplyText")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ContactId");
+
+                    b.HasIndex("ProductReviewId");
+
+                    b.HasIndex("RatingLikeId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("ProductReviewFeedbacks");
                 });
 
             modelBuilder.Entity("SoftGrid.Shop.ProductSubscriptionMap", b =>
@@ -5236,6 +5820,41 @@ namespace SoftGrid.Migrations
                     b.ToTable("ProductTags");
                 });
 
+            modelBuilder.Entity("SoftGrid.Shop.ProductUpsellRelatedProduct", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("DisplaySequence")
+                        .HasColumnType("int");
+
+                    b.Property<long>("PrimaryProductId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("RelatedProductId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PrimaryProductId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("ProductUpsellRelatedProducts");
+                });
+
             modelBuilder.Entity("SoftGrid.Shop.ProductVariant", b =>
                 {
                     b.Property<long>("Id")
@@ -5302,6 +5921,66 @@ namespace SoftGrid.Migrations
                     b.HasIndex("TenantId");
 
                     b.ToTable("ProductVariantCategories");
+                });
+
+            modelBuilder.Entity("SoftGrid.Shop.ProductWholeSalePrice", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("CurrencyId")
+                        .HasColumnType("bigint");
+
+                    b.Property<double?>("ExactQuantity")
+                        .HasColumnType("float");
+
+                    b.Property<long?>("MeasurementUnitId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("PackageInfo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("PackageQuantity")
+                        .HasColumnType("int");
+
+                    b.Property<double?>("Price")
+                        .HasColumnType("float");
+
+                    b.Property<long?>("ProductId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("ProductWholeSaleQuantityTypeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("WholeSaleSkuId")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CurrencyId");
+
+                    b.HasIndex("MeasurementUnitId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("ProductWholeSaleQuantityTypeId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("ProductWholeSalePrices");
                 });
 
             modelBuilder.Entity("SoftGrid.Shop.Store", b =>
@@ -8166,6 +8845,69 @@ namespace SoftGrid.Migrations
                     b.Navigation("StoreFk");
                 });
 
+            modelBuilder.Entity("SoftGrid.Shop.ProductAccountTeam", b =>
+                {
+                    b.HasOne("SoftGrid.CRM.Employee", "EmployeeFk")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SoftGrid.Shop.Product", "ProductFk")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("EmployeeFk");
+
+                    b.Navigation("ProductFk");
+                });
+
+            modelBuilder.Entity("SoftGrid.Shop.ProductAndGiftCardMap", b =>
+                {
+                    b.HasOne("SoftGrid.LookupData.Currency", "CurrencyFk")
+                        .WithMany()
+                        .HasForeignKey("CurrencyId");
+
+                    b.HasOne("SoftGrid.Shop.Product", "ProductFk")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CurrencyFk");
+
+                    b.Navigation("ProductFk");
+                });
+
+            modelBuilder.Entity("SoftGrid.Shop.ProductByVariant", b =>
+                {
+                    b.HasOne("SoftGrid.LookupData.MediaLibrary", "MediaLibraryFk")
+                        .WithMany()
+                        .HasForeignKey("MediaLibraryId");
+
+                    b.HasOne("SoftGrid.Shop.Product", "ProductFk")
+                        .WithMany()
+                        .HasForeignKey("ProductId");
+
+                    b.HasOne("SoftGrid.Shop.ProductVariantCategory", "ProductVariantCategoryFk")
+                        .WithMany()
+                        .HasForeignKey("ProductVariantCategoryId");
+
+                    b.HasOne("SoftGrid.Shop.ProductVariant", "ProductVariantFk")
+                        .WithMany()
+                        .HasForeignKey("ProductVariantId");
+
+                    b.Navigation("MediaLibraryFk");
+
+                    b.Navigation("ProductFk");
+
+                    b.Navigation("ProductVariantCategoryFk");
+
+                    b.Navigation("ProductVariantFk");
+                });
+
             modelBuilder.Entity("SoftGrid.Shop.ProductCategory", b =>
                 {
                     b.HasOne("SoftGrid.LookupData.MediaLibrary", "MediaLibraryFk")
@@ -8211,6 +8953,36 @@ namespace SoftGrid.Migrations
                     b.Navigation("EmployeeFk");
 
                     b.Navigation("ProductCategoryFk");
+                });
+
+            modelBuilder.Entity("SoftGrid.Shop.ProductCategoryVariantMap", b =>
+                {
+                    b.HasOne("SoftGrid.Shop.ProductCategory", "ProductCategoryFk")
+                        .WithMany()
+                        .HasForeignKey("ProductCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SoftGrid.Shop.ProductVariantCategory", "ProductVariantCategoryFk")
+                        .WithMany()
+                        .HasForeignKey("ProductVariantCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ProductCategoryFk");
+
+                    b.Navigation("ProductVariantCategoryFk");
+                });
+
+            modelBuilder.Entity("SoftGrid.Shop.ProductCrossSellProduct", b =>
+                {
+                    b.HasOne("SoftGrid.Shop.Product", "PrimaryProductFk")
+                        .WithMany()
+                        .HasForeignKey("PrimaryProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PrimaryProductFk");
                 });
 
             modelBuilder.Entity("SoftGrid.Shop.ProductCustomerQuery", b =>
@@ -8280,6 +9052,27 @@ namespace SoftGrid.Migrations
                     b.Navigation("ProductFk");
                 });
 
+            modelBuilder.Entity("SoftGrid.Shop.ProductFlashSaleProductMap", b =>
+                {
+                    b.HasOne("SoftGrid.LookupData.MembershipType", "MembershipTypeFk")
+                        .WithMany()
+                        .HasForeignKey("MembershipTypeId");
+
+                    b.HasOne("SoftGrid.Shop.Product", "ProductFk")
+                        .WithMany()
+                        .HasForeignKey("ProductId");
+
+                    b.HasOne("SoftGrid.Shop.Store", "StoreFk")
+                        .WithMany()
+                        .HasForeignKey("StoreId");
+
+                    b.Navigation("MembershipTypeFk");
+
+                    b.Navigation("ProductFk");
+
+                    b.Navigation("StoreFk");
+                });
+
             modelBuilder.Entity("SoftGrid.Shop.ProductMedia", b =>
                 {
                     b.HasOne("SoftGrid.LookupData.MediaLibrary", "MediaLibraryFk")
@@ -8308,6 +9101,33 @@ namespace SoftGrid.Migrations
                     b.Navigation("ProductFk");
                 });
 
+            modelBuilder.Entity("SoftGrid.Shop.ProductOwnerPublicContactInfo", b =>
+                {
+                    b.HasOne("SoftGrid.CRM.Contact", "ContactFk")
+                        .WithMany()
+                        .HasForeignKey("ContactId");
+
+                    b.HasOne("SoftGrid.Shop.Product", "ProductFk")
+                        .WithMany()
+                        .HasForeignKey("ProductId");
+
+                    b.HasOne("SoftGrid.Shop.Store", "StoreFk")
+                        .WithMany()
+                        .HasForeignKey("StoreId");
+
+                    b.HasOne("SoftGrid.Authorization.Users.User", "UserFk")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("ContactFk");
+
+                    b.Navigation("ProductFk");
+
+                    b.Navigation("StoreFk");
+
+                    b.Navigation("UserFk");
+                });
+
             modelBuilder.Entity("SoftGrid.Shop.ProductPackage", b =>
                 {
                     b.HasOne("SoftGrid.LookupData.MediaLibrary", "MediaLibraryFk")
@@ -8323,6 +9143,79 @@ namespace SoftGrid.Migrations
                     b.Navigation("MediaLibraryFk");
 
                     b.Navigation("PrimaryProductFk");
+                });
+
+            modelBuilder.Entity("SoftGrid.Shop.ProductReturnInfo", b =>
+                {
+                    b.HasOne("SoftGrid.Shop.Product", "ProductFk")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SoftGrid.LookupData.ReturnStatus", "ReturnStatusFk")
+                        .WithMany()
+                        .HasForeignKey("ReturnStatusId");
+
+                    b.HasOne("SoftGrid.LookupData.ReturnType", "ReturnTypeFk")
+                        .WithMany()
+                        .HasForeignKey("ReturnTypeId");
+
+                    b.Navigation("ProductFk");
+
+                    b.Navigation("ReturnStatusFk");
+
+                    b.Navigation("ReturnTypeFk");
+                });
+
+            modelBuilder.Entity("SoftGrid.Shop.ProductReview", b =>
+                {
+                    b.HasOne("SoftGrid.CRM.Contact", "ContactFk")
+                        .WithMany()
+                        .HasForeignKey("ContactId");
+
+                    b.HasOne("SoftGrid.Shop.Product", "ProductFk")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SoftGrid.LookupData.RatingLike", "RatingLikeFk")
+                        .WithMany()
+                        .HasForeignKey("RatingLikeId");
+
+                    b.HasOne("SoftGrid.Shop.Store", "StoreFk")
+                        .WithMany()
+                        .HasForeignKey("StoreId");
+
+                    b.Navigation("ContactFk");
+
+                    b.Navigation("ProductFk");
+
+                    b.Navigation("RatingLikeFk");
+
+                    b.Navigation("StoreFk");
+                });
+
+            modelBuilder.Entity("SoftGrid.Shop.ProductReviewFeedback", b =>
+                {
+                    b.HasOne("SoftGrid.CRM.Contact", "ContactFk")
+                        .WithMany()
+                        .HasForeignKey("ContactId");
+
+                    b.HasOne("SoftGrid.Shop.ProductReview", "ProductReviewFk")
+                        .WithMany()
+                        .HasForeignKey("ProductReviewId");
+
+                    b.HasOne("SoftGrid.LookupData.RatingLike", "RatingLikeFk")
+                        .WithMany()
+                        .HasForeignKey("RatingLikeId");
+
+                    b.Navigation("ContactFk");
+
+                    b.Navigation("ProductReviewFk");
+
+                    b.Navigation("RatingLikeFk");
                 });
 
             modelBuilder.Entity("SoftGrid.Shop.ProductSubscriptionMap", b =>
@@ -8363,6 +9256,17 @@ namespace SoftGrid.Migrations
                     b.Navigation("ProductFk");
                 });
 
+            modelBuilder.Entity("SoftGrid.Shop.ProductUpsellRelatedProduct", b =>
+                {
+                    b.HasOne("SoftGrid.Shop.Product", "PrimaryProductFk")
+                        .WithMany()
+                        .HasForeignKey("PrimaryProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PrimaryProductFk");
+                });
+
             modelBuilder.Entity("SoftGrid.Shop.ProductVariant", b =>
                 {
                     b.HasOne("SoftGrid.Shop.ProductVariantCategory", "ProductVariantCategoryFk")
@@ -8379,6 +9283,33 @@ namespace SoftGrid.Migrations
                         .HasForeignKey("StoreId");
 
                     b.Navigation("StoreFk");
+                });
+
+            modelBuilder.Entity("SoftGrid.Shop.ProductWholeSalePrice", b =>
+                {
+                    b.HasOne("SoftGrid.LookupData.Currency", "CurrencyFk")
+                        .WithMany()
+                        .HasForeignKey("CurrencyId");
+
+                    b.HasOne("SoftGrid.LookupData.MeasurementUnit", "MeasurementUnitFk")
+                        .WithMany()
+                        .HasForeignKey("MeasurementUnitId");
+
+                    b.HasOne("SoftGrid.Shop.Product", "ProductFk")
+                        .WithMany()
+                        .HasForeignKey("ProductId");
+
+                    b.HasOne("SoftGrid.LookupData.ProductWholeSaleQuantityType", "ProductWholeSaleQuantityTypeFk")
+                        .WithMany()
+                        .HasForeignKey("ProductWholeSaleQuantityTypeId");
+
+                    b.Navigation("CurrencyFk");
+
+                    b.Navigation("MeasurementUnitFk");
+
+                    b.Navigation("ProductFk");
+
+                    b.Navigation("ProductWholeSaleQuantityTypeFk");
                 });
 
             modelBuilder.Entity("SoftGrid.Shop.Store", b =>

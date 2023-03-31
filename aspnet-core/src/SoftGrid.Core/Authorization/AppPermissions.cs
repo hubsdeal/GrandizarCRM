@@ -6,6 +6,81 @@
     /// </summary>
     public static class AppPermissions
     {
+        public const string Pages_ProductWholeSalePrices = "Pages.ProductWholeSalePrices";
+        public const string Pages_ProductWholeSalePrices_Create = "Pages.ProductWholeSalePrices.Create";
+        public const string Pages_ProductWholeSalePrices_Edit = "Pages.ProductWholeSalePrices.Edit";
+        public const string Pages_ProductWholeSalePrices_Delete = "Pages.ProductWholeSalePrices.Delete";
+
+        public const string Pages_ProductWholeSaleQuantityTypes = "Pages.ProductWholeSaleQuantityTypes";
+        public const string Pages_ProductWholeSaleQuantityTypes_Create = "Pages.ProductWholeSaleQuantityTypes.Create";
+        public const string Pages_ProductWholeSaleQuantityTypes_Edit = "Pages.ProductWholeSaleQuantityTypes.Edit";
+        public const string Pages_ProductWholeSaleQuantityTypes_Delete = "Pages.ProductWholeSaleQuantityTypes.Delete";
+
+        public const string Pages_ProductFlashSaleProductMaps = "Pages.ProductFlashSaleProductMaps";
+        public const string Pages_ProductFlashSaleProductMaps_Create = "Pages.ProductFlashSaleProductMaps.Create";
+        public const string Pages_ProductFlashSaleProductMaps_Edit = "Pages.ProductFlashSaleProductMaps.Edit";
+        public const string Pages_ProductFlashSaleProductMaps_Delete = "Pages.ProductFlashSaleProductMaps.Delete";
+
+        public const string Pages_ProductAndGiftCardMaps = "Pages.ProductAndGiftCardMaps";
+        public const string Pages_ProductAndGiftCardMaps_Create = "Pages.ProductAndGiftCardMaps.Create";
+        public const string Pages_ProductAndGiftCardMaps_Edit = "Pages.ProductAndGiftCardMaps.Edit";
+        public const string Pages_ProductAndGiftCardMaps_Delete = "Pages.ProductAndGiftCardMaps.Delete";
+
+        public const string Pages_ProductCategoryVariantMaps = "Pages.ProductCategoryVariantMaps";
+        public const string Pages_ProductCategoryVariantMaps_Create = "Pages.ProductCategoryVariantMaps.Create";
+        public const string Pages_ProductCategoryVariantMaps_Edit = "Pages.ProductCategoryVariantMaps.Edit";
+        public const string Pages_ProductCategoryVariantMaps_Delete = "Pages.ProductCategoryVariantMaps.Delete";
+
+        public const string Pages_ProductByVariants = "Pages.ProductByVariants";
+        public const string Pages_ProductByVariants_Create = "Pages.ProductByVariants.Create";
+        public const string Pages_ProductByVariants_Edit = "Pages.ProductByVariants.Edit";
+        public const string Pages_ProductByVariants_Delete = "Pages.ProductByVariants.Delete";
+
+        public const string Pages_ProductOwnerPublicContactInfos = "Pages.ProductOwnerPublicContactInfos";
+        public const string Pages_ProductOwnerPublicContactInfos_Create = "Pages.ProductOwnerPublicContactInfos.Create";
+        public const string Pages_ProductOwnerPublicContactInfos_Edit = "Pages.ProductOwnerPublicContactInfos.Edit";
+        public const string Pages_ProductOwnerPublicContactInfos_Delete = "Pages.ProductOwnerPublicContactInfos.Delete";
+
+        public const string Pages_ProductReviewFeedbacks = "Pages.ProductReviewFeedbacks";
+        public const string Pages_ProductReviewFeedbacks_Create = "Pages.ProductReviewFeedbacks.Create";
+        public const string Pages_ProductReviewFeedbacks_Edit = "Pages.ProductReviewFeedbacks.Edit";
+        public const string Pages_ProductReviewFeedbacks_Delete = "Pages.ProductReviewFeedbacks.Delete";
+
+        public const string Pages_ProductReviews = "Pages.ProductReviews";
+        public const string Pages_ProductReviews_Create = "Pages.ProductReviews.Create";
+        public const string Pages_ProductReviews_Edit = "Pages.ProductReviews.Edit";
+        public const string Pages_ProductReviews_Delete = "Pages.ProductReviews.Delete";
+
+        public const string Pages_ProductReturnInfos = "Pages.ProductReturnInfos";
+        public const string Pages_ProductReturnInfos_Create = "Pages.ProductReturnInfos.Create";
+        public const string Pages_ProductReturnInfos_Edit = "Pages.ProductReturnInfos.Edit";
+        public const string Pages_ProductReturnInfos_Delete = "Pages.ProductReturnInfos.Delete";
+
+        public const string Pages_ReturnStatuses = "Pages.ReturnStatuses";
+        public const string Pages_ReturnStatuses_Create = "Pages.ReturnStatuses.Create";
+        public const string Pages_ReturnStatuses_Edit = "Pages.ReturnStatuses.Edit";
+        public const string Pages_ReturnStatuses_Delete = "Pages.ReturnStatuses.Delete";
+
+        public const string Pages_ReturnTypes = "Pages.ReturnTypes";
+        public const string Pages_ReturnTypes_Create = "Pages.ReturnTypes.Create";
+        public const string Pages_ReturnTypes_Edit = "Pages.ReturnTypes.Edit";
+        public const string Pages_ReturnTypes_Delete = "Pages.ReturnTypes.Delete";
+
+        public const string Pages_ProductUpsellRelatedProducts = "Pages.ProductUpsellRelatedProducts";
+        public const string Pages_ProductUpsellRelatedProducts_Create = "Pages.ProductUpsellRelatedProducts.Create";
+        public const string Pages_ProductUpsellRelatedProducts_Edit = "Pages.ProductUpsellRelatedProducts.Edit";
+        public const string Pages_ProductUpsellRelatedProducts_Delete = "Pages.ProductUpsellRelatedProducts.Delete";
+
+        public const string Pages_ProductCrossSellProducts = "Pages.ProductCrossSellProducts";
+        public const string Pages_ProductCrossSellProducts_Create = "Pages.ProductCrossSellProducts.Create";
+        public const string Pages_ProductCrossSellProducts_Edit = "Pages.ProductCrossSellProducts.Edit";
+        public const string Pages_ProductCrossSellProducts_Delete = "Pages.ProductCrossSellProducts.Delete";
+
+        public const string Pages_ProductAccountTeams = "Pages.ProductAccountTeams";
+        public const string Pages_ProductAccountTeams_Create = "Pages.ProductAccountTeams.Create";
+        public const string Pages_ProductAccountTeams_Edit = "Pages.ProductAccountTeams.Edit";
+        public const string Pages_ProductAccountTeams_Delete = "Pages.ProductAccountTeams.Delete";
+
         public const string Pages_SubscriptionTypes = "Pages.SubscriptionTypes";
         public const string Pages_SubscriptionTypes_Create = "Pages.SubscriptionTypes.Create";
         public const string Pages_SubscriptionTypes_Edit = "Pages.SubscriptionTypes.Edit";

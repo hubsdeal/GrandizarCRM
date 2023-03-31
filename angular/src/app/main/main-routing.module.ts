@@ -10,6 +10,111 @@ import { MasterDataIndexComponent } from './lookupData/master-data-index/master-
                 children: [
                     
                     {
+                        path: 'shop/productWholeSalePrices',
+                        loadChildren: () => import('./shop/productWholeSalePrices/productWholeSalePrice.module').then(m => m.ProductWholeSalePriceModule),
+                        data: { permission: 'Pages.ProductWholeSalePrices' }
+                    },
+                
+                    
+                    {
+                        path: 'lookupData/productWholeSaleQuantityTypes',
+                        loadChildren: () => import('./lookupData/productWholeSaleQuantityTypes/productWholeSaleQuantityType.module').then(m => m.ProductWholeSaleQuantityTypeModule),
+                        data: { permission: 'Pages.ProductWholeSaleQuantityTypes' }
+                    },
+                
+                    
+                    {
+                        path: 'shop/productFlashSaleProductMaps',
+                        loadChildren: () => import('./shop/productFlashSaleProductMaps/productFlashSaleProductMap.module').then(m => m.ProductFlashSaleProductMapModule),
+                        data: { permission: 'Pages.ProductFlashSaleProductMaps' }
+                    },
+                
+                    
+                    {
+                        path: 'shop/productAndGiftCardMaps',
+                        loadChildren: () => import('./shop/productAndGiftCardMaps/productAndGiftCardMap.module').then(m => m.ProductAndGiftCardMapModule),
+                        data: { permission: 'Pages.ProductAndGiftCardMaps' }
+                    },
+                
+                    
+                    {
+                        path: 'shop/productCategoryVariantMaps',
+                        loadChildren: () => import('./shop/productCategoryVariantMaps/productCategoryVariantMap.module').then(m => m.ProductCategoryVariantMapModule),
+                        data: { permission: 'Pages.ProductCategoryVariantMaps' }
+                    },
+                
+                    
+                    {
+                        path: 'shop/productByVariants',
+                        loadChildren: () => import('./shop/productByVariants/productByVariant.module').then(m => m.ProductByVariantModule),
+                        data: { permission: 'Pages.ProductByVariants' }
+                    },
+                
+                    
+                    {
+                        path: 'shop/productOwnerPublicContactInfos',
+                        loadChildren: () => import('./shop/productOwnerPublicContactInfos/productOwnerPublicContactInfo.module').then(m => m.ProductOwnerPublicContactInfoModule),
+                        data: { permission: 'Pages.ProductOwnerPublicContactInfos' }
+                    },
+                
+                    
+                    {
+                        path: 'shop/productReviewFeedbacks',
+                        loadChildren: () => import('./shop/productReviewFeedbacks/productReviewFeedback.module').then(m => m.ProductReviewFeedbackModule),
+                        data: { permission: 'Pages.ProductReviewFeedbacks' }
+                    },
+                
+                    
+                    {
+                        path: 'shop/productReviews',
+                        loadChildren: () => import('./shop/productReviews/productReview.module').then(m => m.ProductReviewModule),
+                        data: { permission: 'Pages.ProductReviews' }
+                    },
+                
+                    
+                    {
+                        path: 'shop/productReturnInfos',
+                        loadChildren: () => import('./shop/productReturnInfos/productReturnInfo.module').then(m => m.ProductReturnInfoModule),
+                        data: { permission: 'Pages.ProductReturnInfos' }
+                    },
+                
+                    
+                    {
+                        path: 'lookupData/returnStatuses',
+                        loadChildren: () => import('./lookupData/returnStatuses/returnStatus.module').then(m => m.ReturnStatusModule),
+                        data: { permission: 'Pages.ReturnStatuses' }
+                    },
+                
+                    
+                    {
+                        path: 'lookupData/returnTypes',
+                        loadChildren: () => import('./lookupData/returnTypes/returnType.module').then(m => m.ReturnTypeModule),
+                        data: { permission: 'Pages.ReturnTypes' }
+                    },
+                
+                    
+                    {
+                        path: 'shop/productUpsellRelatedProducts',
+                        loadChildren: () => import('./shop/productUpsellRelatedProducts/productUpsellRelatedProduct.module').then(m => m.ProductUpsellRelatedProductModule),
+                        data: { permission: 'Pages.ProductUpsellRelatedProducts' }
+                    },
+                
+                    
+                    {
+                        path: 'shop/productCrossSellProducts',
+                        loadChildren: () => import('./shop/productCrossSellProducts/productCrossSellProduct.module').then(m => m.ProductCrossSellProductModule),
+                        data: { permission: 'Pages.ProductCrossSellProducts' }
+                    },
+                
+                    
+                    {
+                        path: 'shop/productAccountTeams',
+                        loadChildren: () => import('./shop/productAccountTeams/productAccountTeam.module').then(m => m.ProductAccountTeamModule),
+                        data: { permission: 'Pages.ProductAccountTeams' }
+                    },
+                
+                    
+                    {
                         path: 'lookupData/subscriptionTypes',
                         loadChildren: () => import('./lookupData/subscriptionTypes/subscriptionType.module').then(m => m.SubscriptionTypeModule),
                         data: { permission: 'Pages.SubscriptionTypes' }

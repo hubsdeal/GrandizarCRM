@@ -35,7 +35,7 @@ namespace SoftGrid.LookupData
         {
 
             var filteredMembershipTypes = _membershipTypeRepository.GetAll()
-                        .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false || e.Name.Contains(input.Filter) || e.Description.Contains(input.Filter))
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false || e.Name.Contains(input.Filter))
                         .WhereIf(!string.IsNullOrWhiteSpace(input.NameFilter), e => e.Name.Contains(input.NameFilter));
 
             var pagedAndFilteredMembershipTypes = filteredMembershipTypes
@@ -47,7 +47,6 @@ namespace SoftGrid.LookupData
                                   {
 
                                       o.Name,
-                                      o.Description,
                                       Id = o.Id
                                   };
 
@@ -64,7 +63,6 @@ namespace SoftGrid.LookupData
                     {
 
                         Name = o.Name,
-                        Description = o.Description,
                         Id = o.Id,
                     }
                 };
@@ -142,7 +140,7 @@ namespace SoftGrid.LookupData
         {
 
             var filteredMembershipTypes = _membershipTypeRepository.GetAll()
-                        .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false || e.Name.Contains(input.Filter) || e.Description.Contains(input.Filter))
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false || e.Name.Contains(input.Filter))
                         .WhereIf(!string.IsNullOrWhiteSpace(input.NameFilter), e => e.Name.Contains(input.NameFilter));
 
             var query = (from o in filteredMembershipTypes
@@ -151,7 +149,6 @@ namespace SoftGrid.LookupData
                              MembershipType = new MembershipTypeDto
                              {
                                  Name = o.Name,
-                                 Description = o.Description,
                                  Id = o.Id
                              }
                          });

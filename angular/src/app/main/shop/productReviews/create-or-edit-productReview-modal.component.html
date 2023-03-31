@@ -1,0 +1,236 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #productReviewForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="productReview.id">{{ l('EditProductReview') }}</span>
+                        <span *ngIf="!productReview.id">{{ l('CreateNewProductReview') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="ContactFullName">{{ l('Contact') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="ContactFullName"
+                                name="contactFullName"
+                                [(ngModel)]="contactFullName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectContactModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setContactIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="productReview.contactId"
+                        [(ngModel)]="productReview.contactId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="ProductName">{{ l('Product') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="ProductName"
+                                name="productName"
+                                [(ngModel)]="productName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectProductModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setProductIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="productReview.productId"
+                        [(ngModel)]="productReview.productId"
+                        type="text"
+                        required
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="StoreName">{{ l('Store') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="StoreName"
+                                name="storeName"
+                                [(ngModel)]="storeName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectStoreModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setStoreIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="productReview.storeId"
+                        [(ngModel)]="productReview.storeId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="RatingLikeName">{{ l('RatingLike') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="RatingLikeName"
+                                name="ratingLikeName"
+                                [(ngModel)]="ratingLikeName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectRatingLikeModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setRatingLikeIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="productReview.ratingLikeId"
+                        [(ngModel)]="productReview.ratingLikeId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="ProductReview_ReviewInfo">{{ l('ReviewInfo') }} *</label>
+                        <input
+                            type="text"
+                            #ProductReview_ReviewInfo="ngModel"
+                            id="ProductReview_ReviewInfo"
+                            class="form-control"
+                            [(ngModel)]="productReview.reviewInfo"
+                            name="ReviewInfo"
+                            required
+                        />
+                        <validation-messages [formCtrl]="ProductReview_ReviewInfo"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ProductReview_PostDate">{{ l('PostDate') }}</label>
+                        <input
+                            class="form-control m-input"
+                            #ProductReview_PostDate
+                            type="datetime"
+                            bsDatepicker
+                            datePickerLuxonModifier
+                            [(date)]="productReview.postDate"
+                            id="ProductReview_PostDate"
+                            name="ProductReview_PostDate"
+                        />
+                        <validation-messages [formCtrl]="ProductReview_PostDate"></validation-messages>
+                    </div>
+
+                    <br />
+                    <label class="form-check form-check-custom form-check-solid">
+                        <input
+                            id="ProductReview_Publish"
+                            #ProductReview_Publish="ngModel"
+                            name="Publish"
+                            [(ngModel)]="productReview.publish"
+                            type="checkbox"
+                            class="form-check-input"
+                        />
+                        <span class="form-check-label">
+                            {{ l('Publish') }}
+                        </span>
+                    </label>
+                    <validation-messages [formCtrl]="ProductReview_Publish"></validation-messages>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ProductReview_PostTime">{{ l('PostTime') }}</label>
+                        <input
+                            type="text"
+                            #ProductReview_PostTime="ngModel"
+                            id="ProductReview_PostTime"
+                            class="form-control"
+                            [(ngModel)]="productReview.postTime"
+                            name="PostTime"
+                            minlength="1"
+                            maxlength="50"
+                        />
+                        <validation-messages [formCtrl]="ProductReview_PostTime"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!productReviewForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <productReviewContactLookupTableModal
+        #productReviewContactLookupTableModal
+        (modalSave)="getNewContactId()"
+    ></productReviewContactLookupTableModal>
+    <productReviewProductLookupTableModal
+        #productReviewProductLookupTableModal
+        (modalSave)="getNewProductId()"
+    ></productReviewProductLookupTableModal>
+    <productReviewStoreLookupTableModal
+        #productReviewStoreLookupTableModal
+        (modalSave)="getNewStoreId()"
+    ></productReviewStoreLookupTableModal>
+    <productReviewRatingLikeLookupTableModal
+        #productReviewRatingLikeLookupTableModal
+        (modalSave)="getNewRatingLikeId()"
+    ></productReviewRatingLikeLookupTableModal>
+</div>

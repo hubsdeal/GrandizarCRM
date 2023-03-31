@@ -40,27 +40,6 @@
       },
       "ViewType": null,
       "AdditionalData": {}
-    },
-    {
-      "Name": "Description",
-      "Type": "string",
-      "MaxLength": 1500,
-      "MinLength": 1,
-      "Range": {
-        "IsRangeSet": false,
-        "MinimumValue": 0.0,
-        "MaximumValue": 0.0
-      },
-      "Required": false,
-      "Nullable": false,
-      "Regex": "",
-      "UserInterface": {
-        "AdvancedFilter": false,
-        "List": true,
-        "CreateOrUpdate": true
-      },
-      "ViewType": null,
-      "AdditionalData": {}
     }
   ],
   "NavigationProperties": [],

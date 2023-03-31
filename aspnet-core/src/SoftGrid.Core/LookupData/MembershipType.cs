@@ -15,8 +15,5 @@ namespace SoftGrid.LookupData
         [StringLength(MembershipTypeConsts.MaxNameLength, MinimumLength = MembershipTypeConsts.MinNameLength)]
         public virtual string Name { get; set; }
 
-        [StringLength(MembershipTypeConsts.MaxDescriptionLength, MinimumLength = MembershipTypeConsts.MinDescriptionLength)]
-        public virtual string Description { get; set; }
-
     }
 }

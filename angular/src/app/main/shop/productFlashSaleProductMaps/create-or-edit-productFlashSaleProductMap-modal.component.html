@@ -1,0 +1,266 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form
+                *ngIf="active"
+                #productFlashSaleProductMapForm="ngForm"
+                novalidate
+                (ngSubmit)="save()"
+                autocomplete="off"
+            >
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="productFlashSaleProductMap.id">{{ l('EditProductFlashSaleProductMap') }}</span>
+                        <span *ngIf="!productFlashSaleProductMap.id">
+                            {{ l('CreateNewProductFlashSaleProductMap') }}
+                        </span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="ProductName">{{ l('Product') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="ProductName"
+                                name="productName"
+                                [(ngModel)]="productName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectProductModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setProductIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="productFlashSaleProductMap.productId"
+                        [(ngModel)]="productFlashSaleProductMap.productId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="StoreName">{{ l('Store') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="StoreName"
+                                name="storeName"
+                                [(ngModel)]="storeName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectStoreModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setStoreIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="productFlashSaleProductMap.storeId"
+                        [(ngModel)]="productFlashSaleProductMap.storeId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="MembershipTypeName">{{ l('MembershipType') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="MembershipTypeName"
+                                name="membershipTypeName"
+                                [(ngModel)]="membershipTypeName"
+                                type="text"
+                                disabled
+                            />
+                            <button
+                                class="btn btn-primary blue"
+                                (click)="openSelectMembershipTypeModal()"
+                                type="button"
+                            >
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setMembershipTypeIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="productFlashSaleProductMap.membershipTypeId"
+                        [(ngModel)]="productFlashSaleProductMap.membershipTypeId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my5">
+                        <label class="form-label" for="ProductFlashSaleProductMap_FlashSalePrice">
+                            {{ l('FlashSalePrice') }}
+                        </label>
+                        <input
+                            type="number"
+                            #ProductFlashSaleProductMap_FlashSalePrice="ngModel"
+                            id="ProductFlashSaleProductMap_FlashSalePrice"
+                            class="form-control"
+                            [(ngModel)]="productFlashSaleProductMap.flashSalePrice"
+                            name="FlashSalePrice"
+                        />
+                        <validation-messages
+                            [formCtrl]="ProductFlashSaleProductMap_FlashSalePrice"
+                        ></validation-messages>
+                    </div>
+
+                    <div class="my5">
+                        <label class="form-label" for="ProductFlashSaleProductMap_DiscountPercentage">
+                            {{ l('DiscountPercentage') }}
+                        </label>
+                        <input
+                            type="number"
+                            #ProductFlashSaleProductMap_DiscountPercentage="ngModel"
+                            id="ProductFlashSaleProductMap_DiscountPercentage"
+                            class="form-control"
+                            [(ngModel)]="productFlashSaleProductMap.discountPercentage"
+                            name="DiscountPercentage"
+                        />
+                        <validation-messages
+                            [formCtrl]="ProductFlashSaleProductMap_DiscountPercentage"
+                        ></validation-messages>
+                    </div>
+
+                    <div class="my5">
+                        <label class="form-label" for="ProductFlashSaleProductMap_DiscountAmount">
+                            {{ l('DiscountAmount') }}
+                        </label>
+                        <input
+                            type="number"
+                            #ProductFlashSaleProductMap_DiscountAmount="ngModel"
+                            id="ProductFlashSaleProductMap_DiscountAmount"
+                            class="form-control"
+                            [(ngModel)]="productFlashSaleProductMap.discountAmount"
+                            name="DiscountAmount"
+                        />
+                        <validation-messages
+                            [formCtrl]="ProductFlashSaleProductMap_DiscountAmount"
+                        ></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ProductFlashSaleProductMap_EndDate">{{ l('EndDate') }}</label>
+                        <input
+                            class="form-control m-input"
+                            #ProductFlashSaleProductMap_EndDate
+                            type="datetime"
+                            bsDatepicker
+                            datePickerLuxonModifier
+                            [(date)]="productFlashSaleProductMap.endDate"
+                            id="ProductFlashSaleProductMap_EndDate"
+                            name="ProductFlashSaleProductMap_EndDate"
+                        />
+                        <validation-messages [formCtrl]="ProductFlashSaleProductMap_EndDate"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ProductFlashSaleProductMap_EndTime">{{ l('EndTime') }}</label>
+                        <input
+                            type="text"
+                            #ProductFlashSaleProductMap_EndTime="ngModel"
+                            id="ProductFlashSaleProductMap_EndTime"
+                            class="form-control"
+                            [(ngModel)]="productFlashSaleProductMap.endTime"
+                            name="EndTime"
+                        />
+                        <validation-messages [formCtrl]="ProductFlashSaleProductMap_EndTime"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ProductFlashSaleProductMap_StartDate">
+                            {{ l('StartDate') }}
+                        </label>
+                        <input
+                            class="form-control m-input"
+                            #ProductFlashSaleProductMap_StartDate
+                            type="datetime"
+                            bsDatepicker
+                            datePickerLuxonModifier
+                            [(date)]="productFlashSaleProductMap.startDate"
+                            id="ProductFlashSaleProductMap_StartDate"
+                            name="ProductFlashSaleProductMap_StartDate"
+                        />
+                        <validation-messages [formCtrl]="ProductFlashSaleProductMap_StartDate"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ProductFlashSaleProductMap_StartTime">
+                            {{ l('StartTime') }}
+                        </label>
+                        <input
+                            type="text"
+                            #ProductFlashSaleProductMap_StartTime="ngModel"
+                            id="ProductFlashSaleProductMap_StartTime"
+                            class="form-control"
+                            [(ngModel)]="productFlashSaleProductMap.startTime"
+                            name="StartTime"
+                        />
+                        <validation-messages [formCtrl]="ProductFlashSaleProductMap_StartTime"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!productFlashSaleProductMapForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <productFlashSaleProductMapProductLookupTableModal
+        #productFlashSaleProductMapProductLookupTableModal
+        (modalSave)="getNewProductId()"
+    ></productFlashSaleProductMapProductLookupTableModal>
+    <productFlashSaleProductMapStoreLookupTableModal
+        #productFlashSaleProductMapStoreLookupTableModal
+        (modalSave)="getNewStoreId()"
+    ></productFlashSaleProductMapStoreLookupTableModal>
+    <productFlashSaleProductMapMembershipTypeLookupTableModal
+        #productFlashSaleProductMapMembershipTypeLookupTableModal
+        (modalSave)="getNewMembershipTypeId()"
+    ></productFlashSaleProductMapMembershipTypeLookupTableModal>
+</div>

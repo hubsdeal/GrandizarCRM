@@ -1,0 +1,170 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #productReturnInfoForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="productReturnInfo.id">{{ l('EditProductReturnInfo') }}</span>
+                        <span *ngIf="!productReturnInfo.id">{{ l('CreateNewProductReturnInfo') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="ProductName">{{ l('Product') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="ProductName"
+                                name="productName"
+                                [(ngModel)]="productName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectProductModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setProductIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="productReturnInfo.productId"
+                        [(ngModel)]="productReturnInfo.productId"
+                        type="text"
+                        required
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="ReturnTypeName">{{ l('ReturnType') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="ReturnTypeName"
+                                name="returnTypeName"
+                                [(ngModel)]="returnTypeName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectReturnTypeModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setReturnTypeIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="productReturnInfo.returnTypeId"
+                        [(ngModel)]="productReturnInfo.returnTypeId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="ReturnStatusName">{{ l('ReturnStatus') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="ReturnStatusName"
+                                name="returnStatusName"
+                                [(ngModel)]="returnStatusName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectReturnStatusModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setReturnStatusIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="productReturnInfo.returnStatusId"
+                        [(ngModel)]="productReturnInfo.returnStatusId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="ProductReturnInfo_CustomerNote">{{ l('CustomerNote') }}</label>
+                        <input
+                            type="text"
+                            #ProductReturnInfo_CustomerNote="ngModel"
+                            id="ProductReturnInfo_CustomerNote"
+                            class="form-control"
+                            [(ngModel)]="productReturnInfo.customerNote"
+                            name="CustomerNote"
+                        />
+                        <validation-messages [formCtrl]="ProductReturnInfo_CustomerNote"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ProductReturnInfo_AdminNote">{{ l('AdminNote') }}</label>
+                        <input
+                            type="text"
+                            #ProductReturnInfo_AdminNote="ngModel"
+                            id="ProductReturnInfo_AdminNote"
+                            class="form-control"
+                            [(ngModel)]="productReturnInfo.adminNote"
+                            name="AdminNote"
+                        />
+                        <validation-messages [formCtrl]="ProductReturnInfo_AdminNote"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!productReturnInfoForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <productReturnInfoProductLookupTableModal
+        #productReturnInfoProductLookupTableModal
+        (modalSave)="getNewProductId()"
+    ></productReturnInfoProductLookupTableModal>
+    <productReturnInfoReturnTypeLookupTableModal
+        #productReturnInfoReturnTypeLookupTableModal
+        (modalSave)="getNewReturnTypeId()"
+    ></productReturnInfoReturnTypeLookupTableModal>
+    <productReturnInfoReturnStatusLookupTableModal
+        #productReturnInfoReturnStatusLookupTableModal
+        (modalSave)="getNewReturnStatusId()"
+    ></productReturnInfoReturnStatusLookupTableModal>
+</div>
