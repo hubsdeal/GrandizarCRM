@@ -1,0 +1,148 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span>{{ l('Details') }}</span>
+                </h4>
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    (click)="close()"
+                    aria-label="Close"
+                    [disabled]="saving"
+                ></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('InvoiceNumber') }} :</h6>
+                        {{ item.order.invoiceNumber }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('DeliveryOrPickup') }} :</h6>
+                        <div *ngIf="item.order.deliveryOrPickup" class="text-left">
+                            <i class="fa fa-check-circle text-success" title="True"></i>
+                        </div>
+                        <div *ngIf="!item.order.deliveryOrPickup" class="text-left">
+                            <i class="fa fa-times-circle" title="False"></i>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('PaymentCompleted') }} :</h6>
+                        <div *ngIf="item.order.paymentCompleted" class="text-left">
+                            <i class="fa fa-check-circle text-success" title="True"></i>
+                        </div>
+                        <div *ngIf="!item.order.paymentCompleted" class="text-left">
+                            <i class="fa fa-times-circle" title="False"></i>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('FullName') }} :</h6>
+                        {{ item.order.fullName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('DeliveryAddress') }} :</h6>
+                        {{ item.order.deliveryAddress }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('City') }} :</h6>
+                        {{ item.order.city }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('ZipCode') }} :</h6>
+                        {{ item.order.zipCode }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Notes') }} :</h6>
+                        {{ item.order.notes }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('DeliveryFee') }} :</h6>
+                        {{ item.order.deliveryFee }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('SubTotalExcludedTax') }} :</h6>
+                        {{ item.order.subTotalExcludedTax }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('TotalDiscountAmount') }} :</h6>
+                        {{ item.order.totalDiscountAmount }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('TotalTaxAmount') }} :</h6>
+                        {{ item.order.totalTaxAmount }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('TotalAmount') }} :</h6>
+                        {{ item.order.totalAmount }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Email') }} :</h6>
+                        {{ item.order.email }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('DiscountAmountByCode') }} :</h6>
+                        {{ item.order.discountAmountByCode }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('GratuityAmount') }} :</h6>
+                        {{ item.order.gratuityAmount }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('GratuityPercentage') }} :</h6>
+                        {{ item.order.gratuityPercentage }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('ServiceCharge') }} :</h6>
+                        {{ item.order.serviceCharge }}
+                    </div>
+
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('State') }}) {{ l('Name') }} :</h6>
+                        {{ item.stateName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('Country') }}) {{ l('Name') }} :</h6>
+                        {{ item.countryName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('Contact') }}) {{ l('FullName') }} :</h6>
+                        {{ item.contactFullName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('OrderStatus') }}) {{ l('Name') }} :</h6>
+                        {{ item.orderStatusName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('Currency') }}) {{ l('Name') }} :</h6>
+                        {{ item.currencyName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('Store') }}) {{ l('Name') }} :</h6>
+                        {{ item.storeName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('OrderSalesChannel') }}) {{ l('Name') }} :</h6>
+                        {{ item.orderSalesChannelName }}
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button [disabled]="saving" type="button" class="btn btn-primary blue" (click)="close()">
+                    {{ l('Close') }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

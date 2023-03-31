@@ -1,0 +1,449 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #orderDeliveryInfoForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="orderDeliveryInfo.id">{{ l('EditOrderDeliveryInfo') }}</span>
+                        <span *ngIf="!orderDeliveryInfo.id">{{ l('CreateNewOrderDeliveryInfo') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="EmployeeName">{{ l('Employee') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="EmployeeName"
+                                name="employeeName"
+                                [(ngModel)]="employeeName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectEmployeeModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setEmployeeIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="orderDeliveryInfo.employeeId"
+                        [(ngModel)]="orderDeliveryInfo.employeeId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="OrderInvoiceNumber">{{ l('Order') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="OrderInvoiceNumber"
+                                name="orderInvoiceNumber"
+                                [(ngModel)]="orderInvoiceNumber"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectOrderModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setOrderIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="orderDeliveryInfo.orderId"
+                        [(ngModel)]="orderDeliveryInfo.orderId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="OrderDeliveryInfo_TrackingNumber">
+                            {{ l('TrackingNumber') }}
+                        </label>
+                        <input
+                            type="text"
+                            #OrderDeliveryInfo_TrackingNumber="ngModel"
+                            id="OrderDeliveryInfo_TrackingNumber"
+                            class="form-control"
+                            [(ngModel)]="orderDeliveryInfo.trackingNumber"
+                            name="TrackingNumber"
+                            minlength="1"
+                            maxlength="128"
+                        />
+                        <validation-messages [formCtrl]="OrderDeliveryInfo_TrackingNumber"></validation-messages>
+                    </div>
+
+                    <div class="my5">
+                        <label class="form-label" for="OrderDeliveryInfo_TotalWeight">{{ l('TotalWeight') }}</label>
+                        <input
+                            type="number"
+                            #OrderDeliveryInfo_TotalWeight="ngModel"
+                            id="OrderDeliveryInfo_TotalWeight"
+                            class="form-control"
+                            [(ngModel)]="orderDeliveryInfo.totalWeight"
+                            name="TotalWeight"
+                        />
+                        <validation-messages [formCtrl]="OrderDeliveryInfo_TotalWeight"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="OrderDeliveryInfo_DeliveryProviderId">
+                            {{ l('DeliveryProviderId') }}
+                        </label>
+                        <input
+                            type="text"
+                            #OrderDeliveryInfo_DeliveryProviderId="ngModel"
+                            id="OrderDeliveryInfo_DeliveryProviderId"
+                            class="form-control"
+                            [(ngModel)]="orderDeliveryInfo.deliveryProviderId"
+                            name="DeliveryProviderId"
+                            minlength="1"
+                            maxlength="128"
+                        />
+                        <validation-messages [formCtrl]="OrderDeliveryInfo_DeliveryProviderId"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="OrderDeliveryInfo_DispatchDate">{{ l('DispatchDate') }}</label>
+                        <input
+                            class="form-control m-input"
+                            #OrderDeliveryInfo_DispatchDate
+                            type="datetime"
+                            bsDatepicker
+                            datePickerLuxonModifier
+                            [(date)]="orderDeliveryInfo.dispatchDate"
+                            id="OrderDeliveryInfo_DispatchDate"
+                            name="OrderDeliveryInfo_DispatchDate"
+                        />
+                        <validation-messages [formCtrl]="OrderDeliveryInfo_DispatchDate"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="OrderDeliveryInfo_DispatchTime">{{ l('DispatchTime') }}</label>
+                        <input
+                            type="text"
+                            #OrderDeliveryInfo_DispatchTime="ngModel"
+                            id="OrderDeliveryInfo_DispatchTime"
+                            class="form-control"
+                            [(ngModel)]="orderDeliveryInfo.dispatchTime"
+                            name="DispatchTime"
+                            minlength="1"
+                            maxlength="50"
+                        />
+                        <validation-messages [formCtrl]="OrderDeliveryInfo_DispatchTime"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="OrderDeliveryInfo_DeliverToCustomerDate">
+                            {{ l('DeliverToCustomerDate') }}
+                        </label>
+                        <input
+                            class="form-control m-input"
+                            #OrderDeliveryInfo_DeliverToCustomerDate
+                            type="datetime"
+                            bsDatepicker
+                            datePickerLuxonModifier
+                            [(date)]="orderDeliveryInfo.deliverToCustomerDate"
+                            id="OrderDeliveryInfo_DeliverToCustomerDate"
+                            name="OrderDeliveryInfo_DeliverToCustomerDate"
+                        />
+                        <validation-messages [formCtrl]="OrderDeliveryInfo_DeliverToCustomerDate"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="OrderDeliveryInfo_DeliverToCustomerTime">
+                            {{ l('DeliverToCustomerTime') }}
+                        </label>
+                        <input
+                            type="text"
+                            #OrderDeliveryInfo_DeliverToCustomerTime="ngModel"
+                            id="OrderDeliveryInfo_DeliverToCustomerTime"
+                            class="form-control"
+                            [(ngModel)]="orderDeliveryInfo.deliverToCustomerTime"
+                            name="DeliverToCustomerTime"
+                            minlength="1"
+                            maxlength="50"
+                        />
+                        <validation-messages [formCtrl]="OrderDeliveryInfo_DeliverToCustomerTime"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="OrderDeliveryInfo_DeliveryNotes">{{ l('DeliveryNotes') }}</label>
+                        <input
+                            type="text"
+                            #OrderDeliveryInfo_DeliveryNotes="ngModel"
+                            id="OrderDeliveryInfo_DeliveryNotes"
+                            class="form-control"
+                            [(ngModel)]="orderDeliveryInfo.deliveryNotes"
+                            name="DeliveryNotes"
+                        />
+                        <validation-messages [formCtrl]="OrderDeliveryInfo_DeliveryNotes"></validation-messages>
+                    </div>
+
+                    <br />
+                    <label class="form-check form-check-custom form-check-solid">
+                        <input
+                            id="OrderDeliveryInfo_CustomerAcknowledged"
+                            #OrderDeliveryInfo_CustomerAcknowledged="ngModel"
+                            name="CustomerAcknowledged"
+                            [(ngModel)]="orderDeliveryInfo.customerAcknowledged"
+                            type="checkbox"
+                            class="form-check-input"
+                        />
+                        <span class="form-check-label">
+                            {{ l('CustomerAcknowledged') }}
+                        </span>
+                    </label>
+                    <validation-messages [formCtrl]="OrderDeliveryInfo_CustomerAcknowledged"></validation-messages>
+
+                    <div class="my-3">
+                        <label class="form-label" for="OrderDeliveryInfo_CustomerSignature">
+                            {{ l('CustomerSignature') }}
+                        </label>
+                        <input
+                            type="text"
+                            #OrderDeliveryInfo_CustomerSignature="ngModel"
+                            id="OrderDeliveryInfo_CustomerSignature"
+                            class="form-control"
+                            [(ngModel)]="orderDeliveryInfo.customerSignature"
+                            name="CustomerSignature"
+                        />
+                        <validation-messages [formCtrl]="OrderDeliveryInfo_CustomerSignature"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="OrderDeliveryInfo_CateringDate">{{ l('CateringDate') }}</label>
+                        <input
+                            class="form-control m-input"
+                            #OrderDeliveryInfo_CateringDate
+                            type="datetime"
+                            bsDatepicker
+                            datePickerLuxonModifier
+                            [(date)]="orderDeliveryInfo.cateringDate"
+                            id="OrderDeliveryInfo_CateringDate"
+                            name="OrderDeliveryInfo_CateringDate"
+                        />
+                        <validation-messages [formCtrl]="OrderDeliveryInfo_CateringDate"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="OrderDeliveryInfo_CateringTime">{{ l('CateringTime') }}</label>
+                        <input
+                            type="text"
+                            #OrderDeliveryInfo_CateringTime="ngModel"
+                            id="OrderDeliveryInfo_CateringTime"
+                            class="form-control"
+                            [(ngModel)]="orderDeliveryInfo.cateringTime"
+                            name="CateringTime"
+                            minlength="1"
+                            maxlength="50"
+                        />
+                        <validation-messages [formCtrl]="OrderDeliveryInfo_CateringTime"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="OrderDeliveryInfo_DeliveryDate">{{ l('DeliveryDate') }}</label>
+                        <input
+                            class="form-control m-input"
+                            #OrderDeliveryInfo_DeliveryDate
+                            type="datetime"
+                            bsDatepicker
+                            datePickerLuxonModifier
+                            [(date)]="orderDeliveryInfo.deliveryDate"
+                            id="OrderDeliveryInfo_DeliveryDate"
+                            name="OrderDeliveryInfo_DeliveryDate"
+                        />
+                        <validation-messages [formCtrl]="OrderDeliveryInfo_DeliveryDate"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="OrderDeliveryInfo_DeliveryTime">{{ l('DeliveryTime') }}</label>
+                        <input
+                            type="text"
+                            #OrderDeliveryInfo_DeliveryTime="ngModel"
+                            id="OrderDeliveryInfo_DeliveryTime"
+                            class="form-control"
+                            [(ngModel)]="orderDeliveryInfo.deliveryTime"
+                            name="DeliveryTime"
+                            minlength="1"
+                            maxlength="50"
+                        />
+                        <validation-messages [formCtrl]="OrderDeliveryInfo_DeliveryTime"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="OrderDeliveryInfo_DineInDate">{{ l('DineInDate') }}</label>
+                        <input
+                            class="form-control m-input"
+                            #OrderDeliveryInfo_DineInDate
+                            type="datetime"
+                            bsDatepicker
+                            datePickerLuxonModifier
+                            [(date)]="orderDeliveryInfo.dineInDate"
+                            id="OrderDeliveryInfo_DineInDate"
+                            name="OrderDeliveryInfo_DineInDate"
+                        />
+                        <validation-messages [formCtrl]="OrderDeliveryInfo_DineInDate"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="OrderDeliveryInfo_DineInTime">{{ l('DineInTime') }}</label>
+                        <input
+                            type="text"
+                            #OrderDeliveryInfo_DineInTime="ngModel"
+                            id="OrderDeliveryInfo_DineInTime"
+                            class="form-control"
+                            [(ngModel)]="orderDeliveryInfo.dineInTime"
+                            name="DineInTime"
+                            minlength="1"
+                            maxlength="50"
+                        />
+                        <validation-messages [formCtrl]="OrderDeliveryInfo_DineInTime"></validation-messages>
+                    </div>
+
+                    <br />
+                    <label class="form-check form-check-custom form-check-solid">
+                        <input
+                            id="OrderDeliveryInfo_IncludedChildren"
+                            #OrderDeliveryInfo_IncludedChildren="ngModel"
+                            name="IncludedChildren"
+                            [(ngModel)]="orderDeliveryInfo.includedChildren"
+                            type="checkbox"
+                            class="form-check-input"
+                        />
+                        <span class="form-check-label">
+                            {{ l('IncludedChildren') }}
+                        </span>
+                    </label>
+                    <validation-messages [formCtrl]="OrderDeliveryInfo_IncludedChildren"></validation-messages>
+
+                    <br />
+                    <label class="form-check form-check-custom form-check-solid">
+                        <input
+                            id="OrderDeliveryInfo_IsAsap"
+                            #OrderDeliveryInfo_IsAsap="ngModel"
+                            name="IsAsap"
+                            [(ngModel)]="orderDeliveryInfo.isAsap"
+                            type="checkbox"
+                            class="form-check-input"
+                        />
+                        <span class="form-check-label">
+                            {{ l('IsAsap') }}
+                        </span>
+                    </label>
+                    <validation-messages [formCtrl]="OrderDeliveryInfo_IsAsap"></validation-messages>
+
+                    <br />
+                    <label class="form-check form-check-custom form-check-solid">
+                        <input
+                            id="OrderDeliveryInfo_IsPickupCatering"
+                            #OrderDeliveryInfo_IsPickupCatering="ngModel"
+                            name="IsPickupCatering"
+                            [(ngModel)]="orderDeliveryInfo.isPickupCatering"
+                            type="checkbox"
+                            class="form-check-input"
+                        />
+                        <span class="form-check-label">
+                            {{ l('IsPickupCatering') }}
+                        </span>
+                    </label>
+                    <validation-messages [formCtrl]="OrderDeliveryInfo_IsPickupCatering"></validation-messages>
+
+                    <div class="my5">
+                        <label class="form-label" for="OrderDeliveryInfo_NumberOfGuests">
+                            {{ l('NumberOfGuests') }}
+                        </label>
+                        <input
+                            type="number"
+                            #OrderDeliveryInfo_NumberOfGuests="ngModel"
+                            id="OrderDeliveryInfo_NumberOfGuests"
+                            class="form-control"
+                            [(ngModel)]="orderDeliveryInfo.numberOfGuests"
+                            name="NumberOfGuests"
+                        />
+                        <validation-messages [formCtrl]="OrderDeliveryInfo_NumberOfGuests"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="OrderDeliveryInfo_PickupDate">{{ l('PickupDate') }}</label>
+                        <input
+                            class="form-control m-input"
+                            #OrderDeliveryInfo_PickupDate
+                            type="datetime"
+                            bsDatepicker
+                            datePickerLuxonModifier
+                            [(date)]="orderDeliveryInfo.pickupDate"
+                            id="OrderDeliveryInfo_PickupDate"
+                            name="OrderDeliveryInfo_PickupDate"
+                        />
+                        <validation-messages [formCtrl]="OrderDeliveryInfo_PickupDate"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="OrderDeliveryInfo_PickupTime">{{ l('PickupTime') }}</label>
+                        <input
+                            type="text"
+                            #OrderDeliveryInfo_PickupTime="ngModel"
+                            id="OrderDeliveryInfo_PickupTime"
+                            class="form-control"
+                            [(ngModel)]="orderDeliveryInfo.pickupTime"
+                            name="PickupTime"
+                            minlength="1"
+                            maxlength="50"
+                        />
+                        <validation-messages [formCtrl]="OrderDeliveryInfo_PickupTime"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!orderDeliveryInfoForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <orderDeliveryInfoEmployeeLookupTableModal
+        #orderDeliveryInfoEmployeeLookupTableModal
+        (modalSave)="getNewEmployeeId()"
+    ></orderDeliveryInfoEmployeeLookupTableModal>
+    <orderDeliveryInfoOrderLookupTableModal
+        #orderDeliveryInfoOrderLookupTableModal
+        (modalSave)="getNewOrderId()"
+    ></orderDeliveryInfoOrderLookupTableModal>
+</div>

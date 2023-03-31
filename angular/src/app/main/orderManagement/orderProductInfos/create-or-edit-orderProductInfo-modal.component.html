@@ -1,0 +1,269 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #orderProductInfoForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="orderProductInfo.id">{{ l('EditOrderProductInfo') }}</span>
+                        <span *ngIf="!orderProductInfo.id">{{ l('CreateNewOrderProductInfo') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="OrderInvoiceNumber">{{ l('Order') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="OrderInvoiceNumber"
+                                name="orderInvoiceNumber"
+                                [(ngModel)]="orderInvoiceNumber"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectOrderModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setOrderIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="orderProductInfo.orderId"
+                        [(ngModel)]="orderProductInfo.orderId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="StoreName">{{ l('Store') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="StoreName"
+                                name="storeName"
+                                [(ngModel)]="storeName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectStoreModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setStoreIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="orderProductInfo.storeId"
+                        [(ngModel)]="orderProductInfo.storeId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="ProductName">{{ l('Product') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="ProductName"
+                                name="productName"
+                                [(ngModel)]="productName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectProductModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setProductIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="orderProductInfo.productId"
+                        [(ngModel)]="orderProductInfo.productId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="MeasurementUnitName">{{ l('MeasurementUnit') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="MeasurementUnitName"
+                                name="measurementUnitName"
+                                [(ngModel)]="measurementUnitName"
+                                type="text"
+                                disabled
+                            />
+                            <button
+                                class="btn btn-primary blue"
+                                (click)="openSelectMeasurementUnitModal()"
+                                type="button"
+                            >
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setMeasurementUnitIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="orderProductInfo.measurementUnitId"
+                        [(ngModel)]="orderProductInfo.measurementUnitId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my5">
+                        <label class="form-label" for="OrderProductInfo_Quantity">{{ l('Quantity') }}</label>
+                        <input
+                            type="number"
+                            #OrderProductInfo_Quantity="ngModel"
+                            id="OrderProductInfo_Quantity"
+                            class="form-control"
+                            [(ngModel)]="orderProductInfo.quantity"
+                            name="Quantity"
+                        />
+                        <validation-messages [formCtrl]="OrderProductInfo_Quantity"></validation-messages>
+                    </div>
+
+                    <div class="my5">
+                        <label class="form-label" for="OrderProductInfo_UnitPrice">{{ l('UnitPrice') }}</label>
+                        <input
+                            type="number"
+                            #OrderProductInfo_UnitPrice="ngModel"
+                            id="OrderProductInfo_UnitPrice"
+                            class="form-control"
+                            [(ngModel)]="orderProductInfo.unitPrice"
+                            name="UnitPrice"
+                        />
+                        <validation-messages [formCtrl]="OrderProductInfo_UnitPrice"></validation-messages>
+                    </div>
+
+                    <div class="my5">
+                        <label class="form-label" for="OrderProductInfo_ByProductDiscountAmount">
+                            {{ l('ByProductDiscountAmount') }}
+                        </label>
+                        <input
+                            type="number"
+                            #OrderProductInfo_ByProductDiscountAmount="ngModel"
+                            id="OrderProductInfo_ByProductDiscountAmount"
+                            class="form-control"
+                            [(ngModel)]="orderProductInfo.byProductDiscountAmount"
+                            name="ByProductDiscountAmount"
+                        />
+                        <validation-messages
+                            [formCtrl]="OrderProductInfo_ByProductDiscountAmount"
+                        ></validation-messages>
+                    </div>
+
+                    <div class="my5">
+                        <label class="form-label" for="OrderProductInfo_ByProductDiscountPercentage">
+                            {{ l('ByProductDiscountPercentage') }}
+                        </label>
+                        <input
+                            type="number"
+                            #OrderProductInfo_ByProductDiscountPercentage="ngModel"
+                            id="OrderProductInfo_ByProductDiscountPercentage"
+                            class="form-control"
+                            [(ngModel)]="orderProductInfo.byProductDiscountPercentage"
+                            name="ByProductDiscountPercentage"
+                        />
+                        <validation-messages
+                            [formCtrl]="OrderProductInfo_ByProductDiscountPercentage"
+                        ></validation-messages>
+                    </div>
+
+                    <div class="my5">
+                        <label class="form-label" for="OrderProductInfo_ByProductTaxAmount">
+                            {{ l('ByProductTaxAmount') }}
+                        </label>
+                        <input
+                            type="number"
+                            #OrderProductInfo_ByProductTaxAmount="ngModel"
+                            id="OrderProductInfo_ByProductTaxAmount"
+                            class="form-control"
+                            [(ngModel)]="orderProductInfo.byProductTaxAmount"
+                            name="ByProductTaxAmount"
+                        />
+                        <validation-messages [formCtrl]="OrderProductInfo_ByProductTaxAmount"></validation-messages>
+                    </div>
+
+                    <div class="my5">
+                        <label class="form-label" for="OrderProductInfo_ByProductTotalAmount">
+                            {{ l('ByProductTotalAmount') }}
+                        </label>
+                        <input
+                            type="number"
+                            #OrderProductInfo_ByProductTotalAmount="ngModel"
+                            id="OrderProductInfo_ByProductTotalAmount"
+                            class="form-control"
+                            [(ngModel)]="orderProductInfo.byProductTotalAmount"
+                            name="ByProductTotalAmount"
+                        />
+                        <validation-messages [formCtrl]="OrderProductInfo_ByProductTotalAmount"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!orderProductInfoForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <orderProductInfoOrderLookupTableModal
+        #orderProductInfoOrderLookupTableModal
+        (modalSave)="getNewOrderId()"
+    ></orderProductInfoOrderLookupTableModal>
+    <orderProductInfoStoreLookupTableModal
+        #orderProductInfoStoreLookupTableModal
+        (modalSave)="getNewStoreId()"
+    ></orderProductInfoStoreLookupTableModal>
+    <orderProductInfoProductLookupTableModal
+        #orderProductInfoProductLookupTableModal
+        (modalSave)="getNewProductId()"
+    ></orderProductInfoProductLookupTableModal>
+    <orderProductInfoMeasurementUnitLookupTableModal
+        #orderProductInfoMeasurementUnitLookupTableModal
+        (modalSave)="getNewMeasurementUnitId()"
+    ></orderProductInfoMeasurementUnitLookupTableModal>
+</div>

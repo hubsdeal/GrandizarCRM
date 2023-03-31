@@ -1,0 +1,791 @@
+﻿<div [@routerTransition]>
+    <sub-header [title]="'OrderPaymentInfos' | localize" [description]="'OrderPaymentInfosHeaderInfo' | localize">
+        <div role="actions">
+            <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1">
+                <i class="fa fa-file-excel"></i>
+                {{ l('ExportToExcel') }}
+            </button>
+
+            <button
+                *ngIf="isGranted('Pages.OrderPaymentInfos.Create')"
+                (click)="createOrderPaymentInfo()"
+                class="btn btn-primary blue"
+            >
+                <i class="fa fa-plus"></i>
+                {{ l('CreateNewOrderPaymentInfo') }}
+            </button>
+        </div>
+    </sub-header>
+
+    <div [class]="containerClass">
+        <div class="card card-custom gutter-b">
+            <div class="card-body">
+                <form class="form" autocomplete="off">
+                    <div>
+                        <div class="row align-items-center">
+                            <div class="col-xl-12">
+                                <div class="my-3">
+                                    <div class="input-group mb-3">
+                                        <input
+                                            [(ngModel)]="filterText"
+                                            (ngModelChange)="getOrderPaymentInfos()"
+                                            name="filterText"
+                                            autoFocus
+                                            type="text"
+                                            class="form-control"
+                                            [placeholder]="l('SearchWithThreeDot')"
+                                        />
+                                        <button class="btn btn-primary" type="submit" (click)="getOrderPaymentInfos()">
+                                            <i class="flaticon-search-1"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" [hidden]="!advancedFiltersAreShown">
+                            <div class="col-md-12"></div>
+
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="PaymentSplitFilterSelect">
+                                        {{ l('PaymentSplit') }}
+                                    </label>
+                                    <select
+                                        class="form-select"
+                                        name="PaymentSplitFilter"
+                                        id="PaymentSplitFilterSelect"
+                                        [(ngModel)]="paymentSplitFilter"
+                                        (ngModelChange)="getOrderPaymentInfos()"
+                                    >
+                                        <option value="-1">{{ l('All') }}</option>
+                                        <option value="0">{{ l('False') }}</option>
+                                        <option value="1">{{ l('True') }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="MinDueAmountFilter">
+                                        {{ l('MinMax') }} {{ l('DueAmount') }}
+                                    </label>
+                                    <div class="input-group">
+                                        <input
+                                            type="number"
+                                            class="form-control"
+                                            id="MinDueAmountFilter"
+                                            [(ngModel)]="minDueAmountFilter"
+                                            placeholder="{{ l('MinValue') }}"
+                                            name="minDueAmountFilter"
+                                            (ngModelChange)="getOrderPaymentInfos()"
+                                        />
+                                        <input
+                                            type="number"
+                                            class="form-control"
+                                            [(ngModel)]="maxDueAmountFilter"
+                                            placeholder="{{ l('MaxValue') }}"
+                                            name="maxDueAmountFilter"
+                                            (ngModelChange)="getOrderPaymentInfos()"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="MinPaySplitAmountFilter">
+                                        {{ l('MinMax') }} {{ l('PaySplitAmount') }}
+                                    </label>
+                                    <div class="input-group">
+                                        <input
+                                            type="number"
+                                            class="form-control"
+                                            id="MinPaySplitAmountFilter"
+                                            [(ngModel)]="minPaySplitAmountFilter"
+                                            placeholder="{{ l('MinValue') }}"
+                                            name="minPaySplitAmountFilter"
+                                            (ngModelChange)="getOrderPaymentInfos()"
+                                        />
+                                        <input
+                                            type="number"
+                                            class="form-control"
+                                            [(ngModel)]="maxPaySplitAmountFilter"
+                                            placeholder="{{ l('MaxValue') }}"
+                                            name="maxPaySplitAmountFilter"
+                                            (ngModelChange)="getOrderPaymentInfos()"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="BillingAddressFilter">
+                                        {{ l('BillingAddress') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="BillingAddressFilter"
+                                        name="billingAddressFilter"
+                                        [(ngModel)]="billingAddressFilter"
+                                        (ngModelChange)="getOrderPaymentInfos()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="BillingCityFilter">{{ l('BillingCity') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="BillingCityFilter"
+                                        name="billingCityFilter"
+                                        [(ngModel)]="billingCityFilter"
+                                        (ngModelChange)="getOrderPaymentInfos()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="BillingStateFilter">{{ l('BillingState') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="BillingStateFilter"
+                                        name="billingStateFilter"
+                                        [(ngModel)]="billingStateFilter"
+                                        (ngModelChange)="getOrderPaymentInfos()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="BillingZipCodeFilter">
+                                        {{ l('BillingZipCode') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="BillingZipCodeFilter"
+                                        name="billingZipCodeFilter"
+                                        [(ngModel)]="billingZipCodeFilter"
+                                        (ngModelChange)="getOrderPaymentInfos()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="SaveCreditCardNumberFilterSelect">
+                                        {{ l('SaveCreditCardNumber') }}
+                                    </label>
+                                    <select
+                                        class="form-select"
+                                        name="SaveCreditCardNumberFilter"
+                                        id="SaveCreditCardNumberFilterSelect"
+                                        [(ngModel)]="saveCreditCardNumberFilter"
+                                        (ngModelChange)="getOrderPaymentInfos()"
+                                    >
+                                        <option value="-1">{{ l('All') }}</option>
+                                        <option value="0">{{ l('False') }}</option>
+                                        <option value="1">{{ l('True') }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="MaskedCreditCardNumberFilter">
+                                        {{ l('MaskedCreditCardNumber') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="MaskedCreditCardNumberFilter"
+                                        name="maskedCreditCardNumberFilter"
+                                        [(ngModel)]="maskedCreditCardNumberFilter"
+                                        (ngModelChange)="getOrderPaymentInfos()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="CardNameFilter">{{ l('CardName') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="CardNameFilter"
+                                        name="cardNameFilter"
+                                        [(ngModel)]="cardNameFilter"
+                                        (ngModelChange)="getOrderPaymentInfos()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="CardNumberFilter">{{ l('CardNumber') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="CardNumberFilter"
+                                        name="cardNumberFilter"
+                                        [(ngModel)]="cardNumberFilter"
+                                        (ngModelChange)="getOrderPaymentInfos()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="CardCvvFilter">{{ l('CardCvv') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="CardCvvFilter"
+                                        name="cardCvvFilter"
+                                        [(ngModel)]="cardCvvFilter"
+                                        (ngModelChange)="getOrderPaymentInfos()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="CardExpirationMonthFilter">
+                                        {{ l('CardExpirationMonth') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="CardExpirationMonthFilter"
+                                        name="cardExpirationMonthFilter"
+                                        [(ngModel)]="cardExpirationMonthFilter"
+                                        (ngModelChange)="getOrderPaymentInfos()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="CardExpirationYearFilter">
+                                        {{ l('CardExpirationYear') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="CardExpirationYearFilter"
+                                        name="cardExpirationYearFilter"
+                                        [(ngModel)]="cardExpirationYearFilter"
+                                        (ngModelChange)="getOrderPaymentInfos()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="AuthorizationTransactionNumberFilter">
+                                        {{ l('AuthorizationTransactionNumber') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="AuthorizationTransactionNumberFilter"
+                                        name="authorizationTransactionNumberFilter"
+                                        [(ngModel)]="authorizationTransactionNumberFilter"
+                                        (ngModelChange)="getOrderPaymentInfos()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="AuthorizationTransactionCodeFilter">
+                                        {{ l('AuthorizationTransactionCode') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="AuthorizationTransactionCodeFilter"
+                                        name="authorizationTransactionCodeFilter"
+                                        [(ngModel)]="authorizationTransactionCodeFilter"
+                                        (ngModelChange)="getOrderPaymentInfos()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="AuthrorizationTransactionResultFilter">
+                                        {{ l('AuthrorizationTransactionResult') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="AuthrorizationTransactionResultFilter"
+                                        name="authrorizationTransactionResultFilter"
+                                        [(ngModel)]="authrorizationTransactionResultFilter"
+                                        (ngModelChange)="getOrderPaymentInfos()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="CustomerIpAddressFilter">
+                                        {{ l('CustomerIpAddress') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="CustomerIpAddressFilter"
+                                        name="customerIpAddressFilter"
+                                        [(ngModel)]="customerIpAddressFilter"
+                                        (ngModelChange)="getOrderPaymentInfos()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="CustomerDeviceInfoFilter">
+                                        {{ l('CustomerDeviceInfo') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="CustomerDeviceInfoFilter"
+                                        name="customerDeviceInfoFilter"
+                                        [(ngModel)]="customerDeviceInfoFilter"
+                                        (ngModelChange)="getOrderPaymentInfos()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="MinPaidDateFilter">{{ l('PaidDateRange') }}</label>
+                                    <div class="input-group">
+                                        <input
+                                            class="form-control m-input"
+                                            id="MinPaidDateFilter"
+                                            name="MinPaidDateFilter"
+                                            type="datetime"
+                                            bsDatepicker
+                                            placeholder="{{ l('MinValue') }}"
+                                            [(ngModel)]="minPaidDateFilter"
+                                            (ngModelChange)="getOrderPaymentInfos()"
+                                        />
+                                        <span style="line-height: 40px; padding: 0 15px 0 15px">&mdash;</span>
+                                        <input
+                                            class="form-control m-input"
+                                            id="MaxPaidDateFilter"
+                                            name="MaxPaidDateFilter"
+                                            type="datetime"
+                                            bsDatepicker
+                                            placeholder="{{ l('MaxValue') }}"
+                                            [(ngModel)]="maxPaidDateFilter"
+                                            (ngModelChange)="getOrderPaymentInfos()"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="PaidTimeFilter">{{ l('PaidTime') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="PaidTimeFilter"
+                                        name="paidTimeFilter"
+                                        [(ngModel)]="paidTimeFilter"
+                                        (ngModelChange)="getOrderPaymentInfos()"
+                                    />
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="OrderInvoiceNumberFilter">
+                                        ({{ l('Order') }}) {{ l('InvoiceNumber') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="OrderInvoiceNumberFilter"
+                                        name="orderInvoiceNumberFilter"
+                                        [(ngModel)]="orderInvoiceNumberFilter"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="CurrencyNameFilter">
+                                        ({{ l('Currency') }}) {{ l('Name') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="CurrencyNameFilter"
+                                        name="currencyNameFilter"
+                                        [(ngModel)]="currencyNameFilter"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="PaymentTypeNameFilter">
+                                        ({{ l('PaymentType') }}) {{ l('Name') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="PaymentTypeNameFilter"
+                                        name="paymentTypeNameFilter"
+                                        [(ngModel)]="paymentTypeNameFilter"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-12 mt-5">
+                                <button
+                                    (click)="resetFilters()"
+                                    class="btn btn-secondary btn-sm"
+                                    id="btn-reset-filters"
+                                >
+                                    Reset
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row my-4">
+                            <div class="col-sm-12">
+                                <span
+                                    class="clickable-item text-muted"
+                                    *ngIf="!advancedFiltersAreShown"
+                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown"
+                                >
+                                    <i class="fa fa-angle-down"></i>
+                                    {{ l('ShowAdvancedFilters') }}
+                                </span>
+                                <span
+                                    class="clickable-item text-muted"
+                                    *ngIf="advancedFiltersAreShown"
+                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown"
+                                >
+                                    <i class="fa fa-angle-up"></i>
+                                    {{ l('HideAdvancedFilters') }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="row align-items-center">
+                    <!--<Primeng-Datatable-Start>-->
+                    <div class="primeng-datatable-container col-12" [busyIf]="primengTableHelper.isLoading">
+                        <p-table
+                            #dataTable
+                            (onLazyLoad)="getOrderPaymentInfos($event)"
+                            [value]="primengTableHelper.records"
+                            rows="{{ primengTableHelper.defaultRecordsCountPerPage }}"
+                            [paginator]="false"
+                            [lazy]="true"
+                            [scrollable]="true"
+                            ScrollWidth="100%"
+                            [responsive]="primengTableHelper.isResponsive"
+                            [resizableColumns]="primengTableHelper.resizableColumns"
+                        >
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th
+                                        style="width: 130px"
+                                        [hidden]="
+                                            !isGrantedAny(
+                                                'Pages.OrderPaymentInfos.Edit',
+                                                'Pages.OrderPaymentInfos.Delete'
+                                            )
+                                        "
+                                    >
+                                        {{ l('Actions') }}
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="orderFk.invoiceNumber">
+                                        {{ l('InvoiceNumber') }}
+                                        <p-sortIcon field="orderInvoiceNumber"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="currencyFk.name">
+                                        {{ l('Name') }}
+                                        <p-sortIcon field="currencyName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="paymentTypeFk.name">
+                                        {{ l('Name') }}
+                                        <p-sortIcon field="paymentTypeName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="paymentSplit">
+                                        {{ l('PaymentSplit') }}
+                                        <p-sortIcon field="orderPaymentInfo.paymentSplit"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="dueAmount">
+                                        {{ l('DueAmount') }}
+                                        <p-sortIcon field="orderPaymentInfo.dueAmount"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="paySplitAmount">
+                                        {{ l('PaySplitAmount') }}
+                                        <p-sortIcon field="orderPaymentInfo.paySplitAmount"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="billingAddress">
+                                        {{ l('BillingAddress') }}
+                                        <p-sortIcon field="orderPaymentInfo.billingAddress"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="billingCity">
+                                        {{ l('BillingCity') }}
+                                        <p-sortIcon field="orderPaymentInfo.billingCity"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="billingState">
+                                        {{ l('BillingState') }}
+                                        <p-sortIcon field="orderPaymentInfo.billingState"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="billingZipCode">
+                                        {{ l('BillingZipCode') }}
+                                        <p-sortIcon field="orderPaymentInfo.billingZipCode"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="saveCreditCardNumber">
+                                        {{ l('SaveCreditCardNumber') }}
+                                        <p-sortIcon field="orderPaymentInfo.saveCreditCardNumber"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="maskedCreditCardNumber">
+                                        {{ l('MaskedCreditCardNumber') }}
+                                        <p-sortIcon field="orderPaymentInfo.maskedCreditCardNumber"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="cardName">
+                                        {{ l('CardName') }}
+                                        <p-sortIcon field="orderPaymentInfo.cardName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="cardNumber">
+                                        {{ l('CardNumber') }}
+                                        <p-sortIcon field="orderPaymentInfo.cardNumber"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="cardCvv">
+                                        {{ l('CardCvv') }}
+                                        <p-sortIcon field="orderPaymentInfo.cardCvv"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="cardExpirationMonth">
+                                        {{ l('CardExpirationMonth') }}
+                                        <p-sortIcon field="orderPaymentInfo.cardExpirationMonth"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="cardExpirationYear">
+                                        {{ l('CardExpirationYear') }}
+                                        <p-sortIcon field="orderPaymentInfo.cardExpirationYear"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="authorizationTransactionNumber">
+                                        {{ l('AuthorizationTransactionNumber') }}
+                                        <p-sortIcon
+                                            field="orderPaymentInfo.authorizationTransactionNumber"
+                                        ></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="authorizationTransactionCode">
+                                        {{ l('AuthorizationTransactionCode') }}
+                                        <p-sortIcon field="orderPaymentInfo.authorizationTransactionCode"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="authrorizationTransactionResult">
+                                        {{ l('AuthrorizationTransactionResult') }}
+                                        <p-sortIcon
+                                            field="orderPaymentInfo.authrorizationTransactionResult"
+                                        ></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="customerIpAddress">
+                                        {{ l('CustomerIpAddress') }}
+                                        <p-sortIcon field="orderPaymentInfo.customerIpAddress"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="customerDeviceInfo">
+                                        {{ l('CustomerDeviceInfo') }}
+                                        <p-sortIcon field="orderPaymentInfo.customerDeviceInfo"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="paidDate">
+                                        {{ l('PaidDate') }}
+                                        <p-sortIcon field="orderPaymentInfo.paidDate"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="paidTime">
+                                        {{ l('PaidTime') }}
+                                        <p-sortIcon field="orderPaymentInfo.paidTime"></p-sortIcon>
+                                    </th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
+                                <tr>
+                                    <td
+                                        style="width: 130px"
+                                        [hidden]="
+                                            !isGrantedAny(
+                                                'Pages.OrderPaymentInfos.Edit',
+                                                'Pages.OrderPaymentInfos.Delete'
+                                            )
+                                        "
+                                    >
+                                        <div class="btn-group dropdown" dropdown container="body">
+                                            <button class="dropdown-toggle btn btn-sm btn-primary" dropdownToggle>
+                                                <i class="fa fa-cog"></i>
+                                                <span class="caret"></span>
+                                                {{ l('Actions') }}
+                                            </button>
+                                            <ul class="dropdown-menu" *dropdownMenu>
+                                                <li>
+                                                    <a
+                                                        href="javascript:;"
+                                                        class="dropdown-item"
+                                                        (click)="viewOrderPaymentInfoModal.show(record)"
+                                                    >
+                                                        {{ l('View') }}
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a
+                                                        href="javascript:;"
+                                                        *ngIf="permission.isGranted('Pages.OrderPaymentInfos.Edit')"
+                                                        class="dropdown-item"
+                                                        (click)="
+                                                            createOrEditOrderPaymentInfoModal.show(
+                                                                record.orderPaymentInfo.id
+                                                            )
+                                                        "
+                                                    >
+                                                        {{ l('Edit') }}
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a
+                                                        class="dropdown-item"
+                                                        href="javascript:;"
+                                                        *ngIf="permission.isGranted('Pages.OrderPaymentInfos.Delete')"
+                                                        (click)="deleteOrderPaymentInfo(record.orderPaymentInfo)"
+                                                    >
+                                                        {{ l('Delete') }}
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('InvoiceNumber') }}</span>
+                                        {{ record.orderInvoiceNumber }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Name') }}</span>
+                                        {{ record.currencyName }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Name') }}</span>
+                                        {{ record.paymentTypeName }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('PaymentSplit') }}</span>
+                                        <div *ngIf="record.orderPaymentInfo.paymentSplit" class="text-center">
+                                            <i class="fa fa-check-circle text-success" title="True"></i>
+                                        </div>
+                                        <div *ngIf="!record.orderPaymentInfo.paymentSplit" class="text-center">
+                                            <i class="fa fa-times-circle" title="False"></i>
+                                        </div>
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('DueAmount') }}</span>
+                                        {{ record.orderPaymentInfo.dueAmount }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('PaySplitAmount') }}</span>
+                                        {{ record.orderPaymentInfo.paySplitAmount }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('BillingAddress') }}</span>
+                                        {{ record.orderPaymentInfo.billingAddress }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('BillingCity') }}</span>
+                                        {{ record.orderPaymentInfo.billingCity }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('BillingState') }}</span>
+                                        {{ record.orderPaymentInfo.billingState }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('BillingZipCode') }}</span>
+                                        {{ record.orderPaymentInfo.billingZipCode }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('SaveCreditCardNumber') }}</span>
+                                        <div *ngIf="record.orderPaymentInfo.saveCreditCardNumber" class="text-center">
+                                            <i class="fa fa-check-circle text-success" title="True"></i>
+                                        </div>
+                                        <div *ngIf="!record.orderPaymentInfo.saveCreditCardNumber" class="text-center">
+                                            <i class="fa fa-times-circle" title="False"></i>
+                                        </div>
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('MaskedCreditCardNumber') }}</span>
+                                        {{ record.orderPaymentInfo.maskedCreditCardNumber }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('CardName') }}</span>
+                                        {{ record.orderPaymentInfo.cardName }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('CardNumber') }}</span>
+                                        {{ record.orderPaymentInfo.cardNumber }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('CardCvv') }}</span>
+                                        {{ record.orderPaymentInfo.cardCvv }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('CardExpirationMonth') }}</span>
+                                        {{ record.orderPaymentInfo.cardExpirationMonth }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('CardExpirationYear') }}</span>
+                                        {{ record.orderPaymentInfo.cardExpirationYear }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('AuthorizationTransactionNumber') }}</span>
+                                        {{ record.orderPaymentInfo.authorizationTransactionNumber }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('AuthorizationTransactionCode') }}</span>
+                                        {{ record.orderPaymentInfo.authorizationTransactionCode }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('AuthrorizationTransactionResult') }}</span>
+                                        {{ record.orderPaymentInfo.authrorizationTransactionResult }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('CustomerIpAddress') }}</span>
+                                        {{ record.orderPaymentInfo.customerIpAddress }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('CustomerDeviceInfo') }}</span>
+                                        {{ record.orderPaymentInfo.customerDeviceInfo }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('PaidDate') }}</span>
+                                        <span *ngIf="record.orderPaymentInfo.paidDate">
+                                            {{ record.orderPaymentInfo.paidDate | luxonFormat : 'F' }}
+                                        </span>
+                                        <span *ngIf="!record.orderPaymentInfo.paidDate">-</span>
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('PaidTime') }}</span>
+                                        {{ record.orderPaymentInfo.paidTime }}
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                        <div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
+                            {{ l('NoData') }}
+                        </div>
+                        <div class="primeng-paging-container">
+                            <p-paginator
+                                [rows]="primengTableHelper.defaultRecordsCountPerPage"
+                                #paginator
+                                (onPageChange)="getOrderPaymentInfos($event)"
+                                [totalRecords]="primengTableHelper.totalRecordsCount"
+                                [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
+                                [showCurrentPageReport]="true"
+                                [currentPageReportTemplate]="
+                                    'TotalRecordsCount' | localize : primengTableHelper.totalRecordsCount
+                                "
+                            ></p-paginator>
+                        </div>
+                    </div>
+                    <!--<Primeng-Datatable-End>-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <createOrEditOrderPaymentInfoModal
+        #createOrEditOrderPaymentInfoModal
+        (modalSave)="getOrderPaymentInfos()"
+    ></createOrEditOrderPaymentInfoModal>
+    <viewOrderPaymentInfoModal #viewOrderPaymentInfoModal></viewOrderPaymentInfoModal>
+</div>

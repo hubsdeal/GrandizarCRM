@@ -6,6 +6,86 @@
     /// </summary>
     public static class AppPermissions
     {
+        public const string Pages_DiscountCodeUserHistories = "Pages.DiscountCodeUserHistories";
+        public const string Pages_DiscountCodeUserHistories_Create = "Pages.DiscountCodeUserHistories.Create";
+        public const string Pages_DiscountCodeUserHistories_Edit = "Pages.DiscountCodeUserHistories.Edit";
+        public const string Pages_DiscountCodeUserHistories_Delete = "Pages.DiscountCodeUserHistories.Delete";
+
+        public const string Pages_DiscountCodeMaps = "Pages.DiscountCodeMaps";
+        public const string Pages_DiscountCodeMaps_Create = "Pages.DiscountCodeMaps.Create";
+        public const string Pages_DiscountCodeMaps_Edit = "Pages.DiscountCodeMaps.Edit";
+        public const string Pages_DiscountCodeMaps_Delete = "Pages.DiscountCodeMaps.Delete";
+
+        public const string Pages_DiscountCodeByCustomers = "Pages.DiscountCodeByCustomers";
+        public const string Pages_DiscountCodeByCustomers_Create = "Pages.DiscountCodeByCustomers.Create";
+        public const string Pages_DiscountCodeByCustomers_Edit = "Pages.DiscountCodeByCustomers.Edit";
+        public const string Pages_DiscountCodeByCustomers_Delete = "Pages.DiscountCodeByCustomers.Delete";
+
+        public const string Pages_DiscountCodeGenerators = "Pages.DiscountCodeGenerators";
+        public const string Pages_DiscountCodeGenerators_Create = "Pages.DiscountCodeGenerators.Create";
+        public const string Pages_DiscountCodeGenerators_Edit = "Pages.DiscountCodeGenerators.Edit";
+        public const string Pages_DiscountCodeGenerators_Delete = "Pages.DiscountCodeGenerators.Delete";
+
+        public const string Pages_CustomerWallets = "Pages.CustomerWallets";
+        public const string Pages_CustomerWallets_Create = "Pages.CustomerWallets.Create";
+        public const string Pages_CustomerWallets_Edit = "Pages.CustomerWallets.Edit";
+        public const string Pages_CustomerWallets_Delete = "Pages.CustomerWallets.Delete";
+
+        public const string Pages_OrderTeams = "Pages.OrderTeams";
+        public const string Pages_OrderTeams_Create = "Pages.OrderTeams.Create";
+        public const string Pages_OrderTeams_Edit = "Pages.OrderTeams.Edit";
+        public const string Pages_OrderTeams_Delete = "Pages.OrderTeams.Delete";
+
+        public const string Pages_OrderProductVariants = "Pages.OrderProductVariants";
+        public const string Pages_OrderProductVariants_Create = "Pages.OrderProductVariants.Create";
+        public const string Pages_OrderProductVariants_Edit = "Pages.OrderProductVariants.Edit";
+        public const string Pages_OrderProductVariants_Delete = "Pages.OrderProductVariants.Delete";
+
+        public const string Pages_OrderProductInfos = "Pages.OrderProductInfos";
+        public const string Pages_OrderProductInfos_Create = "Pages.OrderProductInfos.Create";
+        public const string Pages_OrderProductInfos_Edit = "Pages.OrderProductInfos.Edit";
+        public const string Pages_OrderProductInfos_Delete = "Pages.OrderProductInfos.Delete";
+
+        public const string Pages_PaymentTypes = "Pages.PaymentTypes";
+        public const string Pages_PaymentTypes_Create = "Pages.PaymentTypes.Create";
+        public const string Pages_PaymentTypes_Edit = "Pages.PaymentTypes.Edit";
+        public const string Pages_PaymentTypes_Delete = "Pages.PaymentTypes.Delete";
+
+        public const string Pages_OrderPaymentInfos = "Pages.OrderPaymentInfos";
+        public const string Pages_OrderPaymentInfos_Create = "Pages.OrderPaymentInfos.Create";
+        public const string Pages_OrderPaymentInfos_Edit = "Pages.OrderPaymentInfos.Edit";
+        public const string Pages_OrderPaymentInfos_Delete = "Pages.OrderPaymentInfos.Delete";
+
+        public const string Pages_OrderfulfillmentTeams = "Pages.OrderfulfillmentTeams";
+        public const string Pages_OrderfulfillmentTeams_Create = "Pages.OrderfulfillmentTeams.Create";
+        public const string Pages_OrderfulfillmentTeams_Edit = "Pages.OrderfulfillmentTeams.Edit";
+        public const string Pages_OrderfulfillmentTeams_Delete = "Pages.OrderfulfillmentTeams.Delete";
+
+        public const string Pages_OrderFulfillmentStatuses = "Pages.OrderFulfillmentStatuses";
+        public const string Pages_OrderFulfillmentStatuses_Create = "Pages.OrderFulfillmentStatuses.Create";
+        public const string Pages_OrderFulfillmentStatuses_Edit = "Pages.OrderFulfillmentStatuses.Edit";
+        public const string Pages_OrderFulfillmentStatuses_Delete = "Pages.OrderFulfillmentStatuses.Delete";
+
+        public const string Pages_OrderDeliveryInfos = "Pages.OrderDeliveryInfos";
+        public const string Pages_OrderDeliveryInfos_Create = "Pages.OrderDeliveryInfos.Create";
+        public const string Pages_OrderDeliveryInfos_Edit = "Pages.OrderDeliveryInfos.Edit";
+        public const string Pages_OrderDeliveryInfos_Delete = "Pages.OrderDeliveryInfos.Delete";
+
+        public const string Pages_Orders = "Pages.Orders";
+        public const string Pages_Orders_Create = "Pages.Orders.Create";
+        public const string Pages_Orders_Edit = "Pages.Orders.Edit";
+        public const string Pages_Orders_Delete = "Pages.Orders.Delete";
+
+        public const string Pages_OrderStatuses = "Pages.OrderStatuses";
+        public const string Pages_OrderStatuses_Create = "Pages.OrderStatuses.Create";
+        public const string Pages_OrderStatuses_Edit = "Pages.OrderStatuses.Edit";
+        public const string Pages_OrderStatuses_Delete = "Pages.OrderStatuses.Delete";
+
+        public const string Pages_OrderSalesChannels = "Pages.OrderSalesChannels";
+        public const string Pages_OrderSalesChannels_Create = "Pages.OrderSalesChannels.Create";
+        public const string Pages_OrderSalesChannels_Edit = "Pages.OrderSalesChannels.Edit";
+        public const string Pages_OrderSalesChannels_Delete = "Pages.OrderSalesChannels.Delete";
+
         public const string Pages_ProductWholeSalePrices = "Pages.ProductWholeSalePrices";
         public const string Pages_ProductWholeSalePrices_Create = "Pages.ProductWholeSalePrices.Create";
         public const string Pages_ProductWholeSalePrices_Edit = "Pages.ProductWholeSalePrices.Edit";

@@ -1,0 +1,70 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span>{{ l('Details') }}</span>
+                </h4>
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    (click)="close()"
+                    aria-label="Close"
+                    [disabled]="saving"
+                ></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Name') }} :</h6>
+                        {{ item.orderStatus.name }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Description') }} :</h6>
+                        {{ item.orderStatus.description }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('SequenceNo') }} :</h6>
+                        {{ item.orderStatus.sequenceNo }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('ColorCode') }} :</h6>
+                        {{ item.orderStatus.colorCode }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('Message') }} :</h6>
+                        {{ item.orderStatus.message }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('DeliveryOrPickup') }} :</h6>
+                        <div *ngIf="item.orderStatus.deliveryOrPickup" class="text-left">
+                            <i class="fa fa-check-circle text-success" title="True"></i>
+                        </div>
+                        <div *ngIf="!item.orderStatus.deliveryOrPickup" class="text-left">
+                            <i class="fa fa-times-circle" title="False"></i>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('Role') }}) {{ l('Name') }} :</h6>
+                        {{ item.roleName }}
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button [disabled]="saving" type="button" class="btn btn-primary blue" (click)="close()">
+                    {{ l('Close') }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

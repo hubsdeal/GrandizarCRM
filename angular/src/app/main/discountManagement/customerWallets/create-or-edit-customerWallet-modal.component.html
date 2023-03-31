@@ -1,0 +1,188 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #customerWalletForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="customerWallet.id">{{ l('EditCustomerWallet') }}</span>
+                        <span *ngIf="!customerWallet.id">{{ l('CreateNewCustomerWallet') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="ContactFullName">{{ l('Contact') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="ContactFullName"
+                                name="contactFullName"
+                                [(ngModel)]="contactFullName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectContactModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setContactIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="customerWallet.contactId"
+                        [(ngModel)]="customerWallet.contactId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="UserName">{{ l('User') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="UserName"
+                                name="userName"
+                                [(ngModel)]="userName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectUserModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setUserIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="customerWallet.userId"
+                        [(ngModel)]="customerWallet.userId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="CurrencyName">{{ l('Currency') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="CurrencyName"
+                                name="currencyName"
+                                [(ngModel)]="currencyName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectCurrencyModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setCurrencyIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="customerWallet.currencyId"
+                        [(ngModel)]="customerWallet.currencyId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="CustomerWallet_WalletOpeningDate">
+                            {{ l('WalletOpeningDate') }}
+                        </label>
+                        <input
+                            class="form-control m-input"
+                            #CustomerWallet_WalletOpeningDate
+                            type="datetime"
+                            bsDatepicker
+                            datePickerLuxonModifier
+                            [(date)]="customerWallet.walletOpeningDate"
+                            id="CustomerWallet_WalletOpeningDate"
+                            name="CustomerWallet_WalletOpeningDate"
+                        />
+                        <validation-messages [formCtrl]="CustomerWallet_WalletOpeningDate"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="CustomerWallet_BalanceDate">{{ l('BalanceDate') }}</label>
+                        <input
+                            class="form-control m-input"
+                            #CustomerWallet_BalanceDate
+                            type="datetime"
+                            bsDatepicker
+                            datePickerLuxonModifier
+                            [(date)]="customerWallet.balanceDate"
+                            id="CustomerWallet_BalanceDate"
+                            name="CustomerWallet_BalanceDate"
+                        />
+                        <validation-messages [formCtrl]="CustomerWallet_BalanceDate"></validation-messages>
+                    </div>
+
+                    <div class="my5">
+                        <label class="form-label" for="CustomerWallet_BalanceAmount">{{ l('BalanceAmount') }}</label>
+                        <input
+                            type="number"
+                            #CustomerWallet_BalanceAmount="ngModel"
+                            id="CustomerWallet_BalanceAmount"
+                            class="form-control"
+                            [(ngModel)]="customerWallet.balanceAmount"
+                            name="BalanceAmount"
+                        />
+                        <validation-messages [formCtrl]="CustomerWallet_BalanceAmount"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!customerWalletForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <customerWalletContactLookupTableModal
+        #customerWalletContactLookupTableModal
+        (modalSave)="getNewContactId()"
+    ></customerWalletContactLookupTableModal>
+    <customerWalletUserLookupTableModal
+        #customerWalletUserLookupTableModal
+        (modalSave)="getNewUserId()"
+    ></customerWalletUserLookupTableModal>
+    <customerWalletCurrencyLookupTableModal
+        #customerWalletCurrencyLookupTableModal
+        (modalSave)="getNewCurrencyId()"
+    ></customerWalletCurrencyLookupTableModal>
+</div>

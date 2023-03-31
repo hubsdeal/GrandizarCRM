@@ -30,6 +30,86 @@ namespace SoftGrid.Authorization
 
             var pages = context.GetPermissionOrNull(AppPermissions.Pages) ?? context.CreatePermission(AppPermissions.Pages, L("Pages"));
 
+            var discountCodeUserHistories = pages.CreateChildPermission(AppPermissions.Pages_DiscountCodeUserHistories, L("DiscountCodeUserHistories"));
+            discountCodeUserHistories.CreateChildPermission(AppPermissions.Pages_DiscountCodeUserHistories_Create, L("CreateNewDiscountCodeUserHistory"));
+            discountCodeUserHistories.CreateChildPermission(AppPermissions.Pages_DiscountCodeUserHistories_Edit, L("EditDiscountCodeUserHistory"));
+            discountCodeUserHistories.CreateChildPermission(AppPermissions.Pages_DiscountCodeUserHistories_Delete, L("DeleteDiscountCodeUserHistory"));
+
+            var discountCodeMaps = pages.CreateChildPermission(AppPermissions.Pages_DiscountCodeMaps, L("DiscountCodeMaps"));
+            discountCodeMaps.CreateChildPermission(AppPermissions.Pages_DiscountCodeMaps_Create, L("CreateNewDiscountCodeMap"));
+            discountCodeMaps.CreateChildPermission(AppPermissions.Pages_DiscountCodeMaps_Edit, L("EditDiscountCodeMap"));
+            discountCodeMaps.CreateChildPermission(AppPermissions.Pages_DiscountCodeMaps_Delete, L("DeleteDiscountCodeMap"));
+
+            var discountCodeByCustomers = pages.CreateChildPermission(AppPermissions.Pages_DiscountCodeByCustomers, L("DiscountCodeByCustomers"));
+            discountCodeByCustomers.CreateChildPermission(AppPermissions.Pages_DiscountCodeByCustomers_Create, L("CreateNewDiscountCodeByCustomer"));
+            discountCodeByCustomers.CreateChildPermission(AppPermissions.Pages_DiscountCodeByCustomers_Edit, L("EditDiscountCodeByCustomer"));
+            discountCodeByCustomers.CreateChildPermission(AppPermissions.Pages_DiscountCodeByCustomers_Delete, L("DeleteDiscountCodeByCustomer"));
+
+            var discountCodeGenerators = pages.CreateChildPermission(AppPermissions.Pages_DiscountCodeGenerators, L("DiscountCodeGenerators"));
+            discountCodeGenerators.CreateChildPermission(AppPermissions.Pages_DiscountCodeGenerators_Create, L("CreateNewDiscountCodeGenerator"));
+            discountCodeGenerators.CreateChildPermission(AppPermissions.Pages_DiscountCodeGenerators_Edit, L("EditDiscountCodeGenerator"));
+            discountCodeGenerators.CreateChildPermission(AppPermissions.Pages_DiscountCodeGenerators_Delete, L("DeleteDiscountCodeGenerator"));
+
+            var customerWallets = pages.CreateChildPermission(AppPermissions.Pages_CustomerWallets, L("CustomerWallets"));
+            customerWallets.CreateChildPermission(AppPermissions.Pages_CustomerWallets_Create, L("CreateNewCustomerWallet"));
+            customerWallets.CreateChildPermission(AppPermissions.Pages_CustomerWallets_Edit, L("EditCustomerWallet"));
+            customerWallets.CreateChildPermission(AppPermissions.Pages_CustomerWallets_Delete, L("DeleteCustomerWallet"));
+
+            var orderTeams = pages.CreateChildPermission(AppPermissions.Pages_OrderTeams, L("OrderTeams"));
+            orderTeams.CreateChildPermission(AppPermissions.Pages_OrderTeams_Create, L("CreateNewOrderTeam"));
+            orderTeams.CreateChildPermission(AppPermissions.Pages_OrderTeams_Edit, L("EditOrderTeam"));
+            orderTeams.CreateChildPermission(AppPermissions.Pages_OrderTeams_Delete, L("DeleteOrderTeam"));
+
+            var orderProductVariants = pages.CreateChildPermission(AppPermissions.Pages_OrderProductVariants, L("OrderProductVariants"));
+            orderProductVariants.CreateChildPermission(AppPermissions.Pages_OrderProductVariants_Create, L("CreateNewOrderProductVariant"));
+            orderProductVariants.CreateChildPermission(AppPermissions.Pages_OrderProductVariants_Edit, L("EditOrderProductVariant"));
+            orderProductVariants.CreateChildPermission(AppPermissions.Pages_OrderProductVariants_Delete, L("DeleteOrderProductVariant"));
+
+            var orderProductInfos = pages.CreateChildPermission(AppPermissions.Pages_OrderProductInfos, L("OrderProductInfos"));
+            orderProductInfos.CreateChildPermission(AppPermissions.Pages_OrderProductInfos_Create, L("CreateNewOrderProductInfo"));
+            orderProductInfos.CreateChildPermission(AppPermissions.Pages_OrderProductInfos_Edit, L("EditOrderProductInfo"));
+            orderProductInfos.CreateChildPermission(AppPermissions.Pages_OrderProductInfos_Delete, L("DeleteOrderProductInfo"));
+
+            var paymentTypes = pages.CreateChildPermission(AppPermissions.Pages_PaymentTypes, L("PaymentTypes"));
+            paymentTypes.CreateChildPermission(AppPermissions.Pages_PaymentTypes_Create, L("CreateNewPaymentType"));
+            paymentTypes.CreateChildPermission(AppPermissions.Pages_PaymentTypes_Edit, L("EditPaymentType"));
+            paymentTypes.CreateChildPermission(AppPermissions.Pages_PaymentTypes_Delete, L("DeletePaymentType"));
+
+            var orderPaymentInfos = pages.CreateChildPermission(AppPermissions.Pages_OrderPaymentInfos, L("OrderPaymentInfos"));
+            orderPaymentInfos.CreateChildPermission(AppPermissions.Pages_OrderPaymentInfos_Create, L("CreateNewOrderPaymentInfo"));
+            orderPaymentInfos.CreateChildPermission(AppPermissions.Pages_OrderPaymentInfos_Edit, L("EditOrderPaymentInfo"));
+            orderPaymentInfos.CreateChildPermission(AppPermissions.Pages_OrderPaymentInfos_Delete, L("DeleteOrderPaymentInfo"));
+
+            var orderfulfillmentTeams = pages.CreateChildPermission(AppPermissions.Pages_OrderfulfillmentTeams, L("OrderfulfillmentTeams"));
+            orderfulfillmentTeams.CreateChildPermission(AppPermissions.Pages_OrderfulfillmentTeams_Create, L("CreateNewOrderfulfillmentTeam"));
+            orderfulfillmentTeams.CreateChildPermission(AppPermissions.Pages_OrderfulfillmentTeams_Edit, L("EditOrderfulfillmentTeam"));
+            orderfulfillmentTeams.CreateChildPermission(AppPermissions.Pages_OrderfulfillmentTeams_Delete, L("DeleteOrderfulfillmentTeam"));
+
+            var orderFulfillmentStatuses = pages.CreateChildPermission(AppPermissions.Pages_OrderFulfillmentStatuses, L("OrderFulfillmentStatuses"));
+            orderFulfillmentStatuses.CreateChildPermission(AppPermissions.Pages_OrderFulfillmentStatuses_Create, L("CreateNewOrderFulfillmentStatus"));
+            orderFulfillmentStatuses.CreateChildPermission(AppPermissions.Pages_OrderFulfillmentStatuses_Edit, L("EditOrderFulfillmentStatus"));
+            orderFulfillmentStatuses.CreateChildPermission(AppPermissions.Pages_OrderFulfillmentStatuses_Delete, L("DeleteOrderFulfillmentStatus"));
+
+            var orderDeliveryInfos = pages.CreateChildPermission(AppPermissions.Pages_OrderDeliveryInfos, L("OrderDeliveryInfos"));
+            orderDeliveryInfos.CreateChildPermission(AppPermissions.Pages_OrderDeliveryInfos_Create, L("CreateNewOrderDeliveryInfo"));
+            orderDeliveryInfos.CreateChildPermission(AppPermissions.Pages_OrderDeliveryInfos_Edit, L("EditOrderDeliveryInfo"));
+            orderDeliveryInfos.CreateChildPermission(AppPermissions.Pages_OrderDeliveryInfos_Delete, L("DeleteOrderDeliveryInfo"));
+
+            var orders = pages.CreateChildPermission(AppPermissions.Pages_Orders, L("Orders"));
+            orders.CreateChildPermission(AppPermissions.Pages_Orders_Create, L("CreateNewOrder"));
+            orders.CreateChildPermission(AppPermissions.Pages_Orders_Edit, L("EditOrder"));
+            orders.CreateChildPermission(AppPermissions.Pages_Orders_Delete, L("DeleteOrder"));
+
+            var orderStatuses = pages.CreateChildPermission(AppPermissions.Pages_OrderStatuses, L("OrderStatuses"));
+            orderStatuses.CreateChildPermission(AppPermissions.Pages_OrderStatuses_Create, L("CreateNewOrderStatus"));
+            orderStatuses.CreateChildPermission(AppPermissions.Pages_OrderStatuses_Edit, L("EditOrderStatus"));
+            orderStatuses.CreateChildPermission(AppPermissions.Pages_OrderStatuses_Delete, L("DeleteOrderStatus"));
+
+            var orderSalesChannels = pages.CreateChildPermission(AppPermissions.Pages_OrderSalesChannels, L("OrderSalesChannels"));
+            orderSalesChannels.CreateChildPermission(AppPermissions.Pages_OrderSalesChannels_Create, L("CreateNewOrderSalesChannel"));
+            orderSalesChannels.CreateChildPermission(AppPermissions.Pages_OrderSalesChannels_Edit, L("EditOrderSalesChannel"));
+            orderSalesChannels.CreateChildPermission(AppPermissions.Pages_OrderSalesChannels_Delete, L("DeleteOrderSalesChannel"));
+
             var productWholeSalePrices = pages.CreateChildPermission(AppPermissions.Pages_ProductWholeSalePrices, L("ProductWholeSalePrices"));
             productWholeSalePrices.CreateChildPermission(AppPermissions.Pages_ProductWholeSalePrices_Create, L("CreateNewProductWholeSalePrice"));
             productWholeSalePrices.CreateChildPermission(AppPermissions.Pages_ProductWholeSalePrices_Edit, L("EditProductWholeSalePrice"));

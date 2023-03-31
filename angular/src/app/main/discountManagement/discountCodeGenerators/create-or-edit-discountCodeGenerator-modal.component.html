@@ -1,0 +1,216 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #discountCodeGeneratorForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="discountCodeGenerator.id">{{ l('EditDiscountCodeGenerator') }}</span>
+                        <span *ngIf="!discountCodeGenerator.id">{{ l('CreateNewDiscountCodeGenerator') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="DiscountCodeGenerator_Name">{{ l('Name') }}</label>
+                        <input
+                            type="text"
+                            #DiscountCodeGenerator_Name="ngModel"
+                            id="DiscountCodeGenerator_Name"
+                            class="form-control"
+                            [(ngModel)]="discountCodeGenerator.name"
+                            name="Name"
+                            minlength="1"
+                            maxlength="128"
+                        />
+                        <validation-messages [formCtrl]="DiscountCodeGenerator_Name"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="DiscountCodeGenerator_CouponCode">{{ l('CouponCode') }}</label>
+                        <input
+                            type="text"
+                            #DiscountCodeGenerator_CouponCode="ngModel"
+                            id="DiscountCodeGenerator_CouponCode"
+                            class="form-control"
+                            [(ngModel)]="discountCodeGenerator.couponCode"
+                            name="CouponCode"
+                            minlength="1"
+                            maxlength="256"
+                        />
+                        <validation-messages [formCtrl]="DiscountCodeGenerator_CouponCode"></validation-messages>
+                    </div>
+
+                    <br />
+                    <label class="form-check form-check-custom form-check-solid">
+                        <input
+                            id="DiscountCodeGenerator_PercentageOrFixedAmount"
+                            #DiscountCodeGenerator_PercentageOrFixedAmount="ngModel"
+                            name="PercentageOrFixedAmount"
+                            [(ngModel)]="discountCodeGenerator.percentageOrFixedAmount"
+                            type="checkbox"
+                            class="form-check-input"
+                        />
+                        <span class="form-check-label">
+                            {{ l('PercentageOrFixedAmount') }}
+                        </span>
+                    </label>
+                    <validation-messages
+                        [formCtrl]="DiscountCodeGenerator_PercentageOrFixedAmount"
+                    ></validation-messages>
+
+                    <div class="my5">
+                        <label class="form-label" for="DiscountCodeGenerator_DiscountPercentage">
+                            {{ l('DiscountPercentage') }}
+                        </label>
+                        <input
+                            type="number"
+                            #DiscountCodeGenerator_DiscountPercentage="ngModel"
+                            id="DiscountCodeGenerator_DiscountPercentage"
+                            class="form-control"
+                            [(ngModel)]="discountCodeGenerator.discountPercentage"
+                            name="DiscountPercentage"
+                        />
+                        <validation-messages
+                            [formCtrl]="DiscountCodeGenerator_DiscountPercentage"
+                        ></validation-messages>
+                    </div>
+
+                    <div class="my5">
+                        <label class="form-label" for="DiscountCodeGenerator_DiscountAmount">
+                            {{ l('DiscountAmount') }}
+                        </label>
+                        <input
+                            type="number"
+                            #DiscountCodeGenerator_DiscountAmount="ngModel"
+                            id="DiscountCodeGenerator_DiscountAmount"
+                            class="form-control"
+                            [(ngModel)]="discountCodeGenerator.discountAmount"
+                            name="DiscountAmount"
+                        />
+                        <validation-messages [formCtrl]="DiscountCodeGenerator_DiscountAmount"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="DiscountCodeGenerator_StartDate">{{ l('StartDate') }}</label>
+                        <input
+                            class="form-control m-input"
+                            #DiscountCodeGenerator_StartDate
+                            type="datetime"
+                            bsDatepicker
+                            datePickerLuxonModifier
+                            [(date)]="discountCodeGenerator.startDate"
+                            id="DiscountCodeGenerator_StartDate"
+                            name="DiscountCodeGenerator_StartDate"
+                        />
+                        <validation-messages [formCtrl]="DiscountCodeGenerator_StartDate"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="DiscountCodeGenerator_EndDate">{{ l('EndDate') }}</label>
+                        <input
+                            class="form-control m-input"
+                            #DiscountCodeGenerator_EndDate
+                            type="datetime"
+                            bsDatepicker
+                            datePickerLuxonModifier
+                            [(date)]="discountCodeGenerator.endDate"
+                            id="DiscountCodeGenerator_EndDate"
+                            name="DiscountCodeGenerator_EndDate"
+                        />
+                        <validation-messages [formCtrl]="DiscountCodeGenerator_EndDate"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="DiscountCodeGenerator_AdminNotes">{{ l('AdminNotes') }}</label>
+                        <input
+                            type="text"
+                            #DiscountCodeGenerator_AdminNotes="ngModel"
+                            id="DiscountCodeGenerator_AdminNotes"
+                            class="form-control"
+                            [(ngModel)]="discountCodeGenerator.adminNotes"
+                            name="AdminNotes"
+                        />
+                        <validation-messages [formCtrl]="DiscountCodeGenerator_AdminNotes"></validation-messages>
+                    </div>
+
+                    <br />
+                    <label class="form-check form-check-custom form-check-solid">
+                        <input
+                            id="DiscountCodeGenerator_IsActive"
+                            #DiscountCodeGenerator_IsActive="ngModel"
+                            name="IsActive"
+                            [(ngModel)]="discountCodeGenerator.isActive"
+                            type="checkbox"
+                            class="form-check-input"
+                        />
+                        <span class="form-check-label">
+                            {{ l('IsActive') }}
+                        </span>
+                    </label>
+                    <validation-messages [formCtrl]="DiscountCodeGenerator_IsActive"></validation-messages>
+
+                    <div class="my-3">
+                        <label class="form-label" for="DiscountCodeGenerator_StartTime">{{ l('StartTime') }}</label>
+                        <input
+                            type="text"
+                            #DiscountCodeGenerator_StartTime="ngModel"
+                            id="DiscountCodeGenerator_StartTime"
+                            class="form-control"
+                            [(ngModel)]="discountCodeGenerator.startTime"
+                            name="StartTime"
+                            minlength="1"
+                            maxlength="50"
+                        />
+                        <validation-messages [formCtrl]="DiscountCodeGenerator_StartTime"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="DiscountCodeGenerator_EndTime">{{ l('EndTime') }}</label>
+                        <input
+                            type="text"
+                            #DiscountCodeGenerator_EndTime="ngModel"
+                            id="DiscountCodeGenerator_EndTime"
+                            class="form-control"
+                            [(ngModel)]="discountCodeGenerator.endTime"
+                            name="EndTime"
+                            minlength="1"
+                            maxlength="50"
+                        />
+                        <validation-messages [formCtrl]="DiscountCodeGenerator_EndTime"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!discountCodeGeneratorForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,132 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #orderSalesChannelForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="orderSalesChannel.id">{{ l('EditOrderSalesChannel') }}</span>
+                        <span *ngIf="!orderSalesChannel.id">{{ l('CreateNewOrderSalesChannel') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="OrderSalesChannel_Name">{{ l('Name') }} *</label>
+                        <input
+                            type="text"
+                            #OrderSalesChannel_Name="ngModel"
+                            id="OrderSalesChannel_Name"
+                            class="form-control"
+                            [(ngModel)]="orderSalesChannel.name"
+                            name="Name"
+                            minlength="1"
+                            maxlength="128"
+                            required
+                        />
+                        <validation-messages [formCtrl]="OrderSalesChannel_Name"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="OrderSalesChannel_LinkName">{{ l('LinkName') }}</label>
+                        <input
+                            type="text"
+                            #OrderSalesChannel_LinkName="ngModel"
+                            id="OrderSalesChannel_LinkName"
+                            class="form-control"
+                            [(ngModel)]="orderSalesChannel.linkName"
+                            name="LinkName"
+                        />
+                        <validation-messages [formCtrl]="OrderSalesChannel_LinkName"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="OrderSalesChannel_ApiLink">{{ l('ApiLink') }}</label>
+                        <input
+                            type="text"
+                            #OrderSalesChannel_ApiLink="ngModel"
+                            id="OrderSalesChannel_ApiLink"
+                            class="form-control"
+                            [(ngModel)]="orderSalesChannel.apiLink"
+                            name="ApiLink"
+                        />
+                        <validation-messages [formCtrl]="OrderSalesChannel_ApiLink"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="OrderSalesChannel_UserId">{{ l('UserId') }}</label>
+                        <input
+                            type="text"
+                            #OrderSalesChannel_UserId="ngModel"
+                            id="OrderSalesChannel_UserId"
+                            class="form-control"
+                            [(ngModel)]="orderSalesChannel.userId"
+                            name="UserId"
+                            minlength="1"
+                            maxlength="1024"
+                        />
+                        <validation-messages [formCtrl]="OrderSalesChannel_UserId"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="OrderSalesChannel_Password">{{ l('Password') }}</label>
+                        <input
+                            type="text"
+                            #OrderSalesChannel_Password="ngModel"
+                            id="OrderSalesChannel_Password"
+                            class="form-control"
+                            [(ngModel)]="orderSalesChannel.password"
+                            name="Password"
+                            minlength="1"
+                            maxlength="128"
+                        />
+                        <validation-messages [formCtrl]="OrderSalesChannel_Password"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="OrderSalesChannel_Notes">{{ l('Notes') }}</label>
+                        <input
+                            type="text"
+                            #OrderSalesChannel_Notes="ngModel"
+                            id="OrderSalesChannel_Notes"
+                            class="form-control"
+                            [(ngModel)]="orderSalesChannel.notes"
+                            name="Notes"
+                        />
+                        <validation-messages [formCtrl]="OrderSalesChannel_Notes"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!orderSalesChannelForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,175 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #orderFulfillmentStatusForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="orderFulfillmentStatus.id">{{ l('EditOrderFulfillmentStatus') }}</span>
+                        <span *ngIf="!orderFulfillmentStatus.id">{{ l('CreateNewOrderFulfillmentStatus') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="OrderStatusName">{{ l('OrderStatus') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="OrderStatusName"
+                                name="orderStatusName"
+                                [(ngModel)]="orderStatusName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectOrderStatusModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setOrderStatusIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="orderFulfillmentStatus.orderStatusId"
+                        [(ngModel)]="orderFulfillmentStatus.orderStatusId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="OrderInvoiceNumber">{{ l('Order') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="OrderInvoiceNumber"
+                                name="orderInvoiceNumber"
+                                [(ngModel)]="orderInvoiceNumber"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectOrderModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setOrderIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="orderFulfillmentStatus.orderId"
+                        [(ngModel)]="orderFulfillmentStatus.orderId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="EmployeeName">{{ l('Employee') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="EmployeeName"
+                                name="employeeName"
+                                [(ngModel)]="employeeName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectEmployeeModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setEmployeeIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="orderFulfillmentStatus.employeeId"
+                        [(ngModel)]="orderFulfillmentStatus.employeeId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="OrderFulfillmentStatus_EstimatedTime">
+                            {{ l('EstimatedTime') }}
+                        </label>
+                        <input
+                            class="form-control m-input"
+                            #OrderFulfillmentStatus_EstimatedTime
+                            type="datetime"
+                            bsDatepicker
+                            datePickerLuxonModifier
+                            [(date)]="orderFulfillmentStatus.estimatedTime"
+                            id="OrderFulfillmentStatus_EstimatedTime"
+                            name="OrderFulfillmentStatus_EstimatedTime"
+                        />
+                        <validation-messages [formCtrl]="OrderFulfillmentStatus_EstimatedTime"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="OrderFulfillmentStatus_ActualTime">{{ l('ActualTime') }}</label>
+                        <input
+                            class="form-control m-input"
+                            #OrderFulfillmentStatus_ActualTime
+                            type="datetime"
+                            bsDatepicker
+                            datePickerLuxonModifier
+                            [(date)]="orderFulfillmentStatus.actualTime"
+                            id="OrderFulfillmentStatus_ActualTime"
+                            name="OrderFulfillmentStatus_ActualTime"
+                        />
+                        <validation-messages [formCtrl]="OrderFulfillmentStatus_ActualTime"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!orderFulfillmentStatusForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <orderFulfillmentStatusOrderStatusLookupTableModal
+        #orderFulfillmentStatusOrderStatusLookupTableModal
+        (modalSave)="getNewOrderStatusId()"
+    ></orderFulfillmentStatusOrderStatusLookupTableModal>
+    <orderFulfillmentStatusOrderLookupTableModal
+        #orderFulfillmentStatusOrderLookupTableModal
+        (modalSave)="getNewOrderId()"
+    ></orderFulfillmentStatusOrderLookupTableModal>
+    <orderFulfillmentStatusEmployeeLookupTableModal
+        #orderFulfillmentStatusEmployeeLookupTableModal
+        (modalSave)="getNewEmployeeId()"
+    ></orderFulfillmentStatusEmployeeLookupTableModal>
+</div>

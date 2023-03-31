@@ -1,4 +1,8 @@
-﻿using SoftGrid.SalesLeadManagement.Dtos;
+﻿using SoftGrid.DiscountManagement.Dtos;
+using SoftGrid.DiscountManagement;
+using SoftGrid.OrderManagement.Dtos;
+using SoftGrid.OrderManagement;
+using SoftGrid.SalesLeadManagement.Dtos;
 using SoftGrid.SalesLeadManagement;
 using SoftGrid.TaskManagement.Dtos;
 using SoftGrid.TaskManagement;
@@ -62,6 +66,38 @@ namespace SoftGrid
     {
         public static void CreateMappings(IMapperConfigurationExpression configuration)
         {
+            configuration.CreateMap<CreateOrEditDiscountCodeUserHistoryDto, DiscountCodeUserHistory>().ReverseMap();
+            configuration.CreateMap<DiscountCodeUserHistoryDto, DiscountCodeUserHistory>().ReverseMap();
+            configuration.CreateMap<CreateOrEditDiscountCodeMapDto, DiscountCodeMap>().ReverseMap();
+            configuration.CreateMap<DiscountCodeMapDto, DiscountCodeMap>().ReverseMap();
+            configuration.CreateMap<CreateOrEditDiscountCodeByCustomerDto, DiscountCodeByCustomer>().ReverseMap();
+            configuration.CreateMap<DiscountCodeByCustomerDto, DiscountCodeByCustomer>().ReverseMap();
+            configuration.CreateMap<CreateOrEditDiscountCodeGeneratorDto, DiscountCodeGenerator>().ReverseMap();
+            configuration.CreateMap<DiscountCodeGeneratorDto, DiscountCodeGenerator>().ReverseMap();
+            configuration.CreateMap<CreateOrEditCustomerWalletDto, CustomerWallet>().ReverseMap();
+            configuration.CreateMap<CustomerWalletDto, CustomerWallet>().ReverseMap();
+            configuration.CreateMap<CreateOrEditOrderTeamDto, OrderTeam>().ReverseMap();
+            configuration.CreateMap<OrderTeamDto, OrderTeam>().ReverseMap();
+            configuration.CreateMap<CreateOrEditOrderProductVariantDto, OrderProductVariant>().ReverseMap();
+            configuration.CreateMap<OrderProductVariantDto, OrderProductVariant>().ReverseMap();
+            configuration.CreateMap<CreateOrEditOrderProductInfoDto, OrderProductInfo>().ReverseMap();
+            configuration.CreateMap<OrderProductInfoDto, OrderProductInfo>().ReverseMap();
+            configuration.CreateMap<CreateOrEditPaymentTypeDto, PaymentType>().ReverseMap();
+            configuration.CreateMap<PaymentTypeDto, PaymentType>().ReverseMap();
+            configuration.CreateMap<CreateOrEditOrderPaymentInfoDto, OrderPaymentInfo>().ReverseMap();
+            configuration.CreateMap<OrderPaymentInfoDto, OrderPaymentInfo>().ReverseMap();
+            configuration.CreateMap<CreateOrEditOrderfulfillmentTeamDto, OrderfulfillmentTeam>().ReverseMap();
+            configuration.CreateMap<OrderfulfillmentTeamDto, OrderfulfillmentTeam>().ReverseMap();
+            configuration.CreateMap<CreateOrEditOrderFulfillmentStatusDto, OrderFulfillmentStatus>().ReverseMap();
+            configuration.CreateMap<OrderFulfillmentStatusDto, OrderFulfillmentStatus>().ReverseMap();
+            configuration.CreateMap<CreateOrEditOrderDeliveryInfoDto, OrderDeliveryInfo>().ReverseMap();
+            configuration.CreateMap<OrderDeliveryInfoDto, OrderDeliveryInfo>().ReverseMap();
+            configuration.CreateMap<CreateOrEditOrderDto, Order>().ReverseMap();
+            configuration.CreateMap<OrderDto, Order>().ReverseMap();
+            configuration.CreateMap<CreateOrEditOrderStatusDto, OrderStatus>().ReverseMap();
+            configuration.CreateMap<OrderStatusDto, OrderStatus>().ReverseMap();
+            configuration.CreateMap<CreateOrEditOrderSalesChannelDto, OrderSalesChannel>().ReverseMap();
+            configuration.CreateMap<OrderSalesChannelDto, OrderSalesChannel>().ReverseMap();
             configuration.CreateMap<CreateOrEditProductWholeSalePriceDto, ProductWholeSalePrice>().ReverseMap();
             configuration.CreateMap<ProductWholeSalePriceDto, ProductWholeSalePrice>().ReverseMap();
             configuration.CreateMap<CreateOrEditProductWholeSaleQuantityTypeDto, ProductWholeSaleQuantityType>().ReverseMap();

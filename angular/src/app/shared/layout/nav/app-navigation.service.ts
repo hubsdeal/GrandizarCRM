@@ -244,6 +244,38 @@ export class AppNavigationService {
             new AppMenuItem('ProductWholeSaleQuantityTypes', 'Pages.ProductWholeSaleQuantityTypes', 'flaticon-more', '/app/main/lookupData/productWholeSaleQuantityTypes'),
             
             new AppMenuItem('ProductWholeSalePrices', 'Pages.ProductWholeSalePrices', 'flaticon-more', '/app/main/shop/productWholeSalePrices'),
+            
+            new AppMenuItem('OrderSalesChannels', 'Pages.OrderSalesChannels', 'flaticon-more', '/app/main/orderManagement/orderSalesChannels'),
+            
+            new AppMenuItem('OrderStatuses', 'Pages.OrderStatuses', 'flaticon-more', '/app/main/orderManagement/orderStatuses'),
+            
+            new AppMenuItem('Orders', 'Pages.Orders', 'flaticon-more', '/app/main/orderManagement/orders'),
+            
+            new AppMenuItem('OrderDeliveryInfos', 'Pages.OrderDeliveryInfos', 'flaticon-more', '/app/main/orderManagement/orderDeliveryInfos'),
+            
+            new AppMenuItem('OrderFulfillmentStatuses', 'Pages.OrderFulfillmentStatuses', 'flaticon-more', '/app/main/orderManagement/orderFulfillmentStatuses'),
+            
+            new AppMenuItem('OrderfulfillmentTeams', 'Pages.OrderfulfillmentTeams', 'flaticon-more', '/app/main/orderManagement/orderfulfillmentTeams'),
+            
+            new AppMenuItem('OrderPaymentInfos', 'Pages.OrderPaymentInfos', 'flaticon-more', '/app/main/orderManagement/orderPaymentInfos'),
+            
+            new AppMenuItem('PaymentTypes', 'Pages.PaymentTypes', 'flaticon-more', '/app/main/lookupData/paymentTypes'),
+            
+            new AppMenuItem('OrderProductInfos', 'Pages.OrderProductInfos', 'flaticon-more', '/app/main/orderManagement/orderProductInfos'),
+            
+            new AppMenuItem('OrderProductVariants', 'Pages.OrderProductVariants', 'flaticon-more', '/app/main/orderManagement/orderProductVariants'),
+            
+            new AppMenuItem('OrderTeams', 'Pages.OrderTeams', 'flaticon-more', '/app/main/orderManagement/orderTeams'),
+            
+            new AppMenuItem('CustomerWallets', 'Pages.CustomerWallets', 'flaticon-more', '/app/main/discountManagement/customerWallets'),
+            
+            new AppMenuItem('DiscountCodeGenerators', 'Pages.DiscountCodeGenerators', 'flaticon-more', '/app/main/discountManagement/discountCodeGenerators'),
+            
+            new AppMenuItem('DiscountCodeByCustomers', 'Pages.DiscountCodeByCustomers', 'flaticon-more', '/app/main/discountManagement/discountCodeByCustomers'),
+            
+            new AppMenuItem('DiscountCodeMaps', 'Pages.DiscountCodeMaps', 'flaticon-more', '/app/main/discountManagement/discountCodeMaps'),
+            
+            new AppMenuItem('DiscountCodeUserHistories', 'Pages.DiscountCodeUserHistories', 'flaticon-more', '/app/main/discountManagement/discountCodeUserHistories'),
              new AppMenuItem('Editions', 'Pages.Editions', 'flaticon-app', '/app/admin/editions'),
             new AppMenuItem(
                 'Administration',
