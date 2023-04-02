@@ -413,3 +413,46 @@ bs-days-calendar-view {
 .height_fluid{
     height: calc(100% - 20px) !important;
 }
+
+//p-editor
+::ng-deep{
+    .p-editor-container{
+        border-radius: 8px;
+    }
+
+    .p-editor-container .p-editor-toolbar.ql-snow {
+        border: 1px solid #2b9ef417 !important;
+    }
+
+    .p-editor-container .p-editor-toolbar {
+        background: #f5f8fa;
+    }
+
+    .p-editor-container .p-editor-content.ql-snow {
+        border: 1px solid #2b9ef417;
+    }
+
+    .p-editor-container .p-editor-content .ql-editor {
+        background: #f5f8fa;
+    }
+}
+
+.p-editor-container{
+    border-radius: 8px;
+}
+
+.p-editor-container .p-editor-toolbar.ql-snow {
+    border: 1px solid #2b9ef417 !important;
+}
+
+.p-editor-container .p-editor-toolbar {
+    background: #f5f8fa !important;
+}
+
+.p-editor-container .p-editor-content.ql-snow {
+    border: 1px solid #2b9ef417 !important;
+}
+
+.p-editor-container .p-editor-content .ql-editor {
+    background: #f5f8fa !important;
+}
