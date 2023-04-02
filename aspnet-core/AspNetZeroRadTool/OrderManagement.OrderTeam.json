@@ -1,0 +1,60 @@
+{
+  "IsRegenerate": false,
+  "MenuPosition": "main",
+  "RelativeNamespace": "OrderManagement",
+  "EntityName": "OrderTeam",
+  "EntityNamePlural": "OrderTeams",
+  "TableName": "OrderTeams",
+  "PrimaryKeyType": "long",
+  "BaseClass": "CreationAuditedEntity",
+  "EntityHistory": false,
+  "AutoMigration": true,
+  "UpdateDatabase": true,
+  "CreateUserInterface": true,
+  "CreateViewOnly": true,
+  "CreateExcelExport": true,
+  "IsNonModalCRUDPage": false,
+  "IsMasterDetailPage": false,
+  "PagePermission": {
+    "Host": true,
+    "Tenant": true
+  },
+  "Properties": [],
+  "NavigationProperties": [
+    {
+      "Namespace": "SoftGrid.OrderManagement",
+      "ForeignEntityName": "Order",
+      "IdType": "long",
+      "IsNullable": true,
+      "PropertyName": "OrderId",
+      "DuplicationNumber": 0,
+      "RelationType": "single",
+      "ViewType": "LookupTable",
+      "DisplayPropertyNameInfos": {
+        "MergeFormat": "{0}",
+        "DisplayPropertyNames": [
+          "InvoiceNumber"
+        ]
+      }
+    },
+    {
+      "Namespace": "SoftGrid.CRM",
+      "ForeignEntityName": "Employee",
+      "IdType": "long",
+      "IsNullable": true,
+      "PropertyName": "EmployeeId",
+      "DuplicationNumber": 0,
+      "RelationType": "single",
+      "ViewType": "LookupTable",
+      "DisplayPropertyNameInfos": {
+        "MergeFormat": "{0}",
+        "DisplayPropertyNames": [
+          "Name"
+        ]
+      }
+    }
+  ],
+  "NavigationPropertyOneToManyTables": [],
+  "EnumDefinitions": [],
+  "DbContext": null
+}

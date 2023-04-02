@@ -1,0 +1,144 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span>{{ l('Details') }}</span>
+                </h4>
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    (click)="close()"
+                    aria-label="Close"
+                    [disabled]="saving"
+                ></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('PaymentSplit') }} :</h6>
+                        <div *ngIf="item.orderPaymentInfo.paymentSplit" class="text-left">
+                            <i class="fa fa-check-circle text-success" title="True"></i>
+                        </div>
+                        <div *ngIf="!item.orderPaymentInfo.paymentSplit" class="text-left">
+                            <i class="fa fa-times-circle" title="False"></i>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('DueAmount') }} :</h6>
+                        {{ item.orderPaymentInfo.dueAmount }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('PaySplitAmount') }} :</h6>
+                        {{ item.orderPaymentInfo.paySplitAmount }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('BillingAddress') }} :</h6>
+                        {{ item.orderPaymentInfo.billingAddress }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('BillingCity') }} :</h6>
+                        {{ item.orderPaymentInfo.billingCity }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('BillingState') }} :</h6>
+                        {{ item.orderPaymentInfo.billingState }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('BillingZipCode') }} :</h6>
+                        {{ item.orderPaymentInfo.billingZipCode }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('SaveCreditCardNumber') }} :</h6>
+                        <div *ngIf="item.orderPaymentInfo.saveCreditCardNumber" class="text-left">
+                            <i class="fa fa-check-circle text-success" title="True"></i>
+                        </div>
+                        <div *ngIf="!item.orderPaymentInfo.saveCreditCardNumber" class="text-left">
+                            <i class="fa fa-times-circle" title="False"></i>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('MaskedCreditCardNumber') }} :</h6>
+                        {{ item.orderPaymentInfo.maskedCreditCardNumber }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('CardName') }} :</h6>
+                        {{ item.orderPaymentInfo.cardName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('CardNumber') }} :</h6>
+                        {{ item.orderPaymentInfo.cardNumber }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('CardCvv') }} :</h6>
+                        {{ item.orderPaymentInfo.cardCvv }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('CardExpirationMonth') }} :</h6>
+                        {{ item.orderPaymentInfo.cardExpirationMonth }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('CardExpirationYear') }} :</h6>
+                        {{ item.orderPaymentInfo.cardExpirationYear }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('AuthorizationTransactionNumber') }} :</h6>
+                        {{ item.orderPaymentInfo.authorizationTransactionNumber }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('AuthorizationTransactionCode') }} :</h6>
+                        {{ item.orderPaymentInfo.authorizationTransactionCode }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('AuthrorizationTransactionResult') }} :</h6>
+                        {{ item.orderPaymentInfo.authrorizationTransactionResult }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('CustomerIpAddress') }} :</h6>
+                        {{ item.orderPaymentInfo.customerIpAddress }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('CustomerDeviceInfo') }} :</h6>
+                        {{ item.orderPaymentInfo.customerDeviceInfo }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('PaidDate') }} :</h6>
+                        {{ item.orderPaymentInfo.paidDate | luxonFormat : 'yyyy-LL-dd HH:mm:ss' }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('PaidTime') }} :</h6>
+                        {{ item.orderPaymentInfo.paidTime }}
+                    </div>
+
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('Order') }}) {{ l('InvoiceNumber') }} :</h6>
+                        {{ item.orderInvoiceNumber }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('Currency') }}) {{ l('Name') }} :</h6>
+                        {{ item.currencyName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('PaymentType') }}) {{ l('Name') }} :</h6>
+                        {{ item.paymentTypeName }}
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button [disabled]="saving" type="button" class="btn btn-primary blue" (click)="close()">
+                    {{ l('Close') }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

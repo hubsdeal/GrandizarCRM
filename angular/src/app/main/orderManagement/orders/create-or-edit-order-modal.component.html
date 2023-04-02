@@ -1,0 +1,516 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #orderForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="order.id">{{ l('EditOrder') }}</span>
+                        <span *ngIf="!order.id">{{ l('CreateNewOrder') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="StateName">{{ l('State') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="StateName"
+                                name="stateName"
+                                [(ngModel)]="stateName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectStateModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setStateIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input class="form-control" name="order.stateId" [(ngModel)]="order.stateId" type="text" hidden />
+
+                    <div class="my-3">
+                        <label class="form-label" for="CountryName">{{ l('Country') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="CountryName"
+                                name="countryName"
+                                [(ngModel)]="countryName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectCountryModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setCountryIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="order.countryId"
+                        [(ngModel)]="order.countryId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="ContactFullName">{{ l('Contact') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="ContactFullName"
+                                name="contactFullName"
+                                [(ngModel)]="contactFullName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectContactModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setContactIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="order.contactId"
+                        [(ngModel)]="order.contactId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="OrderStatusName">{{ l('OrderStatus') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="OrderStatusName"
+                                name="orderStatusName"
+                                [(ngModel)]="orderStatusName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectOrderStatusModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setOrderStatusIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="order.orderStatusId"
+                        [(ngModel)]="order.orderStatusId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="CurrencyName">{{ l('Currency') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="CurrencyName"
+                                name="currencyName"
+                                [(ngModel)]="currencyName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectCurrencyModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setCurrencyIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="order.currencyId"
+                        [(ngModel)]="order.currencyId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="StoreName">{{ l('Store') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="StoreName"
+                                name="storeName"
+                                [(ngModel)]="storeName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectStoreModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setStoreIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input class="form-control" name="order.storeId" [(ngModel)]="order.storeId" type="text" hidden />
+
+                    <div class="my-3">
+                        <label class="form-label" for="OrderSalesChannelName">{{ l('OrderSalesChannel') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="OrderSalesChannelName"
+                                name="orderSalesChannelName"
+                                [(ngModel)]="orderSalesChannelName"
+                                type="text"
+                                disabled
+                            />
+                            <button
+                                class="btn btn-primary blue"
+                                (click)="openSelectOrderSalesChannelModal()"
+                                type="button"
+                            >
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button
+                                class="btn btn-danger btn-icon"
+                                type="button"
+                                (click)="setOrderSalesChannelIdNull()"
+                            >
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="order.orderSalesChannelId"
+                        [(ngModel)]="order.orderSalesChannelId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="Order_InvoiceNumber">{{ l('InvoiceNumber') }} *</label>
+                        <input
+                            type="text"
+                            #Order_InvoiceNumber="ngModel"
+                            id="Order_InvoiceNumber"
+                            class="form-control"
+                            [(ngModel)]="order.invoiceNumber"
+                            name="InvoiceNumber"
+                            minlength="1"
+                            maxlength="128"
+                            required
+                        />
+                        <validation-messages [formCtrl]="Order_InvoiceNumber"></validation-messages>
+                    </div>
+
+                    <br />
+                    <label class="form-check form-check-custom form-check-solid">
+                        <input
+                            id="Order_DeliveryOrPickup"
+                            #Order_DeliveryOrPickup="ngModel"
+                            name="DeliveryOrPickup"
+                            [(ngModel)]="order.deliveryOrPickup"
+                            type="checkbox"
+                            class="form-check-input"
+                        />
+                        <span class="form-check-label">
+                            {{ l('DeliveryOrPickup') }}
+                        </span>
+                    </label>
+                    <validation-messages [formCtrl]="Order_DeliveryOrPickup"></validation-messages>
+
+                    <br />
+                    <label class="form-check form-check-custom form-check-solid">
+                        <input
+                            id="Order_PaymentCompleted"
+                            #Order_PaymentCompleted="ngModel"
+                            name="PaymentCompleted"
+                            [(ngModel)]="order.paymentCompleted"
+                            type="checkbox"
+                            class="form-check-input"
+                        />
+                        <span class="form-check-label">
+                            {{ l('PaymentCompleted') }}
+                        </span>
+                    </label>
+                    <validation-messages [formCtrl]="Order_PaymentCompleted"></validation-messages>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Order_FullName">{{ l('FullName') }}</label>
+                        <input
+                            type="text"
+                            #Order_FullName="ngModel"
+                            id="Order_FullName"
+                            class="form-control"
+                            [(ngModel)]="order.fullName"
+                            name="FullName"
+                            minlength="1"
+                            maxlength="256"
+                        />
+                        <validation-messages [formCtrl]="Order_FullName"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Order_DeliveryAddress">{{ l('DeliveryAddress') }}</label>
+                        <input
+                            type="text"
+                            #Order_DeliveryAddress="ngModel"
+                            id="Order_DeliveryAddress"
+                            class="form-control"
+                            [(ngModel)]="order.deliveryAddress"
+                            name="DeliveryAddress"
+                            minlength="1"
+                            maxlength="1024"
+                        />
+                        <validation-messages [formCtrl]="Order_DeliveryAddress"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Order_City">{{ l('City') }}</label>
+                        <input
+                            type="text"
+                            #Order_City="ngModel"
+                            id="Order_City"
+                            class="form-control"
+                            [(ngModel)]="order.city"
+                            name="City"
+                            minlength="1"
+                            maxlength="128"
+                        />
+                        <validation-messages [formCtrl]="Order_City"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Order_ZipCode">{{ l('ZipCode') }}</label>
+                        <input
+                            type="text"
+                            #Order_ZipCode="ngModel"
+                            id="Order_ZipCode"
+                            class="form-control"
+                            [(ngModel)]="order.zipCode"
+                            name="ZipCode"
+                            minlength="1"
+                            maxlength="50"
+                        />
+                        <validation-messages [formCtrl]="Order_ZipCode"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Order_Notes">{{ l('Notes') }}</label>
+                        <input
+                            type="text"
+                            #Order_Notes="ngModel"
+                            id="Order_Notes"
+                            class="form-control"
+                            [(ngModel)]="order.notes"
+                            name="Notes"
+                        />
+                        <validation-messages [formCtrl]="Order_Notes"></validation-messages>
+                    </div>
+
+                    <div class="my5">
+                        <label class="form-label" for="Order_DeliveryFee">{{ l('DeliveryFee') }}</label>
+                        <input
+                            type="number"
+                            #Order_DeliveryFee="ngModel"
+                            id="Order_DeliveryFee"
+                            class="form-control"
+                            [(ngModel)]="order.deliveryFee"
+                            name="DeliveryFee"
+                        />
+                        <validation-messages [formCtrl]="Order_DeliveryFee"></validation-messages>
+                    </div>
+
+                    <div class="my5">
+                        <label class="form-label" for="Order_SubTotalExcludedTax">{{ l('SubTotalExcludedTax') }}</label>
+                        <input
+                            type="number"
+                            #Order_SubTotalExcludedTax="ngModel"
+                            id="Order_SubTotalExcludedTax"
+                            class="form-control"
+                            [(ngModel)]="order.subTotalExcludedTax"
+                            name="SubTotalExcludedTax"
+                        />
+                        <validation-messages [formCtrl]="Order_SubTotalExcludedTax"></validation-messages>
+                    </div>
+
+                    <div class="my5">
+                        <label class="form-label" for="Order_TotalDiscountAmount">{{ l('TotalDiscountAmount') }}</label>
+                        <input
+                            type="number"
+                            #Order_TotalDiscountAmount="ngModel"
+                            id="Order_TotalDiscountAmount"
+                            class="form-control"
+                            [(ngModel)]="order.totalDiscountAmount"
+                            name="TotalDiscountAmount"
+                        />
+                        <validation-messages [formCtrl]="Order_TotalDiscountAmount"></validation-messages>
+                    </div>
+
+                    <div class="my5">
+                        <label class="form-label" for="Order_TotalTaxAmount">{{ l('TotalTaxAmount') }}</label>
+                        <input
+                            type="number"
+                            #Order_TotalTaxAmount="ngModel"
+                            id="Order_TotalTaxAmount"
+                            class="form-control"
+                            [(ngModel)]="order.totalTaxAmount"
+                            name="TotalTaxAmount"
+                        />
+                        <validation-messages [formCtrl]="Order_TotalTaxAmount"></validation-messages>
+                    </div>
+
+                    <div class="my5">
+                        <label class="form-label" for="Order_TotalAmount">{{ l('TotalAmount') }}</label>
+                        <input
+                            type="number"
+                            #Order_TotalAmount="ngModel"
+                            id="Order_TotalAmount"
+                            class="form-control"
+                            [(ngModel)]="order.totalAmount"
+                            name="TotalAmount"
+                        />
+                        <validation-messages [formCtrl]="Order_TotalAmount"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Order_Email">{{ l('Email') }}</label>
+                        <input
+                            type="text"
+                            #Order_Email="ngModel"
+                            id="Order_Email"
+                            class="form-control"
+                            [(ngModel)]="order.email"
+                            name="Email"
+                            minlength="1"
+                            maxlength="256"
+                        />
+                        <validation-messages [formCtrl]="Order_Email"></validation-messages>
+                    </div>
+
+                    <div class="my5">
+                        <label class="form-label" for="Order_DiscountAmountByCode">
+                            {{ l('DiscountAmountByCode') }}
+                        </label>
+                        <input
+                            type="number"
+                            #Order_DiscountAmountByCode="ngModel"
+                            id="Order_DiscountAmountByCode"
+                            class="form-control"
+                            [(ngModel)]="order.discountAmountByCode"
+                            name="DiscountAmountByCode"
+                        />
+                        <validation-messages [formCtrl]="Order_DiscountAmountByCode"></validation-messages>
+                    </div>
+
+                    <div class="my5">
+                        <label class="form-label" for="Order_GratuityAmount">{{ l('GratuityAmount') }}</label>
+                        <input
+                            type="number"
+                            #Order_GratuityAmount="ngModel"
+                            id="Order_GratuityAmount"
+                            class="form-control"
+                            [(ngModel)]="order.gratuityAmount"
+                            name="GratuityAmount"
+                        />
+                        <validation-messages [formCtrl]="Order_GratuityAmount"></validation-messages>
+                    </div>
+
+                    <div class="my5">
+                        <label class="form-label" for="Order_GratuityPercentage">{{ l('GratuityPercentage') }}</label>
+                        <input
+                            type="number"
+                            #Order_GratuityPercentage="ngModel"
+                            id="Order_GratuityPercentage"
+                            class="form-control"
+                            [(ngModel)]="order.gratuityPercentage"
+                            name="GratuityPercentage"
+                        />
+                        <validation-messages [formCtrl]="Order_GratuityPercentage"></validation-messages>
+                    </div>
+
+                    <div class="my5">
+                        <label class="form-label" for="Order_ServiceCharge">{{ l('ServiceCharge') }}</label>
+                        <input
+                            type="number"
+                            #Order_ServiceCharge="ngModel"
+                            id="Order_ServiceCharge"
+                            class="form-control"
+                            [(ngModel)]="order.serviceCharge"
+                            name="ServiceCharge"
+                        />
+                        <validation-messages [formCtrl]="Order_ServiceCharge"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!orderForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <orderStateLookupTableModal #orderStateLookupTableModal (modalSave)="getNewStateId()"></orderStateLookupTableModal>
+    <orderCountryLookupTableModal
+        #orderCountryLookupTableModal
+        (modalSave)="getNewCountryId()"
+    ></orderCountryLookupTableModal>
+    <orderContactLookupTableModal
+        #orderContactLookupTableModal
+        (modalSave)="getNewContactId()"
+    ></orderContactLookupTableModal>
+    <orderOrderStatusLookupTableModal
+        #orderOrderStatusLookupTableModal
+        (modalSave)="getNewOrderStatusId()"
+    ></orderOrderStatusLookupTableModal>
+    <orderCurrencyLookupTableModal
+        #orderCurrencyLookupTableModal
+        (modalSave)="getNewCurrencyId()"
+    ></orderCurrencyLookupTableModal>
+    <orderStoreLookupTableModal #orderStoreLookupTableModal (modalSave)="getNewStoreId()"></orderStoreLookupTableModal>
+    <orderOrderSalesChannelLookupTableModal
+        #orderOrderSalesChannelLookupTableModal
+        (modalSave)="getNewOrderSalesChannelId()"
+    ></orderOrderSalesChannelLookupTableModal>
+</div>

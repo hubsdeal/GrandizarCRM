@@ -1,0 +1,153 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #orderProductVariantForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="orderProductVariant.id">{{ l('EditOrderProductVariant') }}</span>
+                        <span *ngIf="!orderProductVariant.id">{{ l('CreateNewOrderProductVariant') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="ProductVariantCategoryName">
+                            {{ l('ProductVariantCategory') }}
+                        </label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="ProductVariantCategoryName"
+                                name="productVariantCategoryName"
+                                [(ngModel)]="productVariantCategoryName"
+                                type="text"
+                                disabled
+                            />
+                            <button
+                                class="btn btn-primary blue"
+                                (click)="openSelectProductVariantCategoryModal()"
+                                type="button"
+                            >
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button
+                                class="btn btn-danger btn-icon"
+                                type="button"
+                                (click)="setProductVariantCategoryIdNull()"
+                            >
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="orderProductVariant.productVariantCategoryId"
+                        [(ngModel)]="orderProductVariant.productVariantCategoryId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="ProductVariantName">{{ l('ProductVariant') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="ProductVariantName"
+                                name="productVariantName"
+                                [(ngModel)]="productVariantName"
+                                type="text"
+                                disabled
+                            />
+                            <button
+                                class="btn btn-primary blue"
+                                (click)="openSelectProductVariantModal()"
+                                type="button"
+                            >
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setProductVariantIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="orderProductVariant.productVariantId"
+                        [(ngModel)]="orderProductVariant.productVariantId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my5">
+                        <label class="form-label" for="OrderProductVariant_Price">{{ l('Price') }}</label>
+                        <input
+                            type="number"
+                            #OrderProductVariant_Price="ngModel"
+                            id="OrderProductVariant_Price"
+                            class="form-control"
+                            [(ngModel)]="orderProductVariant.price"
+                            name="Price"
+                        />
+                        <validation-messages [formCtrl]="OrderProductVariant_Price"></validation-messages>
+                    </div>
+
+                    <div class="my5">
+                        <label class="form-label" for="OrderProductVariant_OrderProductInfoId">
+                            {{ l('OrderProductInfoId') }}
+                        </label>
+                        <input
+                            type="number"
+                            #OrderProductVariant_OrderProductInfoId="ngModel"
+                            id="OrderProductVariant_OrderProductInfoId"
+                            class="form-control"
+                            [(ngModel)]="orderProductVariant.orderProductInfoId"
+                            name="OrderProductInfoId"
+                        />
+                        <validation-messages [formCtrl]="OrderProductVariant_OrderProductInfoId"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!orderProductVariantForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <orderProductVariantProductVariantCategoryLookupTableModal
+        #orderProductVariantProductVariantCategoryLookupTableModal
+        (modalSave)="getNewProductVariantCategoryId()"
+    ></orderProductVariantProductVariantCategoryLookupTableModal>
+    <orderProductVariantProductVariantLookupTableModal
+        #orderProductVariantProductVariantLookupTableModal
+        (modalSave)="getNewProductVariantId()"
+    ></orderProductVariantProductVariantLookupTableModal>
+</div>

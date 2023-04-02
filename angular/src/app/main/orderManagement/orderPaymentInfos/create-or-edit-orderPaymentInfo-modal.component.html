@@ -1,0 +1,472 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #orderPaymentInfoForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="orderPaymentInfo.id">{{ l('EditOrderPaymentInfo') }}</span>
+                        <span *ngIf="!orderPaymentInfo.id">{{ l('CreateNewOrderPaymentInfo') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="OrderInvoiceNumber">{{ l('Order') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="OrderInvoiceNumber"
+                                name="orderInvoiceNumber"
+                                [(ngModel)]="orderInvoiceNumber"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectOrderModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setOrderIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="orderPaymentInfo.orderId"
+                        [(ngModel)]="orderPaymentInfo.orderId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="CurrencyName">{{ l('Currency') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="CurrencyName"
+                                name="currencyName"
+                                [(ngModel)]="currencyName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectCurrencyModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setCurrencyIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="orderPaymentInfo.currencyId"
+                        [(ngModel)]="orderPaymentInfo.currencyId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="PaymentTypeName">{{ l('PaymentType') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="PaymentTypeName"
+                                name="paymentTypeName"
+                                [(ngModel)]="paymentTypeName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectPaymentTypeModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setPaymentTypeIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="orderPaymentInfo.paymentTypeId"
+                        [(ngModel)]="orderPaymentInfo.paymentTypeId"
+                        type="text"
+                        hidden
+                    />
+
+                    <br />
+                    <label class="form-check form-check-custom form-check-solid">
+                        <input
+                            id="OrderPaymentInfo_PaymentSplit"
+                            #OrderPaymentInfo_PaymentSplit="ngModel"
+                            name="PaymentSplit"
+                            [(ngModel)]="orderPaymentInfo.paymentSplit"
+                            type="checkbox"
+                            class="form-check-input"
+                        />
+                        <span class="form-check-label">
+                            {{ l('PaymentSplit') }}
+                        </span>
+                    </label>
+                    <validation-messages [formCtrl]="OrderPaymentInfo_PaymentSplit"></validation-messages>
+
+                    <div class="my5">
+                        <label class="form-label" for="OrderPaymentInfo_DueAmount">{{ l('DueAmount') }}</label>
+                        <input
+                            type="number"
+                            #OrderPaymentInfo_DueAmount="ngModel"
+                            id="OrderPaymentInfo_DueAmount"
+                            class="form-control"
+                            [(ngModel)]="orderPaymentInfo.dueAmount"
+                            name="DueAmount"
+                        />
+                        <validation-messages [formCtrl]="OrderPaymentInfo_DueAmount"></validation-messages>
+                    </div>
+
+                    <div class="my5">
+                        <label class="form-label" for="OrderPaymentInfo_PaySplitAmount">
+                            {{ l('PaySplitAmount') }}
+                        </label>
+                        <input
+                            type="number"
+                            #OrderPaymentInfo_PaySplitAmount="ngModel"
+                            id="OrderPaymentInfo_PaySplitAmount"
+                            class="form-control"
+                            [(ngModel)]="orderPaymentInfo.paySplitAmount"
+                            name="PaySplitAmount"
+                        />
+                        <validation-messages [formCtrl]="OrderPaymentInfo_PaySplitAmount"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="OrderPaymentInfo_BillingAddress">
+                            {{ l('BillingAddress') }}
+                        </label>
+                        <input
+                            type="text"
+                            #OrderPaymentInfo_BillingAddress="ngModel"
+                            id="OrderPaymentInfo_BillingAddress"
+                            class="form-control"
+                            [(ngModel)]="orderPaymentInfo.billingAddress"
+                            name="BillingAddress"
+                            minlength="1"
+                            maxlength="1024"
+                        />
+                        <validation-messages [formCtrl]="OrderPaymentInfo_BillingAddress"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="OrderPaymentInfo_BillingCity">{{ l('BillingCity') }}</label>
+                        <input
+                            type="text"
+                            #OrderPaymentInfo_BillingCity="ngModel"
+                            id="OrderPaymentInfo_BillingCity"
+                            class="form-control"
+                            [(ngModel)]="orderPaymentInfo.billingCity"
+                            name="BillingCity"
+                            minlength="1"
+                            maxlength="128"
+                        />
+                        <validation-messages [formCtrl]="OrderPaymentInfo_BillingCity"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="OrderPaymentInfo_BillingState">{{ l('BillingState') }}</label>
+                        <input
+                            type="text"
+                            #OrderPaymentInfo_BillingState="ngModel"
+                            id="OrderPaymentInfo_BillingState"
+                            class="form-control"
+                            [(ngModel)]="orderPaymentInfo.billingState"
+                            name="BillingState"
+                            minlength="1"
+                            maxlength="128"
+                        />
+                        <validation-messages [formCtrl]="OrderPaymentInfo_BillingState"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="OrderPaymentInfo_BillingZipCode">
+                            {{ l('BillingZipCode') }}
+                        </label>
+                        <input
+                            type="text"
+                            #OrderPaymentInfo_BillingZipCode="ngModel"
+                            id="OrderPaymentInfo_BillingZipCode"
+                            class="form-control"
+                            [(ngModel)]="orderPaymentInfo.billingZipCode"
+                            name="BillingZipCode"
+                            minlength="1"
+                            maxlength="50"
+                        />
+                        <validation-messages [formCtrl]="OrderPaymentInfo_BillingZipCode"></validation-messages>
+                    </div>
+
+                    <br />
+                    <label class="form-check form-check-custom form-check-solid">
+                        <input
+                            id="OrderPaymentInfo_SaveCreditCardNumber"
+                            #OrderPaymentInfo_SaveCreditCardNumber="ngModel"
+                            name="SaveCreditCardNumber"
+                            [(ngModel)]="orderPaymentInfo.saveCreditCardNumber"
+                            type="checkbox"
+                            class="form-check-input"
+                        />
+                        <span class="form-check-label">
+                            {{ l('SaveCreditCardNumber') }}
+                        </span>
+                    </label>
+                    <validation-messages [formCtrl]="OrderPaymentInfo_SaveCreditCardNumber"></validation-messages>
+
+                    <div class="my-3">
+                        <label class="form-label" for="OrderPaymentInfo_MaskedCreditCardNumber">
+                            {{ l('MaskedCreditCardNumber') }}
+                        </label>
+                        <input
+                            type="text"
+                            #OrderPaymentInfo_MaskedCreditCardNumber="ngModel"
+                            id="OrderPaymentInfo_MaskedCreditCardNumber"
+                            class="form-control"
+                            [(ngModel)]="orderPaymentInfo.maskedCreditCardNumber"
+                            name="MaskedCreditCardNumber"
+                        />
+                        <validation-messages [formCtrl]="OrderPaymentInfo_MaskedCreditCardNumber"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="OrderPaymentInfo_CardName">{{ l('CardName') }}</label>
+                        <input
+                            type="text"
+                            #OrderPaymentInfo_CardName="ngModel"
+                            id="OrderPaymentInfo_CardName"
+                            class="form-control"
+                            [(ngModel)]="orderPaymentInfo.cardName"
+                            name="CardName"
+                            minlength="1"
+                            maxlength="256"
+                        />
+                        <validation-messages [formCtrl]="OrderPaymentInfo_CardName"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="OrderPaymentInfo_CardNumber">{{ l('CardNumber') }}</label>
+                        <input
+                            type="text"
+                            #OrderPaymentInfo_CardNumber="ngModel"
+                            id="OrderPaymentInfo_CardNumber"
+                            class="form-control"
+                            [(ngModel)]="orderPaymentInfo.cardNumber"
+                            name="CardNumber"
+                            minlength="1"
+                            maxlength="128"
+                        />
+                        <validation-messages [formCtrl]="OrderPaymentInfo_CardNumber"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="OrderPaymentInfo_CardCvv">{{ l('CardCvv') }}</label>
+                        <input
+                            type="text"
+                            #OrderPaymentInfo_CardCvv="ngModel"
+                            id="OrderPaymentInfo_CardCvv"
+                            class="form-control"
+                            [(ngModel)]="orderPaymentInfo.cardCvv"
+                            name="CardCvv"
+                            minlength="1"
+                            maxlength="50"
+                        />
+                        <validation-messages [formCtrl]="OrderPaymentInfo_CardCvv"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="OrderPaymentInfo_CardExpirationMonth">
+                            {{ l('CardExpirationMonth') }}
+                        </label>
+                        <input
+                            type="text"
+                            #OrderPaymentInfo_CardExpirationMonth="ngModel"
+                            id="OrderPaymentInfo_CardExpirationMonth"
+                            class="form-control"
+                            [(ngModel)]="orderPaymentInfo.cardExpirationMonth"
+                            name="CardExpirationMonth"
+                            minlength="1"
+                            maxlength="128"
+                        />
+                        <validation-messages [formCtrl]="OrderPaymentInfo_CardExpirationMonth"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="OrderPaymentInfo_CardExpirationYear">
+                            {{ l('CardExpirationYear') }}
+                        </label>
+                        <input
+                            type="text"
+                            #OrderPaymentInfo_CardExpirationYear="ngModel"
+                            id="OrderPaymentInfo_CardExpirationYear"
+                            class="form-control"
+                            [(ngModel)]="orderPaymentInfo.cardExpirationYear"
+                            name="CardExpirationYear"
+                            minlength="1"
+                            maxlength="128"
+                        />
+                        <validation-messages [formCtrl]="OrderPaymentInfo_CardExpirationYear"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="OrderPaymentInfo_AuthorizationTransactionNumber">
+                            {{ l('AuthorizationTransactionNumber') }}
+                        </label>
+                        <input
+                            type="text"
+                            #OrderPaymentInfo_AuthorizationTransactionNumber="ngModel"
+                            id="OrderPaymentInfo_AuthorizationTransactionNumber"
+                            class="form-control"
+                            [(ngModel)]="orderPaymentInfo.authorizationTransactionNumber"
+                            name="AuthorizationTransactionNumber"
+                        />
+                        <validation-messages
+                            [formCtrl]="OrderPaymentInfo_AuthorizationTransactionNumber"
+                        ></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="OrderPaymentInfo_AuthorizationTransactionCode">
+                            {{ l('AuthorizationTransactionCode') }}
+                        </label>
+                        <input
+                            type="text"
+                            #OrderPaymentInfo_AuthorizationTransactionCode="ngModel"
+                            id="OrderPaymentInfo_AuthorizationTransactionCode"
+                            class="form-control"
+                            [(ngModel)]="orderPaymentInfo.authorizationTransactionCode"
+                            name="AuthorizationTransactionCode"
+                        />
+                        <validation-messages
+                            [formCtrl]="OrderPaymentInfo_AuthorizationTransactionCode"
+                        ></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="OrderPaymentInfo_AuthrorizationTransactionResult">
+                            {{ l('AuthrorizationTransactionResult') }}
+                        </label>
+                        <input
+                            type="text"
+                            #OrderPaymentInfo_AuthrorizationTransactionResult="ngModel"
+                            id="OrderPaymentInfo_AuthrorizationTransactionResult"
+                            class="form-control"
+                            [(ngModel)]="orderPaymentInfo.authrorizationTransactionResult"
+                            name="AuthrorizationTransactionResult"
+                        />
+                        <validation-messages
+                            [formCtrl]="OrderPaymentInfo_AuthrorizationTransactionResult"
+                        ></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="OrderPaymentInfo_CustomerIpAddress">
+                            {{ l('CustomerIpAddress') }}
+                        </label>
+                        <input
+                            type="text"
+                            #OrderPaymentInfo_CustomerIpAddress="ngModel"
+                            id="OrderPaymentInfo_CustomerIpAddress"
+                            class="form-control"
+                            [(ngModel)]="orderPaymentInfo.customerIpAddress"
+                            name="CustomerIpAddress"
+                        />
+                        <validation-messages [formCtrl]="OrderPaymentInfo_CustomerIpAddress"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="OrderPaymentInfo_CustomerDeviceInfo">
+                            {{ l('CustomerDeviceInfo') }}
+                        </label>
+                        <input
+                            type="text"
+                            #OrderPaymentInfo_CustomerDeviceInfo="ngModel"
+                            id="OrderPaymentInfo_CustomerDeviceInfo"
+                            class="form-control"
+                            [(ngModel)]="orderPaymentInfo.customerDeviceInfo"
+                            name="CustomerDeviceInfo"
+                        />
+                        <validation-messages [formCtrl]="OrderPaymentInfo_CustomerDeviceInfo"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="OrderPaymentInfo_PaidDate">{{ l('PaidDate') }}</label>
+                        <input
+                            class="form-control m-input"
+                            #OrderPaymentInfo_PaidDate
+                            type="datetime"
+                            bsDatepicker
+                            datePickerLuxonModifier
+                            [(date)]="orderPaymentInfo.paidDate"
+                            id="OrderPaymentInfo_PaidDate"
+                            name="OrderPaymentInfo_PaidDate"
+                        />
+                        <validation-messages [formCtrl]="OrderPaymentInfo_PaidDate"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="OrderPaymentInfo_PaidTime">{{ l('PaidTime') }}</label>
+                        <input
+                            type="text"
+                            #OrderPaymentInfo_PaidTime="ngModel"
+                            id="OrderPaymentInfo_PaidTime"
+                            class="form-control"
+                            [(ngModel)]="orderPaymentInfo.paidTime"
+                            name="PaidTime"
+                            minlength="1"
+                            maxlength="50"
+                        />
+                        <validation-messages [formCtrl]="OrderPaymentInfo_PaidTime"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!orderPaymentInfoForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <orderPaymentInfoOrderLookupTableModal
+        #orderPaymentInfoOrderLookupTableModal
+        (modalSave)="getNewOrderId()"
+    ></orderPaymentInfoOrderLookupTableModal>
+    <orderPaymentInfoCurrencyLookupTableModal
+        #orderPaymentInfoCurrencyLookupTableModal
+        (modalSave)="getNewCurrencyId()"
+    ></orderPaymentInfoCurrencyLookupTableModal>
+    <orderPaymentInfoPaymentTypeLookupTableModal
+        #orderPaymentInfoPaymentTypeLookupTableModal
+        (modalSave)="getNewPaymentTypeId()"
+    ></orderPaymentInfoPaymentTypeLookupTableModal>
+</div>

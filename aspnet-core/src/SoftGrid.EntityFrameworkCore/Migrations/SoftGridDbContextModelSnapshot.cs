@@ -2674,6 +2674,253 @@ namespace SoftGrid.Migrations
                     b.ToTable("AppChatMessages");
                 });
 
+            modelBuilder.Entity("SoftGrid.DiscountManagement.CustomerWallet", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<double?>("BalanceAmount")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime?>("BalanceDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("ContactId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("CurrencyId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("DeleterUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("LastModifierUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.Property<long?>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("WalletOpeningDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ContactId");
+
+                    b.HasIndex("CurrencyId");
+
+                    b.HasIndex("TenantId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("CustomerWallets");
+                });
+
+            modelBuilder.Entity("SoftGrid.DiscountManagement.DiscountCodeByCustomer", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long?>("ContactId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("DiscountCodeGeneratorId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ContactId");
+
+                    b.HasIndex("DiscountCodeGeneratorId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("DiscountCodeByCustomers");
+                });
+
+            modelBuilder.Entity("SoftGrid.DiscountManagement.DiscountCodeGenerator", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("AdminNotes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CouponCode")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<double?>("DiscountAmount")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("DiscountPercentage")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime?>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("EndTime")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<bool>("PercentageOrFixedAmount")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("StartTime")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("DiscountCodeGenerators");
+                });
+
+            modelBuilder.Entity("SoftGrid.DiscountManagement.DiscountCodeMap", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("DiscountCodeGeneratorId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("MembershipTypeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("ProductId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("StoreId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DiscountCodeGeneratorId");
+
+                    b.HasIndex("MembershipTypeId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("StoreId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("DiscountCodeMaps");
+                });
+
+            modelBuilder.Entity("SoftGrid.DiscountManagement.DiscountCodeUserHistory", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime?>("Amount")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("ContactId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("DiscountCodeGeneratorId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("OrderId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ContactId");
+
+                    b.HasIndex("DiscountCodeGeneratorId");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("DiscountCodeUserHistories");
+                });
+
             modelBuilder.Entity("SoftGrid.Friendships.Friendship", b =>
                 {
                     b.Property<long>("Id")
@@ -3425,6 +3672,29 @@ namespace SoftGrid.Migrations
                     b.ToTable("MembershipTypes");
                 });
 
+            modelBuilder.Entity("SoftGrid.LookupData.PaymentType", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("PaymentTypes");
+                });
+
             modelBuilder.Entity("SoftGrid.LookupData.ProductWholeSaleQuantityType", b =>
                 {
                     b.Property<long>("Id")
@@ -4095,6 +4365,685 @@ namespace SoftGrid.Migrations
                     b.HasIndex("TenancyName");
 
                     b.ToTable("AbpTenants");
+                });
+
+            modelBuilder.Entity("SoftGrid.OrderManagement.Order", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("City")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<long?>("ContactId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("CountryId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("CurrencyId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("DeleterUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeliveryAddress")
+                        .HasMaxLength(1024)
+                        .HasColumnType("nvarchar(1024)");
+
+                    b.Property<double?>("DeliveryFee")
+                        .HasColumnType("float");
+
+                    b.Property<bool>("DeliveryOrPickup")
+                        .HasColumnType("bit");
+
+                    b.Property<double?>("DiscountAmountByCode")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("FullName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<double?>("GratuityAmount")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("GratuityPercentage")
+                        .HasColumnType("float");
+
+                    b.Property<string>("InvoiceNumber")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("LastModifierUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("OrderSalesChannelId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("OrderStatusId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("PaymentCompleted")
+                        .HasColumnType("bit");
+
+                    b.Property<double?>("ServiceCharge")
+                        .HasColumnType("float");
+
+                    b.Property<long?>("StateId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("StoreId")
+                        .HasColumnType("bigint");
+
+                    b.Property<double?>("SubTotalExcludedTax")
+                        .HasColumnType("float");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.Property<double?>("TotalAmount")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("TotalDiscountAmount")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("TotalTaxAmount")
+                        .HasColumnType("float");
+
+                    b.Property<string>("ZipCode")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ContactId");
+
+                    b.HasIndex("CountryId");
+
+                    b.HasIndex("CurrencyId");
+
+                    b.HasIndex("OrderSalesChannelId");
+
+                    b.HasIndex("OrderStatusId");
+
+                    b.HasIndex("StateId");
+
+                    b.HasIndex("StoreId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("SoftGrid.OrderManagement.OrderDeliveryInfo", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime?>("CateringDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CateringTime")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("CustomerAcknowledged")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("CustomerSignature")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeliverToCustomerDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeliverToCustomerTime")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime?>("DeliveryDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeliveryNotes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DeliveryProviderId")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<string>("DeliveryTime")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime?>("DineInDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DineInTime")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime?>("DispatchDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DispatchTime")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<long?>("EmployeeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("IncludedChildren")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsAsap")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsPickupCatering")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("NumberOfGuests")
+                        .HasColumnType("int");
+
+                    b.Property<long?>("OrderId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("PickupDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PickupTime")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.Property<double?>("TotalWeight")
+                        .HasColumnType("float");
+
+                    b.Property<string>("TrackingNumber")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("OrderDeliveryInfos");
+                });
+
+            modelBuilder.Entity("SoftGrid.OrderManagement.OrderFulfillmentStatus", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime?>("ActualTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("DeleterUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("EmployeeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("EstimatedTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("LastModifierUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("OrderId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("OrderStatusId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("OrderStatusId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("OrderFulfillmentStatuses");
+                });
+
+            modelBuilder.Entity("SoftGrid.OrderManagement.OrderPaymentInfo", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("AuthorizationTransactionCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AuthorizationTransactionNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AuthrorizationTransactionResult")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BillingAddress")
+                        .HasMaxLength(1024)
+                        .HasColumnType("nvarchar(1024)");
+
+                    b.Property<string>("BillingCity")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<string>("BillingState")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<string>("BillingZipCode")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("CardCvv")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("CardExpirationMonth")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<string>("CardExpirationYear")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<string>("CardName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("CardNumber")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("CurrencyId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("CustomerDeviceInfo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CustomerIpAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double?>("DueAmount")
+                        .HasColumnType("float");
+
+                    b.Property<string>("MaskedCreditCardNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("OrderId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("PaidDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PaidTime")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<double?>("PaySplitAmount")
+                        .HasColumnType("float");
+
+                    b.Property<bool>("PaymentSplit")
+                        .HasColumnType("bit");
+
+                    b.Property<long?>("PaymentTypeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("SaveCreditCardNumber")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CurrencyId");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("PaymentTypeId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("OrderPaymentInfos");
+                });
+
+            modelBuilder.Entity("SoftGrid.OrderManagement.OrderProductInfo", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<double?>("ByProductDiscountAmount")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("ByProductDiscountPercentage")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("ByProductTaxAmount")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("ByProductTotalAmount")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("MeasurementUnitId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("OrderId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("ProductId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<long?>("StoreId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.Property<double?>("UnitPrice")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MeasurementUnitId");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("StoreId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("OrderProductInfos");
+                });
+
+            modelBuilder.Entity("SoftGrid.OrderManagement.OrderProductVariant", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("OrderProductInfoId")
+                        .HasColumnType("bigint");
+
+                    b.Property<double?>("Price")
+                        .HasColumnType("float");
+
+                    b.Property<long?>("ProductVariantCategoryId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("ProductVariantId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductVariantCategoryId");
+
+                    b.HasIndex("ProductVariantId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("OrderProductVariants");
+                });
+
+            modelBuilder.Entity("SoftGrid.OrderManagement.OrderSalesChannel", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("ApiLink")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LinkName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasMaxLength(1024)
+                        .HasColumnType("nvarchar(1024)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("OrderSalesChannels");
+                });
+
+            modelBuilder.Entity("SoftGrid.OrderManagement.OrderStatus", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("ColorCode")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<bool>("DeliveryOrPickup")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Message")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<int?>("RoleId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SequenceNo")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("OrderStatuses");
+                });
+
+            modelBuilder.Entity("SoftGrid.OrderManagement.OrderTeam", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("EmployeeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("OrderId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("OrderTeams");
+                });
+
+            modelBuilder.Entity("SoftGrid.OrderManagement.OrderfulfillmentTeam", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long?>("ContactId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("EmployeeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("OrderId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.Property<long?>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ContactId");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("TenantId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("OrderfulfillmentTeams");
                 });
 
             modelBuilder.Entity("SoftGrid.SalesLeadManagement.Lead", b =>
@@ -8373,6 +9322,90 @@ namespace SoftGrid.Migrations
                     b.Navigation("MasterTagFk");
                 });
 
+            modelBuilder.Entity("SoftGrid.DiscountManagement.CustomerWallet", b =>
+                {
+                    b.HasOne("SoftGrid.CRM.Contact", "ContactFk")
+                        .WithMany()
+                        .HasForeignKey("ContactId");
+
+                    b.HasOne("SoftGrid.LookupData.Currency", "CurrencyFk")
+                        .WithMany()
+                        .HasForeignKey("CurrencyId");
+
+                    b.HasOne("SoftGrid.Authorization.Users.User", "UserFk")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("ContactFk");
+
+                    b.Navigation("CurrencyFk");
+
+                    b.Navigation("UserFk");
+                });
+
+            modelBuilder.Entity("SoftGrid.DiscountManagement.DiscountCodeByCustomer", b =>
+                {
+                    b.HasOne("SoftGrid.CRM.Contact", "ContactFk")
+                        .WithMany()
+                        .HasForeignKey("ContactId");
+
+                    b.HasOne("SoftGrid.DiscountManagement.DiscountCodeGenerator", "DiscountCodeGeneratorFk")
+                        .WithMany()
+                        .HasForeignKey("DiscountCodeGeneratorId");
+
+                    b.Navigation("ContactFk");
+
+                    b.Navigation("DiscountCodeGeneratorFk");
+                });
+
+            modelBuilder.Entity("SoftGrid.DiscountManagement.DiscountCodeMap", b =>
+                {
+                    b.HasOne("SoftGrid.DiscountManagement.DiscountCodeGenerator", "DiscountCodeGeneratorFk")
+                        .WithMany()
+                        .HasForeignKey("DiscountCodeGeneratorId");
+
+                    b.HasOne("SoftGrid.LookupData.MembershipType", "MembershipTypeFk")
+                        .WithMany()
+                        .HasForeignKey("MembershipTypeId");
+
+                    b.HasOne("SoftGrid.Shop.Product", "ProductFk")
+                        .WithMany()
+                        .HasForeignKey("ProductId");
+
+                    b.HasOne("SoftGrid.Shop.Store", "StoreFk")
+                        .WithMany()
+                        .HasForeignKey("StoreId");
+
+                    b.Navigation("DiscountCodeGeneratorFk");
+
+                    b.Navigation("MembershipTypeFk");
+
+                    b.Navigation("ProductFk");
+
+                    b.Navigation("StoreFk");
+                });
+
+            modelBuilder.Entity("SoftGrid.DiscountManagement.DiscountCodeUserHistory", b =>
+                {
+                    b.HasOne("SoftGrid.CRM.Contact", "ContactFk")
+                        .WithMany()
+                        .HasForeignKey("ContactId");
+
+                    b.HasOne("SoftGrid.DiscountManagement.DiscountCodeGenerator", "DiscountCodeGeneratorFk")
+                        .WithMany()
+                        .HasForeignKey("DiscountCodeGeneratorId");
+
+                    b.HasOne("SoftGrid.OrderManagement.Order", "OrderFk")
+                        .WithMany()
+                        .HasForeignKey("OrderId");
+
+                    b.Navigation("ContactFk");
+
+                    b.Navigation("DiscountCodeGeneratorFk");
+
+                    b.Navigation("OrderFk");
+                });
+
             modelBuilder.Entity("SoftGrid.JobManagement.Job", b =>
                 {
                     b.HasOne("SoftGrid.CRM.Business", "BusinessFk")
@@ -8610,6 +9643,201 @@ namespace SoftGrid.Migrations
                     b.Navigation("Edition");
 
                     b.Navigation("LastModifierUser");
+                });
+
+            modelBuilder.Entity("SoftGrid.OrderManagement.Order", b =>
+                {
+                    b.HasOne("SoftGrid.CRM.Contact", "ContactFk")
+                        .WithMany()
+                        .HasForeignKey("ContactId");
+
+                    b.HasOne("SoftGrid.LookupData.Country", "CountryFk")
+                        .WithMany()
+                        .HasForeignKey("CountryId");
+
+                    b.HasOne("SoftGrid.LookupData.Currency", "CurrencyFk")
+                        .WithMany()
+                        .HasForeignKey("CurrencyId");
+
+                    b.HasOne("SoftGrid.OrderManagement.OrderSalesChannel", "OrderSalesChannelFk")
+                        .WithMany()
+                        .HasForeignKey("OrderSalesChannelId");
+
+                    b.HasOne("SoftGrid.OrderManagement.OrderStatus", "OrderStatusFk")
+                        .WithMany()
+                        .HasForeignKey("OrderStatusId");
+
+                    b.HasOne("SoftGrid.LookupData.State", "StateFk")
+                        .WithMany()
+                        .HasForeignKey("StateId");
+
+                    b.HasOne("SoftGrid.Shop.Store", "StoreFk")
+                        .WithMany()
+                        .HasForeignKey("StoreId");
+
+                    b.Navigation("ContactFk");
+
+                    b.Navigation("CountryFk");
+
+                    b.Navigation("CurrencyFk");
+
+                    b.Navigation("OrderSalesChannelFk");
+
+                    b.Navigation("OrderStatusFk");
+
+                    b.Navigation("StateFk");
+
+                    b.Navigation("StoreFk");
+                });
+
+            modelBuilder.Entity("SoftGrid.OrderManagement.OrderDeliveryInfo", b =>
+                {
+                    b.HasOne("SoftGrid.CRM.Employee", "EmployeeFk")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId");
+
+                    b.HasOne("SoftGrid.OrderManagement.Order", "OrderFk")
+                        .WithMany()
+                        .HasForeignKey("OrderId");
+
+                    b.Navigation("EmployeeFk");
+
+                    b.Navigation("OrderFk");
+                });
+
+            modelBuilder.Entity("SoftGrid.OrderManagement.OrderFulfillmentStatus", b =>
+                {
+                    b.HasOne("SoftGrid.CRM.Employee", "EmployeeFk")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId");
+
+                    b.HasOne("SoftGrid.OrderManagement.Order", "OrderFk")
+                        .WithMany()
+                        .HasForeignKey("OrderId");
+
+                    b.HasOne("SoftGrid.OrderManagement.OrderStatus", "OrderStatusFk")
+                        .WithMany()
+                        .HasForeignKey("OrderStatusId");
+
+                    b.Navigation("EmployeeFk");
+
+                    b.Navigation("OrderFk");
+
+                    b.Navigation("OrderStatusFk");
+                });
+
+            modelBuilder.Entity("SoftGrid.OrderManagement.OrderPaymentInfo", b =>
+                {
+                    b.HasOne("SoftGrid.LookupData.Currency", "CurrencyFk")
+                        .WithMany()
+                        .HasForeignKey("CurrencyId");
+
+                    b.HasOne("SoftGrid.OrderManagement.Order", "OrderFk")
+                        .WithMany()
+                        .HasForeignKey("OrderId");
+
+                    b.HasOne("SoftGrid.LookupData.PaymentType", "PaymentTypeFk")
+                        .WithMany()
+                        .HasForeignKey("PaymentTypeId");
+
+                    b.Navigation("CurrencyFk");
+
+                    b.Navigation("OrderFk");
+
+                    b.Navigation("PaymentTypeFk");
+                });
+
+            modelBuilder.Entity("SoftGrid.OrderManagement.OrderProductInfo", b =>
+                {
+                    b.HasOne("SoftGrid.LookupData.MeasurementUnit", "MeasurementUnitFk")
+                        .WithMany()
+                        .HasForeignKey("MeasurementUnitId");
+
+                    b.HasOne("SoftGrid.OrderManagement.Order", "OrderFk")
+                        .WithMany()
+                        .HasForeignKey("OrderId");
+
+                    b.HasOne("SoftGrid.Shop.Product", "ProductFk")
+                        .WithMany()
+                        .HasForeignKey("ProductId");
+
+                    b.HasOne("SoftGrid.Shop.Store", "StoreFk")
+                        .WithMany()
+                        .HasForeignKey("StoreId");
+
+                    b.Navigation("MeasurementUnitFk");
+
+                    b.Navigation("OrderFk");
+
+                    b.Navigation("ProductFk");
+
+                    b.Navigation("StoreFk");
+                });
+
+            modelBuilder.Entity("SoftGrid.OrderManagement.OrderProductVariant", b =>
+                {
+                    b.HasOne("SoftGrid.Shop.ProductVariantCategory", "ProductVariantCategoryFk")
+                        .WithMany()
+                        .HasForeignKey("ProductVariantCategoryId");
+
+                    b.HasOne("SoftGrid.Shop.ProductVariant", "ProductVariantFk")
+                        .WithMany()
+                        .HasForeignKey("ProductVariantId");
+
+                    b.Navigation("ProductVariantCategoryFk");
+
+                    b.Navigation("ProductVariantFk");
+                });
+
+            modelBuilder.Entity("SoftGrid.OrderManagement.OrderStatus", b =>
+                {
+                    b.HasOne("SoftGrid.Authorization.Roles.Role", "RoleFk")
+                        .WithMany()
+                        .HasForeignKey("RoleId");
+
+                    b.Navigation("RoleFk");
+                });
+
+            modelBuilder.Entity("SoftGrid.OrderManagement.OrderTeam", b =>
+                {
+                    b.HasOne("SoftGrid.CRM.Employee", "EmployeeFk")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId");
+
+                    b.HasOne("SoftGrid.OrderManagement.Order", "OrderFk")
+                        .WithMany()
+                        .HasForeignKey("OrderId");
+
+                    b.Navigation("EmployeeFk");
+
+                    b.Navigation("OrderFk");
+                });
+
+            modelBuilder.Entity("SoftGrid.OrderManagement.OrderfulfillmentTeam", b =>
+                {
+                    b.HasOne("SoftGrid.CRM.Contact", "ContactFk")
+                        .WithMany()
+                        .HasForeignKey("ContactId");
+
+                    b.HasOne("SoftGrid.CRM.Employee", "EmployeeFk")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId");
+
+                    b.HasOne("SoftGrid.OrderManagement.Order", "OrderFk")
+                        .WithMany()
+                        .HasForeignKey("OrderId");
+
+                    b.HasOne("SoftGrid.Authorization.Users.User", "UserFk")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("ContactFk");
+
+                    b.Navigation("EmployeeFk");
+
+                    b.Navigation("OrderFk");
+
+                    b.Navigation("UserFk");
                 });
 
             modelBuilder.Entity("SoftGrid.SalesLeadManagement.Lead", b =>

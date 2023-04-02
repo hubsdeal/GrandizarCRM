@@ -1,4 +1,6 @@
-﻿using SoftGrid.SalesLeadManagement;
+﻿using SoftGrid.DiscountManagement;
+using SoftGrid.OrderManagement;
+using SoftGrid.SalesLeadManagement;
 using SoftGrid.TaskManagement;
 using SoftGrid.JobManagement;
 using SoftGrid.Shop;
@@ -23,6 +25,38 @@ namespace SoftGrid.EntityFrameworkCore
 {
     public class SoftGridDbContext : AbpZeroDbContext<Tenant, Role, User, SoftGridDbContext>, IAbpPersistedGrantDbContext
     {
+        public virtual DbSet<DiscountCodeUserHistory> DiscountCodeUserHistories { get; set; }
+
+        public virtual DbSet<DiscountCodeMap> DiscountCodeMaps { get; set; }
+
+        public virtual DbSet<DiscountCodeByCustomer> DiscountCodeByCustomers { get; set; }
+
+        public virtual DbSet<DiscountCodeGenerator> DiscountCodeGenerators { get; set; }
+
+        public virtual DbSet<CustomerWallet> CustomerWallets { get; set; }
+
+        public virtual DbSet<OrderTeam> OrderTeams { get; set; }
+
+        public virtual DbSet<OrderProductVariant> OrderProductVariants { get; set; }
+
+        public virtual DbSet<OrderProductInfo> OrderProductInfos { get; set; }
+
+        public virtual DbSet<PaymentType> PaymentTypes { get; set; }
+
+        public virtual DbSet<OrderPaymentInfo> OrderPaymentInfos { get; set; }
+
+        public virtual DbSet<OrderfulfillmentTeam> OrderfulfillmentTeams { get; set; }
+
+        public virtual DbSet<OrderFulfillmentStatus> OrderFulfillmentStatuses { get; set; }
+
+        public virtual DbSet<OrderDeliveryInfo> OrderDeliveryInfos { get; set; }
+
+        public virtual DbSet<Order> Orders { get; set; }
+
+        public virtual DbSet<OrderStatus> OrderStatuses { get; set; }
+
+        public virtual DbSet<OrderSalesChannel> OrderSalesChannels { get; set; }
+
         public virtual DbSet<ProductWholeSalePrice> ProductWholeSalePrices { get; set; }
 
         public virtual DbSet<ProductWholeSaleQuantityType> ProductWholeSaleQuantityTypes { get; set; }
@@ -277,10 +311,78 @@ namespace SoftGrid.EntityFrameworkCore
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<ProductWholeSalePrice>(p =>
+            modelBuilder.Entity<DiscountCodeUserHistory>(d =>
             {
-                p.HasIndex(e => new { e.TenantId });
+                d.HasIndex(e => new { e.TenantId });
             });
+            modelBuilder.Entity<DiscountCodeMap>(d =>
+                       {
+                           d.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<DiscountCodeByCustomer>(d =>
+                       {
+                           d.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<DiscountCodeGenerator>(d =>
+                       {
+                           d.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<CustomerWallet>(c =>
+                       {
+                           c.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<OrderTeam>(o =>
+                       {
+                           o.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<OrderProductVariant>(o =>
+                       {
+                           o.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<OrderProductInfo>(o =>
+                       {
+                           o.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<OrderPaymentInfo>(o =>
+                       {
+                           o.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<PaymentType>(p =>
+                       {
+                           p.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<OrderPaymentInfo>(o =>
+                       {
+                           o.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<OrderfulfillmentTeam>(o =>
+                       {
+                           o.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<OrderFulfillmentStatus>(o =>
+                       {
+                           o.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<OrderDeliveryInfo>(o =>
+                       {
+                           o.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<Order>(o =>
+                       {
+                           o.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<OrderStatus>(o =>
+                       {
+                           o.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<OrderSalesChannel>(o =>
+                       {
+                           o.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<ProductWholeSalePrice>(p =>
+                       {
+                           p.HasIndex(e => new { e.TenantId });
+                       });
             modelBuilder.Entity<ProductWholeSaleQuantityType>(p =>
                        {
                            p.HasIndex(e => new { e.TenantId });

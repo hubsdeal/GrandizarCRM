@@ -7,6 +7,22 @@ import { ZeroTemplateHttpConfigurationService } from './zero-template-http-confi
 
 @NgModule({
     providers: [
+        ApiServiceProxies.DiscountCodeUserHistoriesServiceProxy,        
+        ApiServiceProxies.DiscountCodeMapsServiceProxy,        
+        ApiServiceProxies.DiscountCodeByCustomersServiceProxy,        
+        ApiServiceProxies.DiscountCodeGeneratorsServiceProxy,        
+        ApiServiceProxies.CustomerWalletsServiceProxy,        
+        ApiServiceProxies.OrderTeamsServiceProxy,        
+        ApiServiceProxies.OrderProductVariantsServiceProxy,        
+        ApiServiceProxies.OrderProductInfosServiceProxy,        
+        ApiServiceProxies.PaymentTypesServiceProxy,        
+        ApiServiceProxies.OrderPaymentInfosServiceProxy,        
+        ApiServiceProxies.OrderfulfillmentTeamsServiceProxy,        
+        ApiServiceProxies.OrderFulfillmentStatusesServiceProxy,        
+        ApiServiceProxies.OrderDeliveryInfosServiceProxy,        
+        ApiServiceProxies.OrdersServiceProxy,        
+        ApiServiceProxies.OrderStatusesServiceProxy,        
+        ApiServiceProxies.OrderSalesChannelsServiceProxy,        
         ApiServiceProxies.ProductWholeSalePricesServiceProxy,        
         ApiServiceProxies.ProductWholeSaleQuantityTypesServiceProxy,        
         ApiServiceProxies.ProductFlashSaleProductMapsServiceProxy,        

@@ -10,6 +10,118 @@ import { MasterDataIndexComponent } from './lookupData/master-data-index/master-
                 children: [
                     
                     {
+                        path: 'discountManagement/discountCodeUserHistories',
+                        loadChildren: () => import('./discountManagement/discountCodeUserHistories/discountCodeUserHistory.module').then(m => m.DiscountCodeUserHistoryModule),
+                        data: { permission: 'Pages.DiscountCodeUserHistories' }
+                    },
+                
+                    
+                    {
+                        path: 'discountManagement/discountCodeMaps',
+                        loadChildren: () => import('./discountManagement/discountCodeMaps/discountCodeMap.module').then(m => m.DiscountCodeMapModule),
+                        data: { permission: 'Pages.DiscountCodeMaps' }
+                    },
+                
+                    
+                    {
+                        path: 'discountManagement/discountCodeByCustomers',
+                        loadChildren: () => import('./discountManagement/discountCodeByCustomers/discountCodeByCustomer.module').then(m => m.DiscountCodeByCustomerModule),
+                        data: { permission: 'Pages.DiscountCodeByCustomers' }
+                    },
+                
+                    
+                    {
+                        path: 'discountManagement/discountCodeGenerators',
+                        loadChildren: () => import('./discountManagement/discountCodeGenerators/discountCodeGenerator.module').then(m => m.DiscountCodeGeneratorModule),
+                        data: { permission: 'Pages.DiscountCodeGenerators' }
+                    },
+                
+                    
+                    {
+                        path: 'discountManagement/customerWallets',
+                        loadChildren: () => import('./discountManagement/customerWallets/customerWallet.module').then(m => m.CustomerWalletModule),
+                        data: { permission: 'Pages.CustomerWallets' }
+                    },
+                
+                    
+                    {
+                        path: 'orderManagement/orderTeams',
+                        loadChildren: () => import('./orderManagement/orderTeams/orderTeam.module').then(m => m.OrderTeamModule),
+                        data: { permission: 'Pages.OrderTeams' }
+                    },
+                
+                    
+                    {
+                        path: 'orderManagement/orderProductVariants',
+                        loadChildren: () => import('./orderManagement/orderProductVariants/orderProductVariant.module').then(m => m.OrderProductVariantModule),
+                        data: { permission: 'Pages.OrderProductVariants' }
+                    },
+                
+                    
+                    {
+                        path: 'orderManagement/orderProductInfos',
+                        loadChildren: () => import('./orderManagement/orderProductInfos/orderProductInfo.module').then(m => m.OrderProductInfoModule),
+                        data: { permission: 'Pages.OrderProductInfos' }
+                    },
+                
+                    
+                    {
+                        path: 'lookupData/paymentTypes',
+                        loadChildren: () => import('./lookupData/paymentTypes/paymentType.module').then(m => m.PaymentTypeModule),
+                        data: { permission: 'Pages.PaymentTypes' }
+                    },
+                
+                    
+                    {
+                        path: 'orderManagement/orderPaymentInfos',
+                        loadChildren: () => import('./orderManagement/orderPaymentInfos/orderPaymentInfo.module').then(m => m.OrderPaymentInfoModule),
+                        data: { permission: 'Pages.OrderPaymentInfos' }
+                    },
+                
+                    
+                    {
+                        path: 'orderManagement/orderfulfillmentTeams',
+                        loadChildren: () => import('./orderManagement/orderfulfillmentTeams/orderfulfillmentTeam.module').then(m => m.OrderfulfillmentTeamModule),
+                        data: { permission: 'Pages.OrderfulfillmentTeams' }
+                    },
+                
+                    
+                    {
+                        path: 'orderManagement/orderFulfillmentStatuses',
+                        loadChildren: () => import('./orderManagement/orderFulfillmentStatuses/orderFulfillmentStatus.module').then(m => m.OrderFulfillmentStatusModule),
+                        data: { permission: 'Pages.OrderFulfillmentStatuses' }
+                    },
+                
+                    
+                    {
+                        path: 'orderManagement/orderDeliveryInfos',
+                        loadChildren: () => import('./orderManagement/orderDeliveryInfos/orderDeliveryInfo.module').then(m => m.OrderDeliveryInfoModule),
+                        data: { permission: 'Pages.OrderDeliveryInfos' }
+                    },
+                
+                    
+                    {
+                        path: 'orderManagement/orders',
+                        loadChildren: () => import('./orderManagement/orders/order.module').then(m => m.OrderModule),
+                        data: { permission: 'Pages.Orders' }
+                    },
+                
+                    
+                    {
+                        path: 'orderManagement/orderStatuses',
+                        loadChildren: () => import('./orderManagement/orderStatuses/orderStatus.module').then(m => m.OrderStatusModule),
+                        data: { permission: 'Pages.OrderStatuses' }
+                    },
+                
+                    
+                    {
+                        path: 'orderManagement/orderSalesChannels',
+                        loadChildren: () => import('./orderManagement/orderSalesChannels/orderSalesChannel.module').then(m => m.OrderSalesChannelModule),
+                        data: { permission: 'Pages.OrderSalesChannels' }
+                    },
+                
+                    
+                    {
                         path: 'shop/productWholeSalePrices',
                         loadChildren: () => import('./shop/productWholeSalePrices/productWholeSalePrice.module').then(m => m.ProductWholeSalePriceModule),
                         data: { permission: 'Pages.ProductWholeSalePrices' }

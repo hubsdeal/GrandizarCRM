@@ -1,0 +1,165 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #orderStatusForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="orderStatus.id">{{ l('EditOrderStatus') }}</span>
+                        <span *ngIf="!orderStatus.id">{{ l('CreateNewOrderStatus') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="RoleName">{{ l('Role') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="RoleName"
+                                name="roleName"
+                                [(ngModel)]="roleName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectRoleModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setRoleIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="orderStatus.roleId"
+                        [(ngModel)]="orderStatus.roleId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="OrderStatus_Name">{{ l('Name') }} *</label>
+                        <input
+                            type="text"
+                            #OrderStatus_Name="ngModel"
+                            id="OrderStatus_Name"
+                            class="form-control"
+                            [(ngModel)]="orderStatus.name"
+                            name="Name"
+                            minlength="1"
+                            maxlength="128"
+                            required
+                        />
+                        <validation-messages [formCtrl]="OrderStatus_Name"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="OrderStatus_Description">{{ l('Description') }}</label>
+                        <input
+                            type="text"
+                            #OrderStatus_Description="ngModel"
+                            id="OrderStatus_Description"
+                            class="form-control"
+                            [(ngModel)]="orderStatus.description"
+                            name="Description"
+                        />
+                        <validation-messages [formCtrl]="OrderStatus_Description"></validation-messages>
+                    </div>
+
+                    <div class="my5">
+                        <label class="form-label" for="OrderStatus_SequenceNo">{{ l('SequenceNo') }}</label>
+                        <input
+                            type="number"
+                            #OrderStatus_SequenceNo="ngModel"
+                            id="OrderStatus_SequenceNo"
+                            class="form-control"
+                            [(ngModel)]="orderStatus.sequenceNo"
+                            name="SequenceNo"
+                        />
+                        <validation-messages [formCtrl]="OrderStatus_SequenceNo"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="OrderStatus_ColorCode">{{ l('ColorCode') }}</label>
+                        <input
+                            type="text"
+                            #OrderStatus_ColorCode="ngModel"
+                            id="OrderStatus_ColorCode"
+                            class="form-control"
+                            [(ngModel)]="orderStatus.colorCode"
+                            name="ColorCode"
+                            minlength="1"
+                            maxlength="50"
+                        />
+                        <validation-messages [formCtrl]="OrderStatus_ColorCode"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="OrderStatus_Message">{{ l('Message') }}</label>
+                        <input
+                            type="text"
+                            #OrderStatus_Message="ngModel"
+                            id="OrderStatus_Message"
+                            class="form-control"
+                            [(ngModel)]="orderStatus.message"
+                            name="Message"
+                        />
+                        <validation-messages [formCtrl]="OrderStatus_Message"></validation-messages>
+                    </div>
+
+                    <br />
+                    <label class="form-check form-check-custom form-check-solid">
+                        <input
+                            id="OrderStatus_DeliveryOrPickup"
+                            #OrderStatus_DeliveryOrPickup="ngModel"
+                            name="DeliveryOrPickup"
+                            [(ngModel)]="orderStatus.deliveryOrPickup"
+                            type="checkbox"
+                            class="form-check-input"
+                        />
+                        <span class="form-check-label">
+                            {{ l('DeliveryOrPickup') }}
+                        </span>
+                    </label>
+                    <validation-messages [formCtrl]="OrderStatus_DeliveryOrPickup"></validation-messages>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!orderStatusForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <orderStatusRoleLookupTableModal
+        #orderStatusRoleLookupTableModal
+        (modalSave)="getNewRoleId()"
+    ></orderStatusRoleLookupTableModal>
+</div>

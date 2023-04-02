@@ -1,0 +1,189 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #discountCodeMapForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="discountCodeMap.id">{{ l('EditDiscountCodeMap') }}</span>
+                        <span *ngIf="!discountCodeMap.id">{{ l('CreateNewDiscountCodeMap') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="DiscountCodeGeneratorName">
+                            {{ l('DiscountCodeGenerator') }}
+                        </label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="DiscountCodeGeneratorName"
+                                name="discountCodeGeneratorName"
+                                [(ngModel)]="discountCodeGeneratorName"
+                                type="text"
+                                disabled
+                            />
+                            <button
+                                class="btn btn-primary blue"
+                                (click)="openSelectDiscountCodeGeneratorModal()"
+                                type="button"
+                            >
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button
+                                class="btn btn-danger btn-icon"
+                                type="button"
+                                (click)="setDiscountCodeGeneratorIdNull()"
+                            >
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="discountCodeMap.discountCodeGeneratorId"
+                        [(ngModel)]="discountCodeMap.discountCodeGeneratorId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="StoreName">{{ l('Store') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="StoreName"
+                                name="storeName"
+                                [(ngModel)]="storeName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectStoreModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setStoreIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="discountCodeMap.storeId"
+                        [(ngModel)]="discountCodeMap.storeId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="ProductName">{{ l('Product') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="ProductName"
+                                name="productName"
+                                [(ngModel)]="productName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectProductModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setProductIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="discountCodeMap.productId"
+                        [(ngModel)]="discountCodeMap.productId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="MembershipTypeName">{{ l('MembershipType') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="MembershipTypeName"
+                                name="membershipTypeName"
+                                [(ngModel)]="membershipTypeName"
+                                type="text"
+                                disabled
+                            />
+                            <button
+                                class="btn btn-primary blue"
+                                (click)="openSelectMembershipTypeModal()"
+                                type="button"
+                            >
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setMembershipTypeIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="discountCodeMap.membershipTypeId"
+                        [(ngModel)]="discountCodeMap.membershipTypeId"
+                        type="text"
+                        hidden
+                    />
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!discountCodeMapForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <discountCodeMapDiscountCodeGeneratorLookupTableModal
+        #discountCodeMapDiscountCodeGeneratorLookupTableModal
+        (modalSave)="getNewDiscountCodeGeneratorId()"
+    ></discountCodeMapDiscountCodeGeneratorLookupTableModal>
+    <discountCodeMapStoreLookupTableModal
+        #discountCodeMapStoreLookupTableModal
+        (modalSave)="getNewStoreId()"
+    ></discountCodeMapStoreLookupTableModal>
+    <discountCodeMapProductLookupTableModal
+        #discountCodeMapProductLookupTableModal
+        (modalSave)="getNewProductId()"
+    ></discountCodeMapProductLookupTableModal>
+    <discountCodeMapMembershipTypeLookupTableModal
+        #discountCodeMapMembershipTypeLookupTableModal
+        (modalSave)="getNewMembershipTypeId()"
+    ></discountCodeMapMembershipTypeLookupTableModal>
+</div>

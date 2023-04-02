@@ -1,0 +1,894 @@
+﻿<div [@routerTransition]>
+    <sub-header [title]="'OrderDeliveryInfos' | localize" [description]="'OrderDeliveryInfosHeaderInfo' | localize">
+        <div role="actions">
+            <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1">
+                <i class="fa fa-file-excel"></i>
+                {{ l('ExportToExcel') }}
+            </button>
+
+            <button
+                *ngIf="isGranted('Pages.OrderDeliveryInfos.Create')"
+                (click)="createOrderDeliveryInfo()"
+                class="btn btn-primary blue"
+            >
+                <i class="fa fa-plus"></i>
+                {{ l('CreateNewOrderDeliveryInfo') }}
+            </button>
+        </div>
+    </sub-header>
+
+    <div [class]="containerClass">
+        <div class="card card-custom gutter-b">
+            <div class="card-body">
+                <form class="form" autocomplete="off">
+                    <div>
+                        <div class="row align-items-center">
+                            <div class="col-xl-12">
+                                <div class="my-3">
+                                    <div class="input-group mb-3">
+                                        <input
+                                            [(ngModel)]="filterText"
+                                            (ngModelChange)="getOrderDeliveryInfos()"
+                                            name="filterText"
+                                            autoFocus
+                                            type="text"
+                                            class="form-control"
+                                            [placeholder]="l('SearchWithThreeDot')"
+                                        />
+                                        <button class="btn btn-primary" type="submit" (click)="getOrderDeliveryInfos()">
+                                            <i class="flaticon-search-1"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" [hidden]="!advancedFiltersAreShown">
+                            <div class="col-md-12"></div>
+
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="TrackingNumberFilter">
+                                        {{ l('TrackingNumber') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="TrackingNumberFilter"
+                                        name="trackingNumberFilter"
+                                        [(ngModel)]="trackingNumberFilter"
+                                        (ngModelChange)="getOrderDeliveryInfos()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="MinTotalWeightFilter">
+                                        {{ l('MinMax') }} {{ l('TotalWeight') }}
+                                    </label>
+                                    <div class="input-group">
+                                        <input
+                                            type="number"
+                                            class="form-control"
+                                            id="MinTotalWeightFilter"
+                                            [(ngModel)]="minTotalWeightFilter"
+                                            placeholder="{{ l('MinValue') }}"
+                                            name="minTotalWeightFilter"
+                                            (ngModelChange)="getOrderDeliveryInfos()"
+                                        />
+                                        <input
+                                            type="number"
+                                            class="form-control"
+                                            [(ngModel)]="maxTotalWeightFilter"
+                                            placeholder="{{ l('MaxValue') }}"
+                                            name="maxTotalWeightFilter"
+                                            (ngModelChange)="getOrderDeliveryInfos()"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="DeliveryProviderIdFilter">
+                                        {{ l('DeliveryProviderId') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="DeliveryProviderIdFilter"
+                                        name="deliveryProviderIdFilter"
+                                        [(ngModel)]="deliveryProviderIdFilter"
+                                        (ngModelChange)="getOrderDeliveryInfos()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="MinDispatchDateFilter">
+                                        {{ l('DispatchDateRange') }}
+                                    </label>
+                                    <div class="input-group">
+                                        <input
+                                            class="form-control m-input"
+                                            id="MinDispatchDateFilter"
+                                            name="MinDispatchDateFilter"
+                                            type="datetime"
+                                            bsDatepicker
+                                            placeholder="{{ l('MinValue') }}"
+                                            [(ngModel)]="minDispatchDateFilter"
+                                            (ngModelChange)="getOrderDeliveryInfos()"
+                                        />
+                                        <span style="line-height: 40px; padding: 0 15px 0 15px">&mdash;</span>
+                                        <input
+                                            class="form-control m-input"
+                                            id="MaxDispatchDateFilter"
+                                            name="MaxDispatchDateFilter"
+                                            type="datetime"
+                                            bsDatepicker
+                                            placeholder="{{ l('MaxValue') }}"
+                                            [(ngModel)]="maxDispatchDateFilter"
+                                            (ngModelChange)="getOrderDeliveryInfos()"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="DispatchTimeFilter">{{ l('DispatchTime') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="DispatchTimeFilter"
+                                        name="dispatchTimeFilter"
+                                        [(ngModel)]="dispatchTimeFilter"
+                                        (ngModelChange)="getOrderDeliveryInfos()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="MinDeliverToCustomerDateFilter">
+                                        {{ l('DeliverToCustomerDateRange') }}
+                                    </label>
+                                    <div class="input-group">
+                                        <input
+                                            class="form-control m-input"
+                                            id="MinDeliverToCustomerDateFilter"
+                                            name="MinDeliverToCustomerDateFilter"
+                                            type="datetime"
+                                            bsDatepicker
+                                            placeholder="{{ l('MinValue') }}"
+                                            [(ngModel)]="minDeliverToCustomerDateFilter"
+                                            (ngModelChange)="getOrderDeliveryInfos()"
+                                        />
+                                        <span style="line-height: 40px; padding: 0 15px 0 15px">&mdash;</span>
+                                        <input
+                                            class="form-control m-input"
+                                            id="MaxDeliverToCustomerDateFilter"
+                                            name="MaxDeliverToCustomerDateFilter"
+                                            type="datetime"
+                                            bsDatepicker
+                                            placeholder="{{ l('MaxValue') }}"
+                                            [(ngModel)]="maxDeliverToCustomerDateFilter"
+                                            (ngModelChange)="getOrderDeliveryInfos()"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="DeliverToCustomerTimeFilter">
+                                        {{ l('DeliverToCustomerTime') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="DeliverToCustomerTimeFilter"
+                                        name="deliverToCustomerTimeFilter"
+                                        [(ngModel)]="deliverToCustomerTimeFilter"
+                                        (ngModelChange)="getOrderDeliveryInfos()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="DeliveryNotesFilter">{{ l('DeliveryNotes') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="DeliveryNotesFilter"
+                                        name="deliveryNotesFilter"
+                                        [(ngModel)]="deliveryNotesFilter"
+                                        (ngModelChange)="getOrderDeliveryInfos()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="CustomerAcknowledgedFilterSelect">
+                                        {{ l('CustomerAcknowledged') }}
+                                    </label>
+                                    <select
+                                        class="form-select"
+                                        name="CustomerAcknowledgedFilter"
+                                        id="CustomerAcknowledgedFilterSelect"
+                                        [(ngModel)]="customerAcknowledgedFilter"
+                                        (ngModelChange)="getOrderDeliveryInfos()"
+                                    >
+                                        <option value="-1">{{ l('All') }}</option>
+                                        <option value="0">{{ l('False') }}</option>
+                                        <option value="1">{{ l('True') }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="CustomerSignatureFilter">
+                                        {{ l('CustomerSignature') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="CustomerSignatureFilter"
+                                        name="customerSignatureFilter"
+                                        [(ngModel)]="customerSignatureFilter"
+                                        (ngModelChange)="getOrderDeliveryInfos()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="MinCateringDateFilter">
+                                        {{ l('CateringDateRange') }}
+                                    </label>
+                                    <div class="input-group">
+                                        <input
+                                            class="form-control m-input"
+                                            id="MinCateringDateFilter"
+                                            name="MinCateringDateFilter"
+                                            type="datetime"
+                                            bsDatepicker
+                                            placeholder="{{ l('MinValue') }}"
+                                            [(ngModel)]="minCateringDateFilter"
+                                            (ngModelChange)="getOrderDeliveryInfos()"
+                                        />
+                                        <span style="line-height: 40px; padding: 0 15px 0 15px">&mdash;</span>
+                                        <input
+                                            class="form-control m-input"
+                                            id="MaxCateringDateFilter"
+                                            name="MaxCateringDateFilter"
+                                            type="datetime"
+                                            bsDatepicker
+                                            placeholder="{{ l('MaxValue') }}"
+                                            [(ngModel)]="maxCateringDateFilter"
+                                            (ngModelChange)="getOrderDeliveryInfos()"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="CateringTimeFilter">{{ l('CateringTime') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="CateringTimeFilter"
+                                        name="cateringTimeFilter"
+                                        [(ngModel)]="cateringTimeFilter"
+                                        (ngModelChange)="getOrderDeliveryInfos()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="MinDeliveryDateFilter">
+                                        {{ l('DeliveryDateRange') }}
+                                    </label>
+                                    <div class="input-group">
+                                        <input
+                                            class="form-control m-input"
+                                            id="MinDeliveryDateFilter"
+                                            name="MinDeliveryDateFilter"
+                                            type="datetime"
+                                            bsDatepicker
+                                            placeholder="{{ l('MinValue') }}"
+                                            [(ngModel)]="minDeliveryDateFilter"
+                                            (ngModelChange)="getOrderDeliveryInfos()"
+                                        />
+                                        <span style="line-height: 40px; padding: 0 15px 0 15px">&mdash;</span>
+                                        <input
+                                            class="form-control m-input"
+                                            id="MaxDeliveryDateFilter"
+                                            name="MaxDeliveryDateFilter"
+                                            type="datetime"
+                                            bsDatepicker
+                                            placeholder="{{ l('MaxValue') }}"
+                                            [(ngModel)]="maxDeliveryDateFilter"
+                                            (ngModelChange)="getOrderDeliveryInfos()"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="DeliveryTimeFilter">{{ l('DeliveryTime') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="DeliveryTimeFilter"
+                                        name="deliveryTimeFilter"
+                                        [(ngModel)]="deliveryTimeFilter"
+                                        (ngModelChange)="getOrderDeliveryInfos()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="MinDineInDateFilter">
+                                        {{ l('DineInDateRange') }}
+                                    </label>
+                                    <div class="input-group">
+                                        <input
+                                            class="form-control m-input"
+                                            id="MinDineInDateFilter"
+                                            name="MinDineInDateFilter"
+                                            type="datetime"
+                                            bsDatepicker
+                                            placeholder="{{ l('MinValue') }}"
+                                            [(ngModel)]="minDineInDateFilter"
+                                            (ngModelChange)="getOrderDeliveryInfos()"
+                                        />
+                                        <span style="line-height: 40px; padding: 0 15px 0 15px">&mdash;</span>
+                                        <input
+                                            class="form-control m-input"
+                                            id="MaxDineInDateFilter"
+                                            name="MaxDineInDateFilter"
+                                            type="datetime"
+                                            bsDatepicker
+                                            placeholder="{{ l('MaxValue') }}"
+                                            [(ngModel)]="maxDineInDateFilter"
+                                            (ngModelChange)="getOrderDeliveryInfos()"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="DineInTimeFilter">{{ l('DineInTime') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="DineInTimeFilter"
+                                        name="dineInTimeFilter"
+                                        [(ngModel)]="dineInTimeFilter"
+                                        (ngModelChange)="getOrderDeliveryInfos()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="IncludedChildrenFilterSelect">
+                                        {{ l('IncludedChildren') }}
+                                    </label>
+                                    <select
+                                        class="form-select"
+                                        name="IncludedChildrenFilter"
+                                        id="IncludedChildrenFilterSelect"
+                                        [(ngModel)]="includedChildrenFilter"
+                                        (ngModelChange)="getOrderDeliveryInfos()"
+                                    >
+                                        <option value="-1">{{ l('All') }}</option>
+                                        <option value="0">{{ l('False') }}</option>
+                                        <option value="1">{{ l('True') }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="IsAsapFilterSelect">{{ l('IsAsap') }}</label>
+                                    <select
+                                        class="form-select"
+                                        name="IsAsapFilter"
+                                        id="IsAsapFilterSelect"
+                                        [(ngModel)]="isAsapFilter"
+                                        (ngModelChange)="getOrderDeliveryInfos()"
+                                    >
+                                        <option value="-1">{{ l('All') }}</option>
+                                        <option value="0">{{ l('False') }}</option>
+                                        <option value="1">{{ l('True') }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="IsPickupCateringFilterSelect">
+                                        {{ l('IsPickupCatering') }}
+                                    </label>
+                                    <select
+                                        class="form-select"
+                                        name="IsPickupCateringFilter"
+                                        id="IsPickupCateringFilterSelect"
+                                        [(ngModel)]="isPickupCateringFilter"
+                                        (ngModelChange)="getOrderDeliveryInfos()"
+                                    >
+                                        <option value="-1">{{ l('All') }}</option>
+                                        <option value="0">{{ l('False') }}</option>
+                                        <option value="1">{{ l('True') }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="MinNumberOfGuestsFilter">
+                                        {{ l('MinMax') }} {{ l('NumberOfGuests') }}
+                                    </label>
+                                    <div class="input-group">
+                                        <input
+                                            type="number"
+                                            class="form-control"
+                                            id="MinNumberOfGuestsFilter"
+                                            [(ngModel)]="minNumberOfGuestsFilter"
+                                            placeholder="{{ l('MinValue') }}"
+                                            name="minNumberOfGuestsFilter"
+                                            (ngModelChange)="getOrderDeliveryInfos()"
+                                        />
+                                        <input
+                                            type="number"
+                                            class="form-control"
+                                            [(ngModel)]="maxNumberOfGuestsFilter"
+                                            placeholder="{{ l('MaxValue') }}"
+                                            name="maxNumberOfGuestsFilter"
+                                            (ngModelChange)="getOrderDeliveryInfos()"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="MinPickupDateFilter">
+                                        {{ l('PickupDateRange') }}
+                                    </label>
+                                    <div class="input-group">
+                                        <input
+                                            class="form-control m-input"
+                                            id="MinPickupDateFilter"
+                                            name="MinPickupDateFilter"
+                                            type="datetime"
+                                            bsDatepicker
+                                            placeholder="{{ l('MinValue') }}"
+                                            [(ngModel)]="minPickupDateFilter"
+                                            (ngModelChange)="getOrderDeliveryInfos()"
+                                        />
+                                        <span style="line-height: 40px; padding: 0 15px 0 15px">&mdash;</span>
+                                        <input
+                                            class="form-control m-input"
+                                            id="MaxPickupDateFilter"
+                                            name="MaxPickupDateFilter"
+                                            type="datetime"
+                                            bsDatepicker
+                                            placeholder="{{ l('MaxValue') }}"
+                                            [(ngModel)]="maxPickupDateFilter"
+                                            (ngModelChange)="getOrderDeliveryInfos()"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="PickupTimeFilter">{{ l('PickupTime') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="PickupTimeFilter"
+                                        name="pickupTimeFilter"
+                                        [(ngModel)]="pickupTimeFilter"
+                                        (ngModelChange)="getOrderDeliveryInfos()"
+                                    />
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="EmployeeNameFilter">
+                                        ({{ l('Employee') }}) {{ l('Name') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="EmployeeNameFilter"
+                                        name="employeeNameFilter"
+                                        [(ngModel)]="employeeNameFilter"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="OrderInvoiceNumberFilter">
+                                        ({{ l('Order') }}) {{ l('InvoiceNumber') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="OrderInvoiceNumberFilter"
+                                        name="orderInvoiceNumberFilter"
+                                        [(ngModel)]="orderInvoiceNumberFilter"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-12 mt-5">
+                                <button
+                                    (click)="resetFilters()"
+                                    class="btn btn-secondary btn-sm"
+                                    id="btn-reset-filters"
+                                >
+                                    Reset
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row my-4">
+                            <div class="col-sm-12">
+                                <span
+                                    class="clickable-item text-muted"
+                                    *ngIf="!advancedFiltersAreShown"
+                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown"
+                                >
+                                    <i class="fa fa-angle-down"></i>
+                                    {{ l('ShowAdvancedFilters') }}
+                                </span>
+                                <span
+                                    class="clickable-item text-muted"
+                                    *ngIf="advancedFiltersAreShown"
+                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown"
+                                >
+                                    <i class="fa fa-angle-up"></i>
+                                    {{ l('HideAdvancedFilters') }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="row align-items-center">
+                    <!--<Primeng-Datatable-Start>-->
+                    <div class="primeng-datatable-container col-12" [busyIf]="primengTableHelper.isLoading">
+                        <p-table
+                            #dataTable
+                            (onLazyLoad)="getOrderDeliveryInfos($event)"
+                            [value]="primengTableHelper.records"
+                            rows="{{ primengTableHelper.defaultRecordsCountPerPage }}"
+                            [paginator]="false"
+                            [lazy]="true"
+                            [scrollable]="true"
+                            ScrollWidth="100%"
+                            [responsive]="primengTableHelper.isResponsive"
+                            [resizableColumns]="primengTableHelper.resizableColumns"
+                        >
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th
+                                        style="width: 130px"
+                                        [hidden]="
+                                            !isGrantedAny(
+                                                'Pages.OrderDeliveryInfos.Edit',
+                                                'Pages.OrderDeliveryInfos.Delete'
+                                            )
+                                        "
+                                    >
+                                        {{ l('Actions') }}
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="employeeFk.name">
+                                        {{ l('Name') }}
+                                        <p-sortIcon field="employeeName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="orderFk.invoiceNumber">
+                                        {{ l('InvoiceNumber') }}
+                                        <p-sortIcon field="orderInvoiceNumber"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="trackingNumber">
+                                        {{ l('TrackingNumber') }}
+                                        <p-sortIcon field="orderDeliveryInfo.trackingNumber"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="totalWeight">
+                                        {{ l('TotalWeight') }}
+                                        <p-sortIcon field="orderDeliveryInfo.totalWeight"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="deliveryProviderId">
+                                        {{ l('DeliveryProviderId') }}
+                                        <p-sortIcon field="orderDeliveryInfo.deliveryProviderId"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="dispatchDate">
+                                        {{ l('DispatchDate') }}
+                                        <p-sortIcon field="orderDeliveryInfo.dispatchDate"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="dispatchTime">
+                                        {{ l('DispatchTime') }}
+                                        <p-sortIcon field="orderDeliveryInfo.dispatchTime"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="deliverToCustomerDate">
+                                        {{ l('DeliverToCustomerDate') }}
+                                        <p-sortIcon field="orderDeliveryInfo.deliverToCustomerDate"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="deliverToCustomerTime">
+                                        {{ l('DeliverToCustomerTime') }}
+                                        <p-sortIcon field="orderDeliveryInfo.deliverToCustomerTime"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="deliveryNotes">
+                                        {{ l('DeliveryNotes') }}
+                                        <p-sortIcon field="orderDeliveryInfo.deliveryNotes"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="customerAcknowledged">
+                                        {{ l('CustomerAcknowledged') }}
+                                        <p-sortIcon field="orderDeliveryInfo.customerAcknowledged"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="customerSignature">
+                                        {{ l('CustomerSignature') }}
+                                        <p-sortIcon field="orderDeliveryInfo.customerSignature"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="cateringDate">
+                                        {{ l('CateringDate') }}
+                                        <p-sortIcon field="orderDeliveryInfo.cateringDate"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="cateringTime">
+                                        {{ l('CateringTime') }}
+                                        <p-sortIcon field="orderDeliveryInfo.cateringTime"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="deliveryDate">
+                                        {{ l('DeliveryDate') }}
+                                        <p-sortIcon field="orderDeliveryInfo.deliveryDate"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="deliveryTime">
+                                        {{ l('DeliveryTime') }}
+                                        <p-sortIcon field="orderDeliveryInfo.deliveryTime"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="dineInDate">
+                                        {{ l('DineInDate') }}
+                                        <p-sortIcon field="orderDeliveryInfo.dineInDate"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="dineInTime">
+                                        {{ l('DineInTime') }}
+                                        <p-sortIcon field="orderDeliveryInfo.dineInTime"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="includedChildren">
+                                        {{ l('IncludedChildren') }}
+                                        <p-sortIcon field="orderDeliveryInfo.includedChildren"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="isAsap">
+                                        {{ l('IsAsap') }}
+                                        <p-sortIcon field="orderDeliveryInfo.isAsap"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="isPickupCatering">
+                                        {{ l('IsPickupCatering') }}
+                                        <p-sortIcon field="orderDeliveryInfo.isPickupCatering"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="numberOfGuests">
+                                        {{ l('NumberOfGuests') }}
+                                        <p-sortIcon field="orderDeliveryInfo.numberOfGuests"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="pickupDate">
+                                        {{ l('PickupDate') }}
+                                        <p-sortIcon field="orderDeliveryInfo.pickupDate"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="pickupTime">
+                                        {{ l('PickupTime') }}
+                                        <p-sortIcon field="orderDeliveryInfo.pickupTime"></p-sortIcon>
+                                    </th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
+                                <tr>
+                                    <td
+                                        style="width: 130px"
+                                        [hidden]="
+                                            !isGrantedAny(
+                                                'Pages.OrderDeliveryInfos.Edit',
+                                                'Pages.OrderDeliveryInfos.Delete'
+                                            )
+                                        "
+                                    >
+                                        <div class="btn-group dropdown" dropdown container="body">
+                                            <button class="dropdown-toggle btn btn-sm btn-primary" dropdownToggle>
+                                                <i class="fa fa-cog"></i>
+                                                <span class="caret"></span>
+                                                {{ l('Actions') }}
+                                            </button>
+                                            <ul class="dropdown-menu" *dropdownMenu>
+                                                <li>
+                                                    <a
+                                                        href="javascript:;"
+                                                        class="dropdown-item"
+                                                        (click)="viewOrderDeliveryInfoModal.show(record)"
+                                                    >
+                                                        {{ l('View') }}
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a
+                                                        href="javascript:;"
+                                                        *ngIf="permission.isGranted('Pages.OrderDeliveryInfos.Edit')"
+                                                        class="dropdown-item"
+                                                        (click)="
+                                                            createOrEditOrderDeliveryInfoModal.show(
+                                                                record.orderDeliveryInfo.id
+                                                            )
+                                                        "
+                                                    >
+                                                        {{ l('Edit') }}
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a
+                                                        class="dropdown-item"
+                                                        href="javascript:;"
+                                                        *ngIf="permission.isGranted('Pages.OrderDeliveryInfos.Delete')"
+                                                        (click)="deleteOrderDeliveryInfo(record.orderDeliveryInfo)"
+                                                    >
+                                                        {{ l('Delete') }}
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Name') }}</span>
+                                        {{ record.employeeName }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('InvoiceNumber') }}</span>
+                                        {{ record.orderInvoiceNumber }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('TrackingNumber') }}</span>
+                                        {{ record.orderDeliveryInfo.trackingNumber }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('TotalWeight') }}</span>
+                                        {{ record.orderDeliveryInfo.totalWeight }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('DeliveryProviderId') }}</span>
+                                        {{ record.orderDeliveryInfo.deliveryProviderId }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('DispatchDate') }}</span>
+                                        <span *ngIf="record.orderDeliveryInfo.dispatchDate">
+                                            {{ record.orderDeliveryInfo.dispatchDate | luxonFormat : 'F' }}
+                                        </span>
+                                        <span *ngIf="!record.orderDeliveryInfo.dispatchDate">-</span>
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('DispatchTime') }}</span>
+                                        {{ record.orderDeliveryInfo.dispatchTime }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('DeliverToCustomerDate') }}</span>
+                                        <span *ngIf="record.orderDeliveryInfo.deliverToCustomerDate">
+                                            {{ record.orderDeliveryInfo.deliverToCustomerDate | luxonFormat : 'F' }}
+                                        </span>
+                                        <span *ngIf="!record.orderDeliveryInfo.deliverToCustomerDate">-</span>
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('DeliverToCustomerTime') }}</span>
+                                        {{ record.orderDeliveryInfo.deliverToCustomerTime }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('DeliveryNotes') }}</span>
+                                        {{ record.orderDeliveryInfo.deliveryNotes }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('CustomerAcknowledged') }}</span>
+                                        <div *ngIf="record.orderDeliveryInfo.customerAcknowledged" class="text-center">
+                                            <i class="fa fa-check-circle text-success" title="True"></i>
+                                        </div>
+                                        <div *ngIf="!record.orderDeliveryInfo.customerAcknowledged" class="text-center">
+                                            <i class="fa fa-times-circle" title="False"></i>
+                                        </div>
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('CustomerSignature') }}</span>
+                                        {{ record.orderDeliveryInfo.customerSignature }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('CateringDate') }}</span>
+                                        <span *ngIf="record.orderDeliveryInfo.cateringDate">
+                                            {{ record.orderDeliveryInfo.cateringDate | luxonFormat : 'F' }}
+                                        </span>
+                                        <span *ngIf="!record.orderDeliveryInfo.cateringDate">-</span>
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('CateringTime') }}</span>
+                                        {{ record.orderDeliveryInfo.cateringTime }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('DeliveryDate') }}</span>
+                                        <span *ngIf="record.orderDeliveryInfo.deliveryDate">
+                                            {{ record.orderDeliveryInfo.deliveryDate | luxonFormat : 'F' }}
+                                        </span>
+                                        <span *ngIf="!record.orderDeliveryInfo.deliveryDate">-</span>
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('DeliveryTime') }}</span>
+                                        {{ record.orderDeliveryInfo.deliveryTime }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('DineInDate') }}</span>
+                                        <span *ngIf="record.orderDeliveryInfo.dineInDate">
+                                            {{ record.orderDeliveryInfo.dineInDate | luxonFormat : 'F' }}
+                                        </span>
+                                        <span *ngIf="!record.orderDeliveryInfo.dineInDate">-</span>
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('DineInTime') }}</span>
+                                        {{ record.orderDeliveryInfo.dineInTime }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('IncludedChildren') }}</span>
+                                        <div *ngIf="record.orderDeliveryInfo.includedChildren" class="text-center">
+                                            <i class="fa fa-check-circle text-success" title="True"></i>
+                                        </div>
+                                        <div *ngIf="!record.orderDeliveryInfo.includedChildren" class="text-center">
+                                            <i class="fa fa-times-circle" title="False"></i>
+                                        </div>
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('IsAsap') }}</span>
+                                        <div *ngIf="record.orderDeliveryInfo.isAsap" class="text-center">
+                                            <i class="fa fa-check-circle text-success" title="True"></i>
+                                        </div>
+                                        <div *ngIf="!record.orderDeliveryInfo.isAsap" class="text-center">
+                                            <i class="fa fa-times-circle" title="False"></i>
+                                        </div>
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('IsPickupCatering') }}</span>
+                                        <div *ngIf="record.orderDeliveryInfo.isPickupCatering" class="text-center">
+                                            <i class="fa fa-check-circle text-success" title="True"></i>
+                                        </div>
+                                        <div *ngIf="!record.orderDeliveryInfo.isPickupCatering" class="text-center">
+                                            <i class="fa fa-times-circle" title="False"></i>
+                                        </div>
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('NumberOfGuests') }}</span>
+                                        {{ record.orderDeliveryInfo.numberOfGuests }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('PickupDate') }}</span>
+                                        <span *ngIf="record.orderDeliveryInfo.pickupDate">
+                                            {{ record.orderDeliveryInfo.pickupDate | luxonFormat : 'F' }}
+                                        </span>
+                                        <span *ngIf="!record.orderDeliveryInfo.pickupDate">-</span>
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('PickupTime') }}</span>
+                                        {{ record.orderDeliveryInfo.pickupTime }}
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                        <div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
+                            {{ l('NoData') }}
+                        </div>
+                        <div class="primeng-paging-container">
+                            <p-paginator
+                                [rows]="primengTableHelper.defaultRecordsCountPerPage"
+                                #paginator
+                                (onPageChange)="getOrderDeliveryInfos($event)"
+                                [totalRecords]="primengTableHelper.totalRecordsCount"
+                                [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
+                                [showCurrentPageReport]="true"
+                                [currentPageReportTemplate]="
+                                    'TotalRecordsCount' | localize : primengTableHelper.totalRecordsCount
+                                "
+                            ></p-paginator>
+                        </div>
+                    </div>
+                    <!--<Primeng-Datatable-End>-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <createOrEditOrderDeliveryInfoModal
+        #createOrEditOrderDeliveryInfoModal
+        (modalSave)="getOrderDeliveryInfos()"
+    ></createOrEditOrderDeliveryInfoModal>
+    <viewOrderDeliveryInfoModal #viewOrderDeliveryInfoModal></viewOrderDeliveryInfoModal>
+</div>
