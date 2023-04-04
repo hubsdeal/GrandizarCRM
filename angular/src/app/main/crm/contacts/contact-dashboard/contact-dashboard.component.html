@@ -2552,15 +2552,20 @@
                                                         </div>
                                                         <!--end::Row-->
 
-
-
                                                         <!--begin::Input group-->
                                                         <div class="fv-row mb-7 fv-plugins-icon-container">
-                                                            <label class="fs-6 fw-semibold form-label mt-3">
-                                                                <span class="required">Profile</span>
+                                                            <label class="fs-6 fw-semibold form-label mt-3 w-100 mb-5">
+                                                                <div class="d-flex align-items-end justify-content-between">
+                                                                    <span class="required">Profile</span>
+                                                                    <button class="btn btn-sm btn-light-primary"
+                                                                        (click)="openAiModal()">
+                                                                        <i class="fa-file-signature fas me-2"></i>
+                                                                        Generate Profile Data
+                                                                    </button>
+                                                                </div>
                                                             </label>
-                                                            <textarea class="form-control form-control-solid" name=""
-                                                                id="" cols="30" rows="10"></textarea>
+                                                            <textarea class="form-control form-control-solid" name="bindingDataprofile" [(ngModel)]="bindingDataprofile"
+                                                                id="bindingDataprofile" cols="30" rows="10"></textarea>
                                                         </div>
                                                         <!--end::Input group-->
 

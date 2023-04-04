@@ -15,8 +15,7 @@
                         <li class="breadcrumb-item">
                             <span class="bullet bg-gray-400 w-5px h-2px"></span>
                         </li>
-                        <li routerLink="['/app/main/shop/products']"
-                            class="breadcrumb-item cursor-pointer text-muted">
+                        <li routerLink="['/app/main/shop/products']" class="breadcrumb-item cursor-pointer text-muted">
                             Store List</li>
                     </ul>
                 </div>
@@ -414,10 +413,17 @@
 
                                                 <!--begin::Input group-->
                                                 <div class="fv-row mb-7 fv-plugins-icon-container">
-                                                    <label class="fs-6 fw-semibold form-label mt-3">
-                                                        <span class="required">Short Description</span>
+                                                    <label class="fs-6 fw-semibold form-label mt-3 w-100 mb-5">
+                                                        <div class="d-flex align-items-end justify-content-between">
+                                                            <span class="required">Short Description</span>
+                                                            <button class="btn btn-sm btn-light-primary"
+                                                                (click)="openAiModalPr('Short Description')">
+                                                                <i class="fa-file-signature fas me-2"></i>
+                                                                Generate Short Description
+                                                            </button>
+                                                        </div>
                                                     </label>
-                                                    <textarea class="form-control form-control-solid" name="" id=""
+                                                    <textarea class="form-control form-control-solid" [(ngModel)]="bindingData" name="bindingData" id="bindingData"
                                                         cols="30" rows="10"></textarea>
                                                 </div>
                                                 <!--end::Input group-->
@@ -428,8 +434,7 @@
                                                 <!--begin::Action buttons-->
                                                 <div class="d-flex justify-content-end">
                                                     <!--begin::Button-->
-                                                    <button type="submit" data-kt-contacts-type="submit"
-                                                        class="btn btn-primary">
+                                                    <button type="submit" class="btn btn-primary">
                                                         <span class="indicator-label">Save</span>
                                                         <span class="indicator-progress">Please wait...
                                                             <span
@@ -459,10 +464,16 @@
                                         <div class="card-body">
                                             <!--begin::Item-->
                                             <div class="d-flex flex-stack">
-                                                <div class="d-flex w-100 align-items-center">
-                                                    <div class="w-100">
+                                                <div class="w-100">
+                                                    <div class="w-100 mb-4">
+                                                        <button class="btn btn-sm btn-light-primary" (click)="openAiModalPr('Product Description')">
+                                                            <i class="fa-file-signature fas me-2"></i>
+                                                            Generate Product Description
+                                                        </button>
+                                                    </div>
+                                                    <div class="w-100 mb-4">
                                                         <div class="d-flex flex-column">
-                                                            <textarea name="" id="" cols="30" rows="10"
+                                                            <textarea name="bindingData" id="bindingData" [(ngModel)]="bindingData" cols="30" rows="10"
                                                                 class="form-control form-control-md form-control-solid"
                                                                 placeholder="Full Description"></textarea>
                                                         </div>

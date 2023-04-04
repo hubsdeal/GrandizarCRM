@@ -22,6 +22,9 @@ import { ProgressBarModule } from 'primeng/progressbar';
 import { TableModule } from 'primeng/table';
 import { AppCommonModule } from './common/app-common.module';
 import { ThemesLayoutBaseComponent } from './layout/themes/themes-layout-base.component';
+import { ChatGptResponseModalComponent } from './chat-gpt-response-modal/chat-gpt-response-modal.component';
+import {MatDialogModule} from "@angular/material/dialog";
+import { EditorModule } from 'primeng/editor';
 
 const imports = [
     CommonModule,
@@ -47,11 +50,13 @@ const imports = [
     AutoCompleteModule,
     NgxSpinnerModule,
     AppBsModalModule,
+    MatDialogModule,
+    EditorModule
 ];
 
 @NgModule({
     imports: [...imports],
-    exports: [...imports],
-    declarations: [ThemesLayoutBaseComponent],
+    exports: [...imports, ChatGptResponseModalComponent],
+    declarations: [ThemesLayoutBaseComponent, ChatGptResponseModalComponent],
 })
 export class AppSharedModule {}

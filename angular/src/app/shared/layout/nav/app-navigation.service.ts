@@ -14,11 +14,134 @@ export class AppNavigationService {
 
     getMenu(): AppMenu {
         return new AppMenu('MainMenu', 'MainMenu', [
+            // new AppMenuItem(
+            //     'Dashboard',
+            //     'Pages.Administration.Host.Dashboard',
+            //     'flaticon-line-graph',
+            //     '/app/admin/hostDashboard'
+            // ),
             new AppMenuItem(
                 'Dashboard',
-                'Pages.Administration.Host.Dashboard',
-                'flaticon-line-graph',
-                '/app/admin/hostDashboard'
+                '',
+                'flaticon-dashboard',
+                '',
+                [],
+                [
+                    new AppMenuItem(
+                        'AdminDashboard',
+                        'Pages.Administration.Host.Dashboard',
+                        'flaticon-line-graph',
+                        '/app/admin/hostDashboard'
+                    ),
+                    new AppMenuItem('MasterTaskList', 'Pages.TaskEvents', 'flaticon2-list-2', '/app/main/taskManagement/taskEvents'),
+                    new AppMenuItem('MyTaskList', 'Pages.TaskEvents', 'flaticon2-list-2', '/app/main/taskManagement/taskEvents'),
+                ]
+            ),
+
+            new AppMenuItem(
+                'JobManagement',
+                '',
+                'fas fa-briefcase',
+                '',
+                [],
+                [
+                    new AppMenuItem('MasterJobList', 'Pages.Jobs', 'fas fa-briefcase', '/app/main/jobManagement/jobs'),
+                    new AppMenuItem('MyJobList', 'Pages.Jobs', 'fas fa-briefcase', '/app/main/jobManagement/jobs'),
+                ]
+            ),
+
+            new AppMenuItem(
+                'Applicant & Gigs',
+                '',
+                'flaticon-profile-1',
+                '',
+                [],
+                [
+                    new AppMenuItem('Applicants', '', 'fas fa-user-tie', '/app/main/jobManagement/applicants'),
+                ]
+            ),
+
+            new AppMenuItem(
+                'crm',
+                '',
+                'fas fa-users-cog',
+                '',
+                [],
+                [
+                    new AppMenuItem('Businesses', 'Pages.Businesses', 'fas fa-building', '/app/main/crm/businesses'),
+                    new AppMenuItem('MyCustomerList', 'Pages.Contacts', 'fas fa-user-friends', '/app/main/crm/contacts'),
+                    new AppMenuItem('MasterCustomerList', 'Pages.Contacts', 'fas fa-users', '/app/main/crm/contacts'),
+                    new AppMenuItem('PremiumCustomerList', 'Pages.Contacts', 'flaticon-medal', '/app/main/crm/contacts'),
+                    new AppMenuItem('ContactRepo', 'Pages.Contacts', 'flaticon-network', '/app/main/crm/contacts'),
+                    new AppMenuItem('ReferredContactList', 'Pages.Contacts', 'flaticon-share', '/app/main/crm/contacts'),
+                ]
+            ),
+
+            new AppMenuItem(
+                'ProductCatalog',
+                '',
+                'flaticon-open-box',
+                '',
+                [],
+                [
+                    new AppMenuItem('MasterProductList', 'Pages.Products', 'flaticon2-list-1', '/app/main/shop/products'),
+                    new AppMenuItem('MyProductList', 'Pages.Products', 'flaticon2-list-2', '/app/main/shop/products'),
+                    new AppMenuItem('ProductCategories', 'Pages.ProductCategories', 'flaticon-map', '/app/main/shop/productCategories'),
+                    new AppMenuItem('MediaLibraries', 'Pages.MediaLibraries', 'fas fa-photo-video', '/app/main/lookupData/mediaLibraries'),
+                ]
+            ),
+
+
+            new AppMenuItem(
+                'StoreManagement',
+                '',
+                'fas fa-store-alt',
+                '',
+                [],
+                [
+                    new AppMenuItem('MasterStoreList', 'Pages.Stores', 'flaticon2-list-1', '/app/main/shop/stores'),
+                    new AppMenuItem('MyStoreList', 'Pages.Stores', 'flaticon2-list-2', '/app/main/shop/stores'),
+                ]
+            ),
+
+            new AppMenuItem(
+                'Employee & Consultants ',
+                '',
+                'fas fa-user-tie',
+                '',
+                [],
+                [
+                    new AppMenuItem('MasterEmployeeList', 'Pages.Employees', 'fas fa-users', '/app/main/crm/employees'),
+                    new AppMenuItem('MyEmployeeList', 'Pages.Employees', 'fas fa-user-friends', '/app/main/crm/employees'),
+                ]
+            ),
+
+            new AppMenuItem(
+                'HubsManagement',
+                '',
+                'flaticon-map-location',
+                '',
+                [],
+                [
+                    new AppMenuItem('MasterHubList', 'Pages.Hubs', 'flaticon2-list-1', '/app/main/territory/hubs'),
+                    new AppMenuItem('MyHubList', 'Pages.Hubs', 'flaticon2-list-2', '/app/main/territory/hubs'),
+                ]
+            ),
+
+            new AppMenuItem(
+                'ConnectMessaging',
+                '',
+                'fab fa-connectdevelop',
+                '',
+                [],
+                [
+                    new AppMenuItem('ConnectChannels', 'Pages.ConnectChannels', 'flaticon-more', '/app/main/lookupData/connectChannels'),
+
+                    new AppMenuItem('EmailTemplates', 'Pages.EmailTemplates', 'flaticon-more', '/app/main/lookupData/emailTemplates'),
+
+                    new AppMenuItem('SmsTemplates', 'Pages.SmsTemplates', 'flaticon-more', '/app/main/lookupData/smsTemplates'),
+
+                ]
             ),
             new AppMenuItem('Dashboard', 'Pages.Tenant.Dashboard', 'flaticon-line-graph', '/app/main/dashboard'),
             new AppMenuItem('Tenants', 'Pages.Tenants', 'flaticon-list-3', '/app/admin/tenants'),
