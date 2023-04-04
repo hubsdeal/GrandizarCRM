@@ -465,7 +465,17 @@
                                                     <label class="fs-6 fw-semibold form-label mt-3">
                                                         <span class="required">About Store</span>
                                                     </label>
-                                                    <textarea class="form-control form-control-solid" name="" id=""
+                                                    <label class="fs-6 fw-semibold form-label mt-3 w-100 mb-5">
+                                                        <div class="d-flex align-items-end justify-content-between">
+                                                            <span class="required">About Store</span>
+                                                            <button class="btn btn-sm btn-light-primary"
+                                                                (click)="openAiModal('About Store')">
+                                                                <i class="fa-file-signature fas me-2"></i>
+                                                                Generate About Store
+                                                            </button>
+                                                        </div>
+                                                    </label>
+                                                    <textarea class="form-control form-control-solid" [(ngModel)]="bindingData" name="bindingData" id="bindingData"
                                                         cols="30" rows="10"></textarea>
                                                 </div>
                                                 <!--end::Input group-->

@@ -14,33 +14,21 @@ export class ChatGptResponseModalComponent implements OnInit {
 
   response!: ResponseModel | undefined;
   showSpinner = false;
-  // jobaarFg: FormGroup = this.fb.group({
-
-  // });
   promptText: any;
-  /*editor: Editor;*/
-  // toolbar: Toolbar = [
-  //   ['bold', 'italic'],
-  //   ['underline', 'strike'],
-  //   ['code', 'blockquote'],
-  //   ['ordered_list', 'bullet_list'],
-  //   [{ heading: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }],
-  //   ['image'],
-  //   ['text_color', 'background_color'],
-  //   ['align_left', 'align_center', 'align_right', 'align_justify'],
-  // ];
-  // editor: Editor;
   responseText: any;
-
+  feildName: any;
   constructor(
     public dialogRef: MatDialogRef<ChatGptResponseModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { promtFromAnotherComponent: string }) { }
+    @Inject(MAT_DIALOG_DATA) public data: { promtFromAnotherComponent: string , feildName : string}) { }
 
   ngOnInit(): void {
     // this.editor = new Editor();
     console.log(this.data.promtFromAnotherComponent)
     if (this.data.promtFromAnotherComponent) {
       this.promptText = this.data.promtFromAnotherComponent;
+    }
+    if(this.data.feildName){
+      this.feildName=this.data.feildName
     }
   }
 

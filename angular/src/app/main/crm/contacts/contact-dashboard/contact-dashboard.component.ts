@@ -43,8 +43,9 @@ export class ContactDashboardComponent extends AppComponentBase {
     //   + " Company tradeName :" + 'jobaar' + `,\n`
     //   + " Address : " + 'USA' + `,\n`
     this.companyDescriptionGenerateCommand = "Write a short profile for Rashedur Rahman where job title is angular developer and company is jobaar"
+    const feildName = 'Short Profile';
     const dialogRef = this.dialog.open(ChatGptResponseModalComponent, {
-      data: { promtFromAnotherComponent: this.companyDescriptionGenerateCommand },
+      data: { promtFromAnotherComponent: this.companyDescriptionGenerateCommand , feildName: feildName},
       width: '1100px',
     });
 
