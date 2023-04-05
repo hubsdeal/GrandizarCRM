@@ -410,13 +410,13 @@ bs-days-calendar-view {
     background-position: center;
 }
 
-.height_fluid{
+.height_fluid {
     height: calc(100% - 20px) !important;
 }
 
 //p-editor
-::ng-deep{
-    .p-editor-container{
+::ng-deep {
+    .p-editor-container {
         border-radius: 8px;
     }
 
@@ -437,7 +437,7 @@ bs-days-calendar-view {
     }
 }
 
-.p-editor-container{
+.p-editor-container {
     border-radius: 8px;
 }
 
@@ -455,4 +455,41 @@ bs-days-calendar-view {
 
 .p-editor-container .p-editor-content .ql-editor {
     background: #f5f8fa !important;
+}
+
+.select_button_custom {
+    .p-selectbutton .p-button.p-highlight {
+        background: #3d9ef3 !important;
+        border-color: #2b9ef4 !important;
+        color: rgb(255 255 255 / 87%) !important;
+    }
+}
+
+.border_bold_left_primary{
+    border-left: 8px solid #4a9ef1 !important;
+}
+.border_bold_left_light{
+    border-left: 8px solid  #848484 !important;
+}
+
+.skill_set_block {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px dashed #2b9ef40f;
+    border-radius: 8px;
+    padding: 1.5rem;
+    background: #f1faff;
+    box-shadow: azure;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+
+    .skills_title {
+        display: flex;
+        align-items: center;
+
+        h6 {
+            margin-bottom: 0;
+            margin-right: 1.5rem;
+        }
+    }
 }
