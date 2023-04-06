@@ -54,7 +54,7 @@ import { KeyValueListManagerComponent } from './key-value-list-manager/key-value
         CountoModule,
         AppBsModalModule,
         AutoCompleteModule,
-    ],
+    ], 
     declarations: [
         TimeZoneComboComponent,
         CommonLookupModalComponent,
