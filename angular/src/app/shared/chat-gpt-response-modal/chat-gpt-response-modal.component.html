@@ -1,0 +1,84 @@
+<h2 mat-dialog-title class="title_mat_dialog">
+    <span class="svg-icon svg-icon-primary svg-icon-2hx"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M1.34375 3.9463V15.2178C1.34375 16.119 2.08105 16.8563 2.98219 16.8563H8.65093V19.4594H6.15702C5.38853 19.4594 4.75981 19.9617 4.75981 20.5757V21.6921H19.2403V20.5757C19.2403 19.9617 18.6116 19.4594 17.8431 19.4594H15.3492V16.8563H21.0179C21.919 16.8563 22.6562 16.119 22.6562 15.2178V3.9463C22.6562 3.04516 21.9189 2.30786 21.0179 2.30786H2.98219C2.08105 2.30786 1.34375 3.04516 1.34375 3.9463ZM12.9034 9.9016C13.241 9.98792 13.5597 10.1216 13.852 10.2949L15.0393 9.4353L15.9893 10.3853L15.1297 11.5727C15.303 11.865 15.4366 12.1837 15.523 12.5212L16.97 12.7528V13.4089H13.9851C13.9766 12.3198 13.0912 11.4394 12 11.4394C10.9089 11.4394 10.0235 12.3198 10.015 13.4089H7.03006V12.7528L8.47712 12.5211C8.56345 12.1836 8.69703 11.8649 8.87037 11.5727L8.0107 10.3853L8.96078 9.4353L10.148 10.2949C10.4404 10.1215 10.759 9.98788 11.0966 9.9016L11.3282 8.45467H12.6718L12.9034 9.9016ZM16.1353 7.93758C15.6779 7.93758 15.3071 7.56681 15.3071 7.1094C15.3071 6.652 15.6779 6.28122 16.1353 6.28122C16.5926 6.28122 16.9634 6.652 16.9634 7.1094C16.9634 7.56681 16.5926 7.93758 16.1353 7.93758ZM2.71385 14.0964V3.90518C2.71385 3.78023 2.81612 3.67796 2.94107 3.67796H21.0589C21.1839 3.67796 21.2861 3.78023 21.2861 3.90518V14.0964C15.0954 14.0964 8.90462 14.0964 2.71385 14.0964Z"
+                fill="currentColor" />
+        </svg>
+    </span>
+    <span class="text-primary ms-2">AI Text Generator</span>
+</h2>
+<mat-dialog-content class="mat-typography">
+    <div class="w-100">
+        <div class="notice d-flex bg-white rounded border-primary border border-dashed mb-9 p-6 w-100">
+            <span class="svg-icon svg-icon-2tx svg-icon-primary me-4">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path opacity="0.3"
+                        d="M22 19V17C22 16.4 21.6 16 21 16H8V3C8 2.4 7.6 2 7 2H5C4.4 2 4 2.4 4 3V19C4 19.6 4.4 20 5 20H21C21.6 20 22 19.6 22 19Z"
+                        fill="currentColor"></path>
+                    <path
+                        d="M20 5V21C20 21.6 19.6 22 19 22H17C16.4 22 16 21.6 16 21V8H8V4H19C19.6 4 20 4.4 20 5ZM3 8H4V4H3C2.4 4 2 4.4 2 5V7C2 7.6 2.4 8 3 8Z"
+                        fill="currentColor"></path>
+                </svg>
+            </span>
+            <div class="w-100">
+                <h4 class="text-gray-900 fw-bold mb-2 fs-5">Command to the AI for generating {{feildName}}</h4>
+                <div class="fs-6 text-gray-700">
+                    <textarea rows="10" name="promptText" id="promptText" placeholder="Enter your prompt here"
+                        class="form-control form-control-solid" cols="3" [(ngModel)]="promptText"></textarea>
+                </div>
+                <div class="d-flex justify-content-end mt-6">
+                    <button class="btn btn-sm btn-primary" (click)="checkResponse()">
+                        Check Response
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="py-2">
+            <div class="d-flex flex-stack">
+                <div class="d-flex">
+                    <span class="svg-icon svg-icon-2tx svg-icon-primary me-4">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path opacity="0.3" d="M10 4H21C21.6 4 22 4.4 22 5V7H10V4Z" fill="currentColor" />
+                            <path opacity="0.3" d="M13 14.4V9C13 8.4 12.6 8 12 8C11.4 8 11 8.4 11 9V14.4H13Z"
+                                fill="currentColor" />
+                            <path
+                                d="M10.4 3.60001L12 6H21C21.6 6 22 6.4 22 7V19C22 19.6 21.6 20 21 20H3C2.4 20 2 19.6 2 19V4C2 3.4 2.4 3 3 3H9.20001C9.70001 3 10.2 3.20001 10.4 3.60001ZM13 14.4V9C13 8.4 12.6 8 12 8C11.4 8 11 8.4 11 9V14.4H8L11.3 17.7C11.7 18.1 12.3 18.1 12.7 17.7L16 14.4H13Z"
+                                fill="currentColor" />
+                        </svg>
+                    </span>
+                    <div class="d-flex flex-column">
+                        <a href="#" class="fs-5 text-dark text-hover-primary fw-bold">Generated Response</a>
+                        <div class="fs-6 fw-semibold text-gray-400">You can also edit it and click on insert to insert
+                            the response!</div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-end">
+                    <button class="btn btn-sm btn-success" (click)="onInsert()">
+                        Insert
+                    </button>
+                </div>
+            </div>
+            <div class="separator separator-dashed my-5"></div>
+            <div class="w-100 mt-4">
+                <div class="fs-6 text-gray-700">
+                    <h4 *ngIf="showSpinner" class="text-danger">Processing, please wait...</h4>
+                    <p-editor id="responseText" name="responseText" [(ngModel)]="responseText" ngDefaultControl
+                        [style]="{ height: '300px' }" placeholder="'Type here...'"></p-editor>
+                </div>
+            </div>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <div class="d-flex w-100 align-items-center justify-content-end border-top pt-6 pb-6">
+        <a href="javascript:;" class="btn btn-secondary" mat-dialog-close>
+            <i class="fas fa-times fs-4 me-2"></i>
+            Close
+        </a>
+        <!-- <a href="javascript:;" class="btn btn-primary" [mat-dialog-close]="true" cdkFocusInitial>
+            <i class="fas fa-save fs-4 me-2"></i> 
+            Save
+        </a> -->
+    </div>
+</mat-dialog-actions>

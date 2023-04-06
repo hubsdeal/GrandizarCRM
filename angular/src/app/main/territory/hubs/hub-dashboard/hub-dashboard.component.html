@@ -3390,10 +3390,17 @@
                                                 </div>
                                                 <!--begin::Input group-->
                                                 <div class="fv-row mb-7 fv-plugins-icon-container">
-                                                    <label class="fs-6 fw-semibold form-label mt-3">
-                                                        <span class="required">Description</span>
+                                                    <label class="fs-6 fw-semibold form-label mt-3 w-100 mb-5">
+                                                        <div class="d-flex align-items-end justify-content-between">
+                                                            <span class="required">Description</span>
+                                                            <button class="btn btn-sm btn-light-primary"
+                                                                (click)="openAiModalPr('Hub Description')">
+                                                                <i class="fa-file-signature fas me-2"></i>
+                                                                Generate Description
+                                                            </button>
+                                                        </div>
                                                     </label>
-                                                    <textarea class="form-control form-control-solid" name="" id=""
+                                                    <textarea class="form-control form-control-solid" [(ngModel)]="bindingData" name="bindingData" id="bindingData"
                                                         cols="30" rows="10"></textarea>
                                                 </div>
                                                 <!--end::Input group-->
