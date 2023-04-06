@@ -4,6 +4,7 @@ using Abp.IO.Extensions;
 using Abp.UI;
 using Abp.Web.Models;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using MimeKit;
 using SoftGrid.Authorization.Users.Profile.Dto;
 using SoftGrid.LookupData;
@@ -22,6 +23,7 @@ using System.Threading.Tasks;
 
 namespace SoftGrid.Web.Controllers
 {
+    [Route("api/[controller]/[action]")]
     public class MediaUploadControllerBase : SoftGridControllerBase
     {
         private readonly ITempFileCacheManager _tempFileCacheManager;
@@ -46,6 +48,7 @@ namespace SoftGrid.Web.Controllers
         }
 
         //i,age upload controller
+        [HttpPost]
         public UploadMediaPictureOutput UploadPicture(MediaLibraryInput input)
         {
             try
@@ -90,6 +93,7 @@ namespace SoftGrid.Web.Controllers
             }
         }
 
+        [HttpPost]
         public async void UploadBulkMedia(IFormFile file, string seoTag, string altTag, long mediaLibraryId)
         {
             try
