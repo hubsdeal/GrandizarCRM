@@ -85,7 +85,10 @@ namespace SoftGrid.Territory
                         .WhereIf(!string.IsNullOrWhiteSpace(input.CountyNameFilter), e => e.CountyFk != null && e.CountyFk.Name == input.CountyNameFilter)
                         .WhereIf(!string.IsNullOrWhiteSpace(input.HubTypeNameFilter), e => e.HubTypeFk != null && e.HubTypeFk.Name == input.HubTypeNameFilter)
                         .WhereIf(!string.IsNullOrWhiteSpace(input.CurrencyNameFilter), e => e.CurrencyFk != null && e.CurrencyFk.Name == input.CurrencyNameFilter)
-                        .WhereIf(!string.IsNullOrWhiteSpace(input.MediaLibraryNameFilter), e => e.PictureMediaLibraryFk != null && e.PictureMediaLibraryFk.Name == input.MediaLibraryNameFilter);
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.MediaLibraryNameFilter), e => e.PictureMediaLibraryFk != null && e.PictureMediaLibraryFk.Name == input.MediaLibraryNameFilter)
+                        .WhereIf(input.CountryIdFilter != 0, e => e.CountryId == input.CountryIdFilter)
+                        .WhereIf(input.StateIdFilter != 0, e => e.StateId == input.StateIdFilter)
+                        .WhereIf(input.HubTypeIdFilter != 0, e => e.HubTypeId == input.HubTypeIdFilter);
 
             var pagedAndFilteredHubs = filteredHubs
                 .OrderBy(input.Sorting ?? "id asc")
