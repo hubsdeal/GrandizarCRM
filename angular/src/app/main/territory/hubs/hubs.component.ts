@@ -1,7 +1,7 @@
 ﻿import { AppConsts } from '@shared/AppConsts';
 import { Component, Injector, ViewEncapsulation, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { HubsServiceProxy, HubDto } from '@shared/service-proxies/service-proxies';
+import { HubsServiceProxy, HubDto, HubCountryLookupTableDto, HubHubTypeLookupTableDto, HubStateLookupTableDto } from '@shared/service-proxies/service-proxies';
 import { NotifyService } from 'abp-ng2-module';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { TokenAuthServiceProxy } from '@shared/service-proxies/service-proxies';
@@ -69,6 +69,18 @@ export class HubsComponent extends AppComponentBase {
     currencyNameFilter = '';
     mediaLibraryNameFilter = '';
 
+    countryIdFilter:number;
+    stateIdFilter:number;
+    hubTypeIdFilter:number;
+
+    state:any;
+    country:any;
+    hubType:any;
+
+    allCountrys: HubCountryLookupTableDto[];
+    allStates: HubStateLookupTableDto[];
+    allHubTypes: HubHubTypeLookupTableDto[];
+
     constructor(
         injector: Injector,
         private _hubsServiceProxy: HubsServiceProxy,
@@ -79,6 +91,15 @@ export class HubsComponent extends AppComponentBase {
         private _dateTimeService: DateTimeService
     ) {
         super(injector);
+        this._hubsServiceProxy.getAllCountryForTableDropdown().subscribe((result) => {
+            this.allCountrys = result;
+        });
+        this._hubsServiceProxy.getAllStateForTableDropdown().subscribe((result) => {
+            this.allStates = result;
+        });
+        this._hubsServiceProxy.getAllHubTypeForTableDropdown().subscribe((result) => {
+            this.allHubTypes = result;
+        });
     }
 
     getHubs(event?: LazyLoadEvent) {
@@ -122,9 +143,12 @@ export class HubsComponent extends AppComponentBase {
                     ? this.minDisplaySequenceFilterEmpty
                     : this.minDisplaySequenceFilter,
                 this.countryNameFilter,
+                this.stateIdFilter,
                 this.stateNameFilter,
                 this.cityNameFilter,
+                this.countryIdFilter,
                 this.countyNameFilter,
+                this.hubTypeIdFilter,
                 this.hubTypeNameFilter,
                 this.currencyNameFilter,
                 this.mediaLibraryNameFilter,
@@ -230,7 +254,32 @@ export class HubsComponent extends AppComponentBase {
         this.hubTypeNameFilter = '';
         this.currencyNameFilter = '';
         this.mediaLibraryNameFilter = '';
-
+        this.countryIdFilter = undefined;
+        this.stateIdFilter = undefined;
+        this.hubTypeIdFilter = undefined;
         this.getHubs();
+    }
+
+    onCountrySelect(event:any){
+        // if (event.value && event.value.id) {
+        //     this._hubsServiceProxy.getAllStateForTableDropdown(event.value.id).subscribe(result=>{
+        //         this.stateItems = result;
+        //     })
+        // }
+        if (event.value && event.value.id){
+            this.countryIdFilter = event.value.id; 
+        }
+    }
+
+    onStateSelect(event:any){
+        if (event.value && event.value.id){
+            this.stateIdFilter = event.value.id;
+        }
+    }
+
+    onHusTypeSelect(event:any){
+        if (event.value && event.value.id){
+            this.hubTypeIdFilter = event.value.id;
+        }
     }
 }

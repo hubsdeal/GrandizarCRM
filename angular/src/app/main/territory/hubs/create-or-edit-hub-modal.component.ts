@@ -16,6 +16,7 @@ import { DateTime } from 'luxon';
 
 import { DateTimeService } from '@app/shared/common/timing/date-time.service';
 import { HubMediaLibraryLookupTableModalComponent } from './hub-mediaLibrary-lookup-table-modal.component';
+import { SelectItem } from 'primeng/api';
 
 @Component({
     selector: 'createOrEditHubModal',
@@ -48,6 +49,8 @@ export class CreateOrEditHubModalComponent extends AppComponentBase implements O
     allHubTypes: HubHubTypeLookupTableDto[];
     allCurrencys: HubCurrencyLookupTableDto[];
 
+    partnerAndOwnedOptions: SelectItem[];
+
     constructor(
         injector: Injector,
         private _hubsServiceProxy: HubsServiceProxy,
@@ -67,7 +70,7 @@ export class CreateOrEditHubModalComponent extends AppComponentBase implements O
             this.hubTypeName = '';
             this.currencyName = '';
             this.mediaLibraryName = '';
-
+            
             this.active = true;
             this.modal.show();
         } else {
@@ -104,6 +107,7 @@ export class CreateOrEditHubModalComponent extends AppComponentBase implements O
         this._hubsServiceProxy.getAllCurrencyForTableDropdown().subscribe((result) => {
             this.allCurrencys = result;
         });
+        this.partnerAndOwnedOptions = [{ label: 'Owned', value: false }, { label: 'Partner', value: true }];
     }
 
     save(): void {
