@@ -73,5 +73,9 @@ namespace SoftGrid.Shop.Dtos
 
         public long? StoreId { get; set; }
 
+        public Guid? PictureId { get; set; }
+
+        public string Picture { get; set; }
+
     }
 }

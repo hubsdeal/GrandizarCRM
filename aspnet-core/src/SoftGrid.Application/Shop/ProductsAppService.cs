@@ -38,8 +38,9 @@ namespace SoftGrid.Shop
         private readonly IRepository<RatingLike, long> _lookup_ratingLikeRepository;
         private readonly IRepository<Contact, long> _lookup_contactRepository;
         private readonly IRepository<Store, long> _lookup_storeRepository;
+        private readonly IBinaryObjectManager _binaryObjectManager;
 
-        public ProductsAppService(IRepository<Product, long> productRepository, IProductsExcelExporter productsExcelExporter, IRepository<ProductCategory, long> lookup_productCategoryRepository, IRepository<MediaLibrary, long> lookup_mediaLibraryRepository, IRepository<MeasurementUnit, long> lookup_measurementUnitRepository, IRepository<Currency, long> lookup_currencyRepository, IRepository<RatingLike, long> lookup_ratingLikeRepository, IRepository<Contact, long> lookup_contactRepository, IRepository<Store, long> lookup_storeRepository)
+        public ProductsAppService(IRepository<Product, long> productRepository, IBinaryObjectManager binaryObjectManager, IProductsExcelExporter productsExcelExporter, IRepository<ProductCategory, long> lookup_productCategoryRepository, IRepository<MediaLibrary, long> lookup_mediaLibraryRepository, IRepository<MeasurementUnit, long> lookup_measurementUnitRepository, IRepository<Currency, long> lookup_currencyRepository, IRepository<RatingLike, long> lookup_ratingLikeRepository, IRepository<Contact, long> lookup_contactRepository, IRepository<Store, long> lookup_storeRepository)
         {
             _productRepository = productRepository;
             _productsExcelExporter = productsExcelExporter;
@@ -50,7 +51,7 @@ namespace SoftGrid.Shop
             _lookup_ratingLikeRepository = lookup_ratingLikeRepository;
             _lookup_contactRepository = lookup_contactRepository;
             _lookup_storeRepository = lookup_storeRepository;
-
+            _binaryObjectManager = binaryObjectManager;
         }
 
         public async Task<PagedResultDto<GetProductForViewDto>> GetAll(GetAllProductsInput input)
@@ -165,6 +166,7 @@ namespace SoftGrid.Shop
                                o.ByOrderOnly,
                                o.Score,
                                Id = o.Id,
+                               PictureId = s2==null?Guid.Empty:s2.BinaryObjectId,
                                ProductCategoryName = s1 == null || s1.Name == null ? "" : s1.Name.ToString(),
                                MediaLibraryName = s2 == null || s2.Name == null ? "" : s2.Name.ToString(),
                                MeasurementUnitName = s3 == null || s3.Name == null ? "" : s3.Name.ToString(),
@@ -214,6 +216,7 @@ namespace SoftGrid.Shop
                         ByOrderOnly = o.ByOrderOnly,
                         Score = o.Score,
                         Id = o.Id,
+                        PictureId=o.PictureId
                     },
                     ProductCategoryName = o.ProductCategoryName,
                     MediaLibraryName = o.MediaLibraryName,
@@ -223,6 +226,10 @@ namespace SoftGrid.Shop
                     ContactFullName = o.ContactFullName,
                     StoreName = o.StoreName
                 };
+                if (res.Product.PictureId != null && res.Product.PictureId != Guid.Empty)
+                {
+                    res.Product.Picture = await _binaryObjectManager.GetOthersPictureUrlAsync((Guid)o.PictureId, ".png");
+                }
 
                 results.Add(res);
             }

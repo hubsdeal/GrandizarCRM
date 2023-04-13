@@ -28,7 +28,7 @@ export class AppNavigationService {
                 [],
                 [
                     new AppMenuItem(
-                        'AdminDashboard',
+                        'Admin Dashboard',
                         'Pages.Administration.Host.Dashboard',
                         'flaticon-line-graph',
                         '/app/admin/hostDashboard'
@@ -39,14 +39,14 @@ export class AppNavigationService {
             ),
 
             new AppMenuItem(
-                'JobManagement',
+                'Job Management',
                 '',
                 'fas fa-briefcase',
                 '',
                 [],
                 [
-                    new AppMenuItem('MasterJobList', 'Pages.Jobs', 'fas fa-briefcase', '/app/main/jobManagement/jobs'),
-                    new AppMenuItem('MyJobList', 'Pages.Jobs', 'fas fa-briefcase', '/app/main/jobManagement/jobs'),
+                    new AppMenuItem('Master Job List', 'Pages.Jobs', 'fas fa-briefcase', '/app/main/jobManagement/jobs'),
+                    new AppMenuItem('My Job List', 'Pages.Jobs', 'fas fa-briefcase', '/app/main/jobManagement/jobs'),
                 ]
             ),
 
@@ -78,7 +78,7 @@ export class AppNavigationService {
             ),
 
             new AppMenuItem(
-                'ProductCatalog',
+                'Product Catalog',
                 '',
                 'flaticon-open-box',
                 '',
@@ -93,7 +93,7 @@ export class AppNavigationService {
 
 
             new AppMenuItem(
-                'StoreManagement',
+                'Store Management',
                 '',
                 'fas fa-store-alt',
                 '',
@@ -117,7 +117,7 @@ export class AppNavigationService {
             ),
 
             new AppMenuItem(
-                'HubsManagement',
+                'Hubs Management',
                 '',
                 'flaticon-map-location',
                 '',
@@ -129,7 +129,7 @@ export class AppNavigationService {
             ),
 
             new AppMenuItem(
-                'ConnectMessaging',
+                'Connect Messaging',
                 '',
                 'fab fa-connectdevelop',
                 '',

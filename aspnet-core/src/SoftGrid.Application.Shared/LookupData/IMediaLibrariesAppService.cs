@@ -15,7 +15,7 @@ namespace SoftGrid.LookupData
 
         Task<GetMediaLibraryForEditOutput> GetMediaLibraryForEdit(EntityDto<long> input);
 
-        Task CreateOrEdit(CreateOrEditMediaLibraryDto input);
+        Task<long> CreateOrEdit(CreateOrEditMediaLibraryDto input);
 
         Task Delete(EntityDto<long> input);
 

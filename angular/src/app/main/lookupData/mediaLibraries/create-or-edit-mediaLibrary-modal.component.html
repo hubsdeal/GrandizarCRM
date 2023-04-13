@@ -1,78 +1,42 @@
-﻿<div
-    bsModal
-    #createOrEditModal="bs-modal"
-    class="modal fade"
-    tabindex="-1"
-    role="dialog"
-    aria-labelledby="createOrEditModal"
-    aria-hidden="true"
-    [config]="{ backdrop: 'static' }"
->
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{ backdrop: 'static' }">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <form *ngIf="active" #mediaLibraryForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
                 <div class="modal-header">
                     <h4 class="modal-title">
                         <span *ngIf="mediaLibrary.id">{{ l('EditMediaLibrary') }}</span>
-                        <span *ngIf="!mediaLibrary.id">{{ l('CreateNewMediaLibrary') }}</span>
+                        <span *ngIf="!mediaLibrary.id">{{ l('Add New Media') }}</span>
                     </h4>
 
-                    <button
-                        type="button"
-                        class="btn-close"
-                        (click)="close()"
-                        aria-label="Close"
-                        [disabled]="saving"
-                    ></button>
+                    <button type="button" class="btn-close" (click)="close()" aria-label="Close"
+                        [disabled]="saving"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="my-3">
+                    <!-- <div class="my-3">
                         <label class="form-label" for="MasterTagCategoryName">{{ l('MasterTagCategory') }}</label>
                         <div class="input-group">
-                            <input
-                                class="form-control"
-                                id="MasterTagCategoryName"
-                                name="masterTagCategoryName"
-                                [(ngModel)]="masterTagCategoryName"
-                                type="text"
-                                disabled
-                            />
-                            <button
-                                class="btn btn-primary blue"
-                                (click)="openSelectMasterTagCategoryModal()"
-                                type="button"
-                            >
+                            <input class="form-control" id="MasterTagCategoryName" name="masterTagCategoryName"
+                                [(ngModel)]="masterTagCategoryName" type="text" disabled />
+                            <button class="btn btn-primary blue" (click)="openSelectMasterTagCategoryModal()"
+                                type="button">
                                 <i class="fa fa-search"></i>
                                 {{ l('Pick') }}
                             </button>
-                            <button
-                                class="btn btn-danger btn-icon"
-                                type="button"
-                                (click)="setMasterTagCategoryIdNull()"
-                            >
+                            <button class="btn btn-danger btn-icon" type="button"
+                                (click)="setMasterTagCategoryIdNull()">
                                 <i class="fa fa-times"></i>
                             </button>
                         </div>
                     </div>
-                    <input
-                        class="form-control"
-                        name="mediaLibrary.masterTagCategoryId"
-                        [(ngModel)]="mediaLibrary.masterTagCategoryId"
-                        type="text"
-                        hidden
-                    />
+                    <input class="form-control" name="mediaLibrary.masterTagCategoryId"
+                        [(ngModel)]="mediaLibrary.masterTagCategoryId" type="text" hidden />
 
                     <div class="my-3">
                         <label class="form-label" for="MasterTagName">{{ l('MasterTag') }}</label>
                         <div class="input-group">
-                            <input
-                                class="form-control"
-                                id="MasterTagName"
-                                name="masterTagName"
-                                [(ngModel)]="masterTagName"
-                                type="text"
-                                disabled
-                            />
+                            <input class="form-control" id="MasterTagName" name="masterTagName"
+                                [(ngModel)]="masterTagName" type="text" disabled />
                             <button class="btn btn-primary blue" (click)="openSelectMasterTagModal()" type="button">
                                 <i class="fa fa-search"></i>
                                 {{ l('Pick') }}
@@ -82,157 +46,127 @@
                             </button>
                         </div>
                     </div>
-                    <input
-                        class="form-control"
-                        name="mediaLibrary.masterTagId"
-                        [(ngModel)]="mediaLibrary.masterTagId"
-                        type="text"
-                        hidden
-                    />
-
+                    <input class="form-control" name="mediaLibrary.masterTagId" [(ngModel)]="mediaLibrary.masterTagId"
+                        type="text" hidden /> -->
                     <div class="my-3">
+                        <label class="form-label" for="HubTypeName">{{ l('Media Type') }}</label>
+                        <select name="mediaLibrary.masterTagId" [(ngModel)]="mediaLibrary.masterTagId"
+                            class="form-select" required>
+                            <option value="">{{ l('Select Media Type') }}</option>
+                            <option *ngFor="let item of allMasterTags" value="{{ item.id }}">
+                                {{ item.displayName }}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="my-3" *ngIf="mediaLibrary.masterTagId==2">
                         <label class="form-label" for="MediaLibrary_Name">{{ l('Name') }} *</label>
-                        <input
-                            type="text"
-                            #MediaLibrary_Name="ngModel"
-                            id="MediaLibrary_Name"
-                            class="form-control"
-                            [(ngModel)]="mediaLibrary.name"
-                            name="Name"
-                            minlength="1"
-                            maxlength="512"
-                            required
-                        />
+                        <input type="text" #MediaLibrary_Name="ngModel" id="MediaLibrary_Name" class="form-control"
+                            [(ngModel)]="mediaLibrary.name" name="Name" minlength="1" maxlength="512" required />
                         <validation-messages [formCtrl]="MediaLibrary_Name"></validation-messages>
                     </div>
 
+                    <div class="my-3" *ngIf="mediaLibrary.masterTagId==2">
+                        <label class="form-label" for="MediaLibrary_VideoLink">{{ l('Video Link') }}</label>
+                        <input type="text" #MediaLibrary_VideoLink="ngModel" id="MediaLibrary_VideoLink"
+                            class="form-control" [(ngModel)]="mediaLibrary.videoLink" name="VideoLink" minlength="1"
+                            maxlength="1500" />
+                        <validation-messages [formCtrl]="MediaLibrary_VideoLink"></validation-messages>
+                    </div>
+
                     <div class="my-3">
+                        <label class="form-label" for="MediaLibrary_SeoTag">{{ l('SEO Tag') }}</label>
+                        <input type="text" #MediaLibrary_SeoTag="ngModel" id="MediaLibrary_SeoTag" class="form-control"
+                            [(ngModel)]="mediaLibrary.seoTag" name="SeoTag" minlength="1" maxlength="256" />
+                        <validation-messages [formCtrl]="MediaLibrary_SeoTag"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="MediaLibrary_AltTag">{{ l('Alt Tag') }}</label>
+                        <input type="text" #MediaLibrary_AltTag="ngModel" id="MediaLibrary_AltTag" class="form-control"
+                            [(ngModel)]="mediaLibrary.altTag" name="AltTag" minlength="1" maxlength="256" />
+                        <validation-messages [formCtrl]="MediaLibrary_AltTag"></validation-messages>
+                    </div>
+
+                    <div class="new_media_file" *ngIf="mediaLibrary.masterTagId ==1">
+                        <div class="kt-avatar kt-avatar--outline my-3" id="kt_contacts_edit_avatar">
+                            <label class="kt-avatar__upload" data-toggle="kt-tooltip" title=""
+                                data-original-title="Change avatar">
+                                <i class="fas fa-plus-circle"></i> Upload New
+                                <input type="file" ng2FileSelect [uploader]="uploader"
+                                    (change)="fileChangeEvent($event)" name="customFile" id="customFile"
+                                    accept=".png, .jpg, .jpeg">
+                            </label>
+                            <span class="kt-avatar__cancel" data-toggle="kt-tooltip" title=""
+                                data-original-title="Cancel avatar">
+                                <i class="fa fa-times"></i>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div *ngIf="imageSrc" class="col-md-12 p-4 text-center mt-4 border">
+                        <img [src]="imageSrc"  class="uploaded_img">
+                    </div>
+
+
+                    <!-- <div class="my-3">
                         <label class="form-label" for="MediaLibrary_Size">{{ l('Size') }}</label>
-                        <input
-                            type="text"
-                            #MediaLibrary_Size="ngModel"
-                            id="MediaLibrary_Size"
-                            class="form-control"
-                            [(ngModel)]="mediaLibrary.size"
-                            name="Size"
-                            minlength="1"
-                            maxlength="128"
-                        />
+                        <input type="text" #MediaLibrary_Size="ngModel" id="MediaLibrary_Size" class="form-control"
+                            [(ngModel)]="mediaLibrary.size" name="Size" minlength="1" maxlength="128" />
                         <validation-messages [formCtrl]="MediaLibrary_Size"></validation-messages>
                     </div>
 
                     <div class="my-3">
                         <label class="form-label" for="MediaLibrary_FileExtension">{{ l('FileExtension') }}</label>
-                        <input
-                            type="text"
-                            #MediaLibrary_FileExtension="ngModel"
-                            id="MediaLibrary_FileExtension"
-                            class="form-control"
-                            [(ngModel)]="mediaLibrary.fileExtension"
-                            name="FileExtension"
-                            minlength="1"
-                            maxlength="128"
-                        />
+                        <input type="text" #MediaLibrary_FileExtension="ngModel" id="MediaLibrary_FileExtension"
+                            class="form-control" [(ngModel)]="mediaLibrary.fileExtension" name="FileExtension"
+                            minlength="1" maxlength="128" />
                         <validation-messages [formCtrl]="MediaLibrary_FileExtension"></validation-messages>
                     </div>
 
                     <div class="my-3">
                         <label class="form-label" for="MediaLibrary_Dimension">{{ l('Dimension') }}</label>
-                        <input
-                            type="text"
-                            #MediaLibrary_Dimension="ngModel"
-                            id="MediaLibrary_Dimension"
-                            class="form-control"
-                            [(ngModel)]="mediaLibrary.dimension"
-                            name="Dimension"
-                            minlength="1"
-                            maxlength="128"
-                        />
+                        <input type="text" #MediaLibrary_Dimension="ngModel" id="MediaLibrary_Dimension"
+                            class="form-control" [(ngModel)]="mediaLibrary.dimension" name="Dimension" minlength="1"
+                            maxlength="128" />
                         <validation-messages [formCtrl]="MediaLibrary_Dimension"></validation-messages>
                     </div>
 
-                    <div class="my-3">
-                        <label class="form-label" for="MediaLibrary_VideoLink">{{ l('VideoLink') }}</label>
-                        <input
-                            type="text"
-                            #MediaLibrary_VideoLink="ngModel"
-                            id="MediaLibrary_VideoLink"
-                            class="form-control"
-                            [(ngModel)]="mediaLibrary.videoLink"
-                            name="VideoLink"
-                            minlength="1"
-                            maxlength="1500"
-                        />
-                        <validation-messages [formCtrl]="MediaLibrary_VideoLink"></validation-messages>
-                    </div>
-
+                    
                     <div class="my-3">
                         <label class="form-label" for="MediaLibrary_SeoTag">{{ l('SeoTag') }}</label>
-                        <input
-                            type="text"
-                            #MediaLibrary_SeoTag="ngModel"
-                            id="MediaLibrary_SeoTag"
-                            class="form-control"
-                            [(ngModel)]="mediaLibrary.seoTag"
-                            name="SeoTag"
-                            minlength="1"
-                            maxlength="256"
-                        />
+                        <input type="text" #MediaLibrary_SeoTag="ngModel" id="MediaLibrary_SeoTag" class="form-control"
+                            [(ngModel)]="mediaLibrary.seoTag" name="SeoTag" minlength="1" maxlength="256" />
                         <validation-messages [formCtrl]="MediaLibrary_SeoTag"></validation-messages>
                     </div>
 
                     <div class="my-3">
                         <label class="form-label" for="MediaLibrary_AltTag">{{ l('AltTag') }}</label>
-                        <input
-                            type="text"
-                            #MediaLibrary_AltTag="ngModel"
-                            id="MediaLibrary_AltTag"
-                            class="form-control"
-                            [(ngModel)]="mediaLibrary.altTag"
-                            name="AltTag"
-                            minlength="1"
-                            maxlength="256"
-                        />
+                        <input type="text" #MediaLibrary_AltTag="ngModel" id="MediaLibrary_AltTag" class="form-control"
+                            [(ngModel)]="mediaLibrary.altTag" name="AltTag" minlength="1" maxlength="256" />
                         <validation-messages [formCtrl]="MediaLibrary_AltTag"></validation-messages>
                     </div>
 
                     <div class="my-3">
                         <label class="form-label" for="MediaLibrary_VirtualPath">{{ l('VirtualPath') }}</label>
-                        <input
-                            type="text"
-                            #MediaLibrary_VirtualPath="ngModel"
-                            id="MediaLibrary_VirtualPath"
-                            class="form-control"
-                            [(ngModel)]="mediaLibrary.virtualPath"
-                            name="VirtualPath"
-                        />
+                        <input type="text" #MediaLibrary_VirtualPath="ngModel" id="MediaLibrary_VirtualPath"
+                            class="form-control" [(ngModel)]="mediaLibrary.virtualPath" name="VirtualPath" />
                         <validation-messages [formCtrl]="MediaLibrary_VirtualPath"></validation-messages>
                     </div>
 
                     <div class="my-3">
                         <label class="form-label" for="MediaLibrary_BinaryObjectId">{{ l('BinaryObjectId') }}</label>
-                        <input
-                            type="text"
-                            #MediaLibrary_BinaryObjectId="ngModel"
-                            id="MediaLibrary_BinaryObjectId"
-                            class="form-control"
-                            [(ngModel)]="mediaLibrary.binaryObjectId"
-                            name="BinaryObjectId"
-                        />
+                        <input type="text" #MediaLibrary_BinaryObjectId="ngModel" id="MediaLibrary_BinaryObjectId"
+                            class="form-control" [(ngModel)]="mediaLibrary.binaryObjectId" name="BinaryObjectId" />
                         <validation-messages [formCtrl]="MediaLibrary_BinaryObjectId"></validation-messages>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="modal-footer">
                     <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
                         {{ l('Cancel') }}
                     </button>
-                    <button
-                        type="submit"
-                        class="btn btn-primary blue"
-                        [disabled]="!mediaLibraryForm.form.valid"
-                        [buttonBusy]="saving"
-                        [busyText]="l('SavingWithThreeDot')"
-                    >
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!mediaLibraryForm.form.valid"
+                        [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')">
                         <i class="fa fa-save"></i>
                         <span>{{ l('Save') }}</span>
                     </button>
@@ -240,12 +174,8 @@
             </form>
         </div>
     </div>
-    <mediaLibraryMasterTagCategoryLookupTableModal
-        #mediaLibraryMasterTagCategoryLookupTableModal
-        (modalSave)="getNewMasterTagCategoryId()"
-    ></mediaLibraryMasterTagCategoryLookupTableModal>
-    <mediaLibraryMasterTagLookupTableModal
-        #mediaLibraryMasterTagLookupTableModal
-        (modalSave)="getNewMasterTagId()"
-    ></mediaLibraryMasterTagLookupTableModal>
+    <mediaLibraryMasterTagCategoryLookupTableModal #mediaLibraryMasterTagCategoryLookupTableModal
+        (modalSave)="getNewMasterTagCategoryId()"></mediaLibraryMasterTagCategoryLookupTableModal>
+    <mediaLibraryMasterTagLookupTableModal #mediaLibraryMasterTagLookupTableModal (modalSave)="getNewMasterTagId()">
+    </mediaLibraryMasterTagLookupTableModal>
 </div>

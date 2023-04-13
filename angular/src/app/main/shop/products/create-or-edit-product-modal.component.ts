@@ -206,5 +206,5 @@ export class CreateOrEditProductModalComponent extends AppComponentBase implemen
         this.modal.hide();
     }
 
-    ngOnInit(): void {}
+    ngOnInit(): void { }
 }

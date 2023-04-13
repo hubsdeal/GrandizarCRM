@@ -37,5 +37,7 @@ namespace SoftGrid.LookupData.Dtos
 
         public long? MasterTagId { get; set; }
 
+        public string FileToken { get; set; }
+
     }
 }

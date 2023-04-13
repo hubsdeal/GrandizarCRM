@@ -18,6 +18,8 @@ using Abp.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Abp.UI;
 using SoftGrid.Storage;
+using System.Drawing;
+using System.IO;
 
 namespace SoftGrid.LookupData
 {
@@ -28,14 +30,19 @@ namespace SoftGrid.LookupData
         private readonly IMediaLibrariesExcelExporter _mediaLibrariesExcelExporter;
         private readonly IRepository<MasterTagCategory, long> _lookup_masterTagCategoryRepository;
         private readonly IRepository<MasterTag, long> _lookup_masterTagRepository;
+        private readonly ITempFileCacheManager _tempFileCacheManager;
+        private readonly IBinaryObjectManager _binaryObjectManager;
 
-        public MediaLibrariesAppService(IRepository<MediaLibrary, long> mediaLibraryRepository, IMediaLibrariesExcelExporter mediaLibrariesExcelExporter, IRepository<MasterTagCategory, long> lookup_masterTagCategoryRepository, IRepository<MasterTag, long> lookup_masterTagRepository)
+        public MediaLibrariesAppService(IRepository<MediaLibrary, long> mediaLibraryRepository, IMediaLibrariesExcelExporter mediaLibrariesExcelExporter,
+            IRepository<MasterTagCategory, long> lookup_masterTagCategoryRepository, IRepository<MasterTag, long> lookup_masterTagRepository, ITempFileCacheManager tempFileCacheManager, IBinaryObjectManager binaryObjectManager)
         {
             _mediaLibraryRepository = mediaLibraryRepository;
             _mediaLibrariesExcelExporter = mediaLibrariesExcelExporter;
             _lookup_masterTagCategoryRepository = lookup_masterTagCategoryRepository;
             _lookup_masterTagRepository = lookup_masterTagRepository;
-
+            _tempFileCacheManager = tempFileCacheManager;
+            _tempFileCacheManager = tempFileCacheManager;
+            _binaryObjectManager = binaryObjectManager;
         }
 
         public async Task<PagedResultDto<GetMediaLibraryForViewDto>> GetAll(GetAllMediaLibrariesInput input)
@@ -89,7 +96,6 @@ namespace SoftGrid.LookupData
 
             var dbList = await mediaLibraries.ToListAsync();
             var results = new List<GetMediaLibraryForViewDto>();
-
             foreach (var o in dbList)
             {
                 var res = new GetMediaLibraryForViewDto()
@@ -111,6 +117,10 @@ namespace SoftGrid.LookupData
                     MasterTagCategoryName = o.MasterTagCategoryName,
                     MasterTagName = o.MasterTagName
                 };
+                if (o.BinaryObjectId != null && o.BinaryObjectId != Guid.Empty)
+                {
+                    res.Picture = await _binaryObjectManager.GetOthersPictureUrlAsync((Guid)o.BinaryObjectId, ".png");
+                }
 
                 results.Add(res);
             }
@@ -165,37 +175,48 @@ namespace SoftGrid.LookupData
             return output;
         }
 
-        public async Task CreateOrEdit(CreateOrEditMediaLibraryDto input)
+        public async Task<long> CreateOrEdit(CreateOrEditMediaLibraryDto input)
         {
+            if (input.FileToken != null)
+            {
+                input = await SaveMediaPhoto(input);
+            }
             if (input.Id == null)
             {
-                await Create(input);
+                return await Create(input);
             }
             else
             {
-                await Update(input);
+                return await Update(input);
             }
         }
 
         [AbpAuthorize(AppPermissions.Pages_MediaLibraries_Create)]
-        protected virtual async Task Create(CreateOrEditMediaLibraryDto input)
+        protected virtual async Task<long> Create(CreateOrEditMediaLibraryDto input)
         {
+            if (input.MasterTagId == 1 && input.BinaryObjectId == Guid.Empty)
+            {
+                throw new UserFriendlyException("Image Can not be null");
+            }
             var mediaLibrary = ObjectMapper.Map<MediaLibrary>(input);
 
             if (AbpSession.TenantId != null)
             {
                 mediaLibrary.TenantId = (int?)AbpSession.TenantId;
             }
+            mediaLibrary.MasterTagCategoryId = (long)MasterTagCategoriesEnum.Media_Type;
 
-            await _mediaLibraryRepository.InsertAsync(mediaLibrary);
+            long mediaId = await _mediaLibraryRepository.InsertAndGetIdAsync(mediaLibrary);
+            return mediaId;
 
         }
 
         [AbpAuthorize(AppPermissions.Pages_MediaLibraries_Edit)]
-        protected virtual async Task Update(CreateOrEditMediaLibraryDto input)
+        protected virtual async Task<long> Update(CreateOrEditMediaLibraryDto input)
         {
             var mediaLibrary = await _mediaLibraryRepository.FirstOrDefaultAsync((long)input.Id);
             ObjectMapper.Map(input, mediaLibrary);
+            return (long)input.Id;
 
         }
 
@@ -313,6 +334,52 @@ namespace SoftGrid.LookupData
                 totalCount,
                 lookupTableDtoList
             );
+        }
+
+        public async Task<List<MediaLibraryMasterTagLookupTableDto>> GetAllMasterTagForTableDropdown()
+        {
+            return await _lookup_masterTagRepository.GetAll()
+                .Where(e => e.MasterTagCategoryId == (long)MasterTagCategoriesEnum.Media_Type)
+                .Select(masterTag => new MediaLibraryMasterTagLookupTableDto
+                {
+                    Id = masterTag.Id,
+                    DisplayName = masterTag == null || masterTag.Name == null ? "" : masterTag.Name.ToString()
+                }).ToListAsync();
+        }
+
+        private async Task<CreateOrEditMediaLibraryDto> SaveMediaPhoto(CreateOrEditMediaLibraryDto input)
+        {
+            CreateOrEditMediaLibraryDto mediaLibraryDto = input;
+
+            byte[] byteArray;
+
+            var imageBytes = _tempFileCacheManager.GetFile(input.FileToken);
+
+            if (imageBytes == null)
+            {
+                throw new UserFriendlyException("There is no such image file with the token: " + input.FileToken);
+            }
+
+            using (var bmpImage = new Bitmap(new MemoryStream(imageBytes)))
+            {
+                using (var stream = new MemoryStream())
+                {
+                    byteArray = stream.ToArray();
+                }
+            }
+            byteArray = imageBytes;
+
+            //if (byteArray.Length > MaxProfilPictureBytes)
+            //{
+            //    throw new UserFriendlyException(L("ResizedProfilePicture_Warn_SizeLimit", AppConsts.ResizedMaxProfilPictureBytesUserFriendlyValue));
+            //}
+            Image image = Image.FromStream(new MemoryStream(byteArray));
+            mediaLibraryDto.Dimension = image.Width.ToString() + "*" + image.Height.ToString();
+            var storedFile = new BinaryObject(AbpSession.TenantId, byteArray);
+            await _binaryObjectManager.SaveAsync(storedFile);
+            mediaLibraryDto.BinaryObjectId = storedFile.Id;
+            return mediaLibraryDto;
+
         }
 
     }
