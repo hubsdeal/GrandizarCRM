@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ChatGptResponseModalComponent } from '@app/shared/chat-gpt-response-modal/chat-gpt-response-modal.component';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { TokenService } from 'abp-ng2-module';
+import { SelectItem } from 'primeng/api';
 
 @Component({
   selector: 'app-product-dashboard',
@@ -14,6 +15,9 @@ export class ProductDashboardComponent extends AppComponentBase {
   productId: number;
   productShortDesc: string;
   bindingData: any;
+  productPublishedOptions: SelectItem[];
+  productServiceOptions: SelectItem[];
+  selectBTN: boolean = false;
   constructor(
     injector: Injector,
     private route: ActivatedRoute,
@@ -21,6 +25,8 @@ export class ProductDashboardComponent extends AppComponentBase {
     private dialog: MatDialog
   ) {
     super(injector);
+    this.productPublishedOptions = [{ label: 'Draft', value: false }, { label: 'Published', value: true }];
+    this.productServiceOptions = [{ label: 'Not Service', value: false }, { label: 'Service Product', value: true }];
   }
 
   ngOnInit(): void {

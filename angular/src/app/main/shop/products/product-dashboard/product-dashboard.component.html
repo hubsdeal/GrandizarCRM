@@ -90,14 +90,14 @@
                                         </div>
                                     </div>
 
-                                    <div class="d-flex mb-4">
+                                    <div class="d-flex mb-4 select_button_custom">
                                         <a href="javascript:;" class="btn btn-sm btn-success me-4"><i
                                                 class="fas fa-eye fs-6 "></i>
                                             Public View</a>
-                                        <a href="javascript:;" class="btn btn-sm btn-primary"><i
-                                                class="fas fa-check-double fs-6"></i> Published</a>
-                                        <a href="javascript:;" class="btn btn-sm btn-secondary ms-0"><i
-                                                class="fas fa-eye-slash fs-6"></i> Draft</a>
+                                        <p-selectButton [options]="productPublishedOptions"
+                                            name="productPublishedOptions" id="productPublishedOptions"
+                                            [(ngModel)]="selectBTN" optionLabel="label"
+                                            optionValue="value"></p-selectButton>
 
                                     </div>
                                 </div>
@@ -249,11 +249,11 @@
                                                 <!--end::Input group-->
 
                                                 <!--begin::Input group-->
-                                                <div class="fv-row mb-7 fv-plugins-icon-container">
-                                                    <a href="javascript:;" class="btn btn-sm btn-primary"><i
-                                                            class="fas fa-hammer fs-6"></i> Service Product</a>
-                                                    <a href="javascript:;" class="btn btn-sm btn-secondary ms-0"><i
-                                                            class="fas fa-cart-arrow-down fs-6"></i> Not Service</a>
+                                                <div class="fv-row mb-7 fv-plugins-icon-container select_button_custom">
+                                                    <p-selectButton [options]="productServiceOptions"
+                                                        name="productServiceOptions" id="productServiceOptions"
+                                                        [(ngModel)]="selectBTN" optionLabel="label"
+                                                        optionValue="value"></p-selectButton>
                                                 </div>
                                                 <!--end::Input group-->
 
@@ -423,7 +423,8 @@
                                                             </button>
                                                         </div>
                                                     </label>
-                                                    <textarea class="form-control form-control-solid" [(ngModel)]="bindingData" name="bindingData" id="bindingData"
+                                                    <textarea class="form-control form-control-solid"
+                                                        [(ngModel)]="bindingData" name="bindingData" id="bindingData"
                                                         cols="30" rows="10"></textarea>
                                                 </div>
                                                 <!--end::Input group-->
@@ -466,14 +467,16 @@
                                             <div class="d-flex flex-stack">
                                                 <div class="w-100">
                                                     <div class="w-100 mb-4">
-                                                        <button class="btn btn-sm btn-light-primary" (click)="openAiModalPr('Product Description')">
+                                                        <button class="btn btn-sm btn-light-primary"
+                                                            (click)="openAiModalPr('Product Description')">
                                                             <i class="fa-file-signature fas me-2"></i>
                                                             Generate Product Description
                                                         </button>
                                                     </div>
                                                     <div class="w-100 mb-4">
                                                         <div class="d-flex flex-column">
-                                                            <textarea name="bindingData" id="bindingData" [(ngModel)]="bindingData" cols="30" rows="10"
+                                                            <textarea name="bindingData" id="bindingData"
+                                                                [(ngModel)]="bindingData" cols="30" rows="10"
                                                                 class="form-control form-control-md form-control-solid"
                                                                 placeholder="Full Description"></textarea>
                                                         </div>
