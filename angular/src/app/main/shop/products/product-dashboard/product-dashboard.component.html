@@ -34,10 +34,9 @@
                         <div class="d-flex flex-wrap flex-sm-nowrap mb-6">
                             <div
                                 class="d-flex flex-center flex-shrink-0 bg-light rounded w-100px h-100px w-lg-150px h-lg-150px me-7 mb-4">
-                                <img class="dashboard_header_image" src="/assets/common/images/p1.png" alt="image">
-                                <!-- <span class="dashboard_header_name">
-                                    TP
-                                </span> -->
+                                <img class="dashboard_header_image" *ngIf="picture" src="{{picture}}" alt="image">
+                                <img class="dashboard_header_image" src="/assets/common/images/p1.png" *ngIf="!picture"
+                                    alt="image">
                             </div>
 
                             <div class="flex-grow-1">
@@ -46,47 +45,64 @@
                                         <div class="d-flex align-items-center mb-1">
                                             <a href="javascript:;"
                                                 class="text-gray-800 text-hover-primary fs-2 fw-bold me-3">
-                                                HVAC Services For Your Home Or Business
+                                                {{product.name}}
                                             </a>
-                                            <span class="badge-circle badge badge-success text-white">
+                                            <span class="badge-circle badge badge-success text-white"
+                                                *ngIf="product.isPublished">
                                                 <i class="fas fa-check-circle text-white"></i>
                                             </span>
-                                            <span class="badge badge-primary text-center ms-2" title="Primary Category">
+                                            <span *ngIf="product.isPackageProduct"
+                                                class="badge badge-primary text-center ms-2" title="Primary Category">
                                                 Package
                                             </span>
                                         </div>
                                         <div
                                             class="d-flex flex-wrap fw-semibold mb-1 align-items-center fs-6 text-gray-500">
                                             <i class="fas fa-tag me-2"></i>
-                                            <span>Category: </span> <span class="fw-bold">Home Maintenance &
-                                                improvement</span>
+                                            <span>Category: </span>
+                                            <span class="fw-bold">{{categoryName}}</span>
+                                            <span
+                                                *ngIf="allProductAdditionalCategory!=null && allProductAdditionalCategory.length>0">
+                                                , <span
+                                                    *ngFor="let item of allProductAdditionalCategory;last as isLast">
+                                                    {{item.name}}
+                                                    <span *ngIf="!isLast">, </span>
+                                                </span>
+                                            </span>
                                         </div>
-                                        <div
+                                        <div *ngIf="storeName"
                                             class="d-flex flex-wrap fw-bold mb-1 align-items-center fs-6 text-gray-500">
                                             <i class="fas fa-store-alt me-2"></i>
-                                            Handyman247
+                                            {{storeName}}
                                         </div>
-                                        <div
+                                        <div *ngIf="membershipName"
                                             class="d-flex flex-wrap fw-semibold mb-1 align-items-center fs-6 text-gray-500">
                                             <i class="fas fa-medal me-2"></i>
-                                            <span>Premium Member: </span> <span class="fw-bold">$5</span>
+                                            <span>{{membershipName}}: </span> <span class="fw-bold">$${{membershipPrice
+                                                | number :
+                                                '1.2-2'}}</span>
                                         </div>
                                         <div
                                             class="d-flex flex-wrap fw-semibold mb-1 align-items-center text-gray-500 fs-6">
                                             <i class="flaticon-price-tag me-2"></i>
-                                            <span>Regular Price: </span> <span class="fw-bold">$10</span>
-                                            <span class="ms-3">Sale Price: </span> <span class="fw-bold">$7</span>
+                                            <span>Regular Price: </span> <span class="fw-bold"> ${{product.regularPrice | number : '1.2-2'}}</span>
+                                            <span *ngIf="product.salePrice" class="ms-3">Sale Price: </span> <span class="fw-bold"> ${{product.salePrice | number : '1.2-2'}}</span>
                                         </div>
-                                        <div
+                                        <div  *ngIf="ratingScore"
                                             class="d-flex flex-wrap fw-semibold mb-1 align-items-center text-gray-500 fs-6">
                                             <i class="flaticon-star me-2"></i>
-                                            <span>3.5 out of 5,</span>
-                                            <span class="ms-3">100 Ratings</span>
+                                            <span>{{ratingScore}} out of 5,</span>
+                                            <span class="ms-3">{{numberOfRatings}} Ratings</span>
                                         </div>
-                                        <div
+                                        <div *ngIf="pickupOrDeliveryTags.length>0"
                                             class="d-flex flex-wrap fw-semibold mb-1 align-items-center text-gray-500 fs-6">
                                             <i class="fas fa-shipping-fast me-2"></i>
-                                            <span>Home Delivery, Cash on delivery, Store Pickup, Curbside Pickup</span>
+                                            <span *ngFor="let item of pickupOrDeliveryTags;last as isLast">
+                                                {{item}}
+                                                <span *ngIf="!isLast" class="st_name">
+                                                    |
+                                                </span>
+                                            </span>
                                         </div>
                                     </div>
 
@@ -96,7 +112,7 @@
                                             Public View</a>
                                         <p-selectButton [options]="productPublishedOptions"
                                             name="productPublishedOptions" id="productPublishedOptions"
-                                            [(ngModel)]="selectBTN" optionLabel="label"
+                                            [(ngModel)]="product.isPublished" optionLabel="label"
                                             optionValue="value"></p-selectButton>
 
                                     </div>
@@ -223,30 +239,7 @@
                                         <div class="card-body pt-10">
                                             <!--begin::Form-->
                                             <form id="kt_ecommerce_settings_general_form"
-                                                class="form fv-plugins-bootstrap5 fv-plugins-framework" action="#">
-                                                <!--begin::Input group-->
-                                                <div class="mb-7">
-                                                    <div class="image-input image-input-outline"
-                                                        data-kt-image-input="true"
-                                                        style="background-image: url(assets/common/images/p1.png)">
-                                                        <div class="image-input-wrapper w-125px h-125px"
-                                                            style="background-image: url(assets/common/images/p1.png)">
-                                                        </div>
-                                                        <label
-                                                            class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                                                            data-kt-image-input-action="change" data-bs-toggle="tooltip"
-                                                            aria-label="Change avatar"
-                                                            data-bs-original-title="Change avatar"
-                                                            data-kt-initialized="1">
-                                                            <i class="bi bi-pencil-fill fs-7"></i>
-                                                            <input type="file" name="avatar" accept=".png, .jpg, .jpeg">
-                                                            <input type="hidden" name="avatar_remove">
-                                                        </label>
-                                                    </div>
-                                                    <div class="form-text">Allowed file types: png, jpg, jpeg.
-                                                    </div>
-                                                </div>
-                                                <!--end::Input group-->
+                                                class="form fv-plugins-bootstrap5 fv-plugins-framework">
 
                                                 <!--begin::Input group-->
                                                 <div class="fv-row mb-7 fv-plugins-icon-container select_button_custom">
