@@ -42,7 +42,7 @@
                                         [(ngModel)]="nameFilter" (ngModelChange)="getStores()" />
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <!-- <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="PhoneFilter">{{ l('Phone') }}</label>
                                     <input type="text" class="form-control" id="PhoneFilter" name="phoneFilter"
@@ -69,7 +69,7 @@
                                     <input type="text" class="form-control" id="AddressFilter" name="addressFilter"
                                         [(ngModel)]="addressFilter" (ngModelChange)="getStores()" />
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="ZipCodeFilter">{{ l('Zip Code') }}</label>
@@ -775,12 +775,12 @@
                                                 <span class="caret"></span>
                                             </button>
                                             <ul class="dropdown-menu" *dropdownMenu>
-                                                <li>
+                                                <!-- <li>
                                                     <a href="javascript:;" class="dropdown-item"
                                                         (click)="viewStoreModal.show(record)">
                                                         {{ l('View') }}
                                                     </a>
-                                                </li>
+                                                </li> -->
                                                 <li>
                                                     <a href="javascript:;"
                                                         *ngIf="permission.isGranted('Pages.Stores.Edit')"
