@@ -23,6 +23,7 @@ TestResults
 appsettings.json
 appsettings.Development.json
 appsettings.Staging.json
+appsettings.Production.json
 
 # Build results
 [Dd]ebug/
