@@ -5,7 +5,7 @@
   "angular-cli": {},
   "scripts": {
     "ng": "ng",
-    "publish": "gulp build && ng build --configuration production",
+    "publish": "gulp build && ng build --configuration production --aot",
     "lint": "eslint -c .eslintrc.js --ext .ts src",
     "post-publish": "shx cp -r ./wwwroot/dist/. ./wwwroot/",
     "publish-k8s": "gulp build && ng build --configuration k8s --verbose",
