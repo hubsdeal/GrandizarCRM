@@ -1,17 +1,27 @@
 ﻿<div [@routerTransition]>
-    <sub-header [title]="'Stores' | localize" [description]="">
+    <!-- <sub-header [title]="'Stores' | localize" [description]="">
         <div role="actions">
             <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1">
                 <i class="fa fa-file-excel"></i>
                 {{ l('ExportToExcel') }}
             </button>
-
-            <button *ngIf="isGranted('Pages.Stores.Create')" (click)="createStore()" class="btn btn-primary blue">
-                <i class="fa fa-plus"></i>
-                {{ l('Store') }}
-            </button>
         </div>
-    </sub-header>
+    </sub-header> -->
+    <div class="w-100 d-flex mb-6 ps-9 pe-9 mt-6 justify-content-between align-items-center ng-tns-c282-7">
+        <div class="d-flex">
+            <h1 class="fs-3 fw-bold  my-0 page-heading text-dark"> 
+                Stores 
+            </h1>
+            <span class="badge badge-primary badge ms-2">Total: {{primengTableHelper.totalRecordsCount}}</span>
+            <span class="badge badge-info badge ms-2">Published: 0</span>
+            <span class="badge badge-warning badge ms-2">Unpublished: 0</span>
+            <span class="badge badge-success badge ms-2">Verified: 0</span>
+        </div>
+        <button *ngIf="isGranted('Pages.Stores.Create')" (click)="createStore()" class="btn btn-primary blue">
+            <i class="fa fa-plus"></i>
+            {{ l('Store') }}
+        </button>
+    </div>
 
     <div [class]="containerClass">
         <div class="card card-custom gutter-b">

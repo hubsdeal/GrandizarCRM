@@ -1,13 +1,5 @@
-﻿<div
-    bsModal
-    #createOrEditModal="bs-modal"
-    class="modal fade"
-    tabindex="-1"
-    role="dialog"
-    aria-labelledby="createOrEditModal"
-    aria-hidden="true"
-    [config]="{ backdrop: 'static' }"
->
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{ backdrop: 'static' }">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <form *ngIf="active" #storeForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
@@ -17,16 +9,11 @@
                         <span *ngIf="!store.id">{{ l('CreateNewStore') }}</span>
                     </h4>
 
-                    <button
-                        type="button"
-                        class="btn-close"
-                        (click)="close()"
-                        aria-label="Close"
-                        [disabled]="saving"
-                    ></button>
+                    <button type="button" class="btn-close" (click)="close()" aria-label="Close"
+                        [disabled]="saving"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="my-3">
+                    <!-- <div class="my-3">
                         <label class="form-label" for="MediaLibraryName">{{ l('MediaLibrary') }}</label>
                         <div class="input-group">
                             <input
@@ -108,25 +95,71 @@
                         [(ngModel)]="store.storeCategoryId"
                         type="text"
                         hidden
-                    />
+                    /> -->
 
-                    <div class="my-3">
-                        <label class="form-label" for="Store_Name">{{ l('Name') }} *</label>
-                        <input
-                            type="text"
-                            #Store_Name="ngModel"
-                            id="Store_Name"
-                            class="form-control"
-                            [(ngModel)]="store.name"
-                            name="Name"
-                            minlength="1"
-                            maxlength="1024"
-                            required
-                        />
-                        <validation-messages [formCtrl]="Store_Name"></validation-messages>
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="my-3">
+                                <label class="form-label" for="Store_Name">{{ l('Name') }} *</label>
+                                <input type="text" #Store_Name="ngModel" id="Store_Name" class="form-control"
+                                    [(ngModel)]="store.name" name="Name" minlength="1" maxlength="1024" required />
+                                <validation-messages [formCtrl]="Store_Name"></validation-messages>
+                            </div>
+                        </div>
+                        <div class="col-xl-12">
+                            <div class="my-3">
+                                <label class="form-label" for="Store_LegalName">{{ l('Legal Name') }}</label>
+                                <input type="text" #Store_LegalName="ngModel" id="Store_LegalName" class="form-control"
+                                    [(ngModel)]="store.legalName" name="LegalName" minlength="1" maxlength="1024" />
+                                <validation-messages [formCtrl]="Store_LegalName"></validation-messages>
+                            </div>
+                        </div>
+                        <div class="col-xl-12">
+                            <div class="my-3">
+                                <label class="form-label" for="Store_Phone">{{ l('Phone') }}</label>
+                                <input type="text" #Store_Phone="ngModel" id="Store_Phone" class="form-control"
+                                    [(ngModel)]="store.phone" name="Phone" minlength="1" maxlength="50" />
+                                <validation-messages [formCtrl]="Store_Phone"></validation-messages>
+                                <!-- country code dropdown writing and display both-->
+                            </div>
+                        </div>
+                        <div class="col-xl-12">
+                            <div class="my-3">
+                                <label class="form-label" for="Store_Mobile">{{ l('Mobile') }}</label>
+                                <input type="text" #Store_Mobile="ngModel" id="Store_Mobile" class="form-control"
+                                    [(ngModel)]="store.mobile" name="Mobile" minlength="1" maxlength="50" />
+                                <validation-messages [formCtrl]="Store_Mobile"></validation-messages>
+                                <!-- country code dropdown writing and display both-->
+                            </div>
+                        </div>
+                        <div class="col-xl-12">
+                            <div class="my-3">
+                                <label class="form-label" for="Store_FullAddress">{{ l('FullAddress') }}</label>
+                                <input type="text" #Store_FullAddress="ngModel" id="Store_FullAddress"
+                                    class="form-control" [(ngModel)]="store.fullAddress" name="FullAddress"
+                                    minlength="1" maxlength="1500" />
+                                <validation-messages [formCtrl]="Store_FullAddress"></validation-messages>
+                            </div>
+                        </div>
+                        <div class="xol-xl-12">
+                            <div class="my-3">
+                                <label class="form-label" for="Store_Website">{{ l('Website') }}</label>
+                                <input type="text" #Store_Website="ngModel" id="Store_Website" class="form-control"
+                                    [(ngModel)]="store.website" name="Website" minlength="1" maxlength="1024" />
+                                <validation-messages [formCtrl]="Store_Website"></validation-messages>
+                            </div>
+                        </div>
+                        <div class="col-xl-12 mt-5">
+                            <div class="select_button_custom">
+                                <p-selectButton [options]="localOrVirtualStoreOptions" name="isLocalOrOnlineStore"
+                                    id="isLocalOrOnlineStore" [(ngModel)]="store.isLocalOrOnlineStore"
+                                    optionLabel="label" optionValue="value"></p-selectButton>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="my-3">
+
+                    <!-- <div class="my-3">
                         <label class="form-label" for="Store_StoreUrl">{{ l('StoreUrl') }}</label>
                         <input
                             type="text"
@@ -182,20 +215,7 @@
                         <validation-messages [formCtrl]="Store_MetaDescription"></validation-messages>
                     </div>
 
-                    <div class="my-3">
-                        <label class="form-label" for="Store_FullAddress">{{ l('FullAddress') }}</label>
-                        <input
-                            type="text"
-                            #Store_FullAddress="ngModel"
-                            id="Store_FullAddress"
-                            class="form-control"
-                            [(ngModel)]="store.fullAddress"
-                            name="FullAddress"
-                            minlength="1"
-                            maxlength="1500"
-                        />
-                        <validation-messages [formCtrl]="Store_FullAddress"></validation-messages>
-                    </div>
+                    
 
                     <div class="my-3">
                         <label class="form-label" for="Store_Address">{{ l('Address') }}</label>
@@ -458,24 +478,11 @@
                             name="Score"
                         />
                         <validation-messages [formCtrl]="Store_Score"></validation-messages>
-                    </div>
+                    </div> -->
 
-                    <div class="my-3">
-                        <label class="form-label" for="Store_LegalName">{{ l('LegalName') }}</label>
-                        <input
-                            type="text"
-                            #Store_LegalName="ngModel"
-                            id="Store_LegalName"
-                            class="form-control"
-                            [(ngModel)]="store.legalName"
-                            name="LegalName"
-                            minlength="1"
-                            maxlength="1024"
-                        />
-                        <validation-messages [formCtrl]="Store_LegalName"></validation-messages>
-                    </div>
 
-                    <br />
+
+                    <!-- <br />
                     <label class="form-check form-check-custom form-check-solid">
                         <input
                             id="Store_IsLocalOrOnlineStore"
@@ -505,19 +512,14 @@
                             {{ l('IsVerified') }}
                         </span>
                     </label>
-                    <validation-messages [formCtrl]="Store_IsVerified"></validation-messages>
+                    <validation-messages [formCtrl]="Store_IsVerified"></validation-messages> -->
                 </div>
                 <div class="modal-footer">
                     <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
                         {{ l('Cancel') }}
                     </button>
-                    <button
-                        type="submit"
-                        class="btn btn-primary blue"
-                        [disabled]="!storeForm.form.valid"
-                        [buttonBusy]="saving"
-                        [busyText]="l('SavingWithThreeDot')"
-                    >
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!storeForm.form.valid"
+                        [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')">
                         <i class="fa fa-save"></i>
                         <span>{{ l('Save') }}</span>
                     </button>
@@ -525,12 +527,8 @@
             </form>
         </div>
     </div>
-    <storeMediaLibraryLookupTableModal
-        #storeMediaLibraryLookupTableModal
-        (modalSave)="getNewLogoMediaLibraryId()"
-    ></storeMediaLibraryLookupTableModal>
-    <storeMasterTagLookupTableModal
-        #storeMasterTagLookupTableModal
-        (modalSave)="getNewStoreCategoryId()"
-    ></storeMasterTagLookupTableModal>
+    <storeMediaLibraryLookupTableModal #storeMediaLibraryLookupTableModal (modalSave)="getNewLogoMediaLibraryId()">
+    </storeMediaLibraryLookupTableModal>
+    <storeMasterTagLookupTableModal #storeMasterTagLookupTableModal (modalSave)="getNewStoreCategoryId()">
+    </storeMasterTagLookupTableModal>
 </div>
