@@ -114,6 +114,7 @@ export class CreateOrEditStoreModalComponent extends AppComponentBase implements
             });
             //todo - Once you click submit based on the full addess system will find automatically the lat and long, CITY, state, country will save it in the database
             //auto gpt function based on the web site address it will collect automatically the store data and save it in the database
+            // display sequence number will be auto inserted based on the sequence number
     }
 
     openSelectMediaLibraryModal() {
