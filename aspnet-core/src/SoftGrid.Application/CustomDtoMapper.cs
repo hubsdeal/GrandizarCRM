@@ -66,6 +66,10 @@ namespace SoftGrid
     {
         public static void CreateMappings(IMapperConfigurationExpression configuration)
         {
+            configuration.CreateMap<CreateOrEditShoppingCartDto, ShoppingCart>().ReverseMap();
+            configuration.CreateMap<ShoppingCartDto, ShoppingCart>().ReverseMap();
+            configuration.CreateMap<CreateOrEditWishListDto, WishList>().ReverseMap();
+            configuration.CreateMap<WishListDto, WishList>().ReverseMap();
             configuration.CreateMap<CreateOrEditDiscountCodeUserHistoryDto, DiscountCodeUserHistory>().ReverseMap();
             configuration.CreateMap<DiscountCodeUserHistoryDto, DiscountCodeUserHistory>().ReverseMap();
             configuration.CreateMap<CreateOrEditDiscountCodeMapDto, DiscountCodeMap>().ReverseMap();

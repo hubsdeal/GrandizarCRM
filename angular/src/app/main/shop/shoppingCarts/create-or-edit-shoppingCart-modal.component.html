@@ -1,0 +1,274 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #shoppingCartForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="shoppingCart.id">{{ l('EditShoppingCart') }}</span>
+                        <span *ngIf="!shoppingCart.id">{{ l('CreateNewShoppingCart') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="ContactFullName">{{ l('Contact') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="ContactFullName"
+                                name="contactFullName"
+                                [(ngModel)]="contactFullName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectContactModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setContactIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="shoppingCart.contactId"
+                        [(ngModel)]="shoppingCart.contactId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="OrderInvoiceNumber">{{ l('Order') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="OrderInvoiceNumber"
+                                name="orderInvoiceNumber"
+                                [(ngModel)]="orderInvoiceNumber"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectOrderModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setOrderIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="shoppingCart.orderId"
+                        [(ngModel)]="shoppingCart.orderId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="StoreName">{{ l('Store') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="StoreName"
+                                name="storeName"
+                                [(ngModel)]="storeName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectStoreModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setStoreIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="shoppingCart.storeId"
+                        [(ngModel)]="shoppingCart.storeId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="ProductName">{{ l('Product') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="ProductName"
+                                name="productName"
+                                [(ngModel)]="productName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectProductModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setProductIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="shoppingCart.productId"
+                        [(ngModel)]="shoppingCart.productId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="CurrencyName">{{ l('Currency') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="CurrencyName"
+                                name="currencyName"
+                                [(ngModel)]="currencyName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectCurrencyModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setCurrencyIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="shoppingCart.currencyId"
+                        [(ngModel)]="shoppingCart.currencyId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my5">
+                        <label class="form-label" for="ShoppingCart_Quantity">{{ l('Quantity') }}</label>
+                        <input
+                            type="number"
+                            #ShoppingCart_Quantity="ngModel"
+                            id="ShoppingCart_Quantity"
+                            class="form-control"
+                            [(ngModel)]="shoppingCart.quantity"
+                            name="Quantity"
+                        />
+                        <validation-messages [formCtrl]="ShoppingCart_Quantity"></validation-messages>
+                    </div>
+
+                    <div class="my5">
+                        <label class="form-label" for="ShoppingCart_UnitPrice">{{ l('UnitPrice') }}</label>
+                        <input
+                            type="number"
+                            #ShoppingCart_UnitPrice="ngModel"
+                            id="ShoppingCart_UnitPrice"
+                            class="form-control"
+                            [(ngModel)]="shoppingCart.unitPrice"
+                            name="UnitPrice"
+                        />
+                        <validation-messages [formCtrl]="ShoppingCart_UnitPrice"></validation-messages>
+                    </div>
+
+                    <div class="my5">
+                        <label class="form-label" for="ShoppingCart_TotalAmount">{{ l('TotalAmount') }}</label>
+                        <input
+                            type="number"
+                            #ShoppingCart_TotalAmount="ngModel"
+                            id="ShoppingCart_TotalAmount"
+                            class="form-control"
+                            [(ngModel)]="shoppingCart.totalAmount"
+                            name="TotalAmount"
+                        />
+                        <validation-messages [formCtrl]="ShoppingCart_TotalAmount"></validation-messages>
+                    </div>
+
+                    <div class="my5">
+                        <label class="form-label" for="ShoppingCart_UnitTotalPrice">{{ l('UnitTotalPrice') }}</label>
+                        <input
+                            type="number"
+                            #ShoppingCart_UnitTotalPrice="ngModel"
+                            id="ShoppingCart_UnitTotalPrice"
+                            class="form-control"
+                            [(ngModel)]="shoppingCart.unitTotalPrice"
+                            name="UnitTotalPrice"
+                        />
+                        <validation-messages [formCtrl]="ShoppingCart_UnitTotalPrice"></validation-messages>
+                    </div>
+
+                    <div class="my5">
+                        <label class="form-label" for="ShoppingCart_UnitDiscountAmount">
+                            {{ l('UnitDiscountAmount') }}
+                        </label>
+                        <input
+                            type="number"
+                            #ShoppingCart_UnitDiscountAmount="ngModel"
+                            id="ShoppingCart_UnitDiscountAmount"
+                            class="form-control"
+                            [(ngModel)]="shoppingCart.unitDiscountAmount"
+                            name="UnitDiscountAmount"
+                        />
+                        <validation-messages [formCtrl]="ShoppingCart_UnitDiscountAmount"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!shoppingCartForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <shoppingCartContactLookupTableModal
+        #shoppingCartContactLookupTableModal
+        (modalSave)="getNewContactId()"
+    ></shoppingCartContactLookupTableModal>
+    <shoppingCartOrderLookupTableModal
+        #shoppingCartOrderLookupTableModal
+        (modalSave)="getNewOrderId()"
+    ></shoppingCartOrderLookupTableModal>
+    <shoppingCartStoreLookupTableModal
+        #shoppingCartStoreLookupTableModal
+        (modalSave)="getNewStoreId()"
+    ></shoppingCartStoreLookupTableModal>
+    <shoppingCartProductLookupTableModal
+        #shoppingCartProductLookupTableModal
+        (modalSave)="getNewProductId()"
+    ></shoppingCartProductLookupTableModal>
+    <shoppingCartCurrencyLookupTableModal
+        #shoppingCartCurrencyLookupTableModal
+        (modalSave)="getNewCurrencyId()"
+    ></shoppingCartCurrencyLookupTableModal>
+</div>

@@ -398,7 +398,11 @@ export class AppNavigationService {
             // new AppMenuItem('DiscountCodeMaps', 'Pages.DiscountCodeMaps', 'flaticon-more', '/app/main/discountManagement/discountCodeMaps'),
 
             // new AppMenuItem('DiscountCodeUserHistories', 'Pages.DiscountCodeUserHistories', 'flaticon-more', '/app/main/discountManagement/discountCodeUserHistories'),
-            new AppMenuItem('Editions', 'Pages.Editions', 'flaticon-app', '/app/admin/editions'),
+           
+            new AppMenuItem('WishLists', 'Pages.WishLists', 'flaticon-more', '/app/main/shop/wishLists'),
+            
+            new AppMenuItem('ShoppingCarts', 'Pages.ShoppingCarts', 'flaticon-more', '/app/main/shop/shoppingCarts'),
+             new AppMenuItem('Editions', 'Pages.Editions', 'flaticon-app', '/app/admin/editions'),
             new AppMenuItem(
                 'Administration',
                 '',

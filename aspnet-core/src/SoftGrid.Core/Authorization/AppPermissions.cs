@@ -6,6 +6,16 @@
     /// </summary>
     public static class AppPermissions
     {
+        public const string Pages_ShoppingCarts = "Pages.ShoppingCarts";
+        public const string Pages_ShoppingCarts_Create = "Pages.ShoppingCarts.Create";
+        public const string Pages_ShoppingCarts_Edit = "Pages.ShoppingCarts.Edit";
+        public const string Pages_ShoppingCarts_Delete = "Pages.ShoppingCarts.Delete";
+
+        public const string Pages_WishLists = "Pages.WishLists";
+        public const string Pages_WishLists_Create = "Pages.WishLists.Create";
+        public const string Pages_WishLists_Edit = "Pages.WishLists.Edit";
+        public const string Pages_WishLists_Delete = "Pages.WishLists.Delete";
+
         public const string Pages_DiscountCodeUserHistories = "Pages.DiscountCodeUserHistories";
         public const string Pages_DiscountCodeUserHistories_Create = "Pages.DiscountCodeUserHistories.Create";
         public const string Pages_DiscountCodeUserHistories_Edit = "Pages.DiscountCodeUserHistories.Edit";

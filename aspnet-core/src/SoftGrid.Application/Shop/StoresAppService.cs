@@ -18,6 +18,9 @@ using Abp.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Abp.UI;
 using SoftGrid.Storage;
+using Microsoft.Data.SqlClient;
+using System.Data;
+using SoftGrid.EntityFrameworkCore.Repositories;
 
 namespace SoftGrid.Shop
 {
@@ -31,8 +34,10 @@ namespace SoftGrid.Shop
         private readonly IRepository<State, long> _lookup_stateRepository;
         private readonly IRepository<RatingLike, long> _lookup_ratingLikeRepository;
         private readonly IRepository<MasterTag, long> _lookup_masterTagRepository;
-
-        public StoresAppService(IRepository<Store, long> storeRepository, IStoresExcelExporter storesExcelExporter, IRepository<MediaLibrary, long> lookup_mediaLibraryRepository, IRepository<Country, long> lookup_countryRepository, IRepository<State, long> lookup_stateRepository, IRepository<RatingLike, long> lookup_ratingLikeRepository, IRepository<MasterTag, long> lookup_masterTagRepository)
+        private readonly IStoredProcedureRepository _storedProcedureRepository;
+        private readonly IBinaryObjectManager _binaryObjectManager;
+        public StoresAppService(IRepository<Store, long> storeRepository, IStoresExcelExporter storesExcelExporter, IRepository<MediaLibrary, long> lookup_mediaLibraryRepository, IRepository<Country, long> lookup_countryRepository, IRepository<State, long> lookup_stateRepository, IRepository<RatingLike, long> lookup_ratingLikeRepository, IRepository<MasterTag, long> lookup_masterTagRepository,
+            IStoredProcedureRepository storedProcedureRepository, IBinaryObjectManager binaryObjectManager)
         {
             _storeRepository = storeRepository;
             _storesExcelExporter = storesExcelExporter;
@@ -41,7 +46,8 @@ namespace SoftGrid.Shop
             _lookup_stateRepository = lookup_stateRepository;
             _lookup_ratingLikeRepository = lookup_ratingLikeRepository;
             _lookup_masterTagRepository = lookup_masterTagRepository;
-
+            _storedProcedureRepository = storedProcedureRepository;
+            _binaryObjectManager = binaryObjectManager;
         }
 
         public async Task<PagedResultDto<GetStoreForViewDto>> GetAll(GetAllStoresInput input)
@@ -526,5 +532,135 @@ namespace SoftGrid.Shop
             );
         }
 
+        public async Task<GetStoresBySpForView> GetAllStoresBySp(GetAllStoresInputForSp input)
+        {
+            List<SqlParameter> parameters = PrepareSearchParameterForGetAllStoresBySp(input);
+            var result = await _storedProcedureRepository.ExecuteStoredProcedure<GetStoresBySpForView>("usp_GetAllStores", CommandType.StoredProcedure, parameters.ToArray());
+
+            foreach (var item in result.Stores)
+            {
+                if (item.StoreLogoLink != null && item.StoreLogoLink != Guid.Empty)
+                {
+                    item.Picture = await _binaryObjectManager.GetProductPictureUrlAsync((Guid)item.StoreLogoLink, ".png");
+                }
+            }
+            foreach (var item in parameters)
+            {
+                if (item.ParameterName == "@IsFavoriteOnly")
+                {
+                    result.IsFavoriteOnly = (int)item.Value;
+                    break;
+                }
+            }
+
+            return result;
+        }
+
+        private static List<SqlParameter> PrepareSearchParameterForGetAllStoresBySp(GetAllStoresInputForSp input)
+        {
+            if (input.Filter != null || input.NameFilter != null || input.AddressFilter != null || input.CityFilter != null || input.PhoneFilter != null ||
+                input.MobileFilter != null || input.EmailFilter != null || input.IsPublishedFilter != -1 || input.IsLocalOrOnlineStore != -1 || input.IsVerified != -1 ||
+                input.StateIdFilter != null || input.CountryIdFilter != null || input.ZipCodeFilter != null || input.MasterTagCategoryIdFilter != null || input.MasterTagIdFilter != null)
+            {
+                input.IsFavoriteOnly = -1;
+
+            }
+            input.EmployeeIdFilter = input.IsFromMasterList == true ? null : input.EmployeeIdFilter;
+
+            List<SqlParameter> sqlParameters = new List<SqlParameter>();
+
+
+
+            if (input.Filter != null)
+            {
+                input.Filter = input.Filter[0] == '"' && input.Filter[input.Filter.Length - 1] == '"' ? "*" + input.Filter + "*" : '"' + "*" + input.Filter + "*" + '"';
+            }
+            SqlParameter filter = new SqlParameter("@Filter", input.Filter == null ? "\"\"" : input.Filter);
+            sqlParameters.Add(filter);
+
+            if (input.NameFilter != null)
+            {
+                input.NameFilter = input.NameFilter[0] == '"' && input.NameFilter[input.NameFilter.Length - 1] == '"' ? "*" + input.NameFilter + "*" : '"' + "*" + input.NameFilter + "*" + '"';
+            }
+            SqlParameter nameFilter = new SqlParameter("@Name", input.NameFilter == null ? "\"\"" : input.NameFilter);
+            sqlParameters.Add(nameFilter);
+
+            if (input.PhoneFilter != null)
+            {
+                input.PhoneFilter = input.PhoneFilter[0] == '"' && input.PhoneFilter[input.PhoneFilter.Length - 1] == '"' ? "*" + input.PhoneFilter + "*" : '"' + "*" + input.PhoneFilter + "*" + '"';
+            }
+            SqlParameter phoneFilter = new SqlParameter("@Phone", input.PhoneFilter == null ? "\"\"" : input.PhoneFilter);
+            sqlParameters.Add(phoneFilter);
+
+            if (input.EmailFilter != null)
+            {
+                input.EmailFilter = input.EmailFilter[0] == '"' && input.EmailFilter[input.EmailFilter.Length - 1] == '"' ? "*" + input.EmailFilter + "*" : '"' + "*" + input.EmailFilter + "*" + '"';
+            }
+            SqlParameter emailFilter = new SqlParameter("@Email", input.EmailFilter == null ? "\"\"" : input.EmailFilter);
+            sqlParameters.Add(emailFilter);
+
+            if (input.MobileFilter != null)
+            {
+                input.MobileFilter = input.MobileFilter[0] == '"' && input.MobileFilter[input.MobileFilter.Length - 1] == '"' ? "*" + input.MobileFilter + "*" : '"' + "*" + input.MobileFilter + "*" + '"';
+            }
+            SqlParameter mobileFilter = new SqlParameter("@Mobile", input.MobileFilter == null ? "\"\"" : input.MobileFilter);
+            sqlParameters.Add(mobileFilter);
+
+
+            if (input.AddressFilter != null)
+            {
+                input.AddressFilter = input.AddressFilter[0] == '"' && input.AddressFilter[input.AddressFilter.Length - 1] == '"' ? "*" + input.AddressFilter + "*" : '"' + "*" + input.AddressFilter + "*" + '"';
+            }
+            SqlParameter addressFilter = new SqlParameter("@Address", input.AddressFilter == null ? "\"\"" : input.AddressFilter);
+            sqlParameters.Add(addressFilter);
+
+            if (input.CityFilter != null)
+            {
+                input.CityFilter = input.CityFilter[0] == '"' && input.CityFilter[input.CityFilter.Length - 1] == '"' ? "*" + input.CityFilter + "*" : '"' + "*" + input.CityFilter + "*" + '"';
+            }
+            SqlParameter cityFilter = new SqlParameter("@City", input.CityFilter == null ? "\"\"" : input.CityFilter);
+            sqlParameters.Add(cityFilter);
+
+            SqlParameter stateIdFilter = new SqlParameter("@StateId", input.StateIdFilter == null ? (object)DBNull.Value : input.StateIdFilter);
+            sqlParameters.Add(stateIdFilter);
+
+            SqlParameter countryIdFilter = new SqlParameter("@CountryId", input.CountryIdFilter == null ? (object)DBNull.Value : input.CountryIdFilter);
+            sqlParameters.Add(countryIdFilter);
+
+            SqlParameter isPublishedFilter = new SqlParameter("@IsPublished", input.IsPublishedFilter == -1 ? (object)DBNull.Value : input.IsPublishedFilter);
+            sqlParameters.Add(isPublishedFilter);
+
+            SqlParameter onlineStoreFilter = new SqlParameter("@OnlineStore", input.IsLocalOrOnlineStore == -1 ? (object)DBNull.Value : input.IsLocalOrOnlineStore);
+            sqlParameters.Add(onlineStoreFilter);
+
+            SqlParameter verifiedFilter = new SqlParameter("@Verified", input.IsVerified == -1 ? (object)DBNull.Value : input.IsVerified);
+            sqlParameters.Add(verifiedFilter);
+
+            SqlParameter employeeIdFilter = new SqlParameter("@EmployeeIdFilter", input.EmployeeIdFilter == null ? (object)DBNull.Value : input.EmployeeIdFilter);
+            sqlParameters.Add(employeeIdFilter);
+
+            SqlParameter isFavoriteOnly = new SqlParameter("@IsFavoriteOnly", input.IsFavoriteOnly == -1 ? 0 : input.IsFavoriteOnly);
+            sqlParameters.Add(isFavoriteOnly);
+
+            SqlParameter contactIdFilter = new SqlParameter("@ContactIdFilter", input.ContactIdFilter == null ? (object)DBNull.Value : input.ContactIdFilter);
+            sqlParameters.Add(contactIdFilter);
+
+            SqlParameter zipCodeFilter = new SqlParameter("@ZipCodeFilter", input.ZipCodeFilter == null ? (object)DBNull.Value : input.ZipCodeFilter);
+            sqlParameters.Add(zipCodeFilter);
+
+            SqlParameter skipCount = new SqlParameter("@SkipCount", input.SkipCount);
+            sqlParameters.Add(skipCount);
+
+            SqlParameter maxResultCount = new SqlParameter("@MaxResultCount", input.MaxResultCount);
+            sqlParameters.Add(maxResultCount);
+
+            SqlParameter masterTagCategoryIdFilter = new SqlParameter("@MasterTagCategoryIdFilter", input.MasterTagCategoryIdFilter == null ? (object)DBNull.Value : input.MasterTagCategoryIdFilter);
+            sqlParameters.Add(masterTagCategoryIdFilter);
+
+            SqlParameter masterTagIdFilter = new SqlParameter("@MasterTagIdFilter", input.MasterTagIdFilter == null ? (object)DBNull.Value : input.MasterTagIdFilter);
+            sqlParameters.Add(masterTagIdFilter);
+
+            return sqlParameters;
+        }
     }
 }

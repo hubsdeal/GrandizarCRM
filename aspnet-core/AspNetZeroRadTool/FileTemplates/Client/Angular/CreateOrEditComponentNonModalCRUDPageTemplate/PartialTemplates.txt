@@ -151,7 +151,7 @@
                                this.l('AreYouSure'),
                                isConfirmed => {
                                    if (isConfirmed) {
-                                       this._testEntitiesServiceProxy.remove{{Property_Name_Here}}File(this.{{entity_Name_Here}}.id).subscribe(() => {
+                                       this._{{entity_Name_Plural_Here}}ServiceProxy.remove{{Property_Name_Here}}File(this.{{entity_Name_Here}}.id).subscribe(() => {
                                            abp.notify.success(this.l('SuccessfullyDeleted'));
                                            this.{{property_Name_Here}}FileName = null;
                                        });
