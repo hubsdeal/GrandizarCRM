@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SoftGrid.EntityFrameworkCore;
 
@@ -11,9 +12,11 @@ using SoftGrid.EntityFrameworkCore;
 namespace SoftGrid.Migrations
 {
     [DbContext(typeof(SoftGridDbContext))]
-    partial class SoftGridDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230509143456_ProductTeam addded")]
+    partial class ProductTeamaddded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -6800,9 +6803,6 @@ namespace SoftGrid.Migrations
                     b.Property<long>("ProductId")
                         .HasColumnType("bigint");
 
-                    b.Property<long?>("StoreOwnerTeamId")
-                        .HasColumnType("bigint");
-
                     b.Property<int?>("TenantId")
                         .HasColumnType("int");
 
@@ -6811,8 +6811,6 @@ namespace SoftGrid.Migrations
                     b.HasIndex("EmployeeId");
 
                     b.HasIndex("ProductId");
-
-                    b.HasIndex("StoreOwnerTeamId");
 
                     b.HasIndex("TenantId");
 
@@ -10658,15 +10656,9 @@ namespace SoftGrid.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SoftGrid.Shop.StoreOwnerTeam", "StoreOwnerTeamFk")
-                        .WithMany()
-                        .HasForeignKey("StoreOwnerTeamId");
-
                     b.Navigation("EmployeeFk");
 
                     b.Navigation("ProductFk");
-
-                    b.Navigation("StoreOwnerTeamFk");
                 });
 
             modelBuilder.Entity("SoftGrid.Shop.ProductUpsellRelatedProduct", b =>

@@ -1,6 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <localizationDictionary culture="en">
-  <texts>    <text name="ShoppingCart">Shopping cart</text>
+  <texts>    <text name="ProductTeam">Product team</text>
+    <text name="SoftGrid.Shop.ProductTeam">ProductTeam</text>
+    <text name="ProductTeamsHeaderInfo">Product teams header info</text>
+    <text name="CreateNewProductTeam">Create new product team</text>
+    <text name="EditProductTeam">Edit product team</text>
+    <text name="DeleteProductTeam">Delete product team</text>
+    <text name="ProductTeams">Product teams</text>
+    <text name="ShoppingCart">Shopping cart</text>
     <text name="SoftGrid.Shop.ShoppingCart">ShoppingCart</text>
     <text name="UnitTotalPrice">Unit total price</text>
     <text name="UnitDiscountAmount">Unit discount amount</text>

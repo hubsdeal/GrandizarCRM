@@ -6,6 +6,11 @@
     /// </summary>
     public static class AppPermissions
     {
+        public const string Pages_ProductTeams = "Pages.ProductTeams";
+        public const string Pages_ProductTeams_Create = "Pages.ProductTeams.Create";
+        public const string Pages_ProductTeams_Edit = "Pages.ProductTeams.Edit";
+        public const string Pages_ProductTeams_Delete = "Pages.ProductTeams.Delete";
+
         public const string Pages_ShoppingCarts = "Pages.ShoppingCarts";
         public const string Pages_ShoppingCarts_Create = "Pages.ShoppingCarts.Create";
         public const string Pages_ShoppingCarts_Edit = "Pages.ShoppingCarts.Edit";

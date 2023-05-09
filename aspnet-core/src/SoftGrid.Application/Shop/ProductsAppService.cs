@@ -24,6 +24,9 @@ using Microsoft.EntityFrameworkCore;
 using Abp.UI;
 using SoftGrid.Storage;
 using SoftGrid.Shop.Enums;
+using Microsoft.Data.SqlClient;
+using System.Data;
+using SoftGrid.EntityFrameworkCore.Repositories;
 
 namespace SoftGrid.Shop
 {
@@ -44,6 +47,7 @@ namespace SoftGrid.Shop
         private readonly IRepository<Contact, long> _lookup_contactRepository;
         private readonly IRepository<Store, long> _lookup_storeRepository;
         private readonly IBinaryObjectManager _binaryObjectManager;
+        private readonly IStoredProcedureRepository _storedProcedureRepository;
 
         public ProductsAppService(IRepository<Product, long> productRepository, IBinaryObjectManager binaryObjectManager, IProductsExcelExporter productsExcelExporter,
             IRepository<ProductCategory, long> lookup_productCategoryRepository, IRepository<MediaLibrary, long> lookup_mediaLibraryRepository, IRepository<MeasurementUnit, 
@@ -53,7 +57,8 @@ namespace SoftGrid.Shop
             IRepository<ProductReview, long> productReviewRepository,
             IRepository<StoreProductMap, long> storeProductMapRepository,
             IRepository<StoreTag, long> storeTagRepository,
-            IRepository<ProductTag, long> productTagRepository)
+            IRepository<ProductTag, long> productTagRepository,
+            IStoredProcedureRepository storedProcedureRepository)
         {
             _productRepository = productRepository;
             _productsExcelExporter = productsExcelExporter;
@@ -69,6 +74,7 @@ namespace SoftGrid.Shop
             _storeProductMapRepository = storeProductMapRepository;
             _storeTagRepository = storeTagRepository;
             _productTagRepository = productTagRepository;
+            _storedProcedureRepository = storedProcedureRepository;
         }
 
         public async Task<PagedResultDto<GetProductForViewDto>> GetAll(GetAllProductsInput input)
@@ -842,6 +848,153 @@ namespace SoftGrid.Shop
 
 
             return parentName;
+        }
+
+
+        public async Task<GetProductsBySpForView> GetAllProductsBySp(GetAllProductsInputForSp input)
+        {
+            List<SqlParameter> parameters = PrepareSearchParameterForGetAllProductsBySp(input);
+            var result = await _storedProcedureRepository.ExecuteStoredProcedure<GetProductsBySpForView>("usp_GetAllProducts", CommandType.StoredProcedure, parameters.ToArray());
+            foreach (var item in result.Products)
+            {
+                if (item.PictureId != null)
+                {
+                    item.Picture = await _binaryObjectManager.GetProductPictureUrlAsync((Guid)item.PictureId, ".png");
+                }
+                //item.MembershipPrice = _membershipAndProductMapRepository.GetAll().Where(e => e.ProductId == item.Id && e.MembershipTypeId == (long)MembershipTypeEnum.Snack_Pass).Select(e => e.Price).FirstOrDefault();
+            }
+            if (input.Sorting != null)
+            {
+                var items = result.Products.AsQueryable().OrderBy(input.Sorting);
+                result.Products = items.ToList();
+            }
+
+
+            return result;
+        }
+
+        private static List<SqlParameter> PrepareSearchParameterForGetAllProductsBySp(GetAllProductsInputForSp input)
+        {
+            List<SqlParameter> sqlParameters = new List<SqlParameter>();
+
+            if (input.Filter != null)
+            {
+                input.Filter = input.Filter[0] == '"' && input.Filter[input.Filter.Length - 1] == '"' ? "*" + input.Filter + "*" : '"' + "*" + input.Filter + "*" + '"';
+            }
+            SqlParameter filter = new SqlParameter("@Filter", input.Filter == null ? "\"\"" : input.Filter);
+            sqlParameters.Add(filter);
+
+            if (input.NameFilter != null)
+            {
+                input.NameFilter = input.NameFilter[0] == '"' && input.NameFilter[input.NameFilter.Length - 1] == '"' ? "*" + input.NameFilter + "*" : '"' + "*" + input.NameFilter + "*" + '"';
+            }
+            SqlParameter nameFilter = new SqlParameter("@Name", input.NameFilter == null ? "\"\"" : input.NameFilter);
+            sqlParameters.Add(nameFilter);
+
+            if (input.ProductTagNameFilter != null)
+            {
+                input.ProductTagNameFilter = input.ProductTagNameFilter[0] == '"' && input.ProductTagNameFilter[input.ProductTagNameFilter.Length - 1] == '"' ? "*" + input.ProductTagNameFilter + "*" : '"' + "*" + input.ProductTagNameFilter + "*" + '"';
+            }
+            SqlParameter productTagNameFilter = new SqlParameter("@ProductTagNameFilter", input.ProductTagNameFilter == null ? "\"\"" : input.ProductTagNameFilter);
+            sqlParameters.Add(productTagNameFilter);
+
+            if (input.SkuFilter != null)
+            {
+                input.SkuFilter = input.SkuFilter[0] == '"' && input.SkuFilter[input.SkuFilter.Length - 1] == '"' ? "*" + input.SkuFilter + "*" : '"' + "*" + input.SkuFilter + "*" + '"';
+            }
+            SqlParameter skuFilter = new SqlParameter("@Sku", input.SkuFilter == null ? "\"\"" : input.SkuFilter);
+            sqlParameters.Add(skuFilter);
+
+            if (input.SeoTitleFilter != null)
+            {
+                input.SeoTitleFilter = input.SeoTitleFilter[0] == '"' && input.SeoTitleFilter[input.SeoTitleFilter.Length - 1] == '"' ? "*" + input.SeoTitleFilter + "*" : '"' + "*" + input.SeoTitleFilter + "*" + '"';
+            }
+            SqlParameter seoTitleFilter = new SqlParameter("@SeoTitle", input.SeoTitleFilter == null ? "\"\"" : input.SeoTitleFilter);
+            sqlParameters.Add(seoTitleFilter);
+
+            if (input.MetaKeywordsFilter != null)
+            {
+                input.MetaKeywordsFilter = input.MetaKeywordsFilter[0] == '"' && input.MetaKeywordsFilter[input.MetaKeywordsFilter.Length - 1] == '"' ? "*" + input.MetaKeywordsFilter + "*" : '"' + "*" + input.MetaKeywordsFilter + "*" + '"';
+            }
+            SqlParameter metaKeywordsTitleFilter = new SqlParameter("@MetaKeyWords", input.MetaKeywordsFilter == null ? "\"\"" : input.MetaKeywordsFilter);
+            sqlParameters.Add(metaKeywordsTitleFilter);
+
+            SqlParameter minPriceFilter = new SqlParameter("@MinPrice", input.MinPriceFilter == null ? (object)DBNull.Value : input.MinPriceFilter);
+            sqlParameters.Add(minPriceFilter);
+
+            SqlParameter maxPriceFilter = new SqlParameter("@MaxPrice", input.MaxPriceFilter == null ? (object)DBNull.Value : input.MaxPriceFilter);
+            sqlParameters.Add(maxPriceFilter);
+
+            SqlParameter minSalePriceFilter = new SqlParameter("@MinSalesPrice", input.MinSalePriceFilter == null ? (object)DBNull.Value : input.MinSalePriceFilter);
+            sqlParameters.Add(minSalePriceFilter);
+
+            SqlParameter maxSalesPriceFilter = new SqlParameter("@MaxSalesPrice", input.MaxSalePriceFilter == null ? (object)DBNull.Value : input.MaxSalePriceFilter);
+            sqlParameters.Add(maxSalesPriceFilter);
+
+            SqlParameter minDiscountPercentageFilter = new SqlParameter("@MinDiscountPercentage", input.MinPriceDiscountPercentageFilter == null ? (object)DBNull.Value : input.MinPriceDiscountPercentageFilter);
+            sqlParameters.Add(minDiscountPercentageFilter);
+
+            SqlParameter maxDiscountPercentageFilter = new SqlParameter("@MaxDiscountPercentage", input.MaxPriceDiscountPercentageFilter == null ? (object)DBNull.Value : input.MaxPriceDiscountPercentageFilter);
+            sqlParameters.Add(maxDiscountPercentageFilter);
+
+            SqlParameter isCallForPriceFilter = new SqlParameter("@IsCallForPrice", input.CallForPriceFilter == -1 ? (object)DBNull.Value : input.CallForPriceFilter);
+            sqlParameters.Add(isCallForPriceFilter);
+
+            SqlParameter isTaxExemptFilter = new SqlParameter("@IsTaxExempt", input.IsTaxExemptFilter == -1 ? (object)DBNull.Value : input.IsTaxExemptFilter);
+            sqlParameters.Add(isTaxExemptFilter);
+
+            SqlParameter minStockQuantityFilter = new SqlParameter("@MinStockQuantity", input.MinStockQuantityFilter == null ? (object)DBNull.Value : input.MinStockQuantityFilter);
+            sqlParameters.Add(minStockQuantityFilter);
+
+            SqlParameter maxStockQuantityFilter = new SqlParameter("@MaxStockQuantity", input.MaxStockQuantityFilter == null ? (object)DBNull.Value : input.MaxStockQuantityFilter);
+            sqlParameters.Add(maxStockQuantityFilter);
+
+            SqlParameter isDisplayStockQuantityFilter = new SqlParameter("@IsDisplayStockQuantity", input.IsDisplayStockQuantityFilter == -1 ? (object)DBNull.Value : input.IsDisplayStockQuantityFilter);
+            sqlParameters.Add(isDisplayStockQuantityFilter);
+
+            SqlParameter isPublishedFilter = new SqlParameter("@IsPublished", input.IsPublishedFilter == -1 ? (object)DBNull.Value : input.IsPublishedFilter);
+            sqlParameters.Add(isPublishedFilter);
+
+            SqlParameter isTemplateFilter = new SqlParameter("@IsTemplate", input.IsTemplateFilter == -1 ? (object)DBNull.Value : input.IsTemplateFilter);
+            sqlParameters.Add(isTemplateFilter);
+
+            SqlParameter isPackageProductFilter = new SqlParameter("@IsPackageProduct", input.IsPackageProductFilter == -1 ? (object)DBNull.Value : input.IsPackageProductFilter);
+            sqlParameters.Add(isPackageProductFilter);
+
+            SqlParameter minMeasureAmountFilter = new SqlParameter("@MinMeasureAmount", input.MinMeasurementAmountFilter == null ? (object)DBNull.Value : input.MinMeasurementAmountFilter);
+            sqlParameters.Add(minMeasureAmountFilter);
+
+            SqlParameter maxMeasureAmountFilter = new SqlParameter("@MaxMeasureAmount", input.MaxMeasurementAmountFilter == null ? (object)DBNull.Value : input.MaxMeasurementAmountFilter);
+            sqlParameters.Add(maxMeasureAmountFilter);
+
+            SqlParameter productCategoryIdFilter = new SqlParameter("@ProductCategoryId", input.ProductCategoryIdFilter == null ? (object)DBNull.Value : input.ProductCategoryIdFilter);
+            sqlParameters.Add(productCategoryIdFilter);
+
+            SqlParameter currencyIdFilter = new SqlParameter("@CurrencyId", input.CurrencyIdFilter == null ? (object)DBNull.Value : input.CurrencyIdFilter);
+            sqlParameters.Add(currencyIdFilter);
+
+            SqlParameter employeeIdFilter = new SqlParameter("@EmployeeId", input.EmployeeIdFilter == null ? (object)DBNull.Value : input.EmployeeIdFilter);
+            sqlParameters.Add(employeeIdFilter);
+
+            SqlParameter companyIdFilter = new SqlParameter("@BusinessId", input.BusinessIdFilter == null ? (object)DBNull.Value : input.BusinessIdFilter);
+            sqlParameters.Add(companyIdFilter);
+
+            SqlParameter storeIdFilter = new SqlParameter("@StoreId", input.StoreIdFilter == null ? (object)DBNull.Value : input.StoreIdFilter);
+            sqlParameters.Add(storeIdFilter);
+
+            SqlParameter measurementUnitIdFilter = new SqlParameter("@MeasurementUnitId", input.MeasurementUnitIdFilter == null ? (object)DBNull.Value : input.MeasurementUnitIdFilter);
+            sqlParameters.Add(measurementUnitIdFilter);
+
+            SqlParameter ratingLikeIdFilter = new SqlParameter("@RatingLikeId", input.RatingLikeIdFilter == null ? (object)DBNull.Value : input.RatingLikeIdFilter);
+            sqlParameters.Add(ratingLikeIdFilter);
+
+            SqlParameter skipCount = new SqlParameter("@SkipCount", input.SkipCount);
+            sqlParameters.Add(skipCount);
+
+            SqlParameter maxResultCount = new SqlParameter("@MaxResultCount", input.MaxResultCount);
+            sqlParameters.Add(maxResultCount);
+
+            return sqlParameters;
         }
 
     }

@@ -25,6 +25,8 @@ namespace SoftGrid.EntityFrameworkCore
 {
     public class SoftGridDbContext : AbpZeroDbContext<Tenant, Role, User, SoftGridDbContext>, IAbpPersistedGrantDbContext
     {
+        public virtual DbSet<ProductTeam> ProductTeams { get; set; }
+
         public virtual DbSet<ShoppingCart> ShoppingCarts { get; set; }
 
         public virtual DbSet<WishList> WishLists { get; set; }
@@ -315,10 +317,14 @@ namespace SoftGrid.EntityFrameworkCore
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<ShoppingCart>(s =>
+            modelBuilder.Entity<ProductTeam>(p =>
             {
-                s.HasIndex(e => new { e.TenantId });
+                p.HasIndex(e => new { e.TenantId });
             });
+            modelBuilder.Entity<ShoppingCart>(s =>
+                       {
+                           s.HasIndex(e => new { e.TenantId });
+                       });
             modelBuilder.Entity<WishList>(w =>
                        {
                            w.HasIndex(e => new { e.TenantId });

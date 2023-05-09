@@ -10,6 +10,13 @@ import { MasterDataIndexComponent } from './lookupData/master-data-index/master-
                 children: [
                     
                     {
+                        path: 'shop/productTeams',
+                        loadChildren: () => import('./shop/productTeams/productTeam.module').then(m => m.ProductTeamModule),
+                        data: { permission: 'Pages.ProductTeams' }
+                    },
+                
+                    
+                    {
                         path: 'shop/shoppingCarts',
                         loadChildren: () => import('./shop/shoppingCarts/shoppingCart.module').then(m => m.ShoppingCartModule),
                         data: { permission: 'Pages.ShoppingCarts' }
