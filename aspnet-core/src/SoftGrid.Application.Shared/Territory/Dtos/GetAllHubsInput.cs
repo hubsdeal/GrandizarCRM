@@ -42,12 +42,16 @@ namespace SoftGrid.Territory.Dtos
 
         public string CountryNameFilter { get; set; }
 
+        public long StateIdFilter { get; set; }
         public string StateNameFilter { get; set; }
 
+       
         public string CityNameFilter { get; set; }
 
+        public long CountryIdFilter { get; set; }
         public string CountyNameFilter { get; set; }
 
+        public long HubTypeIdFilter { get; set; }
         public string HubTypeNameFilter { get; set; }
 
         public string CurrencyNameFilter { get; set; }

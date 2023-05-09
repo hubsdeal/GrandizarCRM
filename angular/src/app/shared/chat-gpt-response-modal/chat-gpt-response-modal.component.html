@@ -6,8 +6,9 @@
                 fill="currentColor" />
         </svg>
     </span>
-    <span class="text-primary ms-2">AI Text Generator</span>
+    <span class="text-primary ms-2">{{modalTitle}}</span>
 </h2>
+
 <mat-dialog-content class="mat-typography">
     <div class="w-100">
         <div class="notice d-flex bg-white rounded border-primary border border-dashed mb-9 p-6 w-100">
@@ -24,7 +25,7 @@
             <div class="w-100">
                 <h4 class="text-gray-900 fw-bold mb-2 fs-5">Command to the AI for generating {{feildName}}</h4>
                 <div class="fs-6 text-gray-700">
-                    <textarea rows="10" name="promptText" id="promptText" placeholder="Enter your prompt here"
+                    <textarea rows="2" name="promptText" id="promptText" placeholder="Enter your prompt here"
                         class="form-control form-control-solid" cols="3" [(ngModel)]="promptText"></textarea>
                 </div>
                 <div class="d-flex justify-content-end mt-6">

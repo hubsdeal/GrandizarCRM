@@ -42,7 +42,7 @@
                                         [(ngModel)]="nameFilter" (ngModelChange)="getHubs()" />
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <!-- <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="DescriptionFilter">{{ l('Description') }}</label>
                                     <input type="text" class="form-control" id="DescriptionFilter"
@@ -122,19 +122,19 @@
                                             (ngModelChange)="getHubs()" />
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="LiveFilterSelect">{{ l('Live') }}</label>
                                     <select class="form-select" name="LiveFilter" id="LiveFilterSelect"
                                         [(ngModel)]="liveFilter" (ngModelChange)="getHubs()">
                                         <option value="-1">{{ l('All') }}</option>
-                                        <option value="0">{{ l('False') }}</option>
-                                        <option value="1">{{ l('True') }}</option>
+                                        <option value="0">{{ l('No') }}</option>
+                                        <option value="1">{{ l('Yes') }}</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <!-- <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="UrlFilter">{{ l('Url') }}</label>
                                     <input type="text" class="form-control" id="UrlFilter" name="urlFilter"
@@ -150,18 +150,18 @@
                                         name="officeFullAddressFilter" [(ngModel)]="officeFullAddressFilter"
                                         (ngModelChange)="getHubs()" />
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="PartnerOrOwnedFilterSelect">
-                                        {{ l('PartnerOrOwned') }}
+                                        {{ l('Owner') }}
                                     </label>
                                     <select class="form-select" name="PartnerOrOwnedFilter"
                                         id="PartnerOrOwnedFilterSelect" [(ngModel)]="partnerOrOwnedFilter"
                                         (ngModelChange)="getHubs()">
                                         <option value="-1">{{ l('All') }}</option>
-                                        <option value="0">{{ l('False') }}</option>
-                                        <option value="1">{{ l('True') }}</option>
+                                        <option value="0">{{ l('No') }}</option>
+                                        <option value="1">{{ l('Yes') }}</option>
                                     </select>
                                 </div>
                             </div>
@@ -172,7 +172,7 @@
                                         [(ngModel)]="phoneFilter" (ngModelChange)="getHubs()" />
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <!-- <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="YearlyRevenueFilter">{{ l('YearlyRevenue') }}</label>
                                     <input type="text" class="form-control" id="YearlyRevenueFilter"
@@ -194,36 +194,44 @@
                                             (ngModelChange)="getHubs()" />
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
 
                             <div class="col-md-3">
-                                <div class="my-3">
+                                <div class="my-3 p_filter">
                                     <label class="form-label" for="CountryNameFilter">
-                                        ({{ l('Country') }}) {{ l('Name') }}
+                                        Country
                                     </label>
-                                    <input type="text" class="form-control" id="CountryNameFilter"
-                                        name="countryNameFilter" [(ngModel)]="countryNameFilter" />
+                                    <!-- <input type="text" class="form-control" id="CountryNameFilter"
+                                        name="countryNameFilter" [(ngModel)]="countryNameFilter" /> -->
+                                    <p-dropdown [options]="allCountrys" [filter]="true" [virtualScroll]="true" placeholder="Select Country"
+                                        [itemSize]="30" name="displayName" optionLabel="displayName" optionId="id" (onChange)="onCountrySelect($event)"
+                                        [(ngModel)]="country"  filterBy="displayName"
+                                        [style]="{ width: '100%' }"></p-dropdown>
                                 </div>
                             </div>
                             <div class="col-md-3">
-                                <div class="my-3">
+                                <div class="my-3 p_filter">
                                     <label class="form-label" for="StateNameFilter">
-                                        ({{ l('State') }}) {{ l('Name') }}
+                                        State
                                     </label>
-                                    <input type="text" class="form-control" id="StateNameFilter" name="stateNameFilter"
-                                        [(ngModel)]="stateNameFilter" />
+                                    <!-- <input type="text" class="form-control" id="StateNameFilter" name="stateNameFilter"
+                                        [(ngModel)]="stateNameFilter" /> -->
+                                    <p-dropdown [options]="allStates" [filter]="true" [virtualScroll]="true" placeholder="Select State"
+                                        [itemSize]="30" name="displayName" optionLabel="displayName" optionId="id" (onChange)="onStateSelect($event)"
+                                        [(ngModel)]="state"  filterBy="displayName"
+                                        [style]="{ width: '100%' }"></p-dropdown>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="CityNameFilter">
-                                        ({{ l('City') }}) {{ l('Name') }}
+                                        City
                                     </label>
                                     <input type="text" class="form-control" id="CityNameFilter" name="cityNameFilter"
                                         [(ngModel)]="cityNameFilter" />
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <!-- <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="CountyNameFilter">
                                         ({{ l('County') }}) {{ l('Name') }}
@@ -231,17 +239,21 @@
                                     <input type="text" class="form-control" id="CountyNameFilter"
                                         name="countyNameFilter" [(ngModel)]="countyNameFilter" />
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="col-md-3">
-                                <div class="my-3">
+                                <div class="my-3 p_filter">
                                     <label class="form-label" for="HubTypeNameFilter">
-                                        ({{ l('HubType') }}) {{ l('Name') }}
+                                        Hub Type
                                     </label>
-                                    <input type="text" class="form-control" id="HubTypeNameFilter"
-                                        name="hubTypeNameFilter" [(ngModel)]="hubTypeNameFilter" />
+                                    <!-- <input type="text" class="form-control" id="HubTypeNameFilter"
+                                        name="hubTypeNameFilter" [(ngModel)]="hubTypeNameFilter" /> -->
+                                    <p-dropdown [options]="allHubTypes" [filter]="true" [virtualScroll]="true" placeholder="Select Hub Type"
+                                        [itemSize]="30" name="displayName" optionLabel="displayName" optionId="id"
+                                        [(ngModel)]="hubType"  filterBy="displayName" (onChange)="onHusTypeSelect($event)"
+                                        [style]="{ width: '100%' }"></p-dropdown>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <!-- <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="CurrencyNameFilter">
                                         ({{ l('Currency') }}) {{ l('Name') }}
@@ -258,7 +270,7 @@
                                     <input type="text" class="form-control" id="MediaLibraryNameFilter"
                                         name="mediaLibraryNameFilter" [(ngModel)]="mediaLibraryNameFilter" />
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="col-md-12 mt-5">
                                 <button (click)="resetFilters()" class="btn btn-secondary btn-sm"
                                     id="btn-reset-filters">
@@ -430,14 +442,16 @@
                                             </div>
                                             <div class="d-flex flex-wrap flex-grow-1 mt-n2 mt-lg-n1">
                                                 <div class="d-flex flex-column flex-grow-1 my-lg-0 my-2 pe-3">
-                                                    <a href="javascript:;" title="{{ record.hub.name }}" [routerLink]="['/app/main/territory/hubs/dashboard',record.hub.id]"
+                                                    <a href="javascript:;" title="{{ record.hub.name }}"
+                                                        [routerLink]="['/app/main/territory/hubs/dashboard',record.hub.id]"
                                                         class="fs-5 text-gray-800 text-hover-primary fw-bold">
                                                         {{ record.hub.name }}
                                                         <i *ngIf="record.hub.live"
                                                             class="fas fa-check-circle ml-1 mr-0 text-success"
                                                             title="Live"></i>
                                                     </a>
-                                                    <span *ngIf="record.hub.officeFullAddress" class="text-gray-400 fw-semibold fs-7 my-1">
+                                                    <span *ngIf="record.hub.officeFullAddress"
+                                                        class="text-gray-400 fw-semibold fs-7 my-1">
                                                         <i class="fas fa-map-marked-alt mr-1"></i>
                                                         {{ record.hub.officeFullAddress }}
                                                     </span>

@@ -8,5 +8,7 @@
 
         public string MasterTagName { get; set; }
 
+        public string Picture { get; set; }
+
     }
 }

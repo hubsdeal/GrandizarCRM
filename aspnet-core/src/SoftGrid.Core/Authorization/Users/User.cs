@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using Abp.Auditing;
 using Abp.Authorization.Users;
 using Abp.Extensions;
 using Abp.Timing;
+using SoftGrid.LookupData;
+using SoftGrid.Territory;
 
 namespace SoftGrid.Authorization.Users
 {
@@ -22,6 +25,10 @@ namespace SoftGrid.Authorization.Users
 
         public string GoogleAuthenticatorKey { get; set; }
         public string RecoveryCode { get; set; }
+
+        [ForeignKey("PrimaryHubId")]
+        public Hub HubFk { get; set; }
+        public long? PrimaryHubId { get; set; }
         
         public List<UserOrganizationUnit> OrganizationUnits { get; set; }
 

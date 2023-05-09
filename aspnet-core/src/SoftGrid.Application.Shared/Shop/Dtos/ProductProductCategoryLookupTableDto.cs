@@ -7,5 +7,7 @@ namespace SoftGrid.Shop.Dtos
         public long Id { get; set; }
 
         public string DisplayName { get; set; }
+
+        public long? ParentcategoryId { get; set; }
     }
 }

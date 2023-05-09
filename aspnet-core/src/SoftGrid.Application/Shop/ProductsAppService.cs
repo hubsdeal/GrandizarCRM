@@ -23,6 +23,7 @@ using Abp.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Abp.UI;
 using SoftGrid.Storage;
+using SoftGrid.Shop.Enums;
 
 namespace SoftGrid.Shop
 {
@@ -30,6 +31,10 @@ namespace SoftGrid.Shop
     public class ProductsAppService : SoftGridAppServiceBase, IProductsAppService
     {
         private readonly IRepository<Product, long> _productRepository;
+        private readonly IRepository<ProductReview, long> _productReviewRepository;
+        private readonly IRepository<StoreProductMap, long> _storeProductMapRepository;
+        private readonly IRepository<StoreTag, long> _storeTagRepository;
+        private readonly IRepository<ProductTag, long> _productTagRepository;
         private readonly IProductsExcelExporter _productsExcelExporter;
         private readonly IRepository<ProductCategory, long> _lookup_productCategoryRepository;
         private readonly IRepository<MediaLibrary, long> _lookup_mediaLibraryRepository;
@@ -38,8 +43,17 @@ namespace SoftGrid.Shop
         private readonly IRepository<RatingLike, long> _lookup_ratingLikeRepository;
         private readonly IRepository<Contact, long> _lookup_contactRepository;
         private readonly IRepository<Store, long> _lookup_storeRepository;
+        private readonly IBinaryObjectManager _binaryObjectManager;
 
-        public ProductsAppService(IRepository<Product, long> productRepository, IProductsExcelExporter productsExcelExporter, IRepository<ProductCategory, long> lookup_productCategoryRepository, IRepository<MediaLibrary, long> lookup_mediaLibraryRepository, IRepository<MeasurementUnit, long> lookup_measurementUnitRepository, IRepository<Currency, long> lookup_currencyRepository, IRepository<RatingLike, long> lookup_ratingLikeRepository, IRepository<Contact, long> lookup_contactRepository, IRepository<Store, long> lookup_storeRepository)
+        public ProductsAppService(IRepository<Product, long> productRepository, IBinaryObjectManager binaryObjectManager, IProductsExcelExporter productsExcelExporter,
+            IRepository<ProductCategory, long> lookup_productCategoryRepository, IRepository<MediaLibrary, long> lookup_mediaLibraryRepository, IRepository<MeasurementUnit, 
+                long> lookup_measurementUnitRepository, IRepository<Currency, long> lookup_currencyRepository, IRepository<RatingLike, long> lookup_ratingLikeRepository, 
+            IRepository<Contact, long> lookup_contactRepository, 
+            IRepository<Store, long> lookup_storeRepository,
+            IRepository<ProductReview, long> productReviewRepository,
+            IRepository<StoreProductMap, long> storeProductMapRepository,
+            IRepository<StoreTag, long> storeTagRepository,
+            IRepository<ProductTag, long> productTagRepository)
         {
             _productRepository = productRepository;
             _productsExcelExporter = productsExcelExporter;
@@ -50,7 +64,11 @@ namespace SoftGrid.Shop
             _lookup_ratingLikeRepository = lookup_ratingLikeRepository;
             _lookup_contactRepository = lookup_contactRepository;
             _lookup_storeRepository = lookup_storeRepository;
-
+            _binaryObjectManager = binaryObjectManager;
+            _productReviewRepository = productReviewRepository;
+            _storeProductMapRepository = storeProductMapRepository;
+            _storeTagRepository = storeTagRepository;
+            _productTagRepository = productTagRepository;
         }
 
         public async Task<PagedResultDto<GetProductForViewDto>> GetAll(GetAllProductsInput input)
@@ -165,6 +183,7 @@ namespace SoftGrid.Shop
                                o.ByOrderOnly,
                                o.Score,
                                Id = o.Id,
+                               PictureId = s2==null?Guid.Empty:s2.BinaryObjectId,
                                ProductCategoryName = s1 == null || s1.Name == null ? "" : s1.Name.ToString(),
                                MediaLibraryName = s2 == null || s2.Name == null ? "" : s2.Name.ToString(),
                                MeasurementUnitName = s3 == null || s3.Name == null ? "" : s3.Name.ToString(),
@@ -214,6 +233,7 @@ namespace SoftGrid.Shop
                         ByOrderOnly = o.ByOrderOnly,
                         Score = o.Score,
                         Id = o.Id,
+                        PictureId=o.PictureId
                     },
                     ProductCategoryName = o.ProductCategoryName,
                     MediaLibraryName = o.MediaLibraryName,
@@ -223,6 +243,10 @@ namespace SoftGrid.Shop
                     ContactFullName = o.ContactFullName,
                     StoreName = o.StoreName
                 };
+                if (res.Product.PictureId != null && res.Product.PictureId != Guid.Empty)
+                {
+                    res.Product.Picture = await _binaryObjectManager.GetOthersPictureUrlAsync((Guid)o.PictureId, ".png");
+                }
 
                 results.Add(res);
             }
@@ -296,12 +320,21 @@ namespace SoftGrid.Shop
             {
                 var _lookupProductCategory = await _lookup_productCategoryRepository.FirstOrDefaultAsync((long)output.Product.ProductCategoryId);
                 output.ProductCategoryName = _lookupProductCategory?.Name?.ToString();
+                if(_lookupProductCategory.ParentCategoryId!=null)
+                {
+                    output.ProductCategoryParentId = _lookupProductCategory.ParentCategoryId;
+                    output.ProductCategoryTreeViewName = await GetParentcategory(_lookupProductCategory.ParentCategoryId) != null ? await GetParentcategory(_lookupProductCategory.ParentCategoryId) + _lookupProductCategory?.Name?.ToString() : _lookupProductCategory?.Name?.ToString();
+                }
             }
 
             if (output.Product.MediaLibraryId != null)
             {
                 var _lookupMediaLibrary = await _lookup_mediaLibraryRepository.FirstOrDefaultAsync((long)output.Product.MediaLibraryId);
                 output.MediaLibraryName = _lookupMediaLibrary?.Name?.ToString();
+                if(_lookupMediaLibrary.BinaryObjectId !=null && _lookupMediaLibrary.BinaryObjectId != Guid.Empty)
+                {
+                    output.Picture = await _binaryObjectManager.GetOthersPictureUrlAsync(_lookupMediaLibrary.BinaryObjectId, ".png");
+                }
             }
 
             if (output.Product.MeasurementUnitId != null)
@@ -333,6 +366,54 @@ namespace SoftGrid.Shop
                 var _lookupStore = await _lookup_storeRepository.FirstOrDefaultAsync((long)output.Product.StoreId);
                 output.StoreName = _lookupStore?.Name?.ToString();
             }
+
+            output.NumberOfRatings = await _productReviewRepository.CountAsync(e => e.ProductId == output.Product.Id);
+            if (output.NumberOfRatings > 0)
+            {
+                output.RatingScore = (_productReviewRepository.GetAll().Where(e => e.ProductId == output.Product.Id && e.RatingLikeId != null).Select(e => e.RatingLikeId).Sum()) / output.NumberOfRatings;
+
+            }
+            else
+            {
+                output.RatingScore = 0;
+
+            }
+
+
+            var store = _storeProductMapRepository.GetAll().Include(e => e.StoreFk).Where(e => e.ProductId == output.Product.Id && e.StoreId != null).FirstOrDefault();
+
+            if (store != null)
+            {
+                output.StoreId = store.StoreId;
+                output.StoreName = store.StoreFk?.Name;
+                output.Product.StoreId = store.StoreId;
+                var storeTags = _storeTagRepository.GetAll().Include(e => e.MasterTagFk).Where(e => e.StoreId == store.Id).Take(3).OrderBy(e => e.Sequence);
+
+                foreach (var tag in storeTags)
+                {
+                    if (tag.MasterTagFk.Name != null)
+                    {
+                        output.StoreTags.Add(tag.MasterTagFk.Name);
+                    }
+                    else if (tag.CustomTag != null)
+                    {
+                        output.StoreTags.Add(tag.CustomTag);
+                    }
+                }
+
+            }
+
+            var categories = _productTagRepository.GetAll().Where(e => e.ProductId == output.Product.Id && e.MasterTagCategoryId == (long)ProductEnum.ProductAdditionalCategory && e.MasterTagId != null).Include(e => e.MasterTagFk);
+
+            foreach (var item in categories)
+            {
+                var obj = new AdditionalCategoryForViewDto();
+                obj.Id = item.Id;
+                obj.Name = item.MasterTagFk.Name;
+                output.AdditionalCategories.Add(obj);
+            }
+
+            output.PickupOrDeliveryTags = _productTagRepository.GetAll().Include(e => e.MasterTagFk).Where(e => e.MasterTagCategoryId == 38 && e.ProductId == output.Product.Id && e.MasterTagId != null).Select(e => e.MasterTagFk.Name).ToList();
 
             return output;
         }
@@ -709,6 +790,58 @@ namespace SoftGrid.Shop
                 totalCount,
                 lookupTableDtoList
             );
+        }
+
+        public async Task<List<ProductProductCategoryLookupTableDto>> GetAllProductCategoryForTableDropdown()
+        {
+            var results = await _lookup_productCategoryRepository.GetAll().Where(e => e.IsDeleted == false)
+                .Select(productCategory => new ProductProductCategoryLookupTableDto
+                {
+                    Id = productCategory.Id,
+                    DisplayName = productCategory == null || productCategory.Name == null ? "" : productCategory.Name.ToString(),
+                    ParentcategoryId = productCategory.ParentCategoryId
+                }).ToListAsync();
+
+            foreach (var result in results)
+            {
+                if (result.ParentcategoryId != null)
+                {
+                    result.DisplayName = await GetParentcategory(result.ParentcategoryId) != null ? await GetParentcategory(result.ParentcategoryId) + result.DisplayName : result.DisplayName;
+
+                }
+            }
+            return results.OrderBy(e => e.DisplayName).ToList();
+        }
+
+        private async Task<string> GetParentcategory(long? parentcategoryId)
+        {
+            var category = await _lookup_productCategoryRepository.FirstOrDefaultAsync((long)parentcategoryId);
+            string parentName = null;
+            if (category != null)
+            {
+                parentName = category.Name + " -> ";
+                if (category.ParentCategoryId != null)
+                {
+                    await GetChildsParent(category);
+                }
+
+                async Task GetChildsParent(ProductCategory input)
+                {
+                    var item = await _lookup_productCategoryRepository.FirstOrDefaultAsync((long)input.ParentCategoryId);
+                    if (item != null)
+                    {
+                        parentName = item.Name + " -> " + parentName;
+                        if (item.ParentCategoryId != null)
+                        {
+                            await GetChildsParent(item);
+                        }
+                    }
+
+                }
+            }
+
+
+            return parentName;
         }
 
     }

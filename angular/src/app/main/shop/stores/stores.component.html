@@ -1,17 +1,27 @@
 ﻿<div [@routerTransition]>
-    <sub-header [title]="'Stores' | localize" [description]="">
+    <!-- <sub-header [title]="'Stores' | localize" [description]="">
         <div role="actions">
             <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1">
                 <i class="fa fa-file-excel"></i>
                 {{ l('ExportToExcel') }}
             </button>
-
-            <button *ngIf="isGranted('Pages.Stores.Create')" (click)="createStore()" class="btn btn-primary blue">
-                <i class="fa fa-plus"></i>
-                {{ l('Store') }}
-            </button>
         </div>
-    </sub-header>
+    </sub-header> -->
+    <div class="w-100 d-flex mb-6 ps-9 pe-9 mt-6 justify-content-between align-items-center ng-tns-c282-7">
+        <div class="d-flex">
+            <h1 class="fs-3 fw-bold  my-0 page-heading text-dark"> 
+                Stores 
+            </h1>
+            <span class="badge badge-primary badge ms-2">Total: {{primengTableHelper.totalRecordsCount}}</span>
+            <span class="badge badge-info badge ms-2">Published: 0</span>
+            <span class="badge badge-warning badge ms-2">Unpublished: 0</span>
+            <span class="badge badge-success badge ms-2">Verified: 0</span>
+        </div>
+        <button *ngIf="isGranted('Pages.Stores.Create')" (click)="createStore()" class="btn btn-primary blue">
+            <i class="fa fa-plus"></i>
+            {{ l('Store') }}
+        </button>
+    </div>
 
     <div [class]="containerClass">
         <div class="card card-custom gutter-b">
@@ -42,7 +52,109 @@
                                         [(ngModel)]="nameFilter" (ngModelChange)="getStores()" />
                                 </div>
                             </div>
+                            <!-- <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="PhoneFilter">{{ l('Phone') }}</label>
+                                    <input type="text" class="form-control" id="PhoneFilter" name="phoneFilter"
+                                        [(ngModel)]="phoneFilter" (ngModelChange)="getStores()" />
+                                </div>
+                            </div>
                             <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="MobileFilter">{{ l('Mobile') }}</label>
+                                    <input type="text" class="form-control" id="MobileFilter" name="mobileFilter"
+                                        [(ngModel)]="mobileFilter" (ngModelChange)="getStores()" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="EmailFilter">{{ l('Email') }}</label>
+                                    <input type="text" class="form-control" id="EmailFilter" name="emailFilter"
+                                        [(ngModel)]="emailFilter" (ngModelChange)="getStores()" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="AddressFilter">{{ l('Address') }}</label>
+                                    <input type="text" class="form-control" id="AddressFilter" name="addressFilter"
+                                        [(ngModel)]="addressFilter" (ngModelChange)="getStores()" />
+                                </div>
+                            </div> -->
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="ZipCodeFilter">{{ l('Zip Code') }}</label>
+                                    <input type="text" class="form-control" id="ZipCodeFilter" name="zipCodeFilter"
+                                        [(ngModel)]="zipCodeFilter" (ngModelChange)="getStores()" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="CityFilter">{{ l('City') }}</label>
+                                    <input type="text" class="form-control" id="CityFilter" name="cityFilter"
+                                        [(ngModel)]="cityFilter" (ngModelChange)="getStores()" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="StateNameFilter">
+                                        {{ l('State') }}
+                                    </label>
+                                    <input type="text" class="form-control" id="StateNameFilter" name="stateNameFilter"
+                                        [(ngModel)]="stateNameFilter" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="CountryNameFilter">
+                                        {{ l('Country') }}
+                                    </label>
+                                    <input type="text" class="form-control" id="CountryNameFilter"
+                                        name="countryNameFilter" [(ngModel)]="countryNameFilter" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="IsPublishedFilterSelect">
+                                        {{ l('Published') }}
+                                    </label>
+                                    <select class="form-select" name="IsPublishedFilter" id="IsPublishedFilterSelect"
+                                        [(ngModel)]="isPublishedFilter" (ngModelChange)="getStores()">
+                                        <option value="-1">{{ l('All') }}</option>
+                                        <option value="0">{{ l('No') }}</option>
+                                        <option value="1">{{ l('Yes') }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="IsLocalOrOnlineStoreFilterSelect">
+                                        {{ l('Local Store') }}
+                                    </label>
+                                    <select class="form-select" name="IsLocalOrOnlineStoreFilter"
+                                        id="IsLocalOrOnlineStoreFilterSelect" [(ngModel)]="isLocalOrOnlineStoreFilter"
+                                        (ngModelChange)="getStores()">
+                                        <option value="-1">{{ l('All') }}</option>
+                                        <option value="0">{{ l('No') }}</option>
+                                        <option value="1">{{ l('Yes') }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="IsVerifiedFilterSelect">{{ l('Verified') }}</label>
+                                    <select class="form-select" name="IsVerifiedFilter" id="IsVerifiedFilterSelect"
+                                        [(ngModel)]="isVerifiedFilter" (ngModelChange)="getStores()">
+                                        <option value="-1">{{ l('All') }}</option>
+                                        <option value="0">{{ l('No') }}</option>
+                                        <option value="1">{{ l('Yes') }}</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            
+
+
+                            <!-- <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="StoreUrlFilter">{{ l('StoreUrl') }}</label>
                                     <input type="text" class="form-control" id="StoreUrlFilter" name="storeUrlFilter"
@@ -82,20 +194,8 @@
                                         (ngModelChange)="getStores()" />
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <div class="my-3">
-                                    <label class="form-label" for="AddressFilter">{{ l('Address') }}</label>
-                                    <input type="text" class="form-control" id="AddressFilter" name="addressFilter"
-                                        [(ngModel)]="addressFilter" (ngModelChange)="getStores()" />
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="my-3">
-                                    <label class="form-label" for="CityFilter">{{ l('City') }}</label>
-                                    <input type="text" class="form-control" id="CityFilter" name="cityFilter"
-                                        [(ngModel)]="cityFilter" (ngModelChange)="getStores()" />
-                                </div>
-                            </div>
+                            
+                            
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="MinLatitudeFilter">
@@ -126,40 +226,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <div class="my-3">
-                                    <label class="form-label" for="PhoneFilter">{{ l('Phone') }}</label>
-                                    <input type="text" class="form-control" id="PhoneFilter" name="phoneFilter"
-                                        [(ngModel)]="phoneFilter" (ngModelChange)="getStores()" />
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="my-3">
-                                    <label class="form-label" for="MobileFilter">{{ l('Mobile') }}</label>
-                                    <input type="text" class="form-control" id="MobileFilter" name="mobileFilter"
-                                        [(ngModel)]="mobileFilter" (ngModelChange)="getStores()" />
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="my-3">
-                                    <label class="form-label" for="EmailFilter">{{ l('Email') }}</label>
-                                    <input type="text" class="form-control" id="EmailFilter" name="emailFilter"
-                                        [(ngModel)]="emailFilter" (ngModelChange)="getStores()" />
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="my-3">
-                                    <label class="form-label" for="IsPublishedFilterSelect">
-                                        {{ l('IsPublished') }}
-                                    </label>
-                                    <select class="form-select" name="IsPublishedFilter" id="IsPublishedFilterSelect"
-                                        [(ngModel)]="isPublishedFilter" (ngModelChange)="getStores()">
-                                        <option value="-1">{{ l('All') }}</option>
-                                        <option value="0">{{ l('False') }}</option>
-                                        <option value="1">{{ l('True') }}</option>
-                                    </select>
-                                </div>
-                            </div>
+                            
+                           
+                            
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="FacebookFilter">{{ l('Facebook') }}</label>
@@ -195,13 +264,7 @@
                                         [(ngModel)]="faxFilter" (ngModelChange)="getStores()" />
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <div class="my-3">
-                                    <label class="form-label" for="ZipCodeFilter">{{ l('ZipCode') }}</label>
-                                    <input type="text" class="form-control" id="ZipCodeFilter" name="zipCodeFilter"
-                                        [(ngModel)]="zipCodeFilter" (ngModelChange)="getStores()" />
-                                </div>
-                            </div>
+                           
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="WebsiteFilter">{{ l('Website') }}</label>
@@ -256,32 +319,7 @@
                                         [(ngModel)]="legalNameFilter" (ngModelChange)="getStores()" />
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <div class="my-3">
-                                    <label class="form-label" for="IsLocalOrOnlineStoreFilterSelect">
-                                        {{ l('IsLocalOrOnlineStore') }}
-                                    </label>
-                                    <select class="form-select" name="IsLocalOrOnlineStoreFilter"
-                                        id="IsLocalOrOnlineStoreFilterSelect" [(ngModel)]="isLocalOrOnlineStoreFilter"
-                                        (ngModelChange)="getStores()">
-                                        <option value="-1">{{ l('All') }}</option>
-                                        <option value="0">{{ l('False') }}</option>
-                                        <option value="1">{{ l('True') }}</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="my-3">
-                                    <label class="form-label" for="IsVerifiedFilterSelect">{{ l('IsVerified') }}</label>
-                                    <select class="form-select" name="IsVerifiedFilter" id="IsVerifiedFilterSelect"
-                                        [(ngModel)]="isVerifiedFilter" (ngModelChange)="getStores()">
-                                        <option value="-1">{{ l('All') }}</option>
-                                        <option value="0">{{ l('False') }}</option>
-                                        <option value="1">{{ l('True') }}</option>
-                                    </select>
-                                </div>
-                            </div>
-
+                            
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="MediaLibraryNameFilter">
@@ -291,24 +329,7 @@
                                         name="mediaLibraryNameFilter" [(ngModel)]="mediaLibraryNameFilter" />
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <div class="my-3">
-                                    <label class="form-label" for="CountryNameFilter">
-                                        ({{ l('Country') }}) {{ l('Name') }}
-                                    </label>
-                                    <input type="text" class="form-control" id="CountryNameFilter"
-                                        name="countryNameFilter" [(ngModel)]="countryNameFilter" />
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="my-3">
-                                    <label class="form-label" for="StateNameFilter">
-                                        ({{ l('State') }}) {{ l('Name') }}
-                                    </label>
-                                    <input type="text" class="form-control" id="StateNameFilter" name="stateNameFilter"
-                                        [(ngModel)]="stateNameFilter" />
-                                </div>
-                            </div>
+                            
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="RatingLikeNameFilter">
@@ -326,7 +347,7 @@
                                     <input type="text" class="form-control" id="MasterTagNameFilter"
                                         name="masterTagNameFilter" [(ngModel)]="masterTagNameFilter" />
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="col-md-12 mt-5">
                                 <button (click)="resetFilters()" class="btn btn-secondary btn-sm"
                                     id="btn-reset-filters">
@@ -395,7 +416,7 @@
                                         {{l('Verified')}}
                                     </th>
                                     <th style="width: 120px" pSortableColumn="displaySequence">
-                                        Sequence
+                                        Score
                                         <p-sortIcon field="store.displaySequence"></p-sortIcon>
                                     </th>
                                     <!-- <th style="width: 150px" pSortableColumn="logoMediaLibraryFk.name">
@@ -764,12 +785,12 @@
                                                 <span class="caret"></span>
                                             </button>
                                             <ul class="dropdown-menu" *dropdownMenu>
-                                                <li>
+                                                <!-- <li>
                                                     <a href="javascript:;" class="dropdown-item"
                                                         (click)="viewStoreModal.show(record)">
                                                         {{ l('View') }}
                                                     </a>
-                                                </li>
+                                                </li> -->
                                                 <li>
                                                     <a href="javascript:;"
                                                         *ngIf="permission.isGranted('Pages.Stores.Edit')"

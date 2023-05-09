@@ -1,5 +1,5 @@
 ﻿import { AppConsts } from '@shared/AppConsts';
-import { Component, Injector, ViewEncapsulation, ViewChild } from '@angular/core';
+import { Component, Injector, ViewEncapsulation, ViewChild, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MediaLibrariesServiceProxy, MediaLibraryDto } from '@shared/service-proxies/service-proxies';
 import { NotifyService } from 'abp-ng2-module';
@@ -17,13 +17,16 @@ import { filter as _filter } from 'lodash-es';
 import { DateTime } from 'luxon';
 
 import { DateTimeService } from '@app/shared/common/timing/date-time.service';
+import { DomSanitizer } from '@angular/platform-browser';
+import { DecimalPipe } from '@angular/common';
 
 @Component({
     templateUrl: './mediaLibraries.component.html',
     encapsulation: ViewEncapsulation.None,
     animations: [appModuleAnimation()],
+    providers: [DecimalPipe],
 })
-export class MediaLibrariesComponent extends AppComponentBase {
+export class MediaLibrariesComponent extends AppComponentBase implements OnInit{
     @ViewChild('createOrEditMediaLibraryModal', { static: true })
     createOrEditMediaLibraryModal: CreateOrEditMediaLibraryModalComponent;
     @ViewChild('viewMediaLibraryModal', { static: true }) viewMediaLibraryModal: ViewMediaLibraryModalComponent;
@@ -45,6 +48,9 @@ export class MediaLibrariesComponent extends AppComponentBase {
     masterTagCategoryNameFilter = '';
     masterTagNameFilter = '';
 
+    skipCount: number;
+    maxResultCount: number = 48;
+
     constructor(
         injector: Injector,
         private _mediaLibrariesServiceProxy: MediaLibrariesServiceProxy,
@@ -52,18 +58,24 @@ export class MediaLibrariesComponent extends AppComponentBase {
         private _tokenAuth: TokenAuthServiceProxy,
         private _activatedRoute: ActivatedRoute,
         private _fileDownloadService: FileDownloadService,
-        private _dateTimeService: DateTimeService
+        private _dateTimeService: DateTimeService,
+        private _sanitizer: DomSanitizer,
+        private _decimalPipe: DecimalPipe
     ) {
         super(injector);
     }
 
+    ngOnInit(): void {
+        this.getMediaLibraries();
+    }
+
     getMediaLibraries(event?: LazyLoadEvent) {
-        if (this.primengTableHelper.shouldResetPaging(event)) {
-            this.paginator.changePage(0);
-            if (this.primengTableHelper.records && this.primengTableHelper.records.length > 0) {
-                return;
-            }
-        }
+        // if (this.primengTableHelper.shouldResetPaging(event)) {
+        //     this.paginator.changePage(0);
+        //     if (this.primengTableHelper.records && this.primengTableHelper.records.length > 0) {
+        //         return;
+        //     }
+        // }
 
         this.primengTableHelper.showLoadingIndicator();
 
@@ -81,9 +93,12 @@ export class MediaLibrariesComponent extends AppComponentBase {
                 this.binaryObjectIdFilter,
                 this.masterTagCategoryNameFilter,
                 this.masterTagNameFilter,
-                this.primengTableHelper.getSorting(this.dataTable),
-                this.primengTableHelper.getSkipCount(this.paginator, event),
-                this.primengTableHelper.getMaxResultCount(this.paginator, event)
+                '',
+                this.skipCount,
+                this.maxResultCount
+                // this.primengTableHelper.getSorting(this.dataTable),
+                // this.primengTableHelper.getSkipCount(this.paginator, event),
+                // this.primengTableHelper.getMaxResultCount(this.paginator, event)
             )
             .subscribe((result) => {
                 this.primengTableHelper.totalRecordsCount = result.totalCount;
@@ -148,4 +163,23 @@ export class MediaLibrariesComponent extends AppComponentBase {
 
         this.getMediaLibraries();
     }
+
+    getSafeEmbeddedVideoUrl(url: string) {
+        return this._sanitizer.bypassSecurityTrustResourceUrl(url);
+    }
+
+    getSizeFormat(size: string) {
+        if (size.includes("bytes")) {
+            return size;
+        }
+        let newSize = +size.replace("kb", "");
+        return this._decimalPipe.transform(newSize, '1.2-2') + " kb";
+    }
+
+    paginate(event: any) {
+        this.skipCount = event.first;
+        this.maxResultCount = event.rows;
+        this.getMediaLibraries();
+    }
+
 }

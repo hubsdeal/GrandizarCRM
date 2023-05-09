@@ -1683,6 +1683,9 @@ namespace SoftGrid.Migrations
                         .HasMaxLength(32)
                         .HasColumnType("nvarchar(32)");
 
+                    b.Property<long?>("PrimaryHubId")
+                        .HasColumnType("bigint");
+
                     b.Property<Guid?>("ProfilePictureId")
                         .HasColumnType("uniqueidentifier");
 
@@ -1722,6 +1725,8 @@ namespace SoftGrid.Migrations
                     b.HasIndex("DeleterUserId");
 
                     b.HasIndex("LastModifierUserId");
+
+                    b.HasIndex("PrimaryHubId");
 
                     b.HasIndex("TenantId", "NormalizedEmailAddress");
 
@@ -6932,6 +6937,70 @@ namespace SoftGrid.Migrations
                     b.ToTable("ProductWholeSalePrices");
                 });
 
+            modelBuilder.Entity("SoftGrid.Shop.ShoppingCart", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long?>("ContactId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("CurrencyId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("OrderId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("ProductId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<long?>("StoreId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.Property<double?>("TotalAmount")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("UnitDiscountAmount")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("UnitPrice")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("UnitTotalPrice")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ContactId");
+
+                    b.HasIndex("CurrencyId");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("StoreId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("ShoppingCarts");
+                });
+
             modelBuilder.Entity("SoftGrid.Shop.Store", b =>
                 {
                     b.Property<long>("Id")
@@ -8037,6 +8106,48 @@ namespace SoftGrid.Migrations
                     b.ToTable("StoreZipCodeMaps");
                 });
 
+            modelBuilder.Entity("SoftGrid.Shop.WishList", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long>("ContactId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("ProductId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("StoreId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ContactId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("StoreId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("WishLists");
+                });
+
             modelBuilder.Entity("SoftGrid.Storage.BinaryObject", b =>
                 {
                     b.Property<Guid>("Id")
@@ -9027,9 +9138,15 @@ namespace SoftGrid.Migrations
                         .WithMany()
                         .HasForeignKey("LastModifierUserId");
 
+                    b.HasOne("SoftGrid.Territory.Hub", "HubFk")
+                        .WithMany()
+                        .HasForeignKey("PrimaryHubId");
+
                     b.Navigation("CreatorUser");
 
                     b.Navigation("DeleterUser");
+
+                    b.Navigation("HubFk");
 
                     b.Navigation("LastModifierUser");
                 });
@@ -10540,6 +10657,39 @@ namespace SoftGrid.Migrations
                     b.Navigation("ProductWholeSaleQuantityTypeFk");
                 });
 
+            modelBuilder.Entity("SoftGrid.Shop.ShoppingCart", b =>
+                {
+                    b.HasOne("SoftGrid.CRM.Contact", "ContactFk")
+                        .WithMany()
+                        .HasForeignKey("ContactId");
+
+                    b.HasOne("SoftGrid.LookupData.Currency", "CurrencyFk")
+                        .WithMany()
+                        .HasForeignKey("CurrencyId");
+
+                    b.HasOne("SoftGrid.OrderManagement.Order", "OrderFk")
+                        .WithMany()
+                        .HasForeignKey("OrderId");
+
+                    b.HasOne("SoftGrid.Shop.Product", "ProductFk")
+                        .WithMany()
+                        .HasForeignKey("ProductId");
+
+                    b.HasOne("SoftGrid.Shop.Store", "StoreFk")
+                        .WithMany()
+                        .HasForeignKey("StoreId");
+
+                    b.Navigation("ContactFk");
+
+                    b.Navigation("CurrencyFk");
+
+                    b.Navigation("OrderFk");
+
+                    b.Navigation("ProductFk");
+
+                    b.Navigation("StoreFk");
+                });
+
             modelBuilder.Entity("SoftGrid.Shop.Store", b =>
                 {
                     b.HasOne("SoftGrid.LookupData.Country", "CountryFk")
@@ -10926,6 +11076,29 @@ namespace SoftGrid.Migrations
                     b.Navigation("StoreFk");
 
                     b.Navigation("ZipCodeFk");
+                });
+
+            modelBuilder.Entity("SoftGrid.Shop.WishList", b =>
+                {
+                    b.HasOne("SoftGrid.CRM.Contact", "ContactFk")
+                        .WithMany()
+                        .HasForeignKey("ContactId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SoftGrid.Shop.Product", "ProductFk")
+                        .WithMany()
+                        .HasForeignKey("ProductId");
+
+                    b.HasOne("SoftGrid.Shop.Store", "StoreFk")
+                        .WithMany()
+                        .HasForeignKey("StoreId");
+
+                    b.Navigation("ContactFk");
+
+                    b.Navigation("ProductFk");
+
+                    b.Navigation("StoreFk");
                 });
 
             modelBuilder.Entity("SoftGrid.TaskManagement.TaskEvent", b =>

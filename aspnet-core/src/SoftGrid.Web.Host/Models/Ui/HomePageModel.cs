@@ -7,7 +7,7 @@ namespace SoftGrid.Web.Models.Ui
         public bool IsMultiTenancyEnabled { get; set; }
 
         public GetCurrentLoginInformationsOutput LoginInformation { get; set; }
-
+     
         public string GetShownLoginName()
         {
             var userName = "<span id=\"HeaderCurrentUserName\">" + LoginInformation.User.UserName + "</span>";

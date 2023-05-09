@@ -25,6 +25,10 @@ namespace SoftGrid.EntityFrameworkCore
 {
     public class SoftGridDbContext : AbpZeroDbContext<Tenant, Role, User, SoftGridDbContext>, IAbpPersistedGrantDbContext
     {
+        public virtual DbSet<ShoppingCart> ShoppingCarts { get; set; }
+
+        public virtual DbSet<WishList> WishLists { get; set; }
+
         public virtual DbSet<DiscountCodeUserHistory> DiscountCodeUserHistories { get; set; }
 
         public virtual DbSet<DiscountCodeMap> DiscountCodeMaps { get; set; }
@@ -311,10 +315,18 @@ namespace SoftGrid.EntityFrameworkCore
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<DiscountCodeUserHistory>(d =>
+            modelBuilder.Entity<ShoppingCart>(s =>
             {
-                d.HasIndex(e => new { e.TenantId });
+                s.HasIndex(e => new { e.TenantId });
             });
+            modelBuilder.Entity<WishList>(w =>
+                       {
+                           w.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<DiscountCodeUserHistory>(d =>
+                       {
+                           d.HasIndex(e => new { e.TenantId });
+                       });
             modelBuilder.Entity<DiscountCodeMap>(d =>
                        {
                            d.HasIndex(e => new { e.TenantId });

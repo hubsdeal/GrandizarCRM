@@ -2,6 +2,7 @@ import { AfterViewInit, Component, Injector, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { TokenService } from 'abp-ng2-module';
+import { SelectItem } from 'primeng/api';
 
 @Component({
   selector: 'app-job-dashboard',
@@ -10,12 +11,23 @@ import { TokenService } from 'abp-ng2-module';
 })
 export class JobDashboardComponent extends AppComponentBase implements OnInit, AfterViewInit {
   jobId: number;
+  bindingData: any;
+  remoteOnsiteOptions: SelectItem[];
+  fullTimeOrGigWorkOptions: SelectItem[];
+  selectBTN: boolean = false;
+  description: string;
+  salaryBasedOrFixedPriceOptions: SelectItem[];
+  publishedOptions: SelectItem[];
   constructor(
     injector: Injector,
     private route: ActivatedRoute,
     private _tokenService: TokenService
   ) {
     super(injector);
+    this.remoteOnsiteOptions = [{ label: 'Onsite/Local', value: false }, { label: 'Remote', value: true }];
+    this.salaryBasedOrFixedPriceOptions = [{ label: 'Salary/Staffing Rate', value: true }, { label: 'Fixed Price', value: false }];
+    this.fullTimeOrGigWorkOptions = [{ label: 'Full Time Job', value: true }, { label: 'Gig Work', value: false }];
+    this.salaryBasedOrFixedPriceOptions = [{ label: 'Salary/Staffing Rate', value: true }, { label: 'Fixed Price', value: false }];
   }
 
   ngOnInit(): void {
@@ -23,6 +35,10 @@ export class JobDashboardComponent extends AppComponentBase implements OnInit, A
     this.jobId = parseInt(jobId);
   }
   ngAfterViewInit() {
+
+  }
+
+  openAiModal(fsf: string) {
 
   }
 }

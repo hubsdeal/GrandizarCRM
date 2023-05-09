@@ -12,6 +12,17 @@
 				]
 		},
 		{
+			"placeholder" : "{{Property_Header_And_Value_Here}}",
+			"condition" : "{{Property_Listed_Here}} == true",
+			"templates" : [
+					{
+						"type" : "default",
+						"content" : "{L(\"{{Property_Name_Here}}\"), {{entity_Name_Here}}.{{Entity_Name_Here}}.{{Property_Name_Here}}},
+						"
+					}
+				]
+		},		
+		{
 			"placeholder" : "{{Property_DateTime_Formatter_Here_Before_080400}}",
 			"condition" : "{{Property_Listed_Here}} == true && {{Project_Version_Here}} < 080400",
 			"templates" : [
@@ -36,9 +47,9 @@
 					"type" : "DateTime",
 					"content" : "for (var i = 1; i <= {{entity_Name_Plural_Here}}.Count; i++)
                     {
-                        SetCellDataFormat(sheet.GetRow(i).Cells[{{Loop_Index}}], \"yyyy-mm-dd\");
+                        SetCellDataFormat(sheet.GetRow(i).Cells[{{Loop_Index}}-1], \"yyyy-mm-dd\");
                     }
-                    sheet.AutoSizeColumn({{Loop_Index}});"
+                    sheet.AutoSizeColumn({{Loop_Index}}-1);"
 					},
 					{
 					"type" : "default",
@@ -93,14 +104,19 @@
 	"conditionalTemplates":[
 		{
 			"placeholder": "{{Excel_Reporter_Base_Here}}",
-			"condition": "{{Project_Version_Here}} >= 080400",
+			"condition": "{{Project_Version_Here}} >= 080400 && {{Project_Version_Here}} <= 120001",
 			"content": "NpoiExcelExporterBase"
 		},
 		{
 			"placeholder": "{{Excel_Reporter_Base_Here}}",
-			"condition": "{{Project_Version_Here}} < 080400",
-			"content": "EpPlusExcelExporterBase"
+			"condition": "{{Project_Version_Here}} > 120001",
+			"content": "MiniExcelExcelExporterBase"
 		},
+		{
+			"placeholder": "{{Excel_Reporter_Base_Here}}",
+			"condition": "{{Project_Version_Here}} >= 080400",
+			"content": "EpPlusExcelExporterBase"
+		},		
 		{
 			"placeholder": "{{Excel_Reporter_Using_Here}}",
 			"condition": "{{Project_Version_Here}} < 080400",
@@ -108,9 +124,54 @@
 		},
 		{
 			"placeholder": "{{Excel_Reporter_Using_Here}}",
-			"condition": "{{Project_Version_Here}} >= 080400",
+			"condition": "{{Project_Version_Here}} >= 080400 && {{Project_Version_Here}} <= 120001",
 			"content": "using {{Namespace_Here}}.DataExporting.Excel.NPOI;"
 		},
+		{
+			"placeholder": "{{Excel_Reporter_Using_Here}}",
+			"condition": "{{Project_Version_Here}} > 120001",
+			"content": "using {{Namespace_Here}}.DataExporting.Excel.MiniExcel;"
+		},		
+		{
+			"placeholder": "{{ExportToFile_Method_Content_Here}}",
+			"condition": "{{Project_Version_Here}} <= 120001",
+			"content": "return CreateExcelPackage(
+					\"{{Entity_Name_Plural_Here}}.xlsx\",
+					excelPackage =>
+					{
+						
+						{{Sheet_Initialization_Here}}
+
+						AddHeader(
+							sheet{{Property_Header_Here}}{{NP_Header_Here}}
+							);
+
+						AddObjects(
+							sheet, {{Add_Objects_Start_Index_Here}} {{entity_Name_Plural_Here}}{{Property_Params_Here}}{{NP_Params_Here}}
+							);
+
+						{{Property_DateTime_Formatter_Here_Before_080400}}
+						{{Property_DateTime_Formatter_Here_After_080400}}
+					});
+				"
+		},
+		{
+			"placeholder": "{{ExportToFile_Method_Content_Here}}",
+			"condition": "{{Project_Version_Here}} > 120001",
+			"content": "
+				var items = new List<Dictionary<string, object>>();
+
+				foreach (var {{entity_Name_Here}} in {{entity_Name_Plural_Here}})
+				{
+					items.Add(new Dictionary<string, object>()
+					{
+						{{Property_Header_And_Value_Here}}
+					});
+				}
+
+				return CreateExcelPackage(\"{{Entity_Name_Plural_Here}}List.xlsx\", items);	
+			"
+		},						
 		{
 			"placeholder": "{{Sheet_Initialization_Here}}",
 			"condition": "{{Project_Version_Here}} < 080400",

@@ -14,6 +14,9 @@ import { DateTime } from 'luxon';
 import { DateTimeService } from '@app/shared/common/timing/date-time.service';
 import { StoreMediaLibraryLookupTableModalComponent } from './store-mediaLibrary-lookup-table-modal.component';
 import { StoreMasterTagLookupTableModalComponent } from './store-masterTag-lookup-table-modal.component';
+import { SelectItem } from 'primeng/api';
+import { Router } from '@angular/router';
+import { result } from 'lodash-es';
 
 @Component({
     selector: 'createOrEditStoreModal',
@@ -43,10 +46,13 @@ export class CreateOrEditStoreModalComponent extends AppComponentBase implements
     allStates: StoreStateLookupTableDto[];
     allRatingLikes: StoreRatingLikeLookupTableDto[];
 
+    localOrVirtualStoreOptions: SelectItem[];
+
     constructor(
         injector: Injector,
         private _storesServiceProxy: StoresServiceProxy,
-        private _dateTimeService: DateTimeService
+        private _dateTimeService: DateTimeService,
+        private _router: Router
     ) {
         super(injector);
     }
@@ -60,7 +66,7 @@ export class CreateOrEditStoreModalComponent extends AppComponentBase implements
             this.stateName = '';
             this.ratingLikeName = '';
             this.masterTagName = '';
-
+            this.store.isLocalOrOnlineStore = false;
             this.active = true;
             this.modal.show();
         } else {
@@ -76,6 +82,7 @@ export class CreateOrEditStoreModalComponent extends AppComponentBase implements
                 this.active = true;
                 this.modal.show();
             });
+
         }
         this._storesServiceProxy.getAllCountryForTableDropdown().subscribe((result) => {
             this.allCountrys = result;
@@ -86,6 +93,7 @@ export class CreateOrEditStoreModalComponent extends AppComponentBase implements
         this._storesServiceProxy.getAllRatingLikeForTableDropdown().subscribe((result) => {
             this.allRatingLikes = result;
         });
+        this.localOrVirtualStoreOptions = [{ label: 'Local Store', value: false }, { label: 'Virtual Store', value: true }];
     }
 
     save(): void {
@@ -102,7 +110,11 @@ export class CreateOrEditStoreModalComponent extends AppComponentBase implements
                 this.notify.info(this.l('SavedSuccessfully'));
                 this.close();
                 this.modalSave.emit(null);
+                this._router.navigate(['/app/main/shop/stores/dashboard/',result])
             });
+            //todo - Once you click submit based on the full addess system will find automatically the lat and long, CITY, state, country will save it in the database
+            //auto gpt function based on the web site address it will collect automatically the store data and save it in the database
+            // display sequence number will be auto inserted based on the sequence number
     }
 
     openSelectMediaLibraryModal() {
@@ -139,5 +151,5 @@ export class CreateOrEditStoreModalComponent extends AppComponentBase implements
         this.modal.hide();
     }
 
-    ngOnInit(): void {}
+    ngOnInit(): void { }
 }

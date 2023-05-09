@@ -30,6 +30,16 @@ namespace SoftGrid.Authorization
 
             var pages = context.GetPermissionOrNull(AppPermissions.Pages) ?? context.CreatePermission(AppPermissions.Pages, L("Pages"));
 
+            var shoppingCarts = pages.CreateChildPermission(AppPermissions.Pages_ShoppingCarts, L("ShoppingCarts"));
+            shoppingCarts.CreateChildPermission(AppPermissions.Pages_ShoppingCarts_Create, L("CreateNewShoppingCart"));
+            shoppingCarts.CreateChildPermission(AppPermissions.Pages_ShoppingCarts_Edit, L("EditShoppingCart"));
+            shoppingCarts.CreateChildPermission(AppPermissions.Pages_ShoppingCarts_Delete, L("DeleteShoppingCart"));
+
+            var wishLists = pages.CreateChildPermission(AppPermissions.Pages_WishLists, L("WishLists"));
+            wishLists.CreateChildPermission(AppPermissions.Pages_WishLists_Create, L("CreateNewWishList"));
+            wishLists.CreateChildPermission(AppPermissions.Pages_WishLists_Edit, L("EditWishList"));
+            wishLists.CreateChildPermission(AppPermissions.Pages_WishLists_Delete, L("DeleteWishList"));
+
             var discountCodeUserHistories = pages.CreateChildPermission(AppPermissions.Pages_DiscountCodeUserHistories, L("DiscountCodeUserHistories"));
             discountCodeUserHistories.CreateChildPermission(AppPermissions.Pages_DiscountCodeUserHistories_Create, L("CreateNewDiscountCodeUserHistory"));
             discountCodeUserHistories.CreateChildPermission(AppPermissions.Pages_DiscountCodeUserHistories_Edit, L("EditDiscountCodeUserHistory"));

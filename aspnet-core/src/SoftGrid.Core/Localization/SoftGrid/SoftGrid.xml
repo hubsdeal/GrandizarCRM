@@ -1,6 +1,22 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <localizationDictionary culture="en">
-  <texts>    <text name="DiscountCodeUserHistory">Discount code user history</text>
+  <texts>    <text name="ShoppingCart">Shopping cart</text>
+    <text name="SoftGrid.Shop.ShoppingCart">ShoppingCart</text>
+    <text name="UnitTotalPrice">Unit total price</text>
+    <text name="UnitDiscountAmount">Unit discount amount</text>
+    <text name="ShoppingCartsHeaderInfo">Shopping carts header info</text>
+    <text name="CreateNewShoppingCart">Create new shopping cart</text>
+    <text name="EditShoppingCart">Edit shopping cart</text>
+    <text name="DeleteShoppingCart">Delete shopping cart</text>
+    <text name="ShoppingCarts">Shopping carts</text>
+    <text name="WishList">Wish list</text>
+    <text name="SoftGrid.Shop.WishList">WishList</text>
+    <text name="WishListsHeaderInfo">Wish lists header info</text>
+    <text name="CreateNewWishList">Create new wish list</text>
+    <text name="EditWishList">Edit wish list</text>
+    <text name="DeleteWishList">Delete wish list</text>
+    <text name="WishLists">Wish lists</text>
+    <text name="DiscountCodeUserHistory">Discount code user history</text>
     <text name="SoftGrid.DiscountManagement.DiscountCodeUserHistory">DiscountCodeUserHistory</text>
     <text name="DiscountCodeUserHistoriesHeaderInfo">Discount code user histories header info</text>
     <text name="CreateNewDiscountCodeUserHistory">Create new discount code user history</text>

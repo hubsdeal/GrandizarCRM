@@ -17,19 +17,24 @@ export class ChatGptResponseModalComponent implements OnInit {
   promptText: any;
   responseText: any;
   feildName: any;
+  modalTitle: any;
   constructor(
     public dialogRef: MatDialogRef<ChatGptResponseModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { promtFromAnotherComponent: string , feildName : string}) { }
+    @Inject(MAT_DIALOG_DATA) public data: { promtFromAnotherComponent: string, feildName : string,  modalTitle: string}) {
+      if (this.data.promtFromAnotherComponent) {
+        this.promptText = this.data.promtFromAnotherComponent;
+      }
+      if(this.data.feildName){
+        this.feildName=this.data.feildName
+      }
+      if(this.data.modalTitle){
+        this.modalTitle=this.data.modalTitle
+      }
+     }
 
   ngOnInit(): void {
     // this.editor = new Editor();
-    console.log(this.data.promtFromAnotherComponent)
-    if (this.data.promtFromAnotherComponent) {
-      this.promptText = this.data.promtFromAnotherComponent;
-    }
-    if(this.data.feildName){
-      this.feildName=this.data.feildName
-    }
+   
   }
 
   checkResponse() {
