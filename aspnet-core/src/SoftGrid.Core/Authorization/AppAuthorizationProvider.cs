@@ -30,6 +30,11 @@ namespace SoftGrid.Authorization
 
             var pages = context.GetPermissionOrNull(AppPermissions.Pages) ?? context.CreatePermission(AppPermissions.Pages, L("Pages"));
 
+            var productTeams = pages.CreateChildPermission(AppPermissions.Pages_ProductTeams, L("ProductTeams"));
+            productTeams.CreateChildPermission(AppPermissions.Pages_ProductTeams_Create, L("CreateNewProductTeam"));
+            productTeams.CreateChildPermission(AppPermissions.Pages_ProductTeams_Edit, L("EditProductTeam"));
+            productTeams.CreateChildPermission(AppPermissions.Pages_ProductTeams_Delete, L("DeleteProductTeam"));
+
             var shoppingCarts = pages.CreateChildPermission(AppPermissions.Pages_ShoppingCarts, L("ShoppingCarts"));
             shoppingCarts.CreateChildPermission(AppPermissions.Pages_ShoppingCarts_Create, L("CreateNewShoppingCart"));
             shoppingCarts.CreateChildPermission(AppPermissions.Pages_ShoppingCarts_Edit, L("EditShoppingCart"));

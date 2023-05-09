@@ -84,4 +84,21 @@ namespace SoftGrid.Shop.Dtos
         public string StoreNameFilter { get; set; }
 
     }
+
+    public class GetAllProductsInputForSp : GetAllProductsInput
+    {
+        public decimal? MinPriceFilter { get; set; }
+        public decimal? MaxPriceFilter { get; set; }
+
+        public long? ProductCategoryIdFilter { get; set; }
+        public long? CurrencyIdFilter { get; set; }
+        public long? MeasurementUnitIdFilter { get; set; }
+        public long? RatingLikeIdFilter { get; set; }
+
+        public int? IsTemplateFilter { get; set; }
+        public long? EmployeeIdFilter { get; set; }
+        public long? BusinessIdFilter { get; set; }
+        public long? StoreIdFilter { get; set; }
+        public string ProductTagNameFilter { get; set; }
+    }
 }
