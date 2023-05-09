@@ -1,10 +1,10 @@
 ﻿<div [@routerTransition]>
     <sub-header [title]="'Products' | localize" [description]="">
         <div role="actions">
-            <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1">
+            <!-- <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1">
                 <i class="fa fa-file-excel"></i>
                 {{ l('ExportToExcel') }}
-            </button>
+            </button> -->
 
             <button *ngIf="isGranted('Pages.Products.Create')" (click)="createProduct()" class="btn btn-primary blue">
                 <i class="fa fa-plus"></i>
@@ -31,18 +31,161 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-xl-4">
+                                <div class="w-100">
+                                    <div class="my-3">
+                                        <label class="form-label" for="NameFilter">{{ l('Name') }}</label>
+                                        <input type="text" class="form-control" id="NameFilter" name="nameFilter"
+                                            [(ngModel)]="nameFilter" (ngModelChange)="getProducts()" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-4">
+                                <div class="w-100">
+                                    <div class="my-3">
+                                        <label class="form-label" for="ProductCategoryNameFilter">
+                                            Product Category
+                                        </label>
+                                        <input type="text" class="form-control" id="ProductCategoryNameFilter"
+                                            name="productCategoryNameFilter" [(ngModel)]="productCategoryNameFilter" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-4">
+                                <div class="w-100">
+                                    <div class="my-3">
+                                        <label class="form-label" for="UrlFilter">{{ l('Url') }}</label>
+                                        <input type="text" class="form-control" id="UrlFilter" name="urlFilter"
+                                            [(ngModel)]="urlFilter" (ngModelChange)="getProducts()" />
+                                        </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="row" [hidden]="!advancedFiltersAreShown">
                             <div class="col-md-12"></div>
 
                             <div class="col-md-3">
                                 <div class="my-3">
-                                    <label class="form-label" for="NameFilter">{{ l('Name') }}</label>
-                                    <input type="text" class="form-control" id="NameFilter" name="nameFilter"
-                                        [(ngModel)]="nameFilter" (ngModelChange)="getProducts()" />
+                                    <label class="form-label" for="IsPublishedFilterSelect">
+                                        Published
+                                    </label>
+                                    <select class="form-select" name="IsPublishedFilter" id="IsPublishedFilterSelect"
+                                        [(ngModel)]="isPublishedFilter" (ngModelChange)="getProducts()">
+                                        <option value="-1">{{ l('All') }}</option>
+                                        <option value="0">{{ l('No') }}</option>
+                                        <option value="1">{{ l('Yes') }}</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="MinRegularPriceFilter">
+                                        Regular Price
+                                    </label>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" id="MinRegularPriceFilter"
+                                            [(ngModel)]="minRegularPriceFilter" placeholder="Min Price"
+                                            name="minRegularPriceFilter" (ngModelChange)="getProducts()" />
+                                        <input type="number" class="form-control" [(ngModel)]="maxRegularPriceFilter"
+                                            placeholder="Max Price" name="maxRegularPriceFilter"
+                                            (ngModelChange)="getProducts()" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="MinSalePriceFilter">
+                                        Sale Price
+                                    </label>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" id="MinSalePriceFilter"
+                                            [(ngModel)]="minSalePriceFilter" placeholder="Min Price"
+                                            name="minSalePriceFilter" (ngModelChange)="getProducts()" />
+                                        <input type="number" class="form-control" [(ngModel)]="maxSalePriceFilter"
+                                            placeholder="Max Price" name="maxSalePriceFilter"
+                                            (ngModelChange)="getProducts()" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="SkuFilter">{{ l('Sku') }}</label>
+                                    <input type="text" class="form-control" id="SkuFilter" name="skuFilter"
+                                        [(ngModel)]="skuFilter" (ngModelChange)="getProducts()" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="CallForPriceFilterSelect">
+                                        {{ l('Call for Price') }}
+                                    </label>
+                                    <select class="form-select" name="CallForPriceFilter" id="CallForPriceFilterSelect"
+                                        [(ngModel)]="callForPriceFilter" (ngModelChange)="getProducts()">
+                                        <option value="-1">{{ l('All') }}</option>
+                                        <option value="0">{{ l('No') }}</option>
+                                        <option value="1">{{ l('Yes') }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="IsDisplayStockQuantityFilterSelect">
+                                        {{ l('Display Stock Quantity') }}
+                                    </label>
+                                    <select class="form-select" name="IsDisplayStockQuantityFilter"
+                                        id="IsDisplayStockQuantityFilterSelect"
+                                        [(ngModel)]="isDisplayStockQuantityFilter" (ngModelChange)="getProducts()">
+                                        <option value="-1">{{ l('All') }}</option>
+                                        <option value="0">{{ l('No') }}</option>
+                                        <option value="1">{{ l('Yes') }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="IsPackageProductFilterSelect">
+                                        {{ l('Package Product') }}
+                                    </label>
+                                    <select class="form-select" name="IsPackageProductFilter"
+                                        id="IsPackageProductFilterSelect" [(ngModel)]="isPackageProductFilter"
+                                        (ngModelChange)="getProducts()">
+                                        <option value="-1">{{ l('All') }}</option>
+                                        <option value="0">{{ l('No') }}</option>
+                                        <option value="1">{{ l('Yes') }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="IsServiceFilterSelect">{{ l('Service') }}</label>
+                                    <select class="form-select" name="IsServiceFilter" id="IsServiceFilterSelect"
+                                        [(ngModel)]="isServiceFilter" (ngModelChange)="getProducts()">
+                                        <option value="-1">{{ l('All') }}</option>
+                                        <option value="0">{{ l('No') }}</option>
+                                        <option value="1">{{ l('Yes') }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="IsWholeSaleProductFilterSelect">
+                                        {{ l('Whole Sale Product') }}
+                                    </label>
+                                    <select class="form-select" name="IsWholeSaleProductFilter"
+                                        id="IsWholeSaleProductFilterSelect" [(ngModel)]="isWholeSaleProductFilter"
+                                        (ngModelChange)="getProducts()">
+                                        <option value="-1">{{ l('All') }}</option>
+                                        <option value="0">{{ l('No') }}</option>
+                                        <option value="1">{{ l('Yes') }}</option>
+                                    </select>
+                                </div>
+                            </div>
+
+
+
+
+                            <!-- <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="ShortDescriptionFilter">
                                         {{ l('ShortDescription') }}
@@ -60,20 +203,8 @@
                                         (ngModelChange)="getProducts()" />
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <div class="my-3">
-                                    <label class="form-label" for="SkuFilter">{{ l('Sku') }}</label>
-                                    <input type="text" class="form-control" id="SkuFilter" name="skuFilter"
-                                        [(ngModel)]="skuFilter" (ngModelChange)="getProducts()" />
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="my-3">
-                                    <label class="form-label" for="UrlFilter">{{ l('Url') }}</label>
-                                    <input type="text" class="form-control" id="UrlFilter" name="urlFilter"
-                                        [(ngModel)]="urlFilter" (ngModelChange)="getProducts()" />
-                                </div>
-                            </div>
+                            
+                            
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="SeoTitleFilter">{{ l('SeoTitle') }}</label>
@@ -99,36 +230,7 @@
                                         (ngModelChange)="getProducts()" />
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <div class="my-3">
-                                    <label class="form-label" for="MinRegularPriceFilter">
-                                        {{ l('MinMax') }} {{ l('RegularPrice') }}
-                                    </label>
-                                    <div class="input-group">
-                                        <input type="number" class="form-control" id="MinRegularPriceFilter"
-                                            [(ngModel)]="minRegularPriceFilter" placeholder="{{ l('MinValue') }}"
-                                            name="minRegularPriceFilter" (ngModelChange)="getProducts()" />
-                                        <input type="number" class="form-control" [(ngModel)]="maxRegularPriceFilter"
-                                            placeholder="{{ l('MaxValue') }}" name="maxRegularPriceFilter"
-                                            (ngModelChange)="getProducts()" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="my-3">
-                                    <label class="form-label" for="MinSalePriceFilter">
-                                        {{ l('MinMax') }} {{ l('SalePrice') }}
-                                    </label>
-                                    <div class="input-group">
-                                        <input type="number" class="form-control" id="MinSalePriceFilter"
-                                            [(ngModel)]="minSalePriceFilter" placeholder="{{ l('MinValue') }}"
-                                            name="minSalePriceFilter" (ngModelChange)="getProducts()" />
-                                        <input type="number" class="form-control" [(ngModel)]="maxSalePriceFilter"
-                                            placeholder="{{ l('MaxValue') }}" name="maxSalePriceFilter"
-                                            (ngModelChange)="getProducts()" />
-                                    </div>
-                                </div>
-                            </div>
+                            
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="MinPriceDiscountPercentageFilter">
@@ -146,20 +248,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <div class="my-3">
-                                    <label class="form-label" for="CallForPriceFilterSelect">
-                                        {{ l('CallForPrice') }}
-                                    </label>
-                                    <select class="form-select" name="CallForPriceFilter" id="CallForPriceFilterSelect"
-                                        [(ngModel)]="callForPriceFilter" (ngModelChange)="getProducts()">
-                                        <option value="-1">{{ l('All') }}</option>
-                                        <option value="0">{{ l('False') }}</option>
-                                        <option value="1">{{ l('True') }}</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
+                             -->
+                            <!-- <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="MinUnitPriceFilter">
                                         {{ l('MinMax') }} {{ l('UnitPrice') }}
@@ -216,49 +306,9 @@
                                             (ngModelChange)="getProducts()" />
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="my-3">
-                                    <label class="form-label" for="IsDisplayStockQuantityFilterSelect">
-                                        {{ l('IsDisplayStockQuantity') }}
-                                    </label>
-                                    <select class="form-select" name="IsDisplayStockQuantityFilter"
-                                        id="IsDisplayStockQuantityFilterSelect"
-                                        [(ngModel)]="isDisplayStockQuantityFilter" (ngModelChange)="getProducts()">
-                                        <option value="-1">{{ l('All') }}</option>
-                                        <option value="0">{{ l('False') }}</option>
-                                        <option value="1">{{ l('True') }}</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="my-3">
-                                    <label class="form-label" for="IsPublishedFilterSelect">
-                                        {{ l('IsPublished') }}
-                                    </label>
-                                    <select class="form-select" name="IsPublishedFilter" id="IsPublishedFilterSelect"
-                                        [(ngModel)]="isPublishedFilter" (ngModelChange)="getProducts()">
-                                        <option value="-1">{{ l('All') }}</option>
-                                        <option value="0">{{ l('False') }}</option>
-                                        <option value="1">{{ l('True') }}</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="my-3">
-                                    <label class="form-label" for="IsPackageProductFilterSelect">
-                                        {{ l('IsPackageProduct') }}
-                                    </label>
-                                    <select class="form-select" name="IsPackageProductFilter"
-                                        id="IsPackageProductFilterSelect" [(ngModel)]="isPackageProductFilter"
-                                        (ngModelChange)="getProducts()">
-                                        <option value="-1">{{ l('All') }}</option>
-                                        <option value="0">{{ l('False') }}</option>
-                                        <option value="1">{{ l('True') }}</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
+                            </div> -->
+                            
+                            <!-- <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="InternalNotesFilter">{{ l('InternalNotes') }}</label>
                                     <input type="text" class="form-control" id="InternalNotesFilter"
@@ -276,8 +326,8 @@
                                         <option value="1">{{ l('True') }}</option>
                                     </select>
                                 </div>
-                            </div>
-                            <div class="col-md-3">
+                            </div> -->
+                            <!-- <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="MinPriceDiscountAmountFilter">
                                         {{ l('MinMax') }} {{ l('PriceDiscountAmount') }}
@@ -292,32 +342,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <div class="my-3">
-                                    <label class="form-label" for="IsServiceFilterSelect">{{ l('IsService') }}</label>
-                                    <select class="form-select" name="IsServiceFilter" id="IsServiceFilterSelect"
-                                        [(ngModel)]="isServiceFilter" (ngModelChange)="getProducts()">
-                                        <option value="-1">{{ l('All') }}</option>
-                                        <option value="0">{{ l('False') }}</option>
-                                        <option value="1">{{ l('True') }}</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="my-3">
-                                    <label class="form-label" for="IsWholeSaleProductFilterSelect">
-                                        {{ l('IsWholeSaleProduct') }}
-                                    </label>
-                                    <select class="form-select" name="IsWholeSaleProductFilter"
-                                        id="IsWholeSaleProductFilterSelect" [(ngModel)]="isWholeSaleProductFilter"
-                                        (ngModelChange)="getProducts()">
-                                        <option value="-1">{{ l('All') }}</option>
-                                        <option value="0">{{ l('False') }}</option>
-                                        <option value="1">{{ l('True') }}</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
+                             -->
+                            <!-- <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="ProductManufacturerSkuFilter">
                                         {{ l('ProductManufacturerSku') }}
@@ -339,8 +365,8 @@
                                         <option value="1">{{ l('True') }}</option>
                                     </select>
                                 </div>
-                            </div>
-                            <div class="col-md-3">
+                            </div> -->
+                            <!-- <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="MinScoreFilter">
                                         {{ l('MinMax') }} {{ l('Score') }}
@@ -354,9 +380,9 @@
                                             (ngModelChange)="getProducts()" />
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
 
-                            <div class="col-md-3">
+                            <!-- <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="ProductCategoryNameFilter">
                                         ({{ l('ProductCategory') }}) {{ l('Name') }}
@@ -373,8 +399,8 @@
                                     <input type="text" class="form-control" id="MediaLibraryNameFilter"
                                         name="mediaLibraryNameFilter" [(ngModel)]="mediaLibraryNameFilter" />
                                 </div>
-                            </div>
-                            <div class="col-md-3">
+                            </div> -->
+                            <!-- <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="MeasurementUnitNameFilter">
                                         ({{ l('MeasurementUnit') }}) {{ l('Name') }}
@@ -400,7 +426,7 @@
                                     <input type="text" class="form-control" id="RatingLikeNameFilter"
                                         name="ratingLikeNameFilter" [(ngModel)]="ratingLikeNameFilter" />
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="col-md-12 mt-5">
                                 <button (click)="resetFilters()" class="btn btn-secondary btn-sm"
                                     id="btn-reset-filters">

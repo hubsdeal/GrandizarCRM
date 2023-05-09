@@ -15,6 +15,26 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-xl-12">
+                            <div class="my-3 g_prime_btn">
+                                <div class="p-inputgroup">
+                                    <button type="button" pButton label="">
+                                        <i class="fas fa-plus-circle"></i>
+                                    </button>
+                                    <input type="text" disabled pInputText placeholder="Add from Product Library" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-12">
+                            <div class="my-3 g_prime_btn">
+                                <div class="p-inputgroup">
+                                    <button type="button" pButton label="">
+                                        <i class="fas fa-plus-circle"></i>
+                                    </button>
+                                    <input type="text" disabled pInputText placeholder="Add from My Product List" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-12">
                             <div class="my-3">
                                 <label class="form-label" for="Product_Name">{{ l('Name') }} *</label>
                                 <input type="text" #Product_Name="ngModel" id="Product_Name" class="form-control"
@@ -22,9 +42,9 @@
                                 <validation-messages [formCtrl]="Product_Name"></validation-messages>
                             </div>
                         </div>
-                        <div class="col-xl-6">
+                        <div class="col-xl-12">
                             <div class="my-3">
-                                <label class="form-label" for="ProductCategoryName">{{ l('ProductCategory') }}</label>
+                                <label class="form-label" for="ProductCategoryName">{{ l('Primary Category') }}</label>
                                 <div class="input-group">
                                     <input class="form-control" id="ProductCategoryName" name="productCategoryName"
                                         [(ngModel)]="productCategoryName" type="text" disabled />
@@ -33,31 +53,34 @@
                                         <i class="fa fa-search"></i>
                                         {{ l('Pick') }}
                                     </button>
-                                    <button class="btn btn-danger btn-icon" type="button" (click)="setProductCategoryIdNull()">
+                                    <button class="btn btn-danger btn-icon" type="button"
+                                        (click)="setProductCategoryIdNull()">
                                         <i class="fa fa-times"></i>
                                     </button>
                                 </div>
                             </div>
-                            <input class="form-control" name="product.productCategoryId" [(ngModel)]="product.productCategoryId"
-                                type="text" required hidden />
+                            <input class="form-control" name="product.productCategoryId"
+                                [(ngModel)]="product.productCategoryId" type="text" hidden />
                         </div>
-                        <div class="col-xl-6">
+                        <!-- <div class="col-xl-6">
                             <div class="my-3">
                                 <label class="form-label" for="MediaLibraryName">{{ l('Photo/Video') }}</label>
                                 <div class="input-group">
                                     <input class="form-control" id="MediaLibraryName" name="mediaLibraryName"
                                         [(ngModel)]="mediaLibraryName" type="text" disabled />
-                                    <button class="btn btn-primary blue" (click)="openSelectMediaLibraryModal()" type="button">
+                                    <button class="btn btn-primary blue" (click)="openSelectMediaLibraryModal()"
+                                        type="button">
                                         <i class="fa fa-search"></i>
                                         {{ l('Pick') }}
                                     </button>
-                                    <button class="btn btn-danger btn-icon" type="button" (click)="setMediaLibraryIdNull()">
+                                    <button class="btn btn-danger btn-icon" type="button"
+                                        (click)="setMediaLibraryIdNull()">
                                         <i class="fa fa-times"></i>
                                     </button>
                                 </div>
                             </div>
-                            <input class="form-control" name="product.mediaLibraryId" [(ngModel)]="product.mediaLibraryId"
-                                type="text" hidden />
+                            <input class="form-control" name="product.mediaLibraryId"
+                                [(ngModel)]="product.mediaLibraryId" type="text" hidden />
                         </div>
                         <div class="col-xl-6">
                             <div class="my-3">
@@ -70,22 +93,24 @@
                                         <i class="fa fa-search"></i>
                                         {{ l('Pick') }}
                                     </button>
-                                    <button class="btn btn-danger btn-icon" type="button" (click)="setMeasurementUnitIdNull()">
+                                    <button class="btn btn-danger btn-icon" type="button"
+                                        (click)="setMeasurementUnitIdNull()">
                                         <i class="fa fa-times"></i>
                                     </button>
                                 </div>
                             </div>
-                            <input class="form-control" name="product.measurementUnitId" [(ngModel)]="product.measurementUnitId"
-                                type="text" hidden />
-        
+                            <input class="form-control" name="product.measurementUnitId"
+                                [(ngModel)]="product.measurementUnitId" type="text" hidden />
+
                         </div>
                         <div class="col-xl-6">
                             <div class="my-3">
                                 <label class="form-label" for="CurrencyName">{{ l('Currency') }}</label>
                                 <div class="input-group">
-                                    <input class="form-control" id="CurrencyName" name="currencyName" [(ngModel)]="currencyName"
-                                        type="text" disabled />
-                                    <button class="btn btn-primary blue" (click)="openSelectCurrencyModal()" type="button">
+                                    <input class="form-control" id="CurrencyName" name="currencyName"
+                                        [(ngModel)]="currencyName" type="text" disabled />
+                                    <button class="btn btn-primary blue" (click)="openSelectCurrencyModal()"
+                                        type="button">
                                         <i class="fa fa-search"></i>
                                         {{ l('Pick') }}
                                     </button>
@@ -94,8 +119,8 @@
                                     </button>
                                 </div>
                             </div>
-                            <input class="form-control" name="product.currencyId" [(ngModel)]="product.currencyId" type="text"
-                                hidden />
+                            <input class="form-control" name="product.currencyId" [(ngModel)]="product.currencyId"
+                                type="text" hidden />
                         </div>
                         <div class="col-xl-6">
                             <div class="my-3">
@@ -108,11 +133,11 @@
                         <div class="col-xl-6">
                             <div class="my-3">
                                 <label class="form-label" for="Product_SalePrice">{{ l('Sale Price') }}</label>
-                                <input type="number" #Product_SalePrice="ngModel" id="Product_SalePrice" class="form-control"
-                                    [(ngModel)]="product.salePrice" name="SalePrice" />
+                                <input type="number" #Product_SalePrice="ngModel" id="Product_SalePrice"
+                                    class="form-control" [(ngModel)]="product.salePrice" name="SalePrice" />
                                 <validation-messages [formCtrl]="Product_SalePrice"></validation-messages>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="col-xl-12">
                             <div class="my-3">
                                 <label class="form-label" for="StoreName">{{ l('Store') }}</label>
@@ -131,14 +156,14 @@
                             <input class="form-control" name="product.storeId" [(ngModel)]="product.storeId" type="text"
                                 hidden />
                         </div>
-                        
+
                     </div>
-                   
 
-                   
 
-                    
-                    
+
+
+
+
 
                     <!-- <div class="my-3">
                         <label class="form-label" for="RatingLikeName">{{ l('RatingLike') }}</label>
@@ -174,9 +199,9 @@
                     <input class="form-control" name="product.contactId" [(ngModel)]="product.contactId" type="text"
                         hidden /> -->
 
-                    
 
-                    
+
+
 
                     <!-- <div class="my-3">
                         <label class="form-label" for="Product_ShortDescription">{{ l('ShortDescription') }}</label>
@@ -228,8 +253,8 @@
                         <validation-messages [formCtrl]="Product_MetaDescription"></validation-messages>
                     </div> -->
 
-                    
-<!-- 
+
+                    <!-- 
                     <div class="my5">
                         <label class="form-label" for="Product_PriceDiscountPercentage">
                             {{ l('PriceDiscountPercentage') }}
@@ -274,20 +299,20 @@
                     </label>
                     <validation-messages [formCtrl]="Product_IsTaxExempt"></validation-messages> -->
                     <div class="row">
-                        <div class="col-xl-6">
+                        <!-- <div class="col-xl-6">
                             <div class="my-3">
                                 <label class="form-label" for="Product_StockQuantity">{{ l('Stock Quantity') }}</label>
                                 <input type="number" #Product_StockQuantity="ngModel" id="Product_StockQuantity"
                                     class="form-control" [(ngModel)]="product.stockQuantity" name="StockQuantity" />
                                 <validation-messages [formCtrl]="Product_StockQuantity"></validation-messages>
                             </div>
-                        </div>
-                        <div class="col-xl-6 d-flex align-items-end pb-4">
+                        </div> -->
+                        <div class="col-xl-12 d-flex align-items-end pb-4">
                             <div class="my-3">
                                 <label class="form-check form-check-custom form-check-solid">
                                     <input id="Product_IsDisplayStockQuantity" #Product_IsDisplayStockQuantity="ngModel"
-                                        name="IsDisplayStockQuantity" [(ngModel)]="product.isDisplayStockQuantity" type="checkbox"
-                                        class="form-check-input" />
+                                        name="IsDisplayStockQuantity" [(ngModel)]="product.isDisplayStockQuantity"
+                                        type="checkbox" class="form-check-input" />
                                     <span class="form-check-label">
                                         {{ l('Display Stock Quantity') }}
                                     </span>
@@ -297,14 +322,15 @@
                         </div>
                     </div>
 
-                    
 
-                    
-                    <div class="d-flex my-3 mt-5 flex-wrap">
+
+
+                    <!-- <div class="d-flex my-3 mt-5 flex-wrap">
                         <div class="me-2">
                             <label class="form-check form-check-custom form-check-solid">
-                                <input id="Product_IsPackageProduct" #Product_IsPackageProduct="ngModel" name="IsPackageProduct"
-                                    [(ngModel)]="product.isPackageProduct" type="checkbox" class="form-check-input" />
+                                <input id="Product_IsPackageProduct" #Product_IsPackageProduct="ngModel"
+                                    name="IsPackageProduct" [(ngModel)]="product.isPackageProduct" type="checkbox"
+                                    class="form-check-input" />
                                 <span class="form-check-label">
                                     {{ l('Package Product') }}
                                 </span>
@@ -354,9 +380,9 @@
                             </span>
                         </label>
                         <validation-messages [formCtrl]="Product_IsPublished"></validation-messages>
-                    </div>
-                    
-                    
+                    </div> -->
+
+
 
                     <!-- <div class="my-3">
                         <label class="form-label" for="Product_InternalNotes">{{ l('InternalNotes') }}</label>
@@ -366,8 +392,8 @@
                     </div>
 
                     <br /> -->
-                    
-<!-- 
+
+                    <!-- 
                     <div class="my5">
                         <label class="form-label" for="Product_PriceDiscountAmount">
                             {{ l('PriceDiscountAmount') }}
@@ -378,7 +404,7 @@
                     </div>
 
                     <br /> -->
-                    
+
 
                     <!-- <div class="my-3">
                         <label class="form-label" for="Product_ProductManufacturerSku">
@@ -413,8 +439,8 @@
                     </button>
                     <button type="submit" class="btn btn-primary blue" [disabled]="!productForm.form.valid"
                         [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')">
-                        <i class="fa fa-save"></i>
-                        <span>{{ l('Save') }}</span>
+                        <span>{{ l('Next') }}</span>
+                        <i class="fa ms-3 fa-arrow-right"></i>
                     </button>
                 </div>
             </form>
