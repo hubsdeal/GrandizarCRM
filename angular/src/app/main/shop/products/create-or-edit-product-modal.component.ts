@@ -13,6 +13,8 @@ import { ProductCurrencyLookupTableModalComponent } from './product-currency-loo
 import { ProductRatingLikeLookupTableModalComponent } from './product-ratingLike-lookup-table-modal.component';
 import { ProductContactLookupTableModalComponent } from './product-contact-lookup-table-modal.component';
 import { ProductStoreLookupTableModalComponent } from './product-store-lookup-table-modal.component';
+import { Router } from '@angular/router';
+import { result } from 'lodash-es';
 
 @Component({
     selector: 'createOrEditProductModal',
@@ -53,7 +55,8 @@ export class CreateOrEditProductModalComponent extends AppComponentBase implemen
     constructor(
         injector: Injector,
         private _productsServiceProxy: ProductsServiceProxy,
-        private _dateTimeService: DateTimeService
+        private _dateTimeService: DateTimeService,
+        private _router: Router
     ) {
         super(injector);
     }
@@ -100,10 +103,11 @@ export class CreateOrEditProductModalComponent extends AppComponentBase implemen
                     this.saving = false;
                 })
             )
-            .subscribe(() => {
+            .subscribe(result=> {
                 this.notify.info(this.l('SavedSuccessfully'));
                 this.close();
                 this.modalSave.emit(null);
+                this._router.navigate(['/app/main/shop/products/dashboard/',result])
             });
     }
 

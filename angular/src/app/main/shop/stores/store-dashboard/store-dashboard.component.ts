@@ -41,9 +41,9 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
 
   openAiModal(feildName:string): void {
     this.productShortDesc = "Write Store About where store name is Saffola"
-    var modalTile = "AI Text Generator - About Store"
+    var modalTitle = "AI Text Generator - About Store"
     const dialogRef = this.dialog.open(ChatGptResponseModalComponent, {
-      data: { promtFromAnotherComponent: this.productShortDesc , feildName: feildName, modalTile: modalTile},
+      data: { promtFromAnotherComponent: this.productShortDesc , feildName: feildName, modalTitle: modalTitle},
       width: '1100px',
     });
 
