@@ -76,4 +76,43 @@ namespace SoftGrid.Shop.Dtos
         public string MasterTagNameFilter { get; set; }
 
     }
+
+    public class GetAllStoresInputForSp : PagedAndSortedResultRequestDto
+    {
+        public string Filter { get; set; }
+
+        public string NameFilter { get; set; }
+
+        public string AddressFilter { get; set; }
+
+        public string CityFilter { get; set; }
+
+        public string PhoneFilter { get; set; }
+
+        public string MobileFilter { get; set; }
+        public string EmailFilter { get; set; }
+
+        public int? IsPublishedFilter { get; set; }
+
+        public int? IsLocalOrOnlineStore { get; set; }
+
+        public int? IsVerified { get; set; }
+
+        public long? StateIdFilter { get; set; }
+
+        public long? CountryIdFilter { get; set; }
+
+        public long? EmployeeIdFilter { get; set; }
+
+        public int? IsFavoriteOnly { get; set; }
+
+        public bool? IsFromMasterList { get; set; }
+
+        public long? ContactIdFilter { get; set; }
+
+        public string ZipCodeFilter { get; set; }
+
+        public long? MasterTagCategoryIdFilter { get; set; }
+        public long? MasterTagIdFilter { get; set; }
+    }
 }

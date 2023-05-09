@@ -10,6 +10,20 @@ import { MasterDataIndexComponent } from './lookupData/master-data-index/master-
                 children: [
                     
                     {
+                        path: 'shop/shoppingCarts',
+                        loadChildren: () => import('./shop/shoppingCarts/shoppingCart.module').then(m => m.ShoppingCartModule),
+                        data: { permission: 'Pages.ShoppingCarts' }
+                    },
+                
+                    
+                    {
+                        path: 'shop/wishLists',
+                        loadChildren: () => import('./shop/wishLists/wishList.module').then(m => m.WishListModule),
+                        data: { permission: 'Pages.WishLists' }
+                    },
+                
+                    
+                    {
                         path: 'discountManagement/discountCodeUserHistories',
                         loadChildren: () => import('./discountManagement/discountCodeUserHistories/discountCodeUserHistory.module').then(m => m.DiscountCodeUserHistoryModule),
                         data: { permission: 'Pages.DiscountCodeUserHistories' }

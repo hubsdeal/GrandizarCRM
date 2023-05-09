@@ -26,24 +26,7 @@ namespace {{Namespace_Here}}.{{Namespace_Relative_Full_Here}}.Exporting
 
         public FileDto ExportToFile(List<Get{{Entity_Name_Here}}ForViewDto> {{entity_Name_Plural_Here}})
         {
-            return CreateExcelPackage(
-                "{{Entity_Name_Plural_Here}}.xlsx",
-                excelPackage =>
-                {
-                    
-                    {{Sheet_Initialization_Here}}
-
-                    AddHeader(
-                        sheet{{Property_Header_Here}}{{NP_Header_Here}}
-                        );
-
-                    AddObjects(
-                        sheet, {{Add_Objects_Start_Index_Here}} {{entity_Name_Plural_Here}}{{Property_Params_Here}}{{NP_Params_Here}}
-                        );
-
-					{{Property_DateTime_Formatter_Here_Before_080400}}
-					{{Property_DateTime_Formatter_Here_After_080400}}
-                });
+            {{ExportToFile_Method_Content_Here}}
         }
     }
 }
