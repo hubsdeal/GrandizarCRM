@@ -18,6 +18,9 @@ using Abp.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Abp.UI;
 using SoftGrid.Storage;
+using Microsoft.Data.SqlClient;
+using System.Data;
+using SoftGrid.EntityFrameworkCore.Repositories;
 
 namespace SoftGrid.Territory
 {
@@ -33,8 +36,11 @@ namespace SoftGrid.Territory
         private readonly IRepository<HubType, long> _lookup_hubTypeRepository;
         private readonly IRepository<Currency, long> _lookup_currencyRepository;
         private readonly IRepository<MediaLibrary, long> _lookup_mediaLibraryRepository;
+        private readonly IStoredProcedureRepository _storedProcedureRepository;
+        private readonly IBinaryObjectManager _binaryObjectManager;
 
-        public HubsAppService(IRepository<Hub, long> hubRepository, IHubsExcelExporter hubsExcelExporter, IRepository<Country, long> lookup_countryRepository, IRepository<State, long> lookup_stateRepository, IRepository<City, long> lookup_cityRepository, IRepository<County, long> lookup_countyRepository, IRepository<HubType, long> lookup_hubTypeRepository, IRepository<Currency, long> lookup_currencyRepository, IRepository<MediaLibrary, long> lookup_mediaLibraryRepository)
+        public HubsAppService(IRepository<Hub, long> hubRepository, IHubsExcelExporter hubsExcelExporter, IRepository<Country, long> lookup_countryRepository, IRepository<State, long> lookup_stateRepository, IRepository<City, long> lookup_cityRepository, IRepository<County, long> lookup_countyRepository, IRepository<HubType, long> lookup_hubTypeRepository, IRepository<Currency, long> lookup_currencyRepository, IRepository<MediaLibrary, long> lookup_mediaLibraryRepository,
+            IStoredProcedureRepository storedProcedureRepository, IBinaryObjectManager binaryObjectManager)
         {
             _hubRepository = hubRepository;
             _hubsExcelExporter = hubsExcelExporter;
@@ -45,7 +51,8 @@ namespace SoftGrid.Territory
             _lookup_hubTypeRepository = lookup_hubTypeRepository;
             _lookup_currencyRepository = lookup_currencyRepository;
             _lookup_mediaLibraryRepository = lookup_mediaLibraryRepository;
-
+            _storedProcedureRepository = storedProcedureRepository;
+            _binaryObjectManager = binaryObjectManager;
         }
 
         public async Task<PagedResultDto<GetHubForViewDto>> GetAll(GetAllHubsInput input)
@@ -524,5 +531,84 @@ namespace SoftGrid.Territory
             );
         }
 
+
+        public async Task<GetHubsBySpForView> GetAllHubsBySp(GetAllHubsInputForSp input)
+        {
+            List<SqlParameter> parameters = PrepareSearchParameterForGetAllHubsBySp(input);
+            var result = await _storedProcedureRepository.ExecuteStoredProcedure<GetHubsBySpForView>("usp_GetAllHubs", CommandType.StoredProcedure, parameters.ToArray());
+
+            foreach (var item in result.Hubs)
+            {
+                if (item.BinaryObjectId != null && item.BinaryObjectId != Guid.Empty)
+                {
+                    item.Picture = await _binaryObjectManager.GetProductPictureUrlAsync((Guid)item.BinaryObjectId, ".png");
+                }
+            }
+           
+
+            return result;
+        }
+
+        private static List<SqlParameter> PrepareSearchParameterForGetAllHubsBySp(GetAllHubsInputForSp input)
+        {
+           
+
+            List<SqlParameter> sqlParameters = new List<SqlParameter>();
+
+
+
+            if (input.Filter != null)
+            {
+                input.Filter = input.Filter[0] == '"' && input.Filter[input.Filter.Length - 1] == '"' ? "*" + input.Filter + "*" : '"' + "*" + input.Filter + "*" + '"';
+            }
+            SqlParameter filter = new SqlParameter("@Filter", input.Filter == null ? "\"\"" : input.Filter);
+            sqlParameters.Add(filter);
+
+            if (input.NameFilter != null)
+            {
+                input.NameFilter = input.NameFilter[0] == '"' && input.NameFilter[input.NameFilter.Length - 1] == '"' ? "*" + input.NameFilter + "*" : '"' + "*" + input.NameFilter + "*" + '"';
+            }
+            SqlParameter nameFilter = new SqlParameter("@Name", input.NameFilter == null ? "\"\"" : input.NameFilter);
+            sqlParameters.Add(nameFilter);
+
+            if (input.PhoneFilter != null)
+            {
+                input.PhoneFilter = input.PhoneFilter[0] == '"' && input.PhoneFilter[input.PhoneFilter.Length - 1] == '"' ? "*" + input.PhoneFilter + "*" : '"' + "*" + input.PhoneFilter + "*" + '"';
+            }
+            SqlParameter phoneFilter = new SqlParameter("@Phone", input.PhoneFilter == null ? "\"\"" : input.PhoneFilter);
+            sqlParameters.Add(phoneFilter);
+
+            if (input.CityNameFilter != null)
+            {
+                input.CityNameFilter = input.CityNameFilter[0] == '"' && input.CityNameFilter[input.CityNameFilter.Length - 1] == '"' ? "*" + input.CityNameFilter + "*" : '"' + "*" + input.CityNameFilter + "*" + '"';
+            }
+            SqlParameter cityFilter = new SqlParameter("@City", input.CityNameFilter == null ? "\"\"" : input.CityNameFilter);
+            sqlParameters.Add(cityFilter);
+
+            SqlParameter stateIdFilter = new SqlParameter("@StateId", input.StateIdFilter == null ? (object)DBNull.Value : input.StateIdFilter);
+            sqlParameters.Add(stateIdFilter);
+
+            SqlParameter countryIdFilter = new SqlParameter("@CountryId", input.CountryIdFilter == null ? (object)DBNull.Value : input.CountryIdFilter);
+            sqlParameters.Add(countryIdFilter);
+
+            SqlParameter liveFilter = new SqlParameter("@Live", input.LiveFilter == -1 ? (object)DBNull.Value : input.LiveFilter);
+            sqlParameters.Add(liveFilter);
+
+            SqlParameter ownerFilter = new SqlParameter("@Owner", input.PartnerOrOwnedFilter == -1 ? (object)DBNull.Value : input.PartnerOrOwnedFilter);
+            sqlParameters.Add(ownerFilter);
+
+            SqlParameter hubTypeIdFilter = new SqlParameter("@HubTypeId", input.HubTypeIdFilter == null ? (object)DBNull.Value : input.HubTypeIdFilter);
+            sqlParameters.Add(hubTypeIdFilter);
+
+            SqlParameter skipCount = new SqlParameter("@SkipCount", input.SkipCount);
+            sqlParameters.Add(skipCount);
+
+            SqlParameter maxResultCount = new SqlParameter("@MaxResultCount", input.MaxResultCount);
+            sqlParameters.Add(maxResultCount);
+
+           
+
+            return sqlParameters;
+        }
     }
 }

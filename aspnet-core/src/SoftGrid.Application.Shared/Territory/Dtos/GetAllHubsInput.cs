@@ -59,4 +59,22 @@ namespace SoftGrid.Territory.Dtos
         public string MediaLibraryNameFilter { get; set; }
 
     }
+
+    public class GetAllHubsInputForSp : PagedAndSortedResultRequestDto
+    {
+        public string Filter { get; set; }
+
+        public string NameFilter { get; set; }
+
+        public int? LiveFilter { get; set; }
+
+        public int? PartnerOrOwnedFilter { get; set; }
+
+        public string CityNameFilter { get; set; }
+        public string PhoneFilter { get; set; }
+
+        public long? CountryIdFilter { get; set; }
+        public long? StateIdFilter { get; set; }
+        public long? HubTypeIdFilter { get; set; }
+    }
 }
