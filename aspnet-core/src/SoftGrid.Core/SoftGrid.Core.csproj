@@ -40,4 +40,7 @@
   <ItemGroup>
     <ProjectReference Include="..\SoftGrid.Core.Shared\SoftGrid.Core.Shared.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="UtilityDtos\" />
+  </ItemGroup>
 </Project>
