@@ -1,7 +1,7 @@
 ﻿import { AppConsts } from '@shared/AppConsts';
 import { Component, Injector, ViewEncapsulation, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { StoresServiceProxy, StoreDto } from '@shared/service-proxies/service-proxies';
+import { StoresServiceProxy, StoreDto, StoreCountryLookupTableDto, StoreStateLookupTableDto } from '@shared/service-proxies/service-proxies';
 import { NotifyService } from 'abp-ng2-module';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { TokenAuthServiceProxy } from '@shared/service-proxies/service-proxies';
@@ -77,6 +77,31 @@ export class StoresComponent extends AppComponentBase {
     stateNameFilter = '';
     ratingLikeNameFilter = '';
     masterTagNameFilter = '';
+    stateIdFilter: number;
+    countryIdFilter: number;
+    employeeIdFilter: number;
+    isFavoriteOnly: number;
+    isFromMasterList: boolean;
+    contactIdFilter: number;
+    masterTagCategoryIdFilter: number;
+    masterTagIdFilter: number
+
+    skipCount: number;
+    maxResultCount: number = 10;
+
+    favoriteCount: number;
+
+    isFavorite: number;
+    publishedCount: number = 0;
+    unPublishedCount: number = 0;
+    verifiedCount: number = 0;
+
+    selectedAll: boolean = false;
+
+    allCountrys: StoreCountryLookupTableDto[];
+    allStates: StoreStateLookupTableDto[];
+    state:any;
+    country:any;
 
     constructor(
         injector: Injector,
@@ -88,70 +113,68 @@ export class StoresComponent extends AppComponentBase {
         private _dateTimeService: DateTimeService
     ) {
         super(injector);
+        this._storesServiceProxy.getAllCountryForTableDropdown().subscribe((result) => {
+            this.allCountrys = result;
+        });
+        this._storesServiceProxy.getAllStateForTableDropdown().subscribe((result) => {
+            this.allStates = result;
+        });
     }
 
     getStores(event?: LazyLoadEvent) {
-        if (this.primengTableHelper.shouldResetPaging(event)) {
-            this.paginator.changePage(0);
-            if (this.primengTableHelper.records && this.primengTableHelper.records.length > 0) {
-                return;
-            }
-        }
+        // if (this.primengTableHelper.shouldResetPaging(event)) {
+        //     this.paginator.changePage(0);
+        //     if (this.primengTableHelper.records && this.primengTableHelper.records.length > 0) {
+        //         return;
+        //     }
+        // }
 
         this.primengTableHelper.showLoadingIndicator();
 
         this._storesServiceProxy
-            .getAll(
+            .getAllStoresBySp(
                 this.filterText,
                 this.nameFilter,
-                this.storeUrlFilter,
-                this.descriptionFilter,
-                this.metaTagFilter,
-                this.metaDescriptionFilter,
-                this.fullAddressFilter,
                 this.addressFilter,
                 this.cityFilter,
-                this.maxLatitudeFilter == null ? this.maxLatitudeFilterEmpty : this.maxLatitudeFilter,
-                this.minLatitudeFilter == null ? this.minLatitudeFilterEmpty : this.minLatitudeFilter,
-                this.maxLongitudeFilter == null ? this.maxLongitudeFilterEmpty : this.maxLongitudeFilter,
-                this.minLongitudeFilter == null ? this.minLongitudeFilterEmpty : this.minLongitudeFilter,
                 this.phoneFilter,
                 this.mobileFilter,
                 this.emailFilter,
                 this.isPublishedFilter,
-                this.facebookFilter,
-                this.instagramFilter,
-                this.linkedInFilter,
-                this.youtubeFilter,
-                this.faxFilter,
-                this.zipCodeFilter,
-                this.websiteFilter,
-                this.yearOfEstablishmentFilter,
-                this.maxDisplaySequenceFilter == null
-                    ? this.maxDisplaySequenceFilterEmpty
-                    : this.maxDisplaySequenceFilter,
-                this.minDisplaySequenceFilter == null
-                    ? this.minDisplaySequenceFilterEmpty
-                    : this.minDisplaySequenceFilter,
-                this.maxScoreFilter == null ? this.maxScoreFilterEmpty : this.maxScoreFilter,
-                this.minScoreFilter == null ? this.minScoreFilterEmpty : this.minScoreFilter,
-                this.legalNameFilter,
                 this.isLocalOrOnlineStoreFilter,
                 this.isVerifiedFilter,
-                this.mediaLibraryNameFilter,
-                this.countryNameFilter,
-                this.stateNameFilter,
-                this.ratingLikeNameFilter,
-                this.masterTagNameFilter,
-                this.primengTableHelper.getSorting(this.dataTable),
-                this.primengTableHelper.getSkipCount(this.paginator, event),
-                this.primengTableHelper.getMaxResultCount(this.paginator, event)
+                this.stateIdFilter,
+                this.countryIdFilter,
+                this.employeeIdFilter,
+                1,
+                true,
+                this.contactIdFilter,
+                this.zipCodeFilter,
+                this.masterTagCategoryIdFilter,
+                this.masterTagIdFilter,
+                '',
+                this.skipCount,
+                this.maxResultCount
+                // this.primengTableHelper.getSorting(this.dataTable),
+                // this.primengTableHelper.getSkipCount(this.paginator, event),
+                // this.primengTableHelper.getMaxResultCount(this.paginator, event)
             )
             .subscribe((result) => {
                 this.primengTableHelper.totalRecordsCount = result.totalCount;
-                this.primengTableHelper.records = result.items;
+                this.isFavorite = result.isFavoriteOnly;
+                this.favoriteCount = result.favorite;
+                this.publishedCount = result.published;
+                this.unPublishedCount = result.unPublished;
+                this.verifiedCount = result.verified;
+                this.primengTableHelper.records = result.stores;
                 this.primengTableHelper.hideLoadingIndicator();
             });
+    }
+
+    paginate(event: any) {
+        this.skipCount = event.first;
+        this.maxResultCount = event.rows;
+        this.getStores();
     }
 
     reloadPage(): void {
@@ -263,5 +286,64 @@ export class StoresComponent extends AppComponentBase {
         this.masterTagNameFilter = '';
 
         this.getStores();
+    }
+
+    onPublishClick(value: number) {
+        this.isPublishedFilter = value;
+        this.getStores();
+    }
+
+    onVerifiedClick(value: number) {
+        this.isVerifiedFilter = value;
+        this.getStores();
+    }
+
+    onTotalClick() {
+        this.isPublishedFilter = -1;
+        this.isVerifiedFilter = -1;
+        this.getStores();
+    }
+
+    onChangesSelectAll() {
+        for (var i = 0; i < this.primengTableHelper.records.length; i++) {
+            this.primengTableHelper.records[i].selected = this.selectedAll;
+        }
+    }
+
+    checkIfAllSelected() {
+        this.selectedAll = this.primengTableHelper.records.every(function (item: any) {
+            return item.selected == true;
+        })
+    }
+
+    onLikeClick(id: number) {
+        // this.showMainSpinner();
+        // this._wishListServiceProxy.delete(id).subscribe(result => {
+        //     this.getStores();
+        //     this.hideMainSpinner();
+        // });
+    }
+
+    onDisLikeClick(id: number) {
+        // this.showMainSpinner();
+        // let item = new CreateOrEditWishListDto();
+        // item.storeId = id;
+        // item.contactId = this._appSessionService.contactId;
+        // this._wishListServiceProxy.createOrEdit(item).subscribe(result => {
+        //     this.getStores();
+        //     this.hideMainSpinner();
+        // });
+    }
+
+    onCountrySelect(event:any){
+        if (event.value && event.value.id){
+            this.countryIdFilter = event.value.id; 
+        }
+    }
+
+    onStateSelect(event:any){
+        if (event.value && event.value.id){
+            this.stateIdFilter = event.value.id;
+        }
     }
 }

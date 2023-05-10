@@ -498,6 +498,11 @@ bs-days-calendar-view {
     border: 1px solid rgb(228 230 239) !important;
     border-radius: 5px !important;
     padding: 2px !important;
+
+    .p-inputtext {
+        padding: 0.69rem 0.95rem !important;
+        border: 0px solid rgb(228, 230, 239) !important;
+    }    
 }
 
 .new_media_file {

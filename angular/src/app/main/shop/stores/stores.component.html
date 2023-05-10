@@ -9,13 +9,21 @@
     </sub-header> -->
     <div class="w-100 d-flex mb-6 ps-9 pe-9 mt-6 justify-content-between align-items-center ng-tns-c282-7">
         <div class="d-flex">
-            <h1 class="fs-3 fw-bold  my-0 page-heading text-dark"> 
-                Stores 
+            <h1 class="fs-3 fw-bold  my-0 page-heading text-dark">
+                Stores
             </h1>
-            <span class="badge badge-primary badge ms-2">Total: {{primengTableHelper.totalRecordsCount}}</span>
-            <span class="badge badge-info badge ms-2">Published: 0</span>
-            <span class="badge badge-warning badge ms-2">Unpublished: 0</span>
-            <span class="badge badge-success badge ms-2">Verified: 0</span>
+            <span style="cursor: pointer;" class="badge badge-primary badge ms-2" (click)="onTotalClick()">
+                Total: {{primengTableHelper.totalRecordsCount}}
+            </span>
+            <span style="cursor: pointer;" class="badge badge-info badge ms-2" (click)="onPublishClick(1)">
+                Published : {{publishedCount | number:'1.0-0'}}
+            </span>
+            <span style="cursor: pointer;" class="badge badge-warning badge ms-2" (click)="onPublishClick(0)">
+                Unpublished :{{unPublishedCount | number:'1.0-0'}}
+            </span>
+            <span style="cursor: pointer;" class="badge badge-success badge ms-2" (click)="onVerifiedClick(1)">
+                Verified : {{verifiedCount | number:'1.0-0'}}
+            </span>
         </div>
         <button *ngIf="isGranted('Pages.Stores.Create')" (click)="createStore()" class="btn btn-primary blue">
             <i class="fa fa-plus"></i>
@@ -95,6 +103,30 @@
                                 </div>
                             </div>
                             <div class="col-md-3">
+                                <div class="my-3 p_filter">
+                                    <label class="form-label" for="CountryNameFilter">
+                                        Country
+                                    </label>
+                                    <p-dropdown [options]="allCountrys" [filter]="true" [virtualScroll]="true"
+                                        placeholder="Select Country" [itemSize]="30" name="displayName"
+                                        optionLabel="displayName" optionId="id" (onChange)="onCountrySelect($event)"
+                                        [(ngModel)]="country" filterBy="displayName"
+                                        [style]="{ width: '100%' }"></p-dropdown>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3 p_filter">
+                                    <label class="form-label" for="StateNameFilter">
+                                        State
+                                    </label>
+                                    <p-dropdown [options]="allStates" [filter]="true" [virtualScroll]="true"
+                                        placeholder="Select State" [itemSize]="30" name="displayName"
+                                        optionLabel="displayName" optionId="id" (onChange)="onStateSelect($event)"
+                                        [(ngModel)]="state" filterBy="displayName"
+                                        [style]="{ width: '100%' }"></p-dropdown>
+                                </div>
+                            </div>
+                            <!-- <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="StateNameFilter">
                                         {{ l('State') }}
@@ -111,7 +143,7 @@
                                     <input type="text" class="form-control" id="CountryNameFilter"
                                         name="countryNameFilter" [(ngModel)]="countryNameFilter" />
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="IsPublishedFilterSelect">
@@ -151,7 +183,7 @@
                                 </div>
                             </div>
 
-                            
+
 
 
                             <!-- <div class="col-md-3">
@@ -384,7 +416,8 @@
                                     <th style="width:30px; text-align: center;">
                                         <label
                                             class="form-check form-check-custom form-check-inline form-check-solid is-invalid">
-                                            <input class="form-check-input" type="checkbox" value="1">
+                                            <input class="form-check-input" (change)="onChangesSelectAll()"
+                                                [(ngModel)]="selectedAll" type="checkbox">
                                             <span class="fw-semibold ps-2 fs-6">
                                             </span>
                                         </label>
@@ -558,58 +591,66 @@
                                     <td style="width: 30px;">
                                         <label
                                             class="form-check form-check-custom form-check-inline form-check-solid is-invalid mb-2">
-                                            <input class="form-check-input" type="checkbox" value="1">
+                                            <input class="form-check-input" type="checkbox"
+                                                [(ngModel)]="record.selected" (change)="checkIfAllSelected()">
                                             <span class="fw-semibold ps-2 fs-6">
                                             </span>
                                         </label>
                                     </td>
                                     <td style="text-align: left; width: 45px;">
-                                        <i class="flaticon-black fav_icon_store"></i>
+                                        <i *ngIf="!record.wishListId" class="flaticon-black fav_icon_store"
+                                            (click)="onDisLikeClick(record.id)"></i>
+                                        <i *ngIf="record.wishListId" class="flaticon-black fav_icon_store fav_heart"
+                                            (click)="onLikeClick(record.wishListId)"></i>
                                         <!-- <i *ngIf="record.wishListId" class="flaticon-black fav_icon_store fav_heart" (click)="onLikeClick(record.wishListId)"></i> -->
                                     </td>
                                     <td style="width: 420px">
                                         <span class="p-column-title">{{ l('Name') }}</span>
                                         <div class="d-flex align-items-center">
                                             <div class="square_logo_box shadow-sm">
-                                                <!-- <img src="/assets/common/images/sampleProfilePics/noimg.png"
-                                                    class="mw-100" alt=""> -->
-                                                <span>{{ record.store.name | nameSplit}}</span>
+                                                <img *ngIf="record.picture"
+                                                    src="{{record.picture != null? record.picture:'/assets/common/images/sampleProfilePics/noimg.png'}}"
+                                                    class="mw-100" alt="">
+                                                <span *ngIf="!record.picture">{{ record.name | nameSplit}}</span>
                                             </div>
                                             <div class="d-flex flex-wrap flex-grow-1 mt-n2 mt-lg-n1">
                                                 <div class="d-flex flex-column flex-grow-1 my-lg-0 my-2 pe-3">
-                                                    <a href="javascript:;" title="{{ record.store.name }}" [routerLink]="['/app/main/shop/stores/dashboard',record.store.id]"
+                                                    <a href="javascript:;" title="{{ record.name }}"
+                                                        [routerLink]="['/app/main/shop/stores/dashboard',record.id]"
                                                         class="fs-5 text-gray-800 text-hover-primary fw-bold">
-                                                        {{ record.store.name }}
-                                                        <i *ngIf="record.store.isPublished"
+                                                        {{ record.name }}
+                                                        <i *ngIf="record.isPublished"
                                                             class="fas fa-check-circle ml-1 mr-0 text-success"
                                                             title="Published"></i>
                                                     </a>
-                                                    <span class="text-gray-400 fw-semibold fs-7 my-0">
+                                                    <span class="text-gray-400 fw-semibold fs-7 my-0"
+                                                        *ngIf="record.primaryCategoryName">
                                                         <i class="fas fa-tags mr-1"></i>
-                                                        Local Staffing and GigWork Services
+                                                        {{record.primaryCategoryName}}
                                                     </span>
-                                                    <span class="text-gray-400 fw-semibold fs-7 my-1">
+                                                    <span
+                                                        *ngIf="record.city || record.stateName || record.countryName || record.zipCode"
+                                                        class="text-gray-400 fw-semibold fs-7 my-1">
                                                         <i class="fas fa-map-marked-alt mr-1"></i>
                                                         <span>
-                                                            {{ record.store.city }}
+                                                            {{ record.city }}
                                                         </span>
                                                         <span
-                                                            *ngIf="record.store.city && (record.stateName || record.countryName || record.store.zipCode)">,
+                                                            *ngIf="record.city && (record.stateName || record.countryName || record.zipCode)">,
                                                         </span>
                                                         <span>
                                                             {{ record.stateName }}
                                                         </span>
                                                         <span
-                                                            *ngIf="record.stateName && (record.countryName || record.store.zipCode)">,
+                                                            *ngIf="record.stateName && (record.countryName || record.zipCode)">,
                                                         </span>
                                                         <span>
                                                             {{ record.countryName }}
                                                         </span>
-                                                        <span
-                                                            *ngIf=" record.countryName && record.store.zipCode">,
+                                                        <span *ngIf=" record.countryName && record.zipCode">,
                                                         </span>
                                                         <span>
-                                                            {{ record.store.zipCode }}
+                                                            {{ record.zipCode }}
                                                         </span>
                                                     </span>
                                                 </div>
@@ -618,13 +659,13 @@
                                     </td>
                                     <td style="width: 180px">
                                         <span class="p-column-title">{{ l('Mobile') }}</span>
-                                        <i class="fas fa-phone-alt mr-1"></i>
-                                        {{ record.store.mobile }}
+                                        <i *ngIf="record.mobile " class="fas fa-phone-alt mr-1"></i>
+                                        {{ record.mobile }}
                                     </td>
                                     <td style="width: 220px">
                                         <span class="p-column-title">{{ l('Email') }}</span>
-                                        <i class="fas fa-envelope"></i>
-                                        {{ record.store.email }}
+                                        <i *ngIf="record.email" class="fas fa-envelope"></i>
+                                        {{ record.email }}
                                     </td>
                                     <td style="width: 90px; text-align: center;">
                                         <span class="p-column-title">{{ l('Connect') }}</span>
@@ -632,7 +673,7 @@
                                     </td>
                                     <td style="width: 150px; text-align: center;">
                                         <span class="p-column-title">{{ l('#Products') }}</span>
-                                        15
+                                        {{record.numberOfProducts}}
                                     </td>
                                     <td style="width:150px; text-align: center;">
                                         <span class="p-column-title">{{ l('Published?') }}</span>
@@ -664,116 +705,116 @@
 
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('Sequence') }}</span>
-                                        {{ record.store.displaySequence }}
+                                        {{ record.displaySequence }}
                                     </td>
                                     <!-- <td style="width: 150px">
                                         <span class="p-column-title">{{ l('MetaTag') }}</span>
-                                        {{ record.store.metaTag }}
+                                        {{ record.metaTag }}
                                     </td>
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('MetaDescription') }}</span>
-                                        {{ record.store.metaDescription }}
+                                        {{ record.metaDescription }}
                                     </td>
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('FullAddress') }}</span>
-                                        {{ record.store.fullAddress }}
+                                        {{ record.fullAddress }}
                                     </td>
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('Address') }}</span>
-                                        {{ record.store.address }}
+                                        {{ record.address }}
                                     </td>
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('City') }}</span>
-                                        {{ record.store.city }}
+                                        {{ record.city }}
                                     </td>
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('Latitude') }}</span>
-                                        {{ record.store.latitude }}
+                                        {{ record.latitude }}
                                     </td>
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('Longitude') }}</span>
-                                        {{ record.store.longitude }}
+                                        {{ record.longitude }}
                                     </td>
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('Phone') }}</span>
-                                        {{ record.store.phone }}
+                                        {{ record.phone }}
                                     </td>
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('Mobile') }}</span>
-                                        {{ record.store.mobile }}
+                                        {{ record.mobile }}
                                     </td>
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('Email') }}</span>
-                                        {{ record.store.email }}
+                                        {{ record.email }}
                                     </td>
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('IsPublished') }}</span>
-                                        <div *ngIf="record.store.isPublished" class="text-center">
+                                        <div *ngIf="record.isPublished" class="text-center">
                                             <i class="fa fa-check-circle text-success" title="True"></i>
                                         </div>
-                                        <div *ngIf="!record.store.isPublished" class="text-center">
+                                        <div *ngIf="!record.isPublished" class="text-center">
                                             <i class="fa fa-times-circle" title="False"></i>
                                         </div>
                                     </td>
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('Facebook') }}</span>
-                                        {{ record.store.facebook }}
+                                        {{ record.facebook }}
                                     </td>
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('Instagram') }}</span>
-                                        {{ record.store.instagram }}
+                                        {{ record.instagram }}
                                     </td>
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('LinkedIn') }}</span>
-                                        {{ record.store.linkedIn }}
+                                        {{ record.linkedIn }}
                                     </td>
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('Youtube') }}</span>
-                                        {{ record.store.youtube }}
+                                        {{ record.youtube }}
                                     </td>
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('Fax') }}</span>
-                                        {{ record.store.fax }}
+                                        {{ record.fax }}
                                     </td>
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('ZipCode') }}</span>
-                                        {{ record.store.zipCode }}
+                                        {{ record.zipCode }}
                                     </td>
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('Website') }}</span>
-                                        {{ record.store.website }}
+                                        {{ record.website }}
                                     </td>
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('YearOfEstablishment') }}</span>
-                                        {{ record.store.yearOfEstablishment }}
+                                        {{ record.yearOfEstablishment }}
                                     </td>
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('DisplaySequence') }}</span>
-                                        {{ record.store.displaySequence }}
+                                        {{ record.displaySequence }}
                                     </td>
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('Score') }}</span>
-                                        {{ record.store.score }}
+                                        {{ record.score }}
                                     </td>
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('LegalName') }}</span>
-                                        {{ record.store.legalName }}
+                                        {{ record.legalName }}
                                     </td>
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('IsLocalOrOnlineStore') }}</span>
-                                        <div *ngIf="record.store.isLocalOrOnlineStore" class="text-center">
+                                        <div *ngIf="record.isLocalOrOnlineStore" class="text-center">
                                             <i class="fa fa-check-circle text-success" title="True"></i>
                                         </div>
-                                        <div *ngIf="!record.store.isLocalOrOnlineStore" class="text-center">
+                                        <div *ngIf="!record.isLocalOrOnlineStore" class="text-center">
                                             <i class="fa fa-times-circle" title="False"></i>
                                         </div>
                                     </td>
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('IsVerified') }}</span>
-                                        <div *ngIf="record.store.isVerified" class="text-center">
+                                        <div *ngIf="record.isVerified" class="text-center">
                                             <i class="fa fa-check-circle text-success" title="True"></i>
                                         </div>
-                                        <div *ngIf="!record.store.isVerified" class="text-center">
+                                        <div *ngIf="!record.isVerified" class="text-center">
                                             <i class="fa fa-times-circle" title="False"></i>
                                         </div>
                                     </td> -->
@@ -795,7 +836,7 @@
                                                     <a href="javascript:;"
                                                         *ngIf="permission.isGranted('Pages.Stores.Edit')"
                                                         class="dropdown-item"
-                                                        (click)="createOrEditStoreModal.show(record.store.id)">
+                                                        (click)="createOrEditStoreModal.show(record.id)">
                                                         {{ l('Edit') }}
                                                     </a>
                                                 </li>
@@ -817,7 +858,8 @@
                         </div>
                         <div class="primeng-paging-container">
                             <p-paginator [rows]="primengTableHelper.defaultRecordsCountPerPage" #paginator
-                                (onPageChange)="getStores($event)" [totalRecords]="primengTableHelper.totalRecordsCount"
+                                (onPageChange)="paginate($event)"
+                                [totalRecords]="isFavorite==1?favoriteCount:primengTableHelper.totalRecordsCount"
                                 [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
                                 [showCurrentPageReport]="true" [currentPageReportTemplate]="
                                     'TotalRecordsCount' | localize : primengTableHelper.totalRecordsCount
