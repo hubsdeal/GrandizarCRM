@@ -24,6 +24,11 @@ using Newtonsoft.Json;
 using IdentityModel;
 using NPOI.POIFS.Crypt;
 using MailKit.Net.Smtp;
+using Unifonic.NetCore.Models;
+using MimeKit;
+using Org.BouncyCastle.Cms;
+using Unifonic.NetCore.Controllers;
+using Unifonic.NetCore.Exceptions;
 
 namespace SoftGrid.LookupData
 {
@@ -177,33 +182,71 @@ namespace SoftGrid.LookupData
             return _smsTemplatesExcelExporter.ExportToFile(smsTemplateListDtos);
         }
 
-
-        //[HttpGet("")]
-        public async Task<SmSRequestDto> SendSms(SmSRequestDto dtoModel)
+        [AbpAllowAnonymous]
+        [HttpGet("SendSms")]
+        public async Task<SmSRequestDto> SendSmsAsync(SmSRequestDto dtoModel)
         {
-            if (dtoModel == null) throw new Exception("Sorry! No Data Found to Send SMS!");
-            if (dtoModel.Body == null) throw new Exception("Sorry! No SMS Body Found to Send SMS!");
-            using var client = GethttpClient();
+            try
+            {
+                if (dtoModel == null) throw new Exception("Sorry! No Data Found to Send SMS!");
+                if (dtoModel.Body == null) throw new Exception("Sorry! No SMS Body Found to Send SMS!");
 
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                var appsId = "4cLvMBEmZqzwTMCANNYAsmqYA4jAWr";
+                var baseUrl = $"https://el.cloud.unifonic.com/rest/SMS/messages?AppSid={appsId}&SenderId=sender&";
+                var correlationID = DateTime.Now.Ticks.ToString();
+                //Unifonic.NetCore.Configuration.BasicAuthUserName = "";
+                //Unifonic.NetCore.Configuration.BasicAuthPassword = "";
+                // Unifonic.NetCore.UnifonicNextGenClient smsClient = new Unifonic.NetCore.UnifonicNextGenClient();
+                // SendResponse resultA = await smsClient.Rest.CreateSendMessageAsync(appsId, "", dtoModel.Body, dtoModel.Recipient);
 
-            dtoModel.Body = dtoModel.Body.Replace("\r\n", "NEWLINE");
-            var urlEncode = HttpUtility.UrlEncode(dtoModel.Body);
-            urlEncode = urlEncode.Replace("NEWLINE", "\n");
-            var jsonSerialize = JsonConvert.SerializeObject(new { body = urlEncode });
 
 
-            //for testing purpose
-            //'https://el.cloud.unifonic.com/rest/SMS/messages?AppSid=axuN0U7QlmqVPsfdgoK0mZFgdzG16p&SenderID=UNISMS&Body=Test
-            //message&Recipient=971507679351&responseType=JSON&CorrelationID=q1&baseEncode=true&statusCallback=sent&async=false'
 
-            var baseUrl = "https://el.cloud.unifonic.com/rest/SMS/messages?AppSid=axuN0U7QlmqVPsfdgoK0mZFgdzG16p&SenderID=UNISMS&";
+                var client1 = new Unifonic.NetCore.UnifonicNextGenClient();
+                RestController rest = client1.Rest;
 
-            var finalUrl = $"{baseUrl}&Body={jsonSerialize}";
-            var httpResponse = await client.GetAsync(finalUrl);
-            var responseString = await httpResponse.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<dynamic>(responseString);
-            return result;
+                string senderID = "sender";
+                string responseType = "JSON";
+                bool? baseEncode = true;
+                string statusCallback = "sent";
+                bool? masync = false;
+
+
+                SendResponse result1 = rest.CreateSendMessageAsync(appsId, senderID, dtoModel.Body, dtoModel.Recipient, responseType, correlationID, baseEncode, statusCallback, masync).Result;
+
+
+
+
+
+
+                using var client = GethttpClient();
+
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                dtoModel.Body = dtoModel.Body.Replace("\r\n", "NEWLINE");
+                var urlEncode = HttpUtility.UrlEncode(dtoModel.Body);
+                urlEncode = urlEncode.Replace("NEWLINE", "\n");
+                var jsonSerialize = JsonConvert.SerializeObject(new { appSid = appsId, recipient = dtoModel.Recipient, body = urlEncode, statusCallback = "", async = false, correlationId = DateTime.Now.Ticks });
+
+
+                //for testing purpose
+                //'https://el.cloud.unifonic.com/rest/SMS/messages?AppSid=axuN0U7QlmqVPsfdgoK0mZFgdzG16p&SenderID=UNISMS&Body=Test
+                //message&Recipient=971507679351&responseType=JSON&CorrelationID=q1&baseEncode=true&statusCallback=sent&async=false'
+
+
+
+                var finalUrl = $"{baseUrl}&Body={jsonSerialize}";
+                var httpResponse = await client.GetAsync(finalUrl);
+                var responseString = await httpResponse.Content.ReadAsStringAsync();
+                var result = JsonConvert.DeserializeObject<dynamic>(responseString);
+                return result;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+
         }
 
 
@@ -212,6 +255,7 @@ namespace SoftGrid.LookupData
         {
             if (dtoModel == null) throw new Exception("Sorry! No Data Found to Send SMS!");
             if (dtoModel.Recipient == null) throw new Exception("Sorry! No Recipient Found to Send SMS!");
+
             using var client = GethttpClient();
 
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -240,7 +284,7 @@ namespace SoftGrid.LookupData
 
 
 
-        public async Task<bool> OtpVerification(string mobileNumber, string otp)
+        public async Task<bool> OtpVerify(string mobileNumber, string otp)
         {
             //get OTP from database/ Cache here
             var otpFromDb = "1234";
@@ -261,6 +305,21 @@ namespace SoftGrid.LookupData
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             return client;
         }
+
+
+        //private async Task<bool> SendSms()
+        //{
+        //    Unifonic.NetCore.Configuration.BasicAuthUserName = "yourUsername";
+        //    Unifonic.NetCore.Configuration.BasicAuthPassword = "yourPassword";
+        //    Unifonic.NetCore.UnifonicNextGenClient smsClient = new Unifonic.NetCore.UnifonicNextGenClient();
+        //    string appSid = "appSid";
+        //    string senderID = "senderID";
+        //    long recipient = long.Parse("+0123456789");
+        //    //Asynchronous
+        //    SendResponse resultA = await smsClient.Rest.CreateSendMessageAsync(appSid, senderID, message, recipient);
+        //    //Synchronous
+        //    SendResponse resultS = smsClient.Rest.CreateSendMessage(appSid, senderID, message, recipient);
+        //}
 
     }
 }
