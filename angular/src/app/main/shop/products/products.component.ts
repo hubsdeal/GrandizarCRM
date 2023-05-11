@@ -1,5 +1,5 @@
 ﻿import { AppConsts } from '@shared/AppConsts';
-import { Component, Injector, ViewEncapsulation, ViewChild } from '@angular/core';
+import { Component, Injector, ViewEncapsulation, ViewChild, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductsServiceProxy, ProductDto } from '@shared/service-proxies/service-proxies';
 import { NotifyService } from 'abp-ng2-module';
@@ -45,10 +45,10 @@ export class ProductsComponent extends AppComponentBase {
     maxRegularPriceFilterEmpty: number;
     minRegularPriceFilter: number;
     minRegularPriceFilterEmpty: number;
-    maxSalePriceFilter: number;
-    maxSalePriceFilterEmpty: number;
-    minSalePriceFilter: number;
-    minSalePriceFilterEmpty: number;
+    maxSalesPriceFilter: number;
+    maxSalesPriceFilterEmpty: number;
+    minSalesPriceFilter: number;
+    minSalesPriceFilterEmpty: number;
     maxPriceDiscountPercentageFilter: number;
     maxPriceDiscountPercentageFilterEmpty: number;
     minPriceDiscountPercentageFilter: number;
@@ -58,10 +58,10 @@ export class ProductsComponent extends AppComponentBase {
     maxUnitPriceFilterEmpty: number;
     minUnitPriceFilter: number;
     minUnitPriceFilterEmpty: number;
-    maxMeasurementAmountFilter: number;
-    maxMeasurementAmountFilterEmpty: number;
-    minMeasurementAmountFilter: number;
-    minMeasurementAmountFilterEmpty: number;
+    maxMeasureAmountFilter: number;
+    maxMeasureAmountFilterEmpty: number;
+    minMeasureAmountFilter: number;
+    minMeasureAmountFilterEmpty: number;
     isTaxExemptFilter = -1;
     maxStockQuantityFilter: number;
     maxStockQuantityFilterEmpty: number;
@@ -69,28 +69,56 @@ export class ProductsComponent extends AppComponentBase {
     minStockQuantityFilterEmpty: number;
     isDisplayStockQuantityFilter = -1;
     isPublishedFilter = -1;
-    isPackageProductFilter = -1;
-    internalNotesFilter = '';
     isTemplateFilter = -1;
-    maxPriceDiscountAmountFilter: number;
-    maxPriceDiscountAmountFilterEmpty: number;
-    minPriceDiscountAmountFilter: number;
-    minPriceDiscountAmountFilterEmpty: number;
     isServiceFilter = -1;
+    isPackageProductFilter = -1;
     isWholeSaleProductFilter = -1;
-    productManufacturerSkuFilter = '';
-    byOrderOnlyFilter = -1;
-    maxScoreFilter: number;
-    maxScoreFilterEmpty: number;
-    minScoreFilter: number;
-    minScoreFilterEmpty: number;
+    internalNotesFilter = '';
+    iconFilter = '';
     productCategoryNameFilter = '';
     mediaLibraryNameFilter = '';
     measurementUnitNameFilter = '';
     currencyNameFilter = '';
     ratingLikeNameFilter = '';
-    contactFullNameFilter = '';
-    storeNameFilter = '';
+
+    productManufacturerSkuFilter: string;
+    byOrderOnlyFilter: number;
+    maxScoreFilter: number;
+    minScoreFilter: number;
+    contactFullNameFilter: string;
+    storeNameFilter: string;
+
+    minPriceFilter: number;
+    maxpriceFilter: number;
+    @Input() productCategoryidFilter: number;
+    currencyIdFilter: number;
+    measurementUnitIdFilter: number;
+    ratingLikeIdFilter: number;
+
+    productCategoryOptions: any;
+    currencyoptions: any;
+    measurementUnitOptions: any;
+    ratingLikeOptions: any;
+
+    published: number;
+    unpublished: number;
+
+    selectedAll: boolean = false;
+    selectedInput: number[] = [];
+
+    productTagNameFilter: string = '';
+
+    myStoreOptions: any;
+
+    myStoreEmployeeId: number;
+
+    storeIdFilter: number;
+
+    @Input() businessIdFilter: number;
+    @Input() employeeId: number;
+
+    maxPriceDiscountAmountFilter: number;
+    minPriceDiscountAmountFilter: number;
 
     constructor(
         injector: Injector,
@@ -115,7 +143,18 @@ export class ProductsComponent extends AppComponentBase {
         this.primengTableHelper.showLoadingIndicator();
 
         this._productsServiceProxy
-            .getAll(
+            .getAllProductsBySp(
+                this.minPriceFilter,
+                this.maxpriceFilter,
+                this.productCategoryidFilter != null ? this.productCategoryidFilter : undefined,
+                this.currencyIdFilter,
+                this.measurementUnitIdFilter,
+                this.ratingLikeIdFilter,
+                1,
+                this.employeeId != null ? this.employeeId : undefined,
+                this.businessIdFilter != null ? this.businessIdFilter : undefined,
+                this.storeIdFilter,
+                this.productTagNameFilter,
                 this.filterText,
                 this.nameFilter,
                 this.shortDescriptionFilter,
@@ -127,23 +166,15 @@ export class ProductsComponent extends AppComponentBase {
                 this.metaDescriptionFilter,
                 this.maxRegularPriceFilter == null ? this.maxRegularPriceFilterEmpty : this.maxRegularPriceFilter,
                 this.minRegularPriceFilter == null ? this.minRegularPriceFilterEmpty : this.minRegularPriceFilter,
-                this.maxSalePriceFilter == null ? this.maxSalePriceFilterEmpty : this.maxSalePriceFilter,
-                this.minSalePriceFilter == null ? this.minSalePriceFilterEmpty : this.minSalePriceFilter,
-                this.maxPriceDiscountPercentageFilter == null
-                    ? this.maxPriceDiscountPercentageFilterEmpty
-                    : this.maxPriceDiscountPercentageFilter,
-                this.minPriceDiscountPercentageFilter == null
-                    ? this.minPriceDiscountPercentageFilterEmpty
-                    : this.minPriceDiscountPercentageFilter,
+                this.maxSalesPriceFilter == null ? this.maxSalesPriceFilterEmpty : this.maxSalesPriceFilter,
+                this.minSalesPriceFilter == null ? this.minSalesPriceFilterEmpty : this.minSalesPriceFilter,
+                this.maxPriceDiscountPercentageFilter == null ? this.maxPriceDiscountPercentageFilterEmpty : this.maxPriceDiscountPercentageFilter,
+                this.minPriceDiscountPercentageFilter == null ? this.minPriceDiscountPercentageFilterEmpty : this.minPriceDiscountPercentageFilter,
                 this.callForPriceFilter,
                 this.maxUnitPriceFilter == null ? this.maxUnitPriceFilterEmpty : this.maxUnitPriceFilter,
                 this.minUnitPriceFilter == null ? this.minUnitPriceFilterEmpty : this.minUnitPriceFilter,
-                this.maxMeasurementAmountFilter == null
-                    ? this.maxMeasurementAmountFilterEmpty
-                    : this.maxMeasurementAmountFilter,
-                this.minMeasurementAmountFilter == null
-                    ? this.minMeasurementAmountFilterEmpty
-                    : this.minMeasurementAmountFilter,
+                this.maxMeasureAmountFilter == null ? this.maxMeasureAmountFilterEmpty : this.maxMeasureAmountFilter,
+                this.minMeasureAmountFilter == null ? this.minMeasureAmountFilterEmpty : this.minMeasureAmountFilter,
                 this.isTaxExemptFilter,
                 this.maxStockQuantityFilter == null ? this.maxStockQuantityFilterEmpty : this.maxStockQuantityFilter,
                 this.minStockQuantityFilter == null ? this.minStockQuantityFilterEmpty : this.minStockQuantityFilter,
@@ -151,19 +182,14 @@ export class ProductsComponent extends AppComponentBase {
                 this.isPublishedFilter,
                 this.isPackageProductFilter,
                 this.internalNotesFilter,
-                this.isTemplateFilter,
-                this.maxPriceDiscountAmountFilter == null
-                    ? this.maxPriceDiscountAmountFilterEmpty
-                    : this.maxPriceDiscountAmountFilter,
-                this.minPriceDiscountAmountFilter == null
-                    ? this.minPriceDiscountAmountFilterEmpty
-                    : this.minPriceDiscountAmountFilter,
+                this.maxPriceDiscountAmountFilter,
+                this.minPriceDiscountAmountFilter,
                 this.isServiceFilter,
                 this.isWholeSaleProductFilter,
                 this.productManufacturerSkuFilter,
                 this.byOrderOnlyFilter,
-                this.maxScoreFilter == null ? this.maxScoreFilterEmpty : this.maxScoreFilter,
-                this.minScoreFilter == null ? this.minScoreFilterEmpty : this.minScoreFilter,
+                this.maxScoreFilter,
+                this.minScoreFilter,
                 this.productCategoryNameFilter,
                 this.mediaLibraryNameFilter,
                 this.measurementUnitNameFilter,
@@ -177,7 +203,7 @@ export class ProductsComponent extends AppComponentBase {
             )
             .subscribe((result) => {
                 this.primengTableHelper.totalRecordsCount = result.totalCount;
-                this.primengTableHelper.records = result.items;
+                this.primengTableHelper.records = result.products;
                 this.primengTableHelper.hideLoadingIndicator();
             });
     }
@@ -202,67 +228,67 @@ export class ProductsComponent extends AppComponentBase {
     }
 
     exportToExcel(): void {
-        this._productsServiceProxy
-            .getProductsToExcel(
-                this.filterText,
-                this.nameFilter,
-                this.shortDescriptionFilter,
-                this.descriptionFilter,
-                this.skuFilter,
-                this.urlFilter,
-                this.seoTitleFilter,
-                this.metaKeywordsFilter,
-                this.metaDescriptionFilter,
-                this.maxRegularPriceFilter == null ? this.maxRegularPriceFilterEmpty : this.maxRegularPriceFilter,
-                this.minRegularPriceFilter == null ? this.minRegularPriceFilterEmpty : this.minRegularPriceFilter,
-                this.maxSalePriceFilter == null ? this.maxSalePriceFilterEmpty : this.maxSalePriceFilter,
-                this.minSalePriceFilter == null ? this.minSalePriceFilterEmpty : this.minSalePriceFilter,
-                this.maxPriceDiscountPercentageFilter == null
-                    ? this.maxPriceDiscountPercentageFilterEmpty
-                    : this.maxPriceDiscountPercentageFilter,
-                this.minPriceDiscountPercentageFilter == null
-                    ? this.minPriceDiscountPercentageFilterEmpty
-                    : this.minPriceDiscountPercentageFilter,
-                this.callForPriceFilter,
-                this.maxUnitPriceFilter == null ? this.maxUnitPriceFilterEmpty : this.maxUnitPriceFilter,
-                this.minUnitPriceFilter == null ? this.minUnitPriceFilterEmpty : this.minUnitPriceFilter,
-                this.maxMeasurementAmountFilter == null
-                    ? this.maxMeasurementAmountFilterEmpty
-                    : this.maxMeasurementAmountFilter,
-                this.minMeasurementAmountFilter == null
-                    ? this.minMeasurementAmountFilterEmpty
-                    : this.minMeasurementAmountFilter,
-                this.isTaxExemptFilter,
-                this.maxStockQuantityFilter == null ? this.maxStockQuantityFilterEmpty : this.maxStockQuantityFilter,
-                this.minStockQuantityFilter == null ? this.minStockQuantityFilterEmpty : this.minStockQuantityFilter,
-                this.isDisplayStockQuantityFilter,
-                this.isPublishedFilter,
-                this.isPackageProductFilter,
-                this.internalNotesFilter,
-                this.isTemplateFilter,
-                this.maxPriceDiscountAmountFilter == null
-                    ? this.maxPriceDiscountAmountFilterEmpty
-                    : this.maxPriceDiscountAmountFilter,
-                this.minPriceDiscountAmountFilter == null
-                    ? this.minPriceDiscountAmountFilterEmpty
-                    : this.minPriceDiscountAmountFilter,
-                this.isServiceFilter,
-                this.isWholeSaleProductFilter,
-                this.productManufacturerSkuFilter,
-                this.byOrderOnlyFilter,
-                this.maxScoreFilter == null ? this.maxScoreFilterEmpty : this.maxScoreFilter,
-                this.minScoreFilter == null ? this.minScoreFilterEmpty : this.minScoreFilter,
-                this.productCategoryNameFilter,
-                this.mediaLibraryNameFilter,
-                this.measurementUnitNameFilter,
-                this.currencyNameFilter,
-                this.ratingLikeNameFilter,
-                this.contactFullNameFilter,
-                this.storeNameFilter
-            )
-            .subscribe((result) => {
-                this._fileDownloadService.downloadTempFile(result);
-            });
+        // this._productsServiceProxy
+        //     .getProductsToExcel(
+        //         this.filterText,
+        //         this.nameFilter,
+        //         this.shortDescriptionFilter,
+        //         this.descriptionFilter,
+        //         this.skuFilter,
+        //         this.urlFilter,
+        //         this.seoTitleFilter,
+        //         this.metaKeywordsFilter,
+        //         this.metaDescriptionFilter,
+        //         this.maxRegularPriceFilter == null ? this.maxRegularPriceFilterEmpty : this.maxRegularPriceFilter,
+        //         this.minRegularPriceFilter == null ? this.minRegularPriceFilterEmpty : this.minRegularPriceFilter,
+        //         this.maxSalePriceFilter == null ? this.maxSalePriceFilterEmpty : this.maxSalePriceFilter,
+        //         this.minSalePriceFilter == null ? this.minSalePriceFilterEmpty : this.minSalePriceFilter,
+        //         this.maxPriceDiscountPercentageFilter == null
+        //             ? this.maxPriceDiscountPercentageFilterEmpty
+        //             : this.maxPriceDiscountPercentageFilter,
+        //         this.minPriceDiscountPercentageFilter == null
+        //             ? this.minPriceDiscountPercentageFilterEmpty
+        //             : this.minPriceDiscountPercentageFilter,
+        //         this.callForPriceFilter,
+        //         this.maxUnitPriceFilter == null ? this.maxUnitPriceFilterEmpty : this.maxUnitPriceFilter,
+        //         this.minUnitPriceFilter == null ? this.minUnitPriceFilterEmpty : this.minUnitPriceFilter,
+        //         this.maxMeasurementAmountFilter == null
+        //             ? this.maxMeasurementAmountFilterEmpty
+        //             : this.maxMeasurementAmountFilter,
+        //         this.minMeasurementAmountFilter == null
+        //             ? this.minMeasurementAmountFilterEmpty
+        //             : this.minMeasurementAmountFilter,
+        //         this.isTaxExemptFilter,
+        //         this.maxStockQuantityFilter == null ? this.maxStockQuantityFilterEmpty : this.maxStockQuantityFilter,
+        //         this.minStockQuantityFilter == null ? this.minStockQuantityFilterEmpty : this.minStockQuantityFilter,
+        //         this.isDisplayStockQuantityFilter,
+        //         this.isPublishedFilter,
+        //         this.isPackageProductFilter,
+        //         this.internalNotesFilter,
+        //         this.isTemplateFilter,
+        //         this.maxPriceDiscountAmountFilter == null
+        //             ? this.maxPriceDiscountAmountFilterEmpty
+        //             : this.maxPriceDiscountAmountFilter,
+        //         this.minPriceDiscountAmountFilter == null
+        //             ? this.minPriceDiscountAmountFilterEmpty
+        //             : this.minPriceDiscountAmountFilter,
+        //         this.isServiceFilter,
+        //         this.isWholeSaleProductFilter,
+        //         this.productManufacturerSkuFilter,
+        //         this.byOrderOnlyFilter,
+        //         this.maxScoreFilter == null ? this.maxScoreFilterEmpty : this.maxScoreFilter,
+        //         this.minScoreFilter == null ? this.minScoreFilterEmpty : this.minScoreFilter,
+        //         this.productCategoryNameFilter,
+        //         this.mediaLibraryNameFilter,
+        //         this.measurementUnitNameFilter,
+        //         this.currencyNameFilter,
+        //         this.ratingLikeNameFilter,
+        //         this.contactFullNameFilter,
+        //         this.storeNameFilter
+        //     )
+        //     .subscribe((result) => {
+        //         this._fileDownloadService.downloadTempFile(result);
+        //     });
     }
 
     resetFilters(): void {
@@ -277,15 +303,11 @@ export class ProductsComponent extends AppComponentBase {
         this.metaDescriptionFilter = '';
         this.maxRegularPriceFilter = this.maxRegularPriceFilterEmpty;
         this.minRegularPriceFilter = this.maxRegularPriceFilterEmpty;
-        this.maxSalePriceFilter = this.maxSalePriceFilterEmpty;
-        this.minSalePriceFilter = this.maxSalePriceFilterEmpty;
         this.maxPriceDiscountPercentageFilter = this.maxPriceDiscountPercentageFilterEmpty;
         this.minPriceDiscountPercentageFilter = this.maxPriceDiscountPercentageFilterEmpty;
         this.callForPriceFilter = -1;
         this.maxUnitPriceFilter = this.maxUnitPriceFilterEmpty;
         this.minUnitPriceFilter = this.maxUnitPriceFilterEmpty;
-        this.maxMeasurementAmountFilter = this.maxMeasurementAmountFilterEmpty;
-        this.minMeasurementAmountFilter = this.maxMeasurementAmountFilterEmpty;
         this.isTaxExemptFilter = -1;
         this.maxStockQuantityFilter = this.maxStockQuantityFilterEmpty;
         this.minStockQuantityFilter = this.maxStockQuantityFilterEmpty;
@@ -294,14 +316,10 @@ export class ProductsComponent extends AppComponentBase {
         this.isPackageProductFilter = -1;
         this.internalNotesFilter = '';
         this.isTemplateFilter = -1;
-        this.maxPriceDiscountAmountFilter = this.maxPriceDiscountAmountFilterEmpty;
-        this.minPriceDiscountAmountFilter = this.maxPriceDiscountAmountFilterEmpty;
         this.isServiceFilter = -1;
         this.isWholeSaleProductFilter = -1;
         this.productManufacturerSkuFilter = '';
         this.byOrderOnlyFilter = -1;
-        this.maxScoreFilter = this.maxScoreFilterEmpty;
-        this.minScoreFilter = this.maxScoreFilterEmpty;
         this.productCategoryNameFilter = '';
         this.mediaLibraryNameFilter = '';
         this.measurementUnitNameFilter = '';
@@ -311,5 +329,25 @@ export class ProductsComponent extends AppComponentBase {
         this.storeNameFilter = '';
 
         this.getProducts();
+    }
+
+    onChangesSelectAll() {
+        for (var i = 0; i < this.primengTableHelper.records.length; i++) {
+            this.primengTableHelper.records[i].selected = this.selectedAll;
+        }
+    }
+
+    checkIfAllSelected() {
+        this.selectedAll = this.primengTableHelper.records.every(function (item: any) {
+            return item.selected == true;
+        })
+    }
+
+    refreshCheckboxReloadList() {
+        this.selectedAll = false;
+        for (var i = 0; i < this.primengTableHelper.records.length; i++) {
+            this.primengTableHelper.records[i].selected = false;
+        }
+        this.reloadPage();
     }
 }

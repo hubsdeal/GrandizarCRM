@@ -424,20 +424,20 @@ namespace SoftGrid.Shop
             return output;
         }
 
-        public async Task CreateOrEdit(CreateOrEditProductDto input)
+        public async Task<long > CreateOrEdit(CreateOrEditProductDto input)
         {
             if (input.Id == null)
             {
-                await Create(input);
+               return await Create(input);
             }
             else
             {
-                await Update(input);
+                return await Update(input);
             }
         }
 
         [AbpAuthorize(AppPermissions.Pages_Products_Create)]
-        protected virtual async Task Create(CreateOrEditProductDto input)
+        protected virtual async Task<long> Create(CreateOrEditProductDto input)
         {
             var product = ObjectMapper.Map<Product>(input);
 
@@ -446,15 +446,16 @@ namespace SoftGrid.Shop
                 product.TenantId = (int?)AbpSession.TenantId;
             }
 
-            await _productRepository.InsertAsync(product);
+            return await _productRepository.InsertAndGetIdAsync(product);
 
         }
 
         [AbpAuthorize(AppPermissions.Pages_Products_Edit)]
-        protected virtual async Task Update(CreateOrEditProductDto input)
+        protected virtual async Task<long> Update(CreateOrEditProductDto input)
         {
             var product = await _productRepository.FirstOrDefaultAsync((long)input.Id);
             ObjectMapper.Map(input, product);
+            return (long)input.Id;
 
         }
 
