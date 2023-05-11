@@ -76,5 +76,6 @@ namespace SoftGrid.Territory.Dtos
         public long? CountryIdFilter { get; set; }
         public long? StateIdFilter { get; set; }
         public long? HubTypeIdFilter { get; set; }
+        public string ZipCodeFilter { get; set; }
     }
 }

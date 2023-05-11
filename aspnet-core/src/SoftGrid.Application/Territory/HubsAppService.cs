@@ -591,6 +591,9 @@ namespace SoftGrid.Territory
             SqlParameter countryIdFilter = new SqlParameter("@CountryId", input.CountryIdFilter == null ? (object)DBNull.Value : input.CountryIdFilter);
             sqlParameters.Add(countryIdFilter);
 
+            SqlParameter zipCodeFilter = new SqlParameter("@ZipCode", input.ZipCodeFilter == null ? (object)DBNull.Value : input.ZipCodeFilter);
+            sqlParameters.Add(zipCodeFilter);
+
             SqlParameter liveFilter = new SqlParameter("@Live", input.LiveFilter == -1 ? (object)DBNull.Value : input.LiveFilter);
             sqlParameters.Add(liveFilter);
 
