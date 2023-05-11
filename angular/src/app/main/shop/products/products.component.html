@@ -1,17 +1,38 @@
 ﻿<div [@routerTransition]>
-    <sub-header [title]="'Products' | localize" [description]="">
+    <!-- <sub-header [title]="'Products' | localize" [description]="">
         <div role="actions">
-            <!-- <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1">
+            <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1">
                 <i class="fa fa-file-excel"></i>
                 {{ l('ExportToExcel') }}
-            </button> -->
+            </button>
 
             <button *ngIf="isGranted('Pages.Products.Create')" (click)="createProduct()" class="btn btn-primary blue">
                 <i class="fa fa-plus"></i>
                 {{ l('Product') }}
             </button>
         </div>
-    </sub-header>
+    </sub-header> -->
+
+    <div class="w-100 d-flex mb-6 ps-9 pe-9 mt-6 justify-content-between align-items-center ng-tns-c282-7">
+        <div class="d-flex">
+            <h1 class="fs-3 fw-bold  my-0 page-heading text-dark">
+                Products
+            </h1>
+            <span style="cursor: pointer;" class="badge badge-primary badge ms-2" (click)="onTotalClick()">
+                Total: {{primengTableHelper.totalRecordsCount}}
+            </span>
+            <span style="cursor: pointer;" class="badge badge-info badge ms-2" (click)="onPublishedClick()">
+                Published : {{publishedCount | number:'1.0-0'}}
+            </span>
+            <span style="cursor: pointer;" class="badge badge-warning badge ms-2" (click)="onUnPublishedClick()">
+                Unpublished :{{unpublishedCount | number:'1.0-0'}}
+            </span>
+        </div>
+        <button *ngIf="isGranted('Pages.Products.Create')" (click)="createProduct()" class="btn btn-primary blue">
+            <i class="fa fa-plus"></i>
+            {{ l('Product') }}
+        </button>
+    </div>
 
     <div [class]="containerClass">
         <div class="card card-custom gutter-b">
@@ -642,10 +663,10 @@
                                                             class="fas fa-check-circle ml-1 mr-0 text-success"
                                                             title="Published"></i>
                                                     </a>
-                                                    <span *ngIf="record.productCategoryName"
+                                                    <span *ngIf="record.categoryName"
                                                         class="text-gray-400 fw-semibold fs-7 my-0">
                                                         <i class="fas fa-tags mr-1"></i>
-                                                        {{ record.productCategoryName }}
+                                                        {{ record.categoryName }}
                                                     </span>
                                                     <span *ngIf="record.storeName" class="text-gray-400 fw-semibold fs-7 my-1">
                                                         <i class="fas fa-store-alt mr-1"></i>
@@ -662,15 +683,15 @@
                                     </td>
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('Regular Price') }}</span>
-                                        ${{record.regularPrice}}
+                                        <span *ngIf="record.regularPrice">${{record.regularPrice}}</span>
                                     </td>
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('Sale Price') }}</span>
-                                        ${{record.salesPrice}}
+                                        <span *ngIf="record.salesPrice">${{record.salesPrice}}</span>
                                     </td>
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('Name') }}</span>
-                                        ${{record.membershipPrice}}
+                                        <span *ngIf="record.membershipPrice"> ${{record.membershipPrice}}</span>
                                     </td>
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('Name') }}</span>
@@ -849,7 +870,7 @@
                                                     <a href="javascript:;"
                                                         *ngIf="permission.isGranted('Pages.Products.Edit')"
                                                         class="dropdown-item"
-                                                        (click)="createOrEditProductModal.show(record.product.id)">
+                                                        [routerLink]="['/app/main/shop/products/dashboard', record.id]">
                                                         {{ l('Edit') }}
                                                     </a>
                                                 </li>
@@ -871,7 +892,7 @@
                         </div>
                         <div class="primeng-paging-container">
                             <p-paginator [rows]="primengTableHelper.defaultRecordsCountPerPage" #paginator
-                                (onPageChange)="getProducts($event)"
+                                (onPageChange)="paginate($event)"
                                 [totalRecords]="primengTableHelper.totalRecordsCount"
                                 [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
                                 [showCurrentPageReport]="true" [currentPageReportTemplate]="

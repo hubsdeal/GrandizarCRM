@@ -69,17 +69,28 @@ export class HubsComponent extends AppComponentBase {
     currencyNameFilter = '';
     mediaLibraryNameFilter = '';
 
-    countryIdFilter:number;
-    stateIdFilter:number;
-    hubTypeIdFilter:number;
+    zipCodeFilter = '';
 
-    state:any;
-    country:any;
-    hubType:any;
+    countryIdFilter: number;
+    stateIdFilter: number;
+    hubTypeIdFilter: number;
+
+    state: any;
+    country: any;
+    hubType: any;
 
     allCountrys: HubCountryLookupTableDto[];
     allStates: HubStateLookupTableDto[];
     allHubTypes: HubHubTypeLookupTableDto[];
+
+    cityCount: number = 0;
+    countryCount: number = 0;
+    stateCount: number = 0;
+    countyCount: number = 0;
+    localityCount: number = 0;
+
+    skipCount: number;
+    maxResultCount: number = 10;
 
     constructor(
         injector: Injector,
@@ -103,68 +114,87 @@ export class HubsComponent extends AppComponentBase {
     }
 
     getHubs(event?: LazyLoadEvent) {
-        if (this.primengTableHelper.shouldResetPaging(event)) {
-            this.paginator.changePage(0);
-            if (this.primengTableHelper.records && this.primengTableHelper.records.length > 0) {
-                return;
-            }
-        }
+        // if (this.primengTableHelper.shouldResetPaging(event)) {
+        //     this.paginator.changePage(0);
+        //     if (this.primengTableHelper.records && this.primengTableHelper.records.length > 0) {
+        //         return;
+        //     }
+        // }
 
         this.primengTableHelper.showLoadingIndicator();
 
         this._hubsServiceProxy
-            .getAll(
+            .getAllHubsBySp(
                 this.filterText,
                 this.nameFilter,
-                this.descriptionFilter,
-                this.maxEstimatedPopulationFilter == null
-                    ? this.maxEstimatedPopulationFilterEmpty
-                    : this.maxEstimatedPopulationFilter,
-                this.minEstimatedPopulationFilter == null
-                    ? this.minEstimatedPopulationFilterEmpty
-                    : this.minEstimatedPopulationFilter,
-                this.hasParentHubFilter,
-                this.maxParentHubIdFilter == null ? this.maxParentHubIdFilterEmpty : this.maxParentHubIdFilter,
-                this.minParentHubIdFilter == null ? this.minParentHubIdFilterEmpty : this.minParentHubIdFilter,
-                this.maxLatitudeFilter == null ? this.maxLatitudeFilterEmpty : this.maxLatitudeFilter,
-                this.minLatitudeFilter == null ? this.minLatitudeFilterEmpty : this.minLatitudeFilter,
-                this.maxLongitudeFilter == null ? this.maxLongitudeFilterEmpty : this.maxLongitudeFilter,
-                this.minLongitudeFilter == null ? this.minLongitudeFilterEmpty : this.minLongitudeFilter,
                 this.liveFilter,
-                this.urlFilter,
-                this.officeFullAddressFilter,
                 this.partnerOrOwnedFilter,
-                this.phoneFilter,
-                this.yearlyRevenueFilter,
-                this.maxDisplaySequenceFilter == null
-                    ? this.maxDisplaySequenceFilterEmpty
-                    : this.maxDisplaySequenceFilter,
-                this.minDisplaySequenceFilter == null
-                    ? this.minDisplaySequenceFilterEmpty
-                    : this.minDisplaySequenceFilter,
-                this.countryNameFilter,
-                this.stateIdFilter,
-                this.stateNameFilter,
                 this.cityNameFilter,
+                this.phoneFilter,
                 this.countryIdFilter,
-                this.countyNameFilter,
+                this.stateIdFilter,
                 this.hubTypeIdFilter,
-                this.hubTypeNameFilter,
-                this.currencyNameFilter,
-                this.mediaLibraryNameFilter,
-                this.primengTableHelper.getSorting(this.dataTable),
-                this.primengTableHelper.getSkipCount(this.paginator, event),
-                this.primengTableHelper.getMaxResultCount(this.paginator, event)
+                this.zipCodeFilter,
+                // this.filterText,
+                // this.nameFilter,
+                // this.descriptionFilter,
+                // this.maxEstimatedPopulationFilter == null
+                //     ? this.maxEstimatedPopulationFilterEmpty
+                //     : this.maxEstimatedPopulationFilter,
+                // this.minEstimatedPopulationFilter == null
+                //     ? this.minEstimatedPopulationFilterEmpty
+                //     : this.minEstimatedPopulationFilter,
+                // this.hasParentHubFilter,
+                // this.maxParentHubIdFilter == null ? this.maxParentHubIdFilterEmpty : this.maxParentHubIdFilter,
+                // this.minParentHubIdFilter == null ? this.minParentHubIdFilterEmpty : this.minParentHubIdFilter,
+                // this.maxLatitudeFilter == null ? this.maxLatitudeFilterEmpty : this.maxLatitudeFilter,
+                // this.minLatitudeFilter == null ? this.minLatitudeFilterEmpty : this.minLatitudeFilter,
+                // this.maxLongitudeFilter == null ? this.maxLongitudeFilterEmpty : this.maxLongitudeFilter,
+                // this.minLongitudeFilter == null ? this.minLongitudeFilterEmpty : this.minLongitudeFilter,
+                // this.liveFilter,
+                // this.urlFilter,
+                // this.officeFullAddressFilter,
+                // this.partnerOrOwnedFilter,
+                // this.phoneFilter,
+                // this.yearlyRevenueFilter,
+                // this.maxDisplaySequenceFilter == null
+                //     ? this.maxDisplaySequenceFilterEmpty
+                //     : this.maxDisplaySequenceFilter,
+                // this.minDisplaySequenceFilter == null
+                //     ? this.minDisplaySequenceFilterEmpty
+                //     : this.minDisplaySequenceFilter,
+                // this.countryNameFilter,
+                // this.stateIdFilter,
+                // this.stateNameFilter,
+                // this.cityNameFilter,
+                // this.countryIdFilter,
+                // this.countyNameFilter,
+                // this.hubTypeIdFilter,
+                // this.hubTypeNameFilter,
+                // this.currencyNameFilter,
+                // this.mediaLibraryNameFilter,
+                // this.primengTableHelper.getSorting(this.dataTable),
+                // this.primengTableHelper.getSkipCount(this.paginator, event),
+                // this.primengTableHelper.getMaxResultCount(this.paginator, event)
+                '',
+                this.skipCount,
+                this.maxResultCount
             )
             .subscribe((result) => {
                 this.primengTableHelper.totalRecordsCount = result.totalCount;
-                this.primengTableHelper.records = result.items;
+                this.primengTableHelper.records = result.hubs;
                 this.primengTableHelper.hideLoadingIndicator();
             });
     }
 
     reloadPage(): void {
         this.paginator.changePage(this.paginator.getPage());
+    }
+
+    paginate(event: any) {
+        this.skipCount = event.first;
+        this.maxResultCount = event.rows;
+        this.getHubs();
     }
 
     createHub(): void {
@@ -260,25 +290,25 @@ export class HubsComponent extends AppComponentBase {
         this.getHubs();
     }
 
-    onCountrySelect(event:any){
+    onCountrySelect(event: any) {
         // if (event.value && event.value.id) {
         //     this._hubsServiceProxy.getAllStateForTableDropdown(event.value.id).subscribe(result=>{
         //         this.stateItems = result;
         //     })
         // }
-        if (event.value && event.value.id){
-            this.countryIdFilter = event.value.id; 
+        if (event.value && event.value.id) {
+            this.countryIdFilter = event.value.id;
         }
     }
 
-    onStateSelect(event:any){
-        if (event.value && event.value.id){
+    onStateSelect(event: any) {
+        if (event.value && event.value.id) {
             this.stateIdFilter = event.value.id;
         }
     }
 
-    onHusTypeSelect(event:any){
-        if (event.value && event.value.id){
+    onHusTypeSelect(event: any) {
+        if (event.value && event.value.id) {
             this.hubTypeIdFilter = event.value.id;
         }
     }
