@@ -1,4 +1,6 @@
-﻿using SoftGrid.DiscountManagement.Dtos;
+﻿using SoftGrid.CMS.Dtos;
+using SoftGrid.CMS;
+using SoftGrid.DiscountManagement.Dtos;
 using SoftGrid.DiscountManagement;
 using SoftGrid.OrderManagement.Dtos;
 using SoftGrid.OrderManagement;
@@ -66,6 +68,8 @@ namespace SoftGrid
     {
         public static void CreateMappings(IMapperConfigurationExpression configuration)
         {
+            configuration.CreateMap<CreateOrEditContentDto, Content>().ReverseMap();
+            configuration.CreateMap<ContentDto, Content>().ReverseMap();
             configuration.CreateMap<CreateOrEditProductTeamDto, ProductTeam>().ReverseMap();
             configuration.CreateMap<ProductTeamDto, ProductTeam>().ReverseMap();
             configuration.CreateMap<CreateOrEditShoppingCartDto, ShoppingCart>().ReverseMap();

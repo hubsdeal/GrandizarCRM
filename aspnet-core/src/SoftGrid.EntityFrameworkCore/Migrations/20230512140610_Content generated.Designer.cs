@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SoftGrid.EntityFrameworkCore;
 
@@ -11,9 +12,11 @@ using SoftGrid.EntityFrameworkCore;
 namespace SoftGrid.Migrations
 {
     [DbContext(typeof(SoftGridDbContext))]
-    partial class SoftGridDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230512140610_Content generated")]
+    partial class Contentgenerated
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1748,9 +1751,6 @@ namespace SoftGrid.Migrations
 
                     b.Property<string>("Body")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ContentTypeId")
-                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2");

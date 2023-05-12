@@ -30,6 +30,11 @@ namespace SoftGrid.Authorization
 
             var pages = context.GetPermissionOrNull(AppPermissions.Pages) ?? context.CreatePermission(AppPermissions.Pages, L("Pages"));
 
+            var contents = pages.CreateChildPermission(AppPermissions.Pages_Contents, L("Contents"));
+            contents.CreateChildPermission(AppPermissions.Pages_Contents_Create, L("CreateNewContent"));
+            contents.CreateChildPermission(AppPermissions.Pages_Contents_Edit, L("EditContent"));
+            contents.CreateChildPermission(AppPermissions.Pages_Contents_Delete, L("DeleteContent"));
+
             var productTeams = pages.CreateChildPermission(AppPermissions.Pages_ProductTeams, L("ProductTeams"));
             productTeams.CreateChildPermission(AppPermissions.Pages_ProductTeams_Create, L("CreateNewProductTeam"));
             productTeams.CreateChildPermission(AppPermissions.Pages_ProductTeams_Edit, L("EditProductTeam"));

@@ -1,6 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <localizationDictionary culture="en">
-  <texts>    <text name="ProductTeam">Product team</text>
+  <texts>    <text name="ContentTypeId">Content type id</text>
+    <text name="CMS">C m s</text>
+    <text name="SoftGrid.CMS.Content">Content</text>
+    <text name="Body">Body</text>
+    <text name="PublishedDate">Published date</text>
+    <text name="PublishTime">Publish time</text>
+    <text name="SeoUrl">Seo url</text>
+    <text name="SeoKeywords">Seo keywords</text>
+    <text name="SeoDescription">Seo description</text>
+    <text name="ContentsHeaderInfo">Contents header info</text>
+    <text name="CreateNewContent">Create new content</text>
+    <text name="EditContent">Edit content</text>
+    <text name="DeleteContent">Delete content</text>
+    <text name="Contents">Contents</text>
+    <text name="PublishedDateRange">Published date range</text>
+    <text name="ProductTeam">Product team</text>
     <text name="SoftGrid.Shop.ProductTeam">ProductTeam</text>
     <text name="ProductTeamsHeaderInfo">Product teams header info</text>
     <text name="CreateNewProductTeam">Create new product team</text>
