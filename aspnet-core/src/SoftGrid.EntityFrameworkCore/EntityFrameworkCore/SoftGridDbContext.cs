@@ -26,6 +26,8 @@ namespace SoftGrid.EntityFrameworkCore
 {
     public class SoftGridDbContext : AbpZeroDbContext<Tenant, Role, User, SoftGridDbContext>, IAbpPersistedGrantDbContext
     {
+        public virtual DbSet<StoreTaskMap> StoreTaskMaps { get; set; }
+
         public virtual DbSet<Content> Contents { get; set; }
 
         public virtual DbSet<ProductTeam> ProductTeams { get; set; }
@@ -320,10 +322,14 @@ namespace SoftGrid.EntityFrameworkCore
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Content>(c =>
+            modelBuilder.Entity<StoreTaskMap>(s =>
             {
-                c.HasIndex(e => new { e.TenantId });
+                s.HasIndex(e => new { e.TenantId });
             });
+            modelBuilder.Entity<Content>(c =>
+                       {
+                           c.HasIndex(e => new { e.TenantId });
+                       });
             modelBuilder.Entity<ProductTeam>(p =>
                        {
                            p.HasIndex(e => new { e.TenantId });

@@ -30,6 +30,11 @@ namespace SoftGrid.Authorization
 
             var pages = context.GetPermissionOrNull(AppPermissions.Pages) ?? context.CreatePermission(AppPermissions.Pages, L("Pages"));
 
+            var storeTaskMaps = pages.CreateChildPermission(AppPermissions.Pages_StoreTaskMaps, L("StoreTaskMaps"));
+            storeTaskMaps.CreateChildPermission(AppPermissions.Pages_StoreTaskMaps_Create, L("CreateNewStoreTaskMap"));
+            storeTaskMaps.CreateChildPermission(AppPermissions.Pages_StoreTaskMaps_Edit, L("EditStoreTaskMap"));
+            storeTaskMaps.CreateChildPermission(AppPermissions.Pages_StoreTaskMaps_Delete, L("DeleteStoreTaskMap"));
+
             var contents = pages.CreateChildPermission(AppPermissions.Pages_Contents, L("Contents"));
             contents.CreateChildPermission(AppPermissions.Pages_Contents_Create, L("CreateNewContent"));
             contents.CreateChildPermission(AppPermissions.Pages_Contents_Edit, L("EditContent"));

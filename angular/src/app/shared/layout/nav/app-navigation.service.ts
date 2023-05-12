@@ -406,6 +406,8 @@ export class AppNavigationService {
             new AppMenuItem('ProductTeams', 'Pages.ProductTeams', 'flaticon-more', '/app/main/shop/productTeams'),
             
             new AppMenuItem('Contents', 'Pages.Contents', 'flaticon-more', '/app/main/cms/contents'),
+            
+            new AppMenuItem('StoreTaskMaps', 'Pages.StoreTaskMaps', 'flaticon-more', '/app/main/taskManagement/storeTaskMaps'),
              new AppMenuItem('Editions', 'Pages.Editions', 'flaticon-app', '/app/admin/editions'),
             new AppMenuItem(
                 'Administration',
