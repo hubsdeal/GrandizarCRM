@@ -120,6 +120,11 @@ export class ProductsComponent extends AppComponentBase {
     maxPriceDiscountAmountFilter: number;
     minPriceDiscountAmountFilter: number;
 
+    skipCount: number;
+    maxResultCount: number = 10;
+    publishedCount: number =0;
+    unpublishedCount: number =0;
+
     constructor(
         injector: Injector,
         private _productsServiceProxy: ProductsServiceProxy,
@@ -130,15 +135,16 @@ export class ProductsComponent extends AppComponentBase {
         private _dateTimeService: DateTimeService
     ) {
         super(injector);
+        this.getProducts();
     }
 
     getProducts(event?: LazyLoadEvent) {
-        if (this.primengTableHelper.shouldResetPaging(event)) {
-            this.paginator.changePage(0);
-            if (this.primengTableHelper.records && this.primengTableHelper.records.length > 0) {
-                return;
-            }
-        }
+        // if (this.primengTableHelper.shouldResetPaging(event)) {
+        //     this.paginator.changePage(0);
+        //     if (this.primengTableHelper.records && this.primengTableHelper.records.length > 0) {
+        //         return;
+        //     }
+        // }
 
         this.primengTableHelper.showLoadingIndicator();
 
@@ -150,7 +156,7 @@ export class ProductsComponent extends AppComponentBase {
                 this.currencyIdFilter,
                 this.measurementUnitIdFilter,
                 this.ratingLikeIdFilter,
-                1,
+                0,
                 this.employeeId != null ? this.employeeId : undefined,
                 this.businessIdFilter != null ? this.businessIdFilter : undefined,
                 this.storeIdFilter,
@@ -197,15 +203,26 @@ export class ProductsComponent extends AppComponentBase {
                 this.ratingLikeNameFilter,
                 this.contactFullNameFilter,
                 this.storeNameFilter,
-                this.primengTableHelper.getSorting(this.dataTable),
-                this.primengTableHelper.getSkipCount(this.paginator, event),
-                this.primengTableHelper.getMaxResultCount(this.paginator, event)
+                '',
+                this.skipCount,
+                this.maxResultCount
+                // this.primengTableHelper.getSorting(this.dataTable),
+                // this.primengTableHelper.getSkipCount(this.paginator, event),
+                // this.primengTableHelper.getMaxResultCount(this.paginator, event)
             )
             .subscribe((result) => {
                 this.primengTableHelper.totalRecordsCount = result.totalCount;
                 this.primengTableHelper.records = result.products;
+                this.publishedCount = result.published;
+                this.unpublishedCount=result.unPublished;
                 this.primengTableHelper.hideLoadingIndicator();
             });
+    }
+
+    paginate(event: any) {
+        this.skipCount = event.first;
+        this.maxResultCount = event.rows;
+        this.getProducts();
     }
 
     reloadPage(): void {
@@ -350,4 +367,19 @@ export class ProductsComponent extends AppComponentBase {
         }
         this.reloadPage();
     }
+
+    onPublishedClick() {
+        this.isPublishedFilter = 1;
+        this.getProducts();
+    }
+    onUnPublishedClick() {
+        this.isPublishedFilter = 0;
+        this.getProducts();
+    }
+
+    onTotalClick() {
+        this.isPublishedFilter = -1;
+        this.getProducts();
+    }
+
 }

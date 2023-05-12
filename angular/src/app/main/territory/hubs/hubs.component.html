@@ -6,7 +6,7 @@
                 {{ l('ExportToExcel') }}
             </button>
 
-            <button *ngIf="isGranted('Pages.Hubs.Create')" (click)="createHub()" class="btn btn-primary blue">
+            <button *ngIf="isGranted('Pages.Create')" (click)="createHub()" class="btn btn-primary blue">
                 <i class="fa fa-plus"></i>
                 {{ l('Hub') }}
             </button>
@@ -231,6 +231,16 @@
                                         [(ngModel)]="cityNameFilter" />
                                 </div>
                             </div>
+
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="zipCodeFilter">
+                                        Zip Code
+                                    </label>
+                                    <input type="text" class="form-control" id="zipCodeFilter" name="zipCodeFilter"
+                                        [(ngModel)]="zipCodeFilter" />
+                                </div>
+                            </div>
                             <!-- <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="CountyNameFilter">
@@ -304,15 +314,15 @@
                             [resizableColumns]="primengTableHelper.resizableColumns">
                             <ng-template pTemplate="header">
                                 <tr>
-                                    <th style="width: 400px">
+                                    <th style="width: 200px">
                                         {{l('Name')}}
                                     </th>
                                     <th style="width: 150px">
                                         {{l('Type')}}
                                     </th>
-                                    <th style="width: 150px">
+                                    <!-- <th style="width: 150px">
                                         {{l('Manager')}}
-                                    </th>
+                                    </th> -->
                                     <th style="width: 90px; text-align: center;">
                                         {{l('#Store')}}
                                     </th>
@@ -322,9 +332,9 @@
                                     <th style="width: 90px; text-align: center;">
                                         {{l('#Contact')}}
                                     </th>
-                                    <th style="width: 110px; text-align: center;">
+                                    <!-- <th style="width: 110px; text-align: center;">
                                         {{l('#Contact Repo')}}
-                                    </th>
+                                    </th> -->
                                     <th style="width: 150px">
                                         {{l('Est. Population')}}
                                     </th>
@@ -426,14 +436,14 @@
                                         <p-sortIcon field="hub.displaySequence"></p-sortIcon>
                                     </th> -->
                                     <th style="width: 130px"
-                                        [hidden]="!isGrantedAny('Pages.Hubs.Edit', 'Pages.Hubs.Delete')">
+                                        [hidden]="!isGrantedAny('Pages.Edit', 'Pages.Delete')">
                                         {{ l('Actions') }}
                                     </th>
                                 </tr>
                             </ng-template>
                             <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
                                 <tr>
-                                    <td style="width:400px">
+                                    <td style="width:200px">
                                         <span class="p-column-title">{{ l('Name') }}</span>
                                         <div class="d-flex align-items-center">
                                             <div class="square_logo_box shadow-sm">
@@ -442,18 +452,18 @@
                                             </div>
                                             <div class="d-flex flex-wrap flex-grow-1 mt-n2 mt-lg-n1">
                                                 <div class="d-flex flex-column flex-grow-1 my-lg-0 my-2 pe-3">
-                                                    <a href="javascript:;" title="{{ record.hub.name }}"
-                                                        [routerLink]="['/app/main/territory/hubs/dashboard',record.hub.id]"
+                                                    <a href="javascript:;" title="{{ record.name }}"
+                                                        [routerLink]="['/app/main/territory/hubs/dashboard',record.id]"
                                                         class="fs-5 text-gray-800 text-hover-primary fw-bold">
-                                                        {{ record.hub.name }}
-                                                        <i *ngIf="record.hub.live"
+                                                        {{ record.name }}
+                                                        <i *ngIf="record.live"
                                                             class="fas fa-check-circle ml-1 mr-0 text-success"
                                                             title="Live"></i>
                                                     </a>
-                                                    <span *ngIf="record.hub.officeFullAddress"
+                                                    <span *ngIf="record.officeFullAddress"
                                                         class="text-gray-400 fw-semibold fs-7 my-1">
                                                         <i class="fas fa-map-marked-alt mr-1"></i>
-                                                        {{ record.hub.officeFullAddress }}
+                                                        {{ record.officeFullAddress }}
                                                     </span>
                                                 </div>
                                             </div>
@@ -463,56 +473,56 @@
                                         <span class="p-column-title">{{ l('Name') }}</span>
                                         {{ record.hubTypeName }}
                                     </td>
-                                    <td style="width:150px">
+                                    <!-- <td style="width:150px">
                                         <span class="p-column-title">{{ l('Manager') }}</span>
-                                        Rashedur Rahman
-                                    </td>
+                                        {{record.numberOfStores}}
+                                    </td> -->
                                     <td style="width:90px; text-align: center;">
                                         <span class="p-column-title">{{ l('#store') }}</span>
-                                        {{10000 | number:'1.0-0'}}
+                                        {{record.numberOfStores | number:'1.0-0'}}
                                     </td>
                                     <td style="width:90px; text-align: center;">
                                         <span class="p-column-title">{{ l('#Company') }}</span>
-                                        {{10000 | number:'1.0-0'}}
+                                        {{record.numberOfBusinesses | number:'1.0-0'}}
                                     </td>
                                     <td style="width:90px; text-align: center;">
                                         <span class="p-column-title">{{ l('#Contact') }}</span>
-                                        {{10000 | number:'1.0-0'}}
+                                        {{record.numberOfContacts | number:'1.0-0'}}
                                     </td>
-                                    <td style="width:110px; text-align: center;">
+                                    <!-- <td style="width:110px; text-align: center;">
                                         <span class="p-column-title">{{ l('#Contact Repo') }}</span>
                                         {{10000 | number:'1.0-0'}}
-                                    </td>
+                                    </td> -->
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('Est. Population') }}</span>
-                                        {{ record.hub.estimatedPopulation }}
+                                        {{ record.estimatedPopulation }}
                                     </td>
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('YearlyRevenue') }}</span>
-                                        {{ record.hub.yearlyRevenue }}
+                                        {{ record.yearlyRevenue }}
                                     </td>
                                     <td class="text-center" style="width:90px">
-                                        <div *ngIf="record.hub.live">
+                                        <div *ngIf="record.live">
                                             <span class="badge badge-success">YES</span>
                                         </div>
-                                        <div *ngIf="!record.hub.live">
+                                        <div *ngIf="!record.live">
                                             <span class="badge badge-danger">NO</span>
                                         </div>
                                     </td>
 
                                     <td class="text-center" style="width:150px">
-                                        <div *ngIf="!record.hub.partnerOrOwned">
+                                        <div *ngIf="!record.partnerOrOwned">
                                             <!-- <i class="fa fa-check-circle kt--font-success" title="True"></i> -->
                                             <span class="badge badge-success">YES</span>
                                         </div>
-                                        <div *ngIf="record.hub.partnerOrOwned">
+                                        <div *ngIf="record.partnerOrOwned">
                                             <!-- <i class="fa fa-times-circle" title="False"></i> -->
                                             <span class="badge badge-danger">NO</span>
                                         </div>
                                     </td>
                                     <td style="width:150px; text-align: center;">
                                         <span class="p-column-title">{{ l('Sequence') }}</span>
-                                        {{ record.hub.displaySequence }}
+                                        {{ record.displaySequence }}
                                     </td>
 
 
@@ -547,77 +557,77 @@
                                     </td>
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('Name') }}</span>
-                                        {{ record.hub.name }}
+                                        {{ record.name }}
                                     </td>
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('Description') }}</span>
-                                        {{ record.hub.description }}
+                                        {{ record.description }}
                                     </td>
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('EstimatedPopulation') }}</span>
-                                        {{ record.hub.estimatedPopulation }}
+                                        {{ record.estimatedPopulation }}
                                     </td>
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('HasParentHub') }}</span>
-                                        <div *ngIf="record.hub.hasParentHub" class="text-center">
+                                        <div *ngIf="record.hasParentHub" class="text-center">
                                             <i class="fa fa-check-circle text-success" title="True"></i>
                                         </div>
-                                        <div *ngIf="!record.hub.hasParentHub" class="text-center">
+                                        <div *ngIf="!record.hasParentHub" class="text-center">
                                             <i class="fa fa-times-circle" title="False"></i>
                                         </div>
                                     </td>
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('ParentHubId') }}</span>
-                                        {{ record.hub.parentHubId }}
+                                        {{ record.parentHubId }}
                                     </td>
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('Latitude') }}</span>
-                                        {{ record.hub.latitude }}
+                                        {{ record.latitude }}
                                     </td>
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('Longitude') }}</span>
-                                        {{ record.hub.longitude }}
+                                        {{ record.longitude }}
                                     </td>
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('Live') }}</span>
-                                        <div *ngIf="record.hub.live" class="text-center">
+                                        <div *ngIf="record.live" class="text-center">
                                             <i class="fa fa-check-circle text-success" title="True"></i>
                                         </div>
-                                        <div *ngIf="!record.hub.live" class="text-center">
+                                        <div *ngIf="!record.live" class="text-center">
                                             <i class="fa fa-times-circle" title="False"></i>
                                         </div>
                                     </td>
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('Url') }}</span>
-                                        {{ record.hub.url }}
+                                        {{ record.url }}
                                     </td>
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('OfficeFullAddress') }}</span>
-                                        {{ record.hub.officeFullAddress }}
+                                        {{ record.officeFullAddress }}
                                     </td>
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('PartnerOrOwned') }}</span>
-                                        <div *ngIf="record.hub.partnerOrOwned" class="text-center">
+                                        <div *ngIf="record.partnerOrOwned" class="text-center">
                                             <i class="fa fa-check-circle text-success" title="True"></i>
                                         </div>
-                                        <div *ngIf="!record.hub.partnerOrOwned" class="text-center">
+                                        <div *ngIf="!record.partnerOrOwned" class="text-center">
                                             <i class="fa fa-times-circle" title="False"></i>
                                         </div>
                                     </td>
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('Phone') }}</span>
-                                        {{ record.hub.phone }}
+                                        {{ record.phone }}
                                     </td>
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('YearlyRevenue') }}</span>
-                                        {{ record.hub.yearlyRevenue }}
+                                        {{ record.yearlyRevenue }}
                                     </td>
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('DisplaySequence') }}</span>
-                                        {{ record.hub.displaySequence }}
+                                        {{ record.displaySequence }}
                                     </td> -->
                                     <td style="width: 130px"
-                                        [hidden]="!isGrantedAny('Pages.Hubs.Edit', 'Pages.Hubs.Delete')">
+                                        [hidden]="!isGrantedAny('Pages.Edit', 'Pages.Delete')">
                                         <div class="btn-group dropdown" dropdown container="body">
                                             <button class="dropdown-toggle btn btn-sm btn-primary" dropdownToggle>
                                                 <i class="fa fa-cog"></i>
@@ -632,15 +642,15 @@
                                                 </li>
                                                 <li>
                                                     <a href="javascript:;"
-                                                        *ngIf="permission.isGranted('Pages.Hubs.Edit')"
+                                                        *ngIf="permission.isGranted('Pages.Edit')"
                                                         class="dropdown-item"
-                                                        (click)="createOrEditHubModal.show(record.hub.id)">
+                                                        (click)="createOrEditHubModal.show(record.id)">
                                                         {{ l('Edit') }}
                                                     </a>
                                                 </li>
                                                 <li>
                                                     <a class="dropdown-item" href="javascript:;"
-                                                        *ngIf="permission.isGranted('Pages.Hubs.Delete')"
+                                                        *ngIf="permission.isGranted('Pages.Delete')"
                                                         (click)="deleteHub(record.hub)">
                                                         {{ l('Delete') }}
                                                     </a>
@@ -656,7 +666,7 @@
                         </div>
                         <div class="primeng-paging-container">
                             <p-paginator [rows]="primengTableHelper.defaultRecordsCountPerPage" #paginator
-                                (onPageChange)="getHubs($event)" [totalRecords]="primengTableHelper.totalRecordsCount"
+                                (onPageChange)="paginate($event)" [totalRecords]="primengTableHelper.totalRecordsCount"
                                 [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
                                 [showCurrentPageReport]="true" [currentPageReportTemplate]="
                                     'TotalRecordsCount' | localize : primengTableHelper.totalRecordsCount

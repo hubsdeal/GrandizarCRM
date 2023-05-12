@@ -143,7 +143,7 @@ export class AppNavigationService {
                 ]
             ),
             new AppMenuItem('Dashboard', 'Pages.Tenant.Dashboard', 'flaticon-line-graph', '/app/main/dashboard'),
-            // new AppMenuItem('Tenants', 'Pages.Tenants', 'flaticon-list-3', '/app/admin/tenants'),
+            //new AppMenuItem('Tenants', 'Pages.Tenants', 'flaticon-list-3', '/app/admin/tenants'),
 
             // new AppMenuItem('Currencies', 'Pages.Currencies', 'flaticon-more', '/app/main/lookupData/currencies'),
 
