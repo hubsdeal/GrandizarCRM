@@ -199,7 +199,8 @@ namespace SoftGrid.LookupData
                 // Unifonic.NetCore.UnifonicNextGenClient smsClient = new Unifonic.NetCore.UnifonicNextGenClient();
                 // SendResponse resultA = await smsClient.Rest.CreateSendMessageAsync(appsId, "", dtoModel.Body, dtoModel.Recipient);
 
-
+                //UnifonicSMSClient client3 = new UnifonicSMSClient();
+                //RestController rest3 = client.Rest;
 
 
                 var client1 = new Unifonic.NetCore.UnifonicNextGenClient();
