@@ -1,4 +1,5 @@
-﻿using SoftGrid.DiscountManagement;
+﻿using SoftGrid.CMS;
+using SoftGrid.DiscountManagement;
 using SoftGrid.OrderManagement;
 using SoftGrid.SalesLeadManagement;
 using SoftGrid.TaskManagement;
@@ -25,6 +26,10 @@ namespace SoftGrid.EntityFrameworkCore
 {
     public class SoftGridDbContext : AbpZeroDbContext<Tenant, Role, User, SoftGridDbContext>, IAbpPersistedGrantDbContext
     {
+        public virtual DbSet<StoreTaskMap> StoreTaskMaps { get; set; }
+
+        public virtual DbSet<Content> Contents { get; set; }
+
         public virtual DbSet<ProductTeam> ProductTeams { get; set; }
 
         public virtual DbSet<ShoppingCart> ShoppingCarts { get; set; }
@@ -317,10 +322,18 @@ namespace SoftGrid.EntityFrameworkCore
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<ProductTeam>(p =>
+            modelBuilder.Entity<StoreTaskMap>(s =>
             {
-                p.HasIndex(e => new { e.TenantId });
+                s.HasIndex(e => new { e.TenantId });
             });
+            modelBuilder.Entity<Content>(c =>
+                       {
+                           c.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<ProductTeam>(p =>
+                       {
+                           p.HasIndex(e => new { e.TenantId });
+                       });
             modelBuilder.Entity<ShoppingCart>(s =>
                        {
                            s.HasIndex(e => new { e.TenantId });

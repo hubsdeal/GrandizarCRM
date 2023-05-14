@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SoftGrid.EntityFrameworkCore;
 
@@ -11,9 +12,11 @@ using SoftGrid.EntityFrameworkCore;
 namespace SoftGrid.Migrations
 {
     [DbContext(typeof(SoftGridDbContext))]
-    partial class SoftGridDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230512141138_Content regenerated")]
+    partial class Contentregenerated
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -8292,40 +8295,6 @@ namespace SoftGrid.Migrations
                     b.ToTable("AppBinaryObjects");
                 });
 
-            modelBuilder.Entity("SoftGrid.TaskManagement.StoreTaskMap", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<DateTime>("CreationTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long?>("CreatorUserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("StoreId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("TaskEventId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int?>("TenantId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("StoreId");
-
-                    b.HasIndex("TaskEventId");
-
-                    b.HasIndex("TenantId");
-
-                    b.ToTable("StoreTaskMaps");
-                });
-
             modelBuilder.Entity("SoftGrid.TaskManagement.TaskEvent", b =>
                 {
                     b.Property<long>("Id")
@@ -11286,25 +11255,6 @@ namespace SoftGrid.Migrations
                     b.Navigation("ProductFk");
 
                     b.Navigation("StoreFk");
-                });
-
-            modelBuilder.Entity("SoftGrid.TaskManagement.StoreTaskMap", b =>
-                {
-                    b.HasOne("SoftGrid.Shop.Store", "StoreFk")
-                        .WithMany()
-                        .HasForeignKey("StoreId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SoftGrid.TaskManagement.TaskEvent", "TaskEventFk")
-                        .WithMany()
-                        .HasForeignKey("TaskEventId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("StoreFk");
-
-                    b.Navigation("TaskEventFk");
                 });
 
             modelBuilder.Entity("SoftGrid.TaskManagement.TaskEvent", b =>
