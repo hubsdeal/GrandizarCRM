@@ -89,6 +89,11 @@ namespace SoftGrid.Shop.Dtos
         public long? RatingLikeId { get; set; }
 
         public long? StoreCategoryId { get; set; }
+        public string FileToken { get; set; }
+
+        public long? ProductCategoryId { get; set; }
+
+        public long? PrimaryCategoryId { get; set; }
 
     }
 }

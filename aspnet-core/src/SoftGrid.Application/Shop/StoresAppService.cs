@@ -1,26 +1,28 @@
-﻿using SoftGrid.LookupData;
+﻿using Abp.Application.Services.Dto;
+using Abp.Authorization;
+using Abp.Domain.Repositories;
+using Abp.Linq.Extensions;
+using Abp.UI;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+using SoftGrid.Authorization;
+using SoftGrid.Authorization.Users;
+using SoftGrid.Dto;
+using SoftGrid.EntityFrameworkCore.Repositories;
 using SoftGrid.LookupData;
-
+using SoftGrid.Shop.Dtos;
+using SoftGrid.Shop.Exporting;
+using SoftGrid.Storage;
+using SoftGrid.Territory;
 using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Linq.Dynamic.Core;
-using Abp.Linq.Extensions;
-using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Abp.Domain.Repositories;
-using SoftGrid.Shop.Exporting;
-using SoftGrid.Shop.Dtos;
-using SoftGrid.Dto;
-using Abp.Application.Services.Dto;
-using SoftGrid.Authorization;
-using Abp.Extensions;
-using Abp.Authorization;
-using Microsoft.EntityFrameworkCore;
-using Abp.UI;
-using SoftGrid.Storage;
-using Microsoft.Data.SqlClient;
-using System.Data;
-using SoftGrid.EntityFrameworkCore.Repositories;
 
 namespace SoftGrid.Shop
 {
@@ -36,8 +38,24 @@ namespace SoftGrid.Shop
         private readonly IRepository<MasterTag, long> _lookup_masterTagRepository;
         private readonly IStoredProcedureRepository _storedProcedureRepository;
         private readonly IBinaryObjectManager _binaryObjectManager;
+        private readonly IRepository<ProductCategory, long> _productCategoryRepository;
+        private readonly IRepository<StoreTag, long> _storeTagRepository;
+        private readonly IRepository<StoreNote, long> _storeNoteRepository;
+        private readonly IRepository<StoreReview, long> _storeReviewRepository;
+        private readonly IRepository<User, long> _userRepository;
+        private readonly IRepository<StoreAccountTeam, long> _storAccountTeamRepository;
+        private readonly IRepository<HubStore, long> _hubStoreRepository;
+        private readonly IRepository<Hub, long> _hubRepository;
+        private readonly IRepository<StoreProductMap, long> _storeProductMapRepository;
+        private readonly IRepository<HubProduct, long> _hubProductMapRepository;
+        private readonly IRepository<StoreProductCategoryMap, long> _storeProductCategoryMapRepository;
+        private readonly IRepository<HubProductCategory, long> _hubProductCategoryRepository;
+        private readonly ITempFileCacheManager _tempFileCacheManager;
         public StoresAppService(IRepository<Store, long> storeRepository, IStoresExcelExporter storesExcelExporter, IRepository<MediaLibrary, long> lookup_mediaLibraryRepository, IRepository<Country, long> lookup_countryRepository, IRepository<State, long> lookup_stateRepository, IRepository<RatingLike, long> lookup_ratingLikeRepository, IRepository<MasterTag, long> lookup_masterTagRepository,
-            IStoredProcedureRepository storedProcedureRepository, IBinaryObjectManager binaryObjectManager)
+            IStoredProcedureRepository storedProcedureRepository, IBinaryObjectManager binaryObjectManager, IRepository<ProductCategory, long> productCategoryRepository, IRepository<StoreTag, long> storeTagRepository, IRepository<StoreNote, long> storeNoteRepository, IRepository<StoreReview, long> storeReviewRepository, IRepository<User, long> userRepository,
+            IRepository<StoreAccountTeam, long> storAccountTeamRepository, ITempFileCacheManager tempFileCacheManager,
+            IRepository<HubStore, long> hubStoreRepository, IRepository<Hub, long> hubRepository,
+            IRepository<StoreProductMap, long> storeProductMapRepository, IRepository<HubProduct, long> hubProductMapRepository, IRepository<StoreProductCategoryMap, long> storeProductCategoryMapRepository, IRepository<HubProductCategory, long> hubProductCategoryRepository)
         {
             _storeRepository = storeRepository;
             _storesExcelExporter = storesExcelExporter;
@@ -48,6 +66,19 @@ namespace SoftGrid.Shop
             _lookup_masterTagRepository = lookup_masterTagRepository;
             _storedProcedureRepository = storedProcedureRepository;
             _binaryObjectManager = binaryObjectManager;
+            _productCategoryRepository = productCategoryRepository;
+            _storeTagRepository = storeTagRepository;
+            _storeNoteRepository = storeNoteRepository;
+            _storeReviewRepository = storeReviewRepository;
+            _userRepository = userRepository;
+            _storAccountTeamRepository = storAccountTeamRepository;
+            _tempFileCacheManager = tempFileCacheManager;
+            _hubStoreRepository = hubStoreRepository;
+            _hubRepository = hubRepository;
+            _storeProductMapRepository = storeProductMapRepository;
+            _hubProductMapRepository = hubProductMapRepository;
+            _storeProductCategoryMapRepository = storeProductCategoryMapRepository;
+            _hubProductCategoryRepository = hubProductCategoryRepository;
         }
 
         public async Task<PagedResultDto<GetStoreForViewDto>> GetAll(GetAllStoresInput input)
@@ -262,7 +293,10 @@ namespace SoftGrid.Shop
             if (output.Store.LogoMediaLibraryId != null)
             {
                 var _lookupMediaLibrary = await _lookup_mediaLibraryRepository.FirstOrDefaultAsync((long)output.Store.LogoMediaLibraryId);
-                output.MediaLibraryName = _lookupMediaLibrary?.Name?.ToString();
+                if (_lookupMediaLibrary.BinaryObjectId != Guid.Empty)
+                {
+                    output.Picture = await _binaryObjectManager.GetStorePictureUrlAsync(_lookupMediaLibrary.BinaryObjectId, ".png");
+                }
             }
 
             if (output.Store.CountryId != null)
@@ -289,23 +323,75 @@ namespace SoftGrid.Shop
                 output.MasterTagName = _lookupMasterTag?.Name?.ToString();
             }
 
+
+
+
+            if (output.Store.ProductCategoryId != null)
+            {
+                var _lookupProductCategory = await _productCategoryRepository.FirstOrDefaultAsync((long)output.Store.ProductCategoryId);
+                output.Productcategoryname = _lookupProductCategory?.Name?.ToString();
+            }
+
+            var tags = _storeTagRepository.GetAll().Include(e => e.MasterTagFk).Where(e => e.StoreId == output.Store.Id);
+            foreach (var tag in tags)
+            {
+                if (tag.MasterTagFk != null && tag.MasterTagFk.Name != null)
+                {
+                    output.StoreTags.Add(tag.MasterTagFk.Name);
+                }
+                else if (tag.CustomTag != null)
+                {
+                    output.StoreTags.Add(tag.CustomTag);
+                }
+            }
+
+            //output.NumberOfTasks = await _taskStoreMapRepository.CountAsync(e => e.StoreId == output.Store.Id);
+            output.NumberOfNotes = await _storeNoteRepository.CountAsync(e => e.StoreId == output.Store.Id);
+
+            output.NumberOfRatings = await _storeReviewRepository.CountAsync(e => e.StoreId == output.Store.Id);
+            if (output.NumberOfRatings > 0)
+            {
+                output.RatingScore = (_storeReviewRepository.GetAll().Where(e => e.StoreId == output.Store.Id && e.RatingLikeId != null).Select(e => e.RatingLikeId).Sum()) / output.NumberOfRatings;
+
+            }
+            else
+            {
+                output.RatingScore = 0;
+
+            }
+
+            var primaryCategory = _storeTagRepository.GetAll().Include(e => e.MasterTagFk).Where(e => e.StoreId == output.Store.Id && e.MasterTagCategoryId == 37 && e.MasterTagId != null).FirstOrDefault();
+            if (primaryCategory != null)
+            {
+                output.Store.PrimaryCategoryId = primaryCategory.MasterTagId;
+                output.PrimaryCategoryName = primaryCategory.MasterTagFk.Name;
+            }
+
             return output;
         }
 
-        public async Task CreateOrEdit(CreateOrEditStoreDto input)
+        public async Task<long?> CreateOrEdit(CreateOrEditStoreDto input)
         {
+            if (input.FileToken != null)
+            {
+                input = await SaveStorePhoto(input);
+            }
+
             if (input.Id == null)
             {
-                await Create(input);
+                long storeId = await Create(input);
+                return storeId;
+
             }
             else
             {
                 await Update(input);
+                return input.Id;
             }
         }
 
         [AbpAuthorize(AppPermissions.Pages_Stores_Create)]
-        protected virtual async Task Create(CreateOrEditStoreDto input)
+        protected virtual async Task<long> Create(CreateOrEditStoreDto input)
         {
             var store = ObjectMapper.Map<Store>(input);
 
@@ -314,15 +400,75 @@ namespace SoftGrid.Shop
                 store.TenantId = (int?)AbpSession.TenantId;
             }
 
-            await _storeRepository.InsertAsync(store);
+            store.StoreUrl = GetStoreSlugUrl(store.Name);
+            long storeId = await _storeRepository.InsertAndGetIdAsync(store);
+
+            if (input.PrimaryCategoryId != null)
+            {
+                var primaryCategory = new StoreTag();
+                primaryCategory.MasterTagCategoryId = 37;
+                primaryCategory.StoreId = storeId;
+                primaryCategory.MasterTagId = input.PrimaryCategoryId;
+                await _storeTagRepository.InsertAsync(primaryCategory);
+            }
+
+            //if (AbpSession.UserId != null)
+            //{
+            //    var user = await _userRepository.FirstOrDefaultAsync((long)AbpSession.UserId);
+            //    if (user.EmployeeId != null)
+            //    {
+            //        var team = new StoreAccountTeam();
+            //        team.EmployeeId = user.EmployeeId;
+            //        team.StoreId = storeId;
+            //        team.Active = true;
+            //        await _storAccountTeamRepository.InsertAsync(team);
+            //    }
+            //}
+
+            return storeId;
 
         }
 
         [AbpAuthorize(AppPermissions.Pages_Stores_Edit)]
         protected virtual async Task Update(CreateOrEditStoreDto input)
         {
+            if (input.StoreUrl != null && input.StoreUrl != "")
+            {
+                input.StoreUrl = input.StoreUrl.TrimEnd();
+                input.StoreUrl = input.StoreUrl.Replace(" ", "-");
+                if (!(await CheckUrlAvailability((long)input.Id, input.StoreUrl)))
+                {
+                    throw new UserFriendlyException("Url already exist");
+                }
+            }
+            else
+            {
+                input.StoreUrl = GetStoreSlugUrl(input.Name);
+            }
+
             var store = await _storeRepository.FirstOrDefaultAsync((long)input.Id);
+
+            if (input.PrimaryCategoryId != null)
+            {
+                var category = await _storeTagRepository.FirstOrDefaultAsync(e => e.StoreId == input.Id && e.MasterTagCategoryId == 37);
+                if (category != null)
+                {
+                    category.MasterTagId = input.PrimaryCategoryId;
+                    await _storeTagRepository.UpdateAsync(category);
+                }
+                else
+                {
+                    var primaryCategory = new StoreTag();
+                    primaryCategory.MasterTagCategoryId = 37;
+                    primaryCategory.StoreId = input.Id;
+                    primaryCategory.MasterTagId = input.PrimaryCategoryId;
+                    await _storeTagRepository.InsertAsync(primaryCategory);
+                }
+
+            }
             ObjectMapper.Map(input, store);
+            //var store = await _storeRepository.FirstOrDefaultAsync((long)input.Id);
+            //ObjectMapper.Map(input, store);
 
         }
 
@@ -503,6 +649,33 @@ namespace SoftGrid.Shop
         }
 
         [AbpAuthorize(AppPermissions.Pages_Stores)]
+        public async Task<List<StoreHubsLookupTableDto>> GetAllHubForTableDropdown(long? countryId, long? storeId)
+        {
+            var selectedHubIds = _hubStoreRepository.GetAll().Where(e => e.StoreId == storeId).Select(e => e.HubId);
+
+            var results = await _hubRepository.GetAll().Where(e => e.Live == true).WhereIf(countryId != null, e => e.CountryId == countryId).WhereIf(selectedHubIds != null, e => !selectedHubIds.Contains(e.Id))
+                .Select(hub => new StoreHubsLookupTableDto
+                {
+                    Id = hub.Id,
+                    DisplayName = hub == null || hub.Name == null ? "" : hub.Name.ToString()
+                }).ToListAsync();
+            return results;
+        }
+
+        [AbpAuthorize(AppPermissions.Pages_Stores)]
+        public async Task<List<StoreHubsLookupTableDto>> GetAllSelectedHubByStore(long? storeId)
+        {
+
+            var results = await _hubStoreRepository.GetAll().Include(e => e.HubFk).Where(e => e.StoreId == storeId && e.HubId != null)
+                .Select(hub => new StoreHubsLookupTableDto
+                {
+                    Id = hub.HubFk.Id,
+                    DisplayName = hub == null || hub.HubFk == null ? "" : hub.HubFk.Name.ToString()
+                }).ToListAsync();
+            return results;
+        }
+
+        [AbpAuthorize(AppPermissions.Pages_Stores)]
         public async Task<PagedResultDto<StoreMasterTagLookupTableDto>> GetAllMasterTagForLookupTable(GetAllForLookupTableInput input)
         {
             var query = _lookup_masterTagRepository.GetAll().WhereIf(
@@ -661,6 +834,168 @@ namespace SoftGrid.Shop
             sqlParameters.Add(masterTagIdFilter);
 
             return sqlParameters;
+        }
+
+        private async Task<CreateOrEditStoreDto> SaveStorePhoto(CreateOrEditStoreDto input)
+        {
+            CreateOrEditStoreDto storeDto = input;
+
+            byte[] byteArray;
+
+            var imageBytes = _tempFileCacheManager.GetFile(input.FileToken);
+            if (imageBytes == null)
+            {
+                throw new UserFriendlyException("There is no such image file with the token: " + input.FileToken);
+            }
+
+            using (var bmpImage = new Bitmap(new MemoryStream(imageBytes)))
+            {
+                using (var stream = new MemoryStream())
+                {
+                    byteArray = stream.ToArray();
+                }
+            }
+            byteArray = imageBytes;
+
+            //if (byteArray.Length > MaxProfilPictureBytes)
+            //{
+            //    throw new UserFriendlyException(L("ResizedProfilePicture_Warn_SizeLimit", AppConsts.ResizedMaxProfilPictureBytesUserFriendlyValue));
+            //}
+
+            var storedFile = new BinaryObject(AbpSession.TenantId, byteArray);
+            await _binaryObjectManager.SaveAsync(storedFile);
+            var mediaLibrary = new MediaLibrary();
+            mediaLibrary.BinaryObjectId = storedFile.Id;
+            mediaLibrary.Name = input.Name + "_" + "Logo";
+            mediaLibrary.MasterTagCategoryId = (long)MasterTagCategoriesEnum.Media_Type;
+            mediaLibrary.MasterTagId = 1;
+            mediaLibrary.FileExtension = ".png";
+            mediaLibrary.Size = (byteArray.Length / 1024).ToString() + " kb";
+            Image image = Image.FromStream(new MemoryStream(byteArray));
+            mediaLibrary.Dimension = image.Width.ToString() + "*" + image.Height.ToString();
+
+            storeDto.LogoMediaLibraryId = await _lookup_mediaLibraryRepository.InsertAndGetIdAsync(mediaLibrary);
+            return storeDto;
+
+        }
+
+
+
+        private string GetStoreSlugUrl(string name)
+        {
+            string str = RemoveAccent(name).ToLower();
+            // invalid chars           
+            str = Regex.Replace(str, @"[^a-z0-9\s-]", "");
+            // convert multiple spaces into one space   
+            str = Regex.Replace(str, @"\s+", " ").Trim();
+            // cut and trim 
+            str = str.Substring(0, str.Length <= 45 ? str.Length : 45).Trim();
+            str = Regex.Replace(str, @"\s", "-"); // hyphens 
+            int count = _storeRepository.Count(e => e.StoreUrl.Equals(str));
+            str = count > 0 ? str + "-" + (count + 1).ToString() : str;
+            return str;
+        }
+
+        private string GetProductStoreSlugUrl(string name)
+        {
+            string str = RemoveAccent(name).ToLower();
+            // invalid chars           
+            str = Regex.Replace(str, @"[^a-z0-9\s-]", "");
+            // convert multiple spaces into one space   
+            str = Regex.Replace(str, @"\s+", " ").Trim();
+            // cut and trim 
+            str = str.Substring(0, str.Length <= 45 ? str.Length : 45).Trim();
+            str = Regex.Replace(str, @"\s", "-"); // hyphens 
+            //int count = _storeRepository.Count(e => e.StoreUrl.Equals(str));
+            int count = 0;
+            str = count > 0 ? str + "-" + (count + 1).ToString() : str;
+            return str;
+        }
+        public string RemoveAccent(string txt)
+        {
+            byte[] bytes = System.Text.Encoding.GetEncoding("Cyrillic").GetBytes(txt);
+            return System.Text.Encoding.ASCII.GetString(bytes);
+        }
+
+        public async Task<bool> CheckUrlAvailability(long storeId, string url)
+        {
+            var store = await _storeRepository.FirstOrDefaultAsync(e => e.Id != storeId && e.StoreUrl == url);
+            if (store == null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public async Task BulkHubMap(long storeId, long[] ids)
+        {
+            foreach (var id in ids)
+            {
+                var store = await _hubStoreRepository.FirstOrDefaultAsync(e => e.StoreId == storeId && e.HubId == id);
+                {
+                    if (store == null)
+                    {
+                        var hubStore = new HubStore();
+                        hubStore.StoreId = storeId;
+                        hubStore.HubId = id;
+                        hubStore.Published = true;
+                        await _hubStoreRepository.InsertAsync(hubStore);
+                        //await AssignStoreProductsToHub(storeId, id);
+                        //await AssignStoreCategoriesToHub(storeId, id);
+                    }
+                }
+
+            }
+        }
+
+        private async Task AssignStoreProductsToHub(long storeId, long hubId)
+        {
+            var storeProducts = _storeProductMapRepository.GetAll().Where(e => e.StoreId == storeId);
+            foreach (var item in storeProducts)
+            {
+                var isAdded = await _hubProductMapRepository.FirstOrDefaultAsync(e => e.ProductId == item.ProductId && e.HubId == hubId);
+                if (isAdded == null)
+                {
+                    var hubProduct = new HubProduct();
+                    hubProduct.HubId = hubId;
+                    hubProduct.ProductId = item.ProductId;
+                    hubProduct.Published = true;
+                    await _hubProductMapRepository.InsertAsync(hubProduct);
+                }
+
+            }
+        }
+
+        private async Task AssignStoreCategoriesToHub(long storeId, long hubId)
+        {
+            var storeCategories = _storeProductCategoryMapRepository.GetAll().Where(e => e.StoreId == storeId);
+            foreach (var item in storeCategories)
+            {
+                var isAdded = await _hubProductCategoryRepository.FirstOrDefaultAsync(e => e.ProductCategoryId == item.ProductCategoryId && e.HubId == hubId);
+                if (isAdded == null)
+                {
+                    var hubCategory = new HubProductCategory();
+                    hubCategory.HubId = hubId;
+                    hubCategory.ProductCategoryId = item.ProductCategoryId;
+                    hubCategory.Published = true;
+                    await _hubProductCategoryRepository.InsertAsync(hubCategory);
+                }
+
+            }
+        }
+
+        public async Task<List<StorePrimaryCategoryLookupTableDto>> GetAllStorePrimaryCategoryForTableDropdown()
+        {
+            return await _lookup_masterTagRepository.GetAll()
+                .Where(e => e.MasterTagCategoryId == 18)
+                .Select(taxRate => new StorePrimaryCategoryLookupTableDto
+                {
+                    Id = taxRate.Id,
+                    DisplayName = taxRate == null || taxRate.Name == null ? "" : taxRate.Name.ToString()
+                }).ToListAsync();
         }
     }
 }

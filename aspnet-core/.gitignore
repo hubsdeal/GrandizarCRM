@@ -121,6 +121,10 @@ UpgradeLog*.XML
 src/.vs/config/applicationhost.config
 
 src/SoftGrid.Web.Host/wwwroot/Temp/Downloads
+src/SoftGrid.Web.Host/wwwroot/Common/Images/Products
+src/SoftGrid.Web.Host/wwwroot/Common/Images/Stores
+src/SoftGrid.Web.Host/wwwroot/Common/Images/Others
+src/SoftGrid.Web.Host/wwwroot/Common/Files
 src/SoftGrid.Web.Mvc/wwwroot/Temp/Downloads
 src/SoftGrid.Web.Mvc/Properties/PublishProfiles
 src/SoftGrid.Web.Mvc/node_modules

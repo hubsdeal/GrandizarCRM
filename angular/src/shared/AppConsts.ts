@@ -39,4 +39,6 @@ export class AppConsts {
     /// Redirects users to host URL when using subdomain as tenancy name for not existing tenants
     /// </summary>
     static readonly PreventNotExistingTenantSubdomains = false;
+
+    static readonly defaultCountryId:number=1;
 }
