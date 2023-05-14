@@ -28,14 +28,15 @@ namespace SoftGrid.Shop
         private readonly IStoreMediasExcelExporter _storeMediasExcelExporter;
         private readonly IRepository<Store, long> _lookup_storeRepository;
         private readonly IRepository<MediaLibrary, long> _lookup_mediaLibraryRepository;
+        private readonly IBinaryObjectManager _binaryObjectManager;
 
-        public StoreMediasAppService(IRepository<StoreMedia, long> storeMediaRepository, IStoreMediasExcelExporter storeMediasExcelExporter, IRepository<Store, long> lookup_storeRepository, IRepository<MediaLibrary, long> lookup_mediaLibraryRepository)
+        public StoreMediasAppService(IRepository<StoreMedia, long> storeMediaRepository, IStoreMediasExcelExporter storeMediasExcelExporter, IRepository<Store, long> lookup_storeRepository, IRepository<MediaLibrary, long> lookup_mediaLibraryRepository, IBinaryObjectManager binaryObjectManager)
         {
             _storeMediaRepository = storeMediaRepository;
             _storeMediasExcelExporter = storeMediasExcelExporter;
             _lookup_storeRepository = lookup_storeRepository;
             _lookup_mediaLibraryRepository = lookup_mediaLibraryRepository;
-
+            _binaryObjectManager = binaryObjectManager;
         }
 
         public async Task<PagedResultDto<GetStoreMediaForViewDto>> GetAll(GetAllStoreMediasInput input)
@@ -274,6 +275,66 @@ namespace SoftGrid.Shop
             return new PagedResultDto<StoreMediaMediaLibraryLookupTableDto>(
                 totalCount,
                 lookupTableDtoList
+            );
+        }
+
+        public async Task<PagedResultDto<GetStoreMediaForViewDto>> GetAllByStoreIdForStoreBuilder(long storeId)
+        {
+
+            var filteredStoreMedias = _storeMediaRepository.GetAll()
+                        .Include(e => e.StoreFk)
+                        .Include(e => e.MediaLibraryFk)
+                        .Where(e => e.StoreId == storeId);
+
+            var pagedAndFilteredStoreMedias = filteredStoreMedias
+                .OrderBy("displaySequence asc");
+
+            var storeMedias = from o in pagedAndFilteredStoreMedias
+                              join o1 in _lookup_storeRepository.GetAll() on o.StoreId equals o1.Id into j1
+                              from s1 in j1.DefaultIfEmpty()
+
+                              join o2 in _lookup_mediaLibraryRepository.GetAll() on o.MediaLibraryId equals o2.Id into j2
+                              from s2 in j2.DefaultIfEmpty()
+
+                              select new GetStoreMediaForViewDto()
+                              {
+                                  StoreMedia = new StoreMediaDto
+                                  {
+                                      DisplaySequence = o.DisplaySequence,
+                                      Id = o.Id,
+                                      StoreId = o.StoreId,
+                                      MediaLibraryId = o.MediaLibraryId
+                                  },
+                                  StoreName = s1 == null || s1.Name == null ? "" : s1.Name.ToString(),
+                                  MediaLibraryName = s2 == null || s2.Name == null ? "" : s2.Name.ToString()
+                              };
+
+            var result = await storeMedias.ToListAsync();
+
+            foreach (var storeMedia in result)
+            {
+                if (storeMedia.StoreMedia.MediaLibraryId != null)
+                {
+                    var media = _lookup_mediaLibraryRepository.Get((long)storeMedia.StoreMedia.MediaLibraryId);
+                    if (media.BinaryObjectId != null && media.BinaryObjectId != Guid.Empty)
+                    {
+                        //var binaryObject = await _binaryObjectManager.GetOrNullAsync(media.BinaryObjectId);
+                        storeMedia.Picture = await _binaryObjectManager.GetStorePictureUrlAsync(media.BinaryObjectId, ".png");
+                    }
+
+                    if (media.VideoLink != null)
+                    {
+                        storeMedia.VideoUrl = media.VideoLink;
+                    }
+                }
+
+            }
+
+            var totalCount = await filteredStoreMedias.CountAsync();
+
+            return new PagedResultDto<GetStoreMediaForViewDto>(
+                totalCount,
+                result
             );
         }
 

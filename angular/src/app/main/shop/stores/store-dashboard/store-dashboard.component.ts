@@ -1,14 +1,15 @@
-import { AfterViewInit, Component, Injector, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Injector, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { ChatGptResponseModalComponent } from '@app/shared/chat-gpt-response-modal/chat-gpt-response-modal.component';
 import { AppConsts } from '@shared/AppConsts';
 import { AppComponentBase } from '@shared/common/app-component-base';
-import { CreateOrEditStoreDto, StoresServiceProxy } from '@shared/service-proxies/service-proxies';
+import { CreateOrEditStoreDto, GetStoreMediaForViewDto, StoreMediasServiceProxy, StoresServiceProxy } from '@shared/service-proxies/service-proxies';
 import { IAjaxResponse, TokenService } from 'abp-ng2-module';
 import { FileItem, FileUploader, FileUploaderOptions } from 'ng2-file-upload';
 import { SelectItem } from 'primeng/api';
 import { finalize } from 'rxjs';
+import { CreateOrEditStoreMediaModalComponent } from '../../storeMedias/create-or-edit-storeMedia-modal.component';
 
 @Component({
   selector: 'app-store-dashboard',
@@ -16,6 +17,8 @@ import { finalize } from 'rxjs';
   styleUrls: ['./store-dashboard.component.css']
 })
 export class StoreDashboardComponent extends AppComponentBase implements OnInit, AfterViewInit {
+  @ViewChild('createOrEditStoreMediaModal', { static: true })
+  createOrEditStoreMediaModal: CreateOrEditStoreMediaModalComponent;
   saving = false;
   storeId: number;
   productShortDesc: string;
@@ -56,11 +59,15 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
   isUrlAvailble: boolean = false;
   isUrlNotAvailble: boolean = false;
 
+  images: GetStoreMediaForViewDto[] = [];
+  videos: any[] = [];
+
   constructor(
     injector: Injector,
     private route: ActivatedRoute,
     private _tokenService: TokenService,
     private _storeServiceProxy: StoresServiceProxy,
+    private _storeMediaServiceProxy: StoreMediasServiceProxy,
     private dialog: MatDialog
   ) {
     super(injector);
@@ -145,7 +152,7 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
     });
   }
 
-  
+
 
   saveStoreInfo() {
     if (this.uploader.queue != null && this.uploader.queue.length > 0) {
@@ -167,7 +174,7 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
       });
 
   }
-  
+
   fileChangeEvent(event: any) {
 
     if (event.target.files && event.target.files[0]) {
@@ -217,6 +224,32 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
     return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
   }
 
-  
+  //store medias
+  createStoreMediaPhoto(): void {
+    this.createOrEditStoreMediaModal.selectUploadPhoto = true;
+    this.createOrEditStoreMediaModal.storeId = this.storeId;
+    this.createOrEditStoreMediaModal.show();
+  }
+
+  createStoreMediaVideo(): void {
+    this.createOrEditStoreMediaModal.selectAddVideo = true;
+    this.createOrEditStoreMediaModal.storeId = this.storeId;
+    this.createOrEditStoreMediaModal.show();
+  }
+
+
+  getStoreMedia() {
+    this.images = [];
+    this.videos = [];
+    this._storeMediaServiceProxy.getall(
+      this.storeId
+    ).subscribe(result => {
+      this.images.push(...result.items.filter(x => x.picture != null && x.videoUrl == null));
+      if (this.images[0] != null) {
+        this.picture = this.images[0].picture;
+      }
+      this.videos.push(...result.items.filter(x => x.videoUrl != null));
+    });
+  }
 
 }

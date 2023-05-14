@@ -693,7 +693,7 @@
 
                                                         <div class="border border-dashed border-gray-300 rounded me-5">
                                                             <div class="overlay sm_bottom_gallery">
-                                                                <a href="javascript:;">
+                                                                <a href="javascript:;" (click)="createStoreMediaPhoto()">
                                                                     <span><i
                                                                             class="fas fa-plus-circle text-primary"></i></span>
                                                                     <span class="text-primary fs-5 fw-bold">Photo</span>
@@ -702,7 +702,7 @@
                                                         </div>
                                                         <div class="border border-dashed border-gray-300 rounded me-5">
                                                             <div class="overlay sm_bottom_gallery">
-                                                                <a href="javascript:;">
+                                                                <a href="javascript:;" (click)="createStoreMediaVideo()">
                                                                     <span><i
                                                                             class="fas fa-plus-circle text-primary"></i></span>
                                                                     <span class="text-primary fs-5 fw-bold">Video</span>
@@ -4930,4 +4930,6 @@
         </div>
 
     </div>
+    <createOrEditStoreMediaModal #createOrEditStoreMediaModal (modalSave)="getStoreMedias()">
+    </createOrEditStoreMediaModal>
 </div>
