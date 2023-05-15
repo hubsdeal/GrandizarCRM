@@ -69,10 +69,9 @@
                         <div class="d-flex flex-wrap flex-sm-nowrap mb-6">
                             <div
                                 class="d-flex flex-center flex-shrink-0 bg-light rounded w-100px h-100px w-lg-150px h-lg-150px me-7 mb-4">
-                                <!-- <img class="dashboard_header_image" src="/assets/common/images/app-logo-on-dark.svg"
-                                    alt="image"> -->
-                                <span class="dashboard_header_name">
-                                    TP
+                                <img *ngIf="picture!=null" class="dashboard_header_image" src="{{picture}}" alt="image">
+                                <span *ngIf="picture==null && store.name" class="dashboard_header_name">
+                                    {{store.name | nameSplit}}
                                 </span>
                             </div>
 
@@ -82,32 +81,46 @@
                                         <div class="d-flex align-items-center mb-1">
                                             <a href="javascript:;"
                                                 class="text-gray-800 text-hover-primary fs-2 fw-bold me-3">
-                                                Tutoring PASS
+                                                {{store.name}}
                                             </a>
-                                            <span class="badge badge-success text-white me-auto">
+                                            <span *ngIf="store.isVerified"
+                                                class="badge badge-success text-white me-auto">
                                                 <i class="fas fa-check-circle text-white me-1"></i> Verified
                                             </span>
-                                            <span class="badge badge-primary text-center ms-2" title="Primary Category">
-                                                Event Service
+                                            <span *ngIf="primaryCategoryName"
+                                                class="badge badge-primary text-center ms-2" title="Primary Category">
+                                                {{primaryCategoryName}}
                                             </span>
                                             <span class="badge badge-info text-white ms-2">
                                                 <i class="fas fa-comment-alt text-white me-1"></i> Connect
                                             </span>
                                         </div>
-                                        <div
+                                        <div *ngIf="store.city || stateName || countryName || store.zipCode"
                                             class="d-flex flex-wrap fw-semibold mb-1 align-items-center fs-6 text-gray-500">
                                             <i class="fas fa-map-marked-alt me-2"></i>
-                                            San Francisco, CA
+                                            <span title="City">{{store.city}}</span>
+                                            <span *ngIf="store.city && (stateName || countryName || store.zipCode)">,
+                                            </span>
+                                            <span title="State">{{stateName}}</span>
+                                            <span *ngIf="(store.city || stateName) && (countryName || store.zipCode)">,
+                                            </span>
+                                            <span title="Country">{{countryName}}</span>
+                                            <span *ngIf="(store.city || stateName || countryName) && store.zipCode">,
+                                            </span>
+                                            <span title="Zip Code" *ngIf="store.zipCode">{{store.zipCode}}</span>
                                         </div>
-                                        <div
+                                        <div *ngIf="store.phone || store.mobile"
                                             class="d-flex flex-wrap fw-semibold mb-1 align-items-center fs-6 text-gray-500">
                                             <i class="fas fa-phone-alt me-2"></i>
-                                            +880177721292
+                                            <span *ngIf="store.phone" title="Phone">{{store.phone}}</span>
+                                            <span *ngIf="store.phone && store.mobile"> ,
+                                            </span>
+                                            <span *ngIf="store.mobile" title="Business Mobile">{{store.mobile}}</span>
                                         </div>
-                                        <div
+                                        <div *ngIf="store.email"
                                             class="d-flex flex-wrap fw-semibold mb-1 align-items-center fs-6 text-gray-500">
                                             <i class="fas fa-envelope me-2"></i>
-                                            rashedrontbd4u@gmail.com
+                                            {{store.email}}
                                         </div>
                                         <div
                                             class="d-flex flex-wrap fw-semibold mb-1 align-items-center text-success fs-6">
@@ -116,15 +129,13 @@
                                         </div>
                                     </div>
 
-                                    <div class="d-flex mb-4">
+                                    <div class="d-flex mb-4 select_button_custom">
                                         <a href="javascript:;" class="btn btn-sm btn-success me-4"><i
                                                 class="fas fa-eye fs-6 "></i>
                                             Public View</a>
-                                        <a href="javascript:;" class="btn btn-sm btn-primary"><i
-                                                class="fas fa-check-double fs-6"></i> Published</a>
-                                        <a href="javascript:;" class="btn btn-sm btn-secondary ms-0"><i
-                                                class="fas fa-eye-slash fs-6"></i> Draft</a>
-
+                                        <p-selectButton [options]="storePublishedOptions" name="storePublishedOptions"
+                                            id="storePublishedOptions" [(ngModel)]="store.isPublished"
+                                            optionLabel="label" optionValue="value"></p-selectButton>
                                     </div>
                                 </div>
 
@@ -166,7 +177,7 @@
                                             </div>
                                             <div class="fw-semibold fs-6 text-gray-400">#Products</div>
                                         </div>
-                                        <div class="d-block">
+                                        <!-- <div class="d-block">
                                             <h6 class="mb-2 text-dark">Store Users</h6>
                                             <div class="symbol-group symbol-hover">
                                                 <div class="symbol symbol-30px symbol-circle" data-bs-toggle="tooltip"
@@ -192,7 +203,7 @@
                                                         data-kt-initialized="1">+3</span>
                                                 </a>
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
                             </div>
@@ -292,15 +303,15 @@
                                         aria-labelledby="kt_accordion_1_header_1" data-bs-parent="#kt_accordion_1">
                                         <div class="card-body pt-10">
                                             <!--begin::Form-->
-                                            <form id="kt_ecommerce_settings_general_form"
-                                                class="form fv-plugins-bootstrap5 fv-plugins-framework" action="#">
+                                            <form id="kt_ecommerce_settings_general_form" #storeForm="ngForm" novalidate
+                                                class="form fv-plugins-bootstrap5 fv-plugins-framework">
                                                 <!--begin::Input group-->
                                                 <div class="mb-7">
                                                     <div class="image-input image-input-outline"
-                                                        data-kt-image-input="true"
                                                         style="background-image: url(assets/common/images/c_logo.png)">
-                                                        <div class="image-input-wrapper w-125px h-125px"
-                                                            style="background-image: url(assets/common/images/c_logo.png)">
+                                                        <div *ngIf="imageSrc"
+                                                            class="image-input-wrapper w-125px h-125px"
+                                                            [style.background-image]="'url(' + imageSrc + ')'">
                                                         </div>
                                                         <label
                                                             class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
@@ -309,7 +320,10 @@
                                                             data-bs-original-title="Change avatar"
                                                             data-kt-initialized="1">
                                                             <i class="bi bi-pencil-fill fs-7"></i>
-                                                            <input type="file" name="avatar" accept=".png, .jpg, .jpeg">
+                                                            <input type="file" name="profile_avatar" id="customFile"
+                                                                ng2FileSelect [uploader]="uploader"
+                                                                (change)="fileChangeEvent($event)"
+                                                                accept=".png, .jpg, .jpeg">
                                                             <input type="hidden" name="avatar_remove">
                                                         </label>
                                                     </div>
@@ -323,8 +337,9 @@
                                                     <label class="fs-6 fw-semibold form-label mt-3">
                                                         <span class="required">Store Name</span>
                                                     </label>
-                                                    <input type="text" class="form-control form-control-solid"
-                                                        name="email" value="Tutoring Pass">
+                                                    <input type="text" [(ngModel)]="store.name"
+                                                        class="form-control form-control-solid" name="store.name"
+                                                        id="store.name">
                                                 </div>
                                                 <!--end::Row-->
                                                 <div class="fv-row mb-7 fv-plugins-icon-container">
@@ -332,7 +347,7 @@
                                                         <span>Legal Name</span>
                                                     </label>
                                                     <input type="text" class="form-control form-control-solid"
-                                                        name="phone" value="Tutoring Pass">
+                                                        [(ngModel)]="store.legalName" name="legalName">
                                                 </div>
                                                 <!--begin::Input group-->
                                                 <div class="fv-row mb-7 fv-plugins-icon-container">
@@ -351,7 +366,8 @@
                                                         <span>Full Address</span>
                                                     </label>
                                                     <input type="text" class="form-control form-control-solid"
-                                                        name="phone" value="">
+                                                        [(ngModel)]="store.fullAddress" name="fullAddress"
+                                                        id="fullAddress" value="">
                                                 </div>
                                                 <!--end::Input group-->
                                                 <!--begin::Row-->
@@ -362,7 +378,7 @@
                                                                 <span>City</span>
                                                             </label>
                                                             <input type="text" class="form-control form-control-solid"
-                                                                name="email" value="">
+                                                                [(ngModel)]="store.city" name="city" value="">
                                                         </div>
                                                     </div>
                                                     <div class="col">
@@ -370,9 +386,13 @@
                                                             <label class="fs-6 fw-semibold form-label mt-3">
                                                                 <span>State</span>
                                                             </label>
-                                                            <select class="form-control form-control-solid" name="state"
-                                                                id="state">
-                                                                <option value="1">Select State</option>
+                                                            <select class="form-control form-control-solid"
+                                                                [(ngModel)]="store.stateId" name="state" id="state">
+                                                                <option value="">Select State</option>
+                                                                <option *ngFor="let item of stateOptions"
+                                                                    value="{{item.id}}">
+                                                                    {{item.displayName}}
+                                                                </option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -385,9 +405,14 @@
                                                             <label class="fs-6 fw-semibold form-label mt-3">
                                                                 <span>Country</span>
                                                             </label>
-                                                            <select class="form-control form-control-solid" name="state"
-                                                                id="state">
-                                                                <option value="1">Select Country</option>
+                                                            <select class="form-control form-control-solid"
+                                                                [(ngModel)]="store.countryId" name="state"
+                                                                id="countryId">
+                                                                <option value="">Select Country</option>
+                                                                <option *ngFor="let item of countryOptions"
+                                                                    value="{{item.id}}">
+                                                                    {{item.displayName}}
+                                                                </option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -397,7 +422,7 @@
                                                                 <span>Zip Code</span>
                                                             </label>
                                                             <input type="text" class="form-control form-control-solid"
-                                                                name="email" value="">
+                                                                [(ngModel)]="store.zipCode" name="zipCode" value="">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -407,20 +432,29 @@
                                                     <div class="col">
                                                         <div class="fv-row mb-7">
                                                             <label class="fs-6 fw-semibold form-label mt-3">
-                                                                <span>Store URL</span>
+                                                                <span class="required">Store URL</span>
                                                             </label>
                                                             <input type="text" class="form-control form-control-solid"
-                                                                name="email" value="">
+                                                                name="url" id="url" [(ngModel)]="store.storeUrl"
+                                                                placeholder="Enter URL" required>
                                                         </div>
                                                     </div>
                                                     <div class="col d-flex align-items-center pt-3">
                                                         <div class="fv-row mb-0 mt-2 fv-plugins-icon-container">
                                                             <a href="javascript:;"
+                                                                (click)="checkUrlAvailability(store.id,store.storeUrl)"
                                                                 class="btn btn-outline btn-outline-dashed btn-outline-primary btn-active-light-primary">
                                                                 <i class="fas fa-eye"></i> Check Availability
                                                             </a>
                                                         </div>
                                                     </div>
+                                                </div>
+                                                <div class="mt-0 mb-3">
+                                                    <span class="form-text text-primary" *ngIf="isUrlAvailble">*URL
+                                                        is available</span>
+                                                    <span class="form-text text-danger" *ngIf="isUrlNotAvailble">*URL is
+                                                        not
+                                                        available</span>
                                                 </div>
                                                 <!--end::Row-->
                                                 <!--begin::Row-->
@@ -431,7 +465,7 @@
                                                                 <span>Business Phone</span>
                                                             </label>
                                                             <input type="text" class="form-control form-control-solid"
-                                                                name="email" value="">
+                                                                [(ngModel)]="store.phone" name="phone" id="phone">
                                                         </div>
                                                     </div>
                                                     <div class="col">
@@ -440,7 +474,7 @@
                                                                 <span>Mobile</span>
                                                             </label>
                                                             <input type="text" class="form-control form-control-solid"
-                                                                name="phone" value="">
+                                                                [(ngModel)]="store.mobile" name="mobile" id="mobile">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -453,7 +487,8 @@
                                                                 <span>Email</span>
                                                             </label>
                                                             <input type="email" class="form-control form-control-solid"
-                                                                name="email" value="">
+                                                                name="email" [(ngModel)]="store.email" id="email"
+                                                                required>
                                                         </div>
                                                     </div>
                                                     <div class="col">
@@ -462,7 +497,7 @@
                                                                 <span>Fax</span>
                                                             </label>
                                                             <input type="email" class="form-control form-control-solid"
-                                                                name="email" value="">
+                                                                name="fax" [(ngModel)]="store.fax" id="fax">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -475,7 +510,8 @@
                                                                 <span>Founded Year</span>
                                                             </label>
                                                             <input type="text" class="form-control form-control-solid"
-                                                                name="email" value="">
+                                                                id="yearOfEstablishment" name="yearOfEstablishment"
+                                                                [(ngModel)]="store.yearOfEstablishment">
                                                         </div>
                                                     </div>
                                                     <div class="col">
@@ -484,7 +520,7 @@
                                                                 <span>Website</span>
                                                             </label>
                                                             <input type="text" class="form-control form-control-solid"
-                                                                name="phone" value="">
+                                                                name="website" [(ngModel)]="store.website" id="website">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -498,6 +534,17 @@
                                                     </div>
                                                 </div>
 
+                                                <div class="fv-row mb-7 fv-plugins-icon-container">
+                                                    <div class="d-flex align-items-center">
+                                                        <label
+                                                            class="form-check form-check-custom form-check-inline form-check-solid">
+                                                            <input class="form-check-input" name="verified"
+                                                                id="verified" type="checkbox"
+                                                                [(ngModel)]="store.isVerified">
+                                                            <span class="fw-semibold ps-2 fs-6">Verified Store</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
 
                                                 <!--begin::Input group-->
                                                 <div class="fv-row mb-7 fv-plugins-icon-container">
@@ -511,9 +558,14 @@
                                                             </button>
                                                         </div>
                                                     </label>
-                                                    <textarea class="form-control form-control-solid"
-                                                        [(ngModel)]="bindingData" name="bindingData" id="bindingData"
-                                                        cols="30" rows="10"></textarea>
+                                                    <!-- <textarea class="form-control form-control-solid" id="description"
+                                                        name="description" [(ngModel)]="store.description" cols="30"
+                                                        rows="10"></textarea> -->
+
+                                                    <p-editor id="description" name="description"
+                                                        [(ngModel)]="store.description" ngDefaultControl
+                                                        [style]="{ height: '300px' }"
+                                                        placeholder="'Type here...'"></p-editor>
                                                 </div>
                                                 <!--end::Input group-->
 
@@ -523,12 +575,10 @@
                                                 <!--begin::Action buttons-->
                                                 <div class="d-flex justify-content-end">
                                                     <!--begin::Button-->
-                                                    <button type="submit" data-kt-contacts-type="submit"
-                                                        class="btn btn-primary">
+                                                    <button type="submit" (click)="saveStoreInfo()"
+                                                        [disabled]="!storeForm.form.valid" [buttonBusy]="saving"
+                                                        [busyText]="l('SavingWithThreeDot')" class="btn btn-primary">
                                                         <span class="indicator-label">Save</span>
-                                                        <span class="indicator-progress">Please wait...
-                                                            <span
-                                                                class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                                                     </button>
                                                     <!--end::Button-->
                                                 </div>
@@ -540,7 +590,7 @@
                                 </div>
                             </div>
 
-                            
+
 
                             <div class="card mb-6">
                                 <div class="accordion-item">
@@ -643,7 +693,7 @@
 
                                                         <div class="border border-dashed border-gray-300 rounded me-5">
                                                             <div class="overlay sm_bottom_gallery">
-                                                                <a href="javascript:;">
+                                                                <a href="javascript:;" (click)="createStoreMediaPhoto()">
                                                                     <span><i
                                                                             class="fas fa-plus-circle text-primary"></i></span>
                                                                     <span class="text-primary fs-5 fw-bold">Photo</span>
@@ -652,7 +702,7 @@
                                                         </div>
                                                         <div class="border border-dashed border-gray-300 rounded me-5">
                                                             <div class="overlay sm_bottom_gallery">
-                                                                <a href="javascript:;">
+                                                                <a href="javascript:;" (click)="createStoreMediaVideo()">
                                                                     <span><i
                                                                             class="fas fa-plus-circle text-primary"></i></span>
                                                                     <span class="text-primary fs-5 fw-bold">Video</span>
@@ -4880,4 +4930,6 @@
         </div>
 
     </div>
+    <createOrEditStoreMediaModal #createOrEditStoreMediaModal (modalSave)="getStoreMedias()">
+    </createOrEditStoreMediaModal>
 </div>

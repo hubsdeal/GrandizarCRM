@@ -24,7 +24,7 @@ namespace SoftGrid.Shop
 
         public virtual int? Sequence { get; set; }
 
-        public virtual long StoreId { get; set; }
+        public virtual long? StoreId { get; set; }
 
         [ForeignKey("StoreId")]
         public Store StoreFk { get; set; }

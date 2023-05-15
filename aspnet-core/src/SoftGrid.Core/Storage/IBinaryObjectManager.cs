@@ -14,5 +14,7 @@ namespace SoftGrid.Storage
         Task<string> GetOthersPictureUrlAsync(Guid id, string extension);
 
         Task<string> GetProductPictureUrlAsync(Guid id, string extension);
+
+        Task<string> GetStorePictureUrlAsync(Guid id, string extension);
     }
 }
