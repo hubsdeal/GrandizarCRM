@@ -1,0 +1,49 @@
+
+
+
+
+Moving forward, we opened an account for your company on Unifonic Cloud, and you are kindly requested for the time being to verify your account as per the below details
+
+Link: https://cloud.unifonic.com/finalize/bf790c93-3188-4266-92ff-21bedb33ad5d
+Username: as.hamouda77@outlook.com
+Mobile Phone Number: Kindly add your mobile number, +966569701339
+Password: Please set a suitable and memorable password for you.Please let your developer team start the API integration process accordingly, and feel free to contact Unifonic's support team at any point in time (they are available 24/7) if you need further information or assistance:
+API link:
+ https://developer.unifonic.com/
+https://docs.unifonic.com/docs/sending-your-first-sms-via-unifonic-api
+Unifonic Platform Training: https://www.youtube.com/playlist?list=PL0gs0W04Ym6Bh_NRAoGeDhAe-tD-Qg0uD
+Support Team Email: support@unifonic.com
+Support Team Mobile Number: 966920002687
+Submit a support ticket: https://support.unifonic.com/support/tickets/new
+
+
+
+curl --location --request POST 'https://el.cloud.unifonic.com/rest/SMS/messages?AppSid=axuN0U7QlmqVPsfdgoK0mZFgdzG16p&SenderID=UNISMS&Body=Test message&Recipient=971507679351&responseType=JSON&CorrelationID=q1&baseEncode=true&statusCallback=sent&async=false' \
+--header 'Accept: application/json'
+
+
+string appSid = "Use your own AppSid";
+string senderID = "sender";
+string body = "Test";
+long recipient = 966505980169L;
+string responseType = "JSON";
+string correlationID = "CorrelationID";
+bool? baseEncode = true;
+string statusCallback = "sent";
+bool? masync = false;
+
+try 
+{
+    SendResponse result = rest.CreateSendMessageAsync(appSid, senderID, body, recipient, responseType, correlationID, baseEncode, statusCallback, masync).Result;
+}
+
+CreateSendMessageAsync(
+    string appSid,
+    string senderID,
+    string body,
+    long recipient,
+    string responseType = null,
+    string correlationID = null,
+    bool? baseEncode = null,
+    string statusCallback = null,
+    bool? masync = false)

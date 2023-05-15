@@ -1,5 +1,6 @@
 ﻿using System;
 using Abp.Application.Services.Dto;
+using JetBrains.Annotations;
 
 namespace SoftGrid.LookupData.Dtos
 {
@@ -12,4 +13,6 @@ namespace SoftGrid.LookupData.Dtos
         public bool Published { get; set; }
 
     }
+
+  
 }

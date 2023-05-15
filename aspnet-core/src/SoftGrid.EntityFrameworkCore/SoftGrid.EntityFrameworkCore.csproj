@@ -23,4 +23,7 @@
   <ItemGroup>
     <ProjectReference Include="..\SoftGrid.Core\SoftGrid.Core.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="SeedData\StoredProc\" />
+  </ItemGroup>
 </Project>
