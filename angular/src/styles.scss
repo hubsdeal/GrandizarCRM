@@ -498,6 +498,11 @@ bs-days-calendar-view {
     border: 1px solid rgb(228 230 239) !important;
     border-radius: 5px !important;
     padding: 2px !important;
+
+    .p-inputtext {
+        padding: 0.69rem 0.95rem !important;
+        border: 0px solid rgb(228, 230, 239) !important;
+    }    
 }
 
 .new_media_file {
@@ -906,4 +911,26 @@ bs-days-calendar-view {
         padding: 5px;
       }
     
+}
+
+.p-inputtext {
+    padding: 0.9rem 0.97rem !important;
+    border-radius: 0px 6px 6px 0px !important;
+    border: 1px solid rgb(228 230 239) !important;
+}
+
+.g_prime_btn{
+    .p-button {
+        background: #2b9ef4 !important;
+        text-align: center;
+        justify-content: center;
+        i{
+            color: white;
+            font-size: 1.32rem;
+        }
+    }
+    
+    .p-button:enabled:hover {
+        background: rgb(41 136 207) !important;
+    }
 }

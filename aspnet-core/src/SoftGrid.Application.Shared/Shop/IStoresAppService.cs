@@ -18,7 +18,7 @@ namespace SoftGrid.Shop
 
         Task<GetStoreForEditOutput> GetStoreForEdit(EntityDto<long> input);
 
-        Task CreateOrEdit(CreateOrEditStoreDto input);
+        Task<long?> CreateOrEdit(CreateOrEditStoreDto input);
 
         Task Delete(EntityDto<long> input);
 

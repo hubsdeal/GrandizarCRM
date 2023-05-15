@@ -1,42 +1,74 @@
-﻿<div
-    bsModal
-    #createOrEditModal="bs-modal"
-    class="modal fade"
-    tabindex="-1"
-    role="dialog"
-    aria-labelledby="createOrEditModal"
-    aria-hidden="true"
-    [config]="{ backdrop: 'static' }"
->
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{ backdrop: 'static' }">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <form *ngIf="active" #storeMediaForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
                 <div class="modal-header">
                     <h4 class="modal-title">
-                        <span *ngIf="storeMedia.id">{{ l('EditStoreMedia') }}</span>
-                        <span *ngIf="!storeMedia.id">{{ l('CreateNewStoreMedia') }}</span>
+                        <span *ngIf="selectUploadPhoto">Add New Store Photo</span>
+                        <span *ngIf="selectAddVideo">Add New Store Video</span>
                     </h4>
 
-                    <button
-                        type="button"
-                        class="btn-close"
-                        (click)="close()"
-                        aria-label="Close"
-                        [disabled]="saving"
-                    ></button>
+                    <button type="button" class="btn-close" (click)="close()" aria-label="Close"
+                        [disabled]="saving"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="my-3">
+                    <div class="row">
+                        <div class="col-xl-12" *ngIf="selectUploadPhoto">
+                            <h6 class="text-gray-400 text-center fw-semibold fs-3 mb-10">
+                                Upload Photo <small>( Max Photo size 10 MB )</small>
+                            </h6>
+                            <!--begin::Input group-->
+                            <div class="mb-7 d-flex align-items-center justify-content-center">
+                                <div class="image-input image-input-outline"
+                                    style="background-image: url(assets/common/images/c_logo.png)">
+                                    <div *ngIf="imageSrc" class="image-input-wrapper w-125px h-125px"
+                                        [style.background-image]="'url(' + imageSrc + ')'">
+                                    </div>
+                                    <label
+                                        class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+                                        data-kt-image-input-action="change" data-bs-toggle="tooltip"
+                                        aria-label="Change avatar" data-bs-original-title="Change avatar"
+                                        data-kt-initialized="1">
+                                        <i class="bi bi-pencil-fill fs-7"></i>
+                                        <input type="file" name="profile_avatar" id="customFile" ng2FileSelect
+                                            [uploader]="uploader" (change)="fileChangeEvent($event)"
+                                            accept=".png, .jpg, .jpeg">
+                                        <input type="hidden" name="avatar_remove">
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-text text-center">Allowed file types: png, jpg, jpeg.
+                            </div>
+                            <!-- <div class="w-100">
+                                <div *ngIf="imageSrc" class="justify-content-center d-flex">
+                                    <img [src]="imageSrc" style="height: 250px; width:350px">
+                                </div>
+                            </div> -->
+                            <!--end::Input group-->
+                        </div>
+                    </div>
+
+
+                    <!-- startVideo -->
+                    <div *ngIf="selectAddVideo" class="col-xl-12  mt-4">
+                        <div class="form-group">
+                            <label class="form-label required"  for="StoreMedia_DisplaySequence">{{l("Video Title")}}</label>
+                            <input type="text" id="videoTitle" [(ngModel)]="mediaLibrary.name" class="form-control"
+                                name="videoTitle" required/>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label required"  for="StoreMedia_DisplaySequence">{{l("Video Link")}}</label>
+                            <input type="text" id="videolink" [(ngModel)]="mediaLibrary.videoLink" class="form-control"
+                                name="videolink" required/>
+                        </div>
+                    </div>
+                    <!-- startVideo -->
+                    <!-- <div class="my-3">
                         <label class="form-label" for="StoreName">{{ l('Store') }}</label>
                         <div class="input-group">
-                            <input
-                                class="form-control"
-                                id="StoreName"
-                                name="storeName"
-                                [(ngModel)]="storeName"
-                                type="text"
-                                disabled
-                            />
+                            <input class="form-control" id="StoreName" name="storeName" [(ngModel)]="storeName"
+                                type="text" disabled />
                             <button class="btn btn-primary blue" (click)="openSelectStoreModal()" type="button">
                                 <i class="fa fa-search"></i>
                                 {{ l('Pick') }}
@@ -46,26 +78,14 @@
                             </button>
                         </div>
                     </div>
-                    <input
-                        class="form-control"
-                        name="storeMedia.storeId"
-                        [(ngModel)]="storeMedia.storeId"
-                        type="text"
-                        required
-                        hidden
-                    />
+                    <input class="form-control" name="storeMedia.storeId" [(ngModel)]="storeMedia.storeId" type="text"
+                        required hidden />
 
                     <div class="my-3">
                         <label class="form-label" for="MediaLibraryName">{{ l('MediaLibrary') }}</label>
                         <div class="input-group">
-                            <input
-                                class="form-control"
-                                id="MediaLibraryName"
-                                name="mediaLibraryName"
-                                [(ngModel)]="mediaLibraryName"
-                                type="text"
-                                disabled
-                            />
+                            <input class="form-control" id="MediaLibraryName" name="mediaLibraryName"
+                                [(ngModel)]="mediaLibraryName" type="text" disabled />
                             <button class="btn btn-primary blue" (click)="openSelectMediaLibraryModal()" type="button">
                                 <i class="fa fa-search"></i>
                                 {{ l('Pick') }}
@@ -75,39 +95,22 @@
                             </button>
                         </div>
                     </div>
-                    <input
-                        class="form-control"
-                        name="storeMedia.mediaLibraryId"
-                        [(ngModel)]="storeMedia.mediaLibraryId"
-                        type="text"
-                        required
-                        hidden
-                    />
+                    <input class="form-control" name="storeMedia.mediaLibraryId" [(ngModel)]="storeMedia.mediaLibraryId"
+                        type="text" required hidden />
 
                     <div class="my5">
                         <label class="form-label" for="StoreMedia_DisplaySequence">{{ l('DisplaySequence') }}</label>
-                        <input
-                            type="number"
-                            #StoreMedia_DisplaySequence="ngModel"
-                            id="StoreMedia_DisplaySequence"
-                            class="form-control"
-                            [(ngModel)]="storeMedia.displaySequence"
-                            name="DisplaySequence"
-                        />
+                        <input type="number" #StoreMedia_DisplaySequence="ngModel" id="StoreMedia_DisplaySequence"
+                            class="form-control" [(ngModel)]="storeMedia.displaySequence" name="DisplaySequence" />
                         <validation-messages [formCtrl]="StoreMedia_DisplaySequence"></validation-messages>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="modal-footer">
                     <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
                         {{ l('Cancel') }}
                     </button>
-                    <button
-                        type="submit"
-                        class="btn btn-primary blue"
-                        [disabled]="!storeMediaForm.form.valid"
-                        [buttonBusy]="saving"
-                        [busyText]="l('SavingWithThreeDot')"
-                    >
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!storeMediaForm.form.valid"
+                        [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')">
                         <i class="fa fa-save"></i>
                         <span>{{ l('Save') }}</span>
                     </button>
@@ -115,12 +118,8 @@
             </form>
         </div>
     </div>
-    <storeMediaStoreLookupTableModal
-        #storeMediaStoreLookupTableModal
-        (modalSave)="getNewStoreId()"
-    ></storeMediaStoreLookupTableModal>
-    <storeMediaMediaLibraryLookupTableModal
-        #storeMediaMediaLibraryLookupTableModal
-        (modalSave)="getNewMediaLibraryId()"
-    ></storeMediaMediaLibraryLookupTableModal>
+    <storeMediaStoreLookupTableModal #storeMediaStoreLookupTableModal (modalSave)="getNewStoreId()">
+    </storeMediaStoreLookupTableModal>
+    <storeMediaMediaLibraryLookupTableModal #storeMediaMediaLibraryLookupTableModal
+        (modalSave)="getNewMediaLibraryId()"></storeMediaMediaLibraryLookupTableModal>
 </div>

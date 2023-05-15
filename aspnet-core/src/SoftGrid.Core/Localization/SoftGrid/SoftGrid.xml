@@ -1,6 +1,35 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <localizationDictionary culture="en">
-  <texts>    <text name="ShoppingCart">Shopping cart</text>
+  <texts>    <text name="StoreTaskMap">Store task map</text>
+    <text name="SoftGrid.TaskManagement.StoreTaskMap">StoreTaskMap</text>
+    <text name="StoreTaskMapsHeaderInfo">Store task maps header info</text>
+    <text name="CreateNewStoreTaskMap">Create new store task map</text>
+    <text name="EditStoreTaskMap">Edit store task map</text>
+    <text name="DeleteStoreTaskMap">Delete store task map</text>
+    <text name="StoreTaskMaps">Store task maps</text>
+    <text name="ContentTypeId">Content type id</text>
+    <text name="CMS">C m s</text>
+    <text name="SoftGrid.CMS.Content">Content</text>
+    <text name="Body">Body</text>
+    <text name="PublishedDate">Published date</text>
+    <text name="PublishTime">Publish time</text>
+    <text name="SeoUrl">Seo url</text>
+    <text name="SeoKeywords">Seo keywords</text>
+    <text name="SeoDescription">Seo description</text>
+    <text name="ContentsHeaderInfo">Contents header info</text>
+    <text name="CreateNewContent">Create new content</text>
+    <text name="EditContent">Edit content</text>
+    <text name="DeleteContent">Delete content</text>
+    <text name="Contents">Contents</text>
+    <text name="PublishedDateRange">Published date range</text>
+    <text name="ProductTeam">Product team</text>
+    <text name="SoftGrid.Shop.ProductTeam">ProductTeam</text>
+    <text name="ProductTeamsHeaderInfo">Product teams header info</text>
+    <text name="CreateNewProductTeam">Create new product team</text>
+    <text name="EditProductTeam">Edit product team</text>
+    <text name="DeleteProductTeam">Delete product team</text>
+    <text name="ProductTeams">Product teams</text>
+    <text name="ShoppingCart">Shopping cart</text>
     <text name="SoftGrid.Shop.ShoppingCart">ShoppingCart</text>
     <text name="UnitTotalPrice">Unit total price</text>
     <text name="UnitDiscountAmount">Unit discount amount</text>

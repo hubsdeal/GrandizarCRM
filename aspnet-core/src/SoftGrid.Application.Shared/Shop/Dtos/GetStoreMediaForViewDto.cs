@@ -8,5 +8,9 @@
 
         public string MediaLibraryName { get; set; }
 
+        public string Picture { get; set; }
+
+        public string VideoUrl { get; set; }
+
     }
 }

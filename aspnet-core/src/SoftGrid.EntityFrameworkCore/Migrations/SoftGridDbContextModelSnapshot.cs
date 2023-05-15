@@ -1735,6 +1735,82 @@ namespace SoftGrid.Migrations
                     b.ToTable("AbpUsers");
                 });
 
+            modelBuilder.Entity("SoftGrid.CMS.Content", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long?>("BannerMediaLibraryId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Body")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ContentTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("DeleterUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("LastModifierUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("PublishTime")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<bool>("Published")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("PublishedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("SeoDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SeoKeywords")
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
+
+                    b.Property<string>("SeoUrl")
+                        .HasMaxLength(1024)
+                        .HasColumnType("nvarchar(1024)");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(1024)
+                        .HasColumnType("nvarchar(1024)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BannerMediaLibraryId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("Contents");
+                });
+
             modelBuilder.Entity("SoftGrid.CRM.Business", b =>
                 {
                     b.Property<long>("Id")
@@ -6748,6 +6824,9 @@ namespace SoftGrid.Migrations
                     b.Property<long>("ProductId")
                         .HasColumnType("bigint");
 
+                    b.Property<bool?>("Published")
+                        .HasColumnType("bit");
+
                     b.Property<int?>("Sequence")
                         .HasColumnType("int");
 
@@ -6772,6 +6851,51 @@ namespace SoftGrid.Migrations
                     b.HasIndex("TenantId");
 
                     b.ToTable("ProductTags");
+                });
+
+            modelBuilder.Entity("SoftGrid.Shop.ProductTeam", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("EmployeeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Primary")
+                        .HasColumnType("bit");
+
+                    b.Property<long>("ProductId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("StoreOwnerTeamId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("StoreOwnerTeamId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("ProductTeams");
                 });
 
             modelBuilder.Entity("SoftGrid.Shop.ProductUpsellRelatedProduct", b =>
@@ -7997,6 +8121,9 @@ namespace SoftGrid.Migrations
                     b.Property<long?>("MasterTagId")
                         .HasColumnType("bigint");
 
+                    b.Property<bool?>("Published")
+                        .HasColumnType("bit");
+
                     b.Property<int?>("Sequence")
                         .HasColumnType("int");
 
@@ -8169,6 +8296,40 @@ namespace SoftGrid.Migrations
                     b.HasIndex("TenantId");
 
                     b.ToTable("AppBinaryObjects");
+                });
+
+            modelBuilder.Entity("SoftGrid.TaskManagement.StoreTaskMap", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("StoreId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("TaskEventId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StoreId");
+
+                    b.HasIndex("TaskEventId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("StoreTaskMaps");
                 });
 
             modelBuilder.Entity("SoftGrid.TaskManagement.TaskEvent", b =>
@@ -9149,6 +9310,15 @@ namespace SoftGrid.Migrations
                     b.Navigation("HubFk");
 
                     b.Navigation("LastModifierUser");
+                });
+
+            modelBuilder.Entity("SoftGrid.CMS.Content", b =>
+                {
+                    b.HasOne("SoftGrid.LookupData.MediaLibrary", "BannerMediaLibraryFk")
+                        .WithMany()
+                        .HasForeignKey("BannerMediaLibraryId");
+
+                    b.Navigation("BannerMediaLibraryFk");
                 });
 
             modelBuilder.Entity("SoftGrid.CRM.Business", b =>
@@ -10601,6 +10771,29 @@ namespace SoftGrid.Migrations
                     b.Navigation("ProductFk");
                 });
 
+            modelBuilder.Entity("SoftGrid.Shop.ProductTeam", b =>
+                {
+                    b.HasOne("SoftGrid.CRM.Employee", "EmployeeFk")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId");
+
+                    b.HasOne("SoftGrid.Shop.Product", "ProductFk")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SoftGrid.Shop.StoreOwnerTeam", "StoreOwnerTeamFk")
+                        .WithMany()
+                        .HasForeignKey("StoreOwnerTeamId");
+
+                    b.Navigation("EmployeeFk");
+
+                    b.Navigation("ProductFk");
+
+                    b.Navigation("StoreOwnerTeamFk");
+                });
+
             modelBuilder.Entity("SoftGrid.Shop.ProductUpsellRelatedProduct", b =>
                 {
                     b.HasOne("SoftGrid.Shop.Product", "PrimaryProductFk")
@@ -11099,6 +11292,25 @@ namespace SoftGrid.Migrations
                     b.Navigation("ProductFk");
 
                     b.Navigation("StoreFk");
+                });
+
+            modelBuilder.Entity("SoftGrid.TaskManagement.StoreTaskMap", b =>
+                {
+                    b.HasOne("SoftGrid.Shop.Store", "StoreFk")
+                        .WithMany()
+                        .HasForeignKey("StoreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SoftGrid.TaskManagement.TaskEvent", "TaskEventFk")
+                        .WithMany()
+                        .HasForeignKey("TaskEventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("StoreFk");
+
+                    b.Navigation("TaskEventFk");
                 });
 
             modelBuilder.Entity("SoftGrid.TaskManagement.TaskEvent", b =>

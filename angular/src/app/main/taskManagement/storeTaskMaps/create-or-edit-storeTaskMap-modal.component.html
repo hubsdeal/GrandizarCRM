@@ -1,0 +1,113 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #storeTaskMapForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="storeTaskMap.id">{{ l('EditStoreTaskMap') }}</span>
+                        <span *ngIf="!storeTaskMap.id">{{ l('CreateNewStoreTaskMap') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="StoreName">{{ l('Store') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="StoreName"
+                                name="storeName"
+                                [(ngModel)]="storeName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectStoreModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setStoreIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="storeTaskMap.storeId"
+                        [(ngModel)]="storeTaskMap.storeId"
+                        type="text"
+                        required
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="TaskEventName">{{ l('TaskEvent') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="TaskEventName"
+                                name="taskEventName"
+                                [(ngModel)]="taskEventName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectTaskEventModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setTaskEventIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="storeTaskMap.taskEventId"
+                        [(ngModel)]="storeTaskMap.taskEventId"
+                        type="text"
+                        required
+                        hidden
+                    />
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!storeTaskMapForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <storeTaskMapStoreLookupTableModal
+        #storeTaskMapStoreLookupTableModal
+        (modalSave)="getNewStoreId()"
+    ></storeTaskMapStoreLookupTableModal>
+    <storeTaskMapTaskEventLookupTableModal
+        #storeTaskMapTaskEventLookupTableModal
+        (modalSave)="getNewTaskEventId()"
+    ></storeTaskMapTaskEventLookupTableModal>
+</div>

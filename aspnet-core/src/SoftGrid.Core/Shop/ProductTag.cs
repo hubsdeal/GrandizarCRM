@@ -39,5 +39,6 @@ namespace SoftGrid.Shop
         [ForeignKey("MasterTagId")]
         public MasterTag MasterTagFk { get; set; }
 
+        public virtual bool? Published { get; set; }
     }
 }

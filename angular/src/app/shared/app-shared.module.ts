@@ -25,6 +25,7 @@ import { ThemesLayoutBaseComponent } from './layout/themes/themes-layout-base.co
 import { ChatGptResponseModalComponent } from './chat-gpt-response-modal/chat-gpt-response-modal.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import { EditorModule } from 'primeng/editor';
+import { InputTextModule } from 'primeng/inputtext';
 
 const imports = [
     CommonModule,
@@ -51,7 +52,8 @@ const imports = [
     NgxSpinnerModule,
     AppBsModalModule,
     MatDialogModule,
-    EditorModule
+    EditorModule,
+    InputTextModule
 ];
 
 @NgModule({

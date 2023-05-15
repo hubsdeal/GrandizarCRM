@@ -18,5 +18,13 @@ import { StoreMediaMediaLibraryLookupTableModalComponent } from './storeMedia-me
         StoreMediaMediaLibraryLookupTableModalComponent,
     ],
     imports: [AppSharedModule, StoreMediaRoutingModule, AdminSharedModule],
+    exports: [
+        StoreMediasComponent,
+        CreateOrEditStoreMediaModalComponent,
+        ViewStoreMediaModalComponent,
+
+        StoreMediaStoreLookupTableModalComponent,
+        StoreMediaMediaLibraryLookupTableModalComponent,
+    ]
 })
 export class StoreMediaModule {}

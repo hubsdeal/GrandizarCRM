@@ -24,7 +24,7 @@ namespace SoftGrid.Shop
 
         public virtual int? Sequence { get; set; }
 
-        public virtual long StoreId { get; set; }
+        public virtual long? StoreId { get; set; }
 
         [ForeignKey("StoreId")]
         public Store StoreFk { get; set; }
@@ -38,6 +38,8 @@ namespace SoftGrid.Shop
 
         [ForeignKey("MasterTagId")]
         public MasterTag MasterTagFk { get; set; }
+
+        public virtual bool? Published { get; set; }
 
     }
 }

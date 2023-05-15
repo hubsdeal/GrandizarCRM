@@ -10,6 +10,27 @@ import { MasterDataIndexComponent } from './lookupData/master-data-index/master-
                 children: [
                     
                     {
+                        path: 'taskManagement/storeTaskMaps',
+                        loadChildren: () => import('./taskManagement/storeTaskMaps/storeTaskMap.module').then(m => m.StoreTaskMapModule),
+                        data: { permission: 'Pages.StoreTaskMaps' }
+                    },
+                
+                    
+                    {
+                        path: 'cms/contents',
+                        loadChildren: () => import('./cms/contents/content.module').then(m => m.ContentModule),
+                        data: { permission: 'Pages.Contents' }
+                    },
+                
+                    
+                    {
+                        path: 'shop/productTeams',
+                        loadChildren: () => import('./shop/productTeams/productTeam.module').then(m => m.ProductTeamModule),
+                        data: { permission: 'Pages.ProductTeams' }
+                    },
+                
+                    
+                    {
                         path: 'shop/shoppingCarts',
                         loadChildren: () => import('./shop/shoppingCarts/shoppingCart.module').then(m => m.ShoppingCartModule),
                         data: { permission: 'Pages.ShoppingCarts' }

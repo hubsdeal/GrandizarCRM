@@ -21,6 +21,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SoftGrid.Application.Shared\SoftGrid.Application.Shared.csproj" />
+    <ProjectReference Include="..\SoftGrid.Core.Shared\SoftGrid.Core.Shared.csproj" />
     <ProjectReference Include="..\SoftGrid.Core\SoftGrid.Core.csproj" />
     <ProjectReference Include="..\SoftGrid.EntityFrameworkCore\SoftGrid.EntityFrameworkCore.csproj" />
   </ItemGroup>

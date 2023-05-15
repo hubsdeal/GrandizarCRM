@@ -143,7 +143,7 @@ export class AppNavigationService {
                 ]
             ),
             new AppMenuItem('Dashboard', 'Pages.Tenant.Dashboard', 'flaticon-line-graph', '/app/main/dashboard'),
-            // new AppMenuItem('Tenants', 'Pages.Tenants', 'flaticon-list-3', '/app/admin/tenants'),
+            //new AppMenuItem('Tenants', 'Pages.Tenants', 'flaticon-list-3', '/app/admin/tenants'),
 
             // new AppMenuItem('Currencies', 'Pages.Currencies', 'flaticon-more', '/app/main/lookupData/currencies'),
 
@@ -402,6 +402,12 @@ export class AppNavigationService {
             new AppMenuItem('WishLists', 'Pages.WishLists', 'flaticon-more', '/app/main/shop/wishLists'),
             
             new AppMenuItem('ShoppingCarts', 'Pages.ShoppingCarts', 'flaticon-more', '/app/main/shop/shoppingCarts'),
+            
+            new AppMenuItem('ProductTeams', 'Pages.ProductTeams', 'flaticon-more', '/app/main/shop/productTeams'),
+            
+            new AppMenuItem('Contents', 'Pages.Contents', 'flaticon-more', '/app/main/cms/contents'),
+            
+            new AppMenuItem('StoreTaskMaps', 'Pages.StoreTaskMaps', 'flaticon-more', '/app/main/taskManagement/storeTaskMaps'),
              new AppMenuItem('Editions', 'Pages.Editions', 'flaticon-app', '/app/admin/editions'),
             new AppMenuItem(
                 'Administration',

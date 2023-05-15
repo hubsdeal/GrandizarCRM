@@ -112,8 +112,9 @@ export class ProductDashboardComponent extends AppComponentBase {
 
   openAiModalPr(feildName: string): void {
     this.productShortDesc = "Write a  short description for a product where product name is Organic Mustard Oil and product brand is Saffola"
+    var modalTitle = "AI Text Generator - Product Description"
     const dialogRef = this.dialog.open(ChatGptResponseModalComponent, {
-      data: { promtFromAnotherComponent: this.productShortDesc, feildName: feildName },
+      data: { promtFromAnotherComponent: this.productShortDesc, feildName: feildName, modalTitle: modalTitle },
       width: '1100px',
     });
 
