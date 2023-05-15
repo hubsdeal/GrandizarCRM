@@ -2557,6 +2557,9 @@ namespace SoftGrid.PublicCommon
         [AbpAllowAnonymous]
         public async Task<PagedResultDto<TopHubPublicViewDto>> GetAllHubsList(PublicHubsListInput input)
         {
+
+
+
             List<SqlParameter> sqlParameters = new List<SqlParameter>();
             if (input.Filter != null)
             {
@@ -2589,18 +2592,31 @@ namespace SoftGrid.PublicCommon
             SqlParameter countryIdFilter = new SqlParameter("@CountryIdFilter", input.CountryIdFilter == null ? (object)DBNull.Value : input.CountryIdFilter);
             sqlParameters.Add(countryIdFilter);
 
-            var result = await _storedProcedureRepository.ExecuteStoredProcedure<GetHubListForPublicDirectoryBySp>("usp_GetAllHubsForPublicHubDirectory", CommandType.StoredProcedure, sqlParameters.ToArray());
 
-            if (result != null && result.Hubs != null)
+            GetHubListForPublicDirectoryBySp result = new GetHubListForPublicDirectoryBySp();
+
+            try
             {
-                foreach (var item in result.Hubs)
+                result = await _storedProcedureRepository.ExecuteStoredProcedure<GetHubListForPublicDirectoryBySp>("usp_GetAllHubsForPublicHubDirectory", CommandType.StoredProcedure, sqlParameters.ToArray());
+
+                if (result != null && result.Hubs != null)
                 {
-                    if (item.PictureLink != null && item.PictureLink != Guid.Empty)
+                    foreach (var item in result.Hubs)
                     {
-                        item.Picture = await _binaryObjectManager.GetStorePictureUrlAsync((Guid)item.PictureLink, ".png");
+                        if (item.PictureLink != null && item.PictureLink != Guid.Empty)
+                        {
+                            item.Picture = await _binaryObjectManager.GetStorePictureUrlAsync((Guid)item.PictureLink, ".png");
+                        }
                     }
                 }
             }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+
+
 
 
             return new PagedResultDto<TopHubPublicViewDto>(
