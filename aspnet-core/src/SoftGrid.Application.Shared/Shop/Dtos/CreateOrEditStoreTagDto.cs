@@ -23,5 +23,7 @@ namespace SoftGrid.Shop.Dtos
 
         public long? MasterTagId { get; set; }
 
+        public bool? Published { get; set; }
+
     }
 }
