@@ -108,7 +108,10 @@ export class CreateOrEditMediaLibraryModalComponent extends AppComponentBase imp
         this.mediaLibrary.name = 'hubsdeal-' + this.mediaLibrary.name;
 
         this._mediaLibrariesServiceProxy.createOrEdit(this.mediaLibrary)
-            .pipe(finalize(() => { this.saving = false; }))
+            .pipe(
+                finalize(() => { 
+                    this.saving = false; 
+                }))
             .subscribe((result) => {
                 this.notify.info(this.l('SavedSuccessfully'));
                 this.close();

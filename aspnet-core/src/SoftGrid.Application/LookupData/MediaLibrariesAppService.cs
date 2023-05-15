@@ -65,7 +65,7 @@ namespace SoftGrid.LookupData
                         .WhereIf(!string.IsNullOrWhiteSpace(input.MasterTagNameFilter), e => e.MasterTagFk != null && e.MasterTagFk.Name == input.MasterTagNameFilter);
 
             var pagedAndFilteredMediaLibraries = filteredMediaLibraries
-                .OrderBy(input.Sorting ?? "id asc")
+                .OrderBy(input.Sorting ?? "id desc")
                 .PageBy(input);
 
             var mediaLibraries = from o in pagedAndFilteredMediaLibraries

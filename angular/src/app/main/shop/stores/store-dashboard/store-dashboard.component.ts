@@ -4,12 +4,13 @@ import { ActivatedRoute } from '@angular/router';
 import { ChatGptResponseModalComponent } from '@app/shared/chat-gpt-response-modal/chat-gpt-response-modal.component';
 import { AppConsts } from '@shared/AppConsts';
 import { AppComponentBase } from '@shared/common/app-component-base';
-import { CreateOrEditStoreDto, GetStoreMediaForViewDto, StoreMediasServiceProxy, StoresServiceProxy } from '@shared/service-proxies/service-proxies';
+import { CreateOrEditStoreDto, CreateOrEditStoreMediaDto, GetStoreMediaForViewDto, StoreMediasServiceProxy, StoresServiceProxy } from '@shared/service-proxies/service-proxies';
 import { IAjaxResponse, TokenService } from 'abp-ng2-module';
 import { FileItem, FileUploader, FileUploaderOptions } from 'ng2-file-upload';
 import { SelectItem } from 'primeng/api';
 import { finalize } from 'rxjs';
 import { CreateOrEditStoreMediaModalComponent } from '../../storeMedias/create-or-edit-storeMedia-modal.component';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-store-dashboard',
@@ -35,6 +36,7 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
   picture: string;
   teams: any[] = [];
   taxOptions: any[] = [];
+  video: string;
 
   publishOptions: SelectItem[];
   publish: Boolean = false;
@@ -68,6 +70,7 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
     private _tokenService: TokenService,
     private _storeServiceProxy: StoresServiceProxy,
     private _storeMediaServiceProxy: StoreMediasServiceProxy,
+    private _sanitizer: DomSanitizer,
     private dialog: MatDialog
   ) {
     super(injector);
@@ -137,6 +140,7 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
       if (result.picture != null) {
         this.imageSrc = result.picture;
       }
+      this.getStoreMedia();
     })
   }
 
@@ -241,7 +245,7 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
   getStoreMedia() {
     this.images = [];
     this.videos = [];
-    this._storeMediaServiceProxy.getall(
+    this._storeMediaServiceProxy.getAllByStoreIdForStoreBuilder(
       this.storeId
     ).subscribe(result => {
       this.images.push(...result.items.filter(x => x.picture != null && x.videoUrl == null));
@@ -251,5 +255,36 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
       this.videos.push(...result.items.filter(x => x.videoUrl != null));
     });
   }
+
+  deleteStoreMedia(id: number) {
+    this._storeMediaServiceProxy.delete(id).subscribe(result => {
+      this.notify.success(this.l('DeletedSuccessfully'));
+      this.getStoreDetails(this.storeId);
+    })
+  }
+
+  onStorePhotoOrVideoClick(data: any) {
+    if (data.picture) {
+      this.picture = data.picture;
+    } else if (data.videoUrl) {
+      this.video = data.videoUrl;
+    }
+  }
+  getSafeEmbeddedVideoUrl(url: string) {
+    return this._sanitizer.bypassSecurityTrustResourceUrl(url);
+  }
+
+  uploadStoreMedia(event: any) {
+    if (event) {
+      var media = new CreateOrEditStoreMediaDto();
+      media.storeId = this.storeId;
+      media.mediaLibraryId = event;
+      this._storeMediaServiceProxy.createOrEdit(media).subscribe(result => {
+        this.notify.info(this.l('SavedSuccessfully'));
+        this.getStoreDetails(this.storeId);
+      });
+    }
+  }
+
 
 }

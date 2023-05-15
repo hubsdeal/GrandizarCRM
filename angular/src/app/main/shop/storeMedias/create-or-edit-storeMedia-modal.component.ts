@@ -103,7 +103,7 @@ export class CreateOrEditStoreMediaModalComponent extends AppComponentBase imple
             this.mediaLibrary.masterTagId = 1;
             this.masterTagCategoryName = '';
             this.masterTagName = '';
-
+            this.imageSrc = 'assets/common/images/c_logo.png';
             this.active = true;
             this.modal.show();
         } else {
@@ -152,7 +152,7 @@ export class CreateOrEditStoreMediaModalComponent extends AppComponentBase imple
         if (this.selectAddVideo) {
             this.mediaLibrary.masterTagId = 2;
         }
-        this.mediaLibrary.name = 'hubsdeal-' + this.mediaLibrary.name;
+        this.mediaLibrary.name = 'Grandizar-' + this.mediaLibrary.name;
 
         if (this.mediaId != null) {
             this.saving = false;
@@ -183,6 +183,8 @@ export class CreateOrEditStoreMediaModalComponent extends AppComponentBase imple
     close(): void {
         this.active = false;
         this.modal.hide();
+        this.imageSrc = null;
+        this.mediaLibrary = new CreateOrEditMediaLibraryDto();
         this.selectUploadPhoto = false;
         this.selectAddVideo = false;
     }
