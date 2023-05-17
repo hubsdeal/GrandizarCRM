@@ -26,6 +26,7 @@ import { ChatGptResponseModalComponent } from './chat-gpt-response-modal/chat-gp
 import {MatDialogModule} from "@angular/material/dialog";
 import { EditorModule } from 'primeng/editor';
 import { InputTextModule } from 'primeng/inputtext';
+import { SidebarModule } from 'primeng/sidebar';
 
 const imports = [
     CommonModule,
@@ -53,7 +54,8 @@ const imports = [
     AppBsModalModule,
     MatDialogModule,
     EditorModule,
-    InputTextModule
+    InputTextModule,
+    SidebarModule
 ];
 
 @NgModule({

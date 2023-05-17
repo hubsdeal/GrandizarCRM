@@ -17,6 +17,9 @@ import { DateTime } from 'luxon';
 import { DateTimeService } from '@app/shared/common/timing/date-time.service';
 import { HubMediaLibraryLookupTableModalComponent } from './hub-mediaLibrary-lookup-table-modal.component';
 import { SelectItem } from 'primeng/api';
+import { ChatGptResponseModalComponent } from '@app/shared/chat-gpt-response-modal/chat-gpt-response-modal.component';
+import { MatDialog } from '@angular/material/dialog';
+import { GeocodingService } from '@app/shared/chat-gpt-response-modal/services/chat-gpt-lat-long.service';
 
 @Component({
     selector: 'createOrEditHubModal',
@@ -50,11 +53,14 @@ export class CreateOrEditHubModalComponent extends AppComponentBase implements O
     allCurrencys: HubCurrencyLookupTableDto[];
 
     partnerAndOwnedOptions: SelectItem[];
+    sidebarVisible2: boolean;
 
     constructor(
         injector: Injector,
         private _hubsServiceProxy: HubsServiceProxy,
-        private _dateTimeService: DateTimeService
+        private _dateTimeService: DateTimeService,
+        private dialog: MatDialog,
+        private geocodingService: GeocodingService
     ) {
         super(injector);
     }
@@ -70,7 +76,8 @@ export class CreateOrEditHubModalComponent extends AppComponentBase implements O
             this.hubTypeName = '';
             this.currencyName = '';
             this.mediaLibraryName = '';
-            
+            this.hub.partnerOrOwned = true;
+
             this.active = true;
             this.modal.show();
         } else {
@@ -95,9 +102,9 @@ export class CreateOrEditHubModalComponent extends AppComponentBase implements O
         this._hubsServiceProxy.getAllStateForTableDropdown().subscribe((result) => {
             this.allStates = result;
         });
-        this._hubsServiceProxy.getAllCityForTableDropdown().subscribe((result) => {
-            this.allCitys = result;
-        });
+        // this._hubsServiceProxy.getAllCityForTableDropdown().subscribe((result) => {
+        //     this.allCitys = result;
+        // });
         this._hubsServiceProxy.getAllCountyForTableDropdown().subscribe((result) => {
             this.allCountys = result;
         });
@@ -107,7 +114,7 @@ export class CreateOrEditHubModalComponent extends AppComponentBase implements O
         this._hubsServiceProxy.getAllCurrencyForTableDropdown().subscribe((result) => {
             this.allCurrencys = result;
         });
-        this.partnerAndOwnedOptions = [{ label: 'Owned', value: false }, { label: 'Partner', value: true }];
+        this.partnerAndOwnedOptions = [{ label: 'Corporate Owned', value: true }, { label: 'Partner', value: false }];
     }
 
     save(): void {
@@ -148,5 +155,34 @@ export class CreateOrEditHubModalComponent extends AppComponentBase implements O
         this.modal.hide();
     }
 
-    ngOnInit(): void {}
+    ngOnInit(): void { }
+
+
+    // openAiModal(feildName: string): void {
+    //     var promtText = "Get latitude and longitude for New York"
+    //     var modalTitle = "AI Latitude Longitude Response"
+    //     const dialogRef = this.dialog.open(ChatGptResponseModalComponent, {
+    //       data: { promtFromAnotherComponent: promtText, feildName: feildName, modalTitle: modalTitle },
+    //       width: '1100px',
+    //     });
+    
+    //     dialogRef.afterClosed().subscribe(result => {
+    //       console.log(result)
+    //       //this.bindingData = result.data;
+    //     });
+    //   }
+
+    async getCoordinates() {
+        try {
+          const location = 'Get Latitude and longitude for New York'; // Replace with the desired location
+          const coordinates = await this.geocodingService.invokeGPT(location);
+          console.log('Coordinates:', coordinates);
+          if(coordinates){
+            this.hub.latitude = coordinates.latitude;
+            this.hub.longitude = coordinates.longitude;
+          }
+        } catch (error) {
+          console.error('Error:', error);
+        }
+      }
 }

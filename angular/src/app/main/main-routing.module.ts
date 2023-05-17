@@ -1,6 +1,7 @@
 ﻿import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { MasterDataIndexComponent } from './lookupData/master-data-index/master-data-index.component';
+import { MyHubListComponent } from './territory/hubs/my-hub-list/my-hub-list.component';
 
 @NgModule({
     imports: [
@@ -811,6 +812,12 @@ import { MasterDataIndexComponent } from './lookupData/master-data-index/master-
                         path: 'territory/hubs',
                         loadChildren: () => import('./territory/hubs/hub.module').then(m => m.HubModule),
                         data: { permission: 'Pages.Hubs' }
+                    },
+
+                    {
+                        path: 'territory/myHubs',
+                        data: { permission: 'Pages.Hubs' },
+                        component: MyHubListComponent,
                     },
                 
                     
