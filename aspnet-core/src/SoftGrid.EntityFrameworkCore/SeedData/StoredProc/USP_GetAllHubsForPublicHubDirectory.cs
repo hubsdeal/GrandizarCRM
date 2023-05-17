@@ -18,13 +18,13 @@ public class USP_GetAllHubsForPublicHubDirectory
             -- ============================================================================================================
             -- exec [dbo].[usp_GetAllHubsForPublicHubDirectory] @SkipCount=0,@MaxResultCount=10
             CREATE OR ALTER PROCEDURE [dbo].[usp_GetAllHubsForPublicHubDirectory]
-	            @Filter nvarchar(4000)='""',
+	            @Filter nvarchar(4000)='""""',
 	            @StoreIdFilter bigint=null,
 	            @CountryIdFilter bigint=null,
-	            @StateFilter nvarchar(4000)='""',
-	            @CityFilter nvarchar(4000)='""',
-	            @CountyFilter nvarchar(4000)='""',
-	            @ZipCodeFilter nvarchar(4000)='""',
+	            @StateFilter nvarchar(4000)='""""',
+	            @CityFilter nvarchar(4000)='""""',
+	            @CountyFilter nvarchar(4000)='""""',
+	            @ZipCodeFilter nvarchar(4000)='""""',
 	            @SkipCount int,
 	            @MaxResultCount int
             AS
@@ -34,11 +34,11 @@ public class USP_GetAllHubsForPublicHubDirectory
 		                SELECT COUNT(h.Id) 
 			            from [dbo].[Hubs] h
 			            WHERE h.IsDeleted=0 and h.Live=1
-				             AND (@Filter = '""' OR Contains(h.Name,@Filter))
-				             AND (@StateFilter= '""' OR h.StateId IN(select Id from States s where Contains(s.Name,@StateFilter) OR Contains(s.Ticker,@StateFilter)))
-				             AND (@CityFilter= '""' OR h.CityId IN(select Id from Cities c where Contains(c.Name,@CityFilter)))
-				             AND (@CountyFilter= '""' OR h.CountyId IN(select Id from Counties con where Contains(con.Name,@CountyFilter)))
-				             AND (@ZipCodeFilter= '""' OR h.Id IN(select HubId from HubZipCodeMaps where ZipCodeId IN(Select Id from ZipCodes where Name=@ZipCodeFilter)))
+				             AND (@Filter = '""""' OR Contains(h.Name,@Filter))
+				             AND (@StateFilter= '""""' OR h.StateId IN(select Id from States s where Contains(s.Name,@StateFilter) OR Contains(s.Ticker,@StateFilter)))
+				             AND (@CityFilter= '""""' OR h.CityId IN(select Id from Cities c where Contains(c.Name,@CityFilter)))
+				             AND (@CountyFilter= '""""' OR h.CountyId IN(select Id from Counties con where Contains(con.Name,@CountyFilter)))
+				             AND (@ZipCodeFilter= '""""' OR h.Id IN(select HubId from HubZipCodeMaps where ZipCodeId IN(Select Id from ZipCodes where Name=@ZipCodeFilter)))
 				             AND (@StoreIdFilter IS NULL OR h.Id IN(select HubId from HubStores where StoreId=@StoreIdFilter))
 				             AND (@CountryIdFilter IS NULL OR h.CountryId=@CountryIdFilter)
 			            ) AS TotalCount,
@@ -51,11 +51,11 @@ public class USP_GetAllHubsForPublicHubDirectory
 
 			            FROM [dbo].[Hubs] h
 			            WHERE h.IsDeleted=0 and h.Live=1
-				             AND (@Filter = '""' OR Contains(h.Name,@Filter))
-				             AND (@StateFilter= '""' OR h.StateId IN(select Id from States s where Contains(s.Name,@StateFilter) OR Contains(s.Ticker,@StateFilter)))
-				             AND (@CityFilter= '""' OR h.CityId IN(select Id from Cities c where Contains(c.Name,@CityFilter)))
-				             AND (@CountyFilter= '""' OR h.CountyId IN(select Id from Counties con where Contains(con.Name,@CountyFilter)))
-				             AND (@ZipCodeFilter= '""' OR h.Id IN(select HubId from HubZipCodeMaps where ZipCodeId IN(Select Id from ZipCodes where Name=@ZipCodeFilter)))
+				             AND (@Filter = '""""' OR Contains(h.Name,@Filter))
+				             AND (@StateFilter= '""""' OR h.StateId IN(select Id from States s where Contains(s.Name,@StateFilter) OR Contains(s.Ticker,@StateFilter)))
+				             AND (@CityFilter= '""""' OR h.CityId IN(select Id from Cities c where Contains(c.Name,@CityFilter)))
+				             AND (@CountyFilter= '""""' OR h.CountyId IN(select Id from Counties con where Contains(con.Name,@CountyFilter)))
+				             AND (@ZipCodeFilter= '""""' OR h.Id IN(select HubId from HubZipCodeMaps where ZipCodeId IN(Select Id from ZipCodes where Name=@ZipCodeFilter)))
 				             AND (@StoreIdFilter IS NULL OR h.Id IN(select HubId from HubStores where StoreId=@StoreIdFilter))
 				             AND (@CountryIdFilter IS NULL OR h.CountryId=@CountryIdFilter)
 

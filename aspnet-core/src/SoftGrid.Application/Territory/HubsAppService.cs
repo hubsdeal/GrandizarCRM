@@ -21,6 +21,9 @@ using SoftGrid.Storage;
 using Microsoft.Data.SqlClient;
 using System.Data;
 using SoftGrid.EntityFrameworkCore.Repositories;
+using NPOI.SS.Formula.Functions;
+using System.Drawing;
+using System.IO;
 
 namespace SoftGrid.Territory
 {
@@ -38,9 +41,10 @@ namespace SoftGrid.Territory
         private readonly IRepository<MediaLibrary, long> _lookup_mediaLibraryRepository;
         private readonly IStoredProcedureRepository _storedProcedureRepository;
         private readonly IBinaryObjectManager _binaryObjectManager;
+        private readonly ITempFileCacheManager _tempFileCacheManager;
 
         public HubsAppService(IRepository<Hub, long> hubRepository, IHubsExcelExporter hubsExcelExporter, IRepository<Country, long> lookup_countryRepository, IRepository<State, long> lookup_stateRepository, IRepository<City, long> lookup_cityRepository, IRepository<County, long> lookup_countyRepository, IRepository<HubType, long> lookup_hubTypeRepository, IRepository<Currency, long> lookup_currencyRepository, IRepository<MediaLibrary, long> lookup_mediaLibraryRepository,
-            IStoredProcedureRepository storedProcedureRepository, IBinaryObjectManager binaryObjectManager)
+            IStoredProcedureRepository storedProcedureRepository, IBinaryObjectManager binaryObjectManager, ITempFileCacheManager tempFileCacheManager)
         {
             _hubRepository = hubRepository;
             _hubsExcelExporter = hubsExcelExporter;
@@ -53,6 +57,7 @@ namespace SoftGrid.Territory
             _lookup_mediaLibraryRepository = lookup_mediaLibraryRepository;
             _storedProcedureRepository = storedProcedureRepository;
             _binaryObjectManager = binaryObjectManager;
+            _tempFileCacheManager = tempFileCacheManager;
         }
 
         public async Task<PagedResultDto<GetHubForViewDto>> GetAll(GetAllHubsInput input)
@@ -302,6 +307,10 @@ namespace SoftGrid.Territory
 
         public async Task CreateOrEdit(CreateOrEditHubDto input)
         {
+            if (input.FileToken != null)
+            {
+                await SaveHubPhoto(input);
+            }
             if (input.Id == null)
             {
                 await Create(input);
@@ -612,6 +621,59 @@ namespace SoftGrid.Territory
            
 
             return sqlParameters;
+        }
+
+        public async Task<List<HubContactHubLookupTableDto>> GetAllHubForLookupTable()
+        {
+            return await _hubRepository.GetAll()
+                .Select(hub => new HubContactHubLookupTableDto
+                {
+                    Id = hub.Id,
+                    DisplayName = hub == null || hub.Name == null ? "" : hub.Name.ToString()
+                }).ToListAsync();
+        }
+
+        private async Task<CreateOrEditHubDto> SaveHubPhoto(CreateOrEditHubDto input)
+        {
+            CreateOrEditHubDto hubDto = input;
+
+            byte[] byteArray;
+
+            var imageBytes = _tempFileCacheManager.GetFile(input.FileToken);
+            if (imageBytes == null)
+            {
+                throw new UserFriendlyException("There is no such image file with the token: " + input.FileToken);
+            }
+
+            using (var bmpImage = new Bitmap(new MemoryStream(imageBytes)))
+            {
+                using (var stream = new MemoryStream())
+                {
+                    byteArray = stream.ToArray();
+                }
+            }
+            byteArray = imageBytes;
+
+            //if (byteArray.Length > MaxProfilPictureBytes)
+            //{
+            //    throw new UserFriendlyException(L("ResizedProfilePicture_Warn_SizeLimit", AppConsts.ResizedMaxProfilPictureBytesUserFriendlyValue));
+            //}
+
+            var storedFile = new BinaryObject(AbpSession.TenantId, byteArray);
+            await _binaryObjectManager.SaveAsync(storedFile);
+            var mediaLibrary = new MediaLibrary();
+            mediaLibrary.BinaryObjectId = storedFile.Id;
+            mediaLibrary.Name = input.Name + "_" + "Logo";
+            mediaLibrary.MasterTagCategoryId = (long)MasterTagCategoriesEnum.Media_Type;
+            mediaLibrary.MasterTagId = 1;
+            mediaLibrary.FileExtension = ".png";
+            mediaLibrary.Size = (byteArray.Length / 1024).ToString() + " kb";
+            Image image = Image.FromStream(new MemoryStream(byteArray));
+            mediaLibrary.Dimension = image.Width.ToString() + "*" + image.Height.ToString();
+
+            hubDto.PictureMediaLibraryId = await _lookup_mediaLibraryRepository.InsertAndGetIdAsync(mediaLibrary);
+            return hubDto;
+
         }
     }
 }
