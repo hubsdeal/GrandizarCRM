@@ -1,10 +1,10 @@
 ﻿<div [@routerTransition]>
-    <sub-header [title]="'Employees' | localize" [description]="">
+    <sub-header [title]="'Master Employees' | localize" [description]="">
         <div role="actions">
-            <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1">
+            <!-- <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1">
                 <i class="fa fa-file-excel"></i>
                 {{ l('ExportToExcel') }}
-            </button>
+            </button> -->
 
             <button *ngIf="isGranted('Pages.Employees.Create')" (click)="createEmployee()" class="btn btn-primary blue">
                 <i class="fa fa-plus"></i>
@@ -324,24 +324,24 @@
                                         {{l('Name')}}
                                     </th>
 
-                                    <th style="width: 200px">
+                                    <!-- <th style="width: 200px">
                                         {{l('Department')}}
-                                    </th>
+                                    </th> -->
                                     <th style="width: 200px">
                                         {{l('Mobile')}}
                                     </th>
-                                    <th style="width: 200px">
+                                    <!-- <th style="width: 200px">
                                         {{l('Office Phone')}}
-                                    </th>
+                                    </th> -->
                                     <th style="width: 220px">
                                         {{l('Email')}}
                                     </th>
                                     <th class="text-center" style="width: 75px">
                                         {{l('Connect')}}
                                     </th>
-                                    <th style="width: 150px;text-align: center;">
+                                    <!-- <th style="width: 150px;text-align: center;">
                                         {{l('Social Profile')}}
-                                    </th>
+                                    </th> -->
                                     <th style="width: 150px;">
                                         {{l('HireDate')}}
                                     </th>
@@ -478,6 +478,10 @@
                                                         <i class="fas fa-briefcase me-1"></i>
                                                         {{ record.employee.jobTitle }} <span *ngIf="record.employee.companyName">at {{ record.employee.companyName }}</span> 
                                                     </span>
+                                                    <span class="text-gray-400 fw-lighter fs-7 mt-2 my-0">
+                                                        <i class="fas fa-network-wired me-1"></i>
+                                                        Department: <span> Sales and Marketing</span> 
+                                                    </span>
                                                     <span class="text-gray-400 fw-lighter fs-7 my-1">
                                                         <i class="fas fa-map-marked-alt me-1"></i>
                                                         <span>
@@ -502,22 +506,26 @@
                                                             {{ record.employee.zipCode }}
                                                         </span>
                                                     </span>
+                                                    <span class="mt-2" *ngIf="record.employee.facebook" title="{{record.employee.facebook}}">
+                                                        <a class="text-primary me-2 fa-1x" href="{{record.employee.facebook}}"
+                                                            target="_blank"><i class="fab fa-2x fa-facebook-f"></i></a>
+                                                    </span>
+                                                    <span class="mt-2" *ngIf="record.employee.linkedIn" title="{{record.employee.linkedIn}}">
+                                                        <a class="text-primary fa-1x" href="{{record.employee.linkedIn}}"
+                                                            target="_blank"><i class="fab fa-2x fa-linkedin-in"></i></a>
+                                                    </span>
                                                 </div>
                                             </div>
                                         </div>
-                                    </td>
-
-                                    <td style="width: 200px">
-                                        Sales and Marketing
                                     </td>
                                     <td style="width: 200px">
                                         <span class="p-column-title">{{ l('Mobile') }}</span>
                                         {{ record.employee.mobile }}
                                     </td>
-                                    <td style="width: 200px">
+                                    <!-- <td style="width: 200px">
                                         <span class="p-column-title">{{ l('OfficePhone') }}</span>
                                         {{ record.employee.officePhone }}
-                                    </td>
+                                    </td> -->
                                     <td style="width: 220px">
                                         <span class="p-column-title">{{ l('BusinessEmail') }}</span>
                                         {{ record.employee.businessEmail }}
@@ -527,7 +535,7 @@
                                         <a href="javascript:;">
                                             <i class="fas fa-comments"></i></a>
                                     </td>
-                                    <td style="width:150px; text-align: center;">
+                                    <!-- <td style="width:150px; text-align: center;">
                                         <span class="p-column-title"> {{l('Social')}}</span>
                                         <span *ngIf="record.employee.facebook" title="{{record.employee.facebook}}">
                                             <a class="text-primary me-2 fa-1x" href="{{record.employee.facebook}}"
@@ -537,7 +545,7 @@
                                             <a class="text-primary fa-1x" href="{{record.employee.linkedIn}}"
                                                 target="_blank"><i class="fab fa-2x fa-linkedin-in"></i></a>
                                         </span>
-                                    </td>
+                                    </td> -->
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('HireDate') }}</span>
                                         <span *ngIf="record.employee.hireDate">

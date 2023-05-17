@@ -10,6 +10,9 @@ import {
     HubCountyLookupTableDto,
     HubHubTypeLookupTableDto,
     HubCurrencyLookupTableDto,
+    StatesServiceProxy,
+    CitiesServiceProxy,
+    CountiesServiceProxy,
 } from '@shared/service-proxies/service-proxies';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { DateTime } from 'luxon';
@@ -55,9 +58,17 @@ export class CreateOrEditHubModalComponent extends AppComponentBase implements O
     partnerAndOwnedOptions: SelectItem[];
     sidebarVisible2: boolean;
 
+    selectedCountry:any;
+    selectedState:any;
+    selectedCity:any;
+    selectedCounty:any;
+
     constructor(
         injector: Injector,
         private _hubsServiceProxy: HubsServiceProxy,
+        private _stateServiceProxy: StatesServiceProxy,
+        private _cityServiceProxy: CitiesServiceProxy,
+        private _countyServiceProxy: CountiesServiceProxy,
         private _dateTimeService: DateTimeService,
         private dialog: MatDialog,
         private geocodingService: GeocodingService
@@ -99,15 +110,15 @@ export class CreateOrEditHubModalComponent extends AppComponentBase implements O
         this._hubsServiceProxy.getAllCountryForTableDropdown().subscribe((result) => {
             this.allCountrys = result;
         });
-        this._hubsServiceProxy.getAllStateForTableDropdown().subscribe((result) => {
-            this.allStates = result;
-        });
+        // this._hubsServiceProxy.getAllStateForTableDropdown().subscribe((result) => {
+        //     this.allStates = result;
+        // });
         // this._hubsServiceProxy.getAllCityForTableDropdown().subscribe((result) => {
         //     this.allCitys = result;
         // });
-        this._hubsServiceProxy.getAllCountyForTableDropdown().subscribe((result) => {
-            this.allCountys = result;
-        });
+        // this._hubsServiceProxy.getAllCountyForTableDropdown().subscribe((result) => {
+        //     this.allCountys = result;
+        // });
         this._hubsServiceProxy.getAllHubTypeForTableDropdown().subscribe((result) => {
             this.allHubTypes = result;
         });
@@ -157,6 +168,48 @@ export class CreateOrEditHubModalComponent extends AppComponentBase implements O
 
     ngOnInit(): void { }
 
+    onCountryChange(event:any){
+        if(event.value != null){
+            this.hub.countryId = event.value.id;
+            this._stateServiceProxy.getAllStateForTableDropdown(event.value.id).subscribe((result) => {
+                this.allStates = result;
+            });
+        }
+        console.log("countryId"+this.hub.countryId);
+    }
+
+    onStateChange(event:any){
+        if(event.value != null){
+            this.hub.stateId = event.value.id;
+            this._countyServiceProxy.getAllCountyForTableDropdown(this.selectedCountry.id, event.value.id).subscribe((result) => {
+                this.allCountys = result;
+            });
+        }
+        console.log("countryId"+this.hub.countryId);
+        console.log("State Id"+this.hub.stateId);
+    }
+
+    onCountyChange(event:any){
+        if(event.value != null){
+            this.hub.countyId = event.value.id;
+            this._cityServiceProxy.getAllCityForTableDropdown(this.selectedCountry.id, this.selectedState.id, event.value.id).subscribe((result) => {
+                this.allCitys = result;
+            });
+        }
+        console.log("countryId"+this.hub.countryId);
+        console.log("State Id"+this.hub.stateId);
+        console.log("County Id"+this.hub.countyId);
+    }
+
+    onCityChange(event:any){
+        if(event.value != null){
+            this.hub.cityId = event.value.id;
+        }
+        console.log("City Id"+this.hub.cityId);
+        
+    }
+
+
 
     // openAiModal(feildName: string): void {
     //     var promtText = "Get latitude and longitude for New York"
@@ -165,7 +218,7 @@ export class CreateOrEditHubModalComponent extends AppComponentBase implements O
     //       data: { promtFromAnotherComponent: promtText, feildName: feildName, modalTitle: modalTitle },
     //       width: '1100px',
     //     });
-    
+
     //     dialogRef.afterClosed().subscribe(result => {
     //       console.log(result)
     //       //this.bindingData = result.data;
@@ -174,15 +227,15 @@ export class CreateOrEditHubModalComponent extends AppComponentBase implements O
 
     async getCoordinates() {
         try {
-          const location = 'Get Latitude and longitude for New York'; // Replace with the desired location
-          const coordinates = await this.geocodingService.invokeGPT(location);
-          console.log('Coordinates:', coordinates);
-          if(coordinates){
-            this.hub.latitude = coordinates.latitude;
-            this.hub.longitude = coordinates.longitude;
-          }
+            const location = 'Give me Latitude and longitude for New York as json format as Key latitude and longitude'; // Replace with the desired location
+            const coordinates = await this.geocodingService.invokeGPT(location);
+            console.log('Coordinates:', coordinates);
+            if (coordinates) {
+                this.hub.latitude = coordinates.latitude;
+                this.hub.longitude = coordinates.longitude;
+            }
         } catch (error) {
-          console.error('Error:', error);
+            console.error('Error:', error);
         }
-      }
+    }
 }
