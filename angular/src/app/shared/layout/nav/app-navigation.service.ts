@@ -116,14 +116,15 @@ export class AppNavigationService {
             ),
 
             new AppMenuItem(
-                'Hubs Management',
+                'Territory Management',
                 '',
-                'flaticon-map-location',
+                'fas fa-map-marked-alt',
                 '',
                 [],
                 [
-                    new AppMenuItem('MasterHubList', 'Pages.Hubs', 'flaticon2-list-1', '/app/main/territory/hubs'),
-                    new AppMenuItem('MyHubList', 'Pages.Hubs', 'flaticon2-list-2', '/app/main/territory/hubs'),
+                    new AppMenuItem('Master Hub List', 'Pages.Hubs', 'flaticon2-list-1', '/app/main/territory/hubs'),
+
+                    new AppMenuItem('My Hub List', 'Pages.Hubs', 'flaticon2-list-2', '/app/main/territory/myHubs'),
                 ]
             ),
 
