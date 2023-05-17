@@ -54,5 +54,7 @@ namespace SoftGrid.Territory.Dtos
 
         public long? PictureMediaLibraryId { get; set; }
 
+        public string FileToken { get; set; }
+
     }
 }

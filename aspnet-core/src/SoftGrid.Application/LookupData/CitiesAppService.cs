@@ -17,6 +17,7 @@ using Abp.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Abp.UI;
 using SoftGrid.Storage;
+using SoftGrid.Territory.Dtos;
 
 namespace SoftGrid.LookupData
 {
@@ -271,6 +272,18 @@ namespace SoftGrid.LookupData
                 {
                     Id = county.Id,
                     DisplayName = county == null || county.Name == null ? "" : county.Name.ToString()
+                }).ToListAsync();
+        }
+
+        public async Task<List<HubCityLookupTableDto>> GetAllCityForTableDropdown(long countryId,long? stateId,long? countyId)
+        {
+            return await _cityRepository.GetAll().Where(e=>e.CountryId==countryId)
+                .WhereIf(stateId!=null,e=>e.StateId==stateId)
+                .WhereIf(countyId!=null,e=>e.CountyId==countyId)
+                .Select(city => new HubCityLookupTableDto
+                {
+                    Id = city.Id,
+                    DisplayName = city == null || city.Name == null ? "" : city.Name.ToString()
                 }).ToListAsync();
         }
 

@@ -15,6 +15,7 @@ using Abp.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Abp.UI;
 using SoftGrid.Storage;
+using SoftGrid.Territory.Dtos;
 
 namespace SoftGrid.LookupData
 {
@@ -168,5 +169,14 @@ namespace SoftGrid.LookupData
             return _currenciesExcelExporter.ExportToFile(currencyListDtos);
         }
 
+        public async Task<List<HubCurrencyLookupTableDto>> GetAllCurrencyForTableDropdown()
+        {
+            return await _currencyRepository.GetAll()
+                .Select(currency => new HubCurrencyLookupTableDto
+                {
+                    Id = currency.Id,
+                    DisplayName = currency == null || currency.Name == null ? "" : currency.Name.ToString()
+                }).ToListAsync();
+        }
     }
 }
