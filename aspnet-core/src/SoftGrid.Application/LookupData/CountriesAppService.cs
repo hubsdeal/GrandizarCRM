@@ -173,5 +173,15 @@ namespace SoftGrid.LookupData
             return _countriesExcelExporter.ExportToFile(countryListDtos);
         }
 
+        public async Task<List<StateCountryLookupTableDto>> GetAllCountryForTableDropdown()
+        {
+            return await _countryRepository.GetAll()
+                .Select(country => new StateCountryLookupTableDto
+                {
+                    Id = country.Id,
+                    DisplayName = country == null || country.Name == null ? "" : country.Name.ToString()
+                }).ToListAsync();
+        }
+
     }
 }

@@ -203,5 +203,15 @@ namespace SoftGrid.LookupData
                 }).ToListAsync();
         }
 
+        public async Task<List<CityStateLookupTableDto>> GetAllStateForTableDropdown(long countryId)
+        {
+            return await _stateRepository.GetAll().Where(e => e.CountryId == countryId)
+                .Select(state => new CityStateLookupTableDto
+                {
+                    Id = state.Id,
+                    DisplayName = state == null || state.Name == null ? "" : state.Name.ToString()
+                }).ToListAsync();
+        }
+
     }
 }
