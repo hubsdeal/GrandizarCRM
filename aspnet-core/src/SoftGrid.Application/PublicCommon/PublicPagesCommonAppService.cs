@@ -3289,35 +3289,39 @@ namespace SoftGrid.PublicCommon
 
         //    return results.Categories;
         //}
-        //[AbpAllowAnonymous]
-        //public async Task<GetNearestHubsForViewDto> GetNearestHubsByUserLocation(GeUserLatLongInpuDto input)
-        //{
-        //    List<SqlParameter> parameters = PrepareSearchParameterForGetNearestHubsByUserLocation(input);
-        //    var results = await _storedProcedureRepository.ExecuteStoredProcedure<GetNearestHubsForViewDto>("usp_GetTopNearbyHubsByUserLocation", CommandType.StoredProcedure, parameters.ToArray());
-        //    foreach (var result in results.NearestHubs)
-        //    {
-        //        if (result.PictureId != null && result.PictureId != Guid.Empty)
-        //        {
-        //            result.Picture = await _binaryObjectManager.GetOthersPictureUrlAsync((Guid)result.PictureId, ".png");
-
-        //        }
-        //    }
-        //    return results;
-        //}
-
-        //private static List<SqlParameter> PrepareSearchParameterForGetNearestHubsByUserLocation(GeUserLatLongInpuDto input)
-        //{
-        //    List<SqlParameter> sqlParameters = new List<SqlParameter>();
 
 
-        //    SqlParameter latitudeFilter = new SqlParameter("@Latitude", input.Latitude == null ? (object)DBNull.Value : input.Latitude);
-        //    sqlParameters.Add(latitudeFilter);
+        [AbpAllowAnonymous]
+        public async Task<GetNearestHubsForViewDto> GetNearestHubsByUserLocation(GeUserLatLongInpuDto input)
+        {
+            List<SqlParameter> parameters = PrepareSearchParameterForGetNearestHubsByUserLocation(input);
+            var results = await _storedProcedureRepository.ExecuteStoredProcedure<GetNearestHubsForViewDto>("usp_GetTopNearbyHubsByUserLocation", CommandType.StoredProcedure, parameters.ToArray());
+            foreach (var result in results.NearestHubs)
+            {
+                if (result.PictureId != null && result.PictureId != Guid.Empty)
+                {
+                    result.Picture = await _binaryObjectManager.GetOthersPictureUrlAsync((Guid)result.PictureId, ".png");
 
-        //    SqlParameter longitudeFilter = new SqlParameter("@Longitude", input.Longitude == null ? (object)DBNull.Value : input.Longitude);
-        //    sqlParameters.Add(longitudeFilter);
+                }
+            }
+            return results;
+        }
 
-        //    return sqlParameters;
-        //}
+
+        private static List<SqlParameter> PrepareSearchParameterForGetNearestHubsByUserLocation(GeUserLatLongInpuDto input)
+        {
+            List<SqlParameter> sqlParameters = new List<SqlParameter>();
+
+
+            SqlParameter latitudeFilter = new SqlParameter("@Latitude", input.Latitude == null ? (object)DBNull.Value : input.Latitude);
+            sqlParameters.Add(latitudeFilter);
+
+            SqlParameter longitudeFilter = new SqlParameter("@Longitude", input.Longitude == null ? (object)DBNull.Value : input.Longitude);
+            sqlParameters.Add(longitudeFilter);
+
+            return sqlParameters;
+        }
+
         //[AbpAllowAnonymous]
         //public async Task<PagedResultDto<GetPublicProductForViewDto>> GetAllProductsByHubAndProductCategory(string hubUrl, string categoryUrl, string filter)
         //{

@@ -1,17 +1,19 @@
-using System;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
 using Abp;
 using Abp.Extensions;
 using Abp.Runtime.Session;
 using Abp.Timing;
+
 using Microsoft.AspNetCore.Mvc;
+
 using SoftGrid.Authorization.Users;
 using SoftGrid.Identity;
 using SoftGrid.MultiTenancy;
 using SoftGrid.Url;
 using SoftGrid.Web.Controllers;
+
+using System;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace SoftGrid.Web.Public.Controllers
 {
@@ -85,7 +87,7 @@ namespace SoftGrid.Web.Public.Controllers
             var websiteAddress = _webUrlService.GetSiteRootAddress(tenancyName);
 
             var originalReturnUrl = Request.Query.ContainsKey("ReturnUrl") ? Request.Query["ReturnUrl"].ToString() : "";
-            var returnUrl = websiteAddress.EnsureEndsWith('/') + "account/login?returnUrl="+ websiteAddress.EnsureEndsWith('/')+ originalReturnUrl.TrimStart('/');
+            var returnUrl = websiteAddress.EnsureEndsWith('/') + "account/login?returnUrl=" + websiteAddress.EnsureEndsWith('/') + originalReturnUrl.TrimStart('/');
             return Redirect(serverAddress.EnsureEndsWith('/') + "account/login?ss=true&returnUrl=" + WebUtility.UrlEncode(returnUrl));
         }
 
@@ -105,5 +107,8 @@ namespace SoftGrid.Web.Public.Controllers
             var base64EncodedBytes = Convert.FromBase64String(base64EncodedData);
             return System.Text.Encoding.UTF8.GetString(base64EncodedBytes);
         }
+
+
+
     }
 }

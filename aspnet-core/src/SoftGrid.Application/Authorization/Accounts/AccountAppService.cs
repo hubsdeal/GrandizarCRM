@@ -1,25 +1,26 @@
-﻿using System;
-using System.Threading.Tasks;
-using System.Web;
-using Abp.Authorization;
+﻿using Abp.Authorization;
 using Abp.Configuration;
 using Abp.Extensions;
 using Abp.Runtime.Security;
 using Abp.Runtime.Session;
+using Abp.Timing;
 using Abp.UI;
 using Abp.Zero.Configuration;
+
 using Microsoft.AspNetCore.Identity;
+
 using SoftGrid.Authorization.Accounts.Dto;
+using SoftGrid.Authorization.Delegation;
 using SoftGrid.Authorization.Impersonation;
 using SoftGrid.Authorization.Users;
 using SoftGrid.Configuration;
-using SoftGrid.Debugging;
 using SoftGrid.MultiTenancy;
 using SoftGrid.Security.Recaptcha;
 using SoftGrid.Url;
-using SoftGrid.Authorization.Delegation;
-using Abp.Domain.Repositories;
-using Abp.Timing;
+
+using System;
+using System.Threading.Tasks;
+using System.Web;
 
 
 namespace SoftGrid.Authorization.Accounts
@@ -44,7 +45,7 @@ namespace SoftGrid.Authorization.Accounts
             IImpersonationManager impersonationManager,
             IUserLinkManager userLinkManager,
             IPasswordHasher<User> passwordHasher,
-            IWebUrlService webUrlService, 
+            IWebUrlService webUrlService,
             IUserDelegationManager userDelegationManager)
         {
             _userEmailer = userEmailer;
@@ -126,7 +127,7 @@ namespace SoftGrid.Authorization.Accounts
             {
                 return;
             }
-            
+
             user.SetNewPasswordResetCode();
             await _userEmailer.SendPasswordResetLinkAsync(
                 user,
@@ -140,13 +141,13 @@ namespace SoftGrid.Authorization.Accounts
             {
                 throw new UserFriendlyException(L("PasswordResetLinkExpired"));
             }
-            
+
             var user = await UserManager.GetUserByIdAsync(input.UserId);
             if (user == null || user.PasswordResetCode.IsNullOrEmpty() || user.PasswordResetCode != input.ResetCode)
             {
                 throw new UserFriendlyException(L("InvalidPasswordResetCode"), L("InvalidPasswordResetCode_Detail"));
             }
-    
+
             await UserManager.InitializeOptionsAsync(AbpSession.TenantId);
             CheckErrors(await UserManager.ChangePasswordAsync(user, input.Password));
             user.PasswordResetCode = null;
@@ -205,7 +206,7 @@ namespace SoftGrid.Authorization.Accounts
                 TenancyName = await GetTenancyNameOrNullAsync(input.TenantId)
             };
         }
-        
+
         [AbpAuthorize(AppPermissions.Pages_Tenants_Impersonation)]
         public virtual async Task<ImpersonateOutput> ImpersonateTenant(ImpersonateTenantInput input)
         {
@@ -278,6 +279,24 @@ namespace SoftGrid.Authorization.Accounts
         private async Task<string> GetTenancyNameOrNullAsync(int? tenantId)
         {
             return tenantId.HasValue ? (await GetActiveTenantAsync(tenantId.Value)).TenancyName : null;
+        }
+
+
+
+        //[HttpGet("AddOrUpdateDefaultHub/{hubId:long}")]
+        public async Task<bool> AddOrUpdateDefaultHub(long hubId)
+        {
+            // need logged user id here
+            var userId = AbpSession.UserId ?? 0;
+            if (userId > 0 is false) throw new Exception("Sorry! No User Found to Set Default Hub!");
+
+            var user = await UserManager.GetUserByIdAsync(userId);
+            if (user == null) throw new Exception("Sorry! No User Found to Set Default Hub!");
+
+            user.PrimaryHubId = hubId;
+
+            var isUpdated = (await UserManager.UpdateAsync(user)).Succeeded;
+            return isUpdated;
         }
     }
 }
