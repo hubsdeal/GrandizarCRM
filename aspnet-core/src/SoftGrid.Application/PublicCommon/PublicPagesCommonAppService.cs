@@ -7,6 +7,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 
 using SoftGrid.Authorization.Users;
+using SoftGrid.CMS;
 using SoftGrid.DiscountManagement;
 using SoftGrid.EntityFrameworkCore.Repositories;
 using SoftGrid.LookupData;
@@ -88,7 +89,7 @@ namespace SoftGrid.PublicCommon
         private readonly IRepository<OrderProductVariant, long> _orderProductVariantRepository;
         private readonly IRepository<OrderFulfillmentStatus, long> _orderFulfillmentStatusRepository;
         //private readonly IRepository<RewardPointHistory, long> _rewardPointHistoryRepository;
-        //private readonly IRepository<Content, long> _contentRepository;
+        private readonly IRepository<Content, long> _contentRepository;
         private readonly IRepository<ProductFlashSaleProductMap, long> _productFlashSaleProductMapRepository;
         //private readonly IRepository<TaxRate, long> _taxRateRepository;
         //private readonly IRepository<OrderStatusType, long> _orderStatusTypeRepository;
@@ -165,7 +166,7 @@ namespace SoftGrid.PublicCommon
             IRepository<OrderFulfillmentStatus, long> orderFulfillmentStatusRepository,
             //IRepository<RewardPointHistory, long> rewardPointHistoryRepository,
             IRepository<ProductTag, long> productTagRepository,
-            //IRepository<Content, long> contentRepository,
+            IRepository<Content, long> contentRepository,
             IRepository<ProductFlashSaleProductMap, long> productFlashSaleProductMapRepository,
             //IRepository<TaxRate, long> taxRateRepository,
             //IRepository<OrderStatusType, long> orderStatusTypeRepository,
@@ -243,7 +244,7 @@ namespace SoftGrid.PublicCommon
             //_orderFulfillmentStatusRepository = orderFulfillmentStatusRepository;
             //_rewardPointHistoryRepository = rewardPointHistoryRepository;
             //_productTagRepository = productTagRepository;
-            //_contentRepository = contentRepository;
+            _contentRepository = contentRepository;
             //_productFlashSaleProductMapRepository = productFlashSaleProductMapRepository;
             //_taxRateRepository = taxRateRepository;
             //_orderStatusTypeRepository = orderStatusTypeRepository;
@@ -1047,13 +1048,15 @@ namespace SoftGrid.PublicCommon
         //                result.Picture = await _binaryObjectManager.GetProductPictureUrlAsync(media.BinaryObjectId, ".png");
         //            }
         //        }
-        //        result.HasVariant = await _productByVariantRepository.CountAsync(e => e.ProductId == result.Product.Id) > 0 ? true : false;
+        //        result.HasVariant = await _productByVariantRepository.CountAsync(e => e.ProductId == result.Product.Id) > 0 ? true : 0false;
         //        result.MembershipPrice = _membershipAndProductMapRepository.GetAll().Where(e => e.ProductId == result.Product.Id && e.MembershipTypeId == (long)MembershipTypeEnum.Snack_Pass).Select(e => e.Price).FirstOrDefault();
         //        result.MembershipName = _membershipAndProductMapRepository.GetAll().Include(e => e.MembershipTypeFk).Where(e => e.ProductId == result.Product.Id && e.MembershipTypeId == (long)MembershipTypeEnum.Snack_Pass).Select(e => e.MembershipTypeFk.Name).FirstOrDefault();
         //    }
 
         //    return results;
         //}
+
+
         //[AbpAllowAnonymous]
         //public async Task<List<ProductProductCategoryLookupTableForPublicDto>> GetAllProductCategoryForSideBar()
         //{
@@ -1084,6 +1087,8 @@ namespace SoftGrid.PublicCommon
 
         //    return results.Categories;
         //}
+
+
         //[AbpAllowAnonymous]
         //public async Task<RelevantStorePublicWidgetMapDto> GetRelevantStore(long primaryStoreId, long storeWidgetId)
         //{
@@ -2889,45 +2894,49 @@ namespace SoftGrid.PublicCommon
 
         //    return result;
         //}
-        //[AbpAllowAnonymous]
-        //public async Task<List<HubPublicViewForDropdownDto>> GetAllHubForDropdown(string hubFilter, string cityFilter, string zipCodeFilter)
-        //{
-        //    List<SqlParameter> parameters = new List<SqlParameter>();
 
-        //    if (hubFilter != null)
-        //    {
-        //        hubFilter = hubFilter[0] == '"' && hubFilter[hubFilter.Length - 1] == '"' ? "*" + hubFilter + "*" : '"' + "*" + hubFilter + "*" + '"';
-        //    }
 
-        //    SqlParameter filter = new SqlParameter("@Filter", hubFilter == null ? "\"\"" : hubFilter);
-        //    parameters.Add(filter);
+        [AbpAllowAnonymous]
+        public async Task<List<HubPublicViewForDropdownDto>> GetAllHubForDropdown(string hubFilter, string cityFilter, string zipCodeFilter)
+        {
+            List<SqlParameter> parameters = new List<SqlParameter>();
 
-        //    if (cityFilter != null)
-        //    {
-        //        cityFilter = cityFilter[0] == '"' && cityFilter[cityFilter.Length - 1] == '"' ? "*" + cityFilter + "*" : '"' + "*" + cityFilter + "*" + '"';
-        //    }
+            if (hubFilter != null)
+            {
+                hubFilter = hubFilter[0] == '"' && hubFilter[hubFilter.Length - 1] == '"' ? "*" + hubFilter + "*" : '"' + "*" + hubFilter + "*" + '"';
+            }
 
-        //    SqlParameter city = new SqlParameter("@CityFilter", cityFilter == null ? "\"\"" : cityFilter);
-        //    parameters.Add(city);
+            SqlParameter filter = new SqlParameter("@Filter", hubFilter == null ? "\"\"" : hubFilter);
+            parameters.Add(filter);
 
-        //    if (zipCodeFilter != null)
-        //    {
-        //        zipCodeFilter = zipCodeFilter[0] == '"' && zipCodeFilter[zipCodeFilter.Length - 1] == '"' ? "*" + zipCodeFilter + "*" : '"' + "*" + zipCodeFilter + "*" + '"';
-        //    }
+            if (cityFilter != null)
+            {
+                cityFilter = cityFilter[0] == '"' && cityFilter[cityFilter.Length - 1] == '"' ? "*" + cityFilter + "*" : '"' + "*" + cityFilter + "*" + '"';
+            }
 
-        //    SqlParameter zipCode = new SqlParameter("@ZipCodeFilter", zipCodeFilter == null ? "\"\"" : zipCodeFilter);
-        //    parameters.Add(zipCode);
+            SqlParameter city = new SqlParameter("@CityFilter", cityFilter == null ? "\"\"" : cityFilter);
+            parameters.Add(city);
 
-        //    var result = await _storedProcedureRepository.ExecuteStoredProcedure<GetAllHubsForDropdownViewBySp>("usp_GetAllHubsForDropdown", CommandType.StoredProcedure, parameters.ToArray());
-        //    foreach (var item in result.Hubs)
-        //    {
-        //        if (item.PictureId != null && item.PictureId!=Guid.Empty)
-        //        {
-        //            item.Picture = await _binaryObjectManager.GetStorePictureUrlAsync((Guid)item.PictureId, ".png");
-        //        }
-        //    }
-        //    return result.Hubs;
-        //}
+            if (zipCodeFilter != null)
+            {
+                zipCodeFilter = zipCodeFilter[0] == '"' && zipCodeFilter[zipCodeFilter.Length - 1] == '"' ? "*" + zipCodeFilter + "*" : '"' + "*" + zipCodeFilter + "*" + '"';
+            }
+
+            SqlParameter zipCode = new SqlParameter("@ZipCodeFilter", zipCodeFilter == null ? "\"\"" : zipCodeFilter);
+            parameters.Add(zipCode);
+
+            var result = await _storedProcedureRepository.ExecuteStoredProcedure<GetAllHubsForDropdownViewBySp>("usp_GetAllHubsForDropdown", CommandType.StoredProcedure, parameters.ToArray());
+            foreach (var item in result.Hubs)
+            {
+                if (item.PictureId != null && item.PictureId != Guid.Empty)
+                {
+                    item.Picture = await _binaryObjectManager.GetStorePictureUrlAsync((Guid)item.PictureId, ".png");
+                }
+            }
+            return result.Hubs;
+        }
+
+
         //[AbpAllowAnonymous]
         //public async Task<List<HubPublicViewForDropdownDto>> GetAllHubForDropdownByCity(string cityFilter)
         //{
@@ -3280,35 +3289,39 @@ namespace SoftGrid.PublicCommon
 
         //    return results.Categories;
         //}
-        //[AbpAllowAnonymous]
-        //public async Task<GetNearestHubsForViewDto> GetNearestHubsByUserLocation(GeUserLatLongInpuDto input)
-        //{
-        //    List<SqlParameter> parameters = PrepareSearchParameterForGetNearestHubsByUserLocation(input);
-        //    var results = await _storedProcedureRepository.ExecuteStoredProcedure<GetNearestHubsForViewDto>("usp_GetTopNearbyHubsByUserLocation", CommandType.StoredProcedure, parameters.ToArray());
-        //    foreach (var result in results.NearestHubs)
-        //    {
-        //        if (result.PictureId != null && result.PictureId != Guid.Empty)
-        //        {
-        //            result.Picture = await _binaryObjectManager.GetOthersPictureUrlAsync((Guid)result.PictureId, ".png");
-
-        //        }
-        //    }
-        //    return results;
-        //}
-
-        //private static List<SqlParameter> PrepareSearchParameterForGetNearestHubsByUserLocation(GeUserLatLongInpuDto input)
-        //{
-        //    List<SqlParameter> sqlParameters = new List<SqlParameter>();
 
 
-        //    SqlParameter latitudeFilter = new SqlParameter("@Latitude", input.Latitude == null ? (object)DBNull.Value : input.Latitude);
-        //    sqlParameters.Add(latitudeFilter);
+        [AbpAllowAnonymous]
+        public async Task<GetNearestHubsForViewDto> GetNearestHubsByUserLocation(GeUserLatLongInpuDto input)
+        {
+            List<SqlParameter> parameters = PrepareSearchParameterForGetNearestHubsByUserLocation(input);
+            var results = await _storedProcedureRepository.ExecuteStoredProcedure<GetNearestHubsForViewDto>("usp_GetTopNearbyHubsByUserLocation", CommandType.StoredProcedure, parameters.ToArray());
+            foreach (var result in results.NearestHubs)
+            {
+                if (result.PictureId != null && result.PictureId != Guid.Empty)
+                {
+                    result.Picture = await _binaryObjectManager.GetOthersPictureUrlAsync((Guid)result.PictureId, ".png");
 
-        //    SqlParameter longitudeFilter = new SqlParameter("@Longitude", input.Longitude == null ? (object)DBNull.Value : input.Longitude);
-        //    sqlParameters.Add(longitudeFilter);
+                }
+            }
+            return results;
+        }
 
-        //    return sqlParameters;
-        //}
+
+        private static List<SqlParameter> PrepareSearchParameterForGetNearestHubsByUserLocation(GeUserLatLongInpuDto input)
+        {
+            List<SqlParameter> sqlParameters = new List<SqlParameter>();
+
+
+            SqlParameter latitudeFilter = new SqlParameter("@Latitude", input.Latitude == null ? (object)DBNull.Value : input.Latitude);
+            sqlParameters.Add(latitudeFilter);
+
+            SqlParameter longitudeFilter = new SqlParameter("@Longitude", input.Longitude == null ? (object)DBNull.Value : input.Longitude);
+            sqlParameters.Add(longitudeFilter);
+
+            return sqlParameters;
+        }
+
         //[AbpAllowAnonymous]
         //public async Task<PagedResultDto<GetPublicProductForViewDto>> GetAllProductsByHubAndProductCategory(string hubUrl, string categoryUrl, string filter)
         //{
@@ -3580,18 +3593,20 @@ namespace SoftGrid.PublicCommon
         //    return null;
         //}
 
-        //[AbpAllowAnonymous]
-        //public async Task<string> GetAboutUs()
-        //{
-        //    var content = await _contentRepository.FirstOrDefaultAsync(e => e.Id == Convert.ToInt32(_appConfiguration["LegalDocs:About_Us"]) && e.IsPublished == true);
+        [AbpAllowAnonymous]
+        public async Task<string> GetAboutUs()
+        {
+            //var aboutUsId = Convert.ToInt32(_appConfiguration["LegalDocs:About_Us"]);
 
-        //    if (content != null)
-        //    {
-        //        return content.Body;
-        //    }
+            var content = await _contentRepository.FirstOrDefaultAsync(e => e.Id == 0 /*aboutUsId*/ && e.Published == true);
 
-        //    return null;
-        //}
+            if (content != null)
+            {
+                return content.Body;
+            }
+
+            return null;
+        }
 
         //[AbpAllowAnonymous]
         //public async Task<TaxRate> GetTaxRateByZipCode(string zipCode, long stateId)
