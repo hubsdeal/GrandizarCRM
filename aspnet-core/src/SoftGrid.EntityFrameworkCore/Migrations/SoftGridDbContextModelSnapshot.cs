@@ -2029,6 +2029,48 @@ namespace SoftGrid.Migrations
                     b.ToTable("BusinessContactMaps");
                 });
 
+            modelBuilder.Entity("SoftGrid.CRM.BusinessDocument", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long>("BusinessId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("DocumentTitle")
+                        .IsRequired()
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
+
+                    b.Property<long?>("DocumentTypeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<Guid>("FileBinaryObjectId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BusinessId");
+
+                    b.HasIndex("DocumentTypeId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("BusinessDocuments");
+                });
+
             modelBuilder.Entity("SoftGrid.CRM.BusinessJobMap", b =>
                 {
                     b.Property<long>("Id")
@@ -2461,6 +2503,48 @@ namespace SoftGrid.Migrations
                     b.ToTable("Contacts");
                 });
 
+            modelBuilder.Entity("SoftGrid.CRM.ContactDocument", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long>("ContactId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("DocumentTitle")
+                        .IsRequired()
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
+
+                    b.Property<long?>("DocumentTypeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<Guid>("FileBinaryObjectId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ContactId");
+
+                    b.HasIndex("DocumentTypeId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("ContactDocuments");
+                });
+
             modelBuilder.Entity("SoftGrid.CRM.ContactTag", b =>
                 {
                     b.Property<long>("Id")
@@ -2647,6 +2731,48 @@ namespace SoftGrid.Migrations
                     b.HasIndex("TenantId");
 
                     b.ToTable("Employees");
+                });
+
+            modelBuilder.Entity("SoftGrid.CRM.EmployeeDocument", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("DocumentTitle")
+                        .IsRequired()
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
+
+                    b.Property<long?>("DocumentTypeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("EmployeeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<Guid>("FileBinaryObjectId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DocumentTypeId");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("EmployeeDocuments");
                 });
 
             modelBuilder.Entity("SoftGrid.CRM.EmployeeTag", b =>
@@ -3145,6 +3271,9 @@ namespace SoftGrid.Migrations
                     b.Property<long?>("ProductCategoryId")
                         .HasColumnType("bigint");
 
+                    b.Property<bool?>("ProjectOrJob")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime?>("PublishDate")
                         .HasColumnType("datetime2");
 
@@ -3217,6 +3346,48 @@ namespace SoftGrid.Migrations
                     b.HasIndex("TenantId");
 
                     b.ToTable("Jobs");
+                });
+
+            modelBuilder.Entity("SoftGrid.JobManagement.JobDocument", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("DocumentTitle")
+                        .IsRequired()
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
+
+                    b.Property<long?>("DocumentTypeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<Guid>("FileBinaryObjectId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<long>("JobId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DocumentTypeId");
+
+                    b.HasIndex("JobId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("JobDocuments");
                 });
 
             modelBuilder.Entity("SoftGrid.JobManagement.JobStatusType", b =>
@@ -6291,6 +6462,48 @@ namespace SoftGrid.Migrations
                     b.ToTable("ProductCustomerStats");
                 });
 
+            modelBuilder.Entity("SoftGrid.Shop.ProductDocument", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("DocumentTitle")
+                        .IsRequired()
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
+
+                    b.Property<long?>("DocumentTypeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<Guid>("FileBinaryObjectId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<long>("ProductId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DocumentTypeId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("ProductDocuments");
+                });
+
             modelBuilder.Entity("SoftGrid.Shop.ProductFaq", b =>
                 {
                     b.Property<long>("Id")
@@ -7306,7 +7519,7 @@ namespace SoftGrid.Migrations
                     b.Property<long?>("CreatorUserId")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("EmployeeId")
+                    b.Property<long?>("EmployeeId")
                         .HasColumnType("bigint");
 
                     b.Property<bool>("OrderEmailNotification")
@@ -7581,6 +7794,48 @@ namespace SoftGrid.Migrations
                     b.HasIndex("TenantId");
 
                     b.ToTable("StoreContactMaps");
+                });
+
+            modelBuilder.Entity("SoftGrid.Shop.StoreDocument", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("DocumentTitle")
+                        .IsRequired()
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
+
+                    b.Property<long?>("DocumentTypeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<Guid>("FileBinaryObjectId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<long>("StoreId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DocumentTypeId");
+
+                    b.HasIndex("StoreId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("StoreDocuments");
                 });
 
             modelBuilder.Entity("SoftGrid.Shop.StoreLocation", b =>
@@ -8127,7 +8382,7 @@ namespace SoftGrid.Migrations
                     b.Property<int?>("Sequence")
                         .HasColumnType("int");
 
-                    b.Property<long>("StoreId")
+                    b.Property<long?>("StoreId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("TagValue")
@@ -8330,6 +8585,48 @@ namespace SoftGrid.Migrations
                     b.HasIndex("TenantId");
 
                     b.ToTable("StoreTaskMaps");
+                });
+
+            modelBuilder.Entity("SoftGrid.TaskManagement.TaskDocument", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("DocumentTitle")
+                        .IsRequired()
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
+
+                    b.Property<long?>("DocumentTypeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<Guid>("FileBinaryObjectId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<long>("TaskEventId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DocumentTypeId");
+
+                    b.HasIndex("TaskEventId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("TaskDocuments");
                 });
 
             modelBuilder.Entity("SoftGrid.TaskManagement.TaskEvent", b =>
@@ -8739,6 +9036,48 @@ namespace SoftGrid.Migrations
                     b.HasIndex("TenantId");
 
                     b.ToTable("HubContacts");
+                });
+
+            modelBuilder.Entity("SoftGrid.Territory.HubDocument", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("DocumentTitle")
+                        .IsRequired()
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
+
+                    b.Property<long?>("DocumentTypeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<Guid>("FileBinaryObjectId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<long>("HubId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DocumentTypeId");
+
+                    b.HasIndex("HubId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("HubDocuments");
                 });
 
             modelBuilder.Entity("SoftGrid.Territory.HubNavigationMenu", b =>
@@ -9386,6 +9725,23 @@ namespace SoftGrid.Migrations
                     b.Navigation("ContactFk");
                 });
 
+            modelBuilder.Entity("SoftGrid.CRM.BusinessDocument", b =>
+                {
+                    b.HasOne("SoftGrid.CRM.Business", "BusinessFk")
+                        .WithMany()
+                        .HasForeignKey("BusinessId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SoftGrid.LookupData.DocumentType", "DocumentTypeFk")
+                        .WithMany()
+                        .HasForeignKey("DocumentTypeId");
+
+                    b.Navigation("BusinessFk");
+
+                    b.Navigation("DocumentTypeFk");
+                });
+
             modelBuilder.Entity("SoftGrid.CRM.BusinessJobMap", b =>
                 {
                     b.HasOne("SoftGrid.CRM.Business", "BusinessFk")
@@ -9542,6 +9898,23 @@ namespace SoftGrid.Migrations
                     b.Navigation("StateFk");
                 });
 
+            modelBuilder.Entity("SoftGrid.CRM.ContactDocument", b =>
+                {
+                    b.HasOne("SoftGrid.CRM.Contact", "ContactFk")
+                        .WithMany()
+                        .HasForeignKey("ContactId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SoftGrid.LookupData.DocumentType", "DocumentTypeFk")
+                        .WithMany()
+                        .HasForeignKey("DocumentTypeId");
+
+                    b.Navigation("ContactFk");
+
+                    b.Navigation("DocumentTypeFk");
+                });
+
             modelBuilder.Entity("SoftGrid.CRM.ContactTag", b =>
                 {
                     b.HasOne("SoftGrid.CRM.Contact", "ContactFk")
@@ -9584,6 +9957,23 @@ namespace SoftGrid.Migrations
                     b.Navigation("CountryFk");
 
                     b.Navigation("StateFk");
+                });
+
+            modelBuilder.Entity("SoftGrid.CRM.EmployeeDocument", b =>
+                {
+                    b.HasOne("SoftGrid.LookupData.DocumentType", "DocumentTypeFk")
+                        .WithMany()
+                        .HasForeignKey("DocumentTypeId");
+
+                    b.HasOne("SoftGrid.CRM.Employee", "EmployeeFk")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DocumentTypeFk");
+
+                    b.Navigation("EmployeeFk");
                 });
 
             modelBuilder.Entity("SoftGrid.CRM.EmployeeTag", b =>
@@ -9754,6 +10144,23 @@ namespace SoftGrid.Migrations
                     b.Navigation("StateFk");
 
                     b.Navigation("StoreFk");
+                });
+
+            modelBuilder.Entity("SoftGrid.JobManagement.JobDocument", b =>
+                {
+                    b.HasOne("SoftGrid.LookupData.DocumentType", "DocumentTypeFk")
+                        .WithMany()
+                        .HasForeignKey("DocumentTypeId");
+
+                    b.HasOne("SoftGrid.JobManagement.Job", "JobFk")
+                        .WithMany()
+                        .HasForeignKey("JobId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DocumentTypeFk");
+
+                    b.Navigation("JobFk");
                 });
 
             modelBuilder.Entity("SoftGrid.JobManagement.JobTag", b =>
@@ -10556,6 +10963,23 @@ namespace SoftGrid.Migrations
                     b.Navigation("StoreFk");
                 });
 
+            modelBuilder.Entity("SoftGrid.Shop.ProductDocument", b =>
+                {
+                    b.HasOne("SoftGrid.LookupData.DocumentType", "DocumentTypeFk")
+                        .WithMany()
+                        .HasForeignKey("DocumentTypeId");
+
+                    b.HasOne("SoftGrid.Shop.Product", "ProductFk")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DocumentTypeFk");
+
+                    b.Navigation("ProductFk");
+                });
+
             modelBuilder.Entity("SoftGrid.Shop.ProductFaq", b =>
                 {
                     b.HasOne("SoftGrid.Shop.Product", "ProductFk")
@@ -10920,9 +11344,7 @@ namespace SoftGrid.Migrations
                 {
                     b.HasOne("SoftGrid.CRM.Employee", "EmployeeFk")
                         .WithMany()
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("EmployeeId");
 
                     b.HasOne("SoftGrid.Shop.Store", "StoreFk")
                         .WithMany()
@@ -11003,6 +11425,23 @@ namespace SoftGrid.Migrations
                         .IsRequired();
 
                     b.Navigation("ContactFk");
+
+                    b.Navigation("StoreFk");
+                });
+
+            modelBuilder.Entity("SoftGrid.Shop.StoreDocument", b =>
+                {
+                    b.HasOne("SoftGrid.LookupData.DocumentType", "DocumentTypeFk")
+                        .WithMany()
+                        .HasForeignKey("DocumentTypeId");
+
+                    b.HasOne("SoftGrid.Shop.Store", "StoreFk")
+                        .WithMany()
+                        .HasForeignKey("StoreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DocumentTypeFk");
 
                     b.Navigation("StoreFk");
                 });
@@ -11232,9 +11671,7 @@ namespace SoftGrid.Migrations
 
                     b.HasOne("SoftGrid.Shop.Store", "StoreFk")
                         .WithMany()
-                        .HasForeignKey("StoreId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("StoreId");
 
                     b.Navigation("MasterTagCategoryFk");
 
@@ -11309,6 +11746,23 @@ namespace SoftGrid.Migrations
                         .IsRequired();
 
                     b.Navigation("StoreFk");
+
+                    b.Navigation("TaskEventFk");
+                });
+
+            modelBuilder.Entity("SoftGrid.TaskManagement.TaskDocument", b =>
+                {
+                    b.HasOne("SoftGrid.LookupData.DocumentType", "DocumentTypeFk")
+                        .WithMany()
+                        .HasForeignKey("DocumentTypeId");
+
+                    b.HasOne("SoftGrid.TaskManagement.TaskEvent", "TaskEventFk")
+                        .WithMany()
+                        .HasForeignKey("TaskEventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DocumentTypeFk");
 
                     b.Navigation("TaskEventFk");
                 });
@@ -11449,6 +11903,23 @@ namespace SoftGrid.Migrations
                         .IsRequired();
 
                     b.Navigation("ContactFk");
+
+                    b.Navigation("HubFk");
+                });
+
+            modelBuilder.Entity("SoftGrid.Territory.HubDocument", b =>
+                {
+                    b.HasOne("SoftGrid.LookupData.DocumentType", "DocumentTypeFk")
+                        .WithMany()
+                        .HasForeignKey("DocumentTypeId");
+
+                    b.HasOne("SoftGrid.Territory.Hub", "HubFk")
+                        .WithMany()
+                        .HasForeignKey("HubId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DocumentTypeFk");
 
                     b.Navigation("HubFk");
                 });

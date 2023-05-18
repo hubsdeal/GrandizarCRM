@@ -30,6 +30,46 @@ namespace SoftGrid.Authorization
 
             var pages = context.GetPermissionOrNull(AppPermissions.Pages) ?? context.CreatePermission(AppPermissions.Pages, L("Pages"));
 
+            var taskDocuments = pages.CreateChildPermission(AppPermissions.Pages_TaskDocuments, L("TaskDocuments"));
+            taskDocuments.CreateChildPermission(AppPermissions.Pages_TaskDocuments_Create, L("CreateNewTaskDocument"));
+            taskDocuments.CreateChildPermission(AppPermissions.Pages_TaskDocuments_Edit, L("EditTaskDocument"));
+            taskDocuments.CreateChildPermission(AppPermissions.Pages_TaskDocuments_Delete, L("DeleteTaskDocument"));
+
+            var jobDocuments = pages.CreateChildPermission(AppPermissions.Pages_JobDocuments, L("JobDocuments"));
+            jobDocuments.CreateChildPermission(AppPermissions.Pages_JobDocuments_Create, L("CreateNewJobDocument"));
+            jobDocuments.CreateChildPermission(AppPermissions.Pages_JobDocuments_Edit, L("EditJobDocument"));
+            jobDocuments.CreateChildPermission(AppPermissions.Pages_JobDocuments_Delete, L("DeleteJobDocument"));
+
+            var hubDocuments = pages.CreateChildPermission(AppPermissions.Pages_HubDocuments, L("HubDocuments"));
+            hubDocuments.CreateChildPermission(AppPermissions.Pages_HubDocuments_Create, L("CreateNewHubDocument"));
+            hubDocuments.CreateChildPermission(AppPermissions.Pages_HubDocuments_Edit, L("EditHubDocument"));
+            hubDocuments.CreateChildPermission(AppPermissions.Pages_HubDocuments_Delete, L("DeleteHubDocument"));
+
+            var productDocuments = pages.CreateChildPermission(AppPermissions.Pages_ProductDocuments, L("ProductDocuments"));
+            productDocuments.CreateChildPermission(AppPermissions.Pages_ProductDocuments_Create, L("CreateNewProductDocument"));
+            productDocuments.CreateChildPermission(AppPermissions.Pages_ProductDocuments_Edit, L("EditProductDocument"));
+            productDocuments.CreateChildPermission(AppPermissions.Pages_ProductDocuments_Delete, L("DeleteProductDocument"));
+
+            var storeDocuments = pages.CreateChildPermission(AppPermissions.Pages_StoreDocuments, L("StoreDocuments"));
+            storeDocuments.CreateChildPermission(AppPermissions.Pages_StoreDocuments_Create, L("CreateNewStoreDocument"));
+            storeDocuments.CreateChildPermission(AppPermissions.Pages_StoreDocuments_Edit, L("EditStoreDocument"));
+            storeDocuments.CreateChildPermission(AppPermissions.Pages_StoreDocuments_Delete, L("DeleteStoreDocument"));
+
+            var employeeDocuments = pages.CreateChildPermission(AppPermissions.Pages_EmployeeDocuments, L("EmployeeDocuments"));
+            employeeDocuments.CreateChildPermission(AppPermissions.Pages_EmployeeDocuments_Create, L("CreateNewEmployeeDocument"));
+            employeeDocuments.CreateChildPermission(AppPermissions.Pages_EmployeeDocuments_Edit, L("EditEmployeeDocument"));
+            employeeDocuments.CreateChildPermission(AppPermissions.Pages_EmployeeDocuments_Delete, L("DeleteEmployeeDocument"));
+
+            var businessDocuments = pages.CreateChildPermission(AppPermissions.Pages_BusinessDocuments, L("BusinessDocuments"));
+            businessDocuments.CreateChildPermission(AppPermissions.Pages_BusinessDocuments_Create, L("CreateNewBusinessDocument"));
+            businessDocuments.CreateChildPermission(AppPermissions.Pages_BusinessDocuments_Edit, L("EditBusinessDocument"));
+            businessDocuments.CreateChildPermission(AppPermissions.Pages_BusinessDocuments_Delete, L("DeleteBusinessDocument"));
+
+            var contactDocuments = pages.CreateChildPermission(AppPermissions.Pages_ContactDocuments, L("ContactDocuments"));
+            contactDocuments.CreateChildPermission(AppPermissions.Pages_ContactDocuments_Create, L("CreateNewContactDocument"));
+            contactDocuments.CreateChildPermission(AppPermissions.Pages_ContactDocuments_Edit, L("EditContactDocument"));
+            contactDocuments.CreateChildPermission(AppPermissions.Pages_ContactDocuments_Delete, L("DeleteContactDocument"));
+
             var storeTaskMaps = pages.CreateChildPermission(AppPermissions.Pages_StoreTaskMaps, L("StoreTaskMaps"));
             storeTaskMaps.CreateChildPermission(AppPermissions.Pages_StoreTaskMaps_Create, L("CreateNewStoreTaskMap"));
             storeTaskMaps.CreateChildPermission(AppPermissions.Pages_StoreTaskMaps_Edit, L("EditStoreTaskMap"));

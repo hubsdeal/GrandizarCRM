@@ -6,6 +6,46 @@
     /// </summary>
     public static class AppPermissions
     {
+        public const string Pages_TaskDocuments = "Pages.TaskDocuments";
+        public const string Pages_TaskDocuments_Create = "Pages.TaskDocuments.Create";
+        public const string Pages_TaskDocuments_Edit = "Pages.TaskDocuments.Edit";
+        public const string Pages_TaskDocuments_Delete = "Pages.TaskDocuments.Delete";
+
+        public const string Pages_JobDocuments = "Pages.JobDocuments";
+        public const string Pages_JobDocuments_Create = "Pages.JobDocuments.Create";
+        public const string Pages_JobDocuments_Edit = "Pages.JobDocuments.Edit";
+        public const string Pages_JobDocuments_Delete = "Pages.JobDocuments.Delete";
+
+        public const string Pages_HubDocuments = "Pages.HubDocuments";
+        public const string Pages_HubDocuments_Create = "Pages.HubDocuments.Create";
+        public const string Pages_HubDocuments_Edit = "Pages.HubDocuments.Edit";
+        public const string Pages_HubDocuments_Delete = "Pages.HubDocuments.Delete";
+
+        public const string Pages_ProductDocuments = "Pages.ProductDocuments";
+        public const string Pages_ProductDocuments_Create = "Pages.ProductDocuments.Create";
+        public const string Pages_ProductDocuments_Edit = "Pages.ProductDocuments.Edit";
+        public const string Pages_ProductDocuments_Delete = "Pages.ProductDocuments.Delete";
+
+        public const string Pages_StoreDocuments = "Pages.StoreDocuments";
+        public const string Pages_StoreDocuments_Create = "Pages.StoreDocuments.Create";
+        public const string Pages_StoreDocuments_Edit = "Pages.StoreDocuments.Edit";
+        public const string Pages_StoreDocuments_Delete = "Pages.StoreDocuments.Delete";
+
+        public const string Pages_EmployeeDocuments = "Pages.EmployeeDocuments";
+        public const string Pages_EmployeeDocuments_Create = "Pages.EmployeeDocuments.Create";
+        public const string Pages_EmployeeDocuments_Edit = "Pages.EmployeeDocuments.Edit";
+        public const string Pages_EmployeeDocuments_Delete = "Pages.EmployeeDocuments.Delete";
+
+        public const string Pages_BusinessDocuments = "Pages.BusinessDocuments";
+        public const string Pages_BusinessDocuments_Create = "Pages.BusinessDocuments.Create";
+        public const string Pages_BusinessDocuments_Edit = "Pages.BusinessDocuments.Edit";
+        public const string Pages_BusinessDocuments_Delete = "Pages.BusinessDocuments.Delete";
+
+        public const string Pages_ContactDocuments = "Pages.ContactDocuments";
+        public const string Pages_ContactDocuments_Create = "Pages.ContactDocuments.Create";
+        public const string Pages_ContactDocuments_Edit = "Pages.ContactDocuments.Edit";
+        public const string Pages_ContactDocuments_Delete = "Pages.ContactDocuments.Delete";
+
         public const string Pages_StoreTaskMaps = "Pages.StoreTaskMaps";
         public const string Pages_StoreTaskMaps_Create = "Pages.StoreTaskMaps.Create";
         public const string Pages_StoreTaskMaps_Edit = "Pages.StoreTaskMaps.Edit";

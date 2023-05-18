@@ -1,0 +1,145 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #businessDocumentForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="businessDocument.id">{{ l('EditBusinessDocument') }}</span>
+                        <span *ngIf="!businessDocument.id">{{ l('CreateNewBusinessDocument') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="BusinessName">{{ l('Business') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="BusinessName"
+                                name="businessName"
+                                [(ngModel)]="businessName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectBusinessModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setBusinessIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="businessDocument.businessId"
+                        [(ngModel)]="businessDocument.businessId"
+                        type="text"
+                        required
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="DocumentTypeName">{{ l('DocumentType') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="DocumentTypeName"
+                                name="documentTypeName"
+                                [(ngModel)]="documentTypeName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectDocumentTypeModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setDocumentTypeIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="businessDocument.documentTypeId"
+                        [(ngModel)]="businessDocument.documentTypeId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="BusinessDocument_DocumentTitle">
+                            {{ l('DocumentTitle') }} *
+                        </label>
+                        <input
+                            type="text"
+                            #BusinessDocument_DocumentTitle="ngModel"
+                            id="BusinessDocument_DocumentTitle"
+                            class="form-control"
+                            [(ngModel)]="businessDocument.documentTitle"
+                            name="DocumentTitle"
+                            minlength="1"
+                            maxlength="512"
+                            required
+                        />
+                        <validation-messages [formCtrl]="BusinessDocument_DocumentTitle"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="BusinessDocument_FileBinaryObjectId">
+                            {{ l('FileBinaryObjectId') }}
+                        </label>
+                        <input
+                            type="text"
+                            #BusinessDocument_FileBinaryObjectId="ngModel"
+                            id="BusinessDocument_FileBinaryObjectId"
+                            class="form-control"
+                            [(ngModel)]="businessDocument.fileBinaryObjectId"
+                            name="FileBinaryObjectId"
+                        />
+                        <validation-messages [formCtrl]="BusinessDocument_FileBinaryObjectId"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!businessDocumentForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <businessDocumentBusinessLookupTableModal
+        #businessDocumentBusinessLookupTableModal
+        (modalSave)="getNewBusinessId()"
+    ></businessDocumentBusinessLookupTableModal>
+    <businessDocumentDocumentTypeLookupTableModal
+        #businessDocumentDocumentTypeLookupTableModal
+        (modalSave)="getNewDocumentTypeId()"
+    ></businessDocumentDocumentTypeLookupTableModal>
+</div>
