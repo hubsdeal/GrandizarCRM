@@ -1,0 +1,718 @@
+<div [@routerTransition]>
+    <sub-header [title]="'Master Employees' | localize" [description]="">
+        <div role="actions">
+            <!-- <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1">
+                <i class="fa fa-file-excel"></i>
+                {{ l('ExportToExcel') }}
+            </button> -->
+
+            <button *ngIf="isGranted('Pages.Employees.Create')" (click)="createEmployee()" class="btn btn-primary blue">
+                <i class="fa fa-plus"></i>
+                {{ l('Employee') }}
+            </button>
+        </div>
+    </sub-header>
+
+    <div [class]="containerClass">
+        <div class="card card-custom gutter-b">
+            <div class="card-body">
+                <form class="form" autocomplete="off">
+                    <div>
+                        <div class="row align-items-center">
+                            <div class="col-xl-12">
+                                <div class="my-3">
+                                    <div class="input-group mb-3">
+                                        <input [(ngModel)]="filterText" (ngModelChange)="getEmployees()"
+                                            name="filterText" autoFocus type="text" class="form-control"
+                                            [placeholder]="l('SearchWithThreeDot')" />
+                                        <button class="btn btn-primary" type="submit" (click)="getEmployees()">
+                                            <i class="flaticon-search-1"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" [hidden]="!advancedFiltersAreShown">
+                            <div class="col-md-12"></div>
+
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="NameFilter">{{ l('Name') }}</label>
+                                    <input type="text" class="form-control" id="NameFilter" name="nameFilter"
+                                        [(ngModel)]="nameFilter" (ngModelChange)="getEmployees()" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="FirstNameFilter">{{ l('FirstName') }}</label>
+                                    <input type="text" class="form-control" id="FirstNameFilter" name="firstNameFilter"
+                                        [(ngModel)]="firstNameFilter" (ngModelChange)="getEmployees()" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="LastNameFilter">{{ l('LastName') }}</label>
+                                    <input type="text" class="form-control" id="LastNameFilter" name="lastNameFilter"
+                                        [(ngModel)]="lastNameFilter" (ngModelChange)="getEmployees()" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="FullAddressFilter">{{ l('FullAddress') }}</label>
+                                    <input type="text" class="form-control" id="FullAddressFilter"
+                                        name="fullAddressFilter" [(ngModel)]="fullAddressFilter"
+                                        (ngModelChange)="getEmployees()" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="AddressFilter">{{ l('Address') }}</label>
+                                    <input type="text" class="form-control" id="AddressFilter" name="addressFilter"
+                                        [(ngModel)]="addressFilter" (ngModelChange)="getEmployees()" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="ZipCodeFilter">{{ l('ZipCode') }}</label>
+                                    <input type="text" class="form-control" id="ZipCodeFilter" name="zipCodeFilter"
+                                        [(ngModel)]="zipCodeFilter" (ngModelChange)="getEmployees()" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="CityFilter">{{ l('City') }}</label>
+                                    <input type="text" class="form-control" id="CityFilter" name="cityFilter"
+                                        [(ngModel)]="cityFilter" (ngModelChange)="getEmployees()" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="MinDateOfBirthFilter">
+                                        {{ l('DateOfBirthRange') }}
+                                    </label>
+                                    <div class="input-group">
+                                        <input class="form-control m-input" id="MinDateOfBirthFilter"
+                                            name="MinDateOfBirthFilter" type="datetime" bsDatepicker
+                                            placeholder="{{ l('MinValue') }}" [(ngModel)]="minDateOfBirthFilter"
+                                            (ngModelChange)="getEmployees()" />
+                                        <span style="line-height: 40px; padding: 0 15px 0 15px">&mdash;</span>
+                                        <input class="form-control m-input" id="MaxDateOfBirthFilter"
+                                            name="MaxDateOfBirthFilter" type="datetime" bsDatepicker
+                                            placeholder="{{ l('MaxValue') }}" [(ngModel)]="maxDateOfBirthFilter"
+                                            (ngModelChange)="getEmployees()" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="MobileFilter">{{ l('Mobile') }}</label>
+                                    <input type="text" class="form-control" id="MobileFilter" name="mobileFilter"
+                                        [(ngModel)]="mobileFilter" (ngModelChange)="getEmployees()" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="OfficePhoneFilter">{{ l('OfficePhone') }}</label>
+                                    <input type="text" class="form-control" id="OfficePhoneFilter"
+                                        name="officePhoneFilter" [(ngModel)]="officePhoneFilter"
+                                        (ngModelChange)="getEmployees()" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="PersonalEmailFilter">{{ l('PersonalEmail') }}</label>
+                                    <input type="text" class="form-control" id="PersonalEmailFilter"
+                                        name="personalEmailFilter" [(ngModel)]="personalEmailFilter"
+                                        (ngModelChange)="getEmployees()" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="BusinessEmailFilter">{{ l('BusinessEmail') }}</label>
+                                    <input type="text" class="form-control" id="BusinessEmailFilter"
+                                        name="businessEmailFilter" [(ngModel)]="businessEmailFilter"
+                                        (ngModelChange)="getEmployees()" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="JobTitleFilter">{{ l('JobTitle') }}</label>
+                                    <input type="text" class="form-control" id="JobTitleFilter" name="jobTitleFilter"
+                                        [(ngModel)]="jobTitleFilter" (ngModelChange)="getEmployees()" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="CompanyNameFilter">{{ l('CompanyName') }}</label>
+                                    <input type="text" class="form-control" id="CompanyNameFilter"
+                                        name="companyNameFilter" [(ngModel)]="companyNameFilter"
+                                        (ngModelChange)="getEmployees()" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="ProfileFilter">{{ l('Profile') }}</label>
+                                    <input type="text" class="form-control" id="ProfileFilter" name="profileFilter"
+                                        [(ngModel)]="profileFilter" (ngModelChange)="getEmployees()" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="MinHireDateFilter">{{ l('HireDateRange') }}</label>
+                                    <div class="input-group">
+                                        <input class="form-control m-input" id="MinHireDateFilter"
+                                            name="MinHireDateFilter" type="datetime" bsDatepicker
+                                            placeholder="{{ l('MinValue') }}" [(ngModel)]="minHireDateFilter"
+                                            (ngModelChange)="getEmployees()" />
+                                        <span style="line-height: 40px; padding: 0 15px 0 15px">&mdash;</span>
+                                        <input class="form-control m-input" id="MaxHireDateFilter"
+                                            name="MaxHireDateFilter" type="datetime" bsDatepicker
+                                            placeholder="{{ l('MaxValue') }}" [(ngModel)]="maxHireDateFilter"
+                                            (ngModelChange)="getEmployees()" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="FacebookFilter">{{ l('Facebook') }}</label>
+                                    <input type="text" class="form-control" id="FacebookFilter" name="facebookFilter"
+                                        [(ngModel)]="facebookFilter" (ngModelChange)="getEmployees()" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="LinkedInFilter">{{ l('LinkedIn') }}</label>
+                                    <input type="text" class="form-control" id="LinkedInFilter" name="linkedInFilter"
+                                        [(ngModel)]="linkedInFilter" (ngModelChange)="getEmployees()" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="FaxFilter">{{ l('Fax') }}</label>
+                                    <input type="text" class="form-control" id="FaxFilter" name="faxFilter"
+                                        [(ngModel)]="faxFilter" (ngModelChange)="getEmployees()" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="ProfilePictureIdFilter">
+                                        {{ l('ProfilePictureId') }}
+                                    </label>
+                                    <input type="text" class="form-control" id="ProfilePictureIdFilter"
+                                        name="profilePictureIdFilter" [(ngModel)]="profilePictureIdFilter" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="CurrentEmployeeFilterSelect">
+                                        {{ l('CurrentEmployee') }}
+                                    </label>
+                                    <select class="form-select" name="CurrentEmployeeFilter"
+                                        id="CurrentEmployeeFilterSelect" [(ngModel)]="currentEmployeeFilter"
+                                        (ngModelChange)="getEmployees()">
+                                        <option value="-1">{{ l('All') }}</option>
+                                        <option value="0">{{ l('False') }}</option>
+                                        <option value="1">{{ l('True') }}</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="StateNameFilter">
+                                        ({{ l('State') }}) {{ l('Name') }}
+                                    </label>
+                                    <input type="text" class="form-control" id="StateNameFilter" name="stateNameFilter"
+                                        [(ngModel)]="stateNameFilter" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="CountryNameFilter">
+                                        ({{ l('Country') }}) {{ l('Name') }}
+                                    </label>
+                                    <input type="text" class="form-control" id="CountryNameFilter"
+                                        name="countryNameFilter" [(ngModel)]="countryNameFilter" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="ContactFullNameFilter">
+                                        ({{ l('Contact') }}) {{ l('FullName') }}
+                                    </label>
+                                    <input type="text" class="form-control" id="ContactFullNameFilter"
+                                        name="contactFullNameFilter" [(ngModel)]="contactFullNameFilter" />
+                                </div>
+                            </div>
+                            <div class="col-md-12 mt-5">
+                                <button (click)="resetFilters()" class="btn btn-secondary btn-sm"
+                                    id="btn-reset-filters">
+                                    Reset
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row my-4">
+                            <div class="col-sm-12">
+                                <span class="clickable-item text-muted" *ngIf="!advancedFiltersAreShown"
+                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown">
+                                    <i class="fa fa-angle-down"></i>
+                                    {{ l('ShowAdvancedFilters') }}
+                                </span>
+                                <span class="clickable-item text-muted" *ngIf="advancedFiltersAreShown"
+                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown">
+                                    <i class="fa fa-angle-up"></i>
+                                    {{ l('HideAdvancedFilters') }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="row">
+                    <div class="col-xl-12 mb-6 d-flex justify-content-end">
+                        <div class="m-0">
+                            <a href="javascript:;" class="btn btn-sm btn-flex btn-primary fw-bold menu-dropdown"
+                                data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
+                                <span class="svg-icon svg-icon-6 svg-icon-muted me-1">
+                                    <i class="fas fa-cogs"></i>
+                                </span>Bulk Actions <span class="ms-2"><i class="fas fa-angle-down fs-6"></i></span>
+                            </a>
+                            <div class="menu menu-sub menu-sub-dropdown w-250px w-md-300px" data-kt-menu="true"
+                                id="kt_menu_63de8ab8d2b1a"
+                                style="z-index: 107; position: fixed; inset: 0px 0px auto auto; margin: 0px; transform: translate(-273px, 23px);"
+                                data-popper-placement="bottom-end">
+                                <!--begin::Header-->
+                                <div class="px-7 py-5">
+                                    <div class="fs-5 text-dark fw-bold">Bulk Actions</div>
+                                </div>
+                                <div class="separator border-gray-200"></div>
+                                <div class="px-7 py-5">
+                                    <div class="mb-0">
+                                        <a href="javascript:;" class="fs-5 d-block fw-normal text-active-primary mb-2">
+                                            <i class="fas fa-envelope ms-2"></i> Send Email
+                                        </a>
+                                        <a href="javascript:;" class="fs-5 d-block fw-normal text-active-primary mb-2">
+                                            <i class="fas fa-sms ms-2"></i> Send Sms
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row align-items-center">
+                    <!--<Primeng-Datatable-Start>-->
+                    <div class="primeng-datatable-container col-12" [busyIf]="primengTableHelper.isLoading">
+                        <p-table #dataTable (onLazyLoad)="getEmployees($event)" [value]="primengTableHelper.records"
+                            rows="{{ primengTableHelper.defaultRecordsCountPerPage }}" [paginator]="false" [lazy]="true"
+                            [scrollable]="true" ScrollWidth="100%" [responsive]="primengTableHelper.isResponsive"
+                            [resizableColumns]="primengTableHelper.resizableColumns">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th style="width:30px; text-align: center;">
+                                        <label
+                                            class="form-check form-check-custom form-check-inline form-check-solid is-invalid">
+                                            <input class="form-check-input" type="checkbox" value="1">
+                                            <span class="fw-semibold ps-2 fs-6">
+                                            </span>
+                                        </label>
+                                    </th>
+
+                                    <th style="width: 450px">
+                                        {{l('Name')}}
+                                    </th>
+
+                                    <!-- <th style="width: 200px">
+                                        {{l('Department')}}
+                                    </th> -->
+                                    <th style="width: 200px">
+                                        {{l('Mobile')}}
+                                    </th>
+                                    <!-- <th style="width: 200px">
+                                        {{l('Office Phone')}}
+                                    </th> -->
+                                    <th style="width: 220px">
+                                        {{l('Email')}}
+                                    </th>
+                                    <th class="text-center" style="width: 75px">
+                                        {{l('Connect')}}
+                                    </th>
+                                    <!-- <th style="width: 150px;text-align: center;">
+                                        {{l('Social Profile')}}
+                                    </th> -->
+                                    <th style="width: 150px;">
+                                        {{l('HireDate')}}
+                                    </th>
+
+                                    <th style="width: 90px; text-align: center;">
+                                        {{l('Active')}}
+                                    </th>
+                                    <!-- <th style="width: 150px" pSortableColumn="countryFk.name">
+                                        {{ l('Name') }}
+                                        <p-sortIcon field="countryName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="contactFk.fullName">
+                                        {{ l('FullName') }}
+                                        <p-sortIcon field="contactFullName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="name">
+                                        {{ l('Name') }}
+                                        <p-sortIcon field="employee.name"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="firstName">
+                                        {{ l('FirstName') }}
+                                        <p-sortIcon field="employee.firstName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="lastName">
+                                        {{ l('LastName') }}
+                                        <p-sortIcon field="employee.lastName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="fullAddress">
+                                        {{ l('FullAddress') }}
+                                        <p-sortIcon field="employee.fullAddress"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="address">
+                                        {{ l('Address') }}
+                                        <p-sortIcon field="employee.address"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="zipCode">
+                                        {{ l('ZipCode') }}
+                                        <p-sortIcon field="employee.zipCode"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="city">
+                                        {{ l('City') }}
+                                        <p-sortIcon field="employee.city"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="dateOfBirth">
+                                        {{ l('DateOfBirth') }}
+                                        <p-sortIcon field="employee.dateOfBirth"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="mobile">
+                                        {{ l('Mobile') }}
+                                        <p-sortIcon field="employee.mobile"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="officePhone">
+                                        {{ l('OfficePhone') }}
+                                        <p-sortIcon field="employee.officePhone"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="personalEmail">
+                                        {{ l('PersonalEmail') }}
+                                        <p-sortIcon field="employee.personalEmail"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="businessEmail">
+                                        {{ l('BusinessEmail') }}
+                                        <p-sortIcon field="employee.businessEmail"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="jobTitle">
+                                        {{ l('JobTitle') }}
+                                        <p-sortIcon field="employee.jobTitle"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="companyName">
+                                        {{ l('CompanyName') }}
+                                        <p-sortIcon field="employee.companyName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="profile">
+                                        {{ l('Profile') }}
+                                        <p-sortIcon field="employee.profile"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="hireDate">
+                                        {{ l('HireDate') }}
+                                        <p-sortIcon field="employee.hireDate"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="facebook">
+                                        {{ l('Facebook') }}
+                                        <p-sortIcon field="employee.facebook"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="linkedIn">
+                                        {{ l('LinkedIn') }}
+                                        <p-sortIcon field="employee.linkedIn"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="fax">
+                                        {{ l('Fax') }}
+                                        <p-sortIcon field="employee.fax"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="profilePictureId">
+                                        {{ l('ProfilePictureId') }}
+                                        <p-sortIcon field="employee.profilePictureId"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="currentEmployee">
+                                        {{ l('CurrentEmployee') }}
+                                        <p-sortIcon field="employee.currentEmployee"></p-sortIcon>
+                                    </th> -->
+                                    <th style="width: 130px"
+                                        [hidden]="!isGrantedAny('Pages.Employees.Edit', 'Pages.Employees.Delete')">
+                                        {{ l('Actions') }}
+                                    </th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
+                                <tr>
+                                    <td style="width: 30px;">
+                                        <label
+                                            class="form-check form-check-custom form-check-inline form-check-solid is-invalid mb-2">
+                                            <input class="form-check-input" type="checkbox" value="1">
+                                            <span class="fw-semibold ps-2 fs-6">
+                                            </span>
+                                        </label>
+                                    </td>
+                                    <td style="width: 450px">
+                                        <span class="p-column-title">{{ l('Name') }}</span>
+                                        <div class="d-flex align-items-center">
+                                            <div class="square_logo_box shadow-sm">
+                                                <!-- <img src="/assets/common/images/sampleProfilePics/noimg.png"
+                                                    class="mw-100" alt=""> -->
+                                                <span>{{ record.employee.name | nameSplit}}</span>
+                                            </div>
+                                            <div class="d-flex flex-wrap flex-grow-1 mt-n2 mt-lg-n1">
+                                                <div class="d-flex flex-column flex-grow-1 my-lg-0 my-2 pe-3">
+                                                    <a href="javascript:;" title="{{  record.employee.name }}"
+                                                        [routerLink]="['/app/main/crm/employees/dashboard',record.employee.id]"
+                                                        class="fs-5 text-gray-800 text-hover-primary fw-bold">
+                                                        {{ record.employee.name }}
+                                                        <i *ngIf="record.employee.currentEmployee"
+                                                            class="fas fa-check-circle ms-1 mr-0 text-success"
+                                                            title="Active"></i>
+                                                    </a>
+                                                    <span class="text-gray-400 fw-lighter fs-7 mt-2 my-0">
+                                                        <i class="fas fa-briefcase me-1"></i>
+                                                        {{ record.employee.jobTitle }} <span
+                                                            *ngIf="record.employee.companyName">at {{
+                                                            record.employee.companyName }}</span>
+                                                    </span>
+                                                    <span class="text-gray-400 fw-lighter fs-7 mt-2 my-0">
+                                                        <i class="fas fa-network-wired me-1"></i>
+                                                        Department: <span> Sales and Marketing</span>
+                                                    </span>
+                                                    <span class="text-gray-400 fw-lighter fs-7 my-1">
+                                                        <i class="fas fa-map-marked-alt me-1"></i>
+                                                        <span>
+                                                            {{ record.employee.city }}
+                                                        </span>
+                                                        <span
+                                                            *ngIf="record.employee.city && (record.stateName || record.countryName || record.employee.zipCode)">,
+                                                        </span>
+                                                        <span>
+                                                            {{ record.stateName }}
+                                                        </span>
+                                                        <span
+                                                            *ngIf="record.stateName && (record.countryName || record.employee.zipCode)">,
+                                                        </span>
+                                                        <span>
+                                                            {{ record.countryName }}
+                                                        </span>
+                                                        <span *ngIf=" record.countryName && record.employee.zipCode">,
+                                                        </span>
+                                                        <span>
+                                                            {{ record.employee.zipCode }}
+                                                        </span>
+                                                    </span>
+                                                    <span class="mt-2" *ngIf="record.employee.facebook"
+                                                        title="{{record.employee.facebook}}">
+                                                        <a class="text-primary me-2 fa-1x"
+                                                            href="{{record.employee.facebook}}" target="_blank"><i
+                                                                class="fab fa-2x fa-facebook-f"></i></a>
+                                                    </span>
+                                                    <span class="mt-2" *ngIf="record.employee.linkedIn"
+                                                        title="{{record.employee.linkedIn}}">
+                                                        <a class="text-primary fa-1x"
+                                                            href="{{record.employee.linkedIn}}" target="_blank"><i
+                                                                class="fab fa-2x fa-linkedin-in"></i></a>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td style="width: 200px">
+                                        <span class="p-column-title">{{ l('Mobile') }}</span>
+                                        {{ record.employee.mobile }}
+                                    </td>
+                                    <!-- <td style="width: 200px">
+                                        <span class="p-column-title">{{ l('OfficePhone') }}</span>
+                                        {{ record.employee.officePhone }}
+                                    </td> -->
+                                    <td style="width: 220px">
+                                        <span class="p-column-title">{{ l('BusinessEmail') }}</span>
+                                        {{ record.employee.businessEmail }}
+                                    </td>
+                                    <td style="width:75px; text-align: center;">
+                                        <span class="p-column-title">{{ l('Connect') }}</span>
+                                        <a href="javascript:;">
+                                            <i class="fas fa-comments"></i></a>
+                                    </td>
+                                    <!-- <td style="width:150px; text-align: center;">
+                                        <span class="p-column-title"> {{l('Social')}}</span>
+                                        <span *ngIf="record.employee.facebook" title="{{record.employee.facebook}}">
+                                            <a class="text-primary me-2 fa-1x" href="{{record.employee.facebook}}"
+                                                target="_blank"><i class="fab fa-2x fa-facebook-f"></i></a>
+                                        </span>
+                                        <span *ngIf="record.employee.linkedIn" title="{{record.employee.linkedIn}}">
+                                            <a class="text-primary fa-1x" href="{{record.employee.linkedIn}}"
+                                                target="_blank"><i class="fab fa-2x fa-linkedin-in"></i></a>
+                                        </span>
+                                    </td> -->
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('HireDate') }}</span>
+                                        <span *ngIf="record.employee.hireDate">
+                                            {{ record.employee.hireDate | luxonFormat : 'F' }}
+                                        </span>
+                                        <span *ngIf="!record.employee.hireDate">-</span>
+                                    </td>
+                                    <td style="width:90px; text-align: center;">
+                                        <span class="p-column-title">{{ l('Active') }}</span>
+                                        <div *ngIf="record.employee.currentEmployee">
+                                            <span style="width: 3rem;" class="badge badge-success">Yes</span>
+                                        </div>
+                                        <div *ngIf="!record.employee.currentEmployee">
+                                            <span style="width: 3rem;" class="badge badge-danger">No</span>
+                                        </div>
+                                    </td>
+
+
+                                    <!-- <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Name') }}</span>
+                                        {{ record.stateName }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Name') }}</span>
+                                        {{ record.countryName }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('FullName') }}</span>
+                                        {{ record.contactFullName }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Name') }}</span>
+                                        {{ record.employee.name }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('FirstName') }}</span>
+                                        {{ record.employee.firstName }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('LastName') }}</span>
+                                        {{ record.employee.lastName }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('FullAddress') }}</span>
+                                        {{ record.employee.fullAddress }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Address') }}</span>
+                                        {{ record.employee.address }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('ZipCode') }}</span>
+                                        {{ record.employee.zipCode }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('City') }}</span>
+                                        {{ record.employee.city }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('DateOfBirth') }}</span>
+                                        <span *ngIf="record.employee.dateOfBirth">
+                                            {{ record.employee.dateOfBirth | luxonFormat : 'F' }}
+                                        </span>
+                                        <span *ngIf="!record.employee.dateOfBirth">-</span>
+                                    </td>
+                                   
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('PersonalEmail') }}</span>
+                                        {{ record.employee.personalEmail }}
+                                    </td>
+                                    
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('JobTitle') }}</span>
+                                        {{ record.employee.jobTitle }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('CompanyName') }}</span>
+                                        {{ record.employee.companyName }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Profile') }}</span>
+                                        {{ record.employee.profile }}
+                                    </td>
+                                    
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Facebook') }}</span>
+                                        {{ record.employee.facebook }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('LinkedIn') }}</span>
+                                        {{ record.employee.linkedIn }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Fax') }}</span>
+                                        {{ record.employee.fax }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('ProfilePictureId') }}</span>
+                                        {{ record.employee.profilePictureId }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('CurrentEmployee') }}</span>
+                                        <div *ngIf="record.employee.currentEmployee" class="text-center">
+                                            <i class="fa fa-check-circle text-success" title="True"></i>
+                                        </div>
+                                        <div *ngIf="!record.employee.currentEmployee" class="text-center">
+                                            <i class="fa fa-times-circle" title="False"></i>
+                                        </div>
+                                    </td> -->
+                                    <td style="width: 130px"
+                                        [hidden]="!isGrantedAny('Pages.Employees.Edit', 'Pages.Employees.Delete')">
+                                        <div class="btn-group dropdown" dropdown container="body">
+                                            <button class="dropdown-toggle btn btn-sm btn-primary" dropdownToggle>
+                                                <i class="fa fa-cog"></i>
+                                                <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu" *dropdownMenu>
+                                                <li>
+                                                    <a href="javascript:;" class="dropdown-item"
+                                                        (click)="viewEmployeeModal.show(record)">
+                                                        {{ l('View') }}
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:;"
+                                                        *ngIf="permission.isGranted('Pages.Employees.Edit')"
+                                                        class="dropdown-item"
+                                                        (click)="createOrEditEmployeeModal.show(record.employee.id)">
+                                                        {{ l('Edit') }}
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="javascript:;"
+                                                        *ngIf="permission.isGranted('Pages.Employees.Delete')"
+                                                        (click)="deleteEmployee(record.employee)">
+                                                        {{ l('Delete') }}
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                        <div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
+                            {{ l('NoData') }}
+                        </div>
+                        <div class="primeng-paging-container">
+                            <p-paginator [rows]="primengTableHelper.defaultRecordsCountPerPage" #paginator
+                                (onPageChange)="getEmployees($event)"
+                                [totalRecords]="primengTableHelper.totalRecordsCount"
+                                [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
+                                [showCurrentPageReport]="true" [currentPageReportTemplate]="
+                                    'TotalRecordsCount' | localize : primengTableHelper.totalRecordsCount
+                                "></p-paginator>
+                        </div>
+                    </div>
+                    <!--<Primeng-Datatable-End>-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <createOrEditEmployeeModal #createOrEditEmployeeModal (modalSave)="getEmployees()"></createOrEditEmployeeModal>
+    <viewEmployeeModal #viewEmployeeModal></viewEmployeeModal>
+</div>

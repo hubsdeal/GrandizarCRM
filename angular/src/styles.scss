@@ -938,3 +938,11 @@ bs-days-calendar-view {
         background: rgb(41 136 207) !important;
     }
 }
+
+.modal{
+    background-color: rgba(0, 0, 0, 0.5) !important;
+}
+
+.p-component-overlay{
+    z-index: 999 !important;
+}

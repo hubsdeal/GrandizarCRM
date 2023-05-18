@@ -101,6 +101,7 @@ import { EnableTwoFactorAuthenticationModalComponent } from './shared/layout/pro
 import { RecoveryCodesComponent } from './shared/layout/profile/recovery-codes.component';
 import { VerifyCodeModalComponent } from './shared/layout/profile/verify-code-modal.component';
 import { ViewRecoveryCodesModalComponent } from './shared/layout/profile/view-recovery-codes-modal.component';
+import { GeocodingService } from './shared/chat-gpt-response-modal/services/chat-gpt-lat-long.service';
 
 @NgModule({
     declarations: [
@@ -179,6 +180,7 @@ import { ViewRecoveryCodesModalComponent } from './shared/layout/profile/view-re
             useFactory: appInitializerFactory,
             multi: true,
         },
+        GeocodingService,
     ],
     imports: [
         CommonModule,

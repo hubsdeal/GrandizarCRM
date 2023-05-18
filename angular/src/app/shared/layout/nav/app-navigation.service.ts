@@ -45,8 +45,22 @@ export class AppNavigationService {
                 '',
                 [],
                 [
-                    new AppMenuItem('MasterStoreList', 'Pages.Stores', 'flaticon2-list-1', '/app/main/shop/stores'),
-                    new AppMenuItem('MyStoreList', 'Pages.Stores', 'flaticon2-list-2', '/app/main/shop/stores'),
+                    new AppMenuItem('Master Store List', 'Pages.Stores', 'flaticon2-list-1', '/app/main/shop/stores'),
+                    new AppMenuItem('My Store List', 'Pages.Stores', 'flaticon2-list-2', '/app/main/shop/myStores'),
+                ]
+            ),
+
+            new AppMenuItem(
+                'Product Catalog',
+                '',
+                'flaticon-open-box',
+                '',
+                [],
+                [
+                    new AppMenuItem('MasterProductList', 'Pages.Products', 'flaticon2-list-1', '/app/main/shop/products'),
+                    new AppMenuItem('MyProductList', 'Pages.Products', 'flaticon2-list-2', '/app/main/shop/products'),
+                    new AppMenuItem('ProductCategories', 'Pages.ProductCategories', 'flaticon-map', '/app/main/shop/productCategories'),
+                    new AppMenuItem('MediaLibraries', 'Pages.MediaLibraries', 'fas fa-photo-video', '/app/main/lookupData/mediaLibraries'),
                 ]
             ),
 
@@ -74,7 +88,7 @@ export class AppNavigationService {
             ),
 
             new AppMenuItem(
-                'crm',
+                'Contact Management',
                 '',
                 'fas fa-users-cog',
                 '',
@@ -89,19 +103,7 @@ export class AppNavigationService {
                 ]
             ),
 
-            new AppMenuItem(
-                'Product Catalog',
-                '',
-                'flaticon-open-box',
-                '',
-                [],
-                [
-                    new AppMenuItem('MasterProductList', 'Pages.Products', 'flaticon2-list-1', '/app/main/shop/products'),
-                    new AppMenuItem('MyProductList', 'Pages.Products', 'flaticon2-list-2', '/app/main/shop/products'),
-                    new AppMenuItem('ProductCategories', 'Pages.ProductCategories', 'flaticon-map', '/app/main/shop/productCategories'),
-                    new AppMenuItem('MediaLibraries', 'Pages.MediaLibraries', 'fas fa-photo-video', '/app/main/lookupData/mediaLibraries'),
-                ]
-            ),
+            
 
             new AppMenuItem(
                 'Employee & Consultants ',
@@ -110,20 +112,21 @@ export class AppNavigationService {
                 '',
                 [],
                 [
-                    new AppMenuItem('MasterEmployeeList', 'Pages.Employees', 'fas fa-users', '/app/main/crm/employees'),
-                    new AppMenuItem('MyEmployeeList', 'Pages.Employees', 'fas fa-user-friends', '/app/main/crm/employees'),
+                    new AppMenuItem('Master Employee List', 'Pages.Employees', 'fas fa-users', '/app/main/crm/employees'),
+                    new AppMenuItem('My Employee List', 'Pages.Employees', 'fas fa-user-friends', '/app/main/crm/myEmployees'),
                 ]
             ),
 
             new AppMenuItem(
-                'Hubs Management',
+                'Territory Management',
                 '',
-                'flaticon-map-location',
+                'fas fa-map-marked-alt',
                 '',
                 [],
                 [
-                    new AppMenuItem('MasterHubList', 'Pages.Hubs', 'flaticon2-list-1', '/app/main/territory/hubs'),
-                    new AppMenuItem('MyHubList', 'Pages.Hubs', 'flaticon2-list-2', '/app/main/territory/hubs'),
+                    new AppMenuItem('Master Hub List', 'Pages.Hubs', 'flaticon2-list-1', '/app/main/territory/hubs'),
+
+                    new AppMenuItem('My Hub List', 'Pages.Hubs', 'flaticon2-list-2', '/app/main/territory/myHubs'),
                 ]
             ),
 

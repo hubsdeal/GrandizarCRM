@@ -1,6 +1,10 @@
 ﻿import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { MasterDataIndexComponent } from './lookupData/master-data-index/master-data-index.component';
+import { MyHubListComponent } from './territory/hubs/my-hub-list/my-hub-list.component';
+import { MyStoresComponent } from './shop/stores/my-stores/my-stores.component';
+import { components } from '@metronic/app/kt';
+import { MyEmployeesComponent } from './crm/employees/my-employees/my-employees.component';
 
 @NgModule({
     imports: [
@@ -721,6 +725,12 @@ import { MasterDataIndexComponent } from './lookupData/master-data-index/master-
                         loadChildren: () => import('./crm/employees/employee.module').then(m => m.EmployeeModule),
                         data: { permission: 'Pages.Employees' }
                     },
+
+                    {
+                        path: 'crm/myEmployees',
+                        data: { permission: 'Pages.Employees' },
+                        component: MyEmployeesComponent,
+                    },
                 
                     
                     {
@@ -777,6 +787,12 @@ import { MasterDataIndexComponent } from './lookupData/master-data-index/master-
                         loadChildren: () => import('./shop/stores/store.module').then(m => m.StoreModule),
                         data: { permission: 'Pages.Stores' }
                     },
+
+                    {
+                        path: 'shop/myStores',
+                        data: { permission: 'Pages.Stores' },
+                        component: MyStoresComponent,
+                    },
                 
                     
                     {
@@ -819,6 +835,14 @@ import { MasterDataIndexComponent } from './lookupData/master-data-index/master-
                         loadChildren: () => import('./territory/hubs/hub.module').then(m => m.HubModule),
                         data: { permission: 'Pages.Hubs' }
                     },
+
+                    {
+                        path: 'territory/myHubs',
+                        data: { permission: 'Pages.Hubs' },
+                        component: MyHubListComponent,
+                    },
+
+                    
                 
                     
                     {

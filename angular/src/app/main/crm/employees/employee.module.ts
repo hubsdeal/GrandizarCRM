@@ -9,6 +9,8 @@ import { EmployeeStateLookupTableModalComponent } from './employee-state-lookup-
 import { EmployeeCountryLookupTableModalComponent } from './employee-country-lookup-table-modal.component';
 import { EmployeeContactLookupTableModalComponent } from './employee-contact-lookup-table-modal.component';
 import { EmployeeDashboardComponent } from './employee-dashboard/employee-dashboard.component';
+import { StoreModule } from '@app/main/shop/stores/store.module';
+import { MyEmployeesComponent } from './my-employees/my-employees.component';
 
 @NgModule({
     declarations: [
@@ -20,7 +22,8 @@ import { EmployeeDashboardComponent } from './employee-dashboard/employee-dashbo
         EmployeeCountryLookupTableModalComponent,
         EmployeeContactLookupTableModalComponent,
         EmployeeDashboardComponent,
+        MyEmployeesComponent,
     ],
-    imports: [AppSharedModule, EmployeeRoutingModule, AdminSharedModule],
+    imports: [AppSharedModule, EmployeeRoutingModule, AdminSharedModule, StoreModule],
 })
 export class EmployeeModule {}

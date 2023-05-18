@@ -9,6 +9,7 @@ import { StoreMediaLibraryLookupTableModalComponent } from './store-mediaLibrary
 import { StoreMasterTagLookupTableModalComponent } from './store-masterTag-lookup-table-modal.component';
 import { StoreDashboardComponent } from './store-dashboard/store-dashboard.component';
 import { StoreMediaModule } from '../storeMedias/storeMedia.module';
+import { MyStoresComponent } from './my-stores/my-stores.component';
 
 @NgModule({
     declarations: [
@@ -19,7 +20,14 @@ import { StoreMediaModule } from '../storeMedias/storeMedia.module';
         StoreMediaLibraryLookupTableModalComponent,
         StoreMasterTagLookupTableModalComponent,
         StoreDashboardComponent,
+        MyStoresComponent,
     ],
     imports: [AppSharedModule, StoreRoutingModule, AdminSharedModule, StoreMediaModule],
+    exports:[
+        MyStoresComponent,
+        CreateOrEditStoreModalComponent,
+        StoreMediaLibraryLookupTableModalComponent,
+        StoreMasterTagLookupTableModalComponent,
+    ]
 })
 export class StoreModule {}

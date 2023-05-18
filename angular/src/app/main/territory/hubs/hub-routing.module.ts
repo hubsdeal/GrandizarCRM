@@ -2,6 +2,7 @@
 import { RouterModule, Routes } from '@angular/router';
 import { HubDashboardComponent } from './hub-dashboard/hub-dashboard.component';
 import { HubsComponent } from './hubs.component';
+import { MyHubListComponent } from './my-hub-list/my-hub-list.component';
 
 const routes: Routes = [
     {

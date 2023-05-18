@@ -1,0 +1,686 @@
+<div [@routerTransition]>
+    <sub-header [title]="'My Hubs' | localize" [description]="">
+        <div role="actions">
+            <!-- <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1">
+                <i class="fa fa-file-excel"></i>
+                {{ l('ExportToExcel') }}
+            </button> -->
+
+            <button *ngIf="isGranted('Pages.Hubs.Create')" (click)="createHub()" class="btn btn-primary blue">
+                <i class="fa fa-plus"></i>
+                {{ l('Hub') }}
+            </button>
+        </div>
+    </sub-header>
+
+    <div [class]="containerClass">
+        <div class="card card-custom gutter-b">
+            <div class="card-body">
+                <form class="form" autocomplete="off">
+                    <div>
+                        <div class="row align-items-center">
+                            <div class="col-xl-12">
+                                <div class="my-3">
+                                    <div class="input-group mb-3">
+                                        <input [(ngModel)]="filterText" (ngModelChange)="getHubs()" name="filterText"
+                                            autoFocus type="text" class="form-control"
+                                            [placeholder]="l('SearchWithThreeDot')" />
+                                        <button class="btn btn-primary" type="submit" (click)="getHubs()">
+                                            <i class="flaticon-search-1"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" [hidden]="!advancedFiltersAreShown">
+                            <div class="col-md-12"></div>
+
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="NameFilter">{{ l('Name') }}</label>
+                                    <input type="text" class="form-control" id="NameFilter" name="nameFilter"
+                                        [(ngModel)]="nameFilter" (ngModelChange)="getHubs()" />
+                                </div>
+                            </div>
+                            <!-- <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="DescriptionFilter">{{ l('Description') }}</label>
+                                    <input type="text" class="form-control" id="DescriptionFilter"
+                                        name="descriptionFilter" [(ngModel)]="descriptionFilter"
+                                        (ngModelChange)="getHubs()" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="MinEstimatedPopulationFilter">
+                                        {{ l('MinMax') }} {{ l('EstimatedPopulation') }}
+                                    </label>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" id="MinEstimatedPopulationFilter"
+                                            [(ngModel)]="minEstimatedPopulationFilter" placeholder="{{ l('MinValue') }}"
+                                            name="minEstimatedPopulationFilter" (ngModelChange)="getHubs()" />
+                                        <input type="number" class="form-control"
+                                            [(ngModel)]="maxEstimatedPopulationFilter" placeholder="{{ l('MaxValue') }}"
+                                            name="maxEstimatedPopulationFilter" (ngModelChange)="getHubs()" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="HasParentHubFilterSelect">
+                                        {{ l('HasParentHub') }}
+                                    </label>
+                                    <select class="form-select" name="HasParentHubFilter" id="HasParentHubFilterSelect"
+                                        [(ngModel)]="hasParentHubFilter" (ngModelChange)="getHubs()">
+                                        <option value="-1">{{ l('All') }}</option>
+                                        <option value="0">{{ l('False') }}</option>
+                                        <option value="1">{{ l('True') }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="MinParentHubIdFilter">
+                                        {{ l('MinMax') }} {{ l('ParentHubId') }}
+                                    </label>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" id="MinParentHubIdFilter"
+                                            [(ngModel)]="minParentHubIdFilter" placeholder="{{ l('MinValue') }}"
+                                            name="minParentHubIdFilter" (ngModelChange)="getHubs()" />
+                                        <input type="number" class="form-control" [(ngModel)]="maxParentHubIdFilter"
+                                            placeholder="{{ l('MaxValue') }}" name="maxParentHubIdFilter"
+                                            (ngModelChange)="getHubs()" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="MinLatitudeFilter">
+                                        {{ l('MinMax') }} {{ l('Latitude') }}
+                                    </label>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" id="MinLatitudeFilter"
+                                            [(ngModel)]="minLatitudeFilter" placeholder="{{ l('MinValue') }}"
+                                            name="minLatitudeFilter" (ngModelChange)="getHubs()" />
+                                        <input type="number" class="form-control" [(ngModel)]="maxLatitudeFilter"
+                                            placeholder="{{ l('MaxValue') }}" name="maxLatitudeFilter"
+                                            (ngModelChange)="getHubs()" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="MinLongitudeFilter">
+                                        {{ l('MinMax') }} {{ l('Longitude') }}
+                                    </label>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" id="MinLongitudeFilter"
+                                            [(ngModel)]="minLongitudeFilter" placeholder="{{ l('MinValue') }}"
+                                            name="minLongitudeFilter" (ngModelChange)="getHubs()" />
+                                        <input type="number" class="form-control" [(ngModel)]="maxLongitudeFilter"
+                                            placeholder="{{ l('MaxValue') }}" name="maxLongitudeFilter"
+                                            (ngModelChange)="getHubs()" />
+                                    </div>
+                                </div>
+                            </div> -->
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="LiveFilterSelect">{{ l('Live') }}</label>
+                                    <select class="form-select" name="LiveFilter" id="LiveFilterSelect"
+                                        [(ngModel)]="liveFilter" (ngModelChange)="getHubs()">
+                                        <option value="-1">{{ l('All') }}</option>
+                                        <option value="0">{{ l('No') }}</option>
+                                        <option value="1">{{ l('Yes') }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <!-- <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="UrlFilter">{{ l('Url') }}</label>
+                                    <input type="text" class="form-control" id="UrlFilter" name="urlFilter"
+                                        [(ngModel)]="urlFilter" (ngModelChange)="getHubs()" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="OfficeFullAddressFilter">
+                                        {{ l('OfficeFullAddress') }}
+                                    </label>
+                                    <input type="text" class="form-control" id="OfficeFullAddressFilter"
+                                        name="officeFullAddressFilter" [(ngModel)]="officeFullAddressFilter"
+                                        (ngModelChange)="getHubs()" />
+                                </div>
+                            </div> -->
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="PartnerOrOwnedFilterSelect">
+                                        {{ l('Owner') }}
+                                    </label>
+                                    <select class="form-select" name="PartnerOrOwnedFilter"
+                                        id="PartnerOrOwnedFilterSelect" [(ngModel)]="partnerOrOwnedFilter"
+                                        (ngModelChange)="getHubs()">
+                                        <option value="-1">{{ l('All') }}</option>
+                                        <option value="0">{{ l('No') }}</option>
+                                        <option value="1">{{ l('Yes') }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="PhoneFilter">{{ l('Phone') }}</label>
+                                    <input type="text" class="form-control" id="PhoneFilter" name="phoneFilter"
+                                        [(ngModel)]="phoneFilter" (ngModelChange)="getHubs()" />
+                                </div>
+                            </div>
+                            <!-- <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="YearlyRevenueFilter">{{ l('YearlyRevenue') }}</label>
+                                    <input type="text" class="form-control" id="YearlyRevenueFilter"
+                                        name="yearlyRevenueFilter" [(ngModel)]="yearlyRevenueFilter"
+                                        (ngModelChange)="getHubs()" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="MinDisplaySequenceFilter">
+                                        {{ l('MinMax') }} {{ l('DisplaySequence') }}
+                                    </label>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" id="MinDisplaySequenceFilter"
+                                            [(ngModel)]="minDisplaySequenceFilter" placeholder="{{ l('MinValue') }}"
+                                            name="minDisplaySequenceFilter" (ngModelChange)="getHubs()" />
+                                        <input type="number" class="form-control" [(ngModel)]="maxDisplaySequenceFilter"
+                                            placeholder="{{ l('MaxValue') }}" name="maxDisplaySequenceFilter"
+                                            (ngModelChange)="getHubs()" />
+                                    </div>
+                                </div>
+                            </div> -->
+
+                            <div class="col-md-3">
+                                <div class="my-3 p_filter">
+                                    <label class="form-label" for="CountryNameFilter">
+                                        Country
+                                    </label>
+                                    <!-- <input type="text" class="form-control" id="CountryNameFilter"
+                                        name="countryNameFilter" [(ngModel)]="countryNameFilter" /> -->
+                                    <p-dropdown [options]="allCountrys" [filter]="true" [virtualScroll]="true"
+                                        placeholder="Select Country" [itemSize]="30" name="displayName"
+                                        optionLabel="displayName" optionId="id" (onChange)="onCountrySelect($event)"
+                                        [(ngModel)]="country" filterBy="displayName"
+                                        [style]="{ width: '100%' }"></p-dropdown>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3 p_filter">
+                                    <label class="form-label" for="StateNameFilter">
+                                        State
+                                    </label>
+                                    <!-- <input type="text" class="form-control" id="StateNameFilter" name="stateNameFilter"
+                                        [(ngModel)]="stateNameFilter" /> -->
+                                    <p-dropdown [options]="allStates" [filter]="true" [virtualScroll]="true"
+                                        placeholder="Select State" [itemSize]="30" name="displayName"
+                                        optionLabel="displayName" optionId="id" (onChange)="onStateSelect($event)"
+                                        [(ngModel)]="state" filterBy="displayName"
+                                        [style]="{ width: '100%' }"></p-dropdown>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="CityNameFilter">
+                                        City
+                                    </label>
+                                    <input type="text" class="form-control" id="CityNameFilter" name="cityNameFilter"
+                                        [(ngModel)]="cityNameFilter" />
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="zipCodeFilter">
+                                        Zip Code
+                                    </label>
+                                    <input type="text" class="form-control" id="zipCodeFilter" name="zipCodeFilter"
+                                        [(ngModel)]="zipCodeFilter" />
+                                </div>
+                            </div>
+                            <!-- <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="CountyNameFilter">
+                                        ({{ l('County') }}) {{ l('Name') }}
+                                    </label>
+                                    <input type="text" class="form-control" id="CountyNameFilter"
+                                        name="countyNameFilter" [(ngModel)]="countyNameFilter" />
+                                </div>
+                            </div> -->
+                            <div class="col-md-3">
+                                <div class="my-3 p_filter">
+                                    <label class="form-label" for="HubTypeNameFilter">
+                                        Hub Type
+                                    </label>
+                                    <!-- <input type="text" class="form-control" id="HubTypeNameFilter"
+                                        name="hubTypeNameFilter" [(ngModel)]="hubTypeNameFilter" /> -->
+                                    <p-dropdown [options]="allHubTypes" [filter]="true" [virtualScroll]="true"
+                                        placeholder="Select Hub Type" [itemSize]="30" name="displayName"
+                                        optionLabel="displayName" optionId="id" [(ngModel)]="hubType"
+                                        filterBy="displayName" (onChange)="onHusTypeSelect($event)"
+                                        [style]="{ width: '100%' }"></p-dropdown>
+                                </div>
+                            </div>
+                            <!-- <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="CurrencyNameFilter">
+                                        ({{ l('Currency') }}) {{ l('Name') }}
+                                    </label>
+                                    <input type="text" class="form-control" id="CurrencyNameFilter"
+                                        name="currencyNameFilter" [(ngModel)]="currencyNameFilter" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="MediaLibraryNameFilter">
+                                        ({{ l('MediaLibrary') }}) {{ l('Name') }}
+                                    </label>
+                                    <input type="text" class="form-control" id="MediaLibraryNameFilter"
+                                        name="mediaLibraryNameFilter" [(ngModel)]="mediaLibraryNameFilter" />
+                                </div>
+                            </div> -->
+                            <div class="col-md-12 mt-5">
+                                <button (click)="resetFilters()" class="btn btn-secondary btn-sm"
+                                    id="btn-reset-filters">
+                                    Reset
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row my-4">
+                            <div class="col-sm-12">
+                                <span class="clickable-item text-muted" *ngIf="!advancedFiltersAreShown"
+                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown">
+                                    <i class="fa fa-angle-down"></i>
+                                    {{ l('ShowAdvancedFilters') }}
+                                </span>
+                                <span class="clickable-item text-muted" *ngIf="advancedFiltersAreShown"
+                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown">
+                                    <i class="fa fa-angle-up"></i>
+                                    {{ l('HideAdvancedFilters') }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="row align-items-center">
+                    <!--<Primeng-Datatable-Start>-->
+                    <div class="primeng-datatable-container col-12" [busyIf]="primengTableHelper.isLoading">
+                        <p-table #dataTable (onLazyLoad)="getHubs($event)" [value]="primengTableHelper.records"
+                            rows="{{ primengTableHelper.defaultRecordsCountPerPage }}" [paginator]="false" [lazy]="true"
+                            [scrollable]="true" ScrollWidth="100%" [responsive]="primengTableHelper.isResponsive"
+                            [resizableColumns]="primengTableHelper.resizableColumns">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th style="width: 200px">
+                                        {{l('Name')}}
+                                    </th>
+                                    <th style="width: 150px">
+                                        {{l('Type')}}
+                                    </th>
+                                    <!-- <th style="width: 150px">
+                                        {{l('Manager')}}
+                                    </th> -->
+                                    <th style="width: 90px; text-align: center;">
+                                        {{l('#Store')}}
+                                    </th>
+                                    <th style="width: 90px; text-align: center;">
+                                        {{l('#Company')}}
+                                    </th>
+                                    <th style="width: 90px; text-align: center;">
+                                        {{l('#Contact')}}
+                                    </th>
+                                    <!-- <th style="width: 110px; text-align: center;">
+                                        {{l('#Contact Repo')}}
+                                    </th> -->
+                                    <th style="width: 150px">
+                                        {{l('Population')}}
+                                    </th>
+                                    <th style="width: 150px">
+                                        {{l('Revenue')}}
+                                    </th>
+                                    <th style="width: 90px; text-align: center;">
+                                        {{l('Live?')}}
+                                    </th>
+                                    <th style="width: 150px; text-align: center;">
+                                        {{l('Owner?')}}
+                                    </th>
+                                    <th style="width: 150px; text-align: center;" pSortableColumn="displaySequence">
+                                        {{ l('Sequence') }}
+                                        <p-sortIcon field="hub.displaySequence"></p-sortIcon>
+                                    </th>
+                                    <!-- <th style="width: 150px" pSortableColumn="countryFk.name">
+                                        {{ l('Name') }}
+                                        <p-sortIcon field="countryName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="stateFk.name">
+                                        {{ l('Name') }}
+                                        <p-sortIcon field="stateName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="cityFk.name">
+                                        {{ l('Name') }}
+                                        <p-sortIcon field="cityName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="countyFk.name">
+                                        {{ l('Name') }}
+                                        <p-sortIcon field="countyName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="hubTypeFk.name">
+                                        {{ l('Name') }}
+                                        <p-sortIcon field="hubTypeName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="currencyFk.name">
+                                        {{ l('Name') }}
+                                        <p-sortIcon field="currencyName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="pictureMediaLibraryFk.name">
+                                        {{ l('Name') }}
+                                        <p-sortIcon field="mediaLibraryName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="name">
+                                        {{ l('Name') }}
+                                        <p-sortIcon field="hub.name"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="description">
+                                        {{ l('Description') }}
+                                        <p-sortIcon field="hub.description"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="estimatedPopulation">
+                                        {{ l('EstimatedPopulation') }}
+                                        <p-sortIcon field="hub.estimatedPopulation"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="hasParentHub">
+                                        {{ l('HasParentHub') }}
+                                        <p-sortIcon field="hub.hasParentHub"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="parentHubId">
+                                        {{ l('ParentHubId') }}
+                                        <p-sortIcon field="hub.parentHubId"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="latitude">
+                                        {{ l('Latitude') }}
+                                        <p-sortIcon field="hub.latitude"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="longitude">
+                                        {{ l('Longitude') }}
+                                        <p-sortIcon field="hub.longitude"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="live">
+                                        {{ l('Live') }}
+                                        <p-sortIcon field="hub.live"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="url">
+                                        {{ l('Url') }}
+                                        <p-sortIcon field="hub.url"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="officeFullAddress">
+                                        {{ l('OfficeFullAddress') }}
+                                        <p-sortIcon field="hub.officeFullAddress"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="partnerOrOwned">
+                                        {{ l('PartnerOrOwned') }}
+                                        <p-sortIcon field="hub.partnerOrOwned"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="phone">
+                                        {{ l('Phone') }}
+                                        <p-sortIcon field="hub.phone"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="yearlyRevenue">
+                                        {{ l('YearlyRevenue') }}
+                                        <p-sortIcon field="hub.yearlyRevenue"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="displaySequence">
+                                        {{ l('DisplaySequence') }}
+                                        <p-sortIcon field="hub.displaySequence"></p-sortIcon>
+                                    </th> -->
+                                    <th style="width: 130px"
+                                        [hidden]="!isGrantedAny('Pages.Hubs.Edit', 'Pages.Hubs.Delete')">
+                                        {{ l('Actions') }}
+                                    </th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
+                                <tr>
+                                    <td style="width:200px">
+                                        <span class="p-column-title">{{ l('Name') }}</span>
+                                        <div class="d-flex align-items-center">
+                                            <div class="square_logo_box shadow-sm">
+                                                <img src="/assets/common/images/sampleProfilePics/noimg.png"
+                                                    class="mw-100" alt="">
+                                            </div>
+                                            <div class="d-flex flex-wrap flex-grow-1 mt-n2 mt-lg-n1">
+                                                <div class="d-flex flex-column flex-grow-1 my-lg-0 my-2 pe-3">
+                                                    <a href="javascript:;" title="{{ record.name }}"
+                                                        [routerLink]="['/app/main/territory/hubs/dashboard',record.id]"
+                                                        class="fs-5 text-gray-800 text-hover-primary fw-bold">
+                                                        {{ record.name }}
+                                                        <i *ngIf="record.live"
+                                                            class="fas fa-check-circle ml-1 mr-0 text-success"
+                                                            title="Live"></i>
+                                                    </a>
+                                                    <span *ngIf="record.officeFullAddress"
+                                                        class="text-gray-400 fw-semibold fs-7 my-1">
+                                                        <i class="fas fa-map-marked-alt mr-1"></i>
+                                                        {{ record.officeFullAddress }}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Name') }}</span>
+                                        {{ record.hubTypeName }}
+                                    </td>
+                                    <!-- <td style="width:150px">
+                                        <span class="p-column-title">{{ l('Manager') }}</span>
+                                        {{record.numberOfStores}}
+                                    </td> -->
+                                    <td style="width:90px; text-align: center;">
+                                        <span class="p-column-title">{{ l('#store') }}</span>
+                                        {{record.numberOfStores | number:'1.0-0'}}
+                                    </td>
+                                    <td style="width:90px; text-align: center;">
+                                        <span class="p-column-title">{{ l('#Company') }}</span>
+                                        {{record.numberOfBusinesses | number:'1.0-0'}}
+                                    </td>
+                                    <td style="width:90px; text-align: center;">
+                                        <span class="p-column-title">{{ l('#Contact') }}</span>
+                                        {{record.numberOfContacts | number:'1.0-0'}}
+                                    </td>
+                                    <!-- <td style="width:110px; text-align: center;">
+                                        <span class="p-column-title">{{ l('#Contact Repo') }}</span>
+                                        {{10000 | number:'1.0-0'}}
+                                    </td> -->
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Est. Population') }}</span>
+                                        {{ record.estimatedPopulation }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('YearlyRevenue') }}</span>
+                                        {{ record.yearlyRevenue }}
+                                    </td>
+                                    <td class="text-center" style="width:90px">
+                                        <div *ngIf="record.live">
+                                            <span class="badge badge-success">YES</span>
+                                        </div>
+                                        <div *ngIf="!record.live">
+                                            <span class="badge badge-danger">NO</span>
+                                        </div>
+                                    </td>
+
+                                    <td class="text-center" style="width:150px">
+                                        <div *ngIf="!record.partnerOrOwned">
+                                            <!-- <i class="fa fa-check-circle kt--font-success" title="True"></i> -->
+                                            <span class="badge badge-success">YES</span>
+                                        </div>
+                                        <div *ngIf="record.partnerOrOwned">
+                                            <!-- <i class="fa fa-times-circle" title="False"></i> -->
+                                            <span class="badge badge-danger">NO</span>
+                                        </div>
+                                    </td>
+                                    <td style="width:150px; text-align: center;">
+                                        <span class="p-column-title">{{ l('Sequence') }}</span>
+                                        {{ record.displaySequence }}
+                                    </td>
+
+
+
+                                    <!-- <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Name') }}</span>
+                                        {{ record.countryName }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Name') }}</span>
+                                        {{ record.stateName }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Name') }}</span>
+                                        {{ record.cityName }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Name') }}</span>
+                                        {{ record.countyName }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Name') }}</span>
+                                        {{ record.hubTypeName }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Name') }}</span>
+                                        {{ record.currencyName }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Name') }}</span>
+                                        {{ record.mediaLibraryName }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Name') }}</span>
+                                        {{ record.name }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Description') }}</span>
+                                        {{ record.description }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('EstimatedPopulation') }}</span>
+                                        {{ record.estimatedPopulation }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('HasParentHub') }}</span>
+                                        <div *ngIf="record.hasParentHub" class="text-center">
+                                            <i class="fa fa-check-circle text-success" title="True"></i>
+                                        </div>
+                                        <div *ngIf="!record.hasParentHub" class="text-center">
+                                            <i class="fa fa-times-circle" title="False"></i>
+                                        </div>
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('ParentHubId') }}</span>
+                                        {{ record.parentHubId }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Latitude') }}</span>
+                                        {{ record.latitude }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Longitude') }}</span>
+                                        {{ record.longitude }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Live') }}</span>
+                                        <div *ngIf="record.live" class="text-center">
+                                            <i class="fa fa-check-circle text-success" title="True"></i>
+                                        </div>
+                                        <div *ngIf="!record.live" class="text-center">
+                                            <i class="fa fa-times-circle" title="False"></i>
+                                        </div>
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Url') }}</span>
+                                        {{ record.url }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('OfficeFullAddress') }}</span>
+                                        {{ record.officeFullAddress }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('PartnerOrOwned') }}</span>
+                                        <div *ngIf="record.partnerOrOwned" class="text-center">
+                                            <i class="fa fa-check-circle text-success" title="True"></i>
+                                        </div>
+                                        <div *ngIf="!record.partnerOrOwned" class="text-center">
+                                            <i class="fa fa-times-circle" title="False"></i>
+                                        </div>
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Phone') }}</span>
+                                        {{ record.phone }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('YearlyRevenue') }}</span>
+                                        {{ record.yearlyRevenue }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('DisplaySequence') }}</span>
+                                        {{ record.displaySequence }}
+                                    </td> -->
+                                    <td style="width: 130px"
+                                        [hidden]="!isGrantedAny('Pages.Hubs.Edit', 'Pages.Hubs.Delete')">
+                                        <div class="btn-group dropdown" dropdown container="body">
+                                            <button class="dropdown-toggle btn btn-sm btn-primary" dropdownToggle>
+                                                <i class="fa fa-cog"></i>
+                                                <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu" *dropdownMenu>
+                                                <!-- <li>
+                                                    <a href="javascript:;" class="dropdown-item"
+                                                        (click)="viewHubModal.show(record)">
+                                                        {{ l('View') }}
+                                                    </a>
+                                                </li> -->
+                                                <li>
+                                                    <a href="javascript:;"
+                                                        *ngIf="permission.isGranted('Pages.Hubs.Edit')"
+                                                        class="dropdown-item"
+                                                        (click)="createOrEditHubModal.show(record.id)">
+                                                        {{ l('Edit') }}
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="javascript:;"
+                                                        *ngIf="permission.isGranted('Pages.Hubs.Delete')"
+                                                        (click)="deleteHub(record.hub)">
+                                                        {{ l('Delete') }}
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                        <div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
+                            {{ l('NoData') }}
+                        </div>
+                        <div class="primeng-paging-container">
+                            <p-paginator [rows]="primengTableHelper.defaultRecordsCountPerPage" #paginator
+                                (onPageChange)="paginate($event)" [totalRecords]="primengTableHelper.totalRecordsCount"
+                                [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
+                                [showCurrentPageReport]="true" [currentPageReportTemplate]="
+                                    'TotalRecordsCount' | localize : primengTableHelper.totalRecordsCount
+                                "></p-paginator>
+                        </div>
+                    </div>
+                    <!--<Primeng-Datatable-End>-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <createOrEditHubModal #createOrEditHubModal (modalSave)="getHubs()"></createOrEditHubModal>
+    <viewHubModal #viewHubModal></viewHubModal>
+</div>
