@@ -10,6 +10,13 @@ import { MasterDataIndexComponent } from './lookupData/master-data-index/master-
                 children: [
                     
                     {
+                        path: 'crm/businessDocuments',
+                        loadChildren: () => import('./crm/businessDocuments/businessDocument.module').then(m => m.BusinessDocumentModule),
+                        data: { permission: 'Pages.BusinessDocuments' }
+                    },
+                
+                    
+                    {
                         path: 'taskManagement/storeTaskMaps',
                         loadChildren: () => import('./taskManagement/storeTaskMaps/storeTaskMap.module').then(m => m.StoreTaskMapModule),
                         data: { permission: 'Pages.StoreTaskMaps' }

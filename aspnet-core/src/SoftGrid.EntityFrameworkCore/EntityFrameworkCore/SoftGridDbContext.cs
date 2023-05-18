@@ -26,6 +26,22 @@ namespace SoftGrid.EntityFrameworkCore
 {
     public class SoftGridDbContext : AbpZeroDbContext<Tenant, Role, User, SoftGridDbContext>, IAbpPersistedGrantDbContext
     {
+        public virtual DbSet<TaskDocument> TaskDocuments { get; set; }
+
+        public virtual DbSet<JobDocument> JobDocuments { get; set; }
+
+        public virtual DbSet<HubDocument> HubDocuments { get; set; }
+
+        public virtual DbSet<ProductDocument> ProductDocuments { get; set; }
+
+        public virtual DbSet<StoreDocument> StoreDocuments { get; set; }
+
+        public virtual DbSet<EmployeeDocument> EmployeeDocuments { get; set; }
+
+        public virtual DbSet<BusinessDocument> BusinessDocuments { get; set; }
+
+        public virtual DbSet<ContactDocument> ContactDocuments { get; set; }
+
         public virtual DbSet<StoreTaskMap> StoreTaskMaps { get; set; }
 
         public virtual DbSet<Content> Contents { get; set; }
@@ -322,10 +338,42 @@ namespace SoftGrid.EntityFrameworkCore
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<StoreTaskMap>(s =>
+            modelBuilder.Entity<TaskDocument>(t =>
             {
-                s.HasIndex(e => new { e.TenantId });
+                t.HasIndex(e => new { e.TenantId });
             });
+            modelBuilder.Entity<JobDocument>(j =>
+                       {
+                           j.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<HubDocument>(h =>
+                       {
+                           h.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<ProductDocument>(p =>
+                       {
+                           p.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<StoreDocument>(s =>
+                       {
+                           s.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<EmployeeDocument>(x =>
+                       {
+                           x.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<BusinessDocument>(b =>
+                       {
+                           b.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<ContactDocument>(c =>
+                       {
+                           c.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<StoreTaskMap>(s =>
+                       {
+                           s.HasIndex(e => new { e.TenantId });
+                       });
             modelBuilder.Entity<Content>(c =>
                        {
                            c.HasIndex(e => new { e.TenantId });
