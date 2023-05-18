@@ -71,6 +71,8 @@ export class CreateOrEditHubModalComponent extends AppComponentBase implements O
     public temporaryPictureUrl: string;
     private _uploaderOptions: FileUploaderOptions = {};
 
+    chatGPTPromt: string;
+
     constructor(
         injector: Injector,
         private _hubsServiceProxy: HubsServiceProxy,
@@ -248,7 +250,7 @@ export class CreateOrEditHubModalComponent extends AppComponentBase implements O
                 this.allStates = result;
             });
         }
-        console.log("countryId" + this.hub.countryId);
+        console.log("countryId" + this.selectedCountry.displayName);
     }
 
     onStateChange(event: any) {
@@ -258,8 +260,7 @@ export class CreateOrEditHubModalComponent extends AppComponentBase implements O
                 this.allCountys = result;
             });
         }
-        console.log("countryId" + this.hub.countryId);
-        console.log("State Id" + this.hub.stateId);
+        console.log("State Id" + this.selectedState.displayName);
     }
 
     onCountyChange(event: any) {
@@ -269,16 +270,14 @@ export class CreateOrEditHubModalComponent extends AppComponentBase implements O
                 this.allCitys = result;
             });
         }
-        console.log("countryId" + this.hub.countryId);
-        console.log("State Id" + this.hub.stateId);
-        console.log("County Id" + this.hub.countyId);
+        console.log("countyId" + this.selectedCounty.displayName);
     }
 
     onCityChange(event: any) {
         if (event.value != null) {
             this.hub.cityId = event.value.id;
         }
-        console.log("City Id" + this.hub.cityId);
+        console.log("City Id" + this.selectedCity.displayName);
 
     }
 
@@ -300,8 +299,18 @@ export class CreateOrEditHubModalComponent extends AppComponentBase implements O
 
     async getCoordinates() {
         try {
+            if (this.selectedCountry && this.selectedState && this.selectedCity && this.selectedCounty) {
+                this.chatGPTPromt = 'Give me only the Latitude and longitude for ' + this.selectedCountry.displayName + ', ' + this.selectedState.displayName + ', ' + this.selectedCounty.displayName + ', ' + this.selectedCity.displayName + ' as json format as Key latitude and longitude';
+            } else if (this.selectedCountry && this.selectedState && this.selectedCounty) {
+                this.chatGPTPromt = 'Give me only the Latitude and longitude for ' + this.selectedCountry.displayName + ', ' + this.selectedState.displayName + ', ' + this.selectedCounty.displayName + ' as json format as Key latitude and longitude';
+            } else if (this.selectedCountry && this.selectedState) {
+                this.chatGPTPromt = 'Give me only the Latitude and longitude for ' + this.selectedCountry.displayName + ', ' + this.selectedState.displayName + ' as json format as Key latitude and longitude';
+            } else if (this.selectedCountry) {
+                this.chatGPTPromt = 'Give me only the Latitude and longitude for ' + this.selectedCountry.displayName + ' as json format as Key latitude and longitude';
+            }
+            console.log(this.chatGPTPromt);
             const location = 'Give me Latitude and longitude for New York as json format as Key latitude and longitude'; // Replace with the desired location
-            const coordinates = await this.geocodingService.invokeGPT(location);
+            const coordinates = await this.geocodingService.invokeGPT(this.chatGPTPromt);
             console.log('Coordinates:', coordinates);
             if (coordinates) {
                 this.hub.latitude = coordinates.latitude;
