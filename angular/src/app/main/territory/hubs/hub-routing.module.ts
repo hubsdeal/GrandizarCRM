@@ -14,10 +14,6 @@ const routes: Routes = [
         path: 'dashboard/:hubId',
         component: HubDashboardComponent,
     },
-    // {
-    //     path: 'myHubs',
-    //     component: MyHubListComponent,
-    // },
 ];
 
 @NgModule({

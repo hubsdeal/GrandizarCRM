@@ -18,7 +18,8 @@ export class AccountComponent extends AppComponentBase implements OnInit {
     currentYear: number = this._dateTimeService.getYear();
     remoteServiceBaseUrl: string = AppConsts.remoteServiceBaseUrl;
     skin = this.appSession.theme.baseSettings.layout.darkMode ? 'dark' : 'light';
-    defaultLogo = AppConsts.appBaseUrl + '/assets/common/images/app-logo-on-' + this.skin + '.svg';
+    //defaultLogo = AppConsts.appBaseUrl + '/assets/common/images/app-logo-on-' + this.skin + '.svg';
+    defaultLogo = AppConsts.appBaseUrl + '/assets/common/images/grandizar_logo.png';
     backgroundImageName = this.appSession.theme.baseSettings.layout.darkMode ? 'login-dark' : 'login';
 
     tenantChangeDisabledRoutes: string[] = [

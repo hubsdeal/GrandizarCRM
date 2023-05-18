@@ -126,5 +126,7 @@ namespace SoftGrid.JobManagement
         [ForeignKey("StoreId")]
         public Store StoreFk { get; set; }
 
+        public virtual bool? ProjectOrJob { get; set; }
+
     }
 }

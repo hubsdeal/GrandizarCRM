@@ -82,5 +82,7 @@ namespace SoftGrid.JobManagement.Dtos
 
         public long? StoreId { get; set; }
 
+        public bool? ProjectOrJob { get; set; }
+
     }
 }

@@ -8,6 +8,7 @@ import { ViewHubModalComponent } from './view-hub-modal.component';
 import { HubMediaLibraryLookupTableModalComponent } from './hub-mediaLibrary-lookup-table-modal.component';
 import { HubDashboardComponent } from './hub-dashboard/hub-dashboard.component';
 import { MyHubListComponent } from './my-hub-list/my-hub-list.component';
+import { StoreModule } from '@app/main/shop/stores/store.module';
 
 @NgModule({
     declarations: [
@@ -19,6 +20,6 @@ import { MyHubListComponent } from './my-hub-list/my-hub-list.component';
           HubDashboardComponent,
           MyHubListComponent,
     ],
-    imports: [AppSharedModule, HubRoutingModule, AdminSharedModule],
+    imports: [AppSharedModule, HubRoutingModule, AdminSharedModule, StoreModule],
 })
 export class HubModule {}
