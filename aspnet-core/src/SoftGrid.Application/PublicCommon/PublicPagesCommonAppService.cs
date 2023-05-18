@@ -1,9 +1,11 @@
 ﻿using Abp.Application.Services.Dto;
 using Abp.Authorization;
 using Abp.Domain.Repositories;
+using Abp.Linq.Extensions;
 
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
 using SoftGrid.Authorization.Users;
@@ -23,6 +25,8 @@ using SoftGrid.Url;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 
 using Product = SoftGrid.Shop.Product;
@@ -76,7 +80,7 @@ namespace SoftGrid.PublicCommon
         private readonly IRepository<Hub, long> _hubRepository;
         //private readonly IRepository<HubsProductCategory, long> _hubsProductCategoryRepository;
         //private readonly IRepository<HubsProduct, long> _hubsProductRepository;
-        //private readonly IRepository<HubsStore, long> _hubsStoreRepository;
+        private readonly IRepository<HubStore, long> _hubsStoreRepository;
         //private readonly IRepository<HubsBrand, long> _hubsBrandRepository;
         //private readonly ICustomEmailSender _emailSender;
         private readonly IUserEmailer _userEmailer;
@@ -152,7 +156,7 @@ namespace SoftGrid.PublicCommon
             IRepository<Hub, long> hubRepository,
             //IRepository<HubsProductCategory, long> hubsProductCategoryRepository,
             //IRepository<HubsProduct, long> hubsProductRepository,
-            //IRepository<HubsStore, long> hubsStoreRepository,
+            IRepository<HubStore, long> hubsStoreRepository,
             //IRepository<HubsBrand, long> hubsBrandRepository,
             IRepository<City, long> cityRepository,
             IUserEmailer userEmailer,
@@ -229,7 +233,7 @@ namespace SoftGrid.PublicCommon
             //_hubRepository = hubRepository;
             //_hubsProductCategoryRepository = hubsProductCategoryRepository;
             //_hubsProductRepository = hubsProductRepository;
-            //_hubsStoreRepository = hubsStoreRepository;
+            _hubsStoreRepository = hubsStoreRepository;
             //_hubsBrandRepository = hubsBrandRepository;
             //_cityRepository = cityRepository;
             //_userEmailer = userEmailer;
@@ -258,7 +262,7 @@ namespace SoftGrid.PublicCommon
             //_deliveryTypeRepository = deliveryTypeRepository;
             //_storeDeliveryTypeMapRepository = storeDeliveryTypeMapRepository;
             //_storeZipCodeMapRepository = storeZipCodeMapRepository;
-            //_storeLocationRepository = storeLocationRepository;
+            _storeLocationRepository = storeLocationRepository;
             //_reservationTimeSlotRepository = reservationTimeSlotRepository;
             //_reservationRepository = reservationRepository;
         }
@@ -1359,73 +1363,81 @@ namespace SoftGrid.PublicCommon
         //    var productCategory = await _productCategoryRepository.FirstOrDefaultAsync(e => e.Url.Equals(categoryUrl));
         //    return ObjectMapper.Map<ProductCategoryDto>(productCategory);
         //}
-        //[AbpAllowAnonymous]
-        //public async Task<PagedResultDto<PublicStoreListViewDto>> GetStoreList(PublicStoreListInput input)
-        //{
-        //    var storeIdsByHub = new List<long?>();
-        //    var storeIdsByCity = new List<long?>();
-        //    var storeIdsByZipCode = new List<long>();
+        [AbpAllowAnonymous]
+        public async Task<PagedResultDto<PublicStoreListViewDto>> GetStoreList(PublicStoreListInput input)
+        {
+            var storeIdsByHub = new List<long>();
+            var storeIdsByCity = new List<long>();
+            var storeIdsByZipCode = new List<long>();
 
-        //    if (input.HubId != null)
-        //    {
-        //        var ids = _hubsStoreRepository.GetAll().Where(e => e.HubId == input.HubId && e.StoreId != null).Select(e => e.StoreId).ToList();
-        //        storeIdsByHub.AddRange(ids);
-        //    }
+            if (input.HubId != null)
+            {
+                //var ids = _hubsStoreRepository.GetAll().Where(e => e.HubId == input.HubId && e.StoreId != null).Select(e => e.StoreId).ToList();
 
-        //    if (input.ZipCode != null)
-        //    {
-        //        var ids = _storeZipCodeMapRepository.GetAll().Where(e => e.ZipCode == input.ZipCode).Select(e => e.StoreId).ToList();
-        //        storeIdsByZipCode.AddRange(ids);
-        //    }
+                // no need StoreId nullable check
+                var ids = _hubsStoreRepository.GetAll().Where(e => e.HubId == input.HubId).Select(e => e.StoreId).ToList();
+                storeIdsByHub.AddRange(ids);
+            }
 
-        //    if (input.City != null)
-        //    {
-        //        var ids = _storeLocationRepository.GetAll()
-        //            .WhereIf(!string.IsNullOrWhiteSpace(input.City), e => false || e.LocationName.Contains(input.City) || e.City.Contains(input.City))
-        //            .Select(e => e.StoreId).ToList();
-        //        storeIdsByCity.AddRange(ids);
-        //    }
+            if (input.ZipCode != null)
+            {
+                var ids = _storeZipCodeMapRepository.GetAll().Where(e => e.ZipCode == input.ZipCode).Select(e => e.StoreId).ToList();
+                storeIdsByZipCode.AddRange(ids);
+            }
+
+            if (input.City != null)
+            {
+                var ids = _storeLocationRepository.GetAll()
+                    //.WhereIf(!string.IsNullOrWhiteSpace(input.City), e => false || e.LocationName.Contains(input.City) || e.City.Contains(input.City))
+
+                    .WhereIf(!string.IsNullOrWhiteSpace(input.City), e => false || e.LocationName.Contains(input.City) || e.CityFk.Name.Contains(input.City))
+                    .Select(e => e.StoreId).ToList();
+                storeIdsByCity.AddRange(ids);
+            }
 
 
-        //    var filteredStores = _storeRepository.GetAll()
-        //                //.Where(e => e.Id != 1)
-        //                .Where(e => e.IsPublished == true)
-        //                .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false || e.Name.Contains(input.Filter))
-        //                .WhereIf(!string.IsNullOrWhiteSpace(input.City), e => false || e.City.Contains(input.City) || storeIdsByCity.Contains(e.Id))
-        //                .WhereIf(input.HubId != null, e => storeIdsByHub.Contains(e.Id))
-        //                .WhereIf(input.ZipCode != null, e => storeIdsByZipCode.Contains(e.Id));
+            var filteredStores = _storeRepository.GetAll()
+                        //.Where(e => e.Id != 1)
+                        .Where(e => e.IsPublished == true)
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false || e.Name.Contains(input.Filter))
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.City), e => false || e.City.Contains(input.City) || storeIdsByCity.Contains(e.Id))
+                        .WhereIf(input.HubId != null, e => storeIdsByHub.Contains(e.Id))
+                        .WhereIf(input.ZipCode != null, e => storeIdsByZipCode.Contains(e.Id));
 
-        //    var pagedAndFilteredStores = filteredStores.OrderBy(input.Sorting ?? "displaySequence asc")
-        //        .PageBy(input); ;
+            var pagedAndFilteredStores = filteredStores
+                .OrderBy(input.Sorting ?? "displaySequence asc")
+                .PageBy(input); ;
 
-        //    var stores = from o in pagedAndFilteredStores
+            var stores = from o in pagedAndFilteredStores
 
-        //                 select new PublicStoreListViewDto()
-        //                 {
-        //                     Id = o.Id,
-        //                     Name = o == null || o.Name == null ? "" : o.Name.ToString(),
-        //                     Url = o == null || o.StoreUrl == null ? "" : o.StoreUrl.ToString(),
-        //                     StoreLogoLink = o.StoreLogoLink != null && o.StoreLogoLink != Guid.Empty ? o.StoreLogoLink : Guid.Empty,
+                         select new PublicStoreListViewDto()
+                         {
+                             Id = o.Id,
+                             Name = o == null || o.Name == null ? "" : o.Name.ToString(),
+                             Url = o == null || o.StoreUrl == null ? "" : o.StoreUrl.ToString(),
 
-        //                 };
-        //    var result = await stores.ToListAsync();
-        //    foreach (var store in result)
-        //    {
-        //        if (store.StoreLogoLink != null && store.StoreLogoLink != Guid.Empty)
-        //        {
-        //            //var binaryObject = await _binaryObjectManager.GetOrNullAsync((Guid)store.StoreLogoLink);
-        //            //store.Logo = Convert.ToBase64String(binaryObject.Bytes);
-        //            store.Logo = await _binaryObjectManager.GetStorePictureUrlAsync((Guid)store.StoreLogoLink, ".png");
-        //        }
-        //    }
+                             //TODO: File URL Missing
+                             // StoreLogoLink = o.StoreLogoLink != null && o.StoreLogoLink != Guid.Empty ? o.StoreLogoLink : Guid.Empty,
 
-        //    var totalCount = await filteredStores.CountAsync();
+                         };
+            var result = await stores.ToListAsync();
+            foreach (var store in result)
+            {
+                if (store.StoreLogoLink != null && store.StoreLogoLink != Guid.Empty)
+                {
+                    //var binaryObject = await _binaryObjectManager.GetOrNullAsync((Guid)store.StoreLogoLink);
+                    //store.Logo = Convert.ToBase64String(binaryObject.Bytes);
+                    store.Logo = await _binaryObjectManager.GetStorePictureUrlAsync((Guid)store.StoreLogoLink, ".png");
+                }
+            }
 
-        //    return new PagedResultDto<PublicStoreListViewDto>(
-        //        totalCount,
-        //        result
-        //    );
-        //}
+            var totalCount = await filteredStores.CountAsync();
+
+            return new PagedResultDto<PublicStoreListViewDto>(
+                totalCount,
+                result
+            );
+        }
 
         //[AbpAllowAnonymous]
         //public async Task<GetPublicStoreForViewDto> GetStoreDetailsByUrl(string url)
