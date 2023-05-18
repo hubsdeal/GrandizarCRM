@@ -5,6 +5,8 @@ import { MyHubListComponent } from './territory/hubs/my-hub-list/my-hub-list.com
 import { MyStoresComponent } from './shop/stores/my-stores/my-stores.component';
 import { components } from '@metronic/app/kt';
 import { MyEmployeesComponent } from './crm/employees/my-employees/my-employees.component';
+import { ProductLibrariesComponent } from './shop/products/product-libraries/product-libraries.component';
+import { TaskLibrariesComponent } from './taskManagement/task-libraries/task-libraries.component';
 
 @NgModule({
     imports: [
@@ -704,6 +706,12 @@ import { MyEmployeesComponent } from './crm/employees/my-employees/my-employees.
                         loadChildren: () => import('./taskManagement/taskEvents/taskEvent.module').then(m => m.TaskEventModule),
                         data: { permission: 'Pages.TaskEvents' }
                     },
+
+                    {
+                        path: 'taskManagement/taskLibrary',
+                        data: { permission: 'Pages.TaskEvents' },
+                        component: TaskLibrariesComponent,
+                    },
                 
                     
                     {
@@ -793,7 +801,12 @@ import { MyEmployeesComponent } from './crm/employees/my-employees/my-employees.
                         loadChildren: () => import('./shop/products/product.module').then(m => m.ProductModule),
                         data: { permission: 'Pages.Products' }
                     },
-                
+                    
+                    {
+                        path: 'shop/productLibraries',
+                        data: { permission: 'Pages.Products' },
+                        component: ProductLibrariesComponent,
+                    },
                     
                     {
                         path: 'shop/productCategories',

@@ -23,6 +23,9 @@ import { SelectItem } from 'primeng/api';
 import { ChatGptResponseModalComponent } from '@app/shared/chat-gpt-response-modal/chat-gpt-response-modal.component';
 import { MatDialog } from '@angular/material/dialog';
 import { GeocodingService } from '@app/shared/chat-gpt-response-modal/services/chat-gpt-lat-long.service';
+import { FileItem, FileUploader, FileUploaderOptions } from 'ng2-file-upload';
+import { AppConsts } from '@shared/AppConsts';
+import { IAjaxResponse, TokenService } from 'abp-ng2-module';
 
 @Component({
     selector: 'createOrEditHubModal',
@@ -58,10 +61,15 @@ export class CreateOrEditHubModalComponent extends AppComponentBase implements O
     partnerAndOwnedOptions: SelectItem[];
     sidebarVisible2: boolean;
 
-    selectedCountry:any;
-    selectedState:any;
-    selectedCity:any;
-    selectedCounty:any;
+    selectedCountry: any;
+    selectedState: any;
+    selectedCity: any;
+    selectedCounty: any;
+
+    imageSrc: any = 'assets/common/images/c_logo.png';
+    public uploader: FileUploader;
+    public temporaryPictureUrl: string;
+    private _uploaderOptions: FileUploaderOptions = {};
 
     constructor(
         injector: Injector,
@@ -71,9 +79,14 @@ export class CreateOrEditHubModalComponent extends AppComponentBase implements O
         private _countyServiceProxy: CountiesServiceProxy,
         private _dateTimeService: DateTimeService,
         private dialog: MatDialog,
+        private _tokenService: TokenService,
         private geocodingService: GeocodingService
     ) {
         super(injector);
+    }
+
+    ngOnInit(): void {
+        this.initFileUploader();
     }
 
     show(hubId?: number): void {
@@ -128,8 +141,9 @@ export class CreateOrEditHubModalComponent extends AppComponentBase implements O
         this.partnerAndOwnedOptions = [{ label: 'Corporate Owned', value: true }, { label: 'Partner', value: false }];
     }
 
-    save(): void {
+    saveHub(fileToken?: string): void {
         this.saving = true;
+        this.hub.fileToken = fileToken;
 
         this._hubsServiceProxy
             .createOrEdit(this.hub)
@@ -144,6 +158,65 @@ export class CreateOrEditHubModalComponent extends AppComponentBase implements O
                 this.modalSave.emit(null);
             });
     }
+
+
+    save() {
+        if (this.uploader.queue != null && this.uploader.queue.length > 0) {
+            this.uploader.uploadAll();
+        } else {
+            this.saveHub();
+        }
+    }
+
+    fileChangeEvent(event: any) {
+
+        if (event.target.files && event.target.files[0]) {
+            var reader = new FileReader();
+
+            reader.readAsDataURL(event.target.files[0]); // read file as data url
+
+            reader.onload = (event) => { // called once readAsDataURL is completed
+
+                this.imageSrc = event.target.result;
+            }
+        }
+    }
+
+    initFileUploader(): void {
+
+        this.uploader = new FileUploader({ url: AppConsts.remoteServiceBaseUrl + '/api/MediaUpload/UploadPicture' });
+        this._uploaderOptions.autoUpload = false;
+        this._uploaderOptions.authToken = 'Bearer ' + this._tokenService.getToken();
+        this._uploaderOptions.removeAfterUpload = true;
+        this.uploader.onAfterAddingFile = (file) => {
+            file.withCredentials = false;
+        };
+
+        this.uploader.onBuildItemForm = (fileItem: FileItem, form: any) => {
+            form.append('FileToken', this.guid());
+        };
+
+        this.uploader.onSuccessItem = (item, response, status) => {
+            const resp = <IAjaxResponse>JSON.parse(response);
+            if (resp.success) {
+                this.saveHub(resp.result.fileToken);
+            } else {
+                this.message.error(resp.error.message);
+            }
+        };
+
+        this.uploader.setOptions(this._uploaderOptions);
+    }
+
+    guid(): string {
+        function s4() {
+            return Math.floor((1 + Math.random()) * 0x10000)
+                .toString(16)
+                .substring(1);
+        }
+        return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+    }
+
 
     openSelectMediaLibraryModal() {
         this.hubMediaLibraryLookupTableModal.id = this.hub.pictureMediaLibraryId;
@@ -166,47 +239,47 @@ export class CreateOrEditHubModalComponent extends AppComponentBase implements O
         this.modal.hide();
     }
 
-    ngOnInit(): void { }
 
-    onCountryChange(event:any){
-        if(event.value != null){
+
+    onCountryChange(event: any) {
+        if (event.value != null) {
             this.hub.countryId = event.value.id;
             this._stateServiceProxy.getAllStateForTableDropdown(event.value.id).subscribe((result) => {
                 this.allStates = result;
             });
         }
-        console.log("countryId"+this.hub.countryId);
+        console.log("countryId" + this.hub.countryId);
     }
 
-    onStateChange(event:any){
-        if(event.value != null){
+    onStateChange(event: any) {
+        if (event.value != null) {
             this.hub.stateId = event.value.id;
             this._countyServiceProxy.getAllCountyForTableDropdown(this.selectedCountry.id, event.value.id).subscribe((result) => {
                 this.allCountys = result;
             });
         }
-        console.log("countryId"+this.hub.countryId);
-        console.log("State Id"+this.hub.stateId);
+        console.log("countryId" + this.hub.countryId);
+        console.log("State Id" + this.hub.stateId);
     }
 
-    onCountyChange(event:any){
-        if(event.value != null){
+    onCountyChange(event: any) {
+        if (event.value != null) {
             this.hub.countyId = event.value.id;
             this._cityServiceProxy.getAllCityForTableDropdown(this.selectedCountry.id, this.selectedState.id, event.value.id).subscribe((result) => {
                 this.allCitys = result;
             });
         }
-        console.log("countryId"+this.hub.countryId);
-        console.log("State Id"+this.hub.stateId);
-        console.log("County Id"+this.hub.countyId);
+        console.log("countryId" + this.hub.countryId);
+        console.log("State Id" + this.hub.stateId);
+        console.log("County Id" + this.hub.countyId);
     }
 
-    onCityChange(event:any){
-        if(event.value != null){
+    onCityChange(event: any) {
+        if (event.value != null) {
             this.hub.cityId = event.value.id;
         }
-        console.log("City Id"+this.hub.cityId);
-        
+        console.log("City Id" + this.hub.cityId);
+
     }
 
 

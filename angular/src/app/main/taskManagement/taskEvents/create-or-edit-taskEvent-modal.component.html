@@ -1,13 +1,5 @@
-﻿<div
-    bsModal
-    #createOrEditModal="bs-modal"
-    class="modal fade"
-    tabindex="-1"
-    role="dialog"
-    aria-labelledby="createOrEditModal"
-    aria-hidden="true"
-    [config]="{ backdrop: 'static' }"
->
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{ backdrop: 'static' }">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <form *ngIf="active" #taskEventForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
@@ -17,13 +9,8 @@
                         <span *ngIf="!taskEvent.id">{{ l('CreateNewTaskEvent') }}</span>
                     </h4>
 
-                    <button
-                        type="button"
-                        class="btn-close"
-                        (click)="close()"
-                        aria-label="Close"
-                        [disabled]="saving"
-                    ></button>
+                    <button type="button" class="btn-close" (click)="close()" aria-label="Close"
+                        [disabled]="saving"></button>
                 </div>
                 <div class="modal-body">
                     <div class="my-3">
@@ -38,43 +25,22 @@
 
                     <div class="my-3">
                         <label class="form-label" for="TaskEvent_Name">{{ l('Name') }} *</label>
-                        <input
-                            type="text"
-                            #TaskEvent_Name="ngModel"
-                            id="TaskEvent_Name"
-                            class="form-control"
-                            [(ngModel)]="taskEvent.name"
-                            name="Name"
-                            minlength="1"
-                            maxlength="2048"
-                            required
-                        />
+                        <input type="text" #TaskEvent_Name="ngModel" id="TaskEvent_Name" class="form-control"
+                            [(ngModel)]="taskEvent.name" name="Name" minlength="1" maxlength="2048" required />
                         <validation-messages [formCtrl]="TaskEvent_Name"></validation-messages>
                     </div>
 
                     <div class="my-3">
                         <label class="form-label" for="TaskEvent_Description">{{ l('Description') }}</label>
-                        <input
-                            type="text"
-                            #TaskEvent_Description="ngModel"
-                            id="TaskEvent_Description"
-                            class="form-control"
-                            [(ngModel)]="taskEvent.description"
-                            name="Description"
-                        />
+                        <input type="text" #TaskEvent_Description="ngModel" id="TaskEvent_Description"
+                            class="form-control" [(ngModel)]="taskEvent.description" name="Description" />
                         <validation-messages [formCtrl]="TaskEvent_Description"></validation-messages>
                     </div>
 
                     <br />
                     <label class="form-check form-check-custom form-check-solid">
-                        <input
-                            id="TaskEvent_Status"
-                            #TaskEvent_Status="ngModel"
-                            name="Status"
-                            [(ngModel)]="taskEvent.status"
-                            type="checkbox"
-                            class="form-check-input"
-                        />
+                        <input id="TaskEvent_Status" #TaskEvent_Status="ngModel" name="Status"
+                            [(ngModel)]="taskEvent.status" type="checkbox" class="form-check-input" />
                         <span class="form-check-label">
                             {{ l('Status') }}
                         </span>
@@ -83,14 +49,8 @@
 
                     <br />
                     <label class="form-check form-check-custom form-check-solid">
-                        <input
-                            id="TaskEvent_Priority"
-                            #TaskEvent_Priority="ngModel"
-                            name="Priority"
-                            [(ngModel)]="taskEvent.priority"
-                            type="checkbox"
-                            class="form-check-input"
-                        />
+                        <input id="TaskEvent_Priority" #TaskEvent_Priority="ngModel" name="Priority"
+                            [(ngModel)]="taskEvent.priority" type="checkbox" class="form-check-input" />
                         <span class="form-check-label">
                             {{ l('Priority') }}
                         </span>
@@ -99,59 +59,30 @@
 
                     <div class="my-3">
                         <label class="form-label" for="TaskEvent_EventDate">{{ l('EventDate') }}</label>
-                        <input
-                            class="form-control m-input"
-                            #TaskEvent_EventDate
-                            type="datetime"
-                            bsDatepicker
-                            datePickerLuxonModifier
-                            [(date)]="taskEvent.eventDate"
-                            id="TaskEvent_EventDate"
-                            name="TaskEvent_EventDate"
-                        />
+                        <input class="form-control m-input" #TaskEvent_EventDate type="datetime" bsDatepicker
+                            datePickerLuxonModifier [(date)]="taskEvent.eventDate" id="TaskEvent_EventDate"
+                            name="TaskEvent_EventDate" />
                         <validation-messages [formCtrl]="TaskEvent_EventDate"></validation-messages>
                     </div>
 
                     <div class="my-3">
                         <label class="form-label" for="TaskEvent_StartTime">{{ l('StartTime') }}</label>
-                        <input
-                            type="text"
-                            #TaskEvent_StartTime="ngModel"
-                            id="TaskEvent_StartTime"
-                            class="form-control"
-                            [(ngModel)]="taskEvent.startTime"
-                            name="StartTime"
-                            minlength="1"
-                            maxlength="50"
-                        />
+                        <input type="text" #TaskEvent_StartTime="ngModel" id="TaskEvent_StartTime" class="form-control"
+                            [(ngModel)]="taskEvent.startTime" name="StartTime" minlength="1" maxlength="50" />
                         <validation-messages [formCtrl]="TaskEvent_StartTime"></validation-messages>
                     </div>
 
                     <div class="my-3">
                         <label class="form-label" for="TaskEvent_EndTime">{{ l('EndTime') }}</label>
-                        <input
-                            type="text"
-                            #TaskEvent_EndTime="ngModel"
-                            id="TaskEvent_EndTime"
-                            class="form-control"
-                            [(ngModel)]="taskEvent.endTime"
-                            name="EndTime"
-                            minlength="1"
-                            maxlength="50"
-                        />
+                        <input type="text" #TaskEvent_EndTime="ngModel" id="TaskEvent_EndTime" class="form-control"
+                            [(ngModel)]="taskEvent.endTime" name="EndTime" minlength="1" maxlength="50" />
                         <validation-messages [formCtrl]="TaskEvent_EndTime"></validation-messages>
                     </div>
 
                     <br />
                     <label class="form-check form-check-custom form-check-solid">
-                        <input
-                            id="TaskEvent_Template"
-                            #TaskEvent_Template="ngModel"
-                            name="Template"
-                            [(ngModel)]="taskEvent.template"
-                            type="checkbox"
-                            class="form-check-input"
-                        />
+                        <input id="TaskEvent_Template" #TaskEvent_Template="ngModel" name="Template"
+                            [(ngModel)]="taskEvent.template" type="checkbox" class="form-check-input" />
                         <span class="form-check-label">
                             {{ l('Template') }}
                         </span>
@@ -160,75 +91,52 @@
 
                     <div class="my-3">
                         <label class="form-label" for="TaskEvent_ActualTime">{{ l('ActualTime') }}</label>
-                        <input
-                            type="text"
-                            #TaskEvent_ActualTime="ngModel"
-                            id="TaskEvent_ActualTime"
-                            class="form-control"
-                            [(ngModel)]="taskEvent.actualTime"
-                            name="ActualTime"
-                            minlength="1"
-                            maxlength="50"
-                        />
+                        <input type="text" #TaskEvent_ActualTime="ngModel" id="TaskEvent_ActualTime"
+                            class="form-control" [(ngModel)]="taskEvent.actualTime" name="ActualTime" minlength="1"
+                            maxlength="50" />
                         <validation-messages [formCtrl]="TaskEvent_ActualTime"></validation-messages>
                     </div>
 
                     <div class="my-3">
                         <label class="form-label" for="TaskEvent_EndDate">{{ l('EndDate') }}</label>
-                        <input
-                            class="form-control m-input"
-                            #TaskEvent_EndDate
-                            type="datetime"
-                            bsDatepicker
-                            datePickerLuxonModifier
-                            [(date)]="taskEvent.endDate"
-                            id="TaskEvent_EndDate"
-                            name="TaskEvent_EndDate"
-                        />
+                        <input class="form-control m-input" #TaskEvent_EndDate type="datetime" bsDatepicker
+                            datePickerLuxonModifier [(date)]="taskEvent.endDate" id="TaskEvent_EndDate"
+                            name="TaskEvent_EndDate" />
                         <validation-messages [formCtrl]="TaskEvent_EndDate"></validation-messages>
                     </div>
 
                     <div class="my-3">
                         <label class="form-label" for="TaskEvent_EstimatedTime">{{ l('EstimatedTime') }}</label>
-                        <input
-                            type="text"
-                            #TaskEvent_EstimatedTime="ngModel"
-                            id="TaskEvent_EstimatedTime"
-                            class="form-control"
-                            [(ngModel)]="taskEvent.estimatedTime"
-                            name="EstimatedTime"
-                            minlength="1"
-                            maxlength="50"
-                        />
+                        <input type="text" #TaskEvent_EstimatedTime="ngModel" id="TaskEvent_EstimatedTime"
+                            class="form-control" [(ngModel)]="taskEvent.estimatedTime" name="EstimatedTime"
+                            minlength="1" maxlength="50" />
                         <validation-messages [formCtrl]="TaskEvent_EstimatedTime"></validation-messages>
                     </div>
 
                     <div class="my-3">
                         <label class="form-label" for="TaskEvent_HourAndMinutes">{{ l('HourAndMinutes') }}</label>
-                        <input
-                            type="text"
-                            #TaskEvent_HourAndMinutes="ngModel"
-                            id="TaskEvent_HourAndMinutes"
-                            class="form-control"
-                            [(ngModel)]="taskEvent.hourAndMinutes"
-                            name="HourAndMinutes"
-                            minlength="1"
-                            maxlength="50"
-                        />
+                        <input type="text" #TaskEvent_HourAndMinutes="ngModel" id="TaskEvent_HourAndMinutes"
+                            class="form-control" [(ngModel)]="taskEvent.hourAndMinutes" name="HourAndMinutes"
+                            minlength="1" maxlength="50" />
                         <validation-messages [formCtrl]="TaskEvent_HourAndMinutes"></validation-messages>
+                    </div>
+                    <!-- Need to implement save as task library -->
+                    <div class="col-xl-12 d-flex align-items-center">
+                        <div class="me-5 fw-semibold text-gray">
+                            Save as Library
+                        </div>
+                        <div class="form-check form-check-solid form-switch form-check-custom fv-row">
+                            <input class="form-check-input w-45px h-30px" type="checkbox" id="allowmarketing" checked="checked">
+                            <label class="form-check-label" for="allowmarketing"></label>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
                         {{ l('Cancel') }}
                     </button>
-                    <button
-                        type="submit"
-                        class="btn btn-primary blue"
-                        [disabled]="!taskEventForm.form.valid"
-                        [buttonBusy]="saving"
-                        [busyText]="l('SavingWithThreeDot')"
-                    >
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!taskEventForm.form.valid"
+                        [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')">
                         <i class="fa fa-save"></i>
                         <span>{{ l('Save') }}</span>
                     </button>
