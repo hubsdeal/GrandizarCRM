@@ -5,9 +5,10 @@ import { TaskEventRoutingModule } from './taskEvent-routing.module';
 import { TaskEventsComponent } from './taskEvents.component';
 import { CreateOrEditTaskEventModalComponent } from './create-or-edit-taskEvent-modal.component';
 import { ViewTaskEventModalComponent } from './view-taskEvent-modal.component';
+import { TaskEventsDashboardComponent } from './task-events-dashboard/task-events-dashboard.component';
 
 @NgModule({
-    declarations: [TaskEventsComponent, CreateOrEditTaskEventModalComponent, ViewTaskEventModalComponent],
+    declarations: [TaskEventsComponent, CreateOrEditTaskEventModalComponent, ViewTaskEventModalComponent, TaskEventsDashboardComponent],
     imports: [AppSharedModule, TaskEventRoutingModule, AdminSharedModule],
 })
 export class TaskEventModule {}

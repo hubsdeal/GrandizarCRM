@@ -10,6 +10,7 @@ import { AppComponentBase } from '@shared/common/app-component-base';
 import { DateTime } from 'luxon';
 
 import { DateTimeService } from '@app/shared/common/timing/date-time.service';
+import { SelectItem } from 'primeng/api';
 
 @Component({
     selector: 'createOrEditTaskEventModal',
@@ -29,6 +30,18 @@ export class CreateOrEditTaskEventModalComponent extends AppComponentBase implem
 
     allTaskStatuss: TaskEventTaskStatusLookupTableDto[];
 
+    taskStatusOptions: SelectItem[];
+    priorityOptions: SelectItem[];
+
+    selectedTemplate:any;
+    allTemplate:any[]=[{id:1,displayName:"template 1"},{id:2,displayName:"template 2"},{id:3,displayName:"template 3"}]
+
+    selectedTeam:any;
+    allTeams:any[]=[{id:1,displayName:"Team 1"},{id:2,displayName:"Team 2"},{id:3,displayName:"Team 3"}]
+
+    selectedTag:any;
+    allTags:any[]=[{id:1,displayName:"Tag 1"},{id:2,displayName:"Tag 2"},{id:3,displayName:"Tag 3"}]
+
     constructor(
         injector: Injector,
         private _taskEventsServiceProxy: TaskEventsServiceProxy,
@@ -44,7 +57,8 @@ export class CreateOrEditTaskEventModalComponent extends AppComponentBase implem
             this.taskEvent.eventDate = this._dateTimeService.getStartOfDay();
             this.taskEvent.endDate = this._dateTimeService.getStartOfDay();
             this.taskStatusName = '';
-
+            this.taskEvent.status = false;
+            this.taskEvent.priority = false;
             this.active = true;
             this.modal.show();
         } else {
@@ -60,6 +74,8 @@ export class CreateOrEditTaskEventModalComponent extends AppComponentBase implem
         this._taskEventsServiceProxy.getAllTaskStatusForTableDropdown().subscribe((result) => {
             this.allTaskStatuss = result;
         });
+        this.taskStatusOptions = [{ label: 'Completed', value: true }, { label: 'Open', value: false }];
+        this.priorityOptions = [{ label: 'High', value: true }, { label: 'Low', value: false }];
     }
 
     save(): void {
@@ -84,5 +100,5 @@ export class CreateOrEditTaskEventModalComponent extends AppComponentBase implem
         this.modal.hide();
     }
 
-    ngOnInit(): void {}
+    ngOnInit(): void { }
 }
