@@ -1696,6 +1696,11 @@
   resolved "https://registry.npmjs.org/@types/lodash/-/lodash-4.14.191.tgz"
   integrity sha512-BdZ5BCCvho3EIXw6wUCXHe7rS53AIDPLE+JzwgT+OsJk53oBfbSmZZ7CX4VaRoN78N+TJpFi9QPlfIVNmJYWxQ==
 
+"@types/luxon@1.11.1":
+  version "1.11.1"
+  resolved "https://registry.yarnpkg.com/@types/luxon/-/luxon-1.11.1.tgz#819d730cf8ada52bec9c4a1d94347d1250f22c5d"
+  integrity sha512-XBHQ7rzpOHyJudEQcMyoT67Np61FTb6S2jWqWQER/U7H2NAS+dpC8wv5T+6ygV5g/yJQdaojQbsJQiweool0Aw==
+
 "@types/luxon@^3.1.0":
   version "3.1.0"
   resolved "https://registry.npmjs.org/@types/luxon/-/luxon-3.1.0.tgz"
@@ -6708,6 +6713,11 @@ lru-cache@^7.4.4, lru-cache@^7.5.1, lru-cache@^7.7.1:
   resolved "https://registry.npmjs.org/lru-cache/-/lru-cache-7.14.1.tgz"
   integrity sha512-ysxwsnTKdAx96aTRdhDOCQfDgbHnt8SK0KY8SEjO0wHinhWOFTESbjVCMPbU1uGXg/ch4lifqx0wfjOawU2+WA==
 
+luxon@1.24.0:
+  version "1.24.0"
+  resolved "https://registry.yarnpkg.com/luxon/-/luxon-1.24.0.tgz#6db04b79ec8f7159973d4dcf21871fd6acfb3d58"
+  integrity sha512-PNeB5cFbBtmuS137OuEdaJnCMTMPS2vz9hnM1Zl6tUIuYdtUgEhMqfVZ7yxX0jHEGx6rp757ECe7cdZxDgq2Tg==
+
 luxon@^3.1.1:
   version "3.1.1"
   resolved "https://registry.npmjs.org/luxon/-/luxon-3.1.1.tgz"
@@ -7183,6 +7193,15 @@ ngx-image-cropper@^6.3.1:
   integrity sha512-MouiY0E1Lgewyi4pai7pcElZ6R+5TD18cK4PzA99/YSCmyeW1nXczWXpnY9IpV46R0fG7KP4TJBd4bH4ZTlkkA==
   dependencies:
     tslib "^2.3.0"
+
+ngx-material-timepicker@^5.5.3:
+  version "5.5.3"
+  resolved "https://registry.yarnpkg.com/ngx-material-timepicker/-/ngx-material-timepicker-5.5.3.tgz#9b65071e8f00477d37d1b0f825baf8fb5ea800db"
+  integrity sha512-Ua6eNNNneHS8S1/3Tn2dUOnLdZ4k6MhQqvLM/eFVoeF0WF+q/uK1DAH8eAki3HW1ogq2oDWnVRSeXvvZGJldhQ==
+  dependencies:
+    "@types/luxon" "1.11.1"
+    luxon "1.24.0"
+    tslib "^1.9.0"
 
 ngx-perfect-scrollbar@^10.1.1:
   version "10.1.1"

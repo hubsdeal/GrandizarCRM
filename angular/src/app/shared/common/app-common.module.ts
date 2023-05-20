@@ -37,7 +37,7 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 import { PasswordInputWithShowButtonComponent } from './password-input-with-show-button/password-input-with-show-button.component';
 import { KeyValueListManagerComponent } from './key-value-list-manager/key-value-list-manager.component';
 import { SelectButtonModule } from 'primeng/selectbutton';
-
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 @NgModule({
     imports: [
         CommonModule,
@@ -55,7 +55,8 @@ import { SelectButtonModule } from 'primeng/selectbutton';
         CountoModule,
         AppBsModalModule,
         AutoCompleteModule,
-        SelectButtonModule
+        SelectButtonModule,
+        NgxMaterialTimepickerModule
     ], 
     declarations: [
         TimeZoneComboComponent,
@@ -80,7 +81,8 @@ import { SelectButtonModule } from 'primeng/selectbutton';
         DatePickerInitialValueSetterDirective,
         PasswordInputWithShowButtonComponent,
         KeyValueListManagerComponent,
-        SelectButtonModule
+        SelectButtonModule,
+        NgxMaterialTimepickerModule
     ],
     providers: [
         DateTimeService,

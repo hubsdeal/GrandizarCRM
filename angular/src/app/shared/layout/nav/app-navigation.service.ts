@@ -67,6 +67,19 @@ export class AppNavigationService {
             ),
 
             new AppMenuItem(
+                'Order Management',
+                '',
+                'fas fa-shopping-cart',
+                '',
+                [],
+                [
+                    new AppMenuItem('Master Order List', 'Pages.Orders', 'fas fa-list', '/app/main/orderManagement/orders'),
+                    new AppMenuItem('My Order List', 'Pages.Orders', 'fas fa-list-alt', '/app/main/orderManagement/orders'),
+                    new AppMenuItem('Abandoned Cart', 'Pages.Orders', 'fas fa-shopping-cart', '/app/main/orderManagement/orders'),
+                ]
+            ),
+
+            new AppMenuItem(
                 'Job Management',
                 '',
                 'fas fa-briefcase',

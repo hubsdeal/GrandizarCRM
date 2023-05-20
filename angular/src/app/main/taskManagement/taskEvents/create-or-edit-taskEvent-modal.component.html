@@ -98,19 +98,27 @@
                         <div class="col-xl-6">
                             <div class="my-5">
                                 <label class="form-label" for="TaskEvent_StartTime">{{ l('Start Time') }}</label>
-                                <input type="text" #TaskEvent_StartTime="ngModel" id="TaskEvent_StartTime"
+                                <input class="form-control" [(ngModel)]="taskEvent.startTime" name="StartTime"
+                                    [ngxTimepicker]="startTime" aria-label="12hr format" type="text" readonly>
+                                <ngx-material-timepicker #startTime (timeSet)="startTimeValue($event)">
+                                </ngx-material-timepicker>
+                                <!-- <input type="text" #TaskEvent_StartTime="ngModel" id="TaskEvent_StartTime"
                                     class="form-control" [(ngModel)]="taskEvent.startTime" name="StartTime"
                                     minlength="1" maxlength="50" />
-                                <validation-messages [formCtrl]="TaskEvent_StartTime"></validation-messages>
+                                <validation-messages [formCtrl]="TaskEvent_StartTime"></validation-messages> -->
                             </div>
                         </div>
                         <div class="col-xl-6">
                             <div class="my-5">
                                 <label class="form-label" for="TaskEvent_EndTime">{{ l('End Time') }}</label>
-                                <input type="text" #TaskEvent_EndTime="ngModel" id="TaskEvent_EndTime"
+                                <input class="form-control" [(ngModel)]="taskEvent.endTime" name="EndTime"
+                                    [ngxTimepicker]="endTime" aria-label="12hr format" type="text" readonly>
+                                <ngx-material-timepicker #endTime (timeSet)="endTimeValue($event)">
+                                </ngx-material-timepicker>
+                                <!-- <input type="text" #TaskEvent_EndTime="ngModel" id="TaskEvent_EndTime"
                                     class="form-control" [(ngModel)]="taskEvent.endTime" name="EndTime" minlength="1"
                                     maxlength="50" />
-                                <validation-messages [formCtrl]="TaskEvent_EndTime"></validation-messages>
+                                <validation-messages [formCtrl]="TaskEvent_EndTime"></validation-messages> -->
                             </div>
                         </div>
                         <div class="col-xl-6">

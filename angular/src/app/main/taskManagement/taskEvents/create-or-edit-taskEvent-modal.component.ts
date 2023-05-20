@@ -101,4 +101,13 @@ export class CreateOrEditTaskEventModalComponent extends AppComponentBase implem
     }
 
     ngOnInit(): void { }
+
+    startTimeValue(value: any) {
+        this.taskEvent.startTime = value;
+    }
+
+    endTimeValue(value: any) {
+        this.taskEvent.endTime = value;
+    }
+
 }

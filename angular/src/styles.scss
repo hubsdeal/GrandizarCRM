@@ -946,3 +946,13 @@ bs-days-calendar-view {
 .p-component-overlay{
     z-index: 999 !important;
 }
+
+
+// timepicker
+.timepicker-overlay {
+    z-index: 10000000 !important;
+}
+
+.timepicker-backdrop-overlay {
+    z-index: 10000000 !important;
+}
