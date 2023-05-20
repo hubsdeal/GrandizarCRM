@@ -34,7 +34,7 @@ export class AppNavigationService {
                         '/app/admin/hostDashboard'
                     ),
                     new AppMenuItem('Master Task List', 'Pages.TaskEvents', 'flaticon2-list-2', '/app/main/taskManagement/taskEvents'),
-                    new AppMenuItem('My Task List', 'Pages.TaskEvents', 'flaticon2-list-2', '/app/main/taskManagement/taskEvents'),
+                    new AppMenuItem('My Task List', 'Pages.TaskEvents', 'flaticon2-list-2', '/app/main/taskManagement/myTaskEvents'),
                     new AppMenuItem('Task Template', 'Pages.TaskEvents', 'flaticon2-list-2', '/app/main/taskManagement/taskLibrary'),
                 ]
             ),

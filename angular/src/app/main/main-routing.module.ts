@@ -7,6 +7,7 @@ import { components } from '@metronic/app/kt';
 import { MyEmployeesComponent } from './crm/employees/my-employees/my-employees.component';
 import { ProductLibrariesComponent } from './shop/products/product-libraries/product-libraries.component';
 import { TaskLibrariesComponent } from './taskManagement/task-libraries/task-libraries.component';
+import { MyTaskEventsComponent } from './taskManagement/taskEvents/my-task-events/my-task-events.component';
 
 @NgModule({
     imports: [
@@ -711,6 +712,12 @@ import { TaskLibrariesComponent } from './taskManagement/task-libraries/task-lib
                     {
                         path: 'taskManagement/taskEvents',
                         loadChildren: () => import('./taskManagement/taskEvents/taskEvent.module').then(m => m.TaskEventModule),
+                        data: { permission: 'Pages.TaskEvents' }
+                    },
+
+                    {
+                        path: 'taskManagement/myTaskEvents',
+                        component: MyTaskEventsComponent,
                         data: { permission: 'Pages.TaskEvents' }
                     },
 

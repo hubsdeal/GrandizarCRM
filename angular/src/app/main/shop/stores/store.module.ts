@@ -10,6 +10,7 @@ import { StoreMasterTagLookupTableModalComponent } from './store-masterTag-looku
 import { StoreDashboardComponent } from './store-dashboard/store-dashboard.component';
 import { StoreMediaModule } from '../storeMedias/storeMedia.module';
 import { MyStoresComponent } from './my-stores/my-stores.component';
+import { TaskEventModule } from '@app/main/taskManagement/taskEvents/taskEvent.module';
 
 @NgModule({
     declarations: [
@@ -22,7 +23,7 @@ import { MyStoresComponent } from './my-stores/my-stores.component';
         StoreDashboardComponent,
         MyStoresComponent,
     ],
-    imports: [AppSharedModule, StoreRoutingModule, AdminSharedModule, StoreMediaModule],
+    imports: [AppSharedModule, StoreRoutingModule, AdminSharedModule, StoreMediaModule, TaskEventModule],
     exports:[
         MyStoresComponent,
         CreateOrEditStoreModalComponent,

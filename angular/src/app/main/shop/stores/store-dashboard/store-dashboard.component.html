@@ -269,15 +269,9 @@
                                         <i class="fas fa-calendar-alt"></i> Reservations
                                     </a>
                                 </li>
-
                                 <li class="nav-item">
-                                    <a class="nav-link" data-bs-toggle="tab" href="#company_notes">
-                                        <i class="fas fa-note-sticky"></i> Notes
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" data-bs-toggle="tab" href="#company_tasks">
-                                        <i class="fas fa-tasks-alt"></i> Tasks
+                                    <a class="nav-link" data-bs-toggle="tab" href="#marketplacce_operator">
+                                        <i class="fas fa-user-gear"></i> Marketplace Operator
                                     </a>
                                 </li>
                             </ul>
@@ -376,40 +370,12 @@
                                                 <!--end::Input group-->
                                                 <!--begin::Row-->
                                                 <div class="row row-cols-1 row-cols-sm-2 rol-cols-md-1 row-cols-lg-2">
-                                                    <div class="col">
-                                                        <div class="fv-row mb-7 fv-plugins-icon-container">
-                                                            <label class="fs-6 fw-semibold form-label mt-3">
-                                                                <span>City</span>
-                                                            </label>
-                                                            <input type="text" class="form-control form-control-solid"
-                                                                [(ngModel)]="store.city" name="city" value="">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col">
-                                                        <div class="fv-row mb-7">
-                                                            <label class="fs-6 fw-semibold form-label mt-3">
-                                                                <span>State</span>
-                                                            </label>
-                                                            <select class="form-control form-control-solid"
-                                                                [(ngModel)]="store.stateId" name="state" id="state">
-                                                                <option value="">Select State</option>
-                                                                <option *ngFor="let item of stateOptions"
-                                                                    value="{{item.id}}">
-                                                                    {{item.displayName}}
-                                                                </option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!--end::Row-->
-                                                <!--begin::Row-->
-                                                <div class="row row-cols-1 row-cols-sm-2 rol-cols-md-1 row-cols-lg-2">
-                                                    <div class="col">
+                                                    <div class="col p_filter">
                                                         <div class="fv-row mb-7">
                                                             <label class="fs-6 fw-semibold form-label mt-3">
                                                                 <span>Country</span>
                                                             </label>
-                                                            <select class="form-control form-control-solid"
+                                                            <!-- <select class="form-control form-control-solid"
                                                                 [(ngModel)]="store.countryId" name="state"
                                                                 id="countryId">
                                                                 <option value="">Select Country</option>
@@ -417,7 +383,51 @@
                                                                     value="{{item.id}}">
                                                                     {{item.displayName}}
                                                                 </option>
-                                                            </select>
+                                                            </select> -->
+                                                            <p-dropdown [options]="countryOptions" [filter]="true"
+                                                                [virtualScroll]="true"
+                                                                (onChange)="onCountryChange($event)"
+                                                                placeholder="Select Country" [itemSize]="30"
+                                                                name="displayName" optionLabel="displayName"
+                                                                optionId="id" [(ngModel)]="selectedCountry"
+                                                                filterBy="displayName"
+                                                                [style]="{ width: '100%' }"></p-dropdown>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col p_filter">
+                                                        <div class="fv-row mb-7 ">
+                                                            <label class="fs-6 fw-semibold form-label mt-3">
+                                                                <span>State</span>
+                                                            </label>
+                                                            <!-- <select class="form-control form-control-solid"
+                                                                [(ngModel)]="store.stateId" name="state" id="state">
+                                                                <option value="">Select State</option>
+                                                                <option *ngFor="let item of stateOptions"
+                                                                    value="{{item.id}}">
+                                                                    {{item.displayName}}
+                                                                </option>
+                                                            </select> -->
+                                                            <p-dropdown [options]="stateOptions" [filter]="true"
+                                                                [virtualScroll]="true"
+                                                                (onChange)="onStateChange($event)"
+                                                                placeholder="Select State" [itemSize]="30"
+                                                                name="displayName" optionLabel="displayName"
+                                                                optionId="id" [(ngModel)]="selectedState"
+                                                                filterBy="displayName"
+                                                                [style]="{ width: '100%' }"></p-dropdown>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--end::Row-->
+                                                <!--begin::Row-->
+                                                <div class="row row-cols-1 row-cols-sm-2 rol-cols-md-1 row-cols-lg-2">
+                                                    <div class="col">
+                                                        <div class="fv-row mb-7 fv-plugins-icon-container">
+                                                            <label class="fs-6 fw-semibold form-label mt-3">
+                                                                <span>City</span>
+                                                            </label>
+                                                            <input type="text" class="form-control form-control-solid"
+                                                                [(ngModel)]="store.city" name="city" value="">
                                                         </div>
                                                     </div>
                                                     <div class="col">
@@ -431,6 +441,40 @@
                                                     </div>
                                                 </div>
                                                 <!--end::Row-->
+
+                                                <!--begin::Row-->
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <div class="fv-row mb-7 fv-plugins-icon-container">
+                                                            <label class="fs-6 fw-semibold form-label mt-3">
+                                                                <span>Latitude</span>
+                                                            </label>
+                                                            <input type="text" class="form-control form-control-solid"
+                                                                [(ngModel)]="store.latitude" name="latitude"
+                                                                id="latitude">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="fv-row mb-7">
+                                                            <label class="fs-6 fw-semibold form-label mt-3">
+                                                                <span>Longitude</span>
+                                                            </label>
+                                                            <input type="text" class="form-control form-control-solid"
+                                                                [(ngModel)]="store.longitude" name="longitude"
+                                                                id="longitude">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4 d-flex align-items-center pt-3">
+                                                        <div class="fv-row mb-0 mt-2 fv-plugins-icon-container">
+                                                            <a href="javascript:;" (click)="getCoordinates()"
+                                                                class="btn btn-outline btn-outline-dashed btn-outline-primary btn-active-light-primary">
+                                                                <i class="fa fa-map-marker"></i> Get Lat. Long. Data
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--end::Row-->
+
                                                 <!--begin::Row-->
                                                 <div class="row row-cols-1 row-cols-sm-2 rol-cols-md-1 row-cols-lg-2">
                                                     <div class="col">
@@ -617,7 +661,8 @@
                                                         <!-- <img src="/assets/common/images/bg-6.jpg" alt=""> -->
                                                         <img *ngIf="picture && video==null" src="{{picture}}" alt="logo"
                                                             class="img-fluid product-photo-details p-4">
-                                                        <img *ngIf="!picture && video==null" src="/assets/common/images/bg-6.jpg"
+                                                        <img *ngIf="!picture && video==null"
+                                                            src="/assets/common/images/bg-6.jpg"
                                                             class="img-fluid product-photo-details p-4" alt="logo">
                                                         <iframe *ngIf="video!=null && picture==null" class="video_frame"
                                                             [src]="getSafeEmbeddedVideoUrl(video)" frameborder="0"
@@ -630,33 +675,44 @@
                                                     <div
                                                         class="d-flex align-items-center min-w-700px overflow-auto pt-6">
                                                         <div class="d-flex align-items-center">
-                                                            <div *ngFor="let item of images" >
+                                                            <div *ngFor="let item of images">
                                                                 <div *ngIf="item.picture!=null && item.videoUrl==null"
                                                                     class="border border-dashed border-gray-300 rounded me-5">
                                                                     <div class="overlay sm_bottom_gallery">
-                                                                        <div class="overlay-wrapper" (click)="onStorePhotoOrVideoClick(item)" style="cursor: pointer;">
+                                                                        <div class="overlay-wrapper"
+                                                                            (click)="onStorePhotoOrVideoClick(item)"
+                                                                            style="cursor: pointer;">
                                                                             <img alt="img" class="rounded"
                                                                                 src="{{item.picture}}">
                                                                         </div>
                                                                         <div
                                                                             class="overlay-layer bg-dark bg-opacity-10 rounded">
-                                                                            <a href="javascript:;"  (click)="deleteStoreMedia(item.storeMedia.id)">
+                                                                            <a href="javascript:;"
+                                                                                (click)="deleteStoreMedia(item.storeMedia.id)">
                                                                                 <i
                                                                                     class="fas fa-times-circle text-primary"></i>
                                                                             </a>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div *ngIf="item.picture==null && item.videoUrl!=null" 
+                                                                <div *ngIf="item.picture==null && item.videoUrl!=null"
                                                                     class="border border-dashed border-gray-300 rounded me-5">
                                                                     <div class="overlay sm_bottom_gallery">
-                                                                        <div class="overlay-wrapper" (click)="onStorePhotoOrVideoClick(item)" style="cursor: pointer;">
-                                                                            <iframe [src]="getSafeEmbeddedVideoUrl(item.videoUrl)" style="width: 100%;height: auto; " frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+                                                                        <div class="overlay-wrapper"
+                                                                            (click)="onStorePhotoOrVideoClick(item)"
+                                                                            style="cursor: pointer;">
+                                                                            <iframe
+                                                                                [src]="getSafeEmbeddedVideoUrl(item.videoUrl)"
+                                                                                style="width: 100%;height: auto; "
+                                                                                frameborder="0"
+                                                                                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                                                                allowfullscreen>
                                                                             </iframe>
                                                                         </div>
                                                                         <div
                                                                             class="overlay-layer bg-dark bg-opacity-10 rounded">
-                                                                            <a href="javascript:;"  (click)="deleteStoreMedia(item.storeMedia.id)">
+                                                                            <a href="javascript:;"
+                                                                                (click)="deleteStoreMedia(item.storeMedia.id)">
                                                                                 <i
                                                                                     class="fas fa-times-circle text-primary"></i>
                                                                             </a>
@@ -4896,11 +4952,56 @@
                     <div class="tab-pane fade" id="store_reservation" role="tabpanel">
                         .store_reservation..
                     </div>
-                    <div class="tab-pane fade" id="company_notes" role="tabpanel">
-                        .gfjkjjgjg..
-                    </div>
-                    <div class="tab-pane fade" id="company_tasks" role="tabpanel">
-                        .gfjkjjgjg..
+                    <div class="tab-pane fade" id="marketplacce_operator" role="tabpanel">
+                        <div class="card">
+                            <div class="card-body">
+                                <ul class="nav nav-tabs nav-line-tabs nav-line-tabs-2x mb-5 fs-6">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" data-bs-toggle="tab" href="#m_tasks_m">
+                                            <i class="fas fa-tasks-alt mr-2"></i> Task
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" data-bs-toggle="tab" href="#m_notes_m">
+                                            <i class="fas fa-note-sticky mr-2"></i> Notes
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" data-bs-toggle="tab" href="#m_teams_m">
+                                            <i class="fas fa-user-friends mr-2"></i> Teams
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" data-bs-toggle="tab" href="#m_plans_m">
+                                            <i class="fas fa-sitemap mr-2"></i> Marketplace plan
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" data-bs-toggle="tab" href="#m_approval_m">
+                                            <i class="fas fa-star-and-crescent mr-2"></i> Approval & Internal rating
+                                        </a>
+                                    </li>
+                                </ul>
+                                
+                                <div class="tab-content" id="myTabContent">
+                                    <div class="tab-pane fade show active" id="m_tasks_m" role="tabpanel">
+                                        <app-my-task-events></app-my-task-events>
+                                    </div>
+                                    <div class="tab-pane fade" id="m_notes_m" role="tabpanel">
+                                        m_notes_m
+                                    </div>
+                                    <div class="tab-pane fade" id="m_teams_m" role="tabpanel">
+                                        m_teams_m
+                                    </div>
+                                    <div class="tab-pane fade" id="m_plans_m" role="tabpanel">
+                                        m_plans_m
+                                    </div>
+                                    <div class="tab-pane fade" id="m_approval_m" role="tabpanel">
+                                        Approval & Internal rating
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

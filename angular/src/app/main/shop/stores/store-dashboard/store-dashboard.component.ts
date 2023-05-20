@@ -4,13 +4,14 @@ import { ActivatedRoute } from '@angular/router';
 import { ChatGptResponseModalComponent } from '@app/shared/chat-gpt-response-modal/chat-gpt-response-modal.component';
 import { AppConsts } from '@shared/AppConsts';
 import { AppComponentBase } from '@shared/common/app-component-base';
-import { CreateOrEditStoreDto, CreateOrEditStoreMediaDto, GetStoreMediaForViewDto, StoreMediasServiceProxy, StoresServiceProxy } from '@shared/service-proxies/service-proxies';
+import { CreateOrEditStoreDto, CreateOrEditStoreMediaDto, GetStoreMediaForViewDto, StatesServiceProxy, StoreMediasServiceProxy, StoresServiceProxy } from '@shared/service-proxies/service-proxies';
 import { IAjaxResponse, TokenService } from 'abp-ng2-module';
 import { FileItem, FileUploader, FileUploaderOptions } from 'ng2-file-upload';
 import { SelectItem } from 'primeng/api';
 import { finalize } from 'rxjs';
 import { CreateOrEditStoreMediaModalComponent } from '../../storeMedias/create-or-edit-storeMedia-modal.component';
 import { DomSanitizer } from '@angular/platform-browser';
+import { GeocodingService } from '@app/shared/chat-gpt-response-modal/services/chat-gpt-lat-long.service';
 
 @Component({
   selector: 'app-store-dashboard',
@@ -30,6 +31,8 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
   store: CreateOrEditStoreDto = new CreateOrEditStoreDto();
 
   tags: string[] = [];
+
+  chatGPTPromt: string;
 
   stateName: string;
   countryName: string;
@@ -64,13 +67,17 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
   images: GetStoreMediaForViewDto[] = [];
   videos: any[] = [];
 
+  selectedCountry: any;
+  selectedState: any;
   constructor(
     injector: Injector,
     private route: ActivatedRoute,
     private _tokenService: TokenService,
     private _storeServiceProxy: StoresServiceProxy,
     private _storeMediaServiceProxy: StoreMediasServiceProxy,
+    private _stateServiceProxy: StatesServiceProxy,
     private _sanitizer: DomSanitizer,
+    private geocodingService: GeocodingService,
     private dialog: MatDialog
   ) {
     super(injector);
@@ -95,9 +102,9 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
       this.countryOptions = result;
     });
 
-    this._storeServiceProxy.getAllStateForTableDropdown().subscribe(result => {
-      this.stateOptions = result;
-    });
+    // this._storeServiceProxy.getAllStateForTableDropdown().subscribe(result => {
+    //   this.stateOptions = result;
+    // });
 
     // this._storeServiceProxy.getAllRatingLikeForTableDropdown().subscribe(result => {
     //   this.ratingLikeOptions = result;
@@ -105,6 +112,21 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
     // this._storeServiceProxy.getAllTaxRateForTableDropdown().subscribe(result => {
     //   this.taxOptions = result;
     // });
+  }
+
+  onCountryChange(event: any) {
+    if (event.value != null) {
+      this.store.countryId = event.value.id;
+      this._stateServiceProxy.getAllStateForTableDropdown(event.value.id).subscribe((result) => {
+        this.stateOptions = result;
+      });
+    }
+  }
+
+  onStateChange(event: any) {
+    if (event.value != null) {
+      this.store.stateId = event.value.id;
+    }
   }
 
   openAiModal(feildName: string): void {
@@ -286,5 +308,27 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
     }
   }
 
+  async getCoordinates() {
+    try {
+      if (this.selectedCountry && this.selectedState && this.store.city && this.store.zipCode) {
+        this.chatGPTPromt = 'Give me only the Latitude and longitude for ' + this.selectedCountry.displayName + ', ' + this.selectedState.displayName + ', ' + this.store.city + ', ' + this.store.zipCode + ' as json format as Key latitude and longitude';
+      } else if (this.selectedCountry && this.selectedState && this.store.city) {
+        this.chatGPTPromt = 'Give me only the Latitude and longitude for ' + this.selectedCountry.displayName + ', ' + this.selectedState.displayName + ', ' + this.store.city + ' as json format as Key latitude and longitude';
+      } else if (this.selectedCountry && this.selectedState) {
+        this.chatGPTPromt = 'Give me only the Latitude and longitude for ' + this.selectedCountry.displayName + ', ' + this.selectedState.displayName + ' as json format as Key latitude and longitude';
+      } else if (this.selectedCountry) {
+        this.chatGPTPromt = 'Give me only the Latitude and longitude for ' + this.selectedCountry.displayName + ' as json format as Key latitude and longitude';
+      }
+      console.log(this.chatGPTPromt);
+      const coordinates = await this.geocodingService.invokeGPT(this.chatGPTPromt);
+      console.log('Coordinates:', coordinates);
+      if (coordinates) {
+        this.store.latitude = coordinates.latitude;
+        this.store.longitude = coordinates.longitude;
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }
 
 }
