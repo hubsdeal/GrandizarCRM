@@ -154,14 +154,14 @@
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="PartnerOrOwnedFilterSelect">
-                                        {{ l('Owner') }}
+                                        {{ l('Hub Ownership') }}
                                     </label>
                                     <select class="form-select" name="PartnerOrOwnedFilter"
                                         id="PartnerOrOwnedFilterSelect" [(ngModel)]="partnerOrOwnedFilter"
                                         (ngModelChange)="getHubs()">
                                         <option value="-1">{{ l('All') }}</option>
-                                        <option value="0">{{ l('No') }}</option>
-                                        <option value="1">{{ l('Yes') }}</option>
+                                        <option value="0">{{ l('Partner') }}</option>
+                                        <option value="1">{{ l('Corporate Ownership') }}</option>
                                     </select>
                                 </div>
                             </div>
@@ -317,10 +317,10 @@
                             [resizableColumns]="primengTableHelper.resizableColumns">
                             <ng-template pTemplate="header">
                                 <tr>
-                                    <th style="width: 200px">
+                                    <th style="width: 400px">
                                         {{l('Name')}}
                                     </th>
-                                    <th style="width: 150px">
+                                    <th style="width: 100px">
                                         {{l('Type')}}
                                     </th>
                                     <!-- <th style="width: 150px">
@@ -335,22 +335,22 @@
                                     <th style="width: 90px; text-align: center;">
                                         {{l('#Contact')}}
                                     </th>
+                                    <th style="width: 90px; text-align: center;">
+                                        {{l('#Jobs')}}
+                                    </th>
+                                    <th style="width: 90px; text-align: center;">
+                                        {{l('#Gigs')}}
+                                    </th>
                                     <!-- <th style="width: 110px; text-align: center;">
                                         {{l('#Contact Repo')}}
                                     </th> -->
-                                    <th style="width: 150px">
+                                    <th style="width: 100px">
                                         {{l('Population')}}
                                     </th>
-                                    <th style="width: 150px">
+                                    <th style="width: 100px">
                                         {{l('Revenue')}}
                                     </th>
-                                    <th style="width: 90px; text-align: center;">
-                                        {{l('Live?')}}
-                                    </th>
-                                    <th style="width: 150px; text-align: center;">
-                                        {{l('Owner?')}}
-                                    </th>
-                                    <th style="width: 150px; text-align: center;" pSortableColumn="displaySequence">
+                                    <th style="width: 100px; text-align: center;" pSortableColumn="displaySequence">
                                         {{ l('Sequence') }}
                                         <p-sortIcon field="hub.displaySequence"></p-sortIcon>
                                     </th>
@@ -446,7 +446,7 @@
                             </ng-template>
                             <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
                                 <tr>
-                                    <td style="width:200px">
+                                    <td style="width:400px">
                                         <span class="p-column-title">{{ l('Name') }}</span>
                                         <div class="d-flex align-items-center">
                                             <div class="square_logo_box shadow-sm">
@@ -471,11 +471,19 @@
                                                         <i class="fas fa-map-marked-alt mr-1"></i>
                                                         {{ record.officeFullAddress }}
                                                     </span>
+                                                    <span class="text-gray-400 fw-semibold fs-7 my-1">
+                                                        <div *ngIf="!record.partnerOrOwned">
+                                                            <span class="badge badge-info">Partner</span>
+                                                        </div>
+                                                        <div *ngIf="record.partnerOrOwned">
+                                                            <span class="badge badge-primary">Corporate Owned</span>
+                                                        </div>
+                                                    </span>
                                                 </div>
                                             </div>
                                         </div>
                                     </td>
-                                    <td style="width: 150px">
+                                    <td style="width: 100px">
                                         <span class="p-column-title">{{ l('Name') }}</span>
                                         {{ record.hubTypeName }}
                                     </td>
@@ -495,38 +503,27 @@
                                         <span class="p-column-title">{{ l('#Contact') }}</span>
                                         {{record.numberOfContacts | number:'1.0-0'}}
                                     </td>
+                                    <td style="width:90px; text-align: center;">
+                                        <span class="p-column-title">{{ l('#Jobs') }}</span>
+                                       50
+                                    </td>
+                                    <td style="width:90px; text-align: center;">
+                                        <span class="p-column-title">{{ l('#Gigs') }}</span>
+                                       20
+                                    </td>
                                     <!-- <td style="width:110px; text-align: center;">
                                         <span class="p-column-title">{{ l('#Contact Repo') }}</span>
                                         {{10000 | number:'1.0-0'}}
                                     </td> -->
-                                    <td style="width: 150px">
+                                    <td style="width: 100px">
                                         <span class="p-column-title">{{ l('Est. Population') }}</span>
                                         {{ record.estimatedPopulation }}
                                     </td>
-                                    <td style="width: 150px">
+                                    <td style="width: 100px">
                                         <span class="p-column-title">{{ l('YearlyRevenue') }}</span>
                                         {{ record.yearlyRevenue }}
                                     </td>
-                                    <td class="text-center" style="width:90px">
-                                        <div *ngIf="record.live">
-                                            <span class="badge badge-success">YES</span>
-                                        </div>
-                                        <div *ngIf="!record.live">
-                                            <span class="badge badge-danger">NO</span>
-                                        </div>
-                                    </td>
-
-                                    <td class="text-center" style="width:150px">
-                                        <div *ngIf="!record.partnerOrOwned">
-                                            <!-- <i class="fa fa-check-circle kt--font-success" title="True"></i> -->
-                                            <span class="badge badge-success">YES</span>
-                                        </div>
-                                        <div *ngIf="record.partnerOrOwned">
-                                            <!-- <i class="fa fa-times-circle" title="False"></i> -->
-                                            <span class="badge badge-danger">NO</span>
-                                        </div>
-                                    </td>
-                                    <td style="width:150px; text-align: center;">
+                                    <td style="width:100px; text-align: center;">
                                         <span class="p-column-title">{{ l('Sequence') }}</span>
                                         {{ record.displaySequence }}
                                     </td>

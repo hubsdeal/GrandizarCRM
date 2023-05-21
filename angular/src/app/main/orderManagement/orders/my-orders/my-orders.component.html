@@ -1,4 +1,4 @@
-﻿<div [@routerTransition]>
+<div [@routerTransition]>
     <sub-header [title]="'Master Order List' | localize" [description]="'OrdersHeaderInfo' | localize">
         <div role="actions">
             <!-- <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1">
@@ -8,7 +8,7 @@
 
             <button *ngIf="isGranted('Pages.Orders.Create')" (click)="createOrder()" class="btn btn-primary blue">
                 <i class="fa fa-plus"></i>
-                {{ l('Order') }}
+                {{ l('My Orders') }}
             </button>
         </div>
     </sub-header>

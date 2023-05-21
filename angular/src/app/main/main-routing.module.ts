@@ -8,6 +8,8 @@ import { MyEmployeesComponent } from './crm/employees/my-employees/my-employees.
 import { ProductLibrariesComponent } from './shop/products/product-libraries/product-libraries.component';
 import { TaskLibrariesComponent } from './taskManagement/task-libraries/task-libraries.component';
 import { MyTaskEventsComponent } from './taskManagement/taskEvents/my-task-events/my-task-events.component';
+import { MyOrdersComponent } from './orderManagement/orders/my-orders/my-orders.component';
+import { AbandonedCartComponent } from './orderManagement/orders/abandoned-cart/abandoned-cart.component';
 
 @NgModule({
     imports: [
@@ -152,6 +154,18 @@ import { MyTaskEventsComponent } from './taskManagement/taskEvents/my-task-event
                     {
                         path: 'orderManagement/orders',
                         loadChildren: () => import('./orderManagement/orders/order.module').then(m => m.OrderModule),
+                        data: { permission: 'Pages.Orders' }
+                    },
+
+                    {
+                        path: 'orderManagement/myOrders',
+                        component: MyOrdersComponent,
+                        data: { permission: 'Pages.Orders' }
+                    },
+
+                    {
+                        path: 'orderManagement/abandonedCart',
+                        component: AbandonedCartComponent,
                         data: { permission: 'Pages.Orders' }
                     },
                 
