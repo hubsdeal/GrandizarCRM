@@ -279,7 +279,16 @@
                     </div>
 
                     <div class="my-3">
-                        <label class="form-label" for="Hub_Description">{{ l('Description') }}</label>
+                        <label class="form-label" for="Hub_Description">
+                            <div class="d-flex align-items-end justify-content-between">
+                                <span class="required">About Hub</span>
+                                <button class="btn btn-sm btn-light-primary"
+                                    (click)="openAiModalPr('About Hub')">
+                                    <i class="fa-file-signature fas me-2"></i>
+                                    Generate about Hub
+                                </button>
+                            </div>
+                        </label>
                         <p-editor id="Description" name="Description" [(ngModel)]="hub.description" ngDefaultControl
                             [style]="{ height: '200px' }" placeholder="'Type here...'"></p-editor>
                     </div>

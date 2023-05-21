@@ -72,6 +72,7 @@ export class CreateOrEditHubModalComponent extends AppComponentBase implements O
     private _uploaderOptions: FileUploaderOptions = {};
 
     chatGPTPromt: string;
+    productShortDesc: string;
 
     constructor(
         injector: Injector,
@@ -320,4 +321,18 @@ export class CreateOrEditHubModalComponent extends AppComponentBase implements O
             console.error('Error:', error);
         }
     }
+
+    openAiModalPr(feildName: string): void {
+        this.productShortDesc = "Write a  short description for a hub where hub name is Newyork"
+        var modalTitle = "AI Text Generator - About Hub"
+        const dialogRef = this.dialog.open(ChatGptResponseModalComponent, {
+          data: { promtFromAnotherComponent: this.productShortDesc, feildName: feildName, modalTitle: modalTitle },
+          width: '1100px',
+        });
+    
+        dialogRef.afterClosed().subscribe(result => {
+          console.log(result)
+          this.hub.description = result.data;
+        });
+      }
 }
