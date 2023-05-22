@@ -27,6 +27,7 @@ import {MatDialogModule} from "@angular/material/dialog";
 import { EditorModule } from 'primeng/editor';
 import { InputTextModule } from 'primeng/inputtext';
 import { SidebarModule } from 'primeng/sidebar';
+import { SliderModule } from 'primeng/slider';
 
 const imports = [
     CommonModule,
@@ -55,7 +56,8 @@ const imports = [
     MatDialogModule,
     EditorModule,
     InputTextModule,
-    SidebarModule
+    SidebarModule,
+    SliderModule
 ];
 
 @NgModule({

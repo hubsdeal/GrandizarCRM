@@ -69,7 +69,7 @@ export class ProductDashboardComponent extends AppComponentBase {
   ) {
     super(injector);
     this.productPublishedOptions = [{ label: 'Draft', value: false }, { label: 'Published', value: true }];
-    this.productServiceOptions = [{ label: 'Not Service', value: false }, { label: 'Service Product', value: true }];
+    this.productServiceOptions = [{ label: 'Product', value: true }, { label: 'Service', value: false }];
   }
 
   ngOnInit(): void {
@@ -101,6 +101,9 @@ export class ProductDashboardComponent extends AppComponentBase {
       this.membershipPrice = result.membershipPrice;
       this.membershipName = result.membershipName;
       this.allProductAdditionalCategory = result.additionalCategories;
+      if(!result.product.isService){
+        this.product.isService = true;
+      }
     });
     console.log(this.product)
 

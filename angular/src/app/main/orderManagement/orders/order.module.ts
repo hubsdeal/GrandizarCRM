@@ -12,6 +12,9 @@ import { OrderOrderStatusLookupTableModalComponent } from './order-orderStatus-l
 import { OrderCurrencyLookupTableModalComponent } from './order-currency-lookup-table-modal.component';
 import { OrderStoreLookupTableModalComponent } from './order-store-lookup-table-modal.component';
 import { OrderOrderSalesChannelLookupTableModalComponent } from './order-orderSalesChannel-lookup-table-modal.component';
+import { OrderDashboardComponent } from './order-dashboard/order-dashboard.component';
+import { MyOrdersComponent } from './my-orders/my-orders.component';
+import { AbandonedCartComponent } from './abandoned-cart/abandoned-cart.component';
 
 @NgModule({
     declarations: [
@@ -26,6 +29,9 @@ import { OrderOrderSalesChannelLookupTableModalComponent } from './order-orderSa
         OrderCurrencyLookupTableModalComponent,
         OrderStoreLookupTableModalComponent,
         OrderOrderSalesChannelLookupTableModalComponent,
+        OrderDashboardComponent,
+        MyOrdersComponent,
+        AbandonedCartComponent,
     ],
     imports: [AppSharedModule, OrderRoutingModule, AdminSharedModule],
 })

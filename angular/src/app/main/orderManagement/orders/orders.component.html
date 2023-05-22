@@ -1,14 +1,14 @@
 ﻿<div [@routerTransition]>
-    <sub-header [title]="'Orders' | localize" [description]="'OrdersHeaderInfo' | localize">
+    <sub-header [title]="'Master Order List' | localize" [description]="'OrdersHeaderInfo' | localize">
         <div role="actions">
-            <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1">
+            <!-- <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1">
                 <i class="fa fa-file-excel"></i>
                 {{ l('ExportToExcel') }}
-            </button>
+            </button> -->
 
             <button *ngIf="isGranted('Pages.Orders.Create')" (click)="createOrder()" class="btn btn-primary blue">
                 <i class="fa fa-plus"></i>
-                {{ l('CreateNewOrder') }}
+                {{ l('Order') }}
             </button>
         </div>
     </sub-header>
@@ -22,15 +22,9 @@
                             <div class="col-xl-12">
                                 <div class="my-3">
                                     <div class="input-group mb-3">
-                                        <input
-                                            [(ngModel)]="filterText"
-                                            (ngModelChange)="getOrders()"
-                                            name="filterText"
-                                            autoFocus
-                                            type="text"
-                                            class="form-control"
-                                            [placeholder]="l('SearchWithThreeDot')"
-                                        />
+                                        <input [(ngModel)]="filterText" (ngModelChange)="getOrders()" name="filterText"
+                                            autoFocus type="text" class="form-control"
+                                            [placeholder]="l('SearchWithThreeDot')" />
                                         <button class="btn btn-primary" type="submit" (click)="getOrders()">
                                             <i class="flaticon-search-1"></i>
                                         </button>
@@ -43,118 +37,104 @@
 
                             <div class="col-md-3">
                                 <div class="my-3">
-                                    <label class="form-label" for="InvoiceNumberFilter">{{ l('InvoiceNumber') }}</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="InvoiceNumberFilter"
-                                        name="invoiceNumberFilter"
-                                        [(ngModel)]="invoiceNumberFilter"
-                                        (ngModelChange)="getOrders()"
-                                    />
+                                    <label class="form-label" for="InvoiceNumberFilter">{{ l('Invoice Number') }}</label>
+                                    <input type="text" class="form-control" id="InvoiceNumberFilter"
+                                        name="invoiceNumberFilter" [(ngModel)]="invoiceNumberFilter"
+                                        (ngModelChange)="getOrders()" />
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="my-3">
-                                    <label class="form-label" for="DeliveryOrPickupFilterSelect">
-                                        {{ l('DeliveryOrPickup') }}
+                                    <label class="form-label" for="FullNameFilter">{{ l('Full Name') }}</label>
+                                    <input type="text" class="form-control" id="FullNameFilter" name="fullNameFilter"
+                                        [(ngModel)]="fullNameFilter" (ngModelChange)="getOrders()" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="EmailFilter">{{ l('Email') }}</label>
+                                    <input type="text" class="form-control" id="EmailFilter" name="emailFilter"
+                                        [(ngModel)]="emailFilter" (ngModelChange)="getOrders()" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="CityFilter">{{ l('City') }}</label>
+                                    <input type="text" class="form-control" id="CityFilter" name="cityFilter"
+                                        [(ngModel)]="cityFilter" (ngModelChange)="getOrders()" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="ZipCodeFilter">{{ l('Zip Code') }}</label>
+                                    <input type="text" class="form-control" id="ZipCodeFilter" name="zipCodeFilter"
+                                        [(ngModel)]="zipCodeFilter" (ngModelChange)="getOrders()" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="StoreNameFilter">
+                                        Store
                                     </label>
-                                    <select
-                                        class="form-select"
-                                        name="DeliveryOrPickupFilter"
-                                        id="DeliveryOrPickupFilterSelect"
-                                        [(ngModel)]="deliveryOrPickupFilter"
-                                        (ngModelChange)="getOrders()"
-                                    >
+                                    <input type="text" class="form-control" id="StoreNameFilter" name="storeNameFilter"
+                                        [(ngModel)]="storeNameFilter" />
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="DeliveryOrPickupFilterSelect">
+                                        {{ l('Delivery or Pickup') }}
+                                    </label>
+                                    <select class="form-select" name="DeliveryOrPickupFilter"
+                                        id="DeliveryOrPickupFilterSelect" [(ngModel)]="deliveryOrPickupFilter"
+                                        (ngModelChange)="getOrders()">
                                         <option value="-1">{{ l('All') }}</option>
-                                        <option value="0">{{ l('False') }}</option>
-                                        <option value="1">{{ l('True') }}</option>
+                                        <option value="0">{{ l('Delivery') }}</option>
+                                        <option value="1">{{ l('Pickup') }}</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="PaymentCompletedFilterSelect">
-                                        {{ l('PaymentCompleted') }}
+                                        {{ l('Payment Completed') }}
                                     </label>
-                                    <select
-                                        class="form-select"
-                                        name="PaymentCompletedFilter"
-                                        id="PaymentCompletedFilterSelect"
-                                        [(ngModel)]="paymentCompletedFilter"
-                                        (ngModelChange)="getOrders()"
-                                    >
+                                    <select class="form-select" name="PaymentCompletedFilter"
+                                        id="PaymentCompletedFilterSelect" [(ngModel)]="paymentCompletedFilter"
+                                        (ngModelChange)="getOrders()">
                                         <option value="-1">{{ l('All') }}</option>
-                                        <option value="0">{{ l('False') }}</option>
-                                        <option value="1">{{ l('True') }}</option>
+                                        <option value="0">{{ l('No') }}</option>
+                                        <option value="1">{{ l('Yes') }}</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="my-3">
-                                    <label class="form-label" for="FullNameFilter">{{ l('FullName') }}</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="FullNameFilter"
-                                        name="fullNameFilter"
-                                        [(ngModel)]="fullNameFilter"
-                                        (ngModelChange)="getOrders()"
-                                    />
+                                    <label class="form-label" for="OrderStatusNameFilter">
+                                        Order Status
+                                    </label>
+                                    <input type="text" class="form-control" id="OrderStatusNameFilter"
+                                        name="orderStatusNameFilter" [(ngModel)]="orderStatusNameFilter" />
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            
+                            <!-- <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="DeliveryAddressFilter">
                                         {{ l('DeliveryAddress') }}
                                     </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="DeliveryAddressFilter"
-                                        name="deliveryAddressFilter"
-                                        [(ngModel)]="deliveryAddressFilter"
-                                        (ngModelChange)="getOrders()"
-                                    />
+                                    <input type="text" class="form-control" id="DeliveryAddressFilter"
+                                        name="deliveryAddressFilter" [(ngModel)]="deliveryAddressFilter"
+                                        (ngModelChange)="getOrders()" />
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <div class="my-3">
-                                    <label class="form-label" for="CityFilter">{{ l('City') }}</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="CityFilter"
-                                        name="cityFilter"
-                                        [(ngModel)]="cityFilter"
-                                        (ngModelChange)="getOrders()"
-                                    />
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="my-3">
-                                    <label class="form-label" for="ZipCodeFilter">{{ l('ZipCode') }}</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="ZipCodeFilter"
-                                        name="zipCodeFilter"
-                                        [(ngModel)]="zipCodeFilter"
-                                        (ngModelChange)="getOrders()"
-                                    />
-                                </div>
-                            </div>
+                            
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="NotesFilter">{{ l('Notes') }}</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="NotesFilter"
-                                        name="notesFilter"
-                                        [(ngModel)]="notesFilter"
-                                        (ngModelChange)="getOrders()"
-                                    />
+                                    <input type="text" class="form-control" id="NotesFilter" name="notesFilter"
+                                        [(ngModel)]="notesFilter" (ngModelChange)="getOrders()" />
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -163,23 +143,12 @@
                                         {{ l('MinMax') }} {{ l('DeliveryFee') }}
                                     </label>
                                     <div class="input-group">
-                                        <input
-                                            type="number"
-                                            class="form-control"
-                                            id="MinDeliveryFeeFilter"
-                                            [(ngModel)]="minDeliveryFeeFilter"
-                                            placeholder="{{ l('MinValue') }}"
-                                            name="minDeliveryFeeFilter"
-                                            (ngModelChange)="getOrders()"
-                                        />
-                                        <input
-                                            type="number"
-                                            class="form-control"
-                                            [(ngModel)]="maxDeliveryFeeFilter"
-                                            placeholder="{{ l('MaxValue') }}"
-                                            name="maxDeliveryFeeFilter"
-                                            (ngModelChange)="getOrders()"
-                                        />
+                                        <input type="number" class="form-control" id="MinDeliveryFeeFilter"
+                                            [(ngModel)]="minDeliveryFeeFilter" placeholder="{{ l('MinValue') }}"
+                                            name="minDeliveryFeeFilter" (ngModelChange)="getOrders()" />
+                                        <input type="number" class="form-control" [(ngModel)]="maxDeliveryFeeFilter"
+                                            placeholder="{{ l('MaxValue') }}" name="maxDeliveryFeeFilter"
+                                            (ngModelChange)="getOrders()" />
                                     </div>
                                 </div>
                             </div>
@@ -189,23 +158,12 @@
                                         {{ l('MinMax') }} {{ l('SubTotalExcludedTax') }}
                                     </label>
                                     <div class="input-group">
-                                        <input
-                                            type="number"
-                                            class="form-control"
-                                            id="MinSubTotalExcludedTaxFilter"
-                                            [(ngModel)]="minSubTotalExcludedTaxFilter"
-                                            placeholder="{{ l('MinValue') }}"
-                                            name="minSubTotalExcludedTaxFilter"
-                                            (ngModelChange)="getOrders()"
-                                        />
-                                        <input
-                                            type="number"
-                                            class="form-control"
-                                            [(ngModel)]="maxSubTotalExcludedTaxFilter"
-                                            placeholder="{{ l('MaxValue') }}"
-                                            name="maxSubTotalExcludedTaxFilter"
-                                            (ngModelChange)="getOrders()"
-                                        />
+                                        <input type="number" class="form-control" id="MinSubTotalExcludedTaxFilter"
+                                            [(ngModel)]="minSubTotalExcludedTaxFilter" placeholder="{{ l('MinValue') }}"
+                                            name="minSubTotalExcludedTaxFilter" (ngModelChange)="getOrders()" />
+                                        <input type="number" class="form-control"
+                                            [(ngModel)]="maxSubTotalExcludedTaxFilter" placeholder="{{ l('MaxValue') }}"
+                                            name="maxSubTotalExcludedTaxFilter" (ngModelChange)="getOrders()" />
                                     </div>
                                 </div>
                             </div>
@@ -215,23 +173,12 @@
                                         {{ l('MinMax') }} {{ l('TotalDiscountAmount') }}
                                     </label>
                                     <div class="input-group">
-                                        <input
-                                            type="number"
-                                            class="form-control"
-                                            id="MinTotalDiscountAmountFilter"
-                                            [(ngModel)]="minTotalDiscountAmountFilter"
-                                            placeholder="{{ l('MinValue') }}"
-                                            name="minTotalDiscountAmountFilter"
-                                            (ngModelChange)="getOrders()"
-                                        />
-                                        <input
-                                            type="number"
-                                            class="form-control"
-                                            [(ngModel)]="maxTotalDiscountAmountFilter"
-                                            placeholder="{{ l('MaxValue') }}"
-                                            name="maxTotalDiscountAmountFilter"
-                                            (ngModelChange)="getOrders()"
-                                        />
+                                        <input type="number" class="form-control" id="MinTotalDiscountAmountFilter"
+                                            [(ngModel)]="minTotalDiscountAmountFilter" placeholder="{{ l('MinValue') }}"
+                                            name="minTotalDiscountAmountFilter" (ngModelChange)="getOrders()" />
+                                        <input type="number" class="form-control"
+                                            [(ngModel)]="maxTotalDiscountAmountFilter" placeholder="{{ l('MaxValue') }}"
+                                            name="maxTotalDiscountAmountFilter" (ngModelChange)="getOrders()" />
                                     </div>
                                 </div>
                             </div>
@@ -241,23 +188,12 @@
                                         {{ l('MinMax') }} {{ l('TotalTaxAmount') }}
                                     </label>
                                     <div class="input-group">
-                                        <input
-                                            type="number"
-                                            class="form-control"
-                                            id="MinTotalTaxAmountFilter"
-                                            [(ngModel)]="minTotalTaxAmountFilter"
-                                            placeholder="{{ l('MinValue') }}"
-                                            name="minTotalTaxAmountFilter"
-                                            (ngModelChange)="getOrders()"
-                                        />
-                                        <input
-                                            type="number"
-                                            class="form-control"
-                                            [(ngModel)]="maxTotalTaxAmountFilter"
-                                            placeholder="{{ l('MaxValue') }}"
-                                            name="maxTotalTaxAmountFilter"
-                                            (ngModelChange)="getOrders()"
-                                        />
+                                        <input type="number" class="form-control" id="MinTotalTaxAmountFilter"
+                                            [(ngModel)]="minTotalTaxAmountFilter" placeholder="{{ l('MinValue') }}"
+                                            name="minTotalTaxAmountFilter" (ngModelChange)="getOrders()" />
+                                        <input type="number" class="form-control" [(ngModel)]="maxTotalTaxAmountFilter"
+                                            placeholder="{{ l('MaxValue') }}" name="maxTotalTaxAmountFilter"
+                                            (ngModelChange)="getOrders()" />
                                     </div>
                                 </div>
                             </div>
@@ -267,62 +203,30 @@
                                         {{ l('MinMax') }} {{ l('TotalAmount') }}
                                     </label>
                                     <div class="input-group">
-                                        <input
-                                            type="number"
-                                            class="form-control"
-                                            id="MinTotalAmountFilter"
-                                            [(ngModel)]="minTotalAmountFilter"
-                                            placeholder="{{ l('MinValue') }}"
-                                            name="minTotalAmountFilter"
-                                            (ngModelChange)="getOrders()"
-                                        />
-                                        <input
-                                            type="number"
-                                            class="form-control"
-                                            [(ngModel)]="maxTotalAmountFilter"
-                                            placeholder="{{ l('MaxValue') }}"
-                                            name="maxTotalAmountFilter"
-                                            (ngModelChange)="getOrders()"
-                                        />
+                                        <input type="number" class="form-control" id="MinTotalAmountFilter"
+                                            [(ngModel)]="minTotalAmountFilter" placeholder="{{ l('MinValue') }}"
+                                            name="minTotalAmountFilter" (ngModelChange)="getOrders()" />
+                                        <input type="number" class="form-control" [(ngModel)]="maxTotalAmountFilter"
+                                            placeholder="{{ l('MaxValue') }}" name="maxTotalAmountFilter"
+                                            (ngModelChange)="getOrders()" />
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <div class="my-3">
-                                    <label class="form-label" for="EmailFilter">{{ l('Email') }}</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="EmailFilter"
-                                        name="emailFilter"
-                                        [(ngModel)]="emailFilter"
-                                        (ngModelChange)="getOrders()"
-                                    />
-                                </div>
-                            </div>
+                            
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="MinDiscountAmountByCodeFilter">
                                         {{ l('MinMax') }} {{ l('DiscountAmountByCode') }}
                                     </label>
                                     <div class="input-group">
-                                        <input
-                                            type="number"
-                                            class="form-control"
-                                            id="MinDiscountAmountByCodeFilter"
+                                        <input type="number" class="form-control" id="MinDiscountAmountByCodeFilter"
                                             [(ngModel)]="minDiscountAmountByCodeFilter"
-                                            placeholder="{{ l('MinValue') }}"
-                                            name="minDiscountAmountByCodeFilter"
-                                            (ngModelChange)="getOrders()"
-                                        />
-                                        <input
-                                            type="number"
-                                            class="form-control"
+                                            placeholder="{{ l('MinValue') }}" name="minDiscountAmountByCodeFilter"
+                                            (ngModelChange)="getOrders()" />
+                                        <input type="number" class="form-control"
                                             [(ngModel)]="maxDiscountAmountByCodeFilter"
-                                            placeholder="{{ l('MaxValue') }}"
-                                            name="maxDiscountAmountByCodeFilter"
-                                            (ngModelChange)="getOrders()"
-                                        />
+                                            placeholder="{{ l('MaxValue') }}" name="maxDiscountAmountByCodeFilter"
+                                            (ngModelChange)="getOrders()" />
                                     </div>
                                 </div>
                             </div>
@@ -332,23 +236,12 @@
                                         {{ l('MinMax') }} {{ l('GratuityAmount') }}
                                     </label>
                                     <div class="input-group">
-                                        <input
-                                            type="number"
-                                            class="form-control"
-                                            id="MinGratuityAmountFilter"
-                                            [(ngModel)]="minGratuityAmountFilter"
-                                            placeholder="{{ l('MinValue') }}"
-                                            name="minGratuityAmountFilter"
-                                            (ngModelChange)="getOrders()"
-                                        />
-                                        <input
-                                            type="number"
-                                            class="form-control"
-                                            [(ngModel)]="maxGratuityAmountFilter"
-                                            placeholder="{{ l('MaxValue') }}"
-                                            name="maxGratuityAmountFilter"
-                                            (ngModelChange)="getOrders()"
-                                        />
+                                        <input type="number" class="form-control" id="MinGratuityAmountFilter"
+                                            [(ngModel)]="minGratuityAmountFilter" placeholder="{{ l('MinValue') }}"
+                                            name="minGratuityAmountFilter" (ngModelChange)="getOrders()" />
+                                        <input type="number" class="form-control" [(ngModel)]="maxGratuityAmountFilter"
+                                            placeholder="{{ l('MaxValue') }}" name="maxGratuityAmountFilter"
+                                            (ngModelChange)="getOrders()" />
                                     </div>
                                 </div>
                             </div>
@@ -358,23 +251,12 @@
                                         {{ l('MinMax') }} {{ l('GratuityPercentage') }}
                                     </label>
                                     <div class="input-group">
-                                        <input
-                                            type="number"
-                                            class="form-control"
-                                            id="MinGratuityPercentageFilter"
-                                            [(ngModel)]="minGratuityPercentageFilter"
-                                            placeholder="{{ l('MinValue') }}"
-                                            name="minGratuityPercentageFilter"
-                                            (ngModelChange)="getOrders()"
-                                        />
-                                        <input
-                                            type="number"
-                                            class="form-control"
-                                            [(ngModel)]="maxGratuityPercentageFilter"
-                                            placeholder="{{ l('MaxValue') }}"
-                                            name="maxGratuityPercentageFilter"
-                                            (ngModelChange)="getOrders()"
-                                        />
+                                        <input type="number" class="form-control" id="MinGratuityPercentageFilter"
+                                            [(ngModel)]="minGratuityPercentageFilter" placeholder="{{ l('MinValue') }}"
+                                            name="minGratuityPercentageFilter" (ngModelChange)="getOrders()" />
+                                        <input type="number" class="form-control"
+                                            [(ngModel)]="maxGratuityPercentageFilter" placeholder="{{ l('MaxValue') }}"
+                                            name="maxGratuityPercentageFilter" (ngModelChange)="getOrders()" />
                                     </div>
                                 </div>
                             </div>
@@ -384,23 +266,12 @@
                                         {{ l('MinMax') }} {{ l('ServiceCharge') }}
                                     </label>
                                     <div class="input-group">
-                                        <input
-                                            type="number"
-                                            class="form-control"
-                                            id="MinServiceChargeFilter"
-                                            [(ngModel)]="minServiceChargeFilter"
-                                            placeholder="{{ l('MinValue') }}"
-                                            name="minServiceChargeFilter"
-                                            (ngModelChange)="getOrders()"
-                                        />
-                                        <input
-                                            type="number"
-                                            class="form-control"
-                                            [(ngModel)]="maxServiceChargeFilter"
-                                            placeholder="{{ l('MaxValue') }}"
-                                            name="maxServiceChargeFilter"
-                                            (ngModelChange)="getOrders()"
-                                        />
+                                        <input type="number" class="form-control" id="MinServiceChargeFilter"
+                                            [(ngModel)]="minServiceChargeFilter" placeholder="{{ l('MinValue') }}"
+                                            name="minServiceChargeFilter" (ngModelChange)="getOrders()" />
+                                        <input type="number" class="form-control" [(ngModel)]="maxServiceChargeFilter"
+                                            placeholder="{{ l('MaxValue') }}" name="maxServiceChargeFilter"
+                                            (ngModelChange)="getOrders()" />
                                     </div>
                                 </div>
                             </div>
@@ -410,13 +281,8 @@
                                     <label class="form-label" for="StateNameFilter">
                                         ({{ l('State') }}) {{ l('Name') }}
                                     </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="StateNameFilter"
-                                        name="stateNameFilter"
-                                        [(ngModel)]="stateNameFilter"
-                                    />
+                                    <input type="text" class="form-control" id="StateNameFilter" name="stateNameFilter"
+                                        [(ngModel)]="stateNameFilter" />
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -424,13 +290,8 @@
                                     <label class="form-label" for="CountryNameFilter">
                                         ({{ l('Country') }}) {{ l('Name') }}
                                     </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="CountryNameFilter"
-                                        name="countryNameFilter"
-                                        [(ngModel)]="countryNameFilter"
-                                    />
+                                    <input type="text" class="form-control" id="CountryNameFilter"
+                                        name="countryNameFilter" [(ngModel)]="countryNameFilter" />
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -438,96 +299,46 @@
                                     <label class="form-label" for="ContactFullNameFilter">
                                         ({{ l('Contact') }}) {{ l('FullName') }}
                                     </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="ContactFullNameFilter"
-                                        name="contactFullNameFilter"
-                                        [(ngModel)]="contactFullNameFilter"
-                                    />
+                                    <input type="text" class="form-control" id="ContactFullNameFilter"
+                                        name="contactFullNameFilter" [(ngModel)]="contactFullNameFilter" />
                                 </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="my-3">
-                                    <label class="form-label" for="OrderStatusNameFilter">
-                                        ({{ l('OrderStatus') }}) {{ l('Name') }}
-                                    </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="OrderStatusNameFilter"
-                                        name="orderStatusNameFilter"
-                                        [(ngModel)]="orderStatusNameFilter"
-                                    />
-                                </div>
-                            </div>
-                            <div class="col-md-3">
+                            </div> -->
+                            
+                            <!-- <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="CurrencyNameFilter">
                                         ({{ l('Currency') }}) {{ l('Name') }}
                                     </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="CurrencyNameFilter"
-                                        name="currencyNameFilter"
-                                        [(ngModel)]="currencyNameFilter"
-                                    />
+                                    <input type="text" class="form-control" id="CurrencyNameFilter"
+                                        name="currencyNameFilter" [(ngModel)]="currencyNameFilter" />
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <div class="my-3">
-                                    <label class="form-label" for="StoreNameFilter">
-                                        ({{ l('Store') }}) {{ l('Name') }}
-                                    </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="StoreNameFilter"
-                                        name="storeNameFilter"
-                                        [(ngModel)]="storeNameFilter"
-                                    />
-                                </div>
-                            </div>
+                            
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="OrderSalesChannelNameFilter">
                                         ({{ l('OrderSalesChannel') }}) {{ l('Name') }}
                                     </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="OrderSalesChannelNameFilter"
-                                        name="orderSalesChannelNameFilter"
-                                        [(ngModel)]="orderSalesChannelNameFilter"
-                                    />
+                                    <input type="text" class="form-control" id="OrderSalesChannelNameFilter"
+                                        name="orderSalesChannelNameFilter" [(ngModel)]="orderSalesChannelNameFilter" />
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="col-md-12 mt-5">
-                                <button
-                                    (click)="resetFilters()"
-                                    class="btn btn-secondary btn-sm"
-                                    id="btn-reset-filters"
-                                >
+                                <button (click)="resetFilters()" class="btn btn-secondary btn-sm"
+                                    id="btn-reset-filters">
                                     Reset
                                 </button>
                             </div>
                         </div>
                         <div class="row my-4">
                             <div class="col-sm-12">
-                                <span
-                                    class="clickable-item text-muted"
-                                    *ngIf="!advancedFiltersAreShown"
-                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown"
-                                >
+                                <span class="clickable-item text-muted" *ngIf="!advancedFiltersAreShown"
+                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown">
                                     <i class="fa fa-angle-down"></i>
                                     {{ l('ShowAdvancedFilters') }}
                                 </span>
-                                <span
-                                    class="clickable-item text-muted"
-                                    *ngIf="advancedFiltersAreShown"
-                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown"
-                                >
+                                <span class="clickable-item text-muted" *ngIf="advancedFiltersAreShown"
+                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown">
                                     <i class="fa fa-angle-up"></i>
                                     {{ l('HideAdvancedFilters') }}
                                 </span>
@@ -539,27 +350,34 @@
                 <div class="row align-items-center">
                     <!--<Primeng-Datatable-Start>-->
                     <div class="primeng-datatable-container col-12" [busyIf]="primengTableHelper.isLoading">
-                        <p-table
-                            #dataTable
-                            (onLazyLoad)="getOrders($event)"
-                            [value]="primengTableHelper.records"
-                            rows="{{ primengTableHelper.defaultRecordsCountPerPage }}"
-                            [paginator]="false"
-                            [lazy]="true"
-                            [scrollable]="true"
-                            ScrollWidth="100%"
-                            [responsive]="primengTableHelper.isResponsive"
-                            [resizableColumns]="primengTableHelper.resizableColumns"
-                        >
+                        <p-table #dataTable (onLazyLoad)="getOrders($event)" [value]="primengTableHelper.records"
+                            rows="{{ primengTableHelper.defaultRecordsCountPerPage }}" [paginator]="false" [lazy]="true"
+                            [scrollable]="true" ScrollWidth="100%" [responsive]="primengTableHelper.isResponsive"
+                            [resizableColumns]="primengTableHelper.resizableColumns">
                             <ng-template pTemplate="header">
                                 <tr>
-                                    <th
-                                        style="width: 130px"
-                                        [hidden]="!isGrantedAny('Pages.Orders.Edit', 'Pages.Orders.Delete')"
-                                    >
-                                        {{ l('Actions') }}
+                                    <th style="width: 130px">
+                                        {{l('Order Number')}}
                                     </th>
-                                    <th style="width: 150px" pSortableColumn="stateFk.name">
+                                    <th style="width: 170px">
+                                        {{l('Customer')}}
+                                    </th>
+                                    <th style="width: 90px; text-align: center;">
+                                        {{l('#Item')}}
+                                    </th>
+                                    <th style="width: 150px; text-align: center;">
+                                        {{l('Total Amount')}}
+                                    </th>
+                                    <th style="width: 150px;">
+                                        {{l('Pickup/Delivery')}}
+                                    </th>
+
+                                    <th style="width: 150px;">
+                                        {{l('Order Status')}}
+                                    </th>
+
+                                    
+                                    <!-- <th style="width: 150px" pSortableColumn="stateFk.name">
                                         {{ l('Name') }}
                                         <p-sortIcon field="stateName"></p-sortIcon>
                                     </th>
@@ -658,55 +476,81 @@
                                     <th style="width: 150px" pSortableColumn="serviceCharge">
                                         {{ l('ServiceCharge') }}
                                         <p-sortIcon field="order.serviceCharge"></p-sortIcon>
+                                    </th> -->
+                                    <th style="width: 130px"
+                                        [hidden]="!isGrantedAny('Pages.Orders.Edit', 'Pages.Orders.Delete')">
+                                        {{ l('Actions') }}
                                     </th>
                                 </tr>
                             </ng-template>
                             <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
                                 <tr>
-                                    <td
-                                        style="width: 130px"
-                                        [hidden]="!isGrantedAny('Pages.Orders.Edit', 'Pages.Orders.Delete')"
-                                    >
-                                        <div class="btn-group dropdown" dropdown container="body">
-                                            <button class="dropdown-toggle btn btn-sm btn-primary" dropdownToggle>
-                                                <i class="fa fa-cog"></i>
-                                                <span class="caret"></span>
-                                                {{ l('Actions') }}
+                                    <td style="width: 130px">
+                                        <span class="p-column-title">{{ l('InvoiceNumber') }}</span>
+                                        <div class="d-flex flex-column flex-grow-1 my-lg-0 my-2 pe-3">
+                                            <a href="javascript:;" title=" {{  record.order.invoiceNumber  }}"
+                                                [routerLink]="['/app/main/orderManagement/orders/dashboard',record.order.id]"
+                                                class="fs-5 text-gray-800 text-hover-primary fw-bold">
+                                                {{ record.order.invoiceNumber }}
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <td style="width: 170px;">
+                                        <div class="d-flex flex-column flex-grow-1 my-lg-0 my-2 pe-3">
+                                            <a href="javascript:;" title=" {{ record.order.fullName }}"
+                                                [routerLink]="['/app/main/orderManagement/orders/dashboard',record.order.id]"
+                                                class="fs-5 text-gray-800 text-hover-primary fw-bold">
+                                                {{ record.order.fullName }}
+                                            </a>
+                                            <span class="text-gray-400 fw-semibold fs-7 my-0">
+                                                <i class="fas fa-map-location mr-1"></i>
+                                                Dhaka, Bangladesh
+                                            </span>
+                                            <span class="text-gray-400 fw-semibold fs-7 my-0">
+                                                <i class="fas fa-phone-alt mr-1"></i>
+                                                +880 17772212192
+                                            </span>
+                                        </div>
+                                    </td>
+                                    <td style="width: 90px; text-align: center;" title="Number of Items">
+                                        <span class="ui-column-title"> {{l('items')}}</span>
+                                        <a href="javascript:;" class="fw-semibold text-gray-400">
+                                            5
+                                        </a>
+                                    </td>
+                                    <td style="width:150px; text-align: center;">
+                                        <div *ngIf="record.order.paymentCompleted">
+                                            <button class="btn btn-success btn-sm ">
+                                                Paid <span class="badge badge-circle badge-primary ms-2">${{record.order.totalAmount}}</span>
                                             </button>
-                                            <ul class="dropdown-menu" *dropdownMenu>
-                                                <li>
-                                                    <a
-                                                        href="javascript:;"
-                                                        class="dropdown-item"
-                                                        (click)="viewOrderModal.show(record)"
-                                                    >
-                                                        {{ l('View') }}
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a
-                                                        href="javascript:;"
-                                                        *ngIf="permission.isGranted('Pages.Orders.Edit')"
-                                                        class="dropdown-item"
-                                                        (click)="createOrEditOrderModal.show(record.order.id)"
-                                                    >
-                                                        {{ l('Edit') }}
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a
-                                                        class="dropdown-item"
-                                                        href="javascript:;"
-                                                        *ngIf="permission.isGranted('Pages.Orders.Delete')"
-                                                        (click)="deleteOrder(record.order)"
-                                                    >
-                                                        {{ l('Delete') }}
-                                                    </a>
-                                                </li>
-                                            </ul>
+                                        </div>
+                                        <div *ngIf="!record.order.paymentCompleted">
+                                            <button class="btn btn-danger btn-sm ">
+                                                Unpaid <span class="badge badge-circle badge-warning ms-2">${{record.order.totalAmount}}</span>
+                                            </button>
+                                        </div>
+                                    </td>
+
+                                    <td style="width:150px">
+                                        <div *ngIf="!record.order.deliveryOrPickup">
+                                            <span class="badge badge-primary badge-lg">Pickup</span>
+                                        </div>
+                                        <div *ngIf="record.order.deliveryOrPickup">
+                                            <span class="badge badge-info badge-lg">Delivery</span>
                                         </div>
                                     </td>
                                     <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Name') }}</span>
+                                        <span class="badge badge-primary badge-lg" *ngIf=" record.orderStatusName ">
+                                            {{ record.orderStatusName }}
+                                        </span>
+                                    </td>
+
+
+
+
+
+                                    <!-- <td style="width: 150px">
                                         <span class="p-column-title">{{ l('Name') }}</span>
                                         {{ record.stateName }}
                                     </td>
@@ -717,12 +561,9 @@
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('FullName') }}</span>
                                         {{ record.contactFullName }}
-                                    </td>
-                                    <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('Name') }}</span>
-                                        {{ record.orderStatusName }}
-                                    </td>
-                                    <td style="width: 150px">
+                                    </td> -->
+                                    
+                                    <!-- <td style="width: 150px">
                                         <span class="p-column-title">{{ l('Name') }}</span>
                                         {{ record.currencyName }}
                                     </td>
@@ -734,10 +575,7 @@
                                         <span class="p-column-title">{{ l('Name') }}</span>
                                         {{ record.orderSalesChannelName }}
                                     </td>
-                                    <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('InvoiceNumber') }}</span>
-                                        {{ record.order.invoiceNumber }}
-                                    </td>
+                                    
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('DeliveryOrPickup') }}</span>
                                         <div *ngIf="record.order.deliveryOrPickup" class="text-center">
@@ -815,6 +653,33 @@
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('ServiceCharge') }}</span>
                                         {{ record.order.serviceCharge }}
+                                    </td> -->
+                                    <td style="width: 130px"
+                                        [hidden]="!isGrantedAny('Pages.Orders.Edit', 'Pages.Orders.Delete')">
+                                        <div class="btn-group dropdown" dropdown container="body">
+                                            <button class="dropdown-toggle btn btn-sm btn-primary" dropdownToggle>
+                                                <i class="fa fa-cog"></i>
+                                                <span class="caret"></span>
+                                                {{ l('Actions') }}
+                                            </button>
+                                            <ul class="dropdown-menu" *dropdownMenu>
+                                                <li>
+                                                    <a href="javascript:;"
+                                                        *ngIf="permission.isGranted('Pages.Orders.Edit')"
+                                                        class="dropdown-item"
+                                                        (click)="createOrEditOrderModal.show(record.order.id)">
+                                                        {{ l('Edit') }}
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="javascript:;"
+                                                        *ngIf="permission.isGranted('Pages.Orders.Delete')"
+                                                        (click)="deleteOrder(record.order)">
+                                                        {{ l('Delete') }}
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </td>
                                 </tr>
                             </ng-template>
@@ -823,17 +688,12 @@
                             {{ l('NoData') }}
                         </div>
                         <div class="primeng-paging-container">
-                            <p-paginator
-                                [rows]="primengTableHelper.defaultRecordsCountPerPage"
-                                #paginator
-                                (onPageChange)="getOrders($event)"
-                                [totalRecords]="primengTableHelper.totalRecordsCount"
+                            <p-paginator [rows]="primengTableHelper.defaultRecordsCountPerPage" #paginator
+                                (onPageChange)="getOrders($event)" [totalRecords]="primengTableHelper.totalRecordsCount"
                                 [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
-                                [showCurrentPageReport]="true"
-                                [currentPageReportTemplate]="
+                                [showCurrentPageReport]="true" [currentPageReportTemplate]="
                                     'TotalRecordsCount' | localize : primengTableHelper.totalRecordsCount
-                                "
-                            ></p-paginator>
+                                "></p-paginator>
                         </div>
                     </div>
                     <!--<Primeng-Datatable-End>-->

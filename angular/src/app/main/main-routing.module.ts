@@ -5,6 +5,11 @@ import { MyHubListComponent } from './territory/hubs/my-hub-list/my-hub-list.com
 import { MyStoresComponent } from './shop/stores/my-stores/my-stores.component';
 import { components } from '@metronic/app/kt';
 import { MyEmployeesComponent } from './crm/employees/my-employees/my-employees.component';
+import { ProductLibrariesComponent } from './shop/products/product-libraries/product-libraries.component';
+import { TaskLibrariesComponent } from './taskManagement/task-libraries/task-libraries.component';
+import { MyTaskEventsComponent } from './taskManagement/taskEvents/my-task-events/my-task-events.component';
+import { MyOrdersComponent } from './orderManagement/orders/my-orders/my-orders.component';
+import { AbandonedCartComponent } from './orderManagement/orders/abandoned-cart/abandoned-cart.component';
 
 @NgModule({
     imports: [
@@ -149,6 +154,18 @@ import { MyEmployeesComponent } from './crm/employees/my-employees/my-employees.
                     {
                         path: 'orderManagement/orders',
                         loadChildren: () => import('./orderManagement/orders/order.module').then(m => m.OrderModule),
+                        data: { permission: 'Pages.Orders' }
+                    },
+
+                    {
+                        path: 'orderManagement/myOrders',
+                        component: MyOrdersComponent,
+                        data: { permission: 'Pages.Orders' }
+                    },
+
+                    {
+                        path: 'orderManagement/abandonedCart',
+                        component: AbandonedCartComponent,
                         data: { permission: 'Pages.Orders' }
                     },
                 
@@ -711,6 +728,18 @@ import { MyEmployeesComponent } from './crm/employees/my-employees/my-employees.
                         loadChildren: () => import('./taskManagement/taskEvents/taskEvent.module').then(m => m.TaskEventModule),
                         data: { permission: 'Pages.TaskEvents' }
                     },
+
+                    {
+                        path: 'taskManagement/myTaskEvents',
+                        component: MyTaskEventsComponent,
+                        data: { permission: 'Pages.TaskEvents' }
+                    },
+
+                    {
+                        path: 'taskManagement/taskLibrary',
+                        data: { permission: 'Pages.TaskEvents' },
+                        component: TaskLibrariesComponent,
+                    },
                 
                     
                     {
@@ -800,7 +829,12 @@ import { MyEmployeesComponent } from './crm/employees/my-employees/my-employees.
                         loadChildren: () => import('./shop/products/product.module').then(m => m.ProductModule),
                         data: { permission: 'Pages.Products' }
                     },
-                
+                    
+                    {
+                        path: 'shop/productLibraries',
+                        data: { permission: 'Pages.Products' },
+                        component: ProductLibrariesComponent,
+                    },
                     
                     {
                         path: 'shop/productCategories',

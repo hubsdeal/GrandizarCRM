@@ -189,7 +189,7 @@
                             <ul class="nav mt-5 nav-tabs nav-line-tabs nav-line-tabs-2x mb-0 fs-5">
                                 <li class="nav-item">
                                     <a class="nav-link active" data-bs-toggle="tab" href="#product_editor">
-                                        <i class="fas fa-edit"></i> Basic Product Editor
+                                        <i class="fas fa-edit"></i> Product Editor
                                     </a>
                                 </li>
 
@@ -245,7 +245,7 @@
                                                 <div class="fv-row mb-7 fv-plugins-icon-container select_button_custom">
                                                     <p-selectButton [options]="productServiceOptions"
                                                         name="productServiceOptions" id="productServiceOptions"
-                                                        [(ngModel)]="selectBTN" optionLabel="label"
+                                                        [(ngModel)]="product.isService" optionLabel="label"
                                                         optionValue="value"></p-selectButton>
                                                 </div>
                                                 <!--end::Input group-->
@@ -331,7 +331,7 @@
                                                     <div class="col">
                                                         <div class="fv-row mb-7">
                                                             <label class="fs-6 fw-semibold form-label mt-3">
-                                                                <span class="required">Product Manufacturer SKU Code
+                                                                <span class="required">Manufacturer SKU Code
                                                                 </span>
                                                             </label>
                                                             <input type="text" class="form-control form-control-solid"

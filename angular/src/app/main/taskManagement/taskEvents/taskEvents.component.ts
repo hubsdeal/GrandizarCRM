@@ -49,6 +49,15 @@ export class TaskEventsComponent extends AppComponentBase {
     hourAndMinutesFilter = '';
     taskStatusNameFilter = '';
 
+    selectedTeam:any;
+    allTeams:any[]=[{id:1,displayName:"Team 1"},{id:2,displayName:"Team 2"},{id:3,displayName:"Team 3"}]
+
+    selectedTag:any;
+    allTags:any[]=[{id:1,displayName:"Tag 1"},{id:2,displayName:"Tag 2"},{id:3,displayName:"Tag 3"}]
+
+    value: number = 50;
+
+    selectedAll: boolean = false;
     constructor(
         injector: Injector,
         private _taskEventsServiceProxy: TaskEventsServiceProxy,
@@ -179,5 +188,17 @@ export class TaskEventsComponent extends AppComponentBase {
         this.taskStatusNameFilter = '';
 
         this.getTaskEvents();
+    }
+
+    onChangesSelectAll() {
+        for (var i = 0; i < this.primengTableHelper.records.length; i++) {
+            this.primengTableHelper.records[i].selected = this.selectedAll;
+        }
+    }
+
+    checkIfAllSelected() {
+        this.selectedAll = this.primengTableHelper.records.every(function (item: any) {
+            return item.selected == true;
+        })
     }
 }

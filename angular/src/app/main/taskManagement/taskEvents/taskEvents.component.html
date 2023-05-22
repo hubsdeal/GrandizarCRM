@@ -1,18 +1,15 @@
 ﻿<div [@routerTransition]>
-    <sub-header [title]="'TaskEvents' | localize" [description]="'TaskEventsHeaderInfo' | localize">
+    <sub-header [title]="'TaskEvents' | localize" [description]="">
         <div role="actions">
-            <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1">
+            <!-- <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1">
                 <i class="fa fa-file-excel"></i>
                 {{ l('ExportToExcel') }}
-            </button>
+            </button> -->
 
-            <button
-                *ngIf="isGranted('Pages.TaskEvents.Create')"
-                (click)="createTaskEvent()"
-                class="btn btn-primary blue"
-            >
+            <button *ngIf="isGranted('Pages.TaskEvents.Create')" (click)="createTaskEvent()"
+                class="btn btn-primary blue">
                 <i class="fa fa-plus"></i>
-                {{ l('CreateNewTaskEvent') }}
+                {{ l('Task Event') }}
             </button>
         </div>
     </sub-header>
@@ -26,15 +23,9 @@
                             <div class="col-xl-12">
                                 <div class="my-3">
                                     <div class="input-group mb-3">
-                                        <input
-                                            [(ngModel)]="filterText"
-                                            (ngModelChange)="getTaskEvents()"
-                                            name="filterText"
-                                            autoFocus
-                                            type="text"
-                                            class="form-control"
-                                            [placeholder]="l('SearchWithThreeDot')"
-                                        />
+                                        <input [(ngModel)]="filterText" (ngModelChange)="getTaskEvents()"
+                                            name="filterText" autoFocus type="text" class="form-control"
+                                            [placeholder]="l('SearchWithThreeDot')" />
                                         <button class="btn btn-primary" type="submit" (click)="getTaskEvents()">
                                             <i class="flaticon-search-1"></i>
                                         </button>
@@ -47,126 +38,94 @@
 
                             <div class="col-md-3">
                                 <div class="my-3">
-                                    <label class="form-label" for="NameFilter">{{ l('Name') }}</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="NameFilter"
-                                        name="nameFilter"
-                                        [(ngModel)]="nameFilter"
-                                        (ngModelChange)="getTaskEvents()"
-                                    />
+                                    <label class="form-label" for="NameFilter">{{ l('Task Title') }}</label>
+                                    <input type="text" class="form-control" id="NameFilter" name="nameFilter"
+                                        [(ngModel)]="nameFilter" (ngModelChange)="getTaskEvents()" />
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <!-- <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="DescriptionFilter">{{ l('Description') }}</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="DescriptionFilter"
-                                        name="descriptionFilter"
-                                        [(ngModel)]="descriptionFilter"
-                                        (ngModelChange)="getTaskEvents()"
-                                    />
+                                    <input type="text" class="form-control" id="DescriptionFilter"
+                                        name="descriptionFilter" [(ngModel)]="descriptionFilter"
+                                        (ngModelChange)="getTaskEvents()" />
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="StatusFilterSelect">{{ l('Status') }}</label>
-                                    <select
-                                        class="form-select"
-                                        name="StatusFilter"
-                                        id="StatusFilterSelect"
-                                        [(ngModel)]="statusFilter"
-                                        (ngModelChange)="getTaskEvents()"
-                                    >
+                                    <select class="form-select" name="StatusFilter" id="StatusFilterSelect"
+                                        [(ngModel)]="statusFilter" (ngModelChange)="getTaskEvents()">
                                         <option value="-1">{{ l('All') }}</option>
-                                        <option value="0">{{ l('False') }}</option>
-                                        <option value="1">{{ l('True') }}</option>
+                                        <option value="0">{{ l('Open') }}</option>
+                                        <option value="1">{{ l('Completed') }}</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="PriorityFilterSelect">{{ l('Priority') }}</label>
-                                    <select
-                                        class="form-select"
-                                        name="PriorityFilter"
-                                        id="PriorityFilterSelect"
-                                        [(ngModel)]="priorityFilter"
-                                        (ngModelChange)="getTaskEvents()"
-                                    >
+                                    <select class="form-select" name="PriorityFilter" id="PriorityFilterSelect"
+                                        [(ngModel)]="priorityFilter" (ngModelChange)="getTaskEvents()">
                                         <option value="-1">{{ l('All') }}</option>
-                                        <option value="0">{{ l('False') }}</option>
-                                        <option value="1">{{ l('True') }}</option>
+                                        <option value="0">{{ l('Low') }}</option>
+                                        <option value="1">{{ l('High') }}</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="my-3">
-                                    <label class="form-label" for="MinEventDateFilter">{{ l('EventDateRange') }}</label>
+                                    <label class="form-label" for="MinEventDateFilter">{{ l('Date Range') }}</label>
                                     <div class="input-group">
-                                        <input
-                                            class="form-control m-input"
-                                            id="MinEventDateFilter"
-                                            name="MinEventDateFilter"
-                                            type="datetime"
-                                            bsDatepicker
-                                            placeholder="{{ l('MinValue') }}"
-                                            [(ngModel)]="minEventDateFilter"
-                                            (ngModelChange)="getTaskEvents()"
-                                        />
+                                        <input class="form-control m-input" id="MinEventDateFilter"
+                                            name="MinEventDateFilter" type="datetime" bsDatepicker
+                                            placeholder="{{ l('Start Date') }}" [(ngModel)]="minEventDateFilter"
+                                            (ngModelChange)="getTaskEvents()" />
                                         <span style="line-height: 40px; padding: 0 15px 0 15px">&mdash;</span>
-                                        <input
-                                            class="form-control m-input"
-                                            id="MaxEventDateFilter"
-                                            name="MaxEventDateFilter"
-                                            type="datetime"
-                                            bsDatepicker
-                                            placeholder="{{ l('MaxValue') }}"
-                                            [(ngModel)]="maxEventDateFilter"
-                                            (ngModelChange)="getTaskEvents()"
-                                        />
+                                        <input class="form-control m-input" id="MaxEventDateFilter"
+                                            name="MaxEventDateFilter" type="datetime" bsDatepicker
+                                            placeholder="{{ l('End Date') }}" [(ngModel)]="maxEventDateFilter"
+                                            (ngModelChange)="getTaskEvents()" />
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-3">
+                                <div class="my-3 p_filter">
+                                    <label class="form-label" for="team">{{ l('Team') }}</label>
+                                    <p-dropdown [options]="allTeams" [filter]="true" [virtualScroll]="true"
+                                        placeholder="Select Team" [itemSize]="30" name="displayName"
+                                        optionLabel="displayName" optionId="id" [(ngModel)]="selectedTeam"
+                                        filterBy="displayName" [style]="{ width: '100%' }"></p-dropdown>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3 p_filter">
+                                    <label class="form-label" for="team">{{ l('Tag') }}</label>
+                                    <p-dropdown [options]="allTags" [filter]="true" [virtualScroll]="true"
+                                        placeholder="Select Tag" [itemSize]="30" name="displayName"
+                                        optionLabel="displayName" optionId="id" [(ngModel)]="selectedTag"
+                                        filterBy="displayName" [style]="{ width: '100%' }"></p-dropdown>
+                                </div>
+                            </div>
+                            <!-- <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="StartTimeFilter">{{ l('StartTime') }}</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="StartTimeFilter"
-                                        name="startTimeFilter"
-                                        [(ngModel)]="startTimeFilter"
-                                        (ngModelChange)="getTaskEvents()"
-                                    />
+                                    <input type="text" class="form-control" id="StartTimeFilter" name="startTimeFilter"
+                                        [(ngModel)]="startTimeFilter" (ngModelChange)="getTaskEvents()" />
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="EndTimeFilter">{{ l('EndTime') }}</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="EndTimeFilter"
-                                        name="endTimeFilter"
-                                        [(ngModel)]="endTimeFilter"
-                                        (ngModelChange)="getTaskEvents()"
-                                    />
+                                    <input type="text" class="form-control" id="EndTimeFilter" name="endTimeFilter"
+                                        [(ngModel)]="endTimeFilter" (ngModelChange)="getTaskEvents()" />
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="TemplateFilterSelect">{{ l('Template') }}</label>
-                                    <select
-                                        class="form-select"
-                                        name="TemplateFilter"
-                                        id="TemplateFilterSelect"
-                                        [(ngModel)]="templateFilter"
-                                        (ngModelChange)="getTaskEvents()"
-                                    >
+                                    <select class="form-select" name="TemplateFilter" id="TemplateFilterSelect"
+                                        [(ngModel)]="templateFilter" (ngModelChange)="getTaskEvents()">
                                         <option value="-1">{{ l('All') }}</option>
                                         <option value="0">{{ l('False') }}</option>
                                         <option value="1">{{ l('True') }}</option>
@@ -176,55 +135,33 @@
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="ActualTimeFilter">{{ l('ActualTime') }}</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="ActualTimeFilter"
-                                        name="actualTimeFilter"
-                                        [(ngModel)]="actualTimeFilter"
-                                        (ngModelChange)="getTaskEvents()"
-                                    />
+                                    <input type="text" class="form-control" id="ActualTimeFilter"
+                                        name="actualTimeFilter" [(ngModel)]="actualTimeFilter"
+                                        (ngModelChange)="getTaskEvents()" />
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="MinEndDateFilter">{{ l('EndDateRange') }}</label>
                                     <div class="input-group">
-                                        <input
-                                            class="form-control m-input"
-                                            id="MinEndDateFilter"
-                                            name="MinEndDateFilter"
-                                            type="datetime"
-                                            bsDatepicker
-                                            placeholder="{{ l('MinValue') }}"
-                                            [(ngModel)]="minEndDateFilter"
-                                            (ngModelChange)="getTaskEvents()"
-                                        />
+                                        <input class="form-control m-input" id="MinEndDateFilter"
+                                            name="MinEndDateFilter" type="datetime" bsDatepicker
+                                            placeholder="{{ l('MinValue') }}" [(ngModel)]="minEndDateFilter"
+                                            (ngModelChange)="getTaskEvents()" />
                                         <span style="line-height: 40px; padding: 0 15px 0 15px">&mdash;</span>
-                                        <input
-                                            class="form-control m-input"
-                                            id="MaxEndDateFilter"
-                                            name="MaxEndDateFilter"
-                                            type="datetime"
-                                            bsDatepicker
-                                            placeholder="{{ l('MaxValue') }}"
-                                            [(ngModel)]="maxEndDateFilter"
-                                            (ngModelChange)="getTaskEvents()"
-                                        />
+                                        <input class="form-control m-input" id="MaxEndDateFilter"
+                                            name="MaxEndDateFilter" type="datetime" bsDatepicker
+                                            placeholder="{{ l('MaxValue') }}" [(ngModel)]="maxEndDateFilter"
+                                            (ngModelChange)="getTaskEvents()" />
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="EstimatedTimeFilter">{{ l('EstimatedTime') }}</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="EstimatedTimeFilter"
-                                        name="estimatedTimeFilter"
-                                        [(ngModel)]="estimatedTimeFilter"
-                                        (ngModelChange)="getTaskEvents()"
-                                    />
+                                    <input type="text" class="form-control" id="EstimatedTimeFilter"
+                                        name="estimatedTimeFilter" [(ngModel)]="estimatedTimeFilter"
+                                        (ngModelChange)="getTaskEvents()" />
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -232,14 +169,9 @@
                                     <label class="form-label" for="HourAndMinutesFilter">
                                         {{ l('HourAndMinutes') }}
                                     </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="HourAndMinutesFilter"
-                                        name="hourAndMinutesFilter"
-                                        [(ngModel)]="hourAndMinutesFilter"
-                                        (ngModelChange)="getTaskEvents()"
-                                    />
+                                    <input type="text" class="form-control" id="HourAndMinutesFilter"
+                                        name="hourAndMinutesFilter" [(ngModel)]="hourAndMinutesFilter"
+                                        (ngModelChange)="getTaskEvents()" />
                                 </div>
                             </div>
 
@@ -248,40 +180,26 @@
                                     <label class="form-label" for="TaskStatusNameFilter">
                                         ({{ l('TaskStatus') }}) {{ l('Name') }}
                                     </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="TaskStatusNameFilter"
-                                        name="taskStatusNameFilter"
-                                        [(ngModel)]="taskStatusNameFilter"
-                                    />
+                                    <input type="text" class="form-control" id="TaskStatusNameFilter"
+                                        name="taskStatusNameFilter" [(ngModel)]="taskStatusNameFilter" />
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="col-md-12 mt-5">
-                                <button
-                                    (click)="resetFilters()"
-                                    class="btn btn-secondary btn-sm"
-                                    id="btn-reset-filters"
-                                >
+                                <button (click)="resetFilters()" class="btn btn-secondary btn-sm"
+                                    id="btn-reset-filters">
                                     Reset
                                 </button>
                             </div>
                         </div>
                         <div class="row my-4">
                             <div class="col-sm-12">
-                                <span
-                                    class="clickable-item text-muted"
-                                    *ngIf="!advancedFiltersAreShown"
-                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown"
-                                >
+                                <span class="clickable-item text-muted" *ngIf="!advancedFiltersAreShown"
+                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown">
                                     <i class="fa fa-angle-down"></i>
                                     {{ l('ShowAdvancedFilters') }}
                                 </span>
-                                <span
-                                    class="clickable-item text-muted"
-                                    *ngIf="advancedFiltersAreShown"
-                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown"
-                                >
+                                <span class="clickable-item text-muted" *ngIf="advancedFiltersAreShown"
+                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown">
                                     <i class="fa fa-angle-up"></i>
                                     {{ l('HideAdvancedFilters') }}
                                 </span>
@@ -293,31 +211,51 @@
                 <div class="row align-items-center">
                     <!--<Primeng-Datatable-Start>-->
                     <div class="primeng-datatable-container col-12" [busyIf]="primengTableHelper.isLoading">
-                        <p-table
-                            #dataTable
-                            (onLazyLoad)="getTaskEvents($event)"
-                            [value]="primengTableHelper.records"
-                            rows="{{ primengTableHelper.defaultRecordsCountPerPage }}"
-                            [paginator]="false"
-                            [lazy]="true"
-                            [scrollable]="true"
-                            ScrollWidth="100%"
-                            [responsive]="primengTableHelper.isResponsive"
-                            [resizableColumns]="primengTableHelper.resizableColumns"
-                        >
+                        <p-table #dataTable (onLazyLoad)="getTaskEvents($event)" [value]="primengTableHelper.records"
+                            rows="{{ primengTableHelper.defaultRecordsCountPerPage }}" [paginator]="false" [lazy]="true"
+                            [scrollable]="true" ScrollWidth="100%" [responsive]="primengTableHelper.isResponsive"
+                            [resizableColumns]="primengTableHelper.resizableColumns">
                             <ng-template pTemplate="header">
                                 <tr>
-                                    <th
-                                        style="width: 130px"
-                                        [hidden]="!isGrantedAny('Pages.TaskEvents.Edit', 'Pages.TaskEvents.Delete')"
-                                    >
-                                        {{ l('Actions') }}
+                                    <th style="width:30px; text-align: center;">
+                                        <label
+                                            class="form-check form-check-custom form-check-inline form-check-solid is-invalid">
+                                            <input class="form-check-input" (change)="onChangesSelectAll()"
+                                                [(ngModel)]="selectedAll" type="checkbox">
+                                            <span class="fw-semibold ps-2 fs-6">
+                                            </span>
+                                        </label>
                                     </th>
-                                    <th style="width: 150px" pSortableColumn="taskStatusFk.name">
-                                        {{ l('Name') }}
-                                        <p-sortIcon field="taskStatusName"></p-sortIcon>
+                                    <th style="width: 250px">
+                                        {{ l('Task Title') }}
                                     </th>
-                                    <th style="width: 150px" pSortableColumn="name">
+                                    <th style="width: 180px;">
+                                        {{l('Start Date & Time')}}
+                                    </th>
+                                    <th style="width: 180px;">
+                                        {{l('End Date & Time')}}
+                                    </th>
+                                    <th style="width: 150px; text-align: center;">
+                                        {{l('Est. Hour')}}
+                                    </th>
+                                    <th style="width: 150px; text-align: center;">
+                                        {{l('Actual Hour')}}
+                                    </th>
+                                    <th style="width: 180px; text-align: center;">
+                                        {{l('Team')}}
+                                    </th>
+                                    <th style="width: 180px; text-align: center;">
+                                        {{l('Completion Status')}}
+                                    </th>
+                                    <th class="text-center" style="width: 130px">
+                                        {{l('Status')}}
+                                    </th>
+                                    <th class="text-center" style="width: 130px">
+                                        {{l('Priority')}}
+                                    </th>
+
+
+                                    <!-- <th style="width: 150px" pSortableColumn="name">
                                         {{ l('Name') }}
                                         <p-sortIcon field="taskEvent.name"></p-sortIcon>
                                     </th>
@@ -364,61 +302,115 @@
                                     <th style="width: 150px" pSortableColumn="hourAndMinutes">
                                         {{ l('HourAndMinutes') }}
                                         <p-sortIcon field="taskEvent.hourAndMinutes"></p-sortIcon>
+                                    </th> -->
+                                    <th style="width: 130px"
+                                        [hidden]="!isGrantedAny('Pages.TaskEvents.Edit', 'Pages.TaskEvents.Delete')">
+                                        {{ l('Actions') }}
                                     </th>
                                 </tr>
                             </ng-template>
                             <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
                                 <tr>
-                                    <td
-                                        style="width: 130px"
-                                        [hidden]="!isGrantedAny('Pages.TaskEvents.Edit', 'Pages.TaskEvents.Delete')"
-                                    >
-                                        <div class="btn-group dropdown" dropdown container="body">
-                                            <button class="dropdown-toggle btn btn-sm btn-primary" dropdownToggle>
-                                                <i class="fa fa-cog"></i>
-                                                <span class="caret"></span>
-                                                {{ l('Actions') }}
-                                            </button>
-                                            <ul class="dropdown-menu" *dropdownMenu>
-                                                <li>
-                                                    <a
-                                                        href="javascript:;"
-                                                        class="dropdown-item"
-                                                        (click)="viewTaskEventModal.show(record)"
-                                                    >
-                                                        {{ l('View') }}
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a
-                                                        href="javascript:;"
-                                                        *ngIf="permission.isGranted('Pages.TaskEvents.Edit')"
-                                                        class="dropdown-item"
-                                                        (click)="createOrEditTaskEventModal.show(record.taskEvent.id)"
-                                                    >
-                                                        {{ l('Edit') }}
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a
-                                                        class="dropdown-item"
-                                                        href="javascript:;"
-                                                        *ngIf="permission.isGranted('Pages.TaskEvents.Delete')"
-                                                        (click)="deleteTaskEvent(record.taskEvent)"
-                                                    >
-                                                        {{ l('Delete') }}
-                                                    </a>
-                                                </li>
-                                            </ul>
+                                    <td style="width: 30px;">
+                                        <label
+                                            class="form-check form-check-custom form-check-inline form-check-solid is-invalid mb-2">
+                                            <input class="form-check-input" type="checkbox"
+                                                [(ngModel)]="record.selected" (change)="checkIfAllSelected()">
+                                            <span class="fw-semibold ps-2 fs-6">
+                                            </span>
+                                        </label>
+                                    </td>
+                                    <td style="width: 250px">
+                                        <span class="p-column-title">{{ l('Name') }}</span>
+                                        <div class="d-flex flex-column flex-grow-1 my-lg-0 my-2 pe-3">
+                                            <a href="javascript:;" title=" {{ record.taskEvent.name }}"
+                                                [routerLink]="['/app/main/taskManagement/taskEvents/dashboard',record.id]"
+                                                class="fs-5 text-gray-800 text-hover-primary fw-bold">
+                                                {{ record.taskEvent.name }}
+                                            </a>
+                                            <span class="text-gray-400 fw-semibold fs-7 my-0">
+                                                <i class="fas fa-tags mr-1"></i>
+                                                Web Development, Web Design, Software Development
+                                            </span>
+                                        </div>
+                                    </td>
+                                    <td style="width:180px;">
+                                        <span *ngIf="record.taskEvent.eventDate">
+                                            {{record.taskEvent.eventDate | luxonFormat : 'dd-MM-yyyy'}}
+                                        </span>
+                                        <span *ngIf="record.taskEvent.startTime && record.taskEvent.eventDate">(</span>
+                                        <span *ngIf="record.taskEvent.startTime">{{record.taskEvent.startTime}}</span>
+                                        <span *ngIf="record.taskEvent.startTime && record.taskEvent.eventDate">)</span>
+                                    </td>
+                                    <td style="width:180px;">
+                                        <span *ngIf="record.taskEvent.endDate">
+                                            {{record.taskEvent.endDate | luxonFormat : 'dd-MM-yyyy'}}
+                                        </span>
+                                        <span *ngIf="record.taskEvent.endTime && record.taskEvent.endDate">(</span>
+                                        <span *ngIf="record.taskEvent.endTime">{{record.taskEvent.endTime}}</span>
+                                        <span *ngIf="record.taskEvent.endTime && record.taskEvent.endDate">)</span>
+                                    </td>
+                                    <td style="width:150px; text-align: center;">
+                                        {{ record.taskEvent.actualTime }}
+                                    </td>
+                                    <td style="width:150px; text-align: center;">
+                                        {{ record.taskEvent.actualTime }}
+                                    </td>
+                                    <td style="width: 180px; text-align: center;">
+                                        <div class="symbol-group symbol-hover flex-nowrap d-flex justify-content-center">
+                                            <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
+                                                data-bs-original-title="Alan Warden" data-kt-initialized="1">
+                                                <span
+                                                    class="symbol-label bg-warning text-inverse-warning fw-bold">A</span>
+                                            </div>
+                                            <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
+                                                data-bs-original-title="Susan Redwood" data-kt-initialized="1">
+                                                <span
+                                                    class="symbol-label bg-primary text-inverse-primary fw-bold">S</span>
+                                            </div>
+                                            <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
+                                                data-bs-original-title="Perry Matthew" data-kt-initialized="1">
+                                                <span
+                                                    class="symbol-label bg-danger text-inverse-danger fw-bold">P</span>
+                                            </div>
+                                            <a href="javascript:;" class="symbol symbol-35px symbol-circle" data-bs-toggle="modal"
+                                                data-bs-target="#kt_modal_view_users">
+                                                <span class="symbol-label bg-dark text-gray-300 fs-8 fw-bold">+42</span>
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <td style="width: 180px; text-align: center;">
+                                        <div>
+                                            <input type="text" pInputText [(ngModel)]="value" class="w-full"/>
+                                            <p-slider [(ngModel)]="value" class="w-full"></p-slider>
                                         </div>
                                     </td>
                                     <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('Name') }}</span>
-                                        {{ record.taskStatusName }}
+                                        <span class="p-column-title">{{ l('Status') }}</span>
+                                        <div *ngIf="record.taskEvent.status" class="text-center">
+                                            <span class="badge badge-primary badge-sm">Completed</span>
+                                        </div>
+                                        <div *ngIf="!record.taskEvent.status" class="text-center">
+                                            <span class="badge badge-danger badge-sm">Open</span>
+                                        </div>
                                     </td>
                                     <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Priority') }}</span>
+                                        <div *ngIf="record.taskEvent.priority" class="text-center">
+                                            <span class="badge badge-danger badge-sm">High</span>
+                                        </div>
+                                        <div *ngIf="!record.taskEvent.priority" class="text-center">
+                                            <span class="badge badge-warning badge-sm">Low</span>
+                                        </div>
+                                    </td>
+
+
+
+
+
+                                    <!-- <td style="width: 150px">
                                         <span class="p-column-title">{{ l('Name') }}</span>
-                                        {{ record.taskEvent.name }}
+                                        {{ record.taskStatusName }}
                                     </td>
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('Description') }}</span>
@@ -484,6 +476,39 @@
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('HourAndMinutes') }}</span>
                                         {{ record.taskEvent.hourAndMinutes }}
+                                    </td> -->
+                                    <td style="width: 130px"
+                                        [hidden]="!isGrantedAny('Pages.TaskEvents.Edit', 'Pages.TaskEvents.Delete')">
+                                        <div class="btn-group dropdown" dropdown container="body">
+                                            <button class="dropdown-toggle btn btn-sm btn-primary" dropdownToggle>
+                                                <i class="fa fa-cog"></i>
+                                                <span class="caret"></span>
+                                                {{ l('Actions') }}
+                                            </button>
+                                            <ul class="dropdown-menu" *dropdownMenu>
+                                                <!-- <li>
+                                                    <a href="javascript:;" class="dropdown-item"
+                                                        (click)="viewTaskEventModal.show(record)">
+                                                        {{ l('View') }}
+                                                    </a>
+                                                </li> -->
+                                                <li>
+                                                    <a href="javascript:;"
+                                                        *ngIf="permission.isGranted('Pages.TaskEvents.Edit')"
+                                                        class="dropdown-item"
+                                                        (click)="createOrEditTaskEventModal.show(record.taskEvent.id)">
+                                                        {{ l('Edit') }}
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="javascript:;"
+                                                        *ngIf="permission.isGranted('Pages.TaskEvents.Delete')"
+                                                        (click)="deleteTaskEvent(record.taskEvent)">
+                                                        {{ l('Delete') }}
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </td>
                                 </tr>
                             </ng-template>
@@ -492,17 +517,13 @@
                             {{ l('NoData') }}
                         </div>
                         <div class="primeng-paging-container">
-                            <p-paginator
-                                [rows]="primengTableHelper.defaultRecordsCountPerPage"
-                                #paginator
+                            <p-paginator [rows]="primengTableHelper.defaultRecordsCountPerPage" #paginator
                                 (onPageChange)="getTaskEvents($event)"
                                 [totalRecords]="primengTableHelper.totalRecordsCount"
                                 [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
-                                [showCurrentPageReport]="true"
-                                [currentPageReportTemplate]="
+                                [showCurrentPageReport]="true" [currentPageReportTemplate]="
                                     'TotalRecordsCount' | localize : primengTableHelper.totalRecordsCount
-                                "
-                            ></p-paginator>
+                                "></p-paginator>
                         </div>
                     </div>
                     <!--<Primeng-Datatable-End>-->

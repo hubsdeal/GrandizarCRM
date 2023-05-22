@@ -13,30 +13,61 @@
                         [disabled]="saving"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="my-3">
-                        <label class="form-label" for="Hub_Name">{{ l('Name') }} *</label>
-                        <input type="text" #Hub_Name="ngModel" id="Hub_Name" class="form-control" [(ngModel)]="hub.name"
-                            name="Name" minlength="1" maxlength="128" required />
-                        <validation-messages [formCtrl]="Hub_Name"></validation-messages>
-                    </div>
+                    <div class="row">
+                        <div class="col-xl-3">
+                            <!--begin::Input group-->
+                            <div class="mb-7">
+                                <div class="image-input image-input-outline"
+                                    style="background-image: url(assets/common/images/c_logo.png)">
+                                    <div *ngIf="imageSrc"
+                                        class="image-input-wrapper w-125px h-125px"
+                                        [style.background-image]="'url(' + imageSrc + ')'">
+                                    </div>
+                                    <label
+                                        class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+                                        data-kt-image-input-action="change" data-bs-toggle="tooltip"
+                                        aria-label="Change avatar"
+                                        data-bs-original-title="Change avatar"
+                                        data-kt-initialized="1">
+                                        <i class="bi bi-pencil-fill fs-7"></i>
+                                        <input type="file" name="profile_avatar" id="customFile"
+                                            ng2FileSelect [uploader]="uploader"
+                                            (change)="fileChangeEvent($event)"
+                                            accept=".png, .jpg, .jpeg">
+                                        <input type="hidden" name="avatar_remove">
+                                    </label>
+                                </div>
+                                <div class="form-text">Allowed file types: png, jpg, jpeg.
+                                </div>
+                            </div>
+                            <!--end::Input group-->
+                        </div>
+                        <div class="col-xl-9">
+                            <div class="mt-0 mb-3">
+                                <label class="form-label" for="Hub_Name">{{ l('Name') }} *</label>
+                                <input type="text" #Hub_Name="ngModel" id="Hub_Name" class="form-control"
+                                    [(ngModel)]="hub.name" name="Name" minlength="1" maxlength="128" required />
+                                <validation-messages [formCtrl]="Hub_Name"></validation-messages>
+                            </div>
 
-                    <div class="my-3">
-                        <label class="form-label" for="HubTypeName">{{ l('HubType') }}</label>
-                        <select name="hub.hubTypeId" [(ngModel)]="hub.hubTypeId" class="form-select" required>
-                            <option value="">{{ l('SelectAHubType') }}</option>
-                            <option *ngFor="let item of allHubTypes" value="{{ item.id }}">
-                                {{ item.displayName }}
-                            </option>
-                        </select>
+                            <div class="my-3">
+                                <label class="form-label" for="HubTypeName">{{ l('HubType') }}</label>
+                                <select name="hub.hubTypeId" [(ngModel)]="hub.hubTypeId" class="form-select" required>
+                                    <option value="">{{ l('SelectAHubType') }}</option>
+                                    <option *ngFor="let item of allHubTypes" value="{{ item.id }}">
+                                        {{ item.displayName }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
-
                     <div class="row">
                         <div class="col-xl-6">
                             <div class="my-3 p_filter">
                                 <label class="form-label" for="CountryName">{{ l('Country') }}</label>
-                                <p-dropdown [options]="allCountrys" [filter]="true" [virtualScroll]="true" (onChange)="onCountryChange($event)"
-                                    placeholder="Select Country" [itemSize]="30" name="displayName"
-                                    optionLabel="displayName" optionId="id" 
+                                <p-dropdown [options]="allCountrys" [filter]="true" [virtualScroll]="true"
+                                    (onChange)="onCountryChange($event)" placeholder="Select Country" [itemSize]="30"
+                                    name="displayName" optionLabel="displayName" optionId="id"
                                     [(ngModel)]="selectedCountry" filterBy="displayName"
                                     [style]="{ width: '100%' }"></p-dropdown>
                                 <!-- <select name="hub.countryId" [(ngModel)]="hub.countryId" class="form-select">
@@ -55,9 +86,9 @@
                                     <option *ngFor="let item of allStates" value="{{ item.id }}">{{ item.displayName }}
                                     </option>
                                 </select> -->
-                                <p-dropdown [options]="allStates" [filter]="true" [virtualScroll]="true" (onChange)="onStateChange($event)"
-                                    placeholder="Select State" [itemSize]="30" name="displayName"
-                                    optionLabel="displayName" optionId="id" 
+                                <p-dropdown [options]="allStates" [filter]="true" [virtualScroll]="true"
+                                    (onChange)="onStateChange($event)" placeholder="Select State" [itemSize]="30"
+                                    name="displayName" optionLabel="displayName" optionId="id"
                                     [(ngModel)]="selectedState" filterBy="displayName"
                                     [style]="{ width: '100%' }"></p-dropdown>
                             </div>
@@ -65,9 +96,9 @@
                         <div class="col-xl-6">
                             <div class="my-3 p_filter">
                                 <label class="form-label" for="CountyName">{{ l('County') }}</label>
-                                <p-dropdown [options]="allCountys" [filter]="true" [virtualScroll]="true" (onChange)="onCountyChange($event)"
-                                    placeholder="Select County" [itemSize]="30" name="displayName"
-                                    optionLabel="displayName" optionId="id" 
+                                <p-dropdown [options]="allCountys" [filter]="true" [virtualScroll]="true"
+                                    (onChange)="onCountyChange($event)" placeholder="Select County" [itemSize]="30"
+                                    name="displayName" optionLabel="displayName" optionId="id"
                                     [(ngModel)]="selectedCounty" filterBy="displayName"
                                     [style]="{ width: '100%' }"></p-dropdown>
                                 <!-- <select name="hub.countyId" [(ngModel)]="hub.countyId" class="form-select">
@@ -86,14 +117,14 @@
                                     <option *ngFor="let item of allCitys" value="{{ item.id }}">{{ item.displayName }}
                                     </option>
                                 </select> -->
-                                <p-dropdown [options]="allCitys" [filter]="true" [virtualScroll]="true" (onChange)="onCityChange($event)"
-                                    placeholder="Select City" [itemSize]="30" name="displayName"
-                                    optionLabel="displayName" optionId="id" 
+                                <p-dropdown [options]="allCitys" [filter]="true" [virtualScroll]="true"
+                                    (onChange)="onCityChange($event)" placeholder="Select City" [itemSize]="30"
+                                    name="displayName" optionLabel="displayName" optionId="id"
                                     [(ngModel)]="selectedCity" filterBy="displayName"
                                     [style]="{ width: '100%' }"></p-dropdown>
                             </div>
                         </div>
-                        
+
                         <div class="col-xl-6">
                             <div class="my-3">
                                 <label class="form-label" for="CurrencyName">{{ l('Currency') }}</label>
@@ -188,7 +219,7 @@
 
 
 
-                    <div class="my-3">
+                    <!-- <div class="my-3">
                         <label class="form-label" for="MediaLibraryName">{{ l('MediaLibrary') }}</label>
                         <div class="input-group">
                             <input class="form-control" id="MediaLibraryName" name="mediaLibraryName"
@@ -204,7 +235,7 @@
                         </div>
                     </div>
                     <input class="form-control" name="hub.pictureMediaLibraryId" [(ngModel)]="hub.pictureMediaLibraryId"
-                        type="text" hidden />
+                        type="text" hidden /> -->
 
 
                     <label class="form-check form-check-custom form-check-solid my-3 mt-5 ">
@@ -248,7 +279,16 @@
                     </div>
 
                     <div class="my-3">
-                        <label class="form-label" for="Hub_Description">{{ l('Description') }}</label>
+                        <label class="form-label" for="Hub_Description">
+                            <div class="d-flex align-items-end justify-content-between">
+                                <span class="required">About Hub</span>
+                                <button class="btn btn-sm btn-light-primary"
+                                    (click)="openAiModalPr('About Hub')">
+                                    <i class="fa-file-signature fas me-2"></i>
+                                    Generate about Hub
+                                </button>
+                            </div>
+                        </label>
                         <p-editor id="Description" name="Description" [(ngModel)]="hub.description" ngDefaultControl
                             [style]="{ height: '200px' }" placeholder="'Type here...'"></p-editor>
                     </div>

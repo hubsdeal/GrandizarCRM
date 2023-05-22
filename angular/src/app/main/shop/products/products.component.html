@@ -73,12 +73,10 @@
                                 </div>
                             </div>
                             <div class="col-xl-4">
-                                <div class="w-100">
-                                    <div class="my-3">
-                                        <label class="form-label" for="UrlFilter">{{ l('Url') }}</label>
-                                        <input type="text" class="form-control" id="UrlFilter" name="urlFilter"
-                                            [(ngModel)]="urlFilter" (ngModelChange)="getProducts()" />
-                                    </div>
+                                <div class="my-3">
+                                    <label class="form-label" for="SkuFilter">{{ l('Sku') }}</label>
+                                    <input type="text" class="form-control" id="SkuFilter" name="skuFilter"
+                                        [(ngModel)]="skuFilter" (ngModelChange)="getProducts()" />
                                 </div>
                             </div>
                         </div>
@@ -128,13 +126,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <div class="my-3">
-                                    <label class="form-label" for="SkuFilter">{{ l('Sku') }}</label>
-                                    <input type="text" class="form-control" id="SkuFilter" name="skuFilter"
-                                        [(ngModel)]="skuFilter" (ngModelChange)="getProducts()" />
-                                </div>
-                            </div>
+                            
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="CallForPriceFilterSelect">

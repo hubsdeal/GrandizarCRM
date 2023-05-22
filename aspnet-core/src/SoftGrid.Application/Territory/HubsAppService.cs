@@ -550,7 +550,7 @@ namespace SoftGrid.Territory
             {
                 if (item.BinaryObjectId != null && item.BinaryObjectId != Guid.Empty)
                 {
-                    item.Picture = await _binaryObjectManager.GetProductPictureUrlAsync((Guid)item.BinaryObjectId, ".png");
+                    item.Picture = await _binaryObjectManager.GetOthersPictureUrlAsync((Guid)item.BinaryObjectId, ".png");
                 }
             }
            

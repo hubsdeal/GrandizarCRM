@@ -13,6 +13,7 @@ import { ProductRatingLikeLookupTableModalComponent } from './product-ratingLike
 import { ProductContactLookupTableModalComponent } from './product-contact-lookup-table-modal.component';
 import { ProductStoreLookupTableModalComponent } from './product-store-lookup-table-modal.component';
 import { ProductDashboardComponent } from './product-dashboard/product-dashboard.component';
+import { ProductLibrariesComponent } from './product-libraries/product-libraries.component';
 
 @NgModule({
     declarations: [
@@ -27,7 +28,8 @@ import { ProductDashboardComponent } from './product-dashboard/product-dashboard
         ProductRatingLikeLookupTableModalComponent,
         ProductContactLookupTableModalComponent,
         ProductStoreLookupTableModalComponent,
-        ProductDashboardComponent
+        ProductDashboardComponent,
+        ProductLibrariesComponent
     ],
     imports: [AppSharedModule, ProductRoutingModule, AdminSharedModule],
 })

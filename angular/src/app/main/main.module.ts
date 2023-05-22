@@ -16,6 +16,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { NgxBootstrapDatePickerConfigService } from 'assets/ngx-bootstrap/ngx-bootstrap-datepicker-config.service';
 import { SubheaderModule } from '@app/shared/common/sub-header/subheader.module';
 import { MasterDataIndexComponent } from './lookupData/master-data-index/master-data-index.component';
+import { TaskLibrariesComponent } from './taskManagement/task-libraries/task-libraries.component';
 
 NgxBootstrapDatePickerConfigService.registerNgxBootstrapDatePickerLocales();
 
@@ -36,7 +37,8 @@ NgxBootstrapDatePickerConfigService.registerNgxBootstrapDatePickerLocales();
         SubheaderModule,
     ],
     declarations: [
-    MasterDataIndexComponent
+    MasterDataIndexComponent,
+    TaskLibrariesComponent
   ],
     providers: [
         { provide: BsDatepickerConfig, useFactory: NgxBootstrapDatePickerConfigService.getDatepickerConfig },

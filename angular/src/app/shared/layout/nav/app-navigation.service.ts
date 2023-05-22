@@ -33,8 +33,9 @@ export class AppNavigationService {
                         'flaticon-line-graph',
                         '/app/admin/hostDashboard'
                     ),
-                    new AppMenuItem('MasterTaskList', 'Pages.TaskEvents', 'flaticon2-list-2', '/app/main/taskManagement/taskEvents'),
-                    new AppMenuItem('MyTaskList', 'Pages.TaskEvents', 'flaticon2-list-2', '/app/main/taskManagement/taskEvents'),
+                    new AppMenuItem('Master Task List', 'Pages.TaskEvents', 'flaticon2-list-2', '/app/main/taskManagement/taskEvents'),
+                    new AppMenuItem('My Task List', 'Pages.TaskEvents', 'flaticon2-list-2', '/app/main/taskManagement/myTaskEvents'),
+                    new AppMenuItem('Task Template', 'Pages.TaskEvents', 'flaticon2-list-2', '/app/main/taskManagement/taskLibrary'),
                 ]
             ),
 
@@ -57,10 +58,24 @@ export class AppNavigationService {
                 '',
                 [],
                 [
-                    new AppMenuItem('MasterProductList', 'Pages.Products', 'flaticon2-list-1', '/app/main/shop/products'),
-                    new AppMenuItem('MyProductList', 'Pages.Products', 'flaticon2-list-2', '/app/main/shop/products'),
+                    new AppMenuItem('Master Product List', 'Pages.Products', 'flaticon2-list-1', '/app/main/shop/products'),
+                    new AppMenuItem('My Product List', 'Pages.Products', 'flaticon2-list-2', '/app/main/shop/products'),
+                    new AppMenuItem('Product Libraries', 'Pages.Products', 'flaticon2-delivery-package', '/app/main/shop/productLibraries'),
                     new AppMenuItem('ProductCategories', 'Pages.ProductCategories', 'flaticon-map', '/app/main/shop/productCategories'),
-                    new AppMenuItem('MediaLibraries', 'Pages.MediaLibraries', 'fas fa-photo-video', '/app/main/lookupData/mediaLibraries'),
+                    new AppMenuItem('MediaLibrary', 'Pages.MediaLibraries', 'fas fa-photo-video', '/app/main/lookupData/mediaLibraries'),
+                ]
+            ),
+
+            new AppMenuItem(
+                'Order Management',
+                '',
+                'fas fa-shopping-cart',
+                '',
+                [],
+                [
+                    new AppMenuItem('Master Order List', 'Pages.Orders', 'fas fa-list', '/app/main/orderManagement/orders'),
+                    new AppMenuItem('My Order List', 'Pages.Orders', 'fas fa-list-alt', '/app/main/orderManagement/myOrders'),
+                    new AppMenuItem('Abandoned Cart', 'Pages.Orders', 'fas fa-shopping-cart', '/app/main/orderManagement/abandonedCart'),
                 ]
             ),
 
