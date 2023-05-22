@@ -13,7 +13,7 @@ namespace SoftGrid.TaskManagement.Dtos
 
         public string Description { get; set; }
 
-        public bool Status { get; set; }
+        public bool TaskOrEvent { get; set; }
 
         public bool Priority { get; set; }
 
@@ -39,6 +39,8 @@ namespace SoftGrid.TaskManagement.Dtos
         public string HourAndMinutes { get; set; }
 
         public long? TaskStatusId { get; set; }
+
+        public int? CompletionPercentage { get; set; }
 
     }
 }

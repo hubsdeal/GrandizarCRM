@@ -54,7 +54,7 @@ namespace SoftGrid.TaskManagement.Exporting
                         sheet, taskEvents,
                         _ => _.TaskEvent.Name,
                         _ => _.TaskEvent.Description,
-                        _ => _.TaskEvent.Status,
+                        _ => _.TaskEvent.TaskOrEvent,
                         _ => _.TaskEvent.Priority,
                         _ => _timeZoneConverter.Convert(_.TaskEvent.EventDate, _abpSession.TenantId, _abpSession.GetUserId()),
                         _ => _.TaskEvent.StartTime,

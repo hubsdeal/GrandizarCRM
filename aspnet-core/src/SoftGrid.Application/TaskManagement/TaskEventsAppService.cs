@@ -43,7 +43,7 @@ namespace SoftGrid.TaskManagement
                         .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false || e.Name.Contains(input.Filter) || e.Description.Contains(input.Filter) || e.StartTime.Contains(input.Filter) || e.EndTime.Contains(input.Filter) || e.ActualTime.Contains(input.Filter) || e.EstimatedTime.Contains(input.Filter) || e.HourAndMinutes.Contains(input.Filter))
                         .WhereIf(!string.IsNullOrWhiteSpace(input.NameFilter), e => e.Name.Contains(input.NameFilter))
                         .WhereIf(!string.IsNullOrWhiteSpace(input.DescriptionFilter), e => e.Description.Contains(input.DescriptionFilter))
-                        .WhereIf(input.StatusFilter.HasValue && input.StatusFilter > -1, e => (input.StatusFilter == 1 && e.Status) || (input.StatusFilter == 0 && !e.Status))
+                        .WhereIf(input.StatusFilter.HasValue && input.StatusFilter > -1, e => (input.StatusFilter == 1 && e.TaskOrEvent) || (input.StatusFilter == 0 && !e.TaskOrEvent))
                         .WhereIf(input.PriorityFilter.HasValue && input.PriorityFilter > -1, e => (input.PriorityFilter == 1 && e.Priority) || (input.PriorityFilter == 0 && !e.Priority))
                         .WhereIf(input.MinEventDateFilter != null, e => e.EventDate >= input.MinEventDateFilter)
                         .WhereIf(input.MaxEventDateFilter != null, e => e.EventDate <= input.MaxEventDateFilter)
@@ -70,7 +70,7 @@ namespace SoftGrid.TaskManagement
 
                                  o.Name,
                                  o.Description,
-                                 o.Status,
+                                 o.TaskOrEvent,
                                  o.Priority,
                                  o.EventDate,
                                  o.StartTime,
@@ -98,7 +98,7 @@ namespace SoftGrid.TaskManagement
 
                         Name = o.Name,
                         Description = o.Description,
-                        Status = o.Status,
+                        TaskOrEvent = o.TaskOrEvent,
                         Priority = o.Priority,
                         EventDate = o.EventDate,
                         StartTime = o.StartTime,
@@ -202,7 +202,7 @@ namespace SoftGrid.TaskManagement
                         .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false || e.Name.Contains(input.Filter) || e.Description.Contains(input.Filter) || e.StartTime.Contains(input.Filter) || e.EndTime.Contains(input.Filter) || e.ActualTime.Contains(input.Filter) || e.EstimatedTime.Contains(input.Filter) || e.HourAndMinutes.Contains(input.Filter))
                         .WhereIf(!string.IsNullOrWhiteSpace(input.NameFilter), e => e.Name.Contains(input.NameFilter))
                         .WhereIf(!string.IsNullOrWhiteSpace(input.DescriptionFilter), e => e.Description.Contains(input.DescriptionFilter))
-                        .WhereIf(input.StatusFilter.HasValue && input.StatusFilter > -1, e => (input.StatusFilter == 1 && e.Status) || (input.StatusFilter == 0 && !e.Status))
+                        .WhereIf(input.StatusFilter.HasValue && input.StatusFilter > -1, e => (input.StatusFilter == 1 && e.TaskOrEvent) || (input.StatusFilter == 0 && !e.TaskOrEvent))
                         .WhereIf(input.PriorityFilter.HasValue && input.PriorityFilter > -1, e => (input.PriorityFilter == 1 && e.Priority) || (input.PriorityFilter == 0 && !e.Priority))
                         .WhereIf(input.MinEventDateFilter != null, e => e.EventDate >= input.MinEventDateFilter)
                         .WhereIf(input.MaxEventDateFilter != null, e => e.EventDate <= input.MaxEventDateFilter)
@@ -226,7 +226,7 @@ namespace SoftGrid.TaskManagement
                              {
                                  Name = o.Name,
                                  Description = o.Description,
-                                 Status = o.Status,
+                                 TaskOrEvent = o.TaskOrEvent,
                                  Priority = o.Priority,
                                  EventDate = o.EventDate,
                                  StartTime = o.StartTime,
