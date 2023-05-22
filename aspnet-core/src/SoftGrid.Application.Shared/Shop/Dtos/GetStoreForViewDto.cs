@@ -1,4 +1,6 @@
-﻿namespace SoftGrid.Shop.Dtos
+﻿using System;
+
+namespace SoftGrid.Shop.Dtos
 {
     public class GetStoreForViewDto
     {
