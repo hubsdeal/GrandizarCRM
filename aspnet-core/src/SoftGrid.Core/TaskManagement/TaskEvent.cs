@@ -18,7 +18,7 @@ namespace SoftGrid.TaskManagement
 
         public virtual string Description { get; set; }
 
-        public virtual bool Status { get; set; }
+        public virtual bool TaskOrEvent { get; set; }
 
         public virtual bool Priority { get; set; }
 
@@ -47,6 +47,8 @@ namespace SoftGrid.TaskManagement
 
         [ForeignKey("TaskStatusId")]
         public TaskStatus TaskStatusFk { get; set; }
+
+        public virtual int? CompletionPercentage { get; set; }
 
     }
 }
