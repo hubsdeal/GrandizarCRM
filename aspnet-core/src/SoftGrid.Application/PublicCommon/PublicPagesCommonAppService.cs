@@ -66,7 +66,7 @@ namespace SoftGrid.PublicCommon
         private readonly IRepository<StoreTag, long> _storeTagRepository;
         private readonly IRepository<MasterTagCategory, long> _masterTagCategoryRepository;
         private readonly IRepository<MasterTag, long> _masterTagRepository;
-        private readonly IRepository<StoreHour, long> _storeHourRepository;
+        //private readonly IRepository<StoreHour, long> _storeHourRepository;
         private readonly IRepository<StoreProductMap, long> _storeProductMapRepository;
         //private readonly IRepository<StoreCategoryMap, long> _storeCategoryMapRepository;
         //private SendGridEmailSenderConfiguration _sendGridEmailSenderConfiguration;
@@ -105,8 +105,8 @@ namespace SoftGrid.PublicCommon
         private readonly IRepository<CustomerWallet, long> _customerWalletRepository;
         //private readonly IRepository<WalletTransaction, long> _walletTransactionRepository;
         private readonly IRepository<ProductFaq, long> _productFaqRepository;
-        private readonly IRepository<DeliveryType, int> _deliveryTypeRepository;
-        private readonly IRepository<StoreDeliveryTypeMap, long> _storeDeliveryTypeMapRepository;
+        //private readonly IRepository<DeliveryType, int> _deliveryTypeRepository;
+        //private readonly IRepository<StoreDeliveryTypeMap, long> _storeDeliveryTypeMapRepository;
         private readonly IAppNotifier _appNotifier;
         private readonly IRepository<StoreZipCodeMap, long> _storeZipCodeMapRepository;
         private readonly IRepository<StoreLocation, long> _storeLocationRepository;
@@ -142,7 +142,7 @@ namespace SoftGrid.PublicCommon
             IRepository<StoreTag, long> storeTagRepository,
             IRepository<MasterTagCategory, long> masterTagCategoryRepository,
             IRepository<MasterTag, long> masterTagRepository,
-            IRepository<StoreHour, long> storeHourRepository,
+            //IRepository<StoreHour, long> storeHourRepository,
             IRepository<StoreProductMap, long> storeProductMapRepository,
             //IRepository<StoreCategoryMap, long> storeCategoryMapRepository,
             //ICustomEmailSender emailSender,
@@ -182,7 +182,7 @@ namespace SoftGrid.PublicCommon
             IRepository<ProductFaq, long> productFaqRepository,
             IAppNotifier appNotifier,
             //IRepository<DeliveryType, int> deliveryTypeRepository,
-            IRepository<StoreDeliveryTypeMap, long> storeDeliveryTypeMapRepository,
+            //IRepository<StoreDeliveryTypeMap, long> storeDeliveryTypeMapRepository,
             IRepository<StoreZipCodeMap, long> storeZipCodeMapRepository,
             IRepository<StoreLocation, long> storeLocationRepository
             //IRepository<ReservationTimeSlot, long> reservationTimeSlotRepository,
@@ -218,8 +218,8 @@ namespace SoftGrid.PublicCommon
             _storeTagRepository = storeTagRepository;
             _masterTagCategoryRepository = masterTagCategoryRepository;
             _masterTagRepository = masterTagRepository;
-            _storeHourRepository = storeHourRepository;
-            _storeProductMapRepository = storeProductMapRepository;
+            //_storeHourRepository = storeHourRepository;
+            //_storeProductMapRepository = storeProductMapRepository;
             //_storeCategoryMapRepository = storeCategoryMapRepository;
             //_emailSender = emailSender;
             //_sendGridEmailSenderConfiguration = sendGridEmailSenderConfiguration;
@@ -260,7 +260,7 @@ namespace SoftGrid.PublicCommon
             //_productFaqRepository = productFaqRepository;
             //_appNotifier = appNotifier;
             //_deliveryTypeRepository = deliveryTypeRepository;
-            _storeDeliveryTypeMapRepository = storeDeliveryTypeMapRepository;
+            //_storeDeliveryTypeMapRepository = storeDeliveryTypeMapRepository;
             //_storeZipCodeMapRepository = storeZipCodeMapRepository;
             _storeLocationRepository = storeLocationRepository;
             //_reservationTimeSlotRepository = reservationTimeSlotRepository;
@@ -3192,54 +3192,54 @@ namespace SoftGrid.PublicCommon
         {
             var output = new GetStoreHourCurrentStatusForPublicViewDto();
 
-            var storeOpenHour = await _storeHourRepository.FirstOrDefaultAsync(e => e.StoreId == storeId);
+            //var storeOpenHour = await _storeHourRepository.FirstOrDefaultAsync(e => e.StoreId == storeId);
 
-            if (storeOpenHour != null)
-            {
-                if (storeOpenHour.NowOpenOrClosed || storeOpenHour.IsOpen24Hours)
-                {
-                    output.IsOpen = true;
-                    return output;
-                }
-                var weekday = DateTime.Today.DayOfWeek;
-                output.CurrentTime = DateTime.Now.ToString("h:mm tt");
+            //if (storeOpenHour != null)
+            //{
+            //    if (storeOpenHour.NowOpenOrClosed || storeOpenHour.IsOpen24Hours)
+            //    {
+            //        output.IsOpen = true;
+            //        return output;
+            //    }
+            //    var weekday = DateTime.Today.DayOfWeek;
+            //    output.CurrentTime = DateTime.Now.ToString("h:mm tt");
 
-                if (weekday.ToString() == "Monday")
-                {
-                    output.StartTime = storeOpenHour.MondayStartTime;
-                    output.EndTime = storeOpenHour.MondayEndTime;
-                }
-                else if (weekday.ToString() == "Tuesday")
-                {
-                    output.StartTime = storeOpenHour.TuesdayStartTime;
-                    output.EndTime = storeOpenHour.TuesdayEndTime;
-                }
-                else if (weekday.ToString() == "Wednesday")
-                {
-                    output.StartTime = storeOpenHour.WednesdayStartTime;
-                    output.EndTime = storeOpenHour.WednesdayEndTime;
-                }
-                else if (weekday.ToString() == "Thursday")
-                {
-                    output.StartTime = storeOpenHour.ThursdayStartTime;
-                    output.EndTime = storeOpenHour.ThursdayEndTime;
-                }
-                else if (weekday.ToString() == "Friday")
-                {
-                    output.StartTime = storeOpenHour.FridayStartTime;
-                    output.EndTime = storeOpenHour.FridayEndTime;
-                }
-                else if (weekday.ToString() == "Saturday")
-                {
-                    output.StartTime = storeOpenHour.SaturdayStartTime;
-                    output.EndTime = storeOpenHour.SaturdayEndTime;
-                }
-                else if (weekday.ToString() == "Sunday")
-                {
-                    output.StartTime = storeOpenHour.SundayStartTime;
-                    output.EndTime = storeOpenHour.SundayEndTime;
-                }
-            }
+            //    if (weekday.ToString() == "Monday")
+            //    {
+            //        output.StartTime = storeOpenHour.MondayStartTime;
+            //        output.EndTime = storeOpenHour.MondayEndTime;
+            //    }
+            //    else if (weekday.ToString() == "Tuesday")
+            //    {
+            //        output.StartTime = storeOpenHour.TuesdayStartTime;
+            //        output.EndTime = storeOpenHour.TuesdayEndTime;
+            //    }
+            //    else if (weekday.ToString() == "Wednesday")
+            //    {
+            //        output.StartTime = storeOpenHour.WednesdayStartTime;
+            //        output.EndTime = storeOpenHour.WednesdayEndTime;
+            //    }
+            //    else if (weekday.ToString() == "Thursday")
+            //    {
+            //        output.StartTime = storeOpenHour.ThursdayStartTime;
+            //        output.EndTime = storeOpenHour.ThursdayEndTime;
+            //    }
+            //    else if (weekday.ToString() == "Friday")
+            //    {
+            //        output.StartTime = storeOpenHour.FridayStartTime;
+            //        output.EndTime = storeOpenHour.FridayEndTime;
+            //    }
+            //    else if (weekday.ToString() == "Saturday")
+            //    {
+            //        output.StartTime = storeOpenHour.SaturdayStartTime;
+            //        output.EndTime = storeOpenHour.SaturdayEndTime;
+            //    }
+            //    else if (weekday.ToString() == "Sunday")
+            //    {
+            //        output.StartTime = storeOpenHour.SundayStartTime;
+            //        output.EndTime = storeOpenHour.SundayEndTime;
+            //    }
+            //}
 
             return output;
 
@@ -3692,28 +3692,29 @@ namespace SoftGrid.PublicCommon
         [AbpAllowAnonymous]
         public async Task<List<OrderDeliveryInfoDeliveryTypeLookupTableDto>> GetAllDeliveryTypeForTableDropdown(long? storeId)
         {
-            var deliveryTypeIds = new List<int?>();
-            if (storeId != null)
-            {
-                deliveryTypeIds = _storeDeliveryTypeMapRepository.GetAll().Where(e => e.StoreId == storeId).Select(e => e.DeliveryTypeId).ToList();
-            }
-            var results = await _deliveryTypeRepository.GetAll().WhereIf(storeId != null, e => deliveryTypeIds.Contains(e.Id))
-                .Select(deliveryType => new OrderDeliveryInfoDeliveryTypeLookupTableDto
-                {
-                    Id = deliveryType.Id,
-                    DisplayName = deliveryType == null || deliveryType.Name == null ? "" : deliveryType.Name.ToString(),
-                    PictureId = deliveryType.PictureId
-                }).ToListAsync();
+            //var deliveryTypeIds = new List<int?>();
+            //if (storeId != null)
+            //{
+            //    deliveryTypeIds = _storeDeliveryTypeMapRepository.GetAll().Where(e => e.StoreId == storeId).Select(e => e.DeliveryTypeId).ToList();
+            //}
+            //var results = await _deliveryTypeRepository.GetAll().WhereIf(storeId != null, e => deliveryTypeIds.Contains(e.Id))
+            //    .Select(deliveryType => new OrderDeliveryInfoDeliveryTypeLookupTableDto
+            //    {
+            //        Id = deliveryType.Id,
+            //        DisplayName = deliveryType == null || deliveryType.Name == null ? "" : deliveryType.Name.ToString(),
+            //        PictureId = deliveryType.PictureId
+            //    }).ToListAsync();
 
-            foreach (var item in results)
-            {
-                if (item.PictureId != null && item.PictureId != Guid.Empty)
-                {
-                    item.Picture = await _binaryObjectManager.GetOthersPictureUrlAsync((Guid)item.PictureId, ".png");
-                }
-            }
+            //foreach (var item in results)
+            //{
+            //    if (item.PictureId != null && item.PictureId != Guid.Empty)
+            //    {
+            //        item.Picture = await _binaryObjectManager.GetOthersPictureUrlAsync((Guid)item.PictureId, ".png");
+            //    }
+            //}
 
-            return results;
+           // return results?? new List<OrderDeliveryInfoDeliveryTypeLookupTableDto>();
+            return new List<OrderDeliveryInfoDeliveryTypeLookupTableDto>();
         }
 
         //[AbpAuthorize]
