@@ -267,5 +267,71 @@ namespace SoftGrid.CMS
             );
         }
 
+        public async Task<PagedResultDto<GetContentForViewDto>> GetAllSiteDefaultContents()
+        {
+
+            var filteredContents = _contentRepository.GetAll()
+                        .Include(e => e.BannerMediaLibraryFk)
+                        .Where(e=>e.ContentTypeId == ContentType.Site_Default_Content);
+
+            var pagedAndFilteredContents = filteredContents
+                .OrderBy("id asc");
+
+            var contents = from o in pagedAndFilteredContents
+                           join o1 in _lookup_mediaLibraryRepository.GetAll() on o.BannerMediaLibraryId equals o1.Id into j1
+                           from s1 in j1.DefaultIfEmpty()
+
+                           select new
+                           {
+
+                               o.Title,
+                               o.Body,
+                               o.Published,
+                               o.PublishedDate,
+                               o.PublishTime,
+                               o.SeoUrl,
+                               o.SeoKeywords,
+                               o.SeoDescription,
+                               o.ContentTypeId,
+                               Id = o.Id,
+                               MediaLibraryName = s1 == null || s1.Name == null ? "" : s1.Name.ToString()
+                           };
+
+            var totalCount = await filteredContents.CountAsync();
+
+            var dbList = await contents.ToListAsync();
+            var results = new List<GetContentForViewDto>();
+
+            foreach (var o in dbList)
+            {
+                var res = new GetContentForViewDto()
+                {
+                    Content = new ContentDto
+                    {
+
+                        Title = o.Title,
+                        Body = o.Body,
+                        Published = o.Published,
+                        PublishedDate = o.PublishedDate,
+                        PublishTime = o.PublishTime,
+                        SeoUrl = o.SeoUrl,
+                        SeoKeywords = o.SeoKeywords,
+                        SeoDescription = o.SeoDescription,
+                        ContentTypeId = o.ContentTypeId,
+                        Id = o.Id,
+                    },
+                    MediaLibraryName = o.MediaLibraryName
+                };
+
+                results.Add(res);
+            }
+
+            return new PagedResultDto<GetContentForViewDto>(
+                totalCount,
+                results
+            );
+
+        }
+
     }
 }

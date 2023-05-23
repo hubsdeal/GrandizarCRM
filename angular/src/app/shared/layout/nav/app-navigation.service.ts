@@ -160,6 +160,17 @@ export class AppNavigationService {
 
                 ]
             ),
+            new AppMenuItem(
+                'CMS & Blogs',
+                '',
+                'flaticon2-document',
+                '',
+                [],
+                [
+                    new AppMenuItem('Site Default Content', 'Pages.Contents', 'flaticon-more', '/app/main/cms/siteDefaultContents'),
+                    new AppMenuItem('Contents', 'Pages.Contents', 'flaticon-more', '/app/main/cms/contents'),
+                ]
+            ),
             new AppMenuItem('Dashboard', 'Pages.Tenant.Dashboard', 'flaticon-line-graph', '/app/main/dashboard'),
             //new AppMenuItem('Tenants', 'Pages.Tenants', 'flaticon-list-3', '/app/admin/tenants'),
 
@@ -423,7 +434,7 @@ export class AppNavigationService {
             
             new AppMenuItem('ProductTeams', 'Pages.ProductTeams', 'flaticon-more', '/app/main/shop/productTeams'),
             
-            new AppMenuItem('Contents', 'Pages.Contents', 'flaticon-more', '/app/main/cms/contents'),
+            
             
             new AppMenuItem('StoreTaskMaps', 'Pages.StoreTaskMaps', 'flaticon-more', '/app/main/taskManagement/storeTaskMaps'),
             

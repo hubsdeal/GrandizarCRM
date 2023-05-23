@@ -10,6 +10,7 @@ import { TaskLibrariesComponent } from './taskManagement/task-libraries/task-lib
 import { MyTaskEventsComponent } from './taskManagement/taskEvents/my-task-events/my-task-events.component';
 import { MyOrdersComponent } from './orderManagement/orders/my-orders/my-orders.component';
 import { AbandonedCartComponent } from './orderManagement/orders/abandoned-cart/abandoned-cart.component';
+import { SiteDefaultContentComponent } from './cms/contents/site-default-content/site-default-content.component';
 
 @NgModule({
     imports: [
@@ -35,6 +36,12 @@ import { AbandonedCartComponent } from './orderManagement/orders/abandoned-cart/
                     {
                         path: 'cms/contents',
                         loadChildren: () => import('./cms/contents/content.module').then(m => m.ContentModule),
+                        data: { permission: 'Pages.Contents' }
+                    },
+
+                    {
+                        path: 'cms/siteDefaultContents',
+                        component: SiteDefaultContentComponent,
                         data: { permission: 'Pages.Contents' }
                     },
                 
