@@ -6,6 +6,7 @@ import { ContentsComponent } from './contents.component';
 import { CreateOrEditContentModalComponent } from './create-or-edit-content-modal.component';
 import { ViewContentModalComponent } from './view-content-modal.component';
 import { ContentMediaLibraryLookupTableModalComponent } from './content-mediaLibrary-lookup-table-modal.component';
+import { SiteDefaultContentComponent } from './site-default-content/site-default-content.component';
 
 @NgModule({
     declarations: [
@@ -14,6 +15,7 @@ import { ContentMediaLibraryLookupTableModalComponent } from './content-mediaLib
         ViewContentModalComponent,
 
         ContentMediaLibraryLookupTableModalComponent,
+          SiteDefaultContentComponent,
     ],
     imports: [AppSharedModule, ContentRoutingModule, AdminSharedModule],
 })

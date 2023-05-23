@@ -1,13 +1,5 @@
-﻿<div
-    bsModal
-    #createOrEditModal="bs-modal"
-    class="modal fade"
-    tabindex="-1"
-    role="dialog"
-    aria-labelledby="createOrEditModal"
-    aria-hidden="true"
-    [config]="{ backdrop: 'static' }"
->
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{ backdrop: 'static' }">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <form *ngIf="active" #contentForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
@@ -17,196 +9,135 @@
                         <span *ngIf="!content.id">{{ l('CreateNewContent') }}</span>
                     </h4>
 
-                    <button
-                        type="button"
-                        class="btn-close"
-                        (click)="close()"
-                        aria-label="Close"
-                        [disabled]="saving"
-                    ></button>
+                    <button type="button" class="btn-close" (click)="close()" aria-label="Close"
+                        [disabled]="saving"></button>
                 </div>
                 <div class="modal-body">
                     <div class="my-3">
+                        <label class="form-label" for="Content_ContentTypeId">{{ l('Content Type ID') }}</label>
+                        <select class="form-select" #Content_ContentTypeId="ngModel" name="ContentTypeId"
+                            id="Content_ContentTypeId" [(ngModel)]="content.contentTypeId">
+                            <option value="1">{{ l('Legal Terms') }}</option>
+
+                            <option value="2">{{ l('Blogs') }}</option>
+
+                            <option value="3">{{ l('Company News') }}</option>
+
+                            <option value="4">{{ l('Site Default Content') }}</option>
+                        </select>
+                        <validation-messages [formCtrl]="Content_ContentTypeId"></validation-messages>
+                    </div>
+                    <div class="my-3">
                         <label class="form-label" for="MediaLibraryName">{{ l('MediaLibrary') }}</label>
                         <div class="input-group">
-                            <input
-                                class="form-control"
-                                id="MediaLibraryName"
-                                name="mediaLibraryName"
-                                [(ngModel)]="mediaLibraryName"
-                                type="text"
-                                disabled
-                            />
+                            <input class="form-control" id="MediaLibraryName" name="mediaLibraryName"
+                                [(ngModel)]="mediaLibraryName" type="text" disabled />
                             <button class="btn btn-primary blue" (click)="openSelectMediaLibraryModal()" type="button">
                                 <i class="fa fa-search"></i>
                                 {{ l('Pick') }}
                             </button>
-                            <button
-                                class="btn btn-danger btn-icon"
-                                type="button"
-                                (click)="setBannerMediaLibraryIdNull()"
-                            >
+                            <button class="btn btn-danger btn-icon" type="button"
+                                (click)="setBannerMediaLibraryIdNull()">
                                 <i class="fa fa-times"></i>
                             </button>
                         </div>
                     </div>
-                    <input
-                        class="form-control"
-                        name="content.bannerMediaLibraryId"
-                        [(ngModel)]="content.bannerMediaLibraryId"
-                        type="text"
-                        hidden
-                    />
+                    <input class="form-control" name="content.bannerMediaLibraryId"
+                        [(ngModel)]="content.bannerMediaLibraryId" type="text" hidden />
 
                     <div class="my-3">
-                        <label class="form-label" for="Content_Title">{{ l('Title') }} *</label>
-                        <input
-                            type="text"
-                            #Content_Title="ngModel"
-                            id="Content_Title"
-                            class="form-control"
-                            [(ngModel)]="content.title"
-                            name="Title"
-                            minlength="1"
-                            maxlength="1024"
-                            required
-                        />
+                        <label class="form-label" for="Content_Title">{{ l('Subject') }} *</label>
+                        <input type="text" #Content_Title="ngModel" id="Content_Title" class="form-control"
+                            [(ngModel)]="content.title" name="Title" minlength="1" maxlength="1024" required />
                         <validation-messages [formCtrl]="Content_Title"></validation-messages>
                     </div>
 
                     <div class="my-3">
                         <label class="form-label" for="Content_Body">{{ l('Body') }}</label>
-                        <input
-                            type="text"
-                            #Content_Body="ngModel"
-                            id="Content_Body"
-                            class="form-control"
-                            [(ngModel)]="content.body"
-                            name="Body"
-                        />
-                        <validation-messages [formCtrl]="Content_Body"></validation-messages>
+                        <p-editor id="content.body" name="content.body" [(ngModel)]="content.body" ngDefaultControl
+                            [style]="{ height: '300px' }" placeholder="'Type here...'"></p-editor>
+                        <!-- <input type="text" #Content_Body="ngModel" id="Content_Body" class="form-control"
+                            [(ngModel)]="content.body" name="Body" />
+                        <validation-messages [formCtrl]="Content_Body"></validation-messages> -->
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-6">
+                            <div class="my-3">
+                                <label class="form-label" for="Content_PublishedDate">{{ l('Published Date') }}</label>
+                                <input class="form-control m-input" #Content_PublishedDate type="datetime" bsDatepicker
+                                    datePickerLuxonModifier [(date)]="content.publishedDate" id="Content_PublishedDate"
+                                    name="Content_PublishedDate" />
+                                <validation-messages [formCtrl]="Content_PublishedDate"></validation-messages>
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="my-3">
+                                <label class="form-label" for="Content_PublishTime">{{ l('Publish Time') }}</label>
+                                <input class="form-control" [(ngModel)]="content.publishTime" name="StartTime"
+                                    [ngxTimepicker]="startTime" aria-label="12hr format" type="text" readonly>
+                                <ngx-material-timepicker #startTime (timeSet)="startTimeValue($event)">
+                                </ngx-material-timepicker>
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="my-3">
+                                <label class="form-label" for="Content_SeoUrl">{{ l('Seo URL') }}</label>
+                                <input type="text" #Content_SeoUrl="ngModel" id="Content_SeoUrl" class="form-control"
+                                    [(ngModel)]="content.seoUrl" name="SeoUrl" minlength="1" maxlength="1024" />
+                                <validation-messages [formCtrl]="Content_SeoUrl"></validation-messages>
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="my-3">
+                                <label class="form-label" for="Content_SeoKeywords">{{ l('Seo Keywords') }}</label>
+                                <input type="text" #Content_SeoKeywords="ngModel" id="Content_SeoKeywords"
+                                    class="form-control" [(ngModel)]="content.seoKeywords" name="SeoKeywords"
+                                    minlength="1" maxlength="512" />
+                                <validation-messages [formCtrl]="Content_SeoKeywords"></validation-messages>
+                            </div>
+                        </div>
+                        <div class="col-xl-12">
+                            <div class="my-3">
+                                <label class="form-label" for="Content_SeoDescription">{{ l('Seo Description')
+                                    }}</label>
+                                <textarea #Content_SeoDescription="ngModel" id="Content_SeoDescription"
+                                    class="form-control" [(ngModel)]="content.seoDescription" name="SeoDescription"
+                                    cols="30" rows="5"></textarea>
+                                <validation-messages [formCtrl]="Content_SeoDescription"></validation-messages>
+                            </div>
+                        </div>
                     </div>
 
-                    <br />
-                    <label class="form-check form-check-custom form-check-solid">
-                        <input
-                            id="Content_Published"
-                            #Content_Published="ngModel"
-                            name="Published"
-                            [(ngModel)]="content.published"
-                            type="checkbox"
-                            class="form-check-input"
-                        />
-                        <span class="form-check-label">
-                            {{ l('Published') }}
-                        </span>
-                    </label>
-                    <validation-messages [formCtrl]="Content_Published"></validation-messages>
-
-                    <div class="my-3">
-                        <label class="form-label" for="Content_PublishedDate">{{ l('PublishedDate') }}</label>
-                        <input
-                            class="form-control m-input"
-                            #Content_PublishedDate
-                            type="datetime"
-                            bsDatepicker
-                            datePickerLuxonModifier
-                            [(date)]="content.publishedDate"
-                            id="Content_PublishedDate"
-                            name="Content_PublishedDate"
-                        />
-                        <validation-messages [formCtrl]="Content_PublishedDate"></validation-messages>
+                    <!-- <br />
+                    <div class="mt-3">
+                        <label class="form-check form-check-custom form-check-solid">
+                            <input id="Content_Published" #Content_Published="ngModel" name="Published"
+                                [(ngModel)]="content.published" type="checkbox" class="form-check-input" />
+                            <span class="form-check-label">
+                                {{ l('Published') }}
+                            </span>
+                        </label>
+                        <validation-messages [formCtrl]="Content_Published"></validation-messages>
+                    </div> -->
+                    <div class="col-xl-12 d-flex align-items-center">
+                        <div class="me-5 fw-semibold text-gray">
+                            Published
+                        </div>
+                        <div class="form-check form-check-solid form-switch form-check-custom fv-row">
+                            <input class="form-check-input w-45px h-30px" type="checkbox" id="published" name="published" [(ngModel)]="content.published">
+                            <label class="form-check-label" for="content.published"></label>
+                        </div>
                     </div>
 
-                    <div class="my-3">
-                        <label class="form-label" for="Content_PublishTime">{{ l('PublishTime') }}</label>
-                        <input
-                            type="text"
-                            #Content_PublishTime="ngModel"
-                            id="Content_PublishTime"
-                            class="form-control"
-                            [(ngModel)]="content.publishTime"
-                            name="PublishTime"
-                            minlength="1"
-                            maxlength="50"
-                        />
-                        <validation-messages [formCtrl]="Content_PublishTime"></validation-messages>
-                    </div>
 
-                    <div class="my-3">
-                        <label class="form-label" for="Content_SeoUrl">{{ l('SeoUrl') }}</label>
-                        <input
-                            type="text"
-                            #Content_SeoUrl="ngModel"
-                            id="Content_SeoUrl"
-                            class="form-control"
-                            [(ngModel)]="content.seoUrl"
-                            name="SeoUrl"
-                            minlength="1"
-                            maxlength="1024"
-                        />
-                        <validation-messages [formCtrl]="Content_SeoUrl"></validation-messages>
-                    </div>
 
-                    <div class="my-3">
-                        <label class="form-label" for="Content_SeoKeywords">{{ l('SeoKeywords') }}</label>
-                        <input
-                            type="text"
-                            #Content_SeoKeywords="ngModel"
-                            id="Content_SeoKeywords"
-                            class="form-control"
-                            [(ngModel)]="content.seoKeywords"
-                            name="SeoKeywords"
-                            minlength="1"
-                            maxlength="512"
-                        />
-                        <validation-messages [formCtrl]="Content_SeoKeywords"></validation-messages>
-                    </div>
-
-                    <div class="my-3">
-                        <label class="form-label" for="Content_SeoDescription">{{ l('SeoDescription') }}</label>
-                        <input
-                            type="text"
-                            #Content_SeoDescription="ngModel"
-                            id="Content_SeoDescription"
-                            class="form-control"
-                            [(ngModel)]="content.seoDescription"
-                            name="SeoDescription"
-                        />
-                        <validation-messages [formCtrl]="Content_SeoDescription"></validation-messages>
-                    </div>
-
-                    <div class="my-3">
-                        <label class="form-label" for="Content_ContentTypeId">{{ l('ContentTypeId') }}</label>
-                        <select
-                            class="form-select"
-                            #Content_ContentTypeId="ngModel"
-                            name="ContentTypeId"
-                            id="Content_ContentTypeId"
-                            [(ngModel)]="content.contentTypeId"
-                        >
-                            <option value="1">{{ l('Legal_Terms') }}</option>
-
-                            <option value="2">{{ l('Blogs') }}</option>
-
-                            <option value="3">{{ l('Company_News') }}</option>
-
-                            <option value="4">{{ l('Site_Default_Content') }}</option>
-                        </select>
-                        <validation-messages [formCtrl]="Content_ContentTypeId"></validation-messages>
-                    </div>
                 </div>
                 <div class="modal-footer">
                     <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
                         {{ l('Cancel') }}
                     </button>
-                    <button
-                        type="submit"
-                        class="btn btn-primary blue"
-                        [disabled]="!contentForm.form.valid"
-                        [buttonBusy]="saving"
-                        [busyText]="l('SavingWithThreeDot')"
-                    >
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!contentForm.form.valid"
+                        [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')">
                         <i class="fa fa-save"></i>
                         <span>{{ l('Save') }}</span>
                     </button>
@@ -214,8 +145,6 @@
             </form>
         </div>
     </div>
-    <contentMediaLibraryLookupTableModal
-        #contentMediaLibraryLookupTableModal
-        (modalSave)="getNewBannerMediaLibraryId()"
-    ></contentMediaLibraryLookupTableModal>
+    <contentMediaLibraryLookupTableModal #contentMediaLibraryLookupTableModal
+        (modalSave)="getNewBannerMediaLibraryId()"></contentMediaLibraryLookupTableModal>
 </div>
