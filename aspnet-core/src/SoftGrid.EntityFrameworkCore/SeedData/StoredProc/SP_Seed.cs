@@ -8,5 +8,7 @@ public class SP_Seed
     {
         migrationBuilder.Sql(USP_GetAllHubsForPublicHubDirectory.Up());
         migrationBuilder.Sql(USP_GetTopNearbyHubsByUserLocation.Up());
+        migrationBuilder.Sql(USP_GetAllHubsForDropdown.Up());
+        migrationBuilder.Sql(USP_GetAllStoreReviewsByStoreIdAndContactId.Up());
     }
 }
