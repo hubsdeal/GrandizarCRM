@@ -1,29 +1,28 @@
-﻿using SoftGrid.LookupData;
+﻿using Abp.Application.Services.Dto;
+using Abp.Authorization;
+using Abp.Domain.Repositories;
+using Abp.Linq.Extensions;
+using Abp.UI;
+
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+
+using SoftGrid.Authorization;
+using SoftGrid.Dto;
+using SoftGrid.EntityFrameworkCore.Repositories;
 using SoftGrid.LookupData;
+using SoftGrid.Storage;
+using SoftGrid.Territory.Dtos;
+using SoftGrid.Territory.Exporting;
 
 using System;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using Abp.Linq.Extensions;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using Abp.Domain.Repositories;
-using SoftGrid.Territory.Exporting;
-using SoftGrid.Territory.Dtos;
-using SoftGrid.Dto;
-using Abp.Application.Services.Dto;
-using SoftGrid.Authorization;
-using Abp.Extensions;
-using Abp.Authorization;
-using Microsoft.EntityFrameworkCore;
-using Abp.UI;
-using SoftGrid.Storage;
-using Microsoft.Data.SqlClient;
 using System.Data;
-using SoftGrid.EntityFrameworkCore.Repositories;
-using NPOI.SS.Formula.Functions;
 using System.Drawing;
 using System.IO;
+using System.Linq;
+using System.Linq.Dynamic.Core;
+using System.Threading.Tasks;
 
 namespace SoftGrid.Territory
 {
@@ -553,14 +552,14 @@ namespace SoftGrid.Territory
                     item.Picture = await _binaryObjectManager.GetOthersPictureUrlAsync((Guid)item.BinaryObjectId, ".png");
                 }
             }
-           
+
 
             return result;
         }
 
         private static List<SqlParameter> PrepareSearchParameterForGetAllHubsBySp(GetAllHubsInputForSp input)
         {
-           
+
 
             List<SqlParameter> sqlParameters = new List<SqlParameter>();
 
@@ -618,7 +617,7 @@ namespace SoftGrid.Territory
             SqlParameter maxResultCount = new SqlParameter("@MaxResultCount", input.MaxResultCount);
             sqlParameters.Add(maxResultCount);
 
-           
+
 
             return sqlParameters;
         }
@@ -664,7 +663,7 @@ namespace SoftGrid.Territory
             var mediaLibrary = new MediaLibrary();
             mediaLibrary.BinaryObjectId = storedFile.Id;
             mediaLibrary.Name = input.Name + "_" + "Logo";
-            mediaLibrary.MasterTagCategoryId = (long)MasterTagCategoriesEnum.Media_Type;
+            mediaLibrary.MasterTagCategoryId = (long)MasterTagCategoryEnum.Media_Type;
             mediaLibrary.MasterTagId = 1;
             mediaLibrary.FileExtension = ".png";
             mediaLibrary.Size = (byteArray.Length / 1024).ToString() + " kb";

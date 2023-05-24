@@ -867,7 +867,7 @@ namespace SoftGrid.Shop
             var mediaLibrary = new MediaLibrary();
             mediaLibrary.BinaryObjectId = storedFile.Id;
             mediaLibrary.Name = input.Name + "_" + "Logo";
-            mediaLibrary.MasterTagCategoryId = (long)MasterTagCategoriesEnum.Media_Type;
+            mediaLibrary.MasterTagCategoryId = (long)MasterTagCategoryEnum.Media_Type;
             mediaLibrary.MasterTagId = 1;
             mediaLibrary.FileExtension = ".png";
             mediaLibrary.Size = (byteArray.Length / 1024).ToString() + " kb";

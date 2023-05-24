@@ -1,10 +1,12 @@
-﻿namespace SoftGrid.SeedData.StoredProc;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+
+namespace SoftGrid.SeedData.StoredProc;
 
 public class USP_GetAllStoreReviewsByStoreIdAndContactId
 {
-    public static string Up()
+    public static void Up(MigrationBuilder migrationBuilder)
     {
-        var sql = @"
+        migrationBuilder.Sql(@"
             SET ANSI_NULLS ON
             GO
             SET QUOTED_IDENTIFIER ON
@@ -71,7 +73,6 @@ public class USP_GetAllStoreReviewsByStoreIdAndContactId
             GO
 
 
-            ";
-        return sql;
+            ");
     }
 }

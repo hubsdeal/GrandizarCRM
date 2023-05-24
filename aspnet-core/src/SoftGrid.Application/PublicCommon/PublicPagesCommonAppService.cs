@@ -18,8 +18,10 @@ using SoftGrid.Notifications;
 using SoftGrid.OrderManagement;
 using SoftGrid.PublicCommon.Dtos;
 using SoftGrid.Shop;
+using SoftGrid.Shop.Dtos;
 using SoftGrid.Storage;
 using SoftGrid.Territory;
+using SoftGrid.Territory.Dtos;
 using SoftGrid.Url;
 
 using System;
@@ -28,7 +30,6 @@ using System.Data;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
-using SoftGrid.Shop.Dtos;
 
 
 namespace SoftGrid.PublicCommon
@@ -230,7 +231,7 @@ namespace SoftGrid.PublicCommon
             //_orderPaymentInfoRepository = orderPaymentInfoRepository;
             //_paymentTypeRepository = paymentTypeRepository;
             //_storeWidgetHubMapRepository = storeWidgetHubMapRepository;
-            //_hubRepository = hubRepository;
+            _hubRepository = hubRepository;
             //_hubsProductCategoryRepository = hubsProductCategoryRepository;
             //_hubsProductRepository = hubsProductRepository;
             _hubsStoreRepository = hubsStoreRepository;
@@ -2646,38 +2647,43 @@ namespace SoftGrid.PublicCommon
                 result.Hubs
             );
         }
-        //[AbpAllowAnonymous]
-        //public async Task<GetHubForViewDto> GetHubDetails(string url)
-        //{
-        //    var hub = await _hubRepository.FirstOrDefaultAsync(e => e.Url.Equals(url));
 
-        //    var output = new GetHubForViewDto { Hub = ObjectMapper.Map<HubDto>(hub) };
 
-        //    if (output.Hub.CityId != null)
-        //    {
-        //        var _lookupCity = await _cityRepository.FirstOrDefaultAsync((long)output.Hub.CityId);
-        //        output.CityName = _lookupCity?.Name?.ToString();
-        //    }
 
-        //    if (output.Hub.StateId != null)
-        //    {
-        //        var _lookupState = await _stateRepository.FirstOrDefaultAsync((long)output.Hub.StateId);
-        //        output.StateName = _lookupState?.Name?.ToString();
-        //    }
+        [AbpAllowAnonymous]
+        public async Task<GetHubForViewDto> GetHubDetails(string url)
+        {
+            if (url == null) return new GetHubForViewDto();
 
-        //    if (output.Hub.CountryId != null)
-        //    {
-        //        var _lookupCountry = await _countryRepository.FirstOrDefaultAsync((long)output.Hub.CountryId);
-        //        output.CountryName = _lookupCountry?.Name?.ToString();
-        //    }
+            var hub = await _hubRepository.FirstOrDefaultAsync(e => e.Url.Equals(url));
 
-        //    if (output.Hub.PictureId != Guid.Empty)
-        //    {
-        //        output.Picture = await _binaryObjectManager.GetOthersPictureUrlAsync(output.Hub.PictureId, ".png");
+            var output = new GetHubForViewDto { Hub = ObjectMapper.Map<HubDto>(hub) };
 
-        //    }
-        //    return output;
-        //}
+            if (output.Hub.CityId != null)
+            {
+                var _lookupCity = await _cityRepository.FirstOrDefaultAsync((long)output.Hub.CityId);
+                output.CityName = _lookupCity?.Name?.ToString();
+            }
+
+            if (output.Hub.StateId != null)
+            {
+                var _lookupState = await _stateRepository.FirstOrDefaultAsync((long)output.Hub.StateId);
+                output.StateName = _lookupState?.Name?.ToString();
+            }
+
+            if (output.Hub.CountryId != null)
+            {
+                var _lookupCountry = await _countryRepository.FirstOrDefaultAsync((long)output.Hub.CountryId);
+                output.CountryName = _lookupCountry?.Name?.ToString();
+            }
+
+            //if (output.Hub.PictureId != Guid.Empty)
+            //{
+            //    output.Picture = await _binaryObjectManager.GetOthersPictureUrlAsync(output.Hub.PictureId, ".png");
+
+            //}
+            return output;
+        }
 
         //[AbpAllowAnonymous]
         //public async Task<List<TopProductCategoryPublicViewDto>> GetAllProductCategoriesByHub(long hubId)
@@ -2916,6 +2922,7 @@ namespace SoftGrid.PublicCommon
         [AbpAllowAnonymous]
         public async Task<List<HubPublicViewForDropdownDto>> GetAllHubForDropdown(string hubFilter = null, string cityFilter = null, string zipCodeFilter = null)
         {
+
             List<SqlParameter> parameters = new List<SqlParameter>();
 
             if (hubFilter != null)
@@ -3713,7 +3720,7 @@ namespace SoftGrid.PublicCommon
             //    }
             //}
 
-           // return results?? new List<OrderDeliveryInfoDeliveryTypeLookupTableDto>();
+            // return results?? new List<OrderDeliveryInfoDeliveryTypeLookupTableDto>();
             return new List<OrderDeliveryInfoDeliveryTypeLookupTableDto>();
         }
 
