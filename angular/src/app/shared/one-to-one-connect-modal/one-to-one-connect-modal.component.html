@@ -1,0 +1,882 @@
+<div bsModal #oneToOneConnectModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="oneToOneConnectModal" aria-hidden="true" [config]="{ backdrop: 'static' }">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #oneToOneConnectModalForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span>Faisal Connecting to TBN</span>
+                    </h4>
+
+                    <button type="button" class="btn-close" (click)="close()" aria-label="Close"
+                        [disabled]="saving"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="border rounded card">
+                        <div class="card-body p-0">
+                            <div class="d-flex gap-7 align-items-center bg-primary p-5">
+                                <div class="symbol symbol-circle symbol-100px">
+                                    <img src="/assets/common/images/default-profile-picture.png" alt="image">
+                                </div>
+                                <div class="d-flex flex-column gap-2">
+                                    <h3 class="mb-0 text-white">Emma Smith</h3>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <span class="svg-icon svg-icon-white svg-icon-2">
+                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path opacity="0.3"
+                                                    d="M21 19H3C2.4 19 2 18.6 2 18V6C2 5.4 2.4 5 3 5H21C21.6 5 22 5.4 22 6V18C22 18.6 21.6 19 21 19Z"
+                                                    fill="currentColor"></path>
+                                                <path
+                                                    d="M21 5H2.99999C2.69999 5 2.49999 5.10005 2.29999 5.30005L11.2 13.3C11.7 13.7 12.4 13.7 12.8 13.3L21.7 5.30005C21.5 5.10005 21.3 5 21 5Z"
+                                                    fill="currentColor"></path>
+                                            </svg>
+                                        </span>
+                                        <a href="javascript:;" class="text-white text-hover-info">smith@kpmg.com</a>
+                                    </div>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <span class="svg-icon svg-icon-white svg-icon-2">
+                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M5 20H19V21C19 21.6 18.6 22 18 22H6C5.4 22 5 21.6 5 21V20ZM19 3C19 2.4 18.6 2 18 2H6C5.4 2 5 2.4 5 3V4H19V3Z"
+                                                    fill="currentColor"></path>
+                                                <path opacity="0.3" d="M19 4H5V20H19V4Z" fill="currentColor"></path>
+                                            </svg>
+                                        </span>
+                                        <a href="javascript:;" class="text-white text-hover-info">+6141 234 567</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex gap-7 align-items-center p-5">
+                                <a href="javascript:;" class="btn btn-light-primary">
+                                    <i class="fas fa-message"></i> Connect
+                                </a>
+                            </div>
+                            <br>
+                            <div class="p-5 pt-0">
+                                <ul class="nav nav-custom nav-tabs nav-line-tabs nav-line-tabs-2x fs-6 fw-semibold mt-0 mb-8"
+                                    role="tablist">
+                                    <!--begin:::Tab item-->
+                                    <li class="nav-item" role="presentation">
+                                        <a class="nav-link text-active-primary active pb-4" data-bs-toggle="tab"
+                                            href="#kt_contact_view_general" aria-selected="true" role="tab"
+                                            tabindex="-1">
+                                            <i class="fas fa-envelope"></i> Email
+                                        </a>
+                                    </li>
+                                    <!--end:::Tab item-->
+                                    <!--begin:::Tab item-->
+                                    <li class="nav-item" role="presentation">
+                                        <a class="nav-link text-active-primary pb-4" data-bs-toggle="tab"
+                                            href="#kt_contact_view_meetings" aria-selected="false" role="tab"
+                                            tabindex="-1">
+                                            <i class="fas fa-sms"></i> SMS
+                                        </a>
+                                    </li>
+                                    <!--end:::Tab item-->
+                                    <!--begin:::Tab item-->
+                                    <li class="nav-item" role="presentation">
+                                        <a class="nav-link text-active-primary pb-4" data-bs-toggle="tab"
+                                            href="#kt_contact_view_call" aria-selected="true" role="tab">
+                                            <i class="fas fa-phone-alt"></i> Call
+                                        </a>
+                                    </li>
+                                    <!--end:::Tab item-->
+                                    <!--begin:::Tab item-->
+                                    <li class="nav-item" role="presentation">
+                                        <a class="nav-link text-active-primary pb-4" data-bs-toggle="tab"
+                                            href="#kt_contact_view_chat" aria-selected="true" role="tab">
+                                            <i class="fas fa-message"></i> Chat
+                                        </a>
+                                    </li>
+                                    <!--end:::Tab item-->
+                                    <!--begin:::Tab item-->
+                                    <li class="nav-item" role="presentation">
+                                        <a class="nav-link text-active-primary pb-4" data-bs-toggle="tab"
+                                            href="#kt_contact_view_activity" aria-selected="true" role="tab">
+                                            <i class="flaticon-interface-6"></i> Timeline
+                                        </a>
+                                    </li>
+                                    <!--end:::Tab item-->
+                                </ul>
+                                <!--end:::Tabs-->
+                                <!--begin::Tab content-->
+                                <div class="tab-content" id="">
+                                    <!--begin:::Tab pane-->
+                                    <div class="tab-pane fade active show" id="kt_contact_view_general" role="tabpanel">
+                                        <div class="row">
+                                            <div class="col-xl-12 mb-6">
+                                                <div class="d-flex align-items-center">
+                                                    <label
+                                                        class="form-check form-check-custom form-check-inline form-check-solid me-5">
+                                                        <input class="form-check-input" name="email" type="checkbox"
+                                                            value="1">
+                                                        <span class="fw-semibold ps-6 fs-6">
+                                                            <i class="fas fa-envelope-open me-2"></i>
+                                                            rashed@gmail.com
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-12 mb-6">
+                                                <div class="d-flex align-items-center">
+                                                    <label
+                                                        class="form-check form-check-custom form-check-inline form-check-solid me-5">
+                                                        <input class="form-check-input" name="email" type="checkbox"
+                                                            value="1">
+                                                        <span class="fw-semibold ps-6 fs-6">
+                                                            <i class="fas fa-envelope-open me-2"></i>
+                                                            rashed2@gmail.com
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-12 fv-row fv-plugins-icon-container mb-6">
+                                                <input type="text" name="fname"
+                                                    class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+                                                    placeholder="CC">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xl-3 mb-6">
+                                                <select class="form-select form-select-solid"
+                                                    aria-label="Select example">
+                                                    <option>Select Template</option>
+                                                    <option value="1">One</option>
+                                                    <option value="2">Two</option>
+                                                    <option value="3">Three</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-xl-9 mb-6">
+                                                <input type="text" name="fname"
+                                                    class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+                                                    placeholder="Subject">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xl-12 mb-6">
+                                                <p-editor id="content.body" name="content.body" ngDefaultControl
+                                                    [style]="{ height: '300px' }"
+                                                    placeholder="'Type here...'"></p-editor>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xl-12 d-flex justify-content-end mb-6">
+                                                <button type="button" class="btn btn-primary me-2">
+                                                    <i class="fas fa-rocket me-1"></i> Send
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--end:::Tab pane-->
+                                    <!--begin:::Tab pane-->
+                                    <div class="tab-pane fade" id="kt_contact_view_meetings" role="tabpanel">
+                                        <div class="row">
+                                            <div class="col-xl-12 mb-6">
+                                                <div class="d-flex align-items-center">
+                                                    <label
+                                                        class="form-check form-check-custom form-check-inline form-check-solid me-5">
+                                                        <input class="form-check-input" name="email" type="checkbox"
+                                                            value="1">
+                                                        <span class="fw-semibold ps-6 fs-6">
+                                                            <i class="fas fa-phone me-2"></i>
+                                                            017772212486
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-12 mb-6">
+                                                <div class="d-flex align-items-center">
+                                                    <label
+                                                        class="form-check form-check-custom form-check-inline form-check-solid me-5">
+                                                        <input class="form-check-input" name="email" type="checkbox"
+                                                            value="1">
+                                                        <span class="fw-semibold ps-6 fs-6">
+                                                            <i class="fas fa-phone me-2"></i>
+                                                            017772212486
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xl-12 mb-6">
+                                                <select class="form-select form-select-solid"
+                                                    aria-label="Select example">
+                                                    <option>Select Template</option>
+                                                    <option value="1">One</option>
+                                                    <option value="2">Two</option>
+                                                    <option value="3">Three</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xl-12 mb-6">
+                                                <textarea class="form-control form-control-lg form-control-solid"
+                                                    name="Description" id="Description" cols="30"
+                                                    placeholder="Type here..." rows="10"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xl-12 d-flex justify-content-end mb-6">
+                                                <button type="button" class="btn btn-primary me-2">
+                                                    <i class="fas fa-rocket me-1"></i> Send
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--end:::Tab pane-->
+                                    <!--begin:::Tab pane-->
+                                    <div class="tab-pane fade" id="kt_contact_view_call" role="tabpanel">
+                                        <div class="row">
+                                            <div class="col-xl-12 mb-6">
+                                                <div class="d-flex align-items-center">
+                                                    <label
+                                                        class="form-check form-check-custom form-check-inline form-check-solid me-5">
+                                                        <input class="form-check-input" name="email" type="checkbox"
+                                                            value="1">
+                                                        <span class="fw-semibold ps-6 fs-6">
+                                                            <i class="fas fa-phone me-2"></i>
+                                                            017772212486
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-12 mb-6">
+                                                <div class="d-flex align-items-center">
+                                                    <label
+                                                        class="form-check form-check-custom form-check-inline form-check-solid me-5">
+                                                        <input class="form-check-input" name="email" type="checkbox"
+                                                            value="1">
+                                                        <span class="fw-semibold ps-6 fs-6">
+                                                            <i class="fas fa-phone me-2"></i>
+                                                            017772212486
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xl-12 mb-6">
+                                                <input type="number" name="fname"
+                                                    class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+                                                    placeholder="Enter Number">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xl-12 d-flex justify-content-end mb-6">
+                                                <button type="button" class="btn w-100 btn-primary me-2">
+                                                    <i class="fas fa-phone-alt me-1"></i> Call
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--end:::Tab pane-->
+                                    <!--begin:::Tab pane-->
+                                    <div class="tab-pane fade" id="kt_contact_view_chat" role="tabpanel">
+                                        <div class="card" id="kt_chat_messenger">
+                                            <!--begin::Card header-->
+                                            <div class="card-header" id="kt_chat_messenger_header">
+                                                <!--begin::Title-->
+                                                <div class="card-title">
+                                                    <!--begin::User-->
+                                                    <div class="d-flex justify-content-center flex-column me-3">
+                                                        <a href="#"
+                                                            class="fs-4 fw-bold text-gray-900 text-hover-primary me-1 mb-2 lh-1">Brian
+                                                            Cox</a>
+                                                        <!--begin::Info-->
+                                                        <div class="mb-0 lh-1">
+                                                            <span
+                                                                class="badge badge-success badge-circle w-10px h-10px me-1"></span>
+                                                            <span class="fs-7 fw-semibold text-muted">Active</span>
+                                                        </div>
+                                                        <!--end::Info-->
+                                                    </div>
+                                                    <!--end::User-->
+                                                </div>
+                                                <!--end::Title-->
+                                                <!--begin::Card toolbar-->
+                                                <div class="card-toolbar">
+                                                    <!--begin::Menu-->
+                                                    <div class="me-n3">
+                                                        <button class="btn btn-sm btn-icon btn-active-light-primary"
+                                                            data-kt-menu-trigger="click"
+                                                            data-kt-menu-placement="bottom-end">
+                                                            <i class="bi bi-three-dots fs-2"></i>
+                                                        </button>
+                                                        <!--begin::Menu 3-->
+                                                        <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-200px py-3"
+                                                            data-kt-menu="true" style="">
+                                                            <!--begin::Heading-->
+                                                            <div class="menu-item px-3">
+                                                                <div
+                                                                    class="menu-content text-muted pb-2 px-3 fs-7 text-uppercase">
+                                                                    Contacts</div>
+                                                            </div>
+                                                            <!--end::Heading-->
+                                                            <!--begin::Menu item-->
+                                                            <div class="menu-item px-3">
+                                                                <a href="#" class="menu-link px-3"
+                                                                    data-bs-toggle="modal"
+                                                                    data-bs-target="#kt_modal_users_search">Add
+                                                                    Contact</a>
+                                                            </div>
+                                                            <!--end::Menu item-->
+                                                            <!--begin::Menu item-->
+                                                            <div class="menu-item px-3">
+                                                                <a href="#" class="menu-link flex-stack px-3"
+                                                                    data-bs-toggle="modal"
+                                                                    data-bs-target="#kt_modal_invite_friends">Invite
+                                                                    Contacts
+                                                                    <i class="fas fa-exclamation-circle ms-2 fs-7"
+                                                                        data-bs-toggle="tooltip"
+                                                                        aria-label="Specify a contact email to send an invitation"
+                                                                        data-bs-original-title="Specify a contact email to send an invitation"
+                                                                        data-kt-initialized="1"></i></a>
+                                                            </div>
+                                                            <!--end::Menu item-->
+                                                            <!--begin::Menu item-->
+                                                            <div class="menu-item px-3" data-kt-menu-trigger="hover"
+                                                                data-kt-menu-placement="right-start">
+                                                                <a href="#" class="menu-link px-3">
+                                                                    <span class="menu-title">Groups</span>
+                                                                    <span class="menu-arrow"></span>
+                                                                </a>
+                                                                <!--begin::Menu sub-->
+                                                                <div class="menu-sub menu-sub-dropdown w-175px py-4"
+                                                                    style="">
+                                                                    <!--begin::Menu item-->
+                                                                    <div class="menu-item px-3">
+                                                                        <a href="#" class="menu-link px-3"
+                                                                            data-bs-toggle="tooltip"
+                                                                            data-bs-original-title="Coming soon"
+                                                                            data-kt-initialized="1">Create Group</a>
+                                                                    </div>
+                                                                    <!--end::Menu item-->
+                                                                    <!--begin::Menu item-->
+                                                                    <div class="menu-item px-3">
+                                                                        <a href="#" class="menu-link px-3"
+                                                                            data-bs-toggle="tooltip"
+                                                                            data-bs-original-title="Coming soon"
+                                                                            data-kt-initialized="1">Invite Members</a>
+                                                                    </div>
+                                                                    <!--end::Menu item-->
+                                                                    <!--begin::Menu item-->
+                                                                    <div class="menu-item px-3">
+                                                                        <a href="#" class="menu-link px-3"
+                                                                            data-bs-toggle="tooltip"
+                                                                            data-bs-original-title="Coming soon"
+                                                                            data-kt-initialized="1">Settings</a>
+                                                                    </div>
+                                                                    <!--end::Menu item-->
+                                                                </div>
+                                                                <!--end::Menu sub-->
+                                                            </div>
+                                                            <!--end::Menu item-->
+                                                            <!--begin::Menu item-->
+                                                            <div class="menu-item px-3 my-1">
+                                                                <a href="#" class="menu-link px-3"
+                                                                    data-bs-toggle="tooltip"
+                                                                    data-bs-original-title="Coming soon"
+                                                                    data-kt-initialized="1">Settings</a>
+                                                            </div>
+                                                            <!--end::Menu item-->
+                                                        </div>
+                                                        <!--end::Menu 3-->
+                                                    </div>
+                                                    <!--end::Menu-->
+                                                </div>
+                                                <!--end::Card toolbar-->
+                                            </div>
+                                            <!--end::Card header-->
+                                            <!--begin::Card body-->
+                                            <div class="card-body" id="kt_chat_messenger_body">
+                                                <!--begin::Messages-->
+                                                <div class="scroll-y me-n5 pe-5 h-300px h-lg-auto"
+                                                    data-kt-element="messages" data-kt-scroll="true"
+                                                    data-kt-scroll-activate="{default: false, lg: true}"
+                                                    data-kt-scroll-max-height="auto"
+                                                    data-kt-scroll-dependencies="#kt_header, #kt_app_header, #kt_app_toolbar, #kt_toolbar, #kt_footer, #kt_app_footer, #kt_chat_messenger_header, #kt_chat_messenger_footer"
+                                                    data-kt-scroll-wrappers="#kt_content, #kt_app_content, #kt_chat_messenger_body"
+                                                    data-kt-scroll-offset="5px" style="max-height: 156px;">
+                                                    <!--begin::Message(in)-->
+                                                    <div class="d-flex justify-content-start mb-10">
+                                                        <!--begin::Wrapper-->
+                                                        <div class="d-flex flex-column align-items-start">
+                                                            <!--begin::User-->
+                                                            <div class="d-flex align-items-center mb-2">
+                                                                <!--begin::Avatar-->
+                                                                <div class="symbol symbol-35px symbol-circle">
+                                                                    <img alt="Pic"
+                                                                        src="assets/media/avatars/300-25.jpg">
+                                                                </div>
+                                                                <!--end::Avatar-->
+                                                                <!--begin::Details-->
+                                                                <div class="ms-3">
+                                                                    <a href="#"
+                                                                        class="fs-5 fw-bold text-gray-900 text-hover-primary me-1">Brian
+                                                                        Cox</a>
+                                                                    <span class="text-muted fs-7 mb-1">2 mins</span>
+                                                                </div>
+                                                                <!--end::Details-->
+                                                            </div>
+                                                            <!--end::User-->
+                                                            <!--begin::Text-->
+                                                            <div class="p-5 rounded bg-light-info text-dark fw-semibold mw-lg-400px text-start"
+                                                                data-kt-element="message-text">How likely are you to
+                                                                recommend our company to your friends and family ?</div>
+                                                            <!--end::Text-->
+                                                        </div>
+                                                        <!--end::Wrapper-->
+                                                    </div>
+                                                    <!--end::Message(in)-->
+                                                    <!--begin::Message(out)-->
+                                                    <div class="d-flex justify-content-end mb-10">
+                                                        <!--begin::Wrapper-->
+                                                        <div class="d-flex flex-column align-items-end">
+                                                            <!--begin::User-->
+                                                            <div class="d-flex align-items-center mb-2">
+                                                                <!--begin::Details-->
+                                                                <div class="me-3">
+                                                                    <span class="text-muted fs-7 mb-1">5 mins</span>
+                                                                    <a href="#"
+                                                                        class="fs-5 fw-bold text-gray-900 text-hover-primary ms-1">You</a>
+                                                                </div>
+                                                                <!--end::Details-->
+                                                                <!--begin::Avatar-->
+                                                                <div class="symbol symbol-35px symbol-circle">
+                                                                    <img alt="Pic" src="assets/media/avatars/300-1.jpg">
+                                                                </div>
+                                                                <!--end::Avatar-->
+                                                            </div>
+                                                            <!--end::User-->
+                                                            <!--begin::Text-->
+                                                            <div class="p-5 rounded bg-light-primary text-dark fw-semibold mw-lg-400px text-end"
+                                                                data-kt-element="message-text">Hey there, we’re just
+                                                                writing to let you know that you’ve been subscribed to a
+                                                                repository on GitHub.</div>
+                                                            <!--end::Text-->
+                                                        </div>
+                                                        <!--end::Wrapper-->
+                                                    </div>
+                                                    <!--end::Message(out)-->
+                                                    <!--begin::Message(in)-->
+                                                    <div class="d-flex justify-content-start mb-10">
+                                                        <!--begin::Wrapper-->
+                                                        <div class="d-flex flex-column align-items-start">
+                                                            <!--begin::User-->
+                                                            <div class="d-flex align-items-center mb-2">
+                                                                <!--begin::Avatar-->
+                                                                <div class="symbol symbol-35px symbol-circle">
+                                                                    <img alt="Pic"
+                                                                        src="assets/media/avatars/300-25.jpg">
+                                                                </div>
+                                                                <!--end::Avatar-->
+                                                                <!--begin::Details-->
+                                                                <div class="ms-3">
+                                                                    <a href="#"
+                                                                        class="fs-5 fw-bold text-gray-900 text-hover-primary me-1">Brian
+                                                                        Cox</a>
+                                                                    <span class="text-muted fs-7 mb-1">1 Hour</span>
+                                                                </div>
+                                                                <!--end::Details-->
+                                                            </div>
+                                                            <!--end::User-->
+                                                            <!--begin::Text-->
+                                                            <div class="p-5 rounded bg-light-info text-dark fw-semibold mw-lg-400px text-start"
+                                                                data-kt-element="message-text">Ok, Understood!</div>
+                                                            <!--end::Text-->
+                                                        </div>
+                                                        <!--end::Wrapper-->
+                                                    </div>
+                                                    <!--end::Message(in)-->
+                                                    <!--begin::Message(out)-->
+                                                    <div class="d-flex justify-content-end mb-10">
+                                                        <!--begin::Wrapper-->
+                                                        <div class="d-flex flex-column align-items-end">
+                                                            <!--begin::User-->
+                                                            <div class="d-flex align-items-center mb-2">
+                                                                <!--begin::Details-->
+                                                                <div class="me-3">
+                                                                    <span class="text-muted fs-7 mb-1">2 Hours</span>
+                                                                    <a href="#"
+                                                                        class="fs-5 fw-bold text-gray-900 text-hover-primary ms-1">You</a>
+                                                                </div>
+                                                                <!--end::Details-->
+                                                                <!--begin::Avatar-->
+                                                                <div class="symbol symbol-35px symbol-circle">
+                                                                    <img alt="Pic" src="assets/media/avatars/300-1.jpg">
+                                                                </div>
+                                                                <!--end::Avatar-->
+                                                            </div>
+                                                            <!--end::User-->
+                                                            <!--begin::Text-->
+                                                            <div class="p-5 rounded bg-light-primary text-dark fw-semibold mw-lg-400px text-end"
+                                                                data-kt-element="message-text">You’ll receive
+                                                                notifications for all issues, pull requests!</div>
+                                                            <!--end::Text-->
+                                                        </div>
+                                                        <!--end::Wrapper-->
+                                                    </div>
+                                                    <!--end::Message(out)-->
+                                                    <!--begin::Message(in)-->
+                                                    <div class="d-flex justify-content-start mb-10">
+                                                        <!--begin::Wrapper-->
+                                                        <div class="d-flex flex-column align-items-start">
+                                                            <!--begin::User-->
+                                                            <div class="d-flex align-items-center mb-2">
+                                                                <!--begin::Avatar-->
+                                                                <div class="symbol symbol-35px symbol-circle">
+                                                                    <img alt="Pic"
+                                                                        src="assets/media/avatars/300-25.jpg">
+                                                                </div>
+                                                                <!--end::Avatar-->
+                                                                <!--begin::Details-->
+                                                                <div class="ms-3">
+                                                                    <a href="#"
+                                                                        class="fs-5 fw-bold text-gray-900 text-hover-primary me-1">Brian
+                                                                        Cox</a>
+                                                                    <span class="text-muted fs-7 mb-1">3 Hours</span>
+                                                                </div>
+                                                                <!--end::Details-->
+                                                            </div>
+                                                            <!--end::User-->
+                                                            <!--begin::Text-->
+                                                            <div class="p-5 rounded bg-light-info text-dark fw-semibold mw-lg-400px text-start"
+                                                                data-kt-element="message-text">You can unwatch this
+                                                                repository immediately by clicking here:
+                                                                <a href="https://keenthemes.com">Keenthemes.com</a>
+                                                            </div>
+                                                            <!--end::Text-->
+                                                        </div>
+                                                        <!--end::Wrapper-->
+                                                    </div>
+                                                    <!--end::Message(in)-->
+                                                    <!--begin::Message(out)-->
+                                                    <div class="d-flex justify-content-end mb-10">
+                                                        <!--begin::Wrapper-->
+                                                        <div class="d-flex flex-column align-items-end">
+                                                            <!--begin::User-->
+                                                            <div class="d-flex align-items-center mb-2">
+                                                                <!--begin::Details-->
+                                                                <div class="me-3">
+                                                                    <span class="text-muted fs-7 mb-1">4 Hours</span>
+                                                                    <a href="#"
+                                                                        class="fs-5 fw-bold text-gray-900 text-hover-primary ms-1">You</a>
+                                                                </div>
+                                                                <!--end::Details-->
+                                                                <!--begin::Avatar-->
+                                                                <div class="symbol symbol-35px symbol-circle">
+                                                                    <img alt="Pic" src="assets/media/avatars/300-1.jpg">
+                                                                </div>
+                                                                <!--end::Avatar-->
+                                                            </div>
+                                                            <!--end::User-->
+                                                            <!--begin::Text-->
+                                                            <div class="p-5 rounded bg-light-primary text-dark fw-semibold mw-lg-400px text-end"
+                                                                data-kt-element="message-text">Most purchased Business
+                                                                courses during this sale!</div>
+                                                            <!--end::Text-->
+                                                        </div>
+                                                        <!--end::Wrapper-->
+                                                    </div>
+                                                    <!--end::Message(out)-->
+                                                    <!--begin::Message(in)-->
+                                                    <div class="d-flex justify-content-start mb-10">
+                                                        <!--begin::Wrapper-->
+                                                        <div class="d-flex flex-column align-items-start">
+                                                            <!--begin::User-->
+                                                            <div class="d-flex align-items-center mb-2">
+                                                                <!--begin::Avatar-->
+                                                                <div class="symbol symbol-35px symbol-circle">
+                                                                    <img alt="Pic"
+                                                                        src="assets/media/avatars/300-25.jpg">
+                                                                </div>
+                                                                <!--end::Avatar-->
+                                                                <!--begin::Details-->
+                                                                <div class="ms-3">
+                                                                    <a href="#"
+                                                                        class="fs-5 fw-bold text-gray-900 text-hover-primary me-1">Brian
+                                                                        Cox</a>
+                                                                    <span class="text-muted fs-7 mb-1">5 Hours</span>
+                                                                </div>
+                                                                <!--end::Details-->
+                                                            </div>
+                                                            <!--end::User-->
+                                                            <!--begin::Text-->
+                                                            <div class="p-5 rounded bg-light-info text-dark fw-semibold mw-lg-400px text-start"
+                                                                data-kt-element="message-text">Company BBQ to celebrate
+                                                                the last quater achievements and goals. Food and drinks
+                                                                provided</div>
+                                                            <!--end::Text-->
+                                                        </div>
+                                                        <!--end::Wrapper-->
+                                                    </div>
+                                                    <!--end::Message(in)-->
+                                                    <!--begin::Message(template for out)-->
+                                                    <div class="d-flex justify-content-end mb-10 d-none"
+                                                        data-kt-element="template-out">
+                                                        <!--begin::Wrapper-->
+                                                        <div class="d-flex flex-column align-items-end">
+                                                            <!--begin::User-->
+                                                            <div class="d-flex align-items-center mb-2">
+                                                                <!--begin::Details-->
+                                                                <div class="me-3">
+                                                                    <span class="text-muted fs-7 mb-1">Just now</span>
+                                                                    <a href="#"
+                                                                        class="fs-5 fw-bold text-gray-900 text-hover-primary ms-1">You</a>
+                                                                </div>
+                                                                <!--end::Details-->
+                                                                <!--begin::Avatar-->
+                                                                <div class="symbol symbol-35px symbol-circle">
+                                                                    <img alt="Pic" src="assets/media/avatars/300-1.jpg">
+                                                                </div>
+                                                                <!--end::Avatar-->
+                                                            </div>
+                                                            <!--end::User-->
+                                                            <!--begin::Text-->
+                                                            <div class="p-5 rounded bg-light-primary text-dark fw-semibold mw-lg-400px text-end"
+                                                                data-kt-element="message-text"></div>
+                                                            <!--end::Text-->
+                                                        </div>
+                                                        <!--end::Wrapper-->
+                                                    </div>
+                                                    <!--end::Message(template for out)-->
+                                                    <!--begin::Message(template for in)-->
+                                                    <div class="d-flex justify-content-start mb-10 d-none"
+                                                        data-kt-element="template-in">
+                                                        <!--begin::Wrapper-->
+                                                        <div class="d-flex flex-column align-items-start">
+                                                            <!--begin::User-->
+                                                            <div class="d-flex align-items-center mb-2">
+                                                                <!--begin::Avatar-->
+                                                                <div class="symbol symbol-35px symbol-circle">
+                                                                    <img alt="Pic"
+                                                                        src="assets/media/avatars/300-25.jpg">
+                                                                </div>
+                                                                <!--end::Avatar-->
+                                                                <!--begin::Details-->
+                                                                <div class="ms-3">
+                                                                    <a href="#"
+                                                                        class="fs-5 fw-bold text-gray-900 text-hover-primary me-1">Brian
+                                                                        Cox</a>
+                                                                    <span class="text-muted fs-7 mb-1">Just now</span>
+                                                                </div>
+                                                                <!--end::Details-->
+                                                            </div>
+                                                            <!--end::User-->
+                                                            <!--begin::Text-->
+                                                            <div class="p-5 rounded bg-light-info text-dark fw-semibold mw-lg-400px text-start"
+                                                                data-kt-element="message-text">Right before vacation
+                                                                season we have the next Big Deal for you.</div>
+                                                            <!--end::Text-->
+                                                        </div>
+                                                        <!--end::Wrapper-->
+                                                    </div>
+                                                    <!--end::Message(template for in)-->
+                                                </div>
+                                                <!--end::Messages-->
+                                            </div>
+                                            <!--end::Card body-->
+                                            <!--begin::Card footer-->
+                                            <div class="card-footer pt-4" id="kt_chat_messenger_footer">
+                                                <!--begin::Input-->
+                                                <textarea class="form-control form-control-flush mb-3" rows="1"
+                                                    data-kt-element="input" placeholder="Type a message"></textarea>
+                                                <!--end::Input-->
+                                                <!--begin:Toolbar-->
+                                                <div class="d-flex flex-stack">
+                                                    <!--begin::Actions-->
+                                                    <div class="d-flex align-items-center me-2">
+                                                        <button
+                                                            class="btn btn-sm btn-icon btn-active-light-primary me-1"
+                                                            type="button" data-bs-toggle="tooltip"
+                                                            aria-label="Coming soon"
+                                                            data-bs-original-title="Coming soon"
+                                                            data-kt-initialized="1">
+                                                            <i class="bi bi-paperclip fs-3"></i>
+                                                        </button>
+                                                        <button
+                                                            class="btn btn-sm btn-icon btn-active-light-primary me-1"
+                                                            type="button" data-bs-toggle="tooltip"
+                                                            aria-label="Coming soon"
+                                                            data-bs-original-title="Coming soon"
+                                                            data-kt-initialized="1">
+                                                            <i class="bi bi-upload fs-3"></i>
+                                                        </button>
+                                                    </div>
+                                                    <!--end::Actions-->
+                                                    <!--begin::Send-->
+                                                    <button class="btn btn-primary" type="button"
+                                                        data-kt-element="send">Send</button>
+                                                    <!--end::Send-->
+                                                </div>
+                                                <!--end::Toolbar-->
+                                            </div>
+                                            <!--end::Card footer-->
+                                        </div>
+                                    </div>
+                                    <!--end:::Tab pane-->
+                                    <!--begin:::Tab pane-->
+                                    <div class="tab-pane fade" id="kt_contact_view_activity" role="tabpanel">
+                                        <!--begin::Timeline-->
+                                        <div class="timeline-label">
+                                            <!--begin::Item-->
+                                            <div class="timeline-item">
+                                                <!--begin::Label-->
+                                                <div class="timeline-label fw-bold text-gray-800 fs-6">08:42</div>
+                                                <!--end::Label-->
+                                                <!--begin::Badge-->
+                                                <div class="timeline-badge">
+                                                    <i class="fa fa-genderless text-warning fs-1"></i>
+                                                </div>
+                                                <!--end::Badge-->
+                                                <!--begin::Text-->
+                                                <div class="fw-mormal timeline-content text-muted ps-3">Outlines keep
+                                                    you honest. And keep structure</div>
+                                                <!--end::Text-->
+                                            </div>
+                                            <!--end::Item-->
+                                            <!--begin::Item-->
+                                            <div class="timeline-item">
+                                                <!--begin::Label-->
+                                                <div class="timeline-label fw-bold text-gray-800 fs-6">10:00</div>
+                                                <!--end::Label-->
+                                                <!--begin::Badge-->
+                                                <div class="timeline-badge">
+                                                    <i class="fa fa-genderless text-success fs-1"></i>
+                                                </div>
+                                                <!--end::Badge-->
+                                                <!--begin::Content-->
+                                                <div class="timeline-content d-flex">
+                                                    <span class="fw-bold text-gray-800 ps-3">AEOL meeting</span>
+                                                </div>
+                                                <!--end::Content-->
+                                            </div>
+                                            <!--end::Item-->
+                                            <!--begin::Item-->
+                                            <div class="timeline-item">
+                                                <!--begin::Label-->
+                                                <div class="timeline-label fw-bold text-gray-800 fs-6">14:37</div>
+                                                <!--end::Label-->
+                                                <!--begin::Badge-->
+                                                <div class="timeline-badge">
+                                                    <i class="fa fa-genderless text-danger fs-1"></i>
+                                                </div>
+                                                <!--end::Badge-->
+                                                <!--begin::Desc-->
+                                                <div class="timeline-content fw-bold text-gray-800 ps-3">Make deposit
+                                                    <a href="javascript:;" class="text-primary">USD 700</a>. to ESL
+                                                </div>
+                                                <!--end::Desc-->
+                                            </div>
+                                            <!--end::Item-->
+                                            <!--begin::Item-->
+                                            <div class="timeline-item">
+                                                <!--begin::Label-->
+                                                <div class="timeline-label fw-bold text-gray-800 fs-6">16:50</div>
+                                                <!--end::Label-->
+                                                <!--begin::Badge-->
+                                                <div class="timeline-badge">
+                                                    <i class="fa fa-genderless text-primary fs-1"></i>
+                                                </div>
+                                                <!--end::Badge-->
+                                                <!--begin::Text-->
+                                                <div class="timeline-content fw-mormal text-muted ps-3">Indulging in
+                                                    poorly driving and keep structure keep great</div>
+                                                <!--end::Text-->
+                                            </div>
+                                            <!--end::Item-->
+                                            <!--begin::Item-->
+                                            <div class="timeline-item">
+                                                <!--begin::Label-->
+                                                <div class="timeline-label fw-bold text-gray-800 fs-6">21:03</div>
+                                                <!--end::Label-->
+                                                <!--begin::Badge-->
+                                                <div class="timeline-badge">
+                                                    <i class="fa fa-genderless text-danger fs-1"></i>
+                                                </div>
+                                                <!--end::Badge-->
+                                                <!--begin::Desc-->
+                                                <div class="timeline-content fw-semibold text-gray-800 ps-3">New order
+                                                    placed
+                                                    <a href="javascript:;" class="text-primary">#XF-2356</a>.
+                                                </div>
+                                                <!--end::Desc-->
+                                            </div>
+                                            <!--end::Item-->
+                                            <!--begin::Item-->
+                                            <div class="timeline-item">
+                                                <!--begin::Label-->
+                                                <div class="timeline-label fw-bold text-gray-800 fs-6">16:50</div>
+                                                <!--end::Label-->
+                                                <!--begin::Badge-->
+                                                <div class="timeline-badge">
+                                                    <i class="fa fa-genderless text-primary fs-1"></i>
+                                                </div>
+                                                <!--end::Badge-->
+                                                <!--begin::Text-->
+                                                <div class="timeline-content fw-mormal text-muted ps-3">Indulging in
+                                                    poorly driving and keep structure keep great</div>
+                                                <!--end::Text-->
+                                            </div>
+                                            <!--end::Item-->
+                                            <!--begin::Item-->
+                                            <div class="timeline-item">
+                                                <!--begin::Label-->
+                                                <div class="timeline-label fw-bold text-gray-800 fs-6">21:03</div>
+                                                <!--end::Label-->
+                                                <!--begin::Badge-->
+                                                <div class="timeline-badge">
+                                                    <i class="fa fa-genderless text-danger fs-1"></i>
+                                                </div>
+                                                <!--end::Badge-->
+                                                <!--begin::Desc-->
+                                                <div class="timeline-content fw-semibold text-gray-800 ps-3">New order
+                                                    placed
+                                                    <a href="javascript:;" class="text-primary">#XF-2356</a>.
+                                                </div>
+                                                <!--end::Desc-->
+                                            </div>
+                                            <!--end::Item-->
+                                            <!--begin::Item-->
+                                            <div class="timeline-item">
+                                                <!--begin::Label-->
+                                                <div class="timeline-label fw-bold text-gray-800 fs-6">10:30</div>
+                                                <!--end::Label-->
+                                                <!--begin::Badge-->
+                                                <div class="timeline-badge">
+                                                    <i class="fa fa-genderless text-success fs-1"></i>
+                                                </div>
+                                                <!--end::Badge-->
+                                                <!--begin::Text-->
+                                                <div class="timeline-content fw-mormal text-muted ps-3">Finance KPI
+                                                    Mobile app launch preparion meeting</div>
+                                                <!--end::Text-->
+                                            </div>
+                                            <!--end::Item-->
+                                        </div>
+                                        <!--end::Timeline-->
+                                    </div>
+                                    <!--end:::Tab pane-->
+                                </div>
+                                <!--end::Tab content-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!oneToOneConnectModalForm.form.valid"
+                        [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')">
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
