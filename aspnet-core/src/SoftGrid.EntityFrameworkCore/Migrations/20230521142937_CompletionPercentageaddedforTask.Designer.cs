@@ -12,7 +12,7 @@ using SoftGrid.EntityFrameworkCore;
 namespace SoftGrid.Migrations
 {
     [DbContext(typeof(SoftGridDbContext))]
-    [Migration("20230521142937_Completion Percentage added for Task")]
+    [Migration("20230521142937_CompletionPercentageaddedforTask")]
     partial class CompletionPercentageaddedforTask
     {
         /// <inheritdoc />

@@ -30,6 +30,46 @@ namespace SoftGrid.Authorization
 
             var pages = context.GetPermissionOrNull(AppPermissions.Pages) ?? context.CreatePermission(AppPermissions.Pages, L("Pages"));
 
+            var productTaskMaps = pages.CreateChildPermission(AppPermissions.Pages_ProductTaskMaps, L("ProductTaskMaps"));
+            productTaskMaps.CreateChildPermission(AppPermissions.Pages_ProductTaskMaps_Create, L("CreateNewProductTaskMap"));
+            productTaskMaps.CreateChildPermission(AppPermissions.Pages_ProductTaskMaps_Edit, L("EditProductTaskMap"));
+            productTaskMaps.CreateChildPermission(AppPermissions.Pages_ProductTaskMaps_Delete, L("DeleteProductTaskMap"));
+
+            var contactTaskMaps = pages.CreateChildPermission(AppPermissions.Pages_ContactTaskMaps, L("ContactTaskMaps"));
+            contactTaskMaps.CreateChildPermission(AppPermissions.Pages_ContactTaskMaps_Create, L("CreateNewContactTaskMap"));
+            contactTaskMaps.CreateChildPermission(AppPermissions.Pages_ContactTaskMaps_Edit, L("EditContactTaskMap"));
+            contactTaskMaps.CreateChildPermission(AppPermissions.Pages_ContactTaskMaps_Delete, L("DeleteContactTaskMap"));
+
+            var jobMasterTagSettings = pages.CreateChildPermission(AppPermissions.Pages_JobMasterTagSettings, L("JobMasterTagSettings"));
+            jobMasterTagSettings.CreateChildPermission(AppPermissions.Pages_JobMasterTagSettings_Create, L("CreateNewJobMasterTagSetting"));
+            jobMasterTagSettings.CreateChildPermission(AppPermissions.Pages_JobMasterTagSettings_Edit, L("EditJobMasterTagSetting"));
+            jobMasterTagSettings.CreateChildPermission(AppPermissions.Pages_JobMasterTagSettings_Delete, L("DeleteJobMasterTagSetting"));
+
+            var businessMasterTagSettings = pages.CreateChildPermission(AppPermissions.Pages_BusinessMasterTagSettings, L("BusinessMasterTagSettings"));
+            businessMasterTagSettings.CreateChildPermission(AppPermissions.Pages_BusinessMasterTagSettings_Create, L("CreateNewBusinessMasterTagSetting"));
+            businessMasterTagSettings.CreateChildPermission(AppPermissions.Pages_BusinessMasterTagSettings_Edit, L("EditBusinessMasterTagSetting"));
+            businessMasterTagSettings.CreateChildPermission(AppPermissions.Pages_BusinessMasterTagSettings_Delete, L("DeleteBusinessMasterTagSetting"));
+
+            var contactMasterTagSettings = pages.CreateChildPermission(AppPermissions.Pages_ContactMasterTagSettings, L("ContactMasterTagSettings"));
+            contactMasterTagSettings.CreateChildPermission(AppPermissions.Pages_ContactMasterTagSettings_Create, L("CreateNewContactMasterTagSetting"));
+            contactMasterTagSettings.CreateChildPermission(AppPermissions.Pages_ContactMasterTagSettings_Edit, L("EditContactMasterTagSetting"));
+            contactMasterTagSettings.CreateChildPermission(AppPermissions.Pages_ContactMasterTagSettings_Delete, L("DeleteContactMasterTagSetting"));
+
+            var productMasterTagSettings = pages.CreateChildPermission(AppPermissions.Pages_ProductMasterTagSettings, L("ProductMasterTagSettings"));
+            productMasterTagSettings.CreateChildPermission(AppPermissions.Pages_ProductMasterTagSettings_Create, L("CreateNewProductMasterTagSetting"));
+            productMasterTagSettings.CreateChildPermission(AppPermissions.Pages_ProductMasterTagSettings_Edit, L("EditProductMasterTagSetting"));
+            productMasterTagSettings.CreateChildPermission(AppPermissions.Pages_ProductMasterTagSettings_Delete, L("DeleteProductMasterTagSetting"));
+
+            var storeMasterTagSettings = pages.CreateChildPermission(AppPermissions.Pages_StoreMasterTagSettings, L("StoreMasterTagSettings"));
+            storeMasterTagSettings.CreateChildPermission(AppPermissions.Pages_StoreMasterTagSettings_Create, L("CreateNewStoreMasterTagSetting"));
+            storeMasterTagSettings.CreateChildPermission(AppPermissions.Pages_StoreMasterTagSettings_Edit, L("EditStoreMasterTagSetting"));
+            storeMasterTagSettings.CreateChildPermission(AppPermissions.Pages_StoreMasterTagSettings_Delete, L("DeleteStoreMasterTagSetting"));
+
+            var storeTagSettingCategories = pages.CreateChildPermission(AppPermissions.Pages_StoreTagSettingCategories, L("StoreTagSettingCategories"));
+            storeTagSettingCategories.CreateChildPermission(AppPermissions.Pages_StoreTagSettingCategories_Create, L("CreateNewStoreTagSettingCategory"));
+            storeTagSettingCategories.CreateChildPermission(AppPermissions.Pages_StoreTagSettingCategories_Edit, L("EditStoreTagSettingCategory"));
+            storeTagSettingCategories.CreateChildPermission(AppPermissions.Pages_StoreTagSettingCategories_Delete, L("DeleteStoreTagSettingCategory"));
+
             var taskDocuments = pages.CreateChildPermission(AppPermissions.Pages_TaskDocuments, L("TaskDocuments"));
             taskDocuments.CreateChildPermission(AppPermissions.Pages_TaskDocuments_Create, L("CreateNewTaskDocument"));
             taskDocuments.CreateChildPermission(AppPermissions.Pages_TaskDocuments_Edit, L("EditTaskDocument"));

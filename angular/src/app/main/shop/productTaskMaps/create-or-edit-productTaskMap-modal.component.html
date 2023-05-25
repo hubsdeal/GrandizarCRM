@@ -1,0 +1,148 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #productTaskMapForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="productTaskMap.id">{{ l('EditProductTaskMap') }}</span>
+                        <span *ngIf="!productTaskMap.id">{{ l('CreateNewProductTaskMap') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="ProductName">{{ l('Product') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="ProductName"
+                                name="productName"
+                                [(ngModel)]="productName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectProductModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setProductIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="productTaskMap.productId"
+                        [(ngModel)]="productTaskMap.productId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="TaskEventName">{{ l('TaskEvent') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="TaskEventName"
+                                name="taskEventName"
+                                [(ngModel)]="taskEventName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectTaskEventModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setTaskEventIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="productTaskMap.taskEventId"
+                        [(ngModel)]="productTaskMap.taskEventId"
+                        type="text"
+                        required
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="ProductCategoryName">{{ l('ProductCategory') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="ProductCategoryName"
+                                name="productCategoryName"
+                                [(ngModel)]="productCategoryName"
+                                type="text"
+                                disabled
+                            />
+                            <button
+                                class="btn btn-primary blue"
+                                (click)="openSelectProductCategoryModal()"
+                                type="button"
+                            >
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setProductCategoryIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="productTaskMap.productCategoryId"
+                        [(ngModel)]="productTaskMap.productCategoryId"
+                        type="text"
+                        hidden
+                    />
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!productTaskMapForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <productTaskMapProductLookupTableModal
+        #productTaskMapProductLookupTableModal
+        (modalSave)="getNewProductId()"
+    ></productTaskMapProductLookupTableModal>
+    <productTaskMapTaskEventLookupTableModal
+        #productTaskMapTaskEventLookupTableModal
+        (modalSave)="getNewTaskEventId()"
+    ></productTaskMapTaskEventLookupTableModal>
+    <productTaskMapProductCategoryLookupTableModal
+        #productTaskMapProductCategoryLookupTableModal
+        (modalSave)="getNewProductCategoryId()"
+    ></productTaskMapProductCategoryLookupTableModal>
+</div>

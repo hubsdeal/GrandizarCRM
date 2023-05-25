@@ -1,0 +1,207 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form
+                *ngIf="active"
+                #contactMasterTagSettingForm="ngForm"
+                novalidate
+                (ngSubmit)="save()"
+                autocomplete="off"
+            >
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="contactMasterTagSetting.id">{{ l('EditContactMasterTagSetting') }}</span>
+                        <span *ngIf="!contactMasterTagSetting.id">{{ l('CreateNewContactMasterTagSetting') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="MasterTagName">{{ l('MasterTag') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="MasterTagName"
+                                name="masterTagName"
+                                [(ngModel)]="masterTagName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectMasterTagModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setContactTypeIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="contactMasterTagSetting.contactTypeId"
+                        [(ngModel)]="contactMasterTagSetting.contactTypeId"
+                        type="text"
+                        required
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="MasterTagCategoryName">{{ l('MasterTagCategory') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="MasterTagCategoryName"
+                                name="masterTagCategoryName"
+                                [(ngModel)]="masterTagCategoryName"
+                                type="text"
+                                disabled
+                            />
+                            <button
+                                class="btn btn-primary blue"
+                                (click)="openSelectMasterTagCategoryModal()"
+                                type="button"
+                            >
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button
+                                class="btn btn-danger btn-icon"
+                                type="button"
+                                (click)="setMasterTagCategoryIdNull()"
+                            >
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="contactMasterTagSetting.masterTagCategoryId"
+                        [(ngModel)]="contactMasterTagSetting.masterTagCategoryId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my5">
+                        <label class="form-label" for="ContactMasterTagSetting_DisplaySequence">
+                            {{ l('DisplaySequence') }}
+                        </label>
+                        <input
+                            type="number"
+                            #ContactMasterTagSetting_DisplaySequence="ngModel"
+                            id="ContactMasterTagSetting_DisplaySequence"
+                            class="form-control"
+                            [(ngModel)]="contactMasterTagSetting.displaySequence"
+                            name="DisplaySequence"
+                        />
+                        <validation-messages [formCtrl]="ContactMasterTagSetting_DisplaySequence"></validation-messages>
+                    </div>
+
+                    <br />
+                    <label class="form-check form-check-custom form-check-solid">
+                        <input
+                            id="ContactMasterTagSetting_DisplayPublic"
+                            #ContactMasterTagSetting_DisplayPublic="ngModel"
+                            name="DisplayPublic"
+                            [(ngModel)]="contactMasterTagSetting.displayPublic"
+                            type="checkbox"
+                            class="form-check-input"
+                        />
+                        <span class="form-check-label">
+                            {{ l('DisplayPublic') }}
+                        </span>
+                    </label>
+                    <validation-messages [formCtrl]="ContactMasterTagSetting_DisplayPublic"></validation-messages>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ContactMasterTagSetting_CustomTagTitle">
+                            {{ l('CustomTagTitle') }}
+                        </label>
+                        <input
+                            type="text"
+                            #ContactMasterTagSetting_CustomTagTitle="ngModel"
+                            id="ContactMasterTagSetting_CustomTagTitle"
+                            class="form-control"
+                            [(ngModel)]="contactMasterTagSetting.customTagTitle"
+                            name="CustomTagTitle"
+                            minlength="1"
+                            maxlength="128"
+                        />
+                        <validation-messages [formCtrl]="ContactMasterTagSetting_CustomTagTitle"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ContactMasterTagSetting_CustomTagChatQuestion">
+                            {{ l('CustomTagChatQuestion') }}
+                        </label>
+                        <input
+                            type="text"
+                            #ContactMasterTagSetting_CustomTagChatQuestion="ngModel"
+                            id="ContactMasterTagSetting_CustomTagChatQuestion"
+                            class="form-control"
+                            [(ngModel)]="contactMasterTagSetting.customTagChatQuestion"
+                            name="CustomTagChatQuestion"
+                            minlength="1"
+                            maxlength="512"
+                        />
+                        <validation-messages
+                            [formCtrl]="ContactMasterTagSetting_CustomTagChatQuestion"
+                        ></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ContactMasterTagSetting_AnswerTypeId">
+                            {{ l('AnswerTypeId') }}
+                        </label>
+                        <select
+                            class="form-select"
+                            #ContactMasterTagSetting_AnswerTypeId="ngModel"
+                            name="AnswerTypeId"
+                            id="ContactMasterTagSetting_AnswerTypeId"
+                            [(ngModel)]="contactMasterTagSetting.answerTypeId"
+                        ></select>
+                        <validation-messages [formCtrl]="ContactMasterTagSetting_AnswerTypeId"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!contactMasterTagSettingForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <contactMasterTagSettingMasterTagLookupTableModal
+        #contactMasterTagSettingMasterTagLookupTableModal
+        (modalSave)="getNewContactTypeId()"
+    ></contactMasterTagSettingMasterTagLookupTableModal>
+    <contactMasterTagSettingMasterTagCategoryLookupTableModal
+        #contactMasterTagSettingMasterTagCategoryLookupTableModal
+        (modalSave)="getNewMasterTagCategoryId()"
+    ></contactMasterTagSettingMasterTagCategoryLookupTableModal>
+</div>
