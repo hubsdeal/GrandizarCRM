@@ -28,8 +28,8 @@ using System.Data;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
+using SoftGrid.Shop.Dtos;
 
-using Product = SoftGrid.Shop.Product;
 
 namespace SoftGrid.PublicCommon
 {
@@ -1439,163 +1439,166 @@ namespace SoftGrid.PublicCommon
             );
         }
 
-        //[AbpAllowAnonymous]
-        //public async Task<GetPublicStoreForViewDto> GetStoreDetailsByUrl(string url)
-        //{
+        [AbpAllowAnonymous]
+        public async Task<GetPublicStoreForViewDto> GetStoreDetailsByUrl(string url)
+        {
 
-        //    var output = new GetPublicStoreForViewDto();
+            var output = new GetPublicStoreForViewDto();
 
-        //    var store = await _storeRepository.FirstOrDefaultAsync(e => e.StoreUrl.Equals(url));
+            var store = await _storeRepository.FirstOrDefaultAsync(e => e.StoreUrl.Equals(url));
 
-        //    if (store != null)
-        //    {
-        //        output.Store = ObjectMapper.Map<StoreDto>(store);
+            if (store != null)
+            {
+                output.Store = ObjectMapper.Map<StoreDto>(store);
 
-        //        if (store.StateId != null)
-        //        {
-        //            var _lookupState = await _stateRepository.FirstOrDefaultAsync((long)store.StateId);
-        //            output.StateName = _lookupState?.Name?.ToString();
-        //        }
+                if (store.StateId != null)
+                {
+                    var _lookupState = await _stateRepository.FirstOrDefaultAsync((long)store.StateId);
+                    output.StateName = _lookupState?.Name?.ToString();
+                }
 
-        //        if (store.CountryId != null)
-        //        {
-        //            var _lookupCountry = await _countryRepository.FirstOrDefaultAsync((long)store.CountryId);
-        //            output.CountryName = _lookupCountry?.Name?.ToString();
-        //        }
+                if (store.CountryId != null)
+                {
+                    var _lookupCountry = await _countryRepository.FirstOrDefaultAsync((long)store.CountryId);
+                    output.CountryName = _lookupCountry?.Name?.ToString();
+                }
 
-        //        if (store.RatingLikeId != null)
-        //        {
-        //            var _lookupRating = await _ratingLikeRepository.FirstOrDefaultAsync((long)store.RatingLikeId);
-        //            output.RatingScore = _lookupRating?.Score;
-        //        }
+                if (store.RatingLikeId != null)
+                {
+                    var _lookupRating = await _ratingLikeRepository.FirstOrDefaultAsync((long)store.RatingLikeId);
+                    output.RatingScore = _lookupRating?.Score;
+                }
 
-        //        if (store.StoreLogoLink != null && store.StoreLogoLink != Guid.Empty)
-        //        {
-        //            //var binaryObject = await _binaryObjectManager.GetOrNullAsync((Guid)store.StoreLogoLink);
-        //            //output.Logo = Convert.ToBase64String(binaryObject.Bytes);
-        //            output.Logo = await _binaryObjectManager.GetStorePictureUrlAsync(store.StoreLogoLink, ".png");
-        //        }
-        //        output.NumberOfReviews = await _storeReviewRepository.CountAsync(e => e.StoreId == store.Id && e.IsPublish == true);
+                //if (store.StoreLogoLink != null && store.StoreLogoLink != Guid.Empty)
+                //{
+                //    //var binaryObject = await _binaryObjectManager.GetOrNullAsync((Guid)store.StoreLogoLink);
+                //    //output.Logo = Convert.ToBase64String(binaryObject.Bytes);
+                //    output.Logo = await _binaryObjectManager.GetStorePictureUrlAsync(store.StoreLogoLink, ".png");
+                //}
+                output.NumberOfReviews = await _storeReviewRepository.CountAsync(e => e.StoreId == store.Id && e.IsPublish == true);
 
-        //        output.StoreMedias = await GetAllStoreMediasByStoreId(store.Id);
+                output.StoreMedias = await GetAllStoreMediasByStoreId(store.Id);
 
-        //        output.StoreTags = await GetAllStoreTagsByStoreId(store.Id);
+                output.StoreTags = await GetAllStoreTagsByStoreId(store.Id);
 
-        //        var primaryCategory = _storeTagRepository.GetAll().Include(e => e.MasterTagFk).Where(e => e.StoreId == output.Store.Id && e.MasterTagCategoryId == 37 && e.MasterTagId != null).FirstOrDefault();
-        //        if (primaryCategory != null)
-        //        {
-        //            output.PrimaryCategoryName = primaryCategory.MasterTagFk.Name;
-        //        }
-        //    }
-
-
-        //    return output;
-        //}
+                //TODO: need to add from enum
+                var primaryCategory = _storeTagRepository.GetAll().Include(e => e.MasterTagFk).FirstOrDefault(e => e.StoreId == output.Store.Id && e.MasterTagCategoryId == 37 && e.MasterTagId != null);
+                if (primaryCategory != null)
+                {
+                    output.PrimaryCategoryName = primaryCategory.MasterTagFk.Name;
+                }
+            }
 
 
-        //private async Task<List<GetStoreMediaForViewDto>> GetAllStoreMediasByStoreId(long? storeId)
-        //{
+            return output;
+        }
 
-        //    var filteredStoreMedias = _storeMediaRepository.GetAll()
-        //                .Include(e => e.StoreFk)
-        //                .Include(e => e.MediaLibraryFk)
-        //                .WhereIf(storeId != null, e => e.StoreId == storeId);
 
-        //    var pagedAndFilteredStoreMedias = filteredStoreMedias
-        //        .OrderBy("id desc");
+        private async Task<List<GetStoreMediaForViewDto>> GetAllStoreMediasByStoreId(long? storeId)
+        {
 
-        //    var storeMedias = from o in pagedAndFilteredStoreMedias
-        //                      join o1 in _storeRepository.GetAll() on o.StoreId equals o1.Id into j1
-        //                      from s1 in j1.DefaultIfEmpty()
+            var filteredStoreMedias = _storeMediaRepository.GetAll()
+                        .Include(e => e.StoreFk)
+                        .Include(e => e.MediaLibraryFk)
+                        .WhereIf(storeId != null, e => e.StoreId == storeId);
 
-        //                      join o2 in _lookup_mediaLibraryRepository.GetAll() on o.MediaLibraryId equals o2.Id into j2
-        //                      from s2 in j2.DefaultIfEmpty()
+            var pagedAndFilteredStoreMedias = filteredStoreMedias
+                .OrderBy("id desc");
 
-        //                      select new GetStoreMediaForViewDto()
-        //                      {
-        //                          StoreMedia = new StoreMediaDto
-        //                          {
-        //                              DisplaySequence = o.DisplaySequence,
-        //                              Id = o.Id,
-        //                              StoreId = o.StoreId,
-        //                              MediaLibraryId = o.MediaLibraryId
-        //                          },
-        //                          StoreName = s1 == null || s1.Name == null ? "" : s1.Name.ToString(),
-        //                          MediaLibraryName = s2 == null || s2.Name == null ? "" : s2.Name.ToString()
-        //                      };
+            var storeMedias = from o in pagedAndFilteredStoreMedias
+                              join o1 in _storeRepository.GetAll() on o.StoreId equals o1.Id into j1
+                              from s1 in j1.DefaultIfEmpty()
 
-        //    var result = await storeMedias.ToListAsync();
+                              join o2 in _lookup_mediaLibraryRepository.GetAll() on o.MediaLibraryId equals o2.Id into j2
+                              from s2 in j2.DefaultIfEmpty()
 
-        //    foreach (var storeMedia in result)
-        //    {
-        //        if (storeMedia.StoreMedia.MediaLibraryId != null)
-        //        {
-        //            var media = _lookup_mediaLibraryRepository.Get((long)storeMedia.StoreMedia.MediaLibraryId);
-        //            if (media.BinaryObjectId != null && media.BinaryObjectId != Guid.Empty)
-        //            {
-        //                //var binaryObject = await _binaryObjectManager.GetOrNullAsync(media.BinaryObjectId);
-        //                //storeMedia.Picture = Convert.ToBase64String(binaryObject.Bytes);
-        //                storeMedia.Picture = await _binaryObjectManager.GetStorePictureUrlAsync(media.BinaryObjectId, ".png");
-        //            }
+                              select new GetStoreMediaForViewDto()
+                              {
+                                  StoreMedia = new StoreMediaDto
+                                  {
+                                      DisplaySequence = o.DisplaySequence,
+                                      Id = o.Id,
+                                      StoreId = o.StoreId,
+                                      MediaLibraryId = o.MediaLibraryId
+                                  },
+                                  StoreName = s1 == null || s1.Name == null ? "" : s1.Name.ToString(),
+                                  MediaLibraryName = s2 == null || s2.Name == null ? "" : s2.Name.ToString()
+                              };
 
-        //            if (media.VideoLink != null)
-        //            {
-        //                storeMedia.VideoUrl = media.VideoLink;
-        //            }
-        //        }
+            var result = await storeMedias.ToListAsync();
 
-        //    }
-        //    return result;
-        //}
+            foreach (var storeMedia in result)
+            {
+                if (storeMedia.StoreMedia.MediaLibraryId != null)
+                {
+                    var media = _lookup_mediaLibraryRepository.Get((long)storeMedia.StoreMedia.MediaLibraryId);
+                    if (media.BinaryObjectId != null && media.BinaryObjectId != Guid.Empty)
+                    {
+                        //var binaryObject = await _binaryObjectManager.GetOrNullAsync(media.BinaryObjectId);
+                        //storeMedia.Picture = Convert.ToBase64String(binaryObject.Bytes);
+                        storeMedia.Picture = await _binaryObjectManager.GetStorePictureUrlAsync(media.BinaryObjectId, ".png");
+                    }
 
-        //private async Task<List<string>> GetAllStoreTagsByStoreId(long? storeId)
-        //{
-        //    var output = new List<string>();
-        //    var filteredStoreTags = _storeTagRepository.GetAll()
-        //                .Include(e => e.StoreFk)
-        //                .Include(e => e.MasterTagCategoryFk)
-        //                .Include(e => e.MasterTagFk)
-        //                .WhereIf(storeId != null, e => e.StoreId == storeId);
+                    if (media.VideoLink != null)
+                    {
+                        storeMedia.VideoUrl = media.VideoLink;
+                    }
+                }
 
-        //    var pagedAndFilteredStoreTags = filteredStoreTags
-        //        .OrderBy("id desc");
+            }
+            return result;
+        }
 
-        //    var storeTags = from o in pagedAndFilteredStoreTags
-        //                    join o1 in _storeRepository.GetAll() on o.StoreId equals o1.Id into j1
-        //                    from s1 in j1.DefaultIfEmpty()
+        private async Task<List<string>> GetAllStoreTagsByStoreId(long? storeId)
+        {
+            var output = new List<string>();
+            var filteredStoreTags = _storeTagRepository.GetAll()
+                        .Include(e => e.StoreFk)
+                        .Include(e => e.MasterTagCategoryFk)
+                        .Include(e => e.MasterTagFk)
+                        .WhereIf(storeId != null, e => e.StoreId == storeId);
 
-        //                    join o2 in _masterTagCategoryRepository.GetAll() on o.MasterTagCategoryId equals o2.Id into j2
-        //                    from s2 in j2.DefaultIfEmpty()
+            var pagedAndFilteredStoreTags = filteredStoreTags
+                .OrderBy("id desc");
 
-        //                    join o3 in _masterTagRepository.GetAll() on o.MasterTagId equals o3.Id into j3
-        //                    from s3 in j3.DefaultIfEmpty()
+            var storeTags = from o in pagedAndFilteredStoreTags
+                            join o1 in _storeRepository.GetAll() on o.StoreId equals o1.Id into j1
+                            from s1 in j1.DefaultIfEmpty()
 
-        //                    select new GetStoreTagForViewDto()
-        //                    {
-        //                        StoreTag = new StoreTagDto
-        //                        {
-        //                            DisplaySequence = o.DisplaySequence,
-        //                            CustomTag = o.CustomTag,
-        //                            Id = o.Id
-        //                        },
-        //                        StoreName = s1 == null || s1.Name == null ? "" : s1.Name.ToString(),
-        //                        MasterTagCategoryName = s2 == null || s2.Name == null ? "" : s2.Name.ToString(),
-        //                        MasterTagName = s3 == null || s3.Name == null ? "" : s3.Name.ToString()
-        //                    };
-        //    foreach (var storeTag in storeTags)
-        //    {
-        //        if (storeTag.StoreTag.CustomTag != null)
-        //        {
-        //            output.Add(storeTag.StoreTag.CustomTag);
-        //        }
-        //        else if (storeTag.MasterTagName != null)
-        //        {
-        //            output.Add(storeTag.MasterTagName);
-        //        }
-        //    }
+                            join o2 in _masterTagCategoryRepository.GetAll() on o.MasterTagCategoryId equals o2.Id into j2
+                            from s2 in j2.DefaultIfEmpty()
 
-        //    return output;
-        //}
+                            join o3 in _masterTagRepository.GetAll() on o.MasterTagId equals o3.Id into j3
+                            from s3 in j3.DefaultIfEmpty()
+
+                            select new GetStoreTagForViewDto()
+                            {
+                                StoreTag = new StoreTagDto
+                                {
+                                    Sequence = o.Sequence,
+                                    CustomTag = o.CustomTag,
+                                    Id = o.Id
+                                },
+                                StoreName = s1 == null || s1.Name == null ? "" : s1.Name.ToString(),
+                                MasterTagCategoryName = s2 == null || s2.Name == null ? "" : s2.Name.ToString(),
+                                MasterTagName = s3 == null || s3.Name == null ? "" : s3.Name.ToString()
+                            };
+            foreach (var storeTag in storeTags)
+            {
+                if (storeTag.StoreTag.CustomTag != null)
+                {
+                    output.Add(storeTag.StoreTag.CustomTag);
+                }
+                else if (storeTag.MasterTagName != null)
+                {
+                    output.Add(storeTag.MasterTagName);
+                }
+            }
+
+            return output;
+        }
+
+
         //[AbpAllowAnonymous]
         //public async Task<GetStoreHourForViewDto> GetStoreHourForView(long storeId)
         //{
@@ -1624,42 +1627,44 @@ namespace SoftGrid.PublicCommon
 
         //    return output;
         //}
-        //[AbpAllowAnonymous]
-        //public async Task<GetStoreReviewsByStoreBySpForView> GetAllStoreReviewsByStore(GetAllStoreReviewsByStoreIdForSpInput input)
-        //{
-        //    List<SqlParameter> parameters = PrepareSearchParameterForGetAllStoreReviewsByStoreBySp(input);
-        //    var result = await _storedProcedureRepository.ExecuteStoredProcedure<GetStoreReviewsByStoreBySpForView>("usp_GetAllStoreReviewsByStoreIdAndContactId", CommandType.StoredProcedure, parameters.ToArray());
-        //    return result;
-        //}
 
-        //private static List<SqlParameter> PrepareSearchParameterForGetAllStoreReviewsByStoreBySp(GetAllStoreReviewsByStoreIdForSpInput input)
-        //{
-        //    List<SqlParameter> sqlParameters = new List<SqlParameter>();
 
-        //    if (input.Filter != null)
-        //    {
-        //        input.Filter = input.Filter[0] == '"' && input.Filter[input.Filter.Length - 1] == '"' ? "*" + input.Filter + "*" : '"' + "*" + input.Filter + "*" + '"';
-        //    }
-        //    SqlParameter filter = new SqlParameter("@Filter", input.Filter == null ? "\"\"" : input.Filter);
-        //    sqlParameters.Add(filter);
+        [AbpAllowAnonymous]
+        public async Task<GetStoreReviewsByStoreBySpForView> GetAllStoreReviewsByStore(GetAllStoreReviewsByStoreIdForSpInput input)
+        {
+            List<SqlParameter> parameters = PrepareSearchParameterForGetAllStoreReviewsByStoreBySp(input);
+            var result = await _storedProcedureRepository.ExecuteStoredProcedure<GetStoreReviewsByStoreBySpForView>("usp_GetAllStoreReviewsByStoreIdAndContactId", CommandType.StoredProcedure, parameters.ToArray());
+            return result;
+        }
 
-        //    SqlParameter productIdFilter = new SqlParameter("@StoreId", input.StoreIdFilter == null ? (object)DBNull.Value : input.StoreIdFilter);
-        //    sqlParameters.Add(productIdFilter);
+        private static List<SqlParameter> PrepareSearchParameterForGetAllStoreReviewsByStoreBySp(GetAllStoreReviewsByStoreIdForSpInput input)
+        {
+            List<SqlParameter> sqlParameters = new List<SqlParameter>();
 
-        //    SqlParameter contactIdFilter = new SqlParameter("@ContactId", input.ContactIdFilter == null ? (object)DBNull.Value : input.ContactIdFilter);
-        //    sqlParameters.Add(contactIdFilter);
+            if (input.Filter != null)
+            {
+                input.Filter = input.Filter[0] == '"' && input.Filter[input.Filter.Length - 1] == '"' ? "*" + input.Filter + "*" : '"' + "*" + input.Filter + "*" + '"';
+            }
+            SqlParameter filter = new SqlParameter("@Filter", input.Filter == null ? "\"\"" : input.Filter);
+            sqlParameters.Add(filter);
 
-        //    SqlParameter isPublishFilter = new SqlParameter("@IsPublished", input.IsPublish == -1 ? (object)DBNull.Value : input.IsPublish);
-        //    sqlParameters.Add(isPublishFilter);
+            SqlParameter productIdFilter = new SqlParameter("@StoreId", input.StoreIdFilter == null ? (object)DBNull.Value : input.StoreIdFilter);
+            sqlParameters.Add(productIdFilter);
 
-        //    SqlParameter skipCount = new SqlParameter("@SkipCount", input.SkipCount);
-        //    sqlParameters.Add(skipCount);
+            SqlParameter contactIdFilter = new SqlParameter("@ContactId", input.ContactIdFilter == null ? (object)DBNull.Value : input.ContactIdFilter);
+            sqlParameters.Add(contactIdFilter);
 
-        //    SqlParameter maxResultCount = new SqlParameter("@MaxResultCount", input.MaxResultCount);
-        //    sqlParameters.Add(maxResultCount);
+            SqlParameter isPublishFilter = new SqlParameter("@IsPublished", input.IsPublish == -1 ? (object)DBNull.Value : input.IsPublish);
+            sqlParameters.Add(isPublishFilter);
 
-        //    return sqlParameters;
-        //}
+            SqlParameter skipCount = new SqlParameter("@SkipCount", input.SkipCount);
+            sqlParameters.Add(skipCount);
+
+            SqlParameter maxResultCount = new SqlParameter("@MaxResultCount", input.MaxResultCount);
+            sqlParameters.Add(maxResultCount);
+
+            return sqlParameters;
+        }
 
         //[AbpAuthorize(AppPermissions.Pages_Contact_MyStoreReviews)]
         //public async Task CreateStoreReview(CreateOrEditStoreReviewDto input)
@@ -2909,7 +2914,7 @@ namespace SoftGrid.PublicCommon
 
 
         [AbpAllowAnonymous]
-        public async Task<List<HubPublicViewForDropdownDto>> GetAllHubForDropdown(string hubFilter, string cityFilter, string zipCodeFilter)
+        public async Task<List<HubPublicViewForDropdownDto>> GetAllHubForDropdown(string hubFilter = null, string cityFilter = null, string zipCodeFilter = null)
         {
             List<SqlParameter> parameters = new List<SqlParameter>();
 
@@ -3182,63 +3187,63 @@ namespace SoftGrid.PublicCommon
         //    }
         //    return output;
         //}
-        //[AbpAllowAnonymous]
-        //public async Task<GetStoreHourCurrentStatusForPublicViewDto> GetStoreCurrentOpenStatus(long storeId)
-        //{
-        //    var output = new GetStoreHourCurrentStatusForPublicViewDto();
+        [AbpAllowAnonymous]
+        public async Task<GetStoreHourCurrentStatusForPublicViewDto> GetStoreCurrentOpenStatus(long storeId)
+        {
+            var output = new GetStoreHourCurrentStatusForPublicViewDto();
 
-        //    var storeOpenHour = await _storeHourRepository.FirstOrDefaultAsync(e => e.StoreId == storeId);
+            //var storeOpenHour = await _storeHourRepository.FirstOrDefaultAsync(e => e.StoreId == storeId);
 
-        //    if (storeOpenHour != null)
-        //    {
-        //        if (storeOpenHour.NowOpenOrClosed || storeOpenHour.IsOpen24Hours)
-        //        {
-        //            output.IsOpen = true;
-        //            return output;
-        //        }
-        //        var weekday = DateTime.Today.DayOfWeek;
-        //        output.CurrentTime = DateTime.Now.ToString("h:mm tt");
+            //if (storeOpenHour != null)
+            //{
+            //    if (storeOpenHour.NowOpenOrClosed || storeOpenHour.IsOpen24Hours)
+            //    {
+            //        output.IsOpen = true;
+            //        return output;
+            //    }
+            //    var weekday = DateTime.Today.DayOfWeek;
+            //    output.CurrentTime = DateTime.Now.ToString("h:mm tt");
 
-        //        if (weekday.ToString() == "Monday")
-        //        {
-        //            output.StartTime = storeOpenHour.MondayStartTime;
-        //            output.EndTime = storeOpenHour.MondayEndTime;
-        //        }
-        //        else if (weekday.ToString() == "Tuesday")
-        //        {
-        //            output.StartTime = storeOpenHour.TuesdayStartTime;
-        //            output.EndTime = storeOpenHour.TuesdayEndTime;
-        //        }
-        //        else if (weekday.ToString() == "Wednesday")
-        //        {
-        //            output.StartTime = storeOpenHour.WednesdayStartTime;
-        //            output.EndTime = storeOpenHour.WednesdayEndTime;
-        //        }
-        //        else if (weekday.ToString() == "Thursday")
-        //        {
-        //            output.StartTime = storeOpenHour.ThursdayStartTime;
-        //            output.EndTime = storeOpenHour.ThursdayEndTime;
-        //        }
-        //        else if (weekday.ToString() == "Friday")
-        //        {
-        //            output.StartTime = storeOpenHour.FridayStartTime;
-        //            output.EndTime = storeOpenHour.FridayEndTime;
-        //        }
-        //        else if (weekday.ToString() == "Saturday")
-        //        {
-        //            output.StartTime = storeOpenHour.SaturdayStartTime;
-        //            output.EndTime = storeOpenHour.SaturdayEndTime;
-        //        }
-        //        else if (weekday.ToString() == "Sunday")
-        //        {
-        //            output.StartTime = storeOpenHour.SundayStartTime;
-        //            output.EndTime = storeOpenHour.SundayEndTime;
-        //        }
-        //    }
+            //    if (weekday.ToString() == "Monday")
+            //    {
+            //        output.StartTime = storeOpenHour.MondayStartTime;
+            //        output.EndTime = storeOpenHour.MondayEndTime;
+            //    }
+            //    else if (weekday.ToString() == "Tuesday")
+            //    {
+            //        output.StartTime = storeOpenHour.TuesdayStartTime;
+            //        output.EndTime = storeOpenHour.TuesdayEndTime;
+            //    }
+            //    else if (weekday.ToString() == "Wednesday")
+            //    {
+            //        output.StartTime = storeOpenHour.WednesdayStartTime;
+            //        output.EndTime = storeOpenHour.WednesdayEndTime;
+            //    }
+            //    else if (weekday.ToString() == "Thursday")
+            //    {
+            //        output.StartTime = storeOpenHour.ThursdayStartTime;
+            //        output.EndTime = storeOpenHour.ThursdayEndTime;
+            //    }
+            //    else if (weekday.ToString() == "Friday")
+            //    {
+            //        output.StartTime = storeOpenHour.FridayStartTime;
+            //        output.EndTime = storeOpenHour.FridayEndTime;
+            //    }
+            //    else if (weekday.ToString() == "Saturday")
+            //    {
+            //        output.StartTime = storeOpenHour.SaturdayStartTime;
+            //        output.EndTime = storeOpenHour.SaturdayEndTime;
+            //    }
+            //    else if (weekday.ToString() == "Sunday")
+            //    {
+            //        output.StartTime = storeOpenHour.SundayStartTime;
+            //        output.EndTime = storeOpenHour.SundayEndTime;
+            //    }
+            //}
 
-        //    return output;
+            return output;
 
-        //}
+        }
 
         //[AbpAllowAnonymous]
         //public async Task<List<GetPublicStoreCategoriesForViewDto>> GetCategoryWiseProductsByHub(long? hubId, int skipCount)
@@ -3683,32 +3688,34 @@ namespace SoftGrid.PublicCommon
 
         //    return result;
         //}
-        //[AbpAllowAnonymous]
-        //public async Task<List<OrderDeliveryInfoDeliveryTypeLookupTableDto>> GetAllDeliveryTypeForTableDropdown(long? storeId)
-        //{
-        //    var deliveryTypeIds = new List<int?>();
-        //    if (storeId != null)
-        //    {
-        //        deliveryTypeIds = _storeDeliveryTypeMapRepository.GetAll().Where(e => e.StoreId == storeId).Select(e => e.DeliveryTypeId).ToList();
-        //    }
-        //    var results = await _deliveryTypeRepository.GetAll().WhereIf(storeId != null, e => deliveryTypeIds.Contains(e.Id))
-        //        .Select(deliveryType => new OrderDeliveryInfoDeliveryTypeLookupTableDto
-        //        {
-        //            Id = deliveryType.Id,
-        //            DisplayName = deliveryType == null || deliveryType.Name == null ? "" : deliveryType.Name.ToString(),
-        //            PictureId = deliveryType.PictureId
-        //        }).ToListAsync();
 
-        //    foreach (var item in results)
-        //    {
-        //        if (item.PictureId != null && item.PictureId != Guid.Empty)
-        //        {
-        //            item.Picture = await _binaryObjectManager.GetOthersPictureUrlAsync((Guid)item.PictureId, ".png");
-        //        }
-        //    }
+        [AbpAllowAnonymous]
+        public async Task<List<OrderDeliveryInfoDeliveryTypeLookupTableDto>> GetAllDeliveryTypeForTableDropdown(long? storeId)
+        {
+            //var deliveryTypeIds = new List<int?>();
+            //if (storeId != null)
+            //{
+            //    deliveryTypeIds = _storeDeliveryTypeMapRepository.GetAll().Where(e => e.StoreId == storeId).Select(e => e.DeliveryTypeId).ToList();
+            //}
+            //var results = await _deliveryTypeRepository.GetAll().WhereIf(storeId != null, e => deliveryTypeIds.Contains(e.Id))
+            //    .Select(deliveryType => new OrderDeliveryInfoDeliveryTypeLookupTableDto
+            //    {
+            //        Id = deliveryType.Id,
+            //        DisplayName = deliveryType == null || deliveryType.Name == null ? "" : deliveryType.Name.ToString(),
+            //        PictureId = deliveryType.PictureId
+            //    }).ToListAsync();
 
-        //    return results;
-        //}
+            //foreach (var item in results)
+            //{
+            //    if (item.PictureId != null && item.PictureId != Guid.Empty)
+            //    {
+            //        item.Picture = await _binaryObjectManager.GetOthersPictureUrlAsync((Guid)item.PictureId, ".png");
+            //    }
+            //}
+
+           // return results?? new List<OrderDeliveryInfoDeliveryTypeLookupTableDto>();
+            return new List<OrderDeliveryInfoDeliveryTypeLookupTableDto>();
+        }
 
         //[AbpAuthorize]
         //public async Task<GetSquarePaymentCredentialsForViewDto> GetSquarePaymentCredentials()

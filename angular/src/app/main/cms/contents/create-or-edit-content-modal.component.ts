@@ -94,4 +94,8 @@ export class CreateOrEditContentModalComponent extends AppComponentBase implemen
     }
 
     ngOnInit(): void {}
+
+    startTimeValue(value: any) {
+        this.content.publishTime = value;
+    }
 }

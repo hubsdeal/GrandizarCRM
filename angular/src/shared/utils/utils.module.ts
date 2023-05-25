@@ -25,6 +25,7 @@ import { DatePickerLuxonModifierDirective } from './date-time/date-picker-luxon-
 import { DateRangePickerLuxonModifierDirective } from './date-time/date-range-picker-luxon-modifier.directive';
 import { GuidGeneratorService } from './guid-generator.service';
 import { NameSplitPipe } from './nameSplit.pipe';
+import { Safe } from './safe.pipe';
 
 @NgModule({
     imports: [CommonModule],
@@ -55,7 +56,8 @@ import { NameSplitPipe } from './nameSplit.pipe';
         DatePickerLuxonModifierDirective,
         DateRangePickerLuxonModifierDirective,
         PermissionAllPipe,
-        NameSplitPipe
+        NameSplitPipe,
+        Safe
     ],
     exports: [
         EqualValidator,
@@ -75,7 +77,8 @@ import { NameSplitPipe } from './nameSplit.pipe';
         DatePickerLuxonModifierDirective,
         DateRangePickerLuxonModifierDirective,
         PermissionAllPipe,
-        NameSplitPipe
+        NameSplitPipe,
+        Safe
     ],
 })
 export class UtilsModule { }

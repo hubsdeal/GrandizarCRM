@@ -275,5 +275,63 @@ namespace SoftGrid.Shop
             );
         }
 
+
+
+        public async Task<PagedResultDto<GetStoreZipCodeMapForViewDto>> GetAllByStoreId(long storeId)
+        {
+
+            var filteredStoreZipCodeMaps = _storeZipCodeMapRepository.GetAll()
+                        .Include(e => e.ZipCodeFk)
+                        .Include(e => e.StoreFk)
+                        .Where(e => e.StoreId == storeId);
+
+            var pagedAndFilteredStoreZipCodeMaps = filteredStoreZipCodeMaps
+                .OrderBy("id desc");
+
+
+            var storeZipCodeMaps = from o in pagedAndFilteredStoreZipCodeMaps
+                                   join o1 in _lookup_zipCodeRepository.GetAll() on o.ZipCodeId equals o1.Id into j1
+                                   from s1 in j1.DefaultIfEmpty()
+
+                                   join o2 in _lookup_storeRepository.GetAll() on o.StoreId equals o2.Id into j2
+                                   from s2 in j2.DefaultIfEmpty()
+
+                                   select new
+                                   {
+
+                                       o.ZipCode,
+                                       Id = o.Id,
+                                       ZipCodeName = s1 == null || s1.Name == null ? "" : s1.Name.ToString(),
+                                       StoreName = s2 == null || s2.Name == null ? "" : s2.Name.ToString()
+                                   };
+
+            var totalCount = await filteredStoreZipCodeMaps.CountAsync();
+
+            var dbList = await storeZipCodeMaps.ToListAsync();
+            var results = new List<GetStoreZipCodeMapForViewDto>();
+
+            foreach (var o in dbList)
+            {
+                var res = new GetStoreZipCodeMapForViewDto()
+                {
+                    StoreZipCodeMap = new StoreZipCodeMapDto
+                    {
+
+                        ZipCode = o.ZipCode,
+                        Id = o.Id
+                    },
+                    ZipCodeName = o.ZipCodeName,
+                    StoreName = o.StoreName
+                };
+
+                results.Add(res);
+            }
+
+            return new PagedResultDto<GetStoreZipCodeMapForViewDto>(
+                totalCount,
+                results
+            );
+
+        }
     }
 }

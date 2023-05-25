@@ -1,31 +1,49 @@
-﻿<div
-    bsModal
-    #createOrEditModal="bs-modal"
-    class="modal fade"
-    tabindex="-1"
-    role="dialog"
-    aria-labelledby="createOrEditModal"
-    aria-hidden="true"
-    [config]="{ backdrop: 'static' }"
->
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{ backdrop: 'static' }">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">
-                    <span>{{ l('Details') }}</span>
+                    <span>{{ l('Content Details') }}</span>
                 </h4>
 
-                <button
-                    type="button"
-                    class="btn-close"
-                    (click)="close()"
-                    aria-label="Close"
-                    [disabled]="saving"
-                ></button>
+                <button type="button" class="btn-close" (click)="close()" aria-label="Close"
+                    [disabled]="saving"></button>
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-6 mb-3">
+                    <div class="col-12 ">
+                        <div class="d-flex mb-3">
+                            <h6>{{l("Name")}} :</h6>
+                            <span class="me-3">{{ item.content.title }}</span>
+                        </div>
+                        <div class="d-flex mb-3">
+                            <h6>{{l("Content Type")}} :</h6>
+                            <span class="me-3"> {{ l(contentType[item.content.contentTypeId]) }}</span>
+                        </div>
+                        <div class="d-flex mb-3">
+                            <h6>{{l("Published")}} :</h6>
+                            <div *ngIf="item.content.published" class="me-3">
+                                <span class="badge badge-success badge">Yes</span>
+                            </div>
+                            <div *ngIf="!item.content.published" class="me-3">
+                                <span class="badge badge-danger badge">No</span>
+                            </div>
+                        </div>
+                        <div class="d-flex pb-3">
+                            <h6>{{l("PublishedDate")}} :</h6>
+                            <span class="me-3">{{ item.content.publishedDate | luxonFormat : 'dd-MM-yyyy' 
+                                }}</span>
+                        </div>
+                    </div>
+                    <div class="col-12 mb-3">
+                        <div class="w-100">
+                            <div class="ql-editor " [innerHTML]="item.content.body | safeHtml"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="row">
+                    <div class="col-12 mb-3">
                         <h6>{{ l('Title') }} :</h6>
                         {{ item.content.title }}
                     </div>
@@ -71,7 +89,7 @@
                         <h6>({{ l('MediaLibrary') }}) {{ l('Name') }} :</h6>
                         {{ item.mediaLibraryName }}
                     </div>
-                </div>
+                </div> -->
             </div>
             <div class="modal-footer">
                 <button [disabled]="saving" type="button" class="btn btn-primary blue" (click)="close()">
