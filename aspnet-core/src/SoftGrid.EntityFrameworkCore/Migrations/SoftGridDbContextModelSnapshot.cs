@@ -67,7 +67,7 @@ namespace SoftGrid.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AbpEditions");
+                    b.ToTable("AbpEditions", (string)null);
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("Edition");
 
@@ -107,7 +107,7 @@ namespace SoftGrid.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AbpFeatures");
+                    b.ToTable("AbpFeatures", (string)null);
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("FeatureSetting");
 
@@ -187,7 +187,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId", "UserId");
 
-                    b.ToTable("AbpAuditLogs");
+                    b.ToTable("AbpAuditLogs", (string)null);
                 });
 
             modelBuilder.Entity("Abp.Authorization.PermissionSetting", b =>
@@ -223,7 +223,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId", "Name");
 
-                    b.ToTable("AbpPermissions");
+                    b.ToTable("AbpPermissions", (string)null);
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("PermissionSetting");
 
@@ -263,7 +263,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId", "ClaimType");
 
-                    b.ToTable("AbpRoleClaims");
+                    b.ToTable("AbpRoleClaims", (string)null);
                 });
 
             modelBuilder.Entity("Abp.Authorization.Users.UserAccount", b =>
@@ -324,7 +324,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId", "UserName");
 
-                    b.ToTable("AbpUserAccounts");
+                    b.ToTable("AbpUserAccounts", (string)null);
                 });
 
             modelBuilder.Entity("Abp.Authorization.Users.UserClaim", b =>
@@ -360,7 +360,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId", "ClaimType");
 
-                    b.ToTable("AbpUserClaims");
+                    b.ToTable("AbpUserClaims", (string)null);
                 });
 
             modelBuilder.Entity("Abp.Authorization.Users.UserLogin", b =>
@@ -399,7 +399,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId", "LoginProvider", "ProviderKey");
 
-                    b.ToTable("AbpUserLogins");
+                    b.ToTable("AbpUserLogins", (string)null);
                 });
 
             modelBuilder.Entity("Abp.Authorization.Users.UserLoginAttempt", b =>
@@ -448,7 +448,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenancyName", "UserNameOrEmailAddress", "Result");
 
-                    b.ToTable("AbpUserLoginAttempts");
+                    b.ToTable("AbpUserLoginAttempts", (string)null);
                 });
 
             modelBuilder.Entity("Abp.Authorization.Users.UserOrganizationUnit", b =>
@@ -485,7 +485,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId", "UserId");
 
-                    b.ToTable("AbpUserOrganizationUnits");
+                    b.ToTable("AbpUserOrganizationUnits", (string)null);
                 });
 
             modelBuilder.Entity("Abp.Authorization.Users.UserRole", b =>
@@ -519,7 +519,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId", "UserId");
 
-                    b.ToTable("AbpUserRoles");
+                    b.ToTable("AbpUserRoles", (string)null);
                 });
 
             modelBuilder.Entity("Abp.Authorization.Users.UserToken", b =>
@@ -557,7 +557,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId", "UserId");
 
-                    b.ToTable("AbpUserTokens");
+                    b.ToTable("AbpUserTokens", (string)null);
                 });
 
             modelBuilder.Entity("Abp.BackgroundJobs.BackgroundJobInfo", b =>
@@ -603,7 +603,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("IsAbandoned", "NextTryTime");
 
-                    b.ToTable("AbpBackgroundJobs");
+                    b.ToTable("AbpBackgroundJobs", (string)null);
                 });
 
             modelBuilder.Entity("Abp.Configuration.Setting", b =>
@@ -647,7 +647,7 @@ namespace SoftGrid.Migrations
                     b.HasIndex("TenantId", "Name", "UserId")
                         .IsUnique();
 
-                    b.ToTable("AbpSettings");
+                    b.ToTable("AbpSettings", (string)null);
                 });
 
             modelBuilder.Entity("Abp.DynamicEntityProperties.DynamicEntityProperty", b =>
@@ -676,7 +676,7 @@ namespace SoftGrid.Migrations
                         .IsUnique()
                         .HasFilter("[EntityFullName] IS NOT NULL AND [TenantId] IS NOT NULL");
 
-                    b.ToTable("AbpDynamicEntityProperties");
+                    b.ToTable("AbpDynamicEntityProperties", (string)null);
                 });
 
             modelBuilder.Entity("Abp.DynamicEntityProperties.DynamicEntityPropertyValue", b =>
@@ -704,7 +704,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("DynamicEntityPropertyId");
 
-                    b.ToTable("AbpDynamicEntityPropertyValues");
+                    b.ToTable("AbpDynamicEntityPropertyValues", (string)null);
                 });
 
             modelBuilder.Entity("Abp.DynamicEntityProperties.DynamicProperty", b =>
@@ -737,7 +737,7 @@ namespace SoftGrid.Migrations
                         .IsUnique()
                         .HasFilter("[PropertyName] IS NOT NULL AND [TenantId] IS NOT NULL");
 
-                    b.ToTable("AbpDynamicProperties");
+                    b.ToTable("AbpDynamicProperties", (string)null);
                 });
 
             modelBuilder.Entity("Abp.DynamicEntityProperties.DynamicPropertyValue", b =>
@@ -762,7 +762,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("DynamicPropertyId");
 
-                    b.ToTable("AbpDynamicPropertyValues");
+                    b.ToTable("AbpDynamicPropertyValues", (string)null);
                 });
 
             modelBuilder.Entity("Abp.EntityHistory.EntityChange", b =>
@@ -799,7 +799,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("EntityTypeFullName", "EntityId");
 
-                    b.ToTable("AbpEntityChanges");
+                    b.ToTable("AbpEntityChanges", (string)null);
                 });
 
             modelBuilder.Entity("Abp.EntityHistory.EntityChangeSet", b =>
@@ -852,7 +852,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId", "UserId");
 
-                    b.ToTable("AbpEntityChangeSets");
+                    b.ToTable("AbpEntityChangeSets", (string)null);
                 });
 
             modelBuilder.Entity("Abp.EntityHistory.EntityPropertyChange", b =>
@@ -895,7 +895,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("EntityChangeId");
 
-                    b.ToTable("AbpEntityPropertyChanges");
+                    b.ToTable("AbpEntityPropertyChanges", (string)null);
                 });
 
             modelBuilder.Entity("Abp.IdentityServer4vNext.PersistedGrantEntity", b =>
@@ -1004,7 +1004,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId", "Name");
 
-                    b.ToTable("AbpLanguages");
+                    b.ToTable("AbpLanguages", (string)null);
                 });
 
             modelBuilder.Entity("Abp.Localization.ApplicationLanguageText", b =>
@@ -1054,7 +1054,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId", "Source", "LanguageName", "Key");
 
-                    b.ToTable("AbpLanguageTexts");
+                    b.ToTable("AbpLanguageTexts", (string)null);
                 });
 
             modelBuilder.Entity("Abp.Notifications.NotificationInfo", b =>
@@ -1115,7 +1115,7 @@ namespace SoftGrid.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AbpNotifications");
+                    b.ToTable("AbpNotifications", (string)null);
                 });
 
             modelBuilder.Entity("Abp.Notifications.NotificationSubscriptionInfo", b =>
@@ -1158,7 +1158,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId", "NotificationName", "EntityTypeName", "EntityId", "UserId");
 
-                    b.ToTable("AbpNotificationSubscriptions");
+                    b.ToTable("AbpNotificationSubscriptions", (string)null);
                 });
 
             modelBuilder.Entity("Abp.Notifications.TenantNotificationInfo", b =>
@@ -1208,7 +1208,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("AbpTenantNotifications");
+                    b.ToTable("AbpTenantNotifications", (string)null);
                 });
 
             modelBuilder.Entity("Abp.Notifications.UserNotificationInfo", b =>
@@ -1240,7 +1240,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("UserId", "State", "CreationTime");
 
-                    b.ToTable("AbpUserNotifications");
+                    b.ToTable("AbpUserNotifications", (string)null);
                 });
 
             modelBuilder.Entity("Abp.Organizations.OrganizationUnit", b =>
@@ -1294,7 +1294,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId", "Code");
 
-                    b.ToTable("AbpOrganizationUnits");
+                    b.ToTable("AbpOrganizationUnits", (string)null);
                 });
 
             modelBuilder.Entity("Abp.Organizations.OrganizationUnitRole", b =>
@@ -1329,7 +1329,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId", "RoleId");
 
-                    b.ToTable("AbpOrganizationUnitRoles");
+                    b.ToTable("AbpOrganizationUnitRoles", (string)null);
                 });
 
             modelBuilder.Entity("Abp.Webhooks.WebhookEvent", b =>
@@ -1359,7 +1359,7 @@ namespace SoftGrid.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AbpWebhookEvents");
+                    b.ToTable("AbpWebhookEvents", (string)null);
                 });
 
             modelBuilder.Entity("Abp.Webhooks.WebhookSendAttempt", b =>
@@ -1393,7 +1393,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("WebhookEventId");
 
-                    b.ToTable("AbpWebhookSendAttempts");
+                    b.ToTable("AbpWebhookSendAttempts", (string)null);
                 });
 
             modelBuilder.Entity("Abp.Webhooks.WebhookSubscriptionInfo", b =>
@@ -1430,7 +1430,7 @@ namespace SoftGrid.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AbpWebhookSubscriptions");
+                    b.ToTable("AbpWebhookSubscriptions", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Authorization.Delegation.UserDelegation", b =>
@@ -1483,7 +1483,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId", "TargetUserId");
 
-                    b.ToTable("AppUserDelegations");
+                    b.ToTable("AppUserDelegations", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Authorization.Roles.Role", b =>
@@ -1554,7 +1554,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId", "NormalizedName");
 
-                    b.ToTable("AbpRoles");
+                    b.ToTable("AbpRoles", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Authorization.Users.RecentPassword", b =>
@@ -1581,7 +1581,7 @@ namespace SoftGrid.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AppRecentPasswords");
+                    b.ToTable("AppRecentPasswords", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Authorization.Users.User", b =>
@@ -1732,7 +1732,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId", "NormalizedUserName");
 
-                    b.ToTable("AbpUsers");
+                    b.ToTable("AbpUsers", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.CMS.Content", b =>
@@ -1808,7 +1808,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("Contents");
+                    b.ToTable("Contents", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.CRM.Business", b =>
@@ -1955,7 +1955,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("Businesses");
+                    b.ToTable("Businesses", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.CRM.BusinessAccountTeam", b =>
@@ -1992,7 +1992,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("BusinessAccountTeams");
+                    b.ToTable("BusinessAccountTeams", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.CRM.BusinessContactMap", b =>
@@ -2026,7 +2026,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("BusinessContactMaps");
+                    b.ToTable("BusinessContactMaps", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.CRM.BusinessDocument", b =>
@@ -2068,7 +2068,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("BusinessDocuments");
+                    b.ToTable("BusinessDocuments", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.CRM.BusinessJobMap", b =>
@@ -2102,7 +2102,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("BusinessJobMaps");
+                    b.ToTable("BusinessJobMaps", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.CRM.BusinessNote", b =>
@@ -2149,7 +2149,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("BusinessNotes");
+                    b.ToTable("BusinessNotes", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.CRM.BusinessProductMap", b =>
@@ -2183,7 +2183,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("BusinessProductMaps");
+                    b.ToTable("BusinessProductMaps", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.CRM.BusinessStoreMap", b =>
@@ -2217,7 +2217,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("BusinessStoreMaps");
+                    b.ToTable("BusinessStoreMaps", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.CRM.BusinessTag", b =>
@@ -2270,7 +2270,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("BusinessTags");
+                    b.ToTable("BusinessTags", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.CRM.BusinessTaskMap", b =>
@@ -2304,7 +2304,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("BusinessTaskMaps");
+                    b.ToTable("BusinessTaskMaps", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.CRM.BusinessUser", b =>
@@ -2338,7 +2338,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("BusinessUsers");
+                    b.ToTable("BusinessUsers", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.CRM.Contact", b =>
@@ -2500,7 +2500,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("Contacts");
+                    b.ToTable("Contacts", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.CRM.ContactDocument", b =>
@@ -2542,7 +2542,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("ContactDocuments");
+                    b.ToTable("ContactDocuments", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.CRM.ContactTag", b =>
@@ -2595,7 +2595,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("ContactTags");
+                    b.ToTable("ContactTags", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.CRM.Employee", b =>
@@ -2730,7 +2730,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("Employees");
+                    b.ToTable("Employees", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.CRM.EmployeeDocument", b =>
@@ -2772,7 +2772,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("EmployeeDocuments");
+                    b.ToTable("EmployeeDocuments", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.CRM.EmployeeTag", b =>
@@ -2825,7 +2825,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("EmployeeTags");
+                    b.ToTable("EmployeeTags", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Chat.ChatMessage", b =>
@@ -2878,7 +2878,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId", "UserId", "ReadState");
 
-                    b.ToTable("AppChatMessages");
+                    b.ToTable("AppChatMessages", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.DiscountManagement.CustomerWallet", b =>
@@ -2941,7 +2941,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("CustomerWallets");
+                    b.ToTable("CustomerWallets", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.DiscountManagement.DiscountCodeByCustomer", b =>
@@ -2975,7 +2975,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("DiscountCodeByCustomers");
+                    b.ToTable("DiscountCodeByCustomers", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.DiscountManagement.DiscountCodeGenerator", b =>
@@ -3036,7 +3036,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("DiscountCodeGenerators");
+                    b.ToTable("DiscountCodeGenerators", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.DiscountManagement.DiscountCodeMap", b =>
@@ -3080,7 +3080,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("DiscountCodeMaps");
+                    b.ToTable("DiscountCodeMaps", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.DiscountManagement.DiscountCodeUserHistory", b =>
@@ -3125,7 +3125,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("DiscountCodeUserHistories");
+                    b.ToTable("DiscountCodeUserHistories", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Friendships.Friendship", b =>
@@ -3175,7 +3175,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId", "UserId");
 
-                    b.ToTable("AppFriendships");
+                    b.ToTable("AppFriendships", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.JobManagement.Job", b =>
@@ -3345,7 +3345,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("Jobs");
+                    b.ToTable("Jobs", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.JobManagement.JobDocument", b =>
@@ -3387,7 +3387,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("JobDocuments");
+                    b.ToTable("JobDocuments", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.JobManagement.JobStatusType", b =>
@@ -3410,7 +3410,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("JobStatusTypes");
+                    b.ToTable("JobStatusTypes", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.JobManagement.JobTag", b =>
@@ -3463,7 +3463,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("JobTags");
+                    b.ToTable("JobTags", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.LookupData.City", b =>
@@ -3501,7 +3501,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("Cities");
+                    b.ToTable("Cities", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.LookupData.ConnectChannel", b =>
@@ -3522,7 +3522,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("ConnectChannels");
+                    b.ToTable("ConnectChannels", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.LookupData.ContractType", b =>
@@ -3545,7 +3545,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("ContractTypes");
+                    b.ToTable("ContractTypes", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.LookupData.Country", b =>
@@ -3580,7 +3580,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("Countries");
+                    b.ToTable("Countries", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.LookupData.County", b =>
@@ -3613,7 +3613,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("Counties");
+                    b.ToTable("Counties", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.LookupData.Currency", b =>
@@ -3644,7 +3644,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("Currencies");
+                    b.ToTable("Currencies", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.LookupData.DocumentType", b =>
@@ -3667,7 +3667,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("DocumentTypes");
+                    b.ToTable("DocumentTypes", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.LookupData.EmailTemplate", b =>
@@ -3703,7 +3703,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("EmailTemplates");
+                    b.ToTable("EmailTemplates", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.LookupData.HubType", b =>
@@ -3726,7 +3726,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("HubTypes");
+                    b.ToTable("HubTypes", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.LookupData.MasterTag", b =>
@@ -3772,7 +3772,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("MasterTags");
+                    b.ToTable("MasterTags", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.LookupData.MasterTagCategory", b =>
@@ -3806,7 +3806,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("MasterTagCategories");
+                    b.ToTable("MasterTagCategories", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.LookupData.MeasurementUnit", b =>
@@ -3829,7 +3829,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("MeasurementUnits");
+                    b.ToTable("MeasurementUnits", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.LookupData.MediaLibrary", b =>
@@ -3898,7 +3898,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("MediaLibraries");
+                    b.ToTable("MediaLibraries", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.LookupData.MembershipType", b =>
@@ -3921,7 +3921,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("MembershipTypes");
+                    b.ToTable("MembershipTypes", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.LookupData.PaymentType", b =>
@@ -3944,7 +3944,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("PaymentTypes");
+                    b.ToTable("PaymentTypes", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.LookupData.ProductWholeSaleQuantityType", b =>
@@ -3973,7 +3973,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("ProductWholeSaleQuantityTypes");
+                    b.ToTable("ProductWholeSaleQuantityTypes", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.LookupData.RatingLike", b =>
@@ -4003,7 +4003,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("RatingLikes");
+                    b.ToTable("RatingLikes", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.LookupData.ReturnStatus", b =>
@@ -4026,7 +4026,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("ReturnStatuses");
+                    b.ToTable("ReturnStatuses", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.LookupData.ReturnType", b =>
@@ -4049,7 +4049,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("ReturnTypes");
+                    b.ToTable("ReturnTypes", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.LookupData.SmsTemplate", b =>
@@ -4085,7 +4085,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("SmsTemplates");
+                    b.ToTable("SmsTemplates", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.LookupData.SocialMedia", b =>
@@ -4108,7 +4108,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("SocialMedias");
+                    b.ToTable("SocialMedias", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.LookupData.State", b =>
@@ -4140,7 +4140,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("States");
+                    b.ToTable("States", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.LookupData.SubscriptionType", b =>
@@ -4166,7 +4166,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("SubscriptionTypes");
+                    b.ToTable("SubscriptionTypes", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.LookupData.ZipCode", b =>
@@ -4383,7 +4383,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("ZipCodes");
+                    b.ToTable("ZipCodes", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.MultiTenancy.Accounting.Invoice", b =>
@@ -4411,7 +4411,7 @@ namespace SoftGrid.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AppInvoices");
+                    b.ToTable("AppInvoices", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.MultiTenancy.Payments.SubscriptionPayment", b =>
@@ -4493,7 +4493,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("Status", "CreationTime");
 
-                    b.ToTable("AppSubscriptionPayments");
+                    b.ToTable("AppSubscriptionPayments", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.MultiTenancy.Payments.SubscriptionPaymentExtensionData", b =>
@@ -4522,7 +4522,7 @@ namespace SoftGrid.Migrations
                         .IsUnique()
                         .HasFilter("[IsDeleted] = 0");
 
-                    b.ToTable("AppSubscriptionPaymentsExtensionData");
+                    b.ToTable("AppSubscriptionPaymentsExtensionData", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.MultiTenancy.Tenant", b =>
@@ -4616,7 +4616,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenancyName");
 
-                    b.ToTable("AbpTenants");
+                    b.ToTable("AbpTenants", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.OrderManagement.Order", b =>
@@ -4751,7 +4751,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.OrderManagement.OrderDeliveryInfo", b =>
@@ -4859,7 +4859,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("OrderDeliveryInfos");
+                    b.ToTable("OrderDeliveryInfos", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.OrderManagement.OrderFulfillmentStatus", b =>
@@ -4919,7 +4919,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("OrderFulfillmentStatuses");
+                    b.ToTable("OrderFulfillmentStatuses", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.OrderManagement.OrderPaymentInfo", b =>
@@ -5031,7 +5031,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("OrderPaymentInfos");
+                    b.ToTable("OrderPaymentInfos", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.OrderManagement.OrderProductInfo", b =>
@@ -5093,7 +5093,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("OrderProductInfos");
+                    b.ToTable("OrderProductInfos", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.OrderManagement.OrderProductVariant", b =>
@@ -5133,7 +5133,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("OrderProductVariants");
+                    b.ToTable("OrderProductVariants", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.OrderManagement.OrderSalesChannel", b =>
@@ -5173,7 +5173,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("OrderSalesChannels");
+                    b.ToTable("OrderSalesChannels", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.OrderManagement.OrderStatus", b =>
@@ -5217,7 +5217,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("OrderStatuses");
+                    b.ToTable("OrderStatuses", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.OrderManagement.OrderTeam", b =>
@@ -5251,7 +5251,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("OrderTeams");
+                    b.ToTable("OrderTeams", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.OrderManagement.OrderfulfillmentTeam", b =>
@@ -5295,7 +5295,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("OrderfulfillmentTeams");
+                    b.ToTable("OrderfulfillmentTeams", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.SalesLeadManagement.Lead", b =>
@@ -5425,7 +5425,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("Leads");
+                    b.ToTable("Leads", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.SalesLeadManagement.LeadContact", b =>
@@ -5465,7 +5465,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("LeadContacts");
+                    b.ToTable("LeadContacts", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.SalesLeadManagement.LeadNote", b =>
@@ -5498,7 +5498,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("LeadNotes");
+                    b.ToTable("LeadNotes", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.SalesLeadManagement.LeadPipelineStage", b =>
@@ -5524,7 +5524,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("LeadPipelineStages");
+                    b.ToTable("LeadPipelineStages", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.SalesLeadManagement.LeadPipelineStatus", b =>
@@ -5572,7 +5572,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("LeadPipelineStatuses");
+                    b.ToTable("LeadPipelineStatuses", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.SalesLeadManagement.LeadReferralReward", b =>
@@ -5632,7 +5632,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("LeadReferralRewards");
+                    b.ToTable("LeadReferralRewards", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.SalesLeadManagement.LeadSalesTeam", b =>
@@ -5672,7 +5672,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("LeadSalesTeams");
+                    b.ToTable("LeadSalesTeams", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.SalesLeadManagement.LeadSource", b =>
@@ -5695,7 +5695,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("LeadSources");
+                    b.ToTable("LeadSources", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.SalesLeadManagement.LeadTag", b =>
@@ -5745,7 +5745,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("LeadTags");
+                    b.ToTable("LeadTags", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.SalesLeadManagement.LeadTask", b =>
@@ -5779,7 +5779,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("LeadTasks");
+                    b.ToTable("LeadTasks", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Shop.MarketplaceCommissionType", b =>
@@ -5813,7 +5813,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("MarketplaceCommissionTypes");
+                    b.ToTable("MarketplaceCommissionTypes", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Shop.Product", b =>
@@ -5975,7 +5975,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Shop.ProductAccountTeam", b =>
@@ -6021,7 +6021,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("ProductAccountTeams");
+                    b.ToTable("ProductAccountTeams", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Shop.ProductAndGiftCardMap", b =>
@@ -6061,7 +6061,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("ProductAndGiftCardMaps");
+                    b.ToTable("ProductAndGiftCardMaps", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Shop.ProductByVariant", b =>
@@ -6114,7 +6114,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("ProductByVariants");
+                    b.ToTable("ProductByVariants", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Shop.ProductCategory", b =>
@@ -6190,7 +6190,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("ProductCategories");
+                    b.ToTable("ProductCategories", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Shop.ProductCategoryMap", b =>
@@ -6224,7 +6224,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("ProductCategoryMaps");
+                    b.ToTable("ProductCategoryMaps", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Shop.ProductCategoryTeam", b =>
@@ -6261,7 +6261,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("ProductCategoryTeams");
+                    b.ToTable("ProductCategoryTeams", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Shop.ProductCategoryVariantMap", b =>
@@ -6295,7 +6295,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("ProductCategoryVariantMaps");
+                    b.ToTable("ProductCategoryVariantMaps", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Shop.ProductCrossSellProduct", b =>
@@ -6330,7 +6330,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("ProductCrossSellProducts");
+                    b.ToTable("ProductCrossSellProducts", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Shop.ProductCustomerQuery", b =>
@@ -6386,7 +6386,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("ProductCustomerQueries");
+                    b.ToTable("ProductCustomerQueries", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Shop.ProductCustomerStat", b =>
@@ -6459,7 +6459,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("ProductCustomerStats");
+                    b.ToTable("ProductCustomerStats", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Shop.ProductDocument", b =>
@@ -6501,7 +6501,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("ProductDocuments");
+                    b.ToTable("ProductDocuments", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Shop.ProductFaq", b =>
@@ -6544,7 +6544,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("ProductFaqs");
+                    b.ToTable("ProductFaqs", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Shop.ProductFlashSaleProductMap", b =>
@@ -6604,7 +6604,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("ProductFlashSaleProductMaps");
+                    b.ToTable("ProductFlashSaleProductMaps", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Shop.ProductMedia", b =>
@@ -6641,7 +6641,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("ProductMedias");
+                    b.ToTable("ProductMedias", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Shop.ProductNote", b =>
@@ -6673,7 +6673,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("ProductNotes");
+                    b.ToTable("ProductNotes", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Shop.ProductOwnerPublicContactInfo", b =>
@@ -6739,7 +6739,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("ProductOwnerPublicContactInfos");
+                    b.ToTable("ProductOwnerPublicContactInfos", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Shop.ProductPackage", b =>
@@ -6785,7 +6785,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("ProductPackages");
+                    b.ToTable("ProductPackages", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Shop.ProductReturnInfo", b =>
@@ -6845,7 +6845,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("ProductReturnInfos");
+                    b.ToTable("ProductReturnInfos", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Shop.ProductReview", b =>
@@ -6903,7 +6903,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("ProductReviews");
+                    b.ToTable("ProductReviews", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Shop.ProductReviewFeedback", b =>
@@ -6964,7 +6964,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("ProductReviewFeedbacks");
+                    b.ToTable("ProductReviewFeedbacks", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Shop.ProductSubscriptionMap", b =>
@@ -7007,7 +7007,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("ProductSubscriptionMaps");
+                    b.ToTable("ProductSubscriptionMaps", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Shop.ProductTag", b =>
@@ -7063,7 +7063,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("ProductTags");
+                    b.ToTable("ProductTags", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Shop.ProductTeam", b =>
@@ -7108,7 +7108,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("ProductTeams");
+                    b.ToTable("ProductTeams", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Shop.ProductUpsellRelatedProduct", b =>
@@ -7143,7 +7143,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("ProductUpsellRelatedProducts");
+                    b.ToTable("ProductUpsellRelatedProducts", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Shop.ProductVariant", b =>
@@ -7177,7 +7177,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("ProductVariants");
+                    b.ToTable("ProductVariants", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Shop.ProductVariantCategory", b =>
@@ -7211,7 +7211,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("ProductVariantCategories");
+                    b.ToTable("ProductVariantCategories", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Shop.ProductWholeSalePrice", b =>
@@ -7271,7 +7271,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("ProductWholeSalePrices");
+                    b.ToTable("ProductWholeSalePrices", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Shop.ShoppingCart", b =>
@@ -7335,7 +7335,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("ShoppingCarts");
+                    b.ToTable("ShoppingCarts", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Shop.Store", b =>
@@ -7499,7 +7499,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("Stores");
+                    b.ToTable("Stores", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Shop.StoreAccountTeam", b =>
@@ -7545,7 +7545,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("StoreAccountTeams");
+                    b.ToTable("StoreAccountTeams", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Shop.StoreBankAccount", b =>
@@ -7594,7 +7594,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("StoreBankAccounts");
+                    b.ToTable("StoreBankAccounts", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Shop.StoreBusinessCustomerMap", b =>
@@ -7634,7 +7634,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("StoreBusinessCustomerMaps");
+                    b.ToTable("StoreBusinessCustomerMaps", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Shop.StoreBusinessHour", b =>
@@ -7753,7 +7753,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("StoreBusinessHours");
+                    b.ToTable("StoreBusinessHours", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Shop.StoreContactMap", b =>
@@ -7793,7 +7793,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("StoreContactMaps");
+                    b.ToTable("StoreContactMaps", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Shop.StoreDocument", b =>
@@ -7835,7 +7835,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("StoreDocuments");
+                    b.ToTable("StoreDocuments", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Shop.StoreLocation", b =>
@@ -7910,7 +7910,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("StoreLocations");
+                    b.ToTable("StoreLocations", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Shop.StoreMarketplaceCommissionSetting", b =>
@@ -7966,7 +7966,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("StoreMarketplaceCommissionSettings");
+                    b.ToTable("StoreMarketplaceCommissionSettings", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Shop.StoreMedia", b =>
@@ -8018,7 +8018,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("StoreMedias");
+                    b.ToTable("StoreMedias", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Shop.StoreNote", b =>
@@ -8050,7 +8050,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("StoreNotes");
+                    b.ToTable("StoreNotes", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Shop.StoreOwnerTeam", b =>
@@ -8096,7 +8096,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("StoreOwnerTeams");
+                    b.ToTable("StoreOwnerTeams", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Shop.StoreProductCategoryMap", b =>
@@ -8136,7 +8136,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("StoreProductCategoryMaps");
+                    b.ToTable("StoreProductCategoryMaps", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Shop.StoreProductMap", b =>
@@ -8176,7 +8176,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("StoreProductMaps");
+                    b.ToTable("StoreProductMaps", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Shop.StoreRelevantStore", b =>
@@ -8208,7 +8208,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("StoreRelevantStores");
+                    b.ToTable("StoreRelevantStores", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Shop.StoreReview", b =>
@@ -8261,7 +8261,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("StoreReviews");
+                    b.ToTable("StoreReviews", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Shop.StoreReviewFeedback", b =>
@@ -8307,7 +8307,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("StoreReviewFeedbacks");
+                    b.ToTable("StoreReviewFeedbacks", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Shop.StoreSalesAlert", b =>
@@ -8349,7 +8349,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("StoreSalesAlerts");
+                    b.ToTable("StoreSalesAlerts", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Shop.StoreTag", b =>
@@ -8405,7 +8405,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("StoreTags");
+                    b.ToTable("StoreTags", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Shop.StoreTax", b =>
@@ -8447,7 +8447,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("StoreTaxes");
+                    b.ToTable("StoreTaxes", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Shop.StoreZipCodeMap", b =>
@@ -8485,7 +8485,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("ZipCodeId");
 
-                    b.ToTable("StoreZipCodeMaps");
+                    b.ToTable("StoreZipCodeMaps", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Shop.WishList", b =>
@@ -8527,7 +8527,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("WishLists");
+                    b.ToTable("WishLists", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Storage.BinaryObject", b =>
@@ -8550,7 +8550,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("AppBinaryObjects");
+                    b.ToTable("AppBinaryObjects", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.TaskManagement.StoreTaskMap", b =>
@@ -8584,7 +8584,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("StoreTaskMaps");
+                    b.ToTable("StoreTaskMaps", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.TaskManagement.TaskDocument", b =>
@@ -8626,7 +8626,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("TaskDocuments");
+                    b.ToTable("TaskDocuments", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.TaskManagement.TaskEvent", b =>
@@ -8716,7 +8716,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("TaskEvents");
+                    b.ToTable("TaskEvents", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.TaskManagement.TaskStatus", b =>
@@ -8739,7 +8739,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("TaskStatuses");
+                    b.ToTable("TaskStatuses", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.TaskManagement.TaskTag", b =>
@@ -8792,7 +8792,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("TaskTags");
+                    b.ToTable("TaskTags", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Territory.Hub", b =>
@@ -8913,7 +8913,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("Hubs");
+                    b.ToTable("Hubs", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Territory.HubAccountTeam", b =>
@@ -8961,7 +8961,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("HubAccountTeams");
+                    b.ToTable("HubAccountTeams", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Territory.HubBusiness", b =>
@@ -9001,7 +9001,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("HubBusinesses");
+                    b.ToTable("HubBusinesses", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Territory.HubContact", b =>
@@ -9038,7 +9038,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("HubContacts");
+                    b.ToTable("HubContacts", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Territory.HubDocument", b =>
@@ -9080,7 +9080,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("HubDocuments");
+                    b.ToTable("HubDocuments", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Territory.HubNavigationMenu", b =>
@@ -9121,7 +9121,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("HubNavigationMenus");
+                    b.ToTable("HubNavigationMenus", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Territory.HubProduct", b =>
@@ -9161,7 +9161,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("HubProducts");
+                    b.ToTable("HubProducts", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Territory.HubProductCategory", b =>
@@ -9201,7 +9201,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("HubProductCategories");
+                    b.ToTable("HubProductCategories", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Territory.HubSalesProjection", b =>
@@ -9260,7 +9260,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("HubSalesProjections");
+                    b.ToTable("HubSalesProjections", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Territory.HubStore", b =>
@@ -9300,7 +9300,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("HubStores");
+                    b.ToTable("HubStores", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Territory.HubZipCodeMap", b =>
@@ -9347,7 +9347,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("ZipCodeId");
 
-                    b.ToTable("HubZipCodeMaps");
+                    b.ToTable("HubZipCodeMaps", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Territory.MasterNavigationMenu", b =>
@@ -9388,7 +9388,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("MasterNavigationMenus");
+                    b.ToTable("MasterNavigationMenus", (string)null);
                 });
 
             modelBuilder.Entity("SoftGrid.Editions.SubscribableEdition", b =>
@@ -9416,7 +9416,7 @@ namespace SoftGrid.Migrations
                     b.Property<decimal?>("WeeklyPrice")
                         .HasColumnType("decimal(18,2)");
 
-                    b.ToTable("AbpEditions");
+                    b.ToTable("AbpEditions", (string)null);
 
                     b.HasDiscriminator().HasValue("SubscribableEdition");
                 });
@@ -9430,7 +9430,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("EditionId", "Name");
 
-                    b.ToTable("AbpFeatures");
+                    b.ToTable("AbpFeatures", (string)null);
 
                     b.HasDiscriminator().HasValue("EditionFeatureSetting");
                 });
@@ -9441,7 +9441,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("TenantId", "Name");
 
-                    b.ToTable("AbpFeatures");
+                    b.ToTable("AbpFeatures", (string)null);
 
                     b.HasDiscriminator().HasValue("TenantFeatureSetting");
                 });
@@ -9455,7 +9455,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("AbpPermissions");
+                    b.ToTable("AbpPermissions", (string)null);
 
                     b.HasDiscriminator().HasValue("RolePermissionSetting");
                 });
@@ -9469,7 +9469,7 @@ namespace SoftGrid.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AbpPermissions");
+                    b.ToTable("AbpPermissions", (string)null);
 
                     b.HasDiscriminator().HasValue("UserPermissionSetting");
                 });

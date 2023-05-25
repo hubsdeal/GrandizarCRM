@@ -10,6 +10,7 @@ using SoftGrid.Authorization.Users;
 using SoftGrid.Dto;
 using SoftGrid.EntityFrameworkCore.Repositories;
 using SoftGrid.LookupData;
+using SoftGrid.LookupData.Enums;
 using SoftGrid.Shop.Dtos;
 using SoftGrid.Shop.Exporting;
 using SoftGrid.Storage;

@@ -1772,65 +1772,72 @@ namespace SoftGrid.PublicCommon
 
         //    return results.OrderBy(e => e.DisplaySequence).ToList();
         //}
-        //[AbpAllowAnonymous]
-        //public async Task<List<GetPublicStoreCategoriesForViewDto>> GetCategoryWiseProductsByStore(long? storeId, int skipCount)
-        //{
 
-        //    List<SqlParameter> sqlParameters = new List<SqlParameter>();
+        [AbpAllowAnonymous]
+        public async Task<List<GetPublicStoreCategoriesForViewDto>> GetCategoryWiseProductsByStore(long? storeId, int skipCount)
+        {
 
-        //    SqlParameter sCount = new SqlParameter("@SkipCount", skipCount);
-        //    sqlParameters.Add(sCount);
+            List<SqlParameter> sqlParameters = new List<SqlParameter>();
 
-        //    SqlParameter maxResultCount = new SqlParameter("@MaxResultCount", 2);
-        //    sqlParameters.Add(maxResultCount);
+            SqlParameter sCount = new SqlParameter("@SkipCount", skipCount);
+            sqlParameters.Add(sCount);
 
-        //    SqlParameter storeIdFilter = new SqlParameter("@StoreIdFilter", storeId);
-        //    sqlParameters.Add(storeIdFilter);
+            SqlParameter maxResultCount = new SqlParameter("@MaxResultCount", 2);
+            sqlParameters.Add(maxResultCount);
 
-        //    var results = await _storedProcedureRepository.ExecuteStoredProcedure<GetPublicCategoryWiseProductsForViewDto>("usp_GetCategoryWiseProductsByStore", CommandType.StoredProcedure, sqlParameters.ToArray());
+            SqlParameter storeIdFilter = new SqlParameter("@StoreIdFilter", storeId);
+            sqlParameters.Add(storeIdFilter);
 
-        //    foreach (var item in results.Categories)
-        //    {
-        //        if (item.Products != null && item.Products.Count > 0)
-        //        {
-        //            foreach (var result in item.Products)
-        //            {
-        //                if (result.Product.MediaLibraryId != null)
-        //                {
-        //                    var media = await _lookup_mediaLibraryRepository.FirstOrDefaultAsync(e => e.Id == result.Product.MediaLibraryId);
-        //                    if (media.BinaryObjectId != null)
-        //                    {
-        //                        result.Picture = await _binaryObjectManager.GetProductPictureUrlAsync(media.BinaryObjectId, ".png");
-        //                    }
-        //                }
-        //                result.HasVariant = await _productByVariantRepository.CountAsync(e => e.ProductId == result.Product.Id) > 0 ? true : false;
-        //                result.MembershipPrice = _membershipAndProductMapRepository.GetAll().Where(e => e.ProductId == result.Product.Id && e.MembershipTypeId == (long)MembershipTypeEnum.Snack_Pass).Select(e => e.Price).FirstOrDefault();
-        //                result.MembershipName = _membershipAndProductMapRepository.GetAll().Include(e => e.MembershipTypeFk).Where(e => e.ProductId == result.Product.Id && e.MembershipTypeId == (long)MembershipTypeEnum.Snack_Pass).Select(e => e.MembershipTypeFk.Name).FirstOrDefault();
-        //            }
-        //        }
-        //    }
+            var results = await _storedProcedureRepository.ExecuteStoredProcedure<GetPublicCategoryWiseProductsForViewDto>("usp_GetCategoryWiseProductsByStore", CommandType.StoredProcedure, sqlParameters.ToArray());
 
-        //    return results.Categories;
-        //}
-        //[AbpAllowAnonymous]
-        //public async Task<List<ProductProductCategoryLookupTableForPublicDto>> GetAllProductCategoryByStoreForSideBar(long storeId)
-        //{
-        //    var productCategoryIds = _storeCategoryMapRepository.GetAll().Where(e => e.StoreId == storeId && e.Published == true).Select(e => e.ProductCategoryId);
-        //    var results = await _productCategoryRepository.GetAll().WhereIf(productCategoryIds != null, e => productCategoryIds.Contains(e.Id))
-        //        .Select(productCategory => new ProductProductCategoryLookupTableForPublicDto
-        //        {
-        //            Id = productCategory.Id,
-        //            DisplayName = productCategory == null || productCategory.Name == null ? "" : productCategory.Name.ToString(),
-        //            Url = productCategory == null || productCategory.Url == null ? "" : productCategory.Url.ToString()
-        //        }).ToListAsync();
+            foreach (var item in results.Categories)
+            {
+                if (item.Products != null && item.Products.Count > 0)
+                {
+                    foreach (var result in item.Products)
+                    {
+                        if (result.Product.MediaLibraryId != null)
+                        {
+                            var media = await _lookup_mediaLibraryRepository.FirstOrDefaultAsync(e => e.Id == result.Product.MediaLibraryId);
+                            //if (media.BinaryObjectId != null)
+                            //{
+                            //    result.Picture = await _binaryObjectManager.GetProductPictureUrlAsync(media.BinaryObjectId, ".png");
+                            //}
+                        }
+                        result.HasVariant = await _productByVariantRepository.CountAsync(e => e.ProductId == result.Product.Id) > 0 ? true : false;
+                        //result.MembershipPrice = _membershipAndProductMapRepository.GetAll().Where(e => e.ProductId == result.Product.Id && e.MembershipTypeId == (long)MembershipTypeEnum.Snack_Pass).Select(e => e.Price).FirstOrDefault();
+                        //result.MembershipName = _membershipAndProductMapRepository.GetAll().Include(e => e.MembershipTypeFk).Where(e => e.ProductId == result.Product.Id && e.MembershipTypeId == (long)MembershipTypeEnum.Snack_Pass).Select(e => e.MembershipTypeFk.Name).FirstOrDefault();
+                    }
+                }
+            }
 
-        //    foreach (var result in results)
-        //    {
-        //        result.NumberOfProducts = _storeProductMapRepository.GetAll().Include(e => e.ProductFk).Where(e => e.StoreId == storeId && e.ProductFk.ProductCategoryId == result.Id).Count();
-        //        result.DisplaySequence = _storeCategoryMapRepository.GetAll().Where(e => e.StoreId == storeId && e.ProductCategoryId == result.Id).Select(e => e.DisplaySequence).FirstOrDefault();
-        //    }
-        //    return results.OrderBy(e => e.DisplaySequence).ToList();
-        //}
+            return results.Categories;
+        }
+
+
+        [AbpAllowAnonymous]
+        public async Task<List<ProductProductCategoryLookupTableForPublicDto>> GetAllProductCategoryByStoreForSideBar(long storeId)
+        {
+            //var productCategoryIds = _storeCategoryMapRepository.GetAll().Where(e => e.StoreId == storeId && e.Published == true).Select(e => e.ProductCategoryId);
+            //var results = await _productCategoryRepository.GetAll().WhereIf(productCategoryIds != null, e => productCategoryIds.Contains(e.Id))
+            //    .Select(productCategory => new ProductProductCategoryLookupTableForPublicDto
+            //    {
+            //        Id = productCategory.Id,
+            //        DisplayName = productCategory == null || productCategory.Name == null ? "" : productCategory.Name.ToString(),
+            //        Url = productCategory == null || productCategory.Url == null ? "" : productCategory.Url.ToString()
+            //    }).ToListAsync();
+
+            //foreach (var result in results)
+            //{
+            //    result.NumberOfProducts = _storeProductMapRepository.GetAll().Include(e => e.ProductFk).Where(e => e.StoreId == storeId && e.ProductFk.ProductCategoryId == result.Id).Count();
+            //    result.DisplaySequence = _storeCategoryMapRepository.GetAll().Where(e => e.StoreId == storeId && e.ProductCategoryId == result.Id).Select(e => e.DisplaySequence).FirstOrDefault();
+            //}
+            //return results.OrderBy(e => e.DisplaySequence).ToList();
+
+            return new List<ProductProductCategoryLookupTableForPublicDto>();
+        }
+
+
         //[AbpAllowAnonymous]
         //public async Task<List<ProductProductCategoryLookupTableForPublicDto>> GetAllProductCategoryByHub(long hubId)
         //{

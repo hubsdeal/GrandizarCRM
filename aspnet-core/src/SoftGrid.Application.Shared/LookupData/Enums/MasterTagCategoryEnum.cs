@@ -1,4 +1,4 @@
-﻿namespace SoftGrid
+﻿namespace SoftGrid.LookupData.Enums
 {
     public enum MasterTagCategoryEnum
     {

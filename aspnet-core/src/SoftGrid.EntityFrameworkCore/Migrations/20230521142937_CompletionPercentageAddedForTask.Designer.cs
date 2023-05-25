@@ -12,8 +12,8 @@ using SoftGrid.EntityFrameworkCore;
 namespace SoftGrid.Migrations
 {
     [DbContext(typeof(SoftGridDbContext))]
-    [Migration("20230524172421_SP_Test_Usp_GetAllHubsForDropdown")]
-    partial class SPTestUspGetAllHubsForDropdown
+    [Migration("20230521142937_CompletionPercentageAddedForTask")]
+    partial class CompletionPercentageaddedforTask
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -11,6 +11,7 @@ using SoftGrid.Dto;
 using SoftGrid.JobManagement.Dtos;
 using SoftGrid.JobManagement.Exporting;
 using SoftGrid.LookupData;
+using SoftGrid.LookupData.Enums;
 using SoftGrid.Shop;
 
 using System.Collections.Generic;

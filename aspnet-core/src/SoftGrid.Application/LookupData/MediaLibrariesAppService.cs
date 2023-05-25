@@ -20,6 +20,7 @@ using Abp.UI;
 using SoftGrid.Storage;
 using System.Drawing;
 using System.IO;
+using SoftGrid.LookupData.Enums;
 
 namespace SoftGrid.LookupData
 {
