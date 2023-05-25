@@ -1,0 +1,99 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form
+                *ngIf="active"
+                #storeTagSettingCategoryForm="ngForm"
+                novalidate
+                (ngSubmit)="save()"
+                autocomplete="off"
+            >
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="storeTagSettingCategory.id">{{ l('EditStoreTagSettingCategory') }}</span>
+                        <span *ngIf="!storeTagSettingCategory.id">{{ l('CreateNewStoreTagSettingCategory') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="StoreTagSettingCategory_Name">{{ l('Name') }} *</label>
+                        <input
+                            type="text"
+                            #StoreTagSettingCategory_Name="ngModel"
+                            id="StoreTagSettingCategory_Name"
+                            class="form-control"
+                            [(ngModel)]="storeTagSettingCategory.name"
+                            name="Name"
+                            minlength="1"
+                            maxlength="128"
+                            required
+                        />
+                        <validation-messages [formCtrl]="StoreTagSettingCategory_Name"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="StoreTagSettingCategory_ImageId">{{ l('ImageId') }}</label>
+                        <input
+                            type="text"
+                            #StoreTagSettingCategory_ImageId="ngModel"
+                            id="StoreTagSettingCategory_ImageId"
+                            class="form-control"
+                            [(ngModel)]="storeTagSettingCategory.imageId"
+                            name="ImageId"
+                        />
+                        <validation-messages [formCtrl]="StoreTagSettingCategory_ImageId"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="StoreTagSettingCategory_Description">
+                            {{ l('Description') }}
+                        </label>
+                        <input
+                            type="text"
+                            #StoreTagSettingCategory_Description="ngModel"
+                            id="StoreTagSettingCategory_Description"
+                            class="form-control"
+                            [(ngModel)]="storeTagSettingCategory.description"
+                            name="Description"
+                            minlength="1"
+                            maxlength="2048"
+                        />
+                        <validation-messages [formCtrl]="StoreTagSettingCategory_Description"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!storeTagSettingCategoryForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

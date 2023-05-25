@@ -1,0 +1,211 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #storeMasterTagSettingForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="storeMasterTagSetting.id">{{ l('EditStoreMasterTagSetting') }}</span>
+                        <span *ngIf="!storeMasterTagSetting.id">{{ l('CreateNewStoreMasterTagSetting') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="StoreTagSettingCategoryName">
+                            {{ l('StoreTagSettingCategory') }}
+                        </label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="StoreTagSettingCategoryName"
+                                name="storeTagSettingCategoryName"
+                                [(ngModel)]="storeTagSettingCategoryName"
+                                type="text"
+                                disabled
+                            />
+                            <button
+                                class="btn btn-primary blue"
+                                (click)="openSelectStoreTagSettingCategoryModal()"
+                                type="button"
+                            >
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button
+                                class="btn btn-danger btn-icon"
+                                type="button"
+                                (click)="setStoreTagSettingCategoryIdNull()"
+                            >
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="storeMasterTagSetting.storeTagSettingCategoryId"
+                        [(ngModel)]="storeMasterTagSetting.storeTagSettingCategoryId"
+                        type="text"
+                        required
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="MasterTagCategoryName">{{ l('MasterTagCategory') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="MasterTagCategoryName"
+                                name="masterTagCategoryName"
+                                [(ngModel)]="masterTagCategoryName"
+                                type="text"
+                                disabled
+                            />
+                            <button
+                                class="btn btn-primary blue"
+                                (click)="openSelectMasterTagCategoryModal()"
+                                type="button"
+                            >
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button
+                                class="btn btn-danger btn-icon"
+                                type="button"
+                                (click)="setMasterTagCategoryIdNull()"
+                            >
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="storeMasterTagSetting.masterTagCategoryId"
+                        [(ngModel)]="storeMasterTagSetting.masterTagCategoryId"
+                        type="text"
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="StoreMasterTagSetting_CustomTagTitle">
+                            {{ l('CustomTagTitle') }}
+                        </label>
+                        <input
+                            type="text"
+                            #StoreMasterTagSetting_CustomTagTitle="ngModel"
+                            id="StoreMasterTagSetting_CustomTagTitle"
+                            class="form-control"
+                            [(ngModel)]="storeMasterTagSetting.customTagTitle"
+                            name="CustomTagTitle"
+                            minlength="1"
+                            maxlength="128"
+                        />
+                        <validation-messages [formCtrl]="StoreMasterTagSetting_CustomTagTitle"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="StoreMasterTagSetting_CustomTagChatQuestion">
+                            {{ l('CustomTagChatQuestion') }}
+                        </label>
+                        <input
+                            type="text"
+                            #StoreMasterTagSetting_CustomTagChatQuestion="ngModel"
+                            id="StoreMasterTagSetting_CustomTagChatQuestion"
+                            class="form-control"
+                            [(ngModel)]="storeMasterTagSetting.customTagChatQuestion"
+                            name="CustomTagChatQuestion"
+                            minlength="1"
+                            maxlength="512"
+                        />
+                        <validation-messages
+                            [formCtrl]="StoreMasterTagSetting_CustomTagChatQuestion"
+                        ></validation-messages>
+                    </div>
+
+                    <br />
+                    <label class="form-check form-check-custom form-check-solid">
+                        <input
+                            id="StoreMasterTagSetting_DisplayPublic"
+                            #StoreMasterTagSetting_DisplayPublic="ngModel"
+                            name="DisplayPublic"
+                            [(ngModel)]="storeMasterTagSetting.displayPublic"
+                            type="checkbox"
+                            class="form-check-input"
+                        />
+                        <span class="form-check-label">
+                            {{ l('DisplayPublic') }}
+                        </span>
+                    </label>
+                    <validation-messages [formCtrl]="StoreMasterTagSetting_DisplayPublic"></validation-messages>
+
+                    <div class="my5">
+                        <label class="form-label" for="StoreMasterTagSetting_DisplaySequence">
+                            {{ l('DisplaySequence') }}
+                        </label>
+                        <input
+                            type="number"
+                            #StoreMasterTagSetting_DisplaySequence="ngModel"
+                            id="StoreMasterTagSetting_DisplaySequence"
+                            class="form-control"
+                            [(ngModel)]="storeMasterTagSetting.displaySequence"
+                            name="DisplaySequence"
+                        />
+                        <validation-messages [formCtrl]="StoreMasterTagSetting_DisplaySequence"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="StoreMasterTagSetting_AnswerTypeId">
+                            {{ l('AnswerTypeId') }}
+                        </label>
+                        <select
+                            class="form-select"
+                            #StoreMasterTagSetting_AnswerTypeId="ngModel"
+                            name="AnswerTypeId"
+                            id="StoreMasterTagSetting_AnswerTypeId"
+                            [(ngModel)]="storeMasterTagSetting.answerTypeId"
+                        ></select>
+                        <validation-messages [formCtrl]="StoreMasterTagSetting_AnswerTypeId"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!storeMasterTagSettingForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <storeMasterTagSettingStoreTagSettingCategoryLookupTableModal
+        #storeMasterTagSettingStoreTagSettingCategoryLookupTableModal
+        (modalSave)="getNewStoreTagSettingCategoryId()"
+    ></storeMasterTagSettingStoreTagSettingCategoryLookupTableModal>
+    <storeMasterTagSettingMasterTagCategoryLookupTableModal
+        #storeMasterTagSettingMasterTagCategoryLookupTableModal
+        (modalSave)="getNewMasterTagCategoryId()"
+    ></storeMasterTagSettingMasterTagCategoryLookupTableModal>
+</div>

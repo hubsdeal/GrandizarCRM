@@ -439,6 +439,22 @@ export class AppNavigationService {
             new AppMenuItem('StoreTaskMaps', 'Pages.StoreTaskMaps', 'flaticon-more', '/app/main/taskManagement/storeTaskMaps'),
             
             new AppMenuItem('BusinessDocuments', 'Pages.BusinessDocuments', 'flaticon-more', '/app/main/crm/businessDocuments'),
+            
+            new AppMenuItem('StoreTagSettingCategories', 'Pages.StoreTagSettingCategories', 'flaticon-more', '/app/main/shop/storeTagSettingCategories'),
+            
+            new AppMenuItem('StoreMasterTagSettings', 'Pages.StoreMasterTagSettings', 'flaticon-more', '/app/main/shop/storeMasterTagSettings'),
+            
+            new AppMenuItem('ProductMasterTagSettings', 'Pages.ProductMasterTagSettings', 'flaticon-more', '/app/main/shop/productMasterTagSettings'),
+            
+            new AppMenuItem('ContactMasterTagSettings', 'Pages.ContactMasterTagSettings', 'flaticon-more', '/app/main/crm/contactMasterTagSettings'),
+            
+            new AppMenuItem('BusinessMasterTagSettings', 'Pages.BusinessMasterTagSettings', 'flaticon-more', '/app/main/crm/businessMasterTagSettings'),
+            
+            new AppMenuItem('JobMasterTagSettings', 'Pages.JobMasterTagSettings', 'flaticon-more', '/app/main/jobManagement/jobMasterTagSettings'),
+            
+            new AppMenuItem('ContactTaskMaps', 'Pages.ContactTaskMaps', 'flaticon-more', '/app/main/crm/contactTaskMaps'),
+            
+            new AppMenuItem('ProductTaskMaps', 'Pages.ProductTaskMaps', 'flaticon-more', '/app/main/shop/productTaskMaps'),
              new AppMenuItem('Editions', 'Pages.Editions', 'flaticon-app', '/app/admin/editions'),
             new AppMenuItem(
                 'Administration',
