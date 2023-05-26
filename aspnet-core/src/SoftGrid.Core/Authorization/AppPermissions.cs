@@ -6,6 +6,11 @@
     /// </summary>
     public static class AppPermissions
     {
+        public const string Pages_JobTaskMaps = "Pages.JobTaskMaps";
+        public const string Pages_JobTaskMaps_Create = "Pages.JobTaskMaps.Create";
+        public const string Pages_JobTaskMaps_Edit = "Pages.JobTaskMaps.Edit";
+        public const string Pages_JobTaskMaps_Delete = "Pages.JobTaskMaps.Delete";
+
         public const string Pages_ProductTaskMaps = "Pages.ProductTaskMaps";
         public const string Pages_ProductTaskMaps_Create = "Pages.ProductTaskMaps.Create";
         public const string Pages_ProductTaskMaps_Edit = "Pages.ProductTaskMaps.Edit";

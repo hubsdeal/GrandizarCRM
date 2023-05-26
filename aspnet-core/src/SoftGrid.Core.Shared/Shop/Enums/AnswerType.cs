@@ -6,5 +6,6 @@ namespace SoftGrid.Shop.Enums
 {
     public enum AnswerType
     {
+        Text = 1
     }
 }

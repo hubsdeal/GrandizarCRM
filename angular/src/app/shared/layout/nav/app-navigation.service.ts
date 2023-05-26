@@ -455,6 +455,8 @@ export class AppNavigationService {
             new AppMenuItem('ContactTaskMaps', 'Pages.ContactTaskMaps', 'flaticon-more', '/app/main/crm/contactTaskMaps'),
             
             new AppMenuItem('ProductTaskMaps', 'Pages.ProductTaskMaps', 'flaticon-more', '/app/main/shop/productTaskMaps'),
+            
+            new AppMenuItem('JobTaskMaps', 'Pages.JobTaskMaps', 'flaticon-more', '/app/main/jobManagement/jobTaskMaps'),
              new AppMenuItem('Editions', 'Pages.Editions', 'flaticon-app', '/app/admin/editions'),
             new AppMenuItem(
                 'Administration',
