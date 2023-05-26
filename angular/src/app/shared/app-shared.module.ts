@@ -28,6 +28,7 @@ import { EditorModule } from 'primeng/editor';
 import { InputTextModule } from 'primeng/inputtext';
 import { SidebarModule } from 'primeng/sidebar';
 import { SliderModule } from 'primeng/slider';
+import { OneToOneConnectModalComponent } from './one-to-one-connect-modal/one-to-one-connect-modal.component';
 
 const imports = [
     CommonModule,
@@ -62,7 +63,7 @@ const imports = [
 
 @NgModule({
     imports: [...imports],
-    exports: [...imports, ChatGptResponseModalComponent],
-    declarations: [ThemesLayoutBaseComponent, ChatGptResponseModalComponent],
+    exports: [...imports, ChatGptResponseModalComponent, OneToOneConnectModalComponent],
+    declarations: [ThemesLayoutBaseComponent, ChatGptResponseModalComponent, OneToOneConnectModalComponent],
 })
 export class AppSharedModule {}

@@ -57,7 +57,7 @@ export class CreateOrEditTaskEventModalComponent extends AppComponentBase implem
             this.taskEvent.eventDate = this._dateTimeService.getStartOfDay();
             this.taskEvent.endDate = this._dateTimeService.getStartOfDay();
             this.taskStatusName = '';
-            this.taskEvent.status = false;
+            //this.taskEvent.status = false;
             this.taskEvent.priority = false;
             this.active = true;
             this.modal.show();

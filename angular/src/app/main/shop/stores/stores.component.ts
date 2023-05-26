@@ -17,6 +17,7 @@ import { filter as _filter } from 'lodash-es';
 import { DateTime } from 'luxon';
 
 import { DateTimeService } from '@app/shared/common/timing/date-time.service';
+import { OneToOneConnectModalComponent } from '@app/shared/one-to-one-connect-modal/one-to-one-connect-modal.component';
 
 @Component({
     templateUrl: './stores.component.html',
@@ -102,6 +103,8 @@ export class StoresComponent extends AppComponentBase {
     allStates: StoreStateLookupTableDto[];
     state:any;
     country:any;
+
+    @ViewChild('oneToOneConnectModal', { static: true }) oneToOneConnectModal: OneToOneConnectModalComponent;
 
     constructor(
         injector: Injector,
@@ -345,5 +348,9 @@ export class StoresComponent extends AppComponentBase {
         if (event.value && event.value.id){
             this.stateIdFilter = event.value.id;
         }
+    }
+    onConnectClick(id: number) {
+        this.oneToOneConnectModal.storeId = id;
+        this.oneToOneConnectModal.show();
     }
 }
