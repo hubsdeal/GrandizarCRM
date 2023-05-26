@@ -956,3 +956,8 @@ bs-days-calendar-view {
 .timepicker-backdrop-overlay {
     z-index: 10000000 !important;
 }
+//accordion
+.accordion-button{
+    color: var(--kt-gray-500) !important;
+    font-weight: 500 !important;
+}

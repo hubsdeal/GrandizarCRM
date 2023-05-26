@@ -1,21 +1,15 @@
 ﻿<div [@routerTransition]>
-    <sub-header
-        [title]="'StoreMasterTagSettings' | localize"
-        [description]="'StoreMasterTagSettingsHeaderInfo' | localize"
-    >
+    <sub-header [title]="'Store Data - Tags and Questions Answer Settings' | localize" [description]="">
         <div role="actions">
-            <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1">
+            <!-- <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1">
                 <i class="fa fa-file-excel"></i>
                 {{ l('ExportToExcel') }}
-            </button>
+            </button> -->
 
-            <button
-                *ngIf="isGranted('Pages.StoreMasterTagSettings.Create')"
-                (click)="createStoreMasterTagSetting()"
-                class="btn btn-primary blue"
-            >
+            <button *ngIf="isGranted('Pages.StoreMasterTagSettings.Create')" (click)="createStoreMasterTagSetting()"
+                class="btn btn-primary blue">
                 <i class="fa fa-plus"></i>
-                {{ l('CreateNewStoreMasterTagSetting') }}
+                {{ l('Tags and Questions Answer Settings') }}
             </button>
         </div>
     </sub-header>
@@ -29,20 +23,11 @@
                             <div class="col-xl-12">
                                 <div class="my-3">
                                     <div class="input-group mb-3">
-                                        <input
-                                            [(ngModel)]="filterText"
-                                            (ngModelChange)="getStoreMasterTagSettings()"
-                                            name="filterText"
-                                            autoFocus
-                                            type="text"
-                                            class="form-control"
-                                            [placeholder]="l('SearchWithThreeDot')"
-                                        />
-                                        <button
-                                            class="btn btn-primary"
-                                            type="submit"
-                                            (click)="getStoreMasterTagSettings()"
-                                        >
+                                        <input [(ngModel)]="filterText" (ngModelChange)="getStoreMasterTagSettings()"
+                                            name="filterText" autoFocus type="text" class="form-control"
+                                            [placeholder]="l('SearchWithThreeDot')" />
+                                        <button class="btn btn-primary" type="submit"
+                                            (click)="getStoreMasterTagSettings()">
                                             <i class="flaticon-search-1"></i>
                                         </button>
                                     </div>
@@ -55,89 +40,60 @@
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="CustomTagTitleFilter">
-                                        {{ l('CustomTagTitle') }}
+                                        {{ l('Title') }}
                                     </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="CustomTagTitleFilter"
-                                        name="customTagTitleFilter"
-                                        [(ngModel)]="customTagTitleFilter"
-                                        (ngModelChange)="getStoreMasterTagSettings()"
-                                    />
+                                    <input type="text" class="form-control" id="CustomTagTitleFilter"
+                                        name="customTagTitleFilter" [(ngModel)]="customTagTitleFilter"
+                                        (ngModelChange)="getStoreMasterTagSettings()" />
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="CustomTagChatQuestionFilter">
-                                        {{ l('CustomTagChatQuestion') }}
+                                        {{ l('Tag Questions') }}
                                     </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="CustomTagChatQuestionFilter"
-                                        name="customTagChatQuestionFilter"
-                                        [(ngModel)]="customTagChatQuestionFilter"
-                                        (ngModelChange)="getStoreMasterTagSettings()"
-                                    />
+                                    <input type="text" class="form-control" id="CustomTagChatQuestionFilter"
+                                        name="customTagChatQuestionFilter" [(ngModel)]="customTagChatQuestionFilter"
+                                        (ngModelChange)="getStoreMasterTagSettings()" />
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="DisplayPublicFilterSelect">
-                                        {{ l('DisplayPublic') }}
+                                        {{ l('Display Public') }}
                                     </label>
-                                    <select
-                                        class="form-select"
-                                        name="DisplayPublicFilter"
-                                        id="DisplayPublicFilterSelect"
-                                        [(ngModel)]="displayPublicFilter"
-                                        (ngModelChange)="getStoreMasterTagSettings()"
-                                    >
+                                    <select class="form-select" name="DisplayPublicFilter"
+                                        id="DisplayPublicFilterSelect" [(ngModel)]="displayPublicFilter"
+                                        (ngModelChange)="getStoreMasterTagSettings()">
                                         <option value="-1">{{ l('All') }}</option>
-                                        <option value="0">{{ l('False') }}</option>
-                                        <option value="1">{{ l('True') }}</option>
+                                        <option value="0">{{ l('No') }}</option>
+                                        <option value="1">{{ l('Yes') }}</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <!-- <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="MinDisplaySequenceFilter">
                                         {{ l('MinMax') }} {{ l('DisplaySequence') }}
                                     </label>
                                     <div class="input-group">
-                                        <input
-                                            type="number"
-                                            class="form-control"
-                                            id="MinDisplaySequenceFilter"
-                                            [(ngModel)]="minDisplaySequenceFilter"
-                                            placeholder="{{ l('MinValue') }}"
+                                        <input type="number" class="form-control" id="MinDisplaySequenceFilter"
+                                            [(ngModel)]="minDisplaySequenceFilter" placeholder="{{ l('MinValue') }}"
                                             name="minDisplaySequenceFilter"
-                                            (ngModelChange)="getStoreMasterTagSettings()"
-                                        />
-                                        <input
-                                            type="number"
-                                            class="form-control"
-                                            [(ngModel)]="maxDisplaySequenceFilter"
-                                            placeholder="{{ l('MaxValue') }}"
-                                            name="maxDisplaySequenceFilter"
-                                            (ngModelChange)="getStoreMasterTagSettings()"
-                                        />
+                                            (ngModelChange)="getStoreMasterTagSettings()" />
+                                        <input type="number" class="form-control" [(ngModel)]="maxDisplaySequenceFilter"
+                                            placeholder="{{ l('MaxValue') }}" name="maxDisplaySequenceFilter"
+                                            (ngModelChange)="getStoreMasterTagSettings()" />
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="AnswerTypeIdFilterSelect">
-                                        {{ l('AnswerTypeId') }}
+                                        {{ l('Answer Type') }}
                                     </label>
-                                    <select
-                                        class="form-select"
-                                        name="AnswerTypeIdFilter"
-                                        id="AnswerTypeIdFilterSelect"
-                                        [(ngModel)]="answerTypeIdFilter"
-                                        (ngModelChange)="getStoreMasterTagSettings()"
-                                    >
+                                    <select class="form-select" name="AnswerTypeIdFilter" id="AnswerTypeIdFilterSelect"
+                                        [(ngModel)]="answerTypeIdFilter" (ngModelChange)="getStoreMasterTagSettings()">
                                         <option value="-1">{{ l('All') }}</option>
                                     </select>
                                 </div>
@@ -146,56 +102,38 @@
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="StoreTagSettingCategoryNameFilter">
-                                        ({{ l('StoreTagSettingCategory') }}) {{ l('Name') }}
+                                        Store Type Tag Category
                                     </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="StoreTagSettingCategoryNameFilter"
+                                    <input type="text" class="form-control" id="StoreTagSettingCategoryNameFilter"
                                         name="storeTagSettingCategoryNameFilter"
-                                        [(ngModel)]="storeTagSettingCategoryNameFilter"
-                                    />
+                                        [(ngModel)]="storeTagSettingCategoryNameFilter" />
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="MasterTagCategoryNameFilter">
-                                        ({{ l('MasterTagCategory') }}) {{ l('Name') }}
+                                        Store Tag Category
                                     </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="MasterTagCategoryNameFilter"
-                                        name="masterTagCategoryNameFilter"
-                                        [(ngModel)]="masterTagCategoryNameFilter"
-                                    />
+                                    <input type="text" class="form-control" id="MasterTagCategoryNameFilter"
+                                        name="masterTagCategoryNameFilter" [(ngModel)]="masterTagCategoryNameFilter" />
                                 </div>
                             </div>
                             <div class="col-md-12 mt-5">
-                                <button
-                                    (click)="resetFilters()"
-                                    class="btn btn-secondary btn-sm"
-                                    id="btn-reset-filters"
-                                >
+                                <button (click)="resetFilters()" class="btn btn-secondary btn-sm"
+                                    id="btn-reset-filters">
                                     Reset
                                 </button>
                             </div>
                         </div>
                         <div class="row my-4">
                             <div class="col-sm-12">
-                                <span
-                                    class="clickable-item text-muted"
-                                    *ngIf="!advancedFiltersAreShown"
-                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown"
-                                >
+                                <span class="clickable-item text-muted" *ngIf="!advancedFiltersAreShown"
+                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown">
                                     <i class="fa fa-angle-down"></i>
                                     {{ l('ShowAdvancedFilters') }}
                                 </span>
-                                <span
-                                    class="clickable-item text-muted"
-                                    *ngIf="advancedFiltersAreShown"
-                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown"
-                                >
+                                <span class="clickable-item text-muted" *ngIf="advancedFiltersAreShown"
+                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown">
                                     <i class="fa fa-angle-up"></i>
                                     {{ l('HideAdvancedFilters') }}
                                 </span>
@@ -207,122 +145,55 @@
                 <div class="row align-items-center">
                     <!--<Primeng-Datatable-Start>-->
                     <div class="primeng-datatable-container col-12" [busyIf]="primengTableHelper.isLoading">
-                        <p-table
-                            #dataTable
-                            (onLazyLoad)="getStoreMasterTagSettings($event)"
+                        <p-table #dataTable (onLazyLoad)="getStoreMasterTagSettings($event)"
                             [value]="primengTableHelper.records"
-                            rows="{{ primengTableHelper.defaultRecordsCountPerPage }}"
-                            [paginator]="false"
-                            [lazy]="true"
-                            [scrollable]="true"
-                            ScrollWidth="100%"
-                            [responsive]="primengTableHelper.isResponsive"
-                            [resizableColumns]="primengTableHelper.resizableColumns"
-                        >
+                            rows="{{ primengTableHelper.defaultRecordsCountPerPage }}" [paginator]="false" [lazy]="true"
+                            [scrollable]="true" ScrollWidth="100%" [responsive]="primengTableHelper.isResponsive"
+                            [resizableColumns]="primengTableHelper.resizableColumns">
                             <ng-template pTemplate="header">
                                 <tr>
-                                    <th
-                                        style="width: 130px"
-                                        [hidden]="
-                                            !isGrantedAny(
-                                                'Pages.StoreMasterTagSettings.Edit',
-                                                'Pages.StoreMasterTagSettings.Delete'
-                                            )
-                                        "
-                                    >
-                                        {{ l('Actions') }}
-                                    </th>
-                                    <th style="width: 150px" pSortableColumn="storeTagSettingCategoryFk.name">
-                                        {{ l('Name') }}
+
+                                    <th style="width: 200px" pSortableColumn="storeTagSettingCategoryFk.name">
+                                        {{ l('Store Type / Category') }}
                                         <p-sortIcon field="storeTagSettingCategoryName"></p-sortIcon>
                                     </th>
                                     <th style="width: 150px" pSortableColumn="masterTagCategoryFk.name">
-                                        {{ l('Name') }}
+                                        {{ l('Store Tag') }}
                                         <p-sortIcon field="masterTagCategoryName"></p-sortIcon>
                                     </th>
                                     <th style="width: 150px" pSortableColumn="customTagTitle">
-                                        {{ l('CustomTagTitle') }}
+                                        {{ l('Title') }}
                                         <p-sortIcon field="storeMasterTagSetting.customTagTitle"></p-sortIcon>
                                     </th>
                                     <th style="width: 150px" pSortableColumn="customTagChatQuestion">
-                                        {{ l('CustomTagChatQuestion') }}
+                                        {{ l('Tag Questions') }}
                                         <p-sortIcon field="storeMasterTagSetting.customTagChatQuestion"></p-sortIcon>
                                     </th>
                                     <th style="width: 150px" pSortableColumn="displayPublic">
-                                        {{ l('DisplayPublic') }}
+                                        {{ l('Display Public') }}
                                         <p-sortIcon field="storeMasterTagSetting.displayPublic"></p-sortIcon>
                                     </th>
-                                    <th style="width: 150px" pSortableColumn="displaySequence">
+                                    <!-- <th style="width: 150px" pSortableColumn="displaySequence">
                                         {{ l('DisplaySequence') }}
                                         <p-sortIcon field="storeMasterTagSetting.displaySequence"></p-sortIcon>
-                                    </th>
+                                    </th> -->
                                     <th style="width: 150px" pSortableColumn="answerTypeId">
-                                        {{ l('AnswerTypeId') }}
+                                        {{ l('Answer Type') }}
                                         <p-sortIcon field="storeMasterTagSetting.answerTypeId"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 130px" [hidden]="
+                                            !isGrantedAny(
+                                                'Pages.StoreMasterTagSettings.Edit',
+                                                'Pages.StoreMasterTagSettings.Delete'
+                                            )">
+                                        {{ l('Actions') }}
                                     </th>
                                 </tr>
                             </ng-template>
                             <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
                                 <tr>
-                                    <td
-                                        style="width: 130px"
-                                        [hidden]="
-                                            !isGrantedAny(
-                                                'Pages.StoreMasterTagSettings.Edit',
-                                                'Pages.StoreMasterTagSettings.Delete'
-                                            )
-                                        "
-                                    >
-                                        <div class="btn-group dropdown" dropdown container="body">
-                                            <button class="dropdown-toggle btn btn-sm btn-primary" dropdownToggle>
-                                                <i class="fa fa-cog"></i>
-                                                <span class="caret"></span>
-                                                {{ l('Actions') }}
-                                            </button>
-                                            <ul class="dropdown-menu" *dropdownMenu>
-                                                <li>
-                                                    <a
-                                                        href="javascript:;"
-                                                        class="dropdown-item"
-                                                        (click)="viewStoreMasterTagSettingModal.show(record)"
-                                                    >
-                                                        {{ l('View') }}
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a
-                                                        href="javascript:;"
-                                                        *ngIf="
-                                                            permission.isGranted('Pages.StoreMasterTagSettings.Edit')
-                                                        "
-                                                        class="dropdown-item"
-                                                        (click)="
-                                                            createOrEditStoreMasterTagSettingModal.show(
-                                                                record.storeMasterTagSetting.id
-                                                            )
-                                                        "
-                                                    >
-                                                        {{ l('Edit') }}
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a
-                                                        class="dropdown-item"
-                                                        href="javascript:;"
-                                                        *ngIf="
-                                                            permission.isGranted('Pages.StoreMasterTagSettings.Delete')
-                                                        "
-                                                        (click)="
-                                                            deleteStoreMasterTagSetting(record.storeMasterTagSetting)
-                                                        "
-                                                    >
-                                                        {{ l('Delete') }}
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                    <td style="width: 150px">
+                                    
+                                    <td style="width: 200px">
                                         <span class="p-column-title">{{ l('Name') }}</span>
                                         {{ record.storeTagSettingCategoryName }}
                                     </td>
@@ -340,20 +211,60 @@
                                     </td>
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('DisplayPublic') }}</span>
-                                        <div *ngIf="record.storeMasterTagSetting.displayPublic" class="text-center">
-                                            <i class="fa fa-check-circle text-success" title="True"></i>
+                                        <div *ngIf="record.storeMasterTagSetting.displayPublic">
+                                            <span class="badge badge-primary badge">Yes</span>
                                         </div>
-                                        <div *ngIf="!record.storeMasterTagSetting.displayPublic" class="text-center">
-                                            <i class="fa fa-times-circle" title="False"></i>
+                                        <div *ngIf="!record.storeMasterTagSetting.displayPublic">
+                                            <span class="badge badge-danger badge">No</span>
                                         </div>
                                     </td>
-                                    <td style="width: 150px">
+                                    <!-- <td style="width: 150px">
                                         <span class="p-column-title">{{ l('DisplaySequence') }}</span>
                                         {{ record.storeMasterTagSetting.displaySequence }}
-                                    </td>
+                                    </td> -->
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('AnswerTypeId') }}</span>
                                         {{ l(answerType[record.storeMasterTagSetting.answerTypeId]) }}
+                                    </td>
+                                    <td style="width: 130px" [hidden]="
+                                            !isGrantedAny(
+                                                'Pages.StoreMasterTagSettings.Edit',
+                                                'Pages.StoreMasterTagSettings.Delete'
+                                            )">
+                                        <div class="btn-group dropdown" dropdown container="body">
+                                            <button class="dropdown-toggle btn btn-sm btn-primary" dropdownToggle>
+                                                <i class="fa fa-cog"></i>
+                                                <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu" *dropdownMenu>
+                                                <!-- <li>
+                                                    <a href="javascript:;" class="dropdown-item"
+                                                        (click)="viewStoreMasterTagSettingModal.show(record)">
+                                                        {{ l('View') }}
+                                                    </a>
+                                                </li> -->
+                                                <li>
+                                                    <a href="javascript:;" *ngIf="
+                                                            permission.isGranted('Pages.StoreMasterTagSettings.Edit')
+                                                        " class="dropdown-item" (click)="
+                                                            createOrEditStoreMasterTagSettingModal.show(
+                                                                record.storeMasterTagSetting.id
+                                                            )
+                                                        ">
+                                                        {{ l('Edit') }}
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="javascript:;" *ngIf="
+                                                            permission.isGranted('Pages.StoreMasterTagSettings.Delete')
+                                                        " (click)="
+                                                            deleteStoreMasterTagSetting(record.storeMasterTagSetting)
+                                                        ">
+                                                        {{ l('Delete') }}
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </td>
                                 </tr>
                             </ng-template>
@@ -362,17 +273,13 @@
                             {{ l('NoData') }}
                         </div>
                         <div class="primeng-paging-container">
-                            <p-paginator
-                                [rows]="primengTableHelper.defaultRecordsCountPerPage"
-                                #paginator
+                            <p-paginator [rows]="primengTableHelper.defaultRecordsCountPerPage" #paginator
                                 (onPageChange)="getStoreMasterTagSettings($event)"
                                 [totalRecords]="primengTableHelper.totalRecordsCount"
                                 [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
-                                [showCurrentPageReport]="true"
-                                [currentPageReportTemplate]="
+                                [showCurrentPageReport]="true" [currentPageReportTemplate]="
                                     'TotalRecordsCount' | localize : primengTableHelper.totalRecordsCount
-                                "
-                            ></p-paginator>
+                                "></p-paginator>
                         </div>
                     </div>
                     <!--<Primeng-Datatable-End>-->
@@ -380,9 +287,7 @@
             </div>
         </div>
     </div>
-    <createOrEditStoreMasterTagSettingModal
-        #createOrEditStoreMasterTagSettingModal
-        (modalSave)="getStoreMasterTagSettings()"
-    ></createOrEditStoreMasterTagSettingModal>
+    <createOrEditStoreMasterTagSettingModal #createOrEditStoreMasterTagSettingModal
+        (modalSave)="getStoreMasterTagSettings()"></createOrEditStoreMasterTagSettingModal>
     <viewStoreMasterTagSettingModal #viewStoreMasterTagSettingModal></viewStoreMasterTagSettingModal>
 </div>

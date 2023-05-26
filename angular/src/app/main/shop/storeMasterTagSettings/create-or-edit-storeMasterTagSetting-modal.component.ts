@@ -33,6 +33,12 @@ export class CreateOrEditStoreMasterTagSettingModalComponent extends AppComponen
     storeTagSettingCategoryName = '';
     masterTagCategoryName = '';
 
+    selectedStoreTagSettingCategory: any;
+    storeTagSettingCategoryOptions: any = []
+
+    selectedTagCategory: any;
+    masterTagCategoryOptions: any = []
+
     constructor(
         injector: Injector,
         private _storeMasterTagSettingsServiceProxy: StoreMasterTagSettingsServiceProxy,
@@ -63,6 +69,12 @@ export class CreateOrEditStoreMasterTagSettingModalComponent extends AppComponen
                     this.modal.show();
                 });
         }
+        this._storeMasterTagSettingsServiceProxy.getAllStoreTagSettingCategoryForLookupTable('', '', 0, 1000).subscribe(result => {
+            this.storeTagSettingCategoryOptions = result.items;
+        });
+        this._storeMasterTagSettingsServiceProxy.getAllMasterTagCategoryForLookupTable('', '', 0, 1000).subscribe(result => {
+            this.masterTagCategoryOptions = result.items;
+        })
     }
 
     save(): void {
@@ -82,6 +94,16 @@ export class CreateOrEditStoreMasterTagSettingModalComponent extends AppComponen
             });
     }
 
+    onStoreTagSettingCategoryClick(event: any) {
+        if (event.value != null) {
+            this.storeMasterTagSetting.storeTagSettingCategoryId = event.value.id;
+        }
+    }
+    onMmasterTagCategoryClick(event: any) {
+        if (event.value != null) {
+            this.storeMasterTagSetting.masterTagCategoryId = event.value.id;
+        }
+    }
     openSelectStoreTagSettingCategoryModal() {
         this.storeMasterTagSettingStoreTagSettingCategoryLookupTableModal.id =
             this.storeMasterTagSetting.storeTagSettingCategoryId;
@@ -120,5 +142,5 @@ export class CreateOrEditStoreMasterTagSettingModalComponent extends AppComponen
         this.modal.hide();
     }
 
-    ngOnInit(): void {}
+    ngOnInit(): void { }
 }
