@@ -30,6 +30,11 @@ namespace SoftGrid.Authorization
 
             var pages = context.GetPermissionOrNull(AppPermissions.Pages) ?? context.CreatePermission(AppPermissions.Pages, L("Pages"));
 
+            var jobTaskMaps = pages.CreateChildPermission(AppPermissions.Pages_JobTaskMaps, L("JobTaskMaps"));
+            jobTaskMaps.CreateChildPermission(AppPermissions.Pages_JobTaskMaps_Create, L("CreateNewJobTaskMap"));
+            jobTaskMaps.CreateChildPermission(AppPermissions.Pages_JobTaskMaps_Edit, L("EditJobTaskMap"));
+            jobTaskMaps.CreateChildPermission(AppPermissions.Pages_JobTaskMaps_Delete, L("DeleteJobTaskMap"));
+
             var productTaskMaps = pages.CreateChildPermission(AppPermissions.Pages_ProductTaskMaps, L("ProductTaskMaps"));
             productTaskMaps.CreateChildPermission(AppPermissions.Pages_ProductTaskMaps_Create, L("CreateNewProductTaskMap"));
             productTaskMaps.CreateChildPermission(AppPermissions.Pages_ProductTaskMaps_Edit, L("EditProductTaskMap"));

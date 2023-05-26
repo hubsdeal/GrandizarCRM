@@ -3653,6 +3653,40 @@ namespace SoftGrid.Migrations
                     b.ToTable("JobTags");
                 });
 
+            modelBuilder.Entity("SoftGrid.JobManagement.JobTaskMap", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("JobId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("TaskEventId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("JobId");
+
+                    b.HasIndex("TaskEventId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("JobTaskMaps");
+                });
+
             modelBuilder.Entity("SoftGrid.LookupData.City", b =>
                 {
                     b.Property<long>("Id")
@@ -10622,6 +10656,25 @@ namespace SoftGrid.Migrations
                     b.Navigation("MasterTagCategoryFk");
 
                     b.Navigation("MasterTagFk");
+                });
+
+            modelBuilder.Entity("SoftGrid.JobManagement.JobTaskMap", b =>
+                {
+                    b.HasOne("SoftGrid.JobManagement.Job", "JobFk")
+                        .WithMany()
+                        .HasForeignKey("JobId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SoftGrid.TaskManagement.TaskEvent", "TaskEventFk")
+                        .WithMany()
+                        .HasForeignKey("TaskEventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("JobFk");
+
+                    b.Navigation("TaskEventFk");
                 });
 
             modelBuilder.Entity("SoftGrid.LookupData.City", b =>

@@ -1,6 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <localizationDictionary culture="en">
-  <texts>    <text name="ProductTaskMap">Product task map</text>
+  <texts>    <text name="JobTaskMap">Job task map</text>
+    <text name="SoftGrid.JobManagement.JobTaskMap">JobTaskMap</text>
+    <text name="JobTaskMapsHeaderInfo">Job task maps header info</text>
+    <text name="CreateNewJobTaskMap">Create new job task map</text>
+    <text name="EditJobTaskMap">Edit job task map</text>
+    <text name="DeleteJobTaskMap">Delete job task map</text>
+    <text name="JobTaskMaps">Job task maps</text>
+    <text name="ProductTaskMap">Product task map</text>
     <text name="SoftGrid.Shop.ProductTaskMap">ProductTaskMap</text>
     <text name="ProductTaskMapsHeaderInfo">Product task maps header info</text>
     <text name="CreateNewProductTaskMap">Create new product task map</text>

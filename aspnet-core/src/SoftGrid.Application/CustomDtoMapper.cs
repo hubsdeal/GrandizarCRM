@@ -68,6 +68,8 @@ namespace SoftGrid
     {
         public static void CreateMappings(IMapperConfigurationExpression configuration)
         {
+            configuration.CreateMap<CreateOrEditJobTaskMapDto, JobTaskMap>().ReverseMap();
+            configuration.CreateMap<JobTaskMapDto, JobTaskMap>().ReverseMap();
             configuration.CreateMap<CreateOrEditProductTaskMapDto, ProductTaskMap>().ReverseMap();
             configuration.CreateMap<ProductTaskMapDto, ProductTaskMap>().ReverseMap();
             configuration.CreateMap<CreateOrEditContactTaskMapDto, ContactTaskMap>().ReverseMap();

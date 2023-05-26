@@ -20,6 +20,13 @@ import { SiteDefaultContentComponent } from './cms/contents/site-default-content
                 children: [
                     
                     {
+                        path: 'jobManagement/jobTaskMaps',
+                        loadChildren: () => import('./jobManagement/jobTaskMaps/jobTaskMap.module').then(m => m.JobTaskMapModule),
+                        data: { permission: 'Pages.JobTaskMaps' }
+                    },
+                
+                    
+                    {
                         path: 'shop/productTaskMaps',
                         loadChildren: () => import('./shop/productTaskMaps/productTaskMap.module').then(m => m.ProductTaskMapModule),
                         data: { permission: 'Pages.ProductTaskMaps' }
