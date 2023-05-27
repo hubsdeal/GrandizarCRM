@@ -1,31 +1,23 @@
-﻿using SoftGrid.LookupData;
-using SoftGrid.LookupData;
-using SoftGrid.Shop;
-using SoftGrid.LookupData;
+﻿using Abp.Application.Services.Dto;
+using Abp.Authorization;
+using Abp.Domain.Repositories;
+using Abp.Linq.Extensions;
+
+using Microsoft.EntityFrameworkCore;
+
+using SoftGrid.Authorization;
 using SoftGrid.CRM;
+using SoftGrid.Dto;
+using SoftGrid.JobManagement.Dtos;
+using SoftGrid.JobManagement.Exporting;
 using SoftGrid.LookupData;
-using SoftGrid.LookupData;
-using SoftGrid.LookupData;
-using SoftGrid.JobManagement;
+using SoftGrid.LookupData.Enums;
 using SoftGrid.Shop;
 
-using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
-using Abp.Linq.Extensions;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using Abp.Domain.Repositories;
-using SoftGrid.JobManagement.Exporting;
-using SoftGrid.JobManagement.Dtos;
-using SoftGrid.Dto;
-using Abp.Application.Services.Dto;
-using SoftGrid.Authorization;
-using Abp.Extensions;
-using Abp.Authorization;
-using Microsoft.EntityFrameworkCore;
-using Abp.UI;
-using SoftGrid.Storage;
 
 namespace SoftGrid.JobManagement
 {
@@ -863,5 +855,57 @@ namespace SoftGrid.JobManagement
             );
         }
 
+
+
+        public async Task<PagedResultDto<JobMasterTagLookupTableDto>> GetAllJobCategory()
+        {
+            var query = _lookup_masterTagRepository.GetAll().Where(e => e.MasterTagCategoryId == (long)MasterTagCategoryEnum.JobCategory);
+
+            var totalCount = await query.CountAsync();
+
+            var masterTagList = await query
+                .ToListAsync();
+
+            var lookupTableDtoList = new List<JobMasterTagLookupTableDto>();
+            foreach (var masterTag in masterTagList)
+            {
+                lookupTableDtoList.Add(new JobMasterTagLookupTableDto
+                {
+                    Id = masterTag.Id,
+                    DisplayName = masterTag.Name?.ToString()
+                });
+            }
+
+            return new PagedResultDto<JobMasterTagLookupTableDto>(
+                totalCount,
+                lookupTableDtoList
+            );
+        }
+
+
+        public async Task<PagedResultDto<JobMasterTagLookupTableDto>> GetAllJobType()
+        {
+            var query = _lookup_masterTagRepository.GetAll().Where(e => e.MasterTagCategoryId == (long)MasterTagCategoryEnum.JobType);
+
+            var totalCount = await query.CountAsync();
+
+            var masterTagList = await query
+                .ToListAsync();
+
+            var lookupTableDtoList = new List<JobMasterTagLookupTableDto>();
+            foreach (var masterTag in masterTagList)
+            {
+                lookupTableDtoList.Add(new JobMasterTagLookupTableDto
+                {
+                    Id = masterTag.Id,
+                    DisplayName = masterTag.Name?.ToString()
+                });
+            }
+
+            return new PagedResultDto<JobMasterTagLookupTableDto>(
+                totalCount,
+                lookupTableDtoList
+            );
+        }
     }
 }

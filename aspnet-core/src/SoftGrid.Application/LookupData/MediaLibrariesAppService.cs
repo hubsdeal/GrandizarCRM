@@ -20,6 +20,7 @@ using Abp.UI;
 using SoftGrid.Storage;
 using System.Drawing;
 using System.IO;
+using SoftGrid.LookupData.Enums;
 
 namespace SoftGrid.LookupData
 {
@@ -204,7 +205,7 @@ namespace SoftGrid.LookupData
             {
                 mediaLibrary.TenantId = (int?)AbpSession.TenantId;
             }
-            mediaLibrary.MasterTagCategoryId = (long)MasterTagCategoriesEnum.Media_Type;
+            mediaLibrary.MasterTagCategoryId = (long)MasterTagCategoryEnum.Media_Type;
 
             long mediaId = await _mediaLibraryRepository.InsertAndGetIdAsync(mediaLibrary);
             return mediaId;
@@ -339,7 +340,7 @@ namespace SoftGrid.LookupData
         public async Task<List<MediaLibraryMasterTagLookupTableDto>> GetAllMasterTagForTableDropdown()
         {
             return await _lookup_masterTagRepository.GetAll()
-                .Where(e => e.MasterTagCategoryId == (long)MasterTagCategoriesEnum.Media_Type)
+                .Where(e => e.MasterTagCategoryId == (long)MasterTagCategoryEnum.Media_Type)
                 .Select(masterTag => new MediaLibraryMasterTagLookupTableDto
                 {
                     Id = masterTag.Id,

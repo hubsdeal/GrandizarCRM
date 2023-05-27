@@ -282,19 +282,28 @@ namespace SoftGrid.Authorization.Accounts
         }
 
 
-
-        //[HttpGet("AddOrUpdateDefaultHub/{hubId:long}")]
-        public async Task<bool> AddOrUpdateDefaultHub(long hubId)
+        public class HubIdDto
         {
-            // need logged user id here
-            var userId = AbpSession.UserId ?? 0;
-            if (userId > 0 is false) throw new Exception("Sorry! No User Found to Set Default Hub!");
+            public long HubId { get; set; }
+            public long UserId { get; set; }
+        }
 
-            var user = await UserManager.GetUserByIdAsync(userId);
+
+        //[AbpAuthorize]
+        //[HttpGet("AddOrUpdateDefaultHub/{hubId:long}")]
+        //public async Task<bool> AddOrUpdateDefaultHub(HubIdDto hubDto) // using this Model only for HubId
+        public async Task<bool> AddOrUpdateDefaultHub(HubIdDto hubIdDto) // using this Model only for HubId
+        {
+            if (hubIdDto.HubId > 0 is false) throw new Exception("Sorry! No Hub Found to Set Default!");
+
+            // need logged user id here
+            //var d = AbpSession.UserId;
+            if (hubIdDto.UserId > 0 is false) throw new Exception("Sorry! No User Found to Set Default Hub!");
+
+            var user = await UserManager.GetUserByIdAsync(hubIdDto.UserId);
             if (user == null) throw new Exception("Sorry! No User Found to Set Default Hub!");
 
-            user.PrimaryHubId = hubId;
-
+            user.PrimaryHubId = hubIdDto.HubId;
             var isUpdated = (await UserManager.UpdateAsync(user)).Succeeded;
             return isUpdated;
         }

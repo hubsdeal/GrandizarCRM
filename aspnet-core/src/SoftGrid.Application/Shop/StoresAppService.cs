@@ -10,6 +10,7 @@ using SoftGrid.Authorization.Users;
 using SoftGrid.Dto;
 using SoftGrid.EntityFrameworkCore.Repositories;
 using SoftGrid.LookupData;
+using SoftGrid.LookupData.Enums;
 using SoftGrid.Shop.Dtos;
 using SoftGrid.Shop.Exporting;
 using SoftGrid.Storage;
@@ -867,7 +868,7 @@ namespace SoftGrid.Shop
             var mediaLibrary = new MediaLibrary();
             mediaLibrary.BinaryObjectId = storedFile.Id;
             mediaLibrary.Name = input.Name + "_" + "Logo";
-            mediaLibrary.MasterTagCategoryId = (long)MasterTagCategoriesEnum.Media_Type;
+            mediaLibrary.MasterTagCategoryId = (long)MasterTagCategoryEnum.Media_Type;
             mediaLibrary.MasterTagId = 1;
             mediaLibrary.FileExtension = ".png";
             mediaLibrary.Size = (byteArray.Length / 1024).ToString() + " kb";
