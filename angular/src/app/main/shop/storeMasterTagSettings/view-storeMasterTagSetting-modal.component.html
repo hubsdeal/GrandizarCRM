@@ -1,0 +1,71 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span>{{ l('Details') }}</span>
+                </h4>
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    (click)="close()"
+                    aria-label="Close"
+                    [disabled]="saving"
+                ></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('CustomTagTitle') }} :</h6>
+                        {{ item.storeMasterTagSetting.customTagTitle }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('CustomTagChatQuestion') }} :</h6>
+                        {{ item.storeMasterTagSetting.customTagChatQuestion }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('DisplayPublic') }} :</h6>
+                        <div *ngIf="item.storeMasterTagSetting.displayPublic" class="text-left">
+                            <i class="fa fa-check-circle text-success" title="True"></i>
+                        </div>
+                        <div *ngIf="!item.storeMasterTagSetting.displayPublic" class="text-left">
+                            <i class="fa fa-times-circle" title="False"></i>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('DisplaySequence') }} :</h6>
+                        {{ item.storeMasterTagSetting.displaySequence }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('AnswerTypeId') }} :</h6>
+                        {{ l(answerType[item.storeMasterTagSetting.answerTypeId]) }}
+                    </div>
+
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('StoreTagSettingCategory') }}) {{ l('Name') }} :</h6>
+                        {{ item.storeTagSettingCategoryName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('MasterTagCategory') }}) {{ l('Name') }} :</h6>
+                        {{ item.masterTagCategoryName }}
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button [disabled]="saving" type="button" class="btn btn-primary blue" (click)="close()">
+                    {{ l('Close') }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

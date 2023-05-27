@@ -26,6 +26,24 @@ namespace SoftGrid.EntityFrameworkCore
 {
     public class SoftGridDbContext : AbpZeroDbContext<Tenant, Role, User, SoftGridDbContext>, IAbpPersistedGrantDbContext
     {
+        public virtual DbSet<JobTaskMap> JobTaskMaps { get; set; }
+
+        public virtual DbSet<ProductTaskMap> ProductTaskMaps { get; set; }
+
+        public virtual DbSet<ContactTaskMap> ContactTaskMaps { get; set; }
+
+        public virtual DbSet<JobMasterTagSetting> JobMasterTagSettings { get; set; }
+
+        public virtual DbSet<BusinessMasterTagSetting> BusinessMasterTagSettings { get; set; }
+
+        public virtual DbSet<ContactMasterTagSetting> ContactMasterTagSettings { get; set; }
+
+        public virtual DbSet<ProductMasterTagSetting> ProductMasterTagSettings { get; set; }
+
+        public virtual DbSet<StoreMasterTagSetting> StoreMasterTagSettings { get; set; }
+
+        public virtual DbSet<StoreTagSettingCategory> StoreTagSettingCategories { get; set; }
+
         public virtual DbSet<TaskDocument> TaskDocuments { get; set; }
 
         public virtual DbSet<JobDocument> JobDocuments { get; set; }
@@ -338,10 +356,50 @@ namespace SoftGrid.EntityFrameworkCore
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<TaskDocument>(t =>
+            modelBuilder.Entity<JobTaskMap>(j =>
             {
-                t.HasIndex(e => new { e.TenantId });
+                j.HasIndex(e => new { e.TenantId });
             });
+            modelBuilder.Entity<ProductTaskMap>(p =>
+                       {
+                           p.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<ContactTaskMap>(c =>
+                       {
+                           c.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<JobMasterTagSetting>(j =>
+                       {
+                           j.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<ContactMasterTagSetting>(c =>
+                       {
+                           c.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<BusinessMasterTagSetting>(b =>
+                       {
+                           b.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<ContactMasterTagSetting>(c =>
+                       {
+                           c.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<ProductMasterTagSetting>(p =>
+                       {
+                           p.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<StoreMasterTagSetting>(s =>
+                       {
+                           s.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<StoreTagSettingCategory>(s =>
+                       {
+                           s.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<TaskDocument>(t =>
+                       {
+                           t.HasIndex(e => new { e.TenantId });
+                       });
             modelBuilder.Entity<JobDocument>(j =>
                        {
                            j.HasIndex(e => new { e.TenantId });

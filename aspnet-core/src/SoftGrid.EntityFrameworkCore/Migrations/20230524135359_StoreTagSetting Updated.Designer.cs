@@ -12,8 +12,8 @@ using SoftGrid.EntityFrameworkCore;
 namespace SoftGrid.Migrations
 {
     [DbContext(typeof(SoftGridDbContext))]
-    [Migration("20230521142937_CompletionPercentageAddedForTask")]
-    partial class CompletionPercentageaddedforTask
+    [Migration("20230524135359_StoreTagSetting Updated")]
+    partial class StoreTagSettingUpdated
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -7972,6 +7972,57 @@ namespace SoftGrid.Migrations
                     b.ToTable("StoreMarketplaceCommissionSettings");
                 });
 
+            modelBuilder.Entity("SoftGrid.Shop.StoreMasterTagSetting", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<int>("AnswerTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("CustomTagChatQuestion")
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
+
+                    b.Property<string>("CustomTagTitle")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<bool>("DisplayPublic")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("DisplaySequence")
+                        .HasColumnType("int");
+
+                    b.Property<long?>("MasterTagCategoryId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("StoreTagSettingCategoryId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MasterTagCategoryId");
+
+                    b.HasIndex("StoreTagSettingCategoryId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("StoreMasterTagSettings");
+                });
+
             modelBuilder.Entity("SoftGrid.Shop.StoreMedia", b =>
                 {
                     b.Property<long>("Id")
@@ -8409,6 +8460,42 @@ namespace SoftGrid.Migrations
                     b.HasIndex("TenantId");
 
                     b.ToTable("StoreTags");
+                });
+
+            modelBuilder.Entity("SoftGrid.Shop.StoreTagSettingCategory", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(2048)
+                        .HasColumnType("nvarchar(2048)");
+
+                    b.Property<Guid>("ImageId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("StoreTagSettingCategories");
                 });
 
             modelBuilder.Entity("SoftGrid.Shop.StoreTax", b =>
@@ -11508,6 +11595,23 @@ namespace SoftGrid.Migrations
                     b.Navigation("ProductFk");
 
                     b.Navigation("StoreFk");
+                });
+
+            modelBuilder.Entity("SoftGrid.Shop.StoreMasterTagSetting", b =>
+                {
+                    b.HasOne("SoftGrid.LookupData.MasterTagCategory", "MasterTagCategoryFk")
+                        .WithMany()
+                        .HasForeignKey("MasterTagCategoryId");
+
+                    b.HasOne("SoftGrid.Shop.StoreTagSettingCategory", "StoreTagSettingCategoryFk")
+                        .WithMany()
+                        .HasForeignKey("StoreTagSettingCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MasterTagCategoryFk");
+
+                    b.Navigation("StoreTagSettingCategoryFk");
                 });
 
             modelBuilder.Entity("SoftGrid.Shop.StoreMedia", b =>

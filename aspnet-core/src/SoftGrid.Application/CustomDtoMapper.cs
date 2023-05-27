@@ -68,6 +68,24 @@ namespace SoftGrid
     {
         public static void CreateMappings(IMapperConfigurationExpression configuration)
         {
+            configuration.CreateMap<CreateOrEditJobTaskMapDto, JobTaskMap>().ReverseMap();
+            configuration.CreateMap<JobTaskMapDto, JobTaskMap>().ReverseMap();
+            configuration.CreateMap<CreateOrEditProductTaskMapDto, ProductTaskMap>().ReverseMap();
+            configuration.CreateMap<ProductTaskMapDto, ProductTaskMap>().ReverseMap();
+            configuration.CreateMap<CreateOrEditContactTaskMapDto, ContactTaskMap>().ReverseMap();
+            configuration.CreateMap<ContactTaskMapDto, ContactTaskMap>().ReverseMap();
+            configuration.CreateMap<CreateOrEditJobMasterTagSettingDto, JobMasterTagSetting>().ReverseMap();
+            configuration.CreateMap<JobMasterTagSettingDto, JobMasterTagSetting>().ReverseMap();
+            configuration.CreateMap<CreateOrEditBusinessMasterTagSettingDto, BusinessMasterTagSetting>().ReverseMap();
+            configuration.CreateMap<BusinessMasterTagSettingDto, BusinessMasterTagSetting>().ReverseMap();
+            configuration.CreateMap<CreateOrEditContactMasterTagSettingDto, ContactMasterTagSetting>().ReverseMap();
+            configuration.CreateMap<ContactMasterTagSettingDto, ContactMasterTagSetting>().ReverseMap();
+            configuration.CreateMap<CreateOrEditProductMasterTagSettingDto, ProductMasterTagSetting>().ReverseMap();
+            configuration.CreateMap<ProductMasterTagSettingDto, ProductMasterTagSetting>().ReverseMap();
+            configuration.CreateMap<CreateOrEditStoreMasterTagSettingDto, StoreMasterTagSetting>().ReverseMap();
+            configuration.CreateMap<StoreMasterTagSettingDto, StoreMasterTagSetting>().ReverseMap();
+            configuration.CreateMap<CreateOrEditStoreTagSettingCategoryDto, StoreTagSettingCategory>().ReverseMap();
+            configuration.CreateMap<StoreTagSettingCategoryDto, StoreTagSettingCategory>().ReverseMap();
             configuration.CreateMap<CreateOrEditTaskDocumentDto, TaskDocument>().ReverseMap();
             configuration.CreateMap<TaskDocumentDto, TaskDocument>().ReverseMap();
             configuration.CreateMap<CreateOrEditJobDocumentDto, JobDocument>().ReverseMap();

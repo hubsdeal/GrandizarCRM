@@ -404,6 +404,62 @@
                     </div>
                 </form>
 
+                <div class="row">
+                    <div class="col-xl-12 mt-4 mb-4 d-flex justify-content-end">
+                        <div class="btn-group dropdown" dropdown container="body">
+                            <button class="dropdown-toggle btn btn-sm btn-primary" dropdownToggle>
+                                <i class="fa fa-cogs"></i>
+                                <span class="caret"></span>
+                                Bulk Actions
+                            </button>
+                            <ul class="dropdown-menu" *dropdownMenu>
+                                <li>
+                                    <a href="javascript:;"
+                                        class="dropdown-item">
+                                        <i class="fas fa-envelope me-1"></i> Send Email
+                                         <!-- Need to implement send bulk email -->
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;"
+                                        class="dropdown-item">
+                                        <i class="fas fa-message me-1"></i> Send SMS
+                                         <!-- Need to implement send bulk sms -->
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;"
+                                        class="dropdown-item">
+                                        <i class="fas fa-plus-circle me-1"></i> Sales Campaign
+                                         <!-- Need to implement bulk assign to Sales Campaign (SP bulk insert) -->
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;"
+                                        class="dropdown-item">
+                                        <i class="fas fa-plus-circle me-1"></i> Territory (Hub)
+                                         <!-- Need to implement bulk assign to Hub (SP bulk insert) -->
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;"
+                                        class="dropdown-item">
+                                        <i class="fas fa-plus-circle me-1"></i> Account Manager
+                                        <!-- Need to implement bulk assign to employee (SP bulk insert) -->
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;"
+                                        class="dropdown-item">
+                                        <i class="fas fa-plus-circle me-1"></i> Tag
+                                        <!-- Need to implement bulk tag assign to store -->
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="row align-items-center">
                     <!--<Primeng-Datatable-Start>-->
                     <div class="primeng-datatable-container col-12" [busyIf]="primengTableHelper.isLoading">
@@ -669,7 +725,9 @@
                                     </td>
                                     <td style="width: 90px; text-align: center;">
                                         <span class="p-column-title">{{ l('Connect') }}</span>
-                                        <i class="fas fa-comments text-primary"></i>
+                                        <a href="javascript:;" (click)="onConnectClick(record.id)">
+                                            <i class="fas fa-comments text-primary fs-3"></i>
+                                        </a>
                                     </td>
                                     <td style="width: 150px; text-align: center;">
                                         <span class="p-column-title">{{ l('#Products') }}</span>
@@ -873,4 +931,5 @@
     </div>
     <createOrEditStoreModal #createOrEditStoreModal (modalSave)="getStores()"></createOrEditStoreModal>
     <viewStoreModal #viewStoreModal></viewStoreModal>
+    <oneToOneConnectModal #oneToOneConnectModal></oneToOneConnectModal>
 </div>

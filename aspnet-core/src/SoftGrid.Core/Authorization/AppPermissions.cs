@@ -6,6 +6,51 @@
     /// </summary>
     public static class AppPermissions
     {
+        public const string Pages_JobTaskMaps = "Pages.JobTaskMaps";
+        public const string Pages_JobTaskMaps_Create = "Pages.JobTaskMaps.Create";
+        public const string Pages_JobTaskMaps_Edit = "Pages.JobTaskMaps.Edit";
+        public const string Pages_JobTaskMaps_Delete = "Pages.JobTaskMaps.Delete";
+
+        public const string Pages_ProductTaskMaps = "Pages.ProductTaskMaps";
+        public const string Pages_ProductTaskMaps_Create = "Pages.ProductTaskMaps.Create";
+        public const string Pages_ProductTaskMaps_Edit = "Pages.ProductTaskMaps.Edit";
+        public const string Pages_ProductTaskMaps_Delete = "Pages.ProductTaskMaps.Delete";
+
+        public const string Pages_ContactTaskMaps = "Pages.ContactTaskMaps";
+        public const string Pages_ContactTaskMaps_Create = "Pages.ContactTaskMaps.Create";
+        public const string Pages_ContactTaskMaps_Edit = "Pages.ContactTaskMaps.Edit";
+        public const string Pages_ContactTaskMaps_Delete = "Pages.ContactTaskMaps.Delete";
+
+        public const string Pages_JobMasterTagSettings = "Pages.JobMasterTagSettings";
+        public const string Pages_JobMasterTagSettings_Create = "Pages.JobMasterTagSettings.Create";
+        public const string Pages_JobMasterTagSettings_Edit = "Pages.JobMasterTagSettings.Edit";
+        public const string Pages_JobMasterTagSettings_Delete = "Pages.JobMasterTagSettings.Delete";
+
+        public const string Pages_BusinessMasterTagSettings = "Pages.BusinessMasterTagSettings";
+        public const string Pages_BusinessMasterTagSettings_Create = "Pages.BusinessMasterTagSettings.Create";
+        public const string Pages_BusinessMasterTagSettings_Edit = "Pages.BusinessMasterTagSettings.Edit";
+        public const string Pages_BusinessMasterTagSettings_Delete = "Pages.BusinessMasterTagSettings.Delete";
+
+        public const string Pages_ContactMasterTagSettings = "Pages.ContactMasterTagSettings";
+        public const string Pages_ContactMasterTagSettings_Create = "Pages.ContactMasterTagSettings.Create";
+        public const string Pages_ContactMasterTagSettings_Edit = "Pages.ContactMasterTagSettings.Edit";
+        public const string Pages_ContactMasterTagSettings_Delete = "Pages.ContactMasterTagSettings.Delete";
+
+        public const string Pages_ProductMasterTagSettings = "Pages.ProductMasterTagSettings";
+        public const string Pages_ProductMasterTagSettings_Create = "Pages.ProductMasterTagSettings.Create";
+        public const string Pages_ProductMasterTagSettings_Edit = "Pages.ProductMasterTagSettings.Edit";
+        public const string Pages_ProductMasterTagSettings_Delete = "Pages.ProductMasterTagSettings.Delete";
+
+        public const string Pages_StoreMasterTagSettings = "Pages.StoreMasterTagSettings";
+        public const string Pages_StoreMasterTagSettings_Create = "Pages.StoreMasterTagSettings.Create";
+        public const string Pages_StoreMasterTagSettings_Edit = "Pages.StoreMasterTagSettings.Edit";
+        public const string Pages_StoreMasterTagSettings_Delete = "Pages.StoreMasterTagSettings.Delete";
+
+        public const string Pages_StoreTagSettingCategories = "Pages.StoreTagSettingCategories";
+        public const string Pages_StoreTagSettingCategories_Create = "Pages.StoreTagSettingCategories.Create";
+        public const string Pages_StoreTagSettingCategories_Edit = "Pages.StoreTagSettingCategories.Edit";
+        public const string Pages_StoreTagSettingCategories_Delete = "Pages.StoreTagSettingCategories.Delete";
+
         public const string Pages_TaskDocuments = "Pages.TaskDocuments";
         public const string Pages_TaskDocuments_Create = "Pages.TaskDocuments.Create";
         public const string Pages_TaskDocuments_Edit = "Pages.TaskDocuments.Edit";

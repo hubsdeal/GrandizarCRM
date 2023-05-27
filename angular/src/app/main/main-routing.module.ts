@@ -20,6 +20,69 @@ import { SiteDefaultContentComponent } from './cms/contents/site-default-content
                 children: [
                     
                     {
+                        path: 'jobManagement/jobTaskMaps',
+                        loadChildren: () => import('./jobManagement/jobTaskMaps/jobTaskMap.module').then(m => m.JobTaskMapModule),
+                        data: { permission: 'Pages.JobTaskMaps' }
+                    },
+                
+                    
+                    {
+                        path: 'shop/productTaskMaps',
+                        loadChildren: () => import('./shop/productTaskMaps/productTaskMap.module').then(m => m.ProductTaskMapModule),
+                        data: { permission: 'Pages.ProductTaskMaps' }
+                    },
+                
+                    
+                    {
+                        path: 'crm/contactTaskMaps',
+                        loadChildren: () => import('./crm/contactTaskMaps/contactTaskMap.module').then(m => m.ContactTaskMapModule),
+                        data: { permission: 'Pages.ContactTaskMaps' }
+                    },
+                
+                    
+                    {
+                        path: 'jobManagement/jobMasterTagSettings',
+                        loadChildren: () => import('./jobManagement/jobMasterTagSettings/jobMasterTagSetting.module').then(m => m.JobMasterTagSettingModule),
+                        data: { permission: 'Pages.JobMasterTagSettings' }
+                    },
+                
+                    
+                    {
+                        path: 'crm/businessMasterTagSettings',
+                        loadChildren: () => import('./crm/businessMasterTagSettings/businessMasterTagSetting.module').then(m => m.BusinessMasterTagSettingModule),
+                        data: { permission: 'Pages.BusinessMasterTagSettings' }
+                    },
+                
+                    
+                    {
+                        path: 'crm/contactMasterTagSettings',
+                        loadChildren: () => import('./crm/contactMasterTagSettings/contactMasterTagSetting.module').then(m => m.ContactMasterTagSettingModule),
+                        data: { permission: 'Pages.ContactMasterTagSettings' }
+                    },
+                
+                    
+                    {
+                        path: 'shop/productMasterTagSettings',
+                        loadChildren: () => import('./shop/productMasterTagSettings/productMasterTagSetting.module').then(m => m.ProductMasterTagSettingModule),
+                        data: { permission: 'Pages.ProductMasterTagSettings' }
+                    },
+                
+                    
+                    {
+                        path: 'shop/storeMasterTagSettings',
+                        loadChildren: () => import('./shop/storeMasterTagSettings/storeMasterTagSetting.module').then(m => m.StoreMasterTagSettingModule),
+                        data: { permission: 'Pages.StoreMasterTagSettings' }
+                    },
+                
+                    
+                    {
+                        path: 'shop/storeTagSettingCategories',
+                        loadChildren: () => import('./shop/storeTagSettingCategories/storeTagSettingCategory.module').then(m => m.StoreTagSettingCategoryModule),
+                        data: { permission: 'Pages.StoreTagSettingCategories' }
+                    },
+                
+                    
+                    {
                         path: 'crm/businessDocuments',
                         loadChildren: () => import('./crm/businessDocuments/businessDocument.module').then(m => m.BusinessDocumentModule),
                         data: { permission: 'Pages.BusinessDocuments' }
