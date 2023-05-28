@@ -12,6 +12,7 @@ import { finalize } from 'rxjs';
 import { CreateOrEditStoreMediaModalComponent } from '../../storeMedias/create-or-edit-storeMedia-modal.component';
 import { DomSanitizer } from '@angular/platform-browser';
 import { GeocodingService } from '@app/shared/chat-gpt-response-modal/services/chat-gpt-lat-long.service';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-store-dashboard',
@@ -69,6 +70,23 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
 
   selectedCountry: any;
   selectedState: any;
+
+  storeTags = [
+    {
+      id: "1",
+      value: "Sales Status"
+    },
+
+    {
+      id: "2",
+      value: "Delivery Types"
+    },
+    {
+      id: "3",
+      value: "Customer Group"
+    }
+  ];
+
   constructor(
     injector: Injector,
     private route: ActivatedRoute,
@@ -329,6 +347,11 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
     } catch (error) {
       console.error('Error:', error);
     }
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    console.log(this.storeTags, event.previousIndex, event.currentIndex);
+    moveItemInArray(this.storeTags, event.previousIndex, event.currentIndex);
   }
 
 }

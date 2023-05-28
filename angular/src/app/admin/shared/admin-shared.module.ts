@@ -15,7 +15,7 @@ import { CommonModule } from '@angular/common';
 import { UtilsModule } from '@shared/utils/utils.module';
 import { AppCommonModule } from '@app/shared/common/app-common.module';
 import { TableModule } from 'primeng/table';
-import { DragDropModule } from 'primeng/dragdrop';
+import { DragDropModule as primengDragDropModule } from 'primeng/dragdrop';
 import { ContextMenuModule } from 'primeng/contextmenu';
 import { PaginatorModule } from 'primeng/paginator';
 import { AutoCompleteModule } from 'primeng/autocomplete';
@@ -51,7 +51,7 @@ import { SubheaderModule } from '@app/shared/common/sub-header/subheader.module'
         AppCommonModule,
         TableModule,
         TreeModule,
-        DragDropModule,
+        primengDragDropModule,
         ContextMenuModule,
         PaginatorModule,
         AutoCompleteModule,
@@ -79,7 +79,7 @@ import { SubheaderModule } from '@app/shared/common/sub-header/subheader.module'
         AppCommonModule,
         TableModule,
         TreeModule,
-        DragDropModule,
+        primengDragDropModule,
         ContextMenuModule,
         PaginatorModule,
         AutoCompleteModule,

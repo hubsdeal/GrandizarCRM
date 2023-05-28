@@ -38,6 +38,7 @@ import { PasswordInputWithShowButtonComponent } from './password-input-with-show
 import { KeyValueListManagerComponent } from './key-value-list-manager/key-value-list-manager.component';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 @NgModule({
     imports: [
         CommonModule,
@@ -56,6 +57,7 @@ import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
         AppBsModalModule,
         AutoCompleteModule,
         SelectButtonModule,
+        DragDropModule,
         NgxMaterialTimepickerModule
     ], 
     declarations: [
@@ -82,6 +84,7 @@ import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
         PasswordInputWithShowButtonComponent,
         KeyValueListManagerComponent,
         SelectButtonModule,
+        DragDropModule,
         NgxMaterialTimepickerModule
     ],
     providers: [

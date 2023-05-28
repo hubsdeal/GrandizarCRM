@@ -16,8 +16,8 @@
                 </div>
                 <div class="modal-body">
                     <div class="my-5 p_filter">
-                        <label class="form-label" for="StoreTagSettingCategoryName">
-                            Store Type Tag Category
+                        <label class="form-label required" for="StoreTagSettingCategoryName">
+                            Store Type
                         </label>
                         <!-- <div class="input-group">
                             <input class="form-control" id="StoreTagSettingCategoryName"
@@ -36,12 +36,12 @@
                         <p-dropdown [options]="storeTagSettingCategoryOptions" [filter]="true" [virtualScroll]="true"
                             (onChange)="onStoreTagSettingCategoryClick($event)" placeholder="Select Store Category"
                             [itemSize]="30" name="displayName" optionLabel="displayName" optionId="id"
-                            [(ngModel)]="selectedStoreTagSettingCategory" filterBy="displayName"
+                            [(ngModel)]="selectedStoreTagSettingCategory" filterBy="displayName" required
                             [style]="{ width: '100%' }"></p-dropdown>
                     </div>
                     <!-- <input class="form-control" name="storeMasterTagSetting.storeTagSettingCategoryId"
                         [(ngModel)]="storeMasterTagSetting.storeTagSettingCategoryId" type="text" required hidden /> -->
-                    <div class="d-flex flex-wrap my-5">
+                    <!-- <div class="d-flex flex-wrap my-5">
                         <a href="javascript:;" class="btn btn-light-primary me-3">
                             English
                         </a>
@@ -54,25 +54,12 @@
                         <a href="javascript:;" class="btn btn-light-primary me-3">
                             English
                         </a>
-                    </div>
+                    </div> -->
 
                     <div class="my-5 p_filter">
                         <label class="form-label" for="MasterTagCategoryName">{{ l('Store Tag Category') }}</label>
-                        <!-- <div class="input-group">
-                            <input class="form-control" id="MasterTagCategoryName" name="masterTagCategoryName"
-                                [(ngModel)]="masterTagCategoryName" type="text" disabled />
-                            <button class="btn btn-primary blue" (click)="openSelectMasterTagCategoryModal()"
-                                type="button">
-                                <i class="fa fa-search"></i>
-                                {{ l('Pick') }}
-                            </button>
-                            <button class="btn btn-danger btn-icon" type="button"
-                                (click)="setMasterTagCategoryIdNull()">
-                                <i class="fa fa-times"></i>
-                            </button>
-                        </div> -->
                         <p-dropdown [options]="masterTagCategoryOptions" [filter]="true" [virtualScroll]="true"
-                            (onChange)="onMmasterTagCategoryClick($event)" placeholder="Select Tag Category"
+                            (onChange)="onMasterTagCategoryClick($event)" placeholder="Select Tag Category"
                             [itemSize]="30" name="displayName" optionLabel="displayName" optionId="id"
                             [(ngModel)]="selectedTagCategory" filterBy="displayName"
                             [style]="{ width: '100%' }"></p-dropdown>
@@ -81,12 +68,12 @@
                         [(ngModel)]="storeMasterTagSetting.masterTagCategoryId" type="text" hidden /> -->
 
                     <div class="my-5">
-                        <label class="form-label" for="StoreMasterTagSetting_CustomTagTitle">
+                        <label class="form-label required" for="StoreMasterTagSetting_CustomTagTitle">
                             Title - (Customize if needed)
                         </label>
                         <input type="text" #StoreMasterTagSetting_CustomTagTitle="ngModel"
                             id="StoreMasterTagSetting_CustomTagTitle" class="form-control"
-                            [(ngModel)]="storeMasterTagSetting.customTagTitle" name="CustomTagTitle" minlength="1"
+                            [(ngModel)]="storeMasterTagSetting.customTagTitle" name="CustomTagTitle" minlength="1" required
                             maxlength="128" />
                         <validation-messages [formCtrl]="StoreMasterTagSetting_CustomTagTitle"></validation-messages>
                     </div>
@@ -106,10 +93,12 @@
                         <label class="form-label" for="StoreMasterTagSetting_AnswerTypeId">
                             {{ l('Tag Answer Type') }}
                         </label>
-                        <select class="form-select" #StoreMasterTagSetting_AnswerTypeId="ngModel" name="AnswerTypeId"
+                        <select class="form-select" name="AnswerTypeId"
                             id="StoreMasterTagSetting_AnswerTypeId"
-                            [(ngModel)]="storeMasterTagSetting.answerTypeId"></select>
-                        <validation-messages [formCtrl]="StoreMasterTagSetting_AnswerTypeId"></validation-messages>
+                            [(ngModel)]="storeMasterTagSetting.answerTypeId">
+                            <option value="-1">Select Answer Type</option>
+                            <option *ngFor="let item of answerTypeOptions" value="{{item.value}}">{{item.label}}</option>
+                        </select>
                     </div>
 
                     

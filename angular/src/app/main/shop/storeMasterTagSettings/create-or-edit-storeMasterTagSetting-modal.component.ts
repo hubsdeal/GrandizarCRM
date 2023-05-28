@@ -4,6 +4,8 @@ import { finalize } from 'rxjs/operators';
 import {
     StoreMasterTagSettingsServiceProxy,
     CreateOrEditStoreMasterTagSettingDto,
+    AnswerType,
+    ContentType,
 } from '@shared/service-proxies/service-proxies';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { DateTime } from 'luxon';
@@ -38,6 +40,7 @@ export class CreateOrEditStoreMasterTagSettingModalComponent extends AppComponen
 
     selectedTagCategory: any;
     masterTagCategoryOptions: any = []
+    answerTypeOptions: { value: any, label: string }[] = [];
 
     constructor(
         injector: Injector,
@@ -75,6 +78,11 @@ export class CreateOrEditStoreMasterTagSettingModalComponent extends AppComponen
         this._storeMasterTagSettingsServiceProxy.getAllMasterTagCategoryForLookupTable('', '', 0, 1000).subscribe(result => {
             this.masterTagCategoryOptions = result.items;
         })
+        for (const key in AnswerType) {
+            if (isNaN(Number(key))) {
+                this.answerTypeOptions.push({ value: AnswerType[key], label: key.replace(/_/g, ' ') });
+            }
+        }
     }
 
     save(): void {
@@ -99,9 +107,10 @@ export class CreateOrEditStoreMasterTagSettingModalComponent extends AppComponen
             this.storeMasterTagSetting.storeTagSettingCategoryId = event.value.id;
         }
     }
-    onMmasterTagCategoryClick(event: any) {
+    onMasterTagCategoryClick(event: any) {
         if (event.value != null) {
             this.storeMasterTagSetting.masterTagCategoryId = event.value.id;
+            this.storeMasterTagSetting.customTagTitle = event.value.displayName;
         }
     }
     openSelectStoreTagSettingCategoryModal() {
