@@ -1,6 +1,30 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <localizationDictionary culture="en">
-  <texts>    <text name="JobTaskMap">Job task map</text>
+  <texts>    <text name="TaskWorkItem">Task work item</text>
+    <text name="SoftGrid.TaskManagement.TaskWorkItem">TaskWorkItem</text>
+    <text name="EstimatedHours">Estimated hours</text>
+    <text name="ActualHours">Actual hours</text>
+    <text name="OpenOrClosed">Open or closed</text>
+    <text name="NotOpenOrClosed">Not open or closed</text>
+    <text name="CompletionPercentage">Completion percentage</text>
+    <text name="TaskWorkItemsHeaderInfo">Task work items header info</text>
+    <text name="CreateNewTaskWorkItem">Create new task work item</text>
+    <text name="EditTaskWorkItem">Edit task work item</text>
+    <text name="DeleteTaskWorkItem">Delete task work item</text>
+    <text name="TaskWorkItems">Task work items</text>
+    <text name="TaskTeam">Task team</text>
+    <text name="SoftGrid.TaskManagement.TaskTeam">TaskTeam</text>
+    <text name="HourMinutes">Hour minutes</text>
+    <text name="IsPrimary">Is primary</text>
+    <text name="NotIsPrimary">Not is primary</text>
+    <text name="EstimatedHour">Estimated hour</text>
+    <text name="SubTaskTitle">Sub task title</text>
+    <text name="TaskTeamsHeaderInfo">Task teams header info</text>
+    <text name="CreateNewTaskTeam">Create new task team</text>
+    <text name="EditTaskTeam">Edit task team</text>
+    <text name="DeleteTaskTeam">Delete task team</text>
+    <text name="TaskTeams">Task teams</text>
+    <text name="JobTaskMap">Job task map</text>
     <text name="SoftGrid.JobManagement.JobTaskMap">JobTaskMap</text>
     <text name="JobTaskMapsHeaderInfo">Job task maps header info</text>
     <text name="CreateNewJobTaskMap">Create new job task map</text>
