@@ -20,5 +20,6 @@ import { StoreTagMasterTagLookupTableModalComponent } from './storeTag-masterTag
         StoreTagMasterTagLookupTableModalComponent,
     ],
     imports: [AppSharedModule, StoreTagRoutingModule, AdminSharedModule],
+    exports: [StoreTagsComponent, CreateOrEditStoreTagModalComponent, ViewStoreTagModalComponent],
 })
 export class StoreTagModule {}

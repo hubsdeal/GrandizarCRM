@@ -1,7 +1,7 @@
 ﻿import { AppConsts } from '@shared/AppConsts';
-import { Component, Injector, ViewEncapsulation, ViewChild } from '@angular/core';
+import { Component, Injector, ViewEncapsulation, ViewChild, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { StoreTagsServiceProxy, StoreTagDto } from '@shared/service-proxies/service-proxies';
+import { StoreTagsServiceProxy, StoreTagDto, MasterTagCategoryForDashboardViewDto } from '@shared/service-proxies/service-proxies';
 import { NotifyService } from 'abp-ng2-module';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { TokenAuthServiceProxy } from '@shared/service-proxies/service-proxies';
@@ -17,8 +17,10 @@ import { filter as _filter } from 'lodash-es';
 import { DateTime } from 'luxon';
 
 import { DateTimeService } from '@app/shared/common/timing/date-time.service';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
+    selector: 'app-storeTags',
     templateUrl: './storeTags.component.html',
     encapsulation: ViewEncapsulation.None,
     animations: [appModuleAnimation()],
@@ -44,6 +46,27 @@ export class StoreTagsComponent extends AppComponentBase {
     masterTagCategoryNameFilter = '';
     masterTagNameFilter = '';
 
+    @Input() storeId: number;
+    @Input() storeTagSettingCategoryId: number;
+
+    allStoreTags: MasterTagCategoryForDashboardViewDto[] = [];
+
+    storeTags = [
+        {
+            id: "1",
+            value: "Sales Status"
+        },
+
+        {
+            id: "2",
+            value: "Delivery Types"
+        },
+        {
+            id: "3",
+            value: "Customer Group"
+        }
+    ];
+
     constructor(
         injector: Injector,
         private _storeTagsServiceProxy: StoreTagsServiceProxy,
@@ -54,6 +77,7 @@ export class StoreTagsComponent extends AppComponentBase {
         private _dateTimeService: DateTimeService
     ) {
         super(injector);
+        this.getALlStoreTags();
     }
 
     getStoreTags(event?: LazyLoadEvent) {
@@ -138,4 +162,16 @@ export class StoreTagsComponent extends AppComponentBase {
 
         this.getStoreTags();
     }
+    getALlStoreTags() {
+        this._storeTagsServiceProxy.getStoreTagsByTagSetting(this.storeTagSettingCategoryId, this.storeId).subscribe((result) => {
+            this.allStoreTags = result;
+            console.log(this.allStoreTags);
+        });
+    }
+
+    drop(event: CdkDragDrop<string[]>) {
+        console.log(this.storeTags, event.previousIndex, event.currentIndex);
+        moveItemInArray(this.storeTags, event.previousIndex, event.currentIndex);
+    }
+
 }

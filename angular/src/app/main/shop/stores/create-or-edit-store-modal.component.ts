@@ -7,6 +7,7 @@ import {
     StoreCountryLookupTableDto,
     StoreStateLookupTableDto,
     StoreRatingLikeLookupTableDto,
+    StoreMasterTagSettingsServiceProxy,
 } from '@shared/service-proxies/service-proxies';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { DateTime } from 'luxon';
@@ -48,9 +49,12 @@ export class CreateOrEditStoreModalComponent extends AppComponentBase implements
 
     localOrVirtualStoreOptions: SelectItem[];
 
+    selectedStoreTagSettingCategory: any;
+    storeTagSettingCategoryOptions: any = []
     constructor(
         injector: Injector,
         private _storesServiceProxy: StoresServiceProxy,
+        private _storeMasterTagSettingsServiceProxy: StoreMasterTagSettingsServiceProxy,
         private _dateTimeService: DateTimeService,
         private _router: Router
     ) {
@@ -93,8 +97,12 @@ export class CreateOrEditStoreModalComponent extends AppComponentBase implements
         this._storesServiceProxy.getAllRatingLikeForTableDropdown().subscribe((result) => {
             this.allRatingLikes = result;
         });
+        this._storeMasterTagSettingsServiceProxy.getAllStoreTagSettingCategoryForLookupTable('', '', 0, 1000).subscribe(result => {
+            this.storeTagSettingCategoryOptions = result.items;
+        });
         this.localOrVirtualStoreOptions = [{ label: 'Local Store', value: false }, { label: 'Virtual Store', value: true }];
     }
+
 
     save(): void {
         this.saving = true;
@@ -152,4 +160,10 @@ export class CreateOrEditStoreModalComponent extends AppComponentBase implements
     }
 
     ngOnInit(): void { }
+
+    onStoreTagSettingCategoryClick(event: any) {
+        if (event.value != null) {
+            this.store.storeTagSettingCategoryId = event.value.id;
+        }
+    }
 }

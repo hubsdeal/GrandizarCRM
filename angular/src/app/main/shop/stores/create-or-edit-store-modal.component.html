@@ -106,16 +106,18 @@
                                 <validation-messages [formCtrl]="Store_Name"></validation-messages>
                             </div>
                         </div>
-                        <!-- <div class="my-5 p_filter">
-                            <label class="form-label required" for="StoreTagSettingCategoryName">
-                                Store Type
-                            </label>
-                            <p-dropdown [options]="storeTagSettingCategoryOptions" [filter]="true" [virtualScroll]="true"
-                                (onChange)="onStoreTagSettingCategoryClick($event)" placeholder="Select Store Category"
-                                [itemSize]="30" name="displayName" optionLabel="displayName" optionId="id"
-                                [(ngModel)]="selectedStoreTagSettingCategory" filterBy="displayName" required
-                                [style]="{ width: '100%' }"></p-dropdown>
-                        </div> -->
+                        <div class="col-xl-12">
+                            <div class="my-5 p_filter">
+                                <label class="form-label required" for="StoreTagSettingCategoryName">
+                                    Store Type
+                                </label>
+                                <p-dropdown [options]="storeTagSettingCategoryOptions" [filter]="true" [virtualScroll]="true"
+                                    (onChange)="onStoreTagSettingCategoryClick($event)" placeholder="Select Store Category"
+                                    [itemSize]="30" name="displayName" optionLabel="displayName" optionId="id"
+                                    [(ngModel)]="selectedStoreTagSettingCategory" filterBy="displayName" required
+                                    [style]="{ width: '100%' }"></p-dropdown>
+                            </div>
+                        </div>
                         <div class="col-xl-12">
                             <div class="my-5">
                                 <label class="form-label" for="Store_LegalName">{{ l('Legal Name') }}</label>
