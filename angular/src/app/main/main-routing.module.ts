@@ -20,6 +20,20 @@ import { SiteDefaultContentComponent } from './cms/contents/site-default-content
                 children: [
                     
                     {
+                        path: 'taskManagement/taskWorkItems',
+                        loadChildren: () => import('./taskManagement/taskWorkItems/taskWorkItem.module').then(m => m.TaskWorkItemModule),
+                        data: { permission: 'Pages.TaskWorkItems' }
+                    },
+                
+                    
+                    {
+                        path: 'taskManagement/taskTeams',
+                        loadChildren: () => import('./taskManagement/taskTeams/taskTeam.module').then(m => m.TaskTeamModule),
+                        data: { permission: 'Pages.TaskTeams' }
+                    },
+                
+                    
+                    {
                         path: 'jobManagement/jobTaskMaps',
                         loadChildren: () => import('./jobManagement/jobTaskMaps/jobTaskMap.module').then(m => m.JobTaskMapModule),
                         data: { permission: 'Pages.JobTaskMaps' }

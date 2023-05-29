@@ -95,5 +95,7 @@ namespace SoftGrid.Shop.Dtos
 
         public long? PrimaryCategoryId { get; set; }
 
+        public long? StoreTagSettingCategoryId { get; set; }
+
     }
 }

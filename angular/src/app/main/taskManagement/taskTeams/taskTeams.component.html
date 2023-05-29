@@ -1,0 +1,453 @@
+﻿<div [@routerTransition]>
+    <sub-header [title]="'TaskTeams' | localize" [description]="'TaskTeamsHeaderInfo' | localize">
+        <div role="actions">
+            <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1">
+                <i class="fa fa-file-excel"></i>
+                {{ l('ExportToExcel') }}
+            </button>
+
+            <button *ngIf="isGranted('Pages.TaskTeams.Create')" (click)="createTaskTeam()" class="btn btn-primary blue">
+                <i class="fa fa-plus"></i>
+                {{ l('CreateNewTaskTeam') }}
+            </button>
+        </div>
+    </sub-header>
+
+    <div [class]="containerClass">
+        <div class="card card-custom gutter-b">
+            <div class="card-body">
+                <form class="form" autocomplete="off">
+                    <div>
+                        <div class="row align-items-center">
+                            <div class="col-xl-12">
+                                <div class="my-3">
+                                    <div class="input-group mb-3">
+                                        <input
+                                            [(ngModel)]="filterText"
+                                            (ngModelChange)="getTaskTeams()"
+                                            name="filterText"
+                                            autoFocus
+                                            type="text"
+                                            class="form-control"
+                                            [placeholder]="l('SearchWithThreeDot')"
+                                        />
+                                        <button class="btn btn-primary" type="submit" (click)="getTaskTeams()">
+                                            <i class="flaticon-search-1"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" [hidden]="!advancedFiltersAreShown">
+                            <div class="col-md-12"></div>
+
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="MinStartDateFilter">{{ l('StartDateRange') }}</label>
+                                    <div class="input-group">
+                                        <input
+                                            class="form-control m-input"
+                                            id="MinStartDateFilter"
+                                            name="MinStartDateFilter"
+                                            type="datetime"
+                                            bsDatepicker
+                                            placeholder="{{ l('MinValue') }}"
+                                            [(ngModel)]="minStartDateFilter"
+                                            (ngModelChange)="getTaskTeams()"
+                                        />
+                                        <span style="line-height: 40px; padding: 0 15px 0 15px">&mdash;</span>
+                                        <input
+                                            class="form-control m-input"
+                                            id="MaxStartDateFilter"
+                                            name="MaxStartDateFilter"
+                                            type="datetime"
+                                            bsDatepicker
+                                            placeholder="{{ l('MaxValue') }}"
+                                            [(ngModel)]="maxStartDateFilter"
+                                            (ngModelChange)="getTaskTeams()"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="StartTimeFilter">{{ l('StartTime') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="StartTimeFilter"
+                                        name="startTimeFilter"
+                                        [(ngModel)]="startTimeFilter"
+                                        (ngModelChange)="getTaskTeams()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="EndTimeFilter">{{ l('EndTime') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="EndTimeFilter"
+                                        name="endTimeFilter"
+                                        [(ngModel)]="endTimeFilter"
+                                        (ngModelChange)="getTaskTeams()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="HourMinutesFilter">{{ l('HourMinutes') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="HourMinutesFilter"
+                                        name="hourMinutesFilter"
+                                        [(ngModel)]="hourMinutesFilter"
+                                        (ngModelChange)="getTaskTeams()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="MinEndDateFilter">{{ l('EndDateRange') }}</label>
+                                    <div class="input-group">
+                                        <input
+                                            class="form-control m-input"
+                                            id="MinEndDateFilter"
+                                            name="MinEndDateFilter"
+                                            type="datetime"
+                                            bsDatepicker
+                                            placeholder="{{ l('MinValue') }}"
+                                            [(ngModel)]="minEndDateFilter"
+                                            (ngModelChange)="getTaskTeams()"
+                                        />
+                                        <span style="line-height: 40px; padding: 0 15px 0 15px">&mdash;</span>
+                                        <input
+                                            class="form-control m-input"
+                                            id="MaxEndDateFilter"
+                                            name="MaxEndDateFilter"
+                                            type="datetime"
+                                            bsDatepicker
+                                            placeholder="{{ l('MaxValue') }}"
+                                            [(ngModel)]="maxEndDateFilter"
+                                            (ngModelChange)="getTaskTeams()"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="IsPrimaryFilterSelect">{{ l('IsPrimary') }}</label>
+                                    <select
+                                        class="form-select"
+                                        name="IsPrimaryFilter"
+                                        id="IsPrimaryFilterSelect"
+                                        [(ngModel)]="isPrimaryFilter"
+                                        (ngModelChange)="getTaskTeams()"
+                                    >
+                                        <option value="-1">{{ l('All') }}</option>
+                                        <option value="0">{{ l('False') }}</option>
+                                        <option value="1">{{ l('True') }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="EstimatedHourFilter">{{ l('EstimatedHour') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="EstimatedHourFilter"
+                                        name="estimatedHourFilter"
+                                        [(ngModel)]="estimatedHourFilter"
+                                        (ngModelChange)="getTaskTeams()"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="SubTaskTitleFilter">{{ l('SubTaskTitle') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="SubTaskTitleFilter"
+                                        name="subTaskTitleFilter"
+                                        [(ngModel)]="subTaskTitleFilter"
+                                        (ngModelChange)="getTaskTeams()"
+                                    />
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="TaskEventNameFilter">
+                                        ({{ l('TaskEvent') }}) {{ l('Name') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="TaskEventNameFilter"
+                                        name="taskEventNameFilter"
+                                        [(ngModel)]="taskEventNameFilter"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="EmployeeNameFilter">
+                                        ({{ l('Employee') }}) {{ l('Name') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="EmployeeNameFilter"
+                                        name="employeeNameFilter"
+                                        [(ngModel)]="employeeNameFilter"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="ContactFullNameFilter">
+                                        ({{ l('Contact') }}) {{ l('FullName') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="ContactFullNameFilter"
+                                        name="contactFullNameFilter"
+                                        [(ngModel)]="contactFullNameFilter"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-12 mt-5">
+                                <button
+                                    (click)="resetFilters()"
+                                    class="btn btn-secondary btn-sm"
+                                    id="btn-reset-filters"
+                                >
+                                    Reset
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row my-4">
+                            <div class="col-sm-12">
+                                <span
+                                    class="clickable-item text-muted"
+                                    *ngIf="!advancedFiltersAreShown"
+                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown"
+                                >
+                                    <i class="fa fa-angle-down"></i>
+                                    {{ l('ShowAdvancedFilters') }}
+                                </span>
+                                <span
+                                    class="clickable-item text-muted"
+                                    *ngIf="advancedFiltersAreShown"
+                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown"
+                                >
+                                    <i class="fa fa-angle-up"></i>
+                                    {{ l('HideAdvancedFilters') }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="row align-items-center">
+                    <!--<Primeng-Datatable-Start>-->
+                    <div class="primeng-datatable-container col-12" [busyIf]="primengTableHelper.isLoading">
+                        <p-table
+                            #dataTable
+                            (onLazyLoad)="getTaskTeams($event)"
+                            [value]="primengTableHelper.records"
+                            rows="{{ primengTableHelper.defaultRecordsCountPerPage }}"
+                            [paginator]="false"
+                            [lazy]="true"
+                            [scrollable]="true"
+                            ScrollWidth="100%"
+                            [responsive]="primengTableHelper.isResponsive"
+                            [resizableColumns]="primengTableHelper.resizableColumns"
+                        >
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th
+                                        style="width: 130px"
+                                        [hidden]="!isGrantedAny('Pages.TaskTeams.Edit', 'Pages.TaskTeams.Delete')"
+                                    >
+                                        {{ l('Actions') }}
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="taskEventFk.name">
+                                        {{ l('Name') }}
+                                        <p-sortIcon field="taskEventName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="employeeFk.name">
+                                        {{ l('Name') }}
+                                        <p-sortIcon field="employeeName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="contactFk.fullName">
+                                        {{ l('FullName') }}
+                                        <p-sortIcon field="contactFullName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="startDate">
+                                        {{ l('StartDate') }}
+                                        <p-sortIcon field="taskTeam.startDate"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="startTime">
+                                        {{ l('StartTime') }}
+                                        <p-sortIcon field="taskTeam.startTime"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="endTime">
+                                        {{ l('EndTime') }}
+                                        <p-sortIcon field="taskTeam.endTime"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="hourMinutes">
+                                        {{ l('HourMinutes') }}
+                                        <p-sortIcon field="taskTeam.hourMinutes"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="endDate">
+                                        {{ l('EndDate') }}
+                                        <p-sortIcon field="taskTeam.endDate"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="isPrimary">
+                                        {{ l('IsPrimary') }}
+                                        <p-sortIcon field="taskTeam.isPrimary"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="estimatedHour">
+                                        {{ l('EstimatedHour') }}
+                                        <p-sortIcon field="taskTeam.estimatedHour"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="subTaskTitle">
+                                        {{ l('SubTaskTitle') }}
+                                        <p-sortIcon field="taskTeam.subTaskTitle"></p-sortIcon>
+                                    </th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
+                                <tr>
+                                    <td
+                                        style="width: 130px"
+                                        [hidden]="!isGrantedAny('Pages.TaskTeams.Edit', 'Pages.TaskTeams.Delete')"
+                                    >
+                                        <div class="btn-group dropdown" dropdown container="body">
+                                            <button class="dropdown-toggle btn btn-sm btn-primary" dropdownToggle>
+                                                <i class="fa fa-cog"></i>
+                                                <span class="caret"></span>
+                                                {{ l('Actions') }}
+                                            </button>
+                                            <ul class="dropdown-menu" *dropdownMenu>
+                                                <li>
+                                                    <a
+                                                        href="javascript:;"
+                                                        class="dropdown-item"
+                                                        (click)="viewTaskTeamModal.show(record)"
+                                                    >
+                                                        {{ l('View') }}
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a
+                                                        href="javascript:;"
+                                                        *ngIf="permission.isGranted('Pages.TaskTeams.Edit')"
+                                                        class="dropdown-item"
+                                                        (click)="createOrEditTaskTeamModal.show(record.taskTeam.id)"
+                                                    >
+                                                        {{ l('Edit') }}
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a
+                                                        class="dropdown-item"
+                                                        href="javascript:;"
+                                                        *ngIf="permission.isGranted('Pages.TaskTeams.Delete')"
+                                                        (click)="deleteTaskTeam(record.taskTeam)"
+                                                    >
+                                                        {{ l('Delete') }}
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Name') }}</span>
+                                        {{ record.taskEventName }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Name') }}</span>
+                                        {{ record.employeeName }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('FullName') }}</span>
+                                        {{ record.contactFullName }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('StartDate') }}</span>
+                                        <span *ngIf="record.taskTeam.startDate">
+                                            {{ record.taskTeam.startDate | luxonFormat : 'F' }}
+                                        </span>
+                                        <span *ngIf="!record.taskTeam.startDate">-</span>
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('StartTime') }}</span>
+                                        {{ record.taskTeam.startTime }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('EndTime') }}</span>
+                                        {{ record.taskTeam.endTime }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('HourMinutes') }}</span>
+                                        {{ record.taskTeam.hourMinutes }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('EndDate') }}</span>
+                                        <span *ngIf="record.taskTeam.endDate">
+                                            {{ record.taskTeam.endDate | luxonFormat : 'F' }}
+                                        </span>
+                                        <span *ngIf="!record.taskTeam.endDate">-</span>
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('IsPrimary') }}</span>
+                                        <div *ngIf="record.taskTeam.isPrimary" class="text-center">
+                                            <i class="fa fa-check-circle text-success" title="True"></i>
+                                        </div>
+                                        <div *ngIf="!record.taskTeam.isPrimary" class="text-center">
+                                            <i class="fa fa-times-circle" title="False"></i>
+                                        </div>
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('EstimatedHour') }}</span>
+                                        {{ record.taskTeam.estimatedHour }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('SubTaskTitle') }}</span>
+                                        {{ record.taskTeam.subTaskTitle }}
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                        <div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
+                            {{ l('NoData') }}
+                        </div>
+                        <div class="primeng-paging-container">
+                            <p-paginator
+                                [rows]="primengTableHelper.defaultRecordsCountPerPage"
+                                #paginator
+                                (onPageChange)="getTaskTeams($event)"
+                                [totalRecords]="primengTableHelper.totalRecordsCount"
+                                [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
+                                [showCurrentPageReport]="true"
+                                [currentPageReportTemplate]="
+                                    'TotalRecordsCount' | localize : primengTableHelper.totalRecordsCount
+                                "
+                            ></p-paginator>
+                        </div>
+                    </div>
+                    <!--<Primeng-Datatable-End>-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <createOrEditTaskTeamModal #createOrEditTaskTeamModal (modalSave)="getTaskTeams()"></createOrEditTaskTeamModal>
+    <viewTaskTeamModal #viewTaskTeamModal></viewTaskTeamModal>
+</div>

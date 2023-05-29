@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SoftGrid.EntityFrameworkCore;
 
@@ -11,9 +12,11 @@ using SoftGrid.EntityFrameworkCore;
 namespace SoftGrid.Migrations
 {
     [DbContext(typeof(SoftGridDbContext))]
-    partial class SoftGridDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230529134747_TaskTeamAndItem_added")]
+    partial class TaskTeamAndItemadded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -7774,9 +7777,6 @@ namespace SoftGrid.Migrations
                     b.Property<long?>("StoreCategoryId")
                         .HasColumnType("bigint");
 
-                    b.Property<long?>("StoreTagSettingCategoryId")
-                        .HasColumnType("bigint");
-
                     b.Property<string>("StoreUrl")
                         .HasMaxLength(1024)
                         .HasColumnType("nvarchar(1024)");
@@ -7811,8 +7811,6 @@ namespace SoftGrid.Migrations
                     b.HasIndex("StateId");
 
                     b.HasIndex("StoreCategoryId");
-
-                    b.HasIndex("StoreTagSettingCategoryId");
 
                     b.HasIndex("TenantId");
 
@@ -12000,10 +11998,6 @@ namespace SoftGrid.Migrations
                         .WithMany()
                         .HasForeignKey("StoreCategoryId");
 
-                    b.HasOne("SoftGrid.Shop.StoreTagSettingCategory", "StoreTagSettingCategoryFk")
-                        .WithMany()
-                        .HasForeignKey("StoreTagSettingCategoryId");
-
                     b.Navigation("CountryFk");
 
                     b.Navigation("LogoMediaLibraryFk");
@@ -12013,8 +12007,6 @@ namespace SoftGrid.Migrations
                     b.Navigation("StateFk");
 
                     b.Navigation("StoreCategoryFk");
-
-                    b.Navigation("StoreTagSettingCategoryFk");
                 });
 
             modelBuilder.Entity("SoftGrid.Shop.StoreAccountTeam", b =>

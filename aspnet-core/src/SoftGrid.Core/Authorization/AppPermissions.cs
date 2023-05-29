@@ -6,6 +6,16 @@
     /// </summary>
     public static class AppPermissions
     {
+        public const string Pages_TaskWorkItems = "Pages.TaskWorkItems";
+        public const string Pages_TaskWorkItems_Create = "Pages.TaskWorkItems.Create";
+        public const string Pages_TaskWorkItems_Edit = "Pages.TaskWorkItems.Edit";
+        public const string Pages_TaskWorkItems_Delete = "Pages.TaskWorkItems.Delete";
+
+        public const string Pages_TaskTeams = "Pages.TaskTeams";
+        public const string Pages_TaskTeams_Create = "Pages.TaskTeams.Create";
+        public const string Pages_TaskTeams_Edit = "Pages.TaskTeams.Edit";
+        public const string Pages_TaskTeams_Delete = "Pages.TaskTeams.Delete";
+
         public const string Pages_JobTaskMaps = "Pages.JobTaskMaps";
         public const string Pages_JobTaskMaps_Create = "Pages.JobTaskMaps.Create";
         public const string Pages_JobTaskMaps_Edit = "Pages.JobTaskMaps.Edit";

@@ -457,6 +457,10 @@ export class AppNavigationService {
             new AppMenuItem('ProductTaskMaps', 'Pages.ProductTaskMaps', 'flaticon-more', '/app/main/shop/productTaskMaps'),
             
             new AppMenuItem('JobTaskMaps', 'Pages.JobTaskMaps', 'flaticon-more', '/app/main/jobManagement/jobTaskMaps'),
+            
+            new AppMenuItem('TaskTeams', 'Pages.TaskTeams', 'flaticon-more', '/app/main/taskManagement/taskTeams'),
+            
+            new AppMenuItem('TaskWorkItems', 'Pages.TaskWorkItems', 'flaticon-more', '/app/main/taskManagement/taskWorkItems'),
              new AppMenuItem('Editions', 'Pages.Editions', 'flaticon-app', '/app/admin/editions'),
             new AppMenuItem(
                 'Administration',

@@ -19,6 +19,7 @@ using Abp.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Abp.UI;
 using SoftGrid.Storage;
+using SoftGrid.LookupData.Dtos;
 
 namespace SoftGrid.Shop
 {
@@ -30,15 +31,17 @@ namespace SoftGrid.Shop
         private readonly IRepository<Store, long> _lookup_storeRepository;
         private readonly IRepository<MasterTagCategory, long> _lookup_masterTagCategoryRepository;
         private readonly IRepository<MasterTag, long> _lookup_masterTagRepository;
+        private readonly IRepository<StoreMasterTagSetting, long> _storeMasterTagSettingRepository;
 
-        public StoreTagsAppService(IRepository<StoreTag, long> storeTagRepository, IStoreTagsExcelExporter storeTagsExcelExporter, IRepository<Store, long> lookup_storeRepository, IRepository<MasterTagCategory, long> lookup_masterTagCategoryRepository, IRepository<MasterTag, long> lookup_masterTagRepository)
+        public StoreTagsAppService(IRepository<StoreTag, long> storeTagRepository, IStoreTagsExcelExporter storeTagsExcelExporter, IRepository<Store, long> lookup_storeRepository, IRepository<MasterTagCategory, long> lookup_masterTagCategoryRepository, IRepository<MasterTag, long> lookup_masterTagRepository,
+            IRepository<StoreMasterTagSetting, long> storeMasterTagSettingRepository)
         {
             _storeTagRepository = storeTagRepository;
             _storeTagsExcelExporter = storeTagsExcelExporter;
             _lookup_storeRepository = lookup_storeRepository;
             _lookup_masterTagCategoryRepository = lookup_masterTagCategoryRepository;
             _lookup_masterTagRepository = lookup_masterTagRepository;
-
+            _storeMasterTagSettingRepository = storeMasterTagSettingRepository;
         }
 
         public async Task<PagedResultDto<GetStoreTagForViewDto>> GetAll(GetAllStoreTagsInput input)
@@ -261,7 +264,7 @@ namespace SoftGrid.Shop
         }
 
         [AbpAuthorize(AppPermissions.Pages_StoreTags)]
-        public async Task<PagedResultDto<StoreTagStoreLookupTableDto>> GetAllStoreForLookupTable(GetAllForLookupTableInput input)
+        public async Task<PagedResultDto<StoreTagStoreLookupTableDto>> GetAllStoreForLookupTable(SoftGrid.Shop.Dtos.GetAllForLookupTableInput input)
         {
             var query = _lookup_storeRepository.GetAll().WhereIf(
                    !string.IsNullOrWhiteSpace(input.Filter),
@@ -291,7 +294,7 @@ namespace SoftGrid.Shop
         }
 
         [AbpAuthorize(AppPermissions.Pages_StoreTags)]
-        public async Task<PagedResultDto<StoreTagMasterTagCategoryLookupTableDto>> GetAllMasterTagCategoryForLookupTable(GetAllForLookupTableInput input)
+        public async Task<PagedResultDto<StoreTagMasterTagCategoryLookupTableDto>> GetAllMasterTagCategoryForLookupTable(SoftGrid.Shop.Dtos.GetAllForLookupTableInput input)
         {
             var query = _lookup_masterTagCategoryRepository.GetAll().WhereIf(
                    !string.IsNullOrWhiteSpace(input.Filter),
@@ -321,7 +324,7 @@ namespace SoftGrid.Shop
         }
 
         [AbpAuthorize(AppPermissions.Pages_StoreTags)]
-        public async Task<PagedResultDto<StoreTagMasterTagLookupTableDto>> GetAllMasterTagForLookupTable(GetAllForLookupTableInput input)
+        public async Task<PagedResultDto<StoreTagMasterTagLookupTableDto>> GetAllMasterTagForLookupTable(SoftGrid.Shop.Dtos.GetAllForLookupTableInput input)
         {
             var query = _lookup_masterTagRepository.GetAll().WhereIf(
                    !string.IsNullOrWhiteSpace(input.Filter),
@@ -350,5 +353,29 @@ namespace SoftGrid.Shop
             );
         }
 
+        public async Task<List<MasterTagCategoryForDashboardViewDto>> GetStoreTagsByTagSetting(long storeTypeId,long storeId)
+        {
+            var output=new List<MasterTagCategoryForDashboardViewDto>();
+            var masterTagCategories=_storeMasterTagSettingRepository.GetAll().Include(e=>e.MasterTagCategoryFk).Where(e=>e.StoreTagSettingCategoryId==storeTypeId && e.MasterTagCategoryId!=null).OrderBy(e=>e.DisplaySequence);
+            foreach (var category in masterTagCategories)
+            {
+                var item = new MasterTagCategoryForDashboardViewDto();
+                item.Name = category.MasterTagCategoryFk?.Name;
+                item.Id = category.MasterTagCategoryFk.Id;
+                item.DisplayPublic=category.DisplayPublic;
+                item.DisplaySequence=category.DisplaySequence;
+                var masterTags = _lookup_masterTagRepository.GetAll().Where(e => e.MasterTagCategoryId == item.Id);
+                foreach(var tag in masterTags)
+                {
+                    item.MasterTags.Add(new MasterTagForDashboardViewDto()
+                    {
+                        Name = tag.Name,
+                        Id = tag.Id,
+                        IsSelected = await _storeTagRepository.FirstOrDefaultAsync(e => e.StoreId == storeId && e.MasterTagId == tag.Id) != null ? true : false
+                    });
+                }
+            }
+            return output;
+        }
     }
 }

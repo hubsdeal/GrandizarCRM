@@ -114,5 +114,10 @@ namespace SoftGrid.Shop
         [ForeignKey("StoreCategoryId")]
         public MasterTag StoreCategoryFk { get; set; }
 
+        public virtual long? StoreTagSettingCategoryId { get; set; }
+
+        [ForeignKey("StoreTagSettingCategoryId")]
+        public StoreTagSettingCategory StoreTagSettingCategoryFk { get; set; }
+
     }
 }
