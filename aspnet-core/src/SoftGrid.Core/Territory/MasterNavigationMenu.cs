@@ -20,8 +20,9 @@ namespace SoftGrid.Territory
         public virtual long? ParentMenuId { get; set; }
 
         public virtual Guid IconLink { get; set; }
-
-        public virtual Guid MediaLink { get; set; }
+        public virtual string ContentLink { get; set; }
+        public virtual int? DisplaySequence { get; set; }
+        public virtual string NavigationLink { get; set; }
 
     }
 }

@@ -1,0 +1,103 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #storeMasterThemeForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="storeMasterTheme.id">{{ l('EditStoreMasterTheme') }}</span>
+                        <span *ngIf="!storeMasterTheme.id">{{ l('CreateNewStoreMasterTheme') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="StoreMasterTheme_Name">{{ l('Name') }}</label>
+                        <input
+                            type="text"
+                            #StoreMasterTheme_Name="ngModel"
+                            id="StoreMasterTheme_Name"
+                            class="form-control"
+                            [(ngModel)]="storeMasterTheme.name"
+                            name="Name"
+                            minlength="1"
+                            maxlength="256"
+                        />
+                        <validation-messages [formCtrl]="StoreMasterTheme_Name"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="StoreMasterTheme_Description">{{ l('Description') }}</label>
+                        <input
+                            type="text"
+                            #StoreMasterTheme_Description="ngModel"
+                            id="StoreMasterTheme_Description"
+                            class="form-control"
+                            [(ngModel)]="storeMasterTheme.description"
+                            name="Description"
+                        />
+                        <validation-messages [formCtrl]="StoreMasterTheme_Description"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="StoreMasterTheme_ThemeCode">{{ l('ThemeCode') }}</label>
+                        <input
+                            type="text"
+                            #StoreMasterTheme_ThemeCode="ngModel"
+                            id="StoreMasterTheme_ThemeCode"
+                            class="form-control"
+                            [(ngModel)]="storeMasterTheme.themeCode"
+                            name="ThemeCode"
+                        />
+                        <validation-messages [formCtrl]="StoreMasterTheme_ThemeCode"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="StoreMasterTheme_ThumbnailImageId">
+                            {{ l('ThumbnailImageId') }}
+                        </label>
+                        <input
+                            type="text"
+                            #StoreMasterTheme_ThumbnailImageId="ngModel"
+                            id="StoreMasterTheme_ThumbnailImageId"
+                            class="form-control"
+                            [(ngModel)]="storeMasterTheme.thumbnailImageId"
+                            name="ThumbnailImageId"
+                        />
+                        <validation-messages [formCtrl]="StoreMasterTheme_ThumbnailImageId"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!storeMasterThemeForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

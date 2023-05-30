@@ -1,0 +1,128 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #hubWidgetContentMapForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="hubWidgetContentMap.id">{{ l('EditHubWidgetContentMap') }}</span>
+                        <span *ngIf="!hubWidgetContentMap.id">{{ l('CreateNewHubWidgetContentMap') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="HubWidgetMapCustomName">{{ l('HubWidgetMap') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="HubWidgetMapCustomName"
+                                name="hubWidgetMapCustomName"
+                                [(ngModel)]="hubWidgetMapCustomName"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectHubWidgetMapModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setHubWidgetMapIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="hubWidgetContentMap.hubWidgetMapId"
+                        [(ngModel)]="hubWidgetContentMap.hubWidgetMapId"
+                        type="text"
+                        required
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="ContentTitle">{{ l('Content') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="ContentTitle"
+                                name="contentTitle"
+                                [(ngModel)]="contentTitle"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectContentModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setContentIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="hubWidgetContentMap.contentId"
+                        [(ngModel)]="hubWidgetContentMap.contentId"
+                        type="text"
+                        required
+                        hidden
+                    />
+
+                    <div class="my5">
+                        <label class="form-label" for="HubWidgetContentMap_DisplaySequence">
+                            {{ l('DisplaySequence') }}
+                        </label>
+                        <input
+                            type="number"
+                            #HubWidgetContentMap_DisplaySequence="ngModel"
+                            id="HubWidgetContentMap_DisplaySequence"
+                            class="form-control"
+                            [(ngModel)]="hubWidgetContentMap.displaySequence"
+                            name="DisplaySequence"
+                        />
+                        <validation-messages [formCtrl]="HubWidgetContentMap_DisplaySequence"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!hubWidgetContentMapForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <hubWidgetContentMapHubWidgetMapLookupTableModal
+        #hubWidgetContentMapHubWidgetMapLookupTableModal
+        (modalSave)="getNewHubWidgetMapId()"
+    ></hubWidgetContentMapHubWidgetMapLookupTableModal>
+    <hubWidgetContentMapContentLookupTableModal
+        #hubWidgetContentMapContentLookupTableModal
+        (modalSave)="getNewContentId()"
+    ></hubWidgetContentMapContentLookupTableModal>
+</div>

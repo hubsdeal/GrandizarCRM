@@ -23,7 +23,7 @@ namespace SoftGrid.Web.Controllers
         [DisableAuditing]
         public IActionResult Index()
         {
-            if (_webHostEnvironment.IsDevelopment())
+            if (_webHostEnvironment.IsDevelopment() || _webHostEnvironment.IsProduction())
             {
                 return RedirectToAction("Index", "Ui");
             }
