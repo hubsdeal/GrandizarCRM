@@ -20,7 +20,7 @@ import { DateTimeService } from '@app/shared/common/timing/date-time.service';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
-    selector: 'app-storeTags',
+    selector: 'appStoreTags',
     templateUrl: './storeTags.component.html',
     encapsulation: ViewEncapsulation.None,
     animations: [appModuleAnimation()],
@@ -50,6 +50,7 @@ export class StoreTagsComponent extends AppComponentBase {
     @Input() storeTagSettingCategoryId: number;
 
     allStoreTags: MasterTagCategoryForDashboardViewDto[] = [];
+    showMoreAndShowLess = false;
 
     storeTags = [
         {
@@ -78,6 +79,8 @@ export class StoreTagsComponent extends AppComponentBase {
     ) {
         super(injector);
         this.getALlStoreTags();
+        console.log(this.storeId);
+        console.log(this.storeTagSettingCategoryId);
     }
 
     getStoreTags(event?: LazyLoadEvent) {
@@ -163,7 +166,9 @@ export class StoreTagsComponent extends AppComponentBase {
         this.getStoreTags();
     }
     getALlStoreTags() {
-        this._storeTagsServiceProxy.getStoreTagsByTagSetting(this.storeTagSettingCategoryId, this.storeId).subscribe((result) => {
+        console.log(this.storeId);
+        console.log(this.storeTagSettingCategoryId);
+        this._storeTagsServiceProxy.getStoreTagsByTagSetting(6, 10078).subscribe((result) => {
             this.allStoreTags = result;
             console.log(this.allStoreTags);
         });

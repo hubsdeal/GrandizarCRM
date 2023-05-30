@@ -10,6 +10,7 @@ namespace SoftGrid.LookupData.Dtos
 
         public bool DisplayPublic { get; set; }
         public int? DisplaySequence { get; set; }
+        public string CustomName { get; set; }
 
         public MasterTagCategoryForDashboardViewDto()
         {

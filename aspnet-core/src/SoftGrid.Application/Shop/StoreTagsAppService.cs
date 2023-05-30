@@ -364,6 +364,7 @@ namespace SoftGrid.Shop
                 item.Id = category.MasterTagCategoryFk.Id;
                 item.DisplayPublic=category.DisplayPublic;
                 item.DisplaySequence=category.DisplaySequence;
+                item.CustomName = category.CustomTagTitle;
                 var masterTags = _lookup_masterTagRepository.GetAll().Where(e => e.MasterTagCategoryId == item.Id);
                 foreach(var tag in masterTags)
                 {
@@ -374,6 +375,7 @@ namespace SoftGrid.Shop
                         IsSelected = await _storeTagRepository.FirstOrDefaultAsync(e => e.StoreId == storeId && e.MasterTagId == tag.Id) != null ? true : false
                     });
                 }
+                output.Add(item);
             }
             return output;
         }

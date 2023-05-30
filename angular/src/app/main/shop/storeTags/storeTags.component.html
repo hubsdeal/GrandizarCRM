@@ -1,5 +1,4 @@
-﻿
-<div class="card drag_drop_card mb-6">
+﻿<div class="card drag_drop_card mb-6">
     <div class="card-header">
         <div class="card-title">
             <h3 class="m-0 text-gray-600">
@@ -17,11 +16,10 @@
     </div>
     <div class="card-body">
         <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
-            <div *ngFor="let item of storeTags" cdkDrag
+            <div *ngFor="let item of allStoreTags" cdkDrag
                 class="example-box notice align-items-start d-flex bg-light-primary rounded border-primary border border-dashed mb-9 p-6">
                 <span class="svg-icon svg-icon-2tx svg-icon-primary me-4">
-                    <svg width="24" height="25" viewBox="0 0 24 25" fill="none"
-                        xmlns="http://www.w3.org/2000/svg">
+                    <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path opacity="0.3"
                             d="M8.9 21L7.19999 22.6999C6.79999 23.0999 6.2 23.0999 5.8 22.6999L4.1 21H8.9ZM4 16.0999L2.3 17.8C1.9 18.2 1.9 18.7999 2.3 19.1999L4 20.9V16.0999ZM19.3 9.1999L15.8 5.6999C15.4 5.2999 14.8 5.2999 14.4 5.6999L9 11.0999V21L19.3 10.6999C19.7 10.2999 19.7 9.5999 19.3 9.1999Z"
                             fill="currentColor" />
@@ -32,9 +30,8 @@
                 </span>
                 <div class="d-flex flex-stack flex-grow-1">
                     <div class="fw-semibold tag_block_custom">
-                        <h4
-                            class="text-gray-600 fw-bold d-flex justify-content-between align-items-center">
-                            {{item.value}}
+                        <h4 class="text-gray-600 fw-bold d-flex justify-content-between align-items-center">
+                            {{item.name}}
                             <span class="d-flex align-items-center">
                                 <span class="me-4 cursor-move">
                                     <i class="fa-solid fa-bars fs-1 me-4 text-primary"></i>
@@ -44,94 +41,40 @@
                         </h4>
                         <div class="fs-6">
                             <div style="display: inline-block;" class="row w-100 pl-2">
-                                <span>
-                                    <button type="button" class="btn btn-outline-brand btn-sm">
-                                        <i class="fas fa-plus mr-1"></i>
-                                        New tag 1
+                                <span *ngFor="let tags of item.masterTags">
+                                    <button type="button" class="btn btn-outline-brand btn-sm"
+                                        [class.active]="tags.isSelected">
+                                        <i *ngIf="!tags.isSelected" class="fas fa-plus mr-1"></i>
+                                        <i *ngIf="tags.isSelected" class="fas fa-check-circle mr-1"></i>
+                                        {{tags.name}}
                                     </button>
                                 </span>
-                                <span>
-                                    <button type="button"
-                                        class="btn btn-outline-brand btn-sm active">
-                                        <i class="fas fa-check-circle mr-1"></i>
-                                        new tag 2
-                                    </button>
+                                <!-- <span [hidden]="!showMoreAndShowLess">
+                                    <span class="me-3" *ngFor="let tags of item.masterTags | slice:6:1000000">
+                                        <button type="button" class="btn btn-outline-brand btn-sm"
+                                            [class.active]="tags.isSelected">
+                                            <i *ngIf="!tags.isSelected" class="fas fa-plus mr-1"></i>
+                                            <i *ngIf="tags.isSelected" class="fas fa-check-circle mr-1"></i>
+                                            {{tags.name}}
+                                        </button>
+                                    </span>
                                 </span>
-                                <span>
-                                    <button type="button" class="btn btn-outline-brand btn-sm">
-                                        <i class="fas fa-plus mr-1"></i>
-                                        New tag 1
-                                    </button>
-                                </span>
-                                <span>
-                                    <button type="button"
-                                        class="btn btn-outline-brand btn-sm active">
-                                        <i class="fas fa-check-circle mr-1"></i>
-                                        new tag 2
-                                    </button>
-                                </span>
-                                <span>
-                                    <button type="button" class="btn btn-outline-brand btn-sm">
-                                        <i class="fas fa-plus mr-1"></i>
-                                        New tag 1
-                                    </button>
-                                </span>
-                                <span>
-                                    <button type="button"
-                                        class="btn btn-outline-brand btn-sm active">
-                                        <i class="fas fa-check-circle mr-1"></i>
-                                        new tag 2
-                                    </button>
-                                </span>
-                                <span>
-                                    <button type="button" class="btn btn-outline-brand btn-sm">
-                                        <i class="fas fa-plus mr-1"></i>
-                                        New tag 1
-                                    </button>
-                                </span>
-                                <span>
-                                    <button type="button"
-                                        class="btn btn-outline-brand btn-sm active">
-                                        <i class="fas fa-check-circle mr-1"></i>
-                                        new tag 2
-                                    </button>
-                                </span>
-                                <span>
-                                    <button type="button" class="btn btn-outline-brand btn-sm">
-                                        <i class="fas fa-plus mr-1"></i>
-                                        New tag 1
-                                    </button>
-                                </span>
-                                <span>
-                                    <button type="button"
-                                        class="btn btn-outline-brand btn-sm active">
-                                        <i class="fas fa-check-circle mr-1"></i>
-                                        new tag 2
-                                    </button>
-                                </span>
-                                <span>
-                                    <button type="button" class="btn btn-outline-brand btn-sm">
-                                        <i class="fas fa-plus mr-1"></i>
-                                        New tag 1
-                                    </button>
-                                </span>
-                                <span>
-                                    <button type="button"
-                                        class="btn btn-outline-brand btn-sm active">
-                                        <i class="fas fa-check-circle mr-1"></i>
-                                        new tag 2
-                                    </button>
-                                </span>
-                                <span>
-                                    <button
-                                        style="background: none; border: none; color: #5d78ff;"
+
+                                <span *ngIf="item.masterTags.length>5">
+                                    <button style="background: none; border: none; color: #5d78ff;"
                                         class="btn btn-outline-brand btn-sm">
-                                        <span class="clickable-item">
+                                        <span class="clickable-item" *ngIf="!showMoreAndShowLess"
+                                            (click)="showMoreAndShowLess=!showMoreAndShowLess">
                                             <i class="fa fa-angle-down"></i>
                                             {{l("Show more")}}
                                         </span>
+                                        <span class="clickable-item" *ngIf="showMoreAndShowLess"
+                                            (click)="showMoreAndShowLess=!showMoreAndShowLess"><i
+                                                class="fa fa-angle-up"></i> {{l("Show
+                                            less")}}
+                                        </span>
                                     </button>
-                                </span>
+                                </span> -->
                             </div>
                         </div>
                     </div>

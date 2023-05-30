@@ -5333,7 +5333,7 @@
                         .store_location..
                     </div> -->
                     <div class="tab-pane fade" id="store_tags_all" role="tabpanel">
-                        <app-storeTags [storeId]="storeId" [storeTagSettingCategoryId]="storeTagSettingCategoryId"></app-storeTags>
+                        <appStoreTags *ngIf="storeTagSettingCategoryId" [storeId]="10078" [storeTagSettingCategoryId]="6"></appStoreTags>
                     </div>
                     <div class="tab-pane fade" id="marketplacce_operator" role="tabpanel">
                         <div class="card">
