@@ -16,5 +16,9 @@ namespace SoftGrid.Territory.Dtos
 
         public long? MasterNavigationMenuId { get; set; }
 
+        public bool? HasParentMenu { get; set; }
+        public long? ParentMenuId { get; set; }
+        public int? DisplaySequence { get; set; }
+
     }
 }

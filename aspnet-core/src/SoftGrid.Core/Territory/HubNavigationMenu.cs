@@ -28,5 +28,9 @@ namespace SoftGrid.Territory
         [ForeignKey("MasterNavigationMenuId")]
         public MasterNavigationMenu MasterNavigationMenuFk { get; set; }
 
+        public virtual bool? HasParentMenu { get; set; }
+        public virtual long? ParentMenuId { get; set; }
+        public virtual int? DisplaySequence { get; set; }
+
     }
 }

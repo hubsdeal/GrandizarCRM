@@ -9640,6 +9640,12 @@ namespace SoftGrid.Migrations
                         .HasMaxLength(128)
                         .HasColumnType("nvarchar(128)");
 
+                    b.Property<int?>("DisplaySequence")
+                        .HasColumnType("int");
+
+                    b.Property<bool?>("HasParentMenu")
+                        .HasColumnType("bit");
+
                     b.Property<long>("HubId")
                         .HasColumnType("bigint");
 
@@ -9648,6 +9654,9 @@ namespace SoftGrid.Migrations
 
                     b.Property<string>("NavigationLink")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("ParentMenuId")
+                        .HasColumnType("bigint");
 
                     b.Property<int?>("TenantId")
                         .HasColumnType("int");
@@ -9897,11 +9906,17 @@ namespace SoftGrid.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
+                    b.Property<string>("ContentLink")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2");
 
                     b.Property<long?>("CreatorUserId")
                         .HasColumnType("bigint");
+
+                    b.Property<int?>("DisplaySequence")
+                        .HasColumnType("int");
 
                     b.Property<bool>("HasParentMenu")
                         .HasColumnType("bit");
@@ -9909,13 +9924,13 @@ namespace SoftGrid.Migrations
                     b.Property<Guid>("IconLink")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("MediaLink")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(128)
                         .HasColumnType("nvarchar(128)");
+
+                    b.Property<string>("NavigationLink")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<long?>("ParentMenuId")
                         .HasColumnType("bigint");
@@ -9928,6 +9943,397 @@ namespace SoftGrid.Migrations
                     b.HasIndex("TenantId");
 
                     b.ToTable("MasterNavigationMenus");
+                });
+
+            modelBuilder.Entity("SoftGrid.WidgetManagement.HubWidgetContentMap", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long>("ContentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("DisplaySequence")
+                        .HasColumnType("int");
+
+                    b.Property<long>("HubWidgetMapId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ContentId");
+
+                    b.HasIndex("HubWidgetMapId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("HubWidgetContentMaps");
+                });
+
+            modelBuilder.Entity("SoftGrid.WidgetManagement.HubWidgetMap", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("CustomName")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<int?>("DisplaySequence")
+                        .HasColumnType("int");
+
+                    b.Property<long>("HubId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("MasterWidgetId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("WidgetTypeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HubId");
+
+                    b.HasIndex("MasterWidgetId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("HubWidgetMaps");
+                });
+
+            modelBuilder.Entity("SoftGrid.WidgetManagement.HubWidgetProductMap", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("DisplaySequence")
+                        .HasColumnType("int");
+
+                    b.Property<long>("HubWidgetMapId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("ProductId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HubWidgetMapId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("HubWidgetProductMaps");
+                });
+
+            modelBuilder.Entity("SoftGrid.WidgetManagement.HubWidgetStoreMap", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("DisplaySequence")
+                        .HasColumnType("int");
+
+                    b.Property<long>("HubWidgetMapId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("StoreId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HubWidgetMapId");
+
+                    b.HasIndex("StoreId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("HubWidgetStoreMaps");
+                });
+
+            modelBuilder.Entity("SoftGrid.WidgetManagement.MasterWidget", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DesignCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("InternalDisplayNumber")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
+
+                    b.Property<bool>("Publish")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("ThumbnailImageId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("MasterWidgets");
+                });
+
+            modelBuilder.Entity("SoftGrid.WidgetManagement.StoreMasterTheme", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ThemeCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("ThumbnailImageId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("StoreMasterThemes");
+                });
+
+            modelBuilder.Entity("SoftGrid.WidgetManagement.StoreThemeMap", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("StoreId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("StoreMasterThemeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StoreId");
+
+                    b.HasIndex("StoreMasterThemeId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("StoreThemeMaps");
+                });
+
+            modelBuilder.Entity("SoftGrid.WidgetManagement.StoreWidgetContentMap", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long>("ContentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("DisplaySequence")
+                        .HasColumnType("int");
+
+                    b.Property<long>("StoreWidgetMapId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ContentId");
+
+                    b.HasIndex("StoreWidgetMapId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("StoreWidgetContentMaps");
+                });
+
+            modelBuilder.Entity("SoftGrid.WidgetManagement.StoreWidgetMap", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("CustomName")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<int?>("DisplaySequence")
+                        .HasColumnType("int");
+
+                    b.Property<long>("MasterWidgetId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("StoreId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("WidgetTypeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MasterWidgetId");
+
+                    b.HasIndex("StoreId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("StoreWidgetMaps");
+                });
+
+            modelBuilder.Entity("SoftGrid.WidgetManagement.StoreWidgetProductMap", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("DisplaySequence")
+                        .HasColumnType("int");
+
+                    b.Property<long>("ProductId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("StoreWidgetMapId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("StoreWidgetMapId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("StoreWidgetProductMaps");
                 });
 
             modelBuilder.Entity("SoftGrid.Editions.SubscribableEdition", b =>
@@ -12782,6 +13188,158 @@ namespace SoftGrid.Migrations
                     b.Navigation("HubFk");
 
                     b.Navigation("ZipCodeFk");
+                });
+
+            modelBuilder.Entity("SoftGrid.WidgetManagement.HubWidgetContentMap", b =>
+                {
+                    b.HasOne("SoftGrid.CMS.Content", "ContentFk")
+                        .WithMany()
+                        .HasForeignKey("ContentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SoftGrid.WidgetManagement.HubWidgetMap", "HubWidgetMapFk")
+                        .WithMany()
+                        .HasForeignKey("HubWidgetMapId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ContentFk");
+
+                    b.Navigation("HubWidgetMapFk");
+                });
+
+            modelBuilder.Entity("SoftGrid.WidgetManagement.HubWidgetMap", b =>
+                {
+                    b.HasOne("SoftGrid.Territory.Hub", "HubFk")
+                        .WithMany()
+                        .HasForeignKey("HubId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SoftGrid.WidgetManagement.MasterWidget", "MasterWidgetFk")
+                        .WithMany()
+                        .HasForeignKey("MasterWidgetId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("HubFk");
+
+                    b.Navigation("MasterWidgetFk");
+                });
+
+            modelBuilder.Entity("SoftGrid.WidgetManagement.HubWidgetProductMap", b =>
+                {
+                    b.HasOne("SoftGrid.WidgetManagement.HubWidgetMap", "HubWidgetMapFk")
+                        .WithMany()
+                        .HasForeignKey("HubWidgetMapId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SoftGrid.Shop.Product", "ProductFk")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("HubWidgetMapFk");
+
+                    b.Navigation("ProductFk");
+                });
+
+            modelBuilder.Entity("SoftGrid.WidgetManagement.HubWidgetStoreMap", b =>
+                {
+                    b.HasOne("SoftGrid.WidgetManagement.HubWidgetMap", "HubWidgetMapFk")
+                        .WithMany()
+                        .HasForeignKey("HubWidgetMapId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SoftGrid.Shop.Store", "StoreFk")
+                        .WithMany()
+                        .HasForeignKey("StoreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("HubWidgetMapFk");
+
+                    b.Navigation("StoreFk");
+                });
+
+            modelBuilder.Entity("SoftGrid.WidgetManagement.StoreThemeMap", b =>
+                {
+                    b.HasOne("SoftGrid.Shop.Store", "StoreFk")
+                        .WithMany()
+                        .HasForeignKey("StoreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SoftGrid.WidgetManagement.StoreMasterTheme", "StoreMasterThemeFk")
+                        .WithMany()
+                        .HasForeignKey("StoreMasterThemeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("StoreFk");
+
+                    b.Navigation("StoreMasterThemeFk");
+                });
+
+            modelBuilder.Entity("SoftGrid.WidgetManagement.StoreWidgetContentMap", b =>
+                {
+                    b.HasOne("SoftGrid.CMS.Content", "ContentFk")
+                        .WithMany()
+                        .HasForeignKey("ContentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SoftGrid.WidgetManagement.StoreWidgetMap", "StoreWidgetMapFk")
+                        .WithMany()
+                        .HasForeignKey("StoreWidgetMapId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ContentFk");
+
+                    b.Navigation("StoreWidgetMapFk");
+                });
+
+            modelBuilder.Entity("SoftGrid.WidgetManagement.StoreWidgetMap", b =>
+                {
+                    b.HasOne("SoftGrid.WidgetManagement.MasterWidget", "MasterWidgetFk")
+                        .WithMany()
+                        .HasForeignKey("MasterWidgetId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SoftGrid.Shop.Store", "StoreFk")
+                        .WithMany()
+                        .HasForeignKey("StoreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MasterWidgetFk");
+
+                    b.Navigation("StoreFk");
+                });
+
+            modelBuilder.Entity("SoftGrid.WidgetManagement.StoreWidgetProductMap", b =>
+                {
+                    b.HasOne("SoftGrid.Shop.Product", "ProductFk")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SoftGrid.WidgetManagement.StoreWidgetMap", "StoreWidgetMapFk")
+                        .WithMany()
+                        .HasForeignKey("StoreWidgetMapId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ProductFk");
+
+                    b.Navigation("StoreWidgetMapFk");
                 });
 
             modelBuilder.Entity("Abp.Application.Features.EditionFeatureSetting", b =>

@@ -20,6 +20,76 @@ import { SiteDefaultContentComponent } from './cms/contents/site-default-content
                 children: [
                     
                     {
+                        path: 'widgetManagement/storeThemeMaps',
+                        loadChildren: () => import('./widgetManagement/storeThemeMaps/storeThemeMap.module').then(m => m.StoreThemeMapModule),
+                        data: { permission: 'Pages.StoreThemeMaps' }
+                    },
+                
+                    
+                    {
+                        path: 'widgetManagement/storeMasterThemes',
+                        loadChildren: () => import('./widgetManagement/storeMasterThemes/storeMasterTheme.module').then(m => m.StoreMasterThemeModule),
+                        data: { permission: 'Pages.StoreMasterThemes' }
+                    },
+                
+                    
+                    {
+                        path: 'widgetManagement/storeWidgetContentMaps',
+                        loadChildren: () => import('./widgetManagement/storeWidgetContentMaps/storeWidgetContentMap.module').then(m => m.StoreWidgetContentMapModule),
+                        data: { permission: 'Pages.StoreWidgetContentMaps' }
+                    },
+                
+                    
+                    {
+                        path: 'widgetManagement/storeWidgetProductMaps',
+                        loadChildren: () => import('./widgetManagement/storeWidgetProductMaps/storeWidgetProductMap.module').then(m => m.StoreWidgetProductMapModule),
+                        data: { permission: 'Pages.StoreWidgetProductMaps' }
+                    },
+                
+                    
+                    {
+                        path: 'widgetManagement/storeWidgetMaps',
+                        loadChildren: () => import('./widgetManagement/storeWidgetMaps/storeWidgetMap.module').then(m => m.StoreWidgetMapModule),
+                        data: { permission: 'Pages.StoreWidgetMaps' }
+                    },
+                
+                    
+                    {
+                        path: 'widgetManagement/hubWidgetContentMaps',
+                        loadChildren: () => import('./widgetManagement/hubWidgetContentMaps/hubWidgetContentMap.module').then(m => m.HubWidgetContentMapModule),
+                        data: { permission: 'Pages.HubWidgetContentMaps' }
+                    },
+                
+                    
+                    {
+                        path: 'widgetManagement/hubWidgetProductMaps',
+                        loadChildren: () => import('./widgetManagement/hubWidgetProductMaps/hubWidgetProductMap.module').then(m => m.HubWidgetProductMapModule),
+                        data: { permission: 'Pages.HubWidgetProductMaps' }
+                    },
+                
+                    
+                    {
+                        path: 'widgetManagement/hubWidgetStoreMaps',
+                        loadChildren: () => import('./widgetManagement/hubWidgetStoreMaps/hubWidgetStoreMap.module').then(m => m.HubWidgetStoreMapModule),
+                        data: { permission: 'Pages.HubWidgetStoreMaps' }
+                    },
+                
+                    
+                    {
+                        path: 'widgetManagement/hubWidgetMaps',
+                        loadChildren: () => import('./widgetManagement/hubWidgetMaps/hubWidgetMap.module').then(m => m.HubWidgetMapModule),
+                        data: { permission: 'Pages.HubWidgetMaps' }
+                    },
+                
+                    
+                    {
+                        path: 'widgetManagement/masterWidgets',
+                        loadChildren: () => import('./widgetManagement/masterWidgets/masterWidget.module').then(m => m.MasterWidgetModule),
+                        data: { permission: 'Pages.MasterWidgets' }
+                    },
+                
+                    
+                    {
                         path: 'taskManagement/taskWorkItems',
                         loadChildren: () => import('./taskManagement/taskWorkItems/taskWorkItem.module').then(m => m.TaskWorkItemModule),
                         data: { permission: 'Pages.TaskWorkItems' }

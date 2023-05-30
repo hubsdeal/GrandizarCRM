@@ -1,0 +1,132 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #storeWidgetContentMapForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="storeWidgetContentMap.id">{{ l('EditStoreWidgetContentMap') }}</span>
+                        <span *ngIf="!storeWidgetContentMap.id">{{ l('CreateNewStoreWidgetContentMap') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-3">
+                        <label class="form-label" for="StoreWidgetMapCustomName">{{ l('StoreWidgetMap') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="StoreWidgetMapCustomName"
+                                name="storeWidgetMapCustomName"
+                                [(ngModel)]="storeWidgetMapCustomName"
+                                type="text"
+                                disabled
+                            />
+                            <button
+                                class="btn btn-primary blue"
+                                (click)="openSelectStoreWidgetMapModal()"
+                                type="button"
+                            >
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setStoreWidgetMapIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="storeWidgetContentMap.storeWidgetMapId"
+                        [(ngModel)]="storeWidgetContentMap.storeWidgetMapId"
+                        type="text"
+                        required
+                        hidden
+                    />
+
+                    <div class="my-3">
+                        <label class="form-label" for="ContentTitle">{{ l('Content') }}</label>
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                id="ContentTitle"
+                                name="contentTitle"
+                                [(ngModel)]="contentTitle"
+                                type="text"
+                                disabled
+                            />
+                            <button class="btn btn-primary blue" (click)="openSelectContentModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setContentIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input
+                        class="form-control"
+                        name="storeWidgetContentMap.contentId"
+                        [(ngModel)]="storeWidgetContentMap.contentId"
+                        type="text"
+                        required
+                        hidden
+                    />
+
+                    <div class="my5">
+                        <label class="form-label" for="StoreWidgetContentMap_DisplaySequence">
+                            {{ l('DisplaySequence') }}
+                        </label>
+                        <input
+                            type="number"
+                            #StoreWidgetContentMap_DisplaySequence="ngModel"
+                            id="StoreWidgetContentMap_DisplaySequence"
+                            class="form-control"
+                            [(ngModel)]="storeWidgetContentMap.displaySequence"
+                            name="DisplaySequence"
+                        />
+                        <validation-messages [formCtrl]="StoreWidgetContentMap_DisplaySequence"></validation-messages>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!storeWidgetContentMapForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <storeWidgetContentMapStoreWidgetMapLookupTableModal
+        #storeWidgetContentMapStoreWidgetMapLookupTableModal
+        (modalSave)="getNewStoreWidgetMapId()"
+    ></storeWidgetContentMapStoreWidgetMapLookupTableModal>
+    <storeWidgetContentMapContentLookupTableModal
+        #storeWidgetContentMapContentLookupTableModal
+        (modalSave)="getNewContentId()"
+    ></storeWidgetContentMapContentLookupTableModal>
+</div>

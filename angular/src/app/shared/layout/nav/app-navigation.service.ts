@@ -461,6 +461,26 @@ export class AppNavigationService {
             new AppMenuItem('TaskTeams', 'Pages.TaskTeams', 'flaticon-more', '/app/main/taskManagement/taskTeams'),
             
             new AppMenuItem('TaskWorkItems', 'Pages.TaskWorkItems', 'flaticon-more', '/app/main/taskManagement/taskWorkItems'),
+            
+            new AppMenuItem('MasterWidgets', 'Pages.MasterWidgets', 'flaticon-more', '/app/main/widgetManagement/masterWidgets'),
+            
+            new AppMenuItem('HubWidgetMaps', 'Pages.HubWidgetMaps', 'flaticon-more', '/app/main/widgetManagement/hubWidgetMaps'),
+            
+            new AppMenuItem('HubWidgetStoreMaps', 'Pages.HubWidgetStoreMaps', 'flaticon-more', '/app/main/widgetManagement/hubWidgetStoreMaps'),
+            
+            new AppMenuItem('HubWidgetProductMaps', 'Pages.HubWidgetProductMaps', 'flaticon-more', '/app/main/widgetManagement/hubWidgetProductMaps'),
+            
+            new AppMenuItem('HubWidgetContentMaps', 'Pages.HubWidgetContentMaps', 'flaticon-more', '/app/main/widgetManagement/hubWidgetContentMaps'),
+            
+            new AppMenuItem('StoreWidgetMaps', 'Pages.StoreWidgetMaps', 'flaticon-more', '/app/main/widgetManagement/storeWidgetMaps'),
+            
+            new AppMenuItem('StoreWidgetProductMaps', 'Pages.StoreWidgetProductMaps', 'flaticon-more', '/app/main/widgetManagement/storeWidgetProductMaps'),
+            
+            new AppMenuItem('StoreWidgetContentMaps', 'Pages.StoreWidgetContentMaps', 'flaticon-more', '/app/main/widgetManagement/storeWidgetContentMaps'),
+            
+            new AppMenuItem('StoreMasterThemes', 'Pages.StoreMasterThemes', 'flaticon-more', '/app/main/widgetManagement/storeMasterThemes'),
+            
+            new AppMenuItem('StoreThemeMaps', 'Pages.StoreThemeMaps', 'flaticon-more', '/app/main/widgetManagement/storeThemeMaps'),
              new AppMenuItem('Editions', 'Pages.Editions', 'flaticon-app', '/app/admin/editions'),
             new AppMenuItem(
                 'Administration',

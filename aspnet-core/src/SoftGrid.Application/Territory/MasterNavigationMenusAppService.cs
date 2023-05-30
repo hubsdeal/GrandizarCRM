@@ -41,7 +41,7 @@ namespace SoftGrid.Territory
                         .WhereIf(input.MinParentMenuIdFilter != null, e => e.ParentMenuId >= input.MinParentMenuIdFilter)
                         .WhereIf(input.MaxParentMenuIdFilter != null, e => e.ParentMenuId <= input.MaxParentMenuIdFilter)
                         .WhereIf(!string.IsNullOrWhiteSpace(input.IconLinkFilter.ToString()), e => e.IconLink.ToString() == input.IconLinkFilter.ToString())
-                        .WhereIf(!string.IsNullOrWhiteSpace(input.MediaLinkFilter.ToString()), e => e.MediaLink.ToString() == input.MediaLinkFilter.ToString());
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.MediaLinkFilter.ToString()), e => e.ContentLink.ToString() == input.MediaLinkFilter.ToString());
 
             var pagedAndFilteredMasterNavigationMenus = filteredMasterNavigationMenus
                 .OrderBy(input.Sorting ?? "id asc")
@@ -55,7 +55,7 @@ namespace SoftGrid.Territory
                                             o.HasParentMenu,
                                             o.ParentMenuId,
                                             o.IconLink,
-                                            o.MediaLink,
+                                            o.ContentLink,
                                             Id = o.Id
                                         };
 
@@ -75,7 +75,7 @@ namespace SoftGrid.Territory
                         HasParentMenu = o.HasParentMenu,
                         ParentMenuId = o.ParentMenuId,
                         IconLink = o.IconLink,
-                        MediaLink = o.MediaLink,
+                        ContentLink = o.ContentLink,
                         Id = o.Id,
                     }
                 };
@@ -159,7 +159,7 @@ namespace SoftGrid.Territory
                         .WhereIf(input.MinParentMenuIdFilter != null, e => e.ParentMenuId >= input.MinParentMenuIdFilter)
                         .WhereIf(input.MaxParentMenuIdFilter != null, e => e.ParentMenuId <= input.MaxParentMenuIdFilter)
                         .WhereIf(!string.IsNullOrWhiteSpace(input.IconLinkFilter.ToString()), e => e.IconLink.ToString() == input.IconLinkFilter.ToString())
-                        .WhereIf(!string.IsNullOrWhiteSpace(input.MediaLinkFilter.ToString()), e => e.MediaLink.ToString() == input.MediaLinkFilter.ToString());
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.MediaLinkFilter.ToString()), e => e.ContentLink.ToString() == input.MediaLinkFilter.ToString());
 
             var query = (from o in filteredMasterNavigationMenus
                          select new GetMasterNavigationMenuForViewDto()
@@ -170,7 +170,7 @@ namespace SoftGrid.Territory
                                  HasParentMenu = o.HasParentMenu,
                                  ParentMenuId = o.ParentMenuId,
                                  IconLink = o.IconLink,
-                                 MediaLink = o.MediaLink,
+                                 ContentLink = o.ContentLink,
                                  Id = o.Id
                              }
                          });
