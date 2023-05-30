@@ -11,6 +11,7 @@ import { StoreDashboardComponent } from './store-dashboard/store-dashboard.compo
 import { StoreMediaModule } from '../storeMedias/storeMedia.module';
 import { MyStoresComponent } from './my-stores/my-stores.component';
 import { TaskEventModule } from '@app/main/taskManagement/taskEvents/taskEvent.module';
+import { StoreTagModule } from '../storeTags/storeTag.module';
 
 @NgModule({
     declarations: [
@@ -23,7 +24,7 @@ import { TaskEventModule } from '@app/main/taskManagement/taskEvents/taskEvent.m
         StoreDashboardComponent,
         MyStoresComponent,
     ],
-    imports: [AppSharedModule, StoreRoutingModule, AdminSharedModule, StoreMediaModule, TaskEventModule],
+    imports: [AppSharedModule, StoreRoutingModule, AdminSharedModule, StoreMediaModule, TaskEventModule, StoreTagModule],
     exports:[
         MyStoresComponent,
         CreateOrEditStoreModalComponent,
