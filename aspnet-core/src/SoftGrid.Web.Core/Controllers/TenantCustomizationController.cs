@@ -1,7 +1,3 @@
-using System;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
 using Abp.AspNetCore.Mvc.Authorization;
 using Abp.AspNetZeroCore.Net;
 using Abp.IO.Extensions;
@@ -9,14 +5,20 @@ using Abp.MimeTypes;
 using Abp.Runtime.Session;
 using Abp.UI;
 using Abp.Web.Models;
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+
 using SoftGrid.Authorization;
-using SoftGrid.Authorization.Users.Profile.Dto;
 using SoftGrid.Graphics;
 using SoftGrid.MultiTenancy;
 using SoftGrid.Storage;
 using SoftGrid.Tenants;
+
+using System;
+using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace SoftGrid.Web.Controllers
 {
@@ -53,7 +55,7 @@ namespace SoftGrid.Web.Controllers
                 tenant.LightLogoFileType = logoObject.contentType;
 
                 return Json(new AjaxResponse(new
-                    { id = logoObject.id, TenantId = tenant.Id, fileType = tenant.DarkLogoFileType }));
+                { id = logoObject.id, TenantId = tenant.Id, fileType = tenant.DarkLogoFileType }));
             }
             catch (UserFriendlyException ex)
             {
@@ -74,7 +76,7 @@ namespace SoftGrid.Web.Controllers
                 tenant.DarkLogoFileType = logoObject.contentType;
 
                 return Json(new AjaxResponse(new
-                    { id = logoObject.id, TenantId = tenant.Id, fileType = tenant.LightLogoFileType }));
+                { id = logoObject.id, TenantId = tenant.Id, fileType = tenant.LightLogoFileType }));
             }
             catch (UserFriendlyException ex)
             {
@@ -183,8 +185,7 @@ namespace SoftGrid.Web.Controllers
         [AllowAnonymous]
         [Route("/TenantCustomization/GetTenantLogo/{skin}/{tenantId?}/{extension?}")]
         [HttpGet]
-        public Task<ActionResult> GetTenantLogoWithCustomRoute(string skin, int? tenantId = null,
-            string extension = "svg")
+        public Task<ActionResult> GetTenantLogoWithCustomRoute(string skin, int? tenantId = null, string extension = "svg")
         {
             return GetTenantLogo(skin, tenantId, extension);
         }

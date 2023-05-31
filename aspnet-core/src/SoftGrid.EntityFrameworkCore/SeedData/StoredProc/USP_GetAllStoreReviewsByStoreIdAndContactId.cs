@@ -19,7 +19,7 @@ public class USP_GetAllStoreReviewsByStoreIdAndContactId
             -- ==================================================================================================
             -- exec usp_GetAllStoreReviewsByStoreIdAndContactId @SkipCount=0,@MaxResultCount=10
             CREATE OR ALTER PROCEDURE [dbo].[usp_GetAllStoreReviewsByStoreIdAndContactId]
-	            @Filter nvarchar(4000)='""',
+	            @Filter nvarchar(4000)='""""',
 	            @StoreId bigint=null,
 	            @ContactId bigint=null,
 	            @IsPublished bit=null,
@@ -37,7 +37,7 @@ public class USP_GetAllStoreReviewsByStoreIdAndContactId
                     (@StoreId IS NULL OR sr.StoreId=@StoreId)
 		            AND (@ContactId IS NULL OR sr.ContactId=@ContactId)
 		            AND (@IsPublished IS NULL OR sr.IsPublish=@IsPublished)
-		            AND (@Filter = '""'     OR Contains(sr.ReviewInfo, @Filter)))AS TotalCount, 
+		            AND (@Filter = '""""'     OR Contains(sr.ReviewInfo, @Filter)))AS TotalCount, 
 		            (SELECT
 		            sr.Id as Id,
 		            sr.ReviewInfo as ReviewInfo,
@@ -62,7 +62,7 @@ public class USP_GetAllStoreReviewsByStoreIdAndContactId
                     (@StoreId IS NULL OR sr.StoreId=@StoreId)
 		            AND (@ContactId IS NULL OR sr.ContactId=@ContactId)
 		            AND (@IsPublished IS NULL OR sr.IsPublish=@IsPublished)
-		            AND (@Filter = '""'     OR Contains(sr.ReviewInfo, @Filter))
+		            AND (@Filter = '""""'     OR Contains(sr.ReviewInfo, @Filter))
 		            ORDER BY sr.Id DESC
 		            OFFSET @SkipCount ROWS	
 		            FETCH NEXT @MaxResultCount ROWS ONLY

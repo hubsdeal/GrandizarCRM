@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 
 using SoftGrid.Authorization.Users;
 using SoftGrid.CMS;
+using SoftGrid.Configuration;
 using SoftGrid.DiscountManagement;
 using SoftGrid.EntityFrameworkCore.Repositories;
 using SoftGrid.LookupData;
@@ -225,7 +226,7 @@ namespace SoftGrid.PublicCommon
             //_emailSender = emailSender;
             //_sendGridEmailSenderConfiguration = sendGridEmailSenderConfiguration;
             _env = env;
-            //_appConfiguration = env.GetAppConfiguration();
+            _appConfiguration = env.GetAppConfiguration();
             //_orderRepository = orderRepository;
             //_orderProductInfoRepository = orderProductInfoRepository;
             //_orderPaymentInfoRepository = orderPaymentInfoRepository;
@@ -3627,9 +3628,9 @@ namespace SoftGrid.PublicCommon
         [AbpAllowAnonymous]
         public async Task<string> GetAboutUs()
         {
-            //var aboutUsId = Convert.ToInt32(_appConfiguration["LegalDocs:About_Us"]);
-
-            var content = await _contentRepository.FirstOrDefaultAsync(e => e.Id == 0 /*aboutUsId*/ && e.Published == true);
+            var aboutUsId = Convert.ToInt32(_appConfiguration["LegalDocs:About_Us"]);
+            aboutUsId = aboutUsId > 0 ? aboutUsId : 3; //TODO: Remove this line after adding About Us page in database
+            var content = await _contentRepository.FirstOrDefaultAsync(e => e.Id == aboutUsId && e.Published == true);
 
             if (content != null)
             {
