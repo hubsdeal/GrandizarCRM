@@ -48,6 +48,7 @@ export class AppNavigationService {
                 [
                     new AppMenuItem('Master Store List', 'Pages.Stores', 'flaticon2-list-1', '/app/main/shop/stores'),
                     new AppMenuItem('My Store List', 'Pages.Stores', 'flaticon2-list-2', '/app/main/shop/myStores'),
+                    new AppMenuItem('Store Widgets', 'Pages.StoreWidgetMaps', 'fas fa-border-all', '/app/main/widgetManagement/storeWidgetMaps'),
                 ]
             ),
 
@@ -78,6 +79,37 @@ export class AppNavigationService {
                     new AppMenuItem('Abandoned Cart', 'Pages.Orders', 'fas fa-shopping-cart', '/app/main/orderManagement/abandonedCart'),
                 ]
             ),
+
+            new AppMenuItem(
+                'Widget Management',
+                '',
+                'fas fa-border-all',
+                '',
+                [],
+                [
+                    new AppMenuItem('Master Widgets', 'Pages.MasterWidgets', 'flaticon-more', '/app/main/widgetManagement/masterWidgets'),
+
+                    new AppMenuItem('Hub Widget Maps', 'Pages.HubWidgetMaps', 'flaticon-more', '/app/main/widgetManagement/hubWidgetMaps'),
+
+                    new AppMenuItem('Hub Widget Store Maps', 'Pages.HubWidgetStoreMaps', 'flaticon-more', '/app/main/widgetManagement/hubWidgetStoreMaps'),
+
+                    new AppMenuItem('Hub Widget Product Maps', 'Pages.HubWidgetProductMaps', 'flaticon-more', '/app/main/widgetManagement/hubWidgetProductMaps'),
+
+                    new AppMenuItem('Hub Widget Content Maps', 'Pages.HubWidgetContentMaps', 'flaticon-more', '/app/main/widgetManagement/hubWidgetContentMaps'),
+
+                    new AppMenuItem('Store Widget Maps', 'Pages.StoreWidgetMaps', 'flaticon-more', '/app/main/widgetManagement/storeWidgetMaps'),
+
+                    new AppMenuItem('Store Widget Product Maps', 'Pages.StoreWidgetProductMaps', 'flaticon-more', '/app/main/widgetManagement/storeWidgetProductMaps'),
+
+                    new AppMenuItem('Store Widget Content Maps', 'Pages.StoreWidgetContentMaps', 'flaticon-more', '/app/main/widgetManagement/storeWidgetContentMaps'),
+
+                    new AppMenuItem('Store Master Themes', 'Pages.StoreMasterThemes', 'flaticon-more', '/app/main/widgetManagement/storeMasterThemes'),
+
+                    new AppMenuItem('Store Theme Maps', 'Pages.StoreThemeMaps', 'flaticon-more', '/app/main/widgetManagement/storeThemeMaps'),
+                ]
+            ),
+
+
 
             new AppMenuItem(
                 'Job Management',
@@ -118,7 +150,7 @@ export class AppNavigationService {
                 ]
             ),
 
-            
+
 
             new AppMenuItem(
                 'Employee & Consultants ',
@@ -427,61 +459,43 @@ export class AppNavigationService {
             // new AppMenuItem('DiscountCodeMaps', 'Pages.DiscountCodeMaps', 'flaticon-more', '/app/main/discountManagement/discountCodeMaps'),
 
             // new AppMenuItem('DiscountCodeUserHistories', 'Pages.DiscountCodeUserHistories', 'flaticon-more', '/app/main/discountManagement/discountCodeUserHistories'),
-           
+
             new AppMenuItem('WishLists', 'Pages.WishLists', 'flaticon-more', '/app/main/shop/wishLists'),
-            
+
             new AppMenuItem('ShoppingCarts', 'Pages.ShoppingCarts', 'flaticon-more', '/app/main/shop/shoppingCarts'),
-            
+
             new AppMenuItem('ProductTeams', 'Pages.ProductTeams', 'flaticon-more', '/app/main/shop/productTeams'),
-            
-            
-            
+
+
+
             new AppMenuItem('StoreTaskMaps', 'Pages.StoreTaskMaps', 'flaticon-more', '/app/main/taskManagement/storeTaskMaps'),
-            
+
             new AppMenuItem('BusinessDocuments', 'Pages.BusinessDocuments', 'flaticon-more', '/app/main/crm/businessDocuments'),
-            
+
             new AppMenuItem('StoreTagSettingCategories', 'Pages.StoreTagSettingCategories', 'flaticon-more', '/app/main/shop/storeTagSettingCategories'),
-            
+
             new AppMenuItem('StoreMasterTagSettings', 'Pages.StoreMasterTagSettings', 'flaticon-more', '/app/main/shop/storeMasterTagSettings'),
-            
+
             new AppMenuItem('ProductMasterTagSettings', 'Pages.ProductMasterTagSettings', 'flaticon-more', '/app/main/shop/productMasterTagSettings'),
-            
+
             new AppMenuItem('ContactMasterTagSettings', 'Pages.ContactMasterTagSettings', 'flaticon-more', '/app/main/crm/contactMasterTagSettings'),
-            
+
             new AppMenuItem('BusinessMasterTagSettings', 'Pages.BusinessMasterTagSettings', 'flaticon-more', '/app/main/crm/businessMasterTagSettings'),
-            
+
             new AppMenuItem('JobMasterTagSettings', 'Pages.JobMasterTagSettings', 'flaticon-more', '/app/main/jobManagement/jobMasterTagSettings'),
-            
+
             new AppMenuItem('ContactTaskMaps', 'Pages.ContactTaskMaps', 'flaticon-more', '/app/main/crm/contactTaskMaps'),
-            
+
             new AppMenuItem('ProductTaskMaps', 'Pages.ProductTaskMaps', 'flaticon-more', '/app/main/shop/productTaskMaps'),
-            
+
             new AppMenuItem('JobTaskMaps', 'Pages.JobTaskMaps', 'flaticon-more', '/app/main/jobManagement/jobTaskMaps'),
-            
+
             new AppMenuItem('TaskTeams', 'Pages.TaskTeams', 'flaticon-more', '/app/main/taskManagement/taskTeams'),
-            
+
             new AppMenuItem('TaskWorkItems', 'Pages.TaskWorkItems', 'flaticon-more', '/app/main/taskManagement/taskWorkItems'),
-            
-            new AppMenuItem('MasterWidgets', 'Pages.MasterWidgets', 'flaticon-more', '/app/main/widgetManagement/masterWidgets'),
-            
-            new AppMenuItem('HubWidgetMaps', 'Pages.HubWidgetMaps', 'flaticon-more', '/app/main/widgetManagement/hubWidgetMaps'),
-            
-            new AppMenuItem('HubWidgetStoreMaps', 'Pages.HubWidgetStoreMaps', 'flaticon-more', '/app/main/widgetManagement/hubWidgetStoreMaps'),
-            
-            new AppMenuItem('HubWidgetProductMaps', 'Pages.HubWidgetProductMaps', 'flaticon-more', '/app/main/widgetManagement/hubWidgetProductMaps'),
-            
-            new AppMenuItem('HubWidgetContentMaps', 'Pages.HubWidgetContentMaps', 'flaticon-more', '/app/main/widgetManagement/hubWidgetContentMaps'),
-            
-            new AppMenuItem('StoreWidgetMaps', 'Pages.StoreWidgetMaps', 'flaticon-more', '/app/main/widgetManagement/storeWidgetMaps'),
-            
-            new AppMenuItem('StoreWidgetProductMaps', 'Pages.StoreWidgetProductMaps', 'flaticon-more', '/app/main/widgetManagement/storeWidgetProductMaps'),
-            
-            new AppMenuItem('StoreWidgetContentMaps', 'Pages.StoreWidgetContentMaps', 'flaticon-more', '/app/main/widgetManagement/storeWidgetContentMaps'),
-            
-            new AppMenuItem('StoreMasterThemes', 'Pages.StoreMasterThemes', 'flaticon-more', '/app/main/widgetManagement/storeMasterThemes'),
-            
-            new AppMenuItem('StoreThemeMaps', 'Pages.StoreThemeMaps', 'flaticon-more', '/app/main/widgetManagement/storeThemeMaps'),
-             new AppMenuItem('Editions', 'Pages.Editions', 'flaticon-app', '/app/admin/editions'),
+
+
+            new AppMenuItem('Editions', 'Pages.Editions', 'flaticon-app', '/app/admin/editions'),
             new AppMenuItem(
                 'Administration',
                 '',

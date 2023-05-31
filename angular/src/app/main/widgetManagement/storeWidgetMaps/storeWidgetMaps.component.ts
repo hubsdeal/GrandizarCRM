@@ -20,6 +20,7 @@ import { DateTimeService } from '@app/shared/common/timing/date-time.service';
 
 @Component({
     templateUrl: './storeWidgetMaps.component.html',
+    styleUrls: ['./storeWidgetMaps.component.scss'],
     encapsulation: ViewEncapsulation.None,
     animations: [appModuleAnimation()],
 })
