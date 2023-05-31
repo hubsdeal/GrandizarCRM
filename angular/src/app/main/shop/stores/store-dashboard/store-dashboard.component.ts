@@ -30,7 +30,7 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
   bindingData: any;
   localOrVirtualStoreOptions: SelectItem[];
   storePublishedOptions: SelectItem[];
-  store: CreateOrEditStoreDto = new CreateOrEditStoreDto();
+  store: CreateOrEditStoreDto;
 
   tags: string[] = [];
 
@@ -106,9 +106,6 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
   ) {
     super(injector);
     this.loadAllDropdown();
-    this.store.isLocalOrOnlineStore = true;
-    this.localOrVirtualStoreOptions = [{ label: 'Local Store', value: false }, { label: 'Virtual Store', value: true }];
-    this.storePublishedOptions = [{ label: 'Draft', value: false }, { label: 'Published', value: true }];
   }
 
   ngOnInit(): void {
@@ -116,6 +113,8 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
     this.storeId = parseInt(storeId);
     this.getStoreDetails(this.storeId);
     this.initFileUploader();
+    this.localOrVirtualStoreOptions = [{ label: 'Local Store', value: false }, { label: 'Virtual Store', value: true }];
+    this.storePublishedOptions = [{ label: 'Draft', value: false }, { label: 'Published', value: true }];
   }
   ngAfterViewInit() {
 
@@ -190,11 +189,11 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
       if (result.picture != null) {
         this.imageSrc = result.picture;
       }
+      console.log(result)
       this.getStoreMedia();
-      if(this.selectedStoreTagSettingCategory.id != null){
-        this.selectedStoreTagSettingCategory.id = result.store.storeTagSettingCategoryId 
-      }
-    })
+    });
+    // console.log("db"+this.storeTagSettingCategoryId);
+    // console.log("db"+this.storeId);
   }
 
   checkUrlAvailability(id: number, url: string) {

@@ -27,7 +27,7 @@
             </div>
         </div>
         <!-- end Topbar -->
-        <div id="kt_app_content" class="app-content flex-column-fluid">
+        <div id="kt_app_content" *ngIf="store?.id" class="app-content flex-column-fluid">
             <div id="kt_app_content_container" class="app-container container-xxl">
                 <div class="card mb-6">
                     <div class="card-body">
@@ -264,7 +264,7 @@
                                     </a>
                                 </li> -->
 
-                                <li class="nav-item">
+                                <li class="nav-item" *ngIf="store">
                                     <a class="nav-link" data-bs-toggle="tab" href="#store_tags_all">
                                         <i class="fas fa-tags"></i> Tags
                                     </a>
@@ -5332,8 +5332,8 @@
                     <!-- <div class="tab-pane fade" id="store_location" role="tabpanel">
                         .store_location..
                     </div> -->
-                    <div class="tab-pane fade" id="store_tags_all" role="tabpanel">
-                        <appStoreTags *ngIf="storeTagSettingCategoryId" [storeId]="10078" [storeTagSettingCategoryId]="6"></appStoreTags>
+                    <div class="tab-pane fade" id="store_tags_all" role="tabpanel" *ngIf="store">
+                        <appStoreTags *ngIf="store" [storeId]="store.id" [storeTagSettingCategoryId]="store.storeTagSettingCategoryId"></appStoreTags>
                     </div>
                     <div class="tab-pane fade" id="marketplacce_operator" role="tabpanel">
                         <div class="card">

@@ -1,5 +1,5 @@
 ﻿import { AppConsts } from '@shared/AppConsts';
-import { Component, Injector, ViewEncapsulation, ViewChild, Input } from '@angular/core';
+import { Component, Injector, ViewEncapsulation, ViewChild, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StoreTagsServiceProxy, StoreTagDto, MasterTagCategoryForDashboardViewDto } from '@shared/service-proxies/service-proxies';
 import { NotifyService } from 'abp-ng2-module';
@@ -25,7 +25,7 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
     encapsulation: ViewEncapsulation.None,
     animations: [appModuleAnimation()],
 })
-export class StoreTagsComponent extends AppComponentBase {
+export class StoreTagsComponent extends AppComponentBase implements OnInit {
     @ViewChild('createOrEditStoreTagModal', { static: true })
     createOrEditStoreTagModal: CreateOrEditStoreTagModalComponent;
     @ViewChild('viewStoreTagModal', { static: true }) viewStoreTagModal: ViewStoreTagModalComponent;
@@ -78,9 +78,6 @@ export class StoreTagsComponent extends AppComponentBase {
         private _dateTimeService: DateTimeService
     ) {
         super(injector);
-        this.getALlStoreTags();
-        console.log(this.storeId);
-        console.log(this.storeTagSettingCategoryId);
     }
 
     getStoreTags(event?: LazyLoadEvent) {
@@ -166,17 +163,20 @@ export class StoreTagsComponent extends AppComponentBase {
         this.getStoreTags();
     }
     getALlStoreTags() {
-        console.log(this.storeId);
-        console.log(this.storeTagSettingCategoryId);
-        this._storeTagsServiceProxy.getStoreTagsByTagSetting(6, 10078).subscribe((result) => {
+        this._storeTagsServiceProxy.getStoreTagsByTagSetting(this.storeTagSettingCategoryId, this.storeId).subscribe((result) => {
             this.allStoreTags = result;
-            console.log(this.allStoreTags);
         });
     }
 
     drop(event: CdkDragDrop<string[]>) {
-        console.log(this.storeTags, event.previousIndex, event.currentIndex);
-        moveItemInArray(this.storeTags, event.previousIndex, event.currentIndex);
+        console.log(this.allStoreTags, event.previousIndex, event.currentIndex);
+        moveItemInArray(this.allStoreTags, event.previousIndex, event.currentIndex);
+    }
+
+    ngOnInit(): void {
+        this.getALlStoreTags();
+        console.log(this.storeId);
+        console.log(this.storeTagSettingCategoryId);
     }
 
 }
