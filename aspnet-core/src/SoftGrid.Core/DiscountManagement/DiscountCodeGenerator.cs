@@ -37,5 +37,9 @@ namespace SoftGrid.DiscountManagement
         [StringLength(DiscountCodeGeneratorConsts.MaxEndTimeLength, MinimumLength = DiscountCodeGeneratorConsts.MinEndTimeLength)]
         public virtual string EndTime { get; set; }
 
+        public virtual bool? OpenForAll { get; set; }
+        public virtual int? RedeemCount { get; set; }
+        public virtual string SalesTag { get;set; }
+
     }
 }
