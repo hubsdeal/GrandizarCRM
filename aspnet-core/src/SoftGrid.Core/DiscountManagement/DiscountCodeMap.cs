@@ -35,5 +35,10 @@ namespace SoftGrid.DiscountManagement
         [ForeignKey("MembershipTypeId")]
         public MembershipType MembershipTypeFk { get; set; }
 
+        public virtual long? ProductCategoryId { get; set; }
+
+        [ForeignKey("ProductCategoryId")]
+        public ProductCategory ProductCategoryFk { get; set; }
+
     }
 }
