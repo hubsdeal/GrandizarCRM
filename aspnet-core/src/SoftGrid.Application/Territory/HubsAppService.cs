@@ -325,7 +325,7 @@ namespace SoftGrid.Territory
         protected virtual async Task Create(CreateOrEditHubDto input)
         {
             var hub = ObjectMapper.Map<Hub>(input);
-
+             
             if (AbpSession.TenantId != null)
             {
                 hub.TenantId = (int?)AbpSession.TenantId;

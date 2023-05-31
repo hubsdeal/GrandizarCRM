@@ -13,7 +13,9 @@ namespace SoftGrid.Territory.Dtos
 
         public Guid IconLink { get; set; }
 
-        public Guid MediaLink { get; set; }
+        public string ContentLink { get; set; }
+        public int? DisplaySequence { get; set; }
+        public string NavigationLink { get; set; }
 
     }
 }

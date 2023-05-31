@@ -30,6 +30,66 @@ namespace SoftGrid.Authorization
 
             var pages = context.GetPermissionOrNull(AppPermissions.Pages) ?? context.CreatePermission(AppPermissions.Pages, L("Pages"));
 
+            var storeThemeMaps = pages.CreateChildPermission(AppPermissions.Pages_StoreThemeMaps, L("StoreThemeMaps"));
+            storeThemeMaps.CreateChildPermission(AppPermissions.Pages_StoreThemeMaps_Create, L("CreateNewStoreThemeMap"));
+            storeThemeMaps.CreateChildPermission(AppPermissions.Pages_StoreThemeMaps_Edit, L("EditStoreThemeMap"));
+            storeThemeMaps.CreateChildPermission(AppPermissions.Pages_StoreThemeMaps_Delete, L("DeleteStoreThemeMap"));
+
+            var storeMasterThemes = pages.CreateChildPermission(AppPermissions.Pages_StoreMasterThemes, L("StoreMasterThemes"));
+            storeMasterThemes.CreateChildPermission(AppPermissions.Pages_StoreMasterThemes_Create, L("CreateNewStoreMasterTheme"));
+            storeMasterThemes.CreateChildPermission(AppPermissions.Pages_StoreMasterThemes_Edit, L("EditStoreMasterTheme"));
+            storeMasterThemes.CreateChildPermission(AppPermissions.Pages_StoreMasterThemes_Delete, L("DeleteStoreMasterTheme"));
+
+            var storeWidgetContentMaps = pages.CreateChildPermission(AppPermissions.Pages_StoreWidgetContentMaps, L("StoreWidgetContentMaps"));
+            storeWidgetContentMaps.CreateChildPermission(AppPermissions.Pages_StoreWidgetContentMaps_Create, L("CreateNewStoreWidgetContentMap"));
+            storeWidgetContentMaps.CreateChildPermission(AppPermissions.Pages_StoreWidgetContentMaps_Edit, L("EditStoreWidgetContentMap"));
+            storeWidgetContentMaps.CreateChildPermission(AppPermissions.Pages_StoreWidgetContentMaps_Delete, L("DeleteStoreWidgetContentMap"));
+
+            var storeWidgetProductMaps = pages.CreateChildPermission(AppPermissions.Pages_StoreWidgetProductMaps, L("StoreWidgetProductMaps"));
+            storeWidgetProductMaps.CreateChildPermission(AppPermissions.Pages_StoreWidgetProductMaps_Create, L("CreateNewStoreWidgetProductMap"));
+            storeWidgetProductMaps.CreateChildPermission(AppPermissions.Pages_StoreWidgetProductMaps_Edit, L("EditStoreWidgetProductMap"));
+            storeWidgetProductMaps.CreateChildPermission(AppPermissions.Pages_StoreWidgetProductMaps_Delete, L("DeleteStoreWidgetProductMap"));
+
+            var storeWidgetMaps = pages.CreateChildPermission(AppPermissions.Pages_StoreWidgetMaps, L("StoreWidgetMaps"));
+            storeWidgetMaps.CreateChildPermission(AppPermissions.Pages_StoreWidgetMaps_Create, L("CreateNewStoreWidgetMap"));
+            storeWidgetMaps.CreateChildPermission(AppPermissions.Pages_StoreWidgetMaps_Edit, L("EditStoreWidgetMap"));
+            storeWidgetMaps.CreateChildPermission(AppPermissions.Pages_StoreWidgetMaps_Delete, L("DeleteStoreWidgetMap"));
+
+            var hubWidgetContentMaps = pages.CreateChildPermission(AppPermissions.Pages_HubWidgetContentMaps, L("HubWidgetContentMaps"));
+            hubWidgetContentMaps.CreateChildPermission(AppPermissions.Pages_HubWidgetContentMaps_Create, L("CreateNewHubWidgetContentMap"));
+            hubWidgetContentMaps.CreateChildPermission(AppPermissions.Pages_HubWidgetContentMaps_Edit, L("EditHubWidgetContentMap"));
+            hubWidgetContentMaps.CreateChildPermission(AppPermissions.Pages_HubWidgetContentMaps_Delete, L("DeleteHubWidgetContentMap"));
+
+            var hubWidgetProductMaps = pages.CreateChildPermission(AppPermissions.Pages_HubWidgetProductMaps, L("HubWidgetProductMaps"));
+            hubWidgetProductMaps.CreateChildPermission(AppPermissions.Pages_HubWidgetProductMaps_Create, L("CreateNewHubWidgetProductMap"));
+            hubWidgetProductMaps.CreateChildPermission(AppPermissions.Pages_HubWidgetProductMaps_Edit, L("EditHubWidgetProductMap"));
+            hubWidgetProductMaps.CreateChildPermission(AppPermissions.Pages_HubWidgetProductMaps_Delete, L("DeleteHubWidgetProductMap"));
+
+            var hubWidgetStoreMaps = pages.CreateChildPermission(AppPermissions.Pages_HubWidgetStoreMaps, L("HubWidgetStoreMaps"));
+            hubWidgetStoreMaps.CreateChildPermission(AppPermissions.Pages_HubWidgetStoreMaps_Create, L("CreateNewHubWidgetStoreMap"));
+            hubWidgetStoreMaps.CreateChildPermission(AppPermissions.Pages_HubWidgetStoreMaps_Edit, L("EditHubWidgetStoreMap"));
+            hubWidgetStoreMaps.CreateChildPermission(AppPermissions.Pages_HubWidgetStoreMaps_Delete, L("DeleteHubWidgetStoreMap"));
+
+            var hubWidgetMaps = pages.CreateChildPermission(AppPermissions.Pages_HubWidgetMaps, L("HubWidgetMaps"));
+            hubWidgetMaps.CreateChildPermission(AppPermissions.Pages_HubWidgetMaps_Create, L("CreateNewHubWidgetMap"));
+            hubWidgetMaps.CreateChildPermission(AppPermissions.Pages_HubWidgetMaps_Edit, L("EditHubWidgetMap"));
+            hubWidgetMaps.CreateChildPermission(AppPermissions.Pages_HubWidgetMaps_Delete, L("DeleteHubWidgetMap"));
+
+            var masterWidgets = pages.CreateChildPermission(AppPermissions.Pages_MasterWidgets, L("MasterWidgets"));
+            masterWidgets.CreateChildPermission(AppPermissions.Pages_MasterWidgets_Create, L("CreateNewMasterWidget"));
+            masterWidgets.CreateChildPermission(AppPermissions.Pages_MasterWidgets_Edit, L("EditMasterWidget"));
+            masterWidgets.CreateChildPermission(AppPermissions.Pages_MasterWidgets_Delete, L("DeleteMasterWidget"));
+
+            var taskWorkItems = pages.CreateChildPermission(AppPermissions.Pages_TaskWorkItems, L("TaskWorkItems"));
+            taskWorkItems.CreateChildPermission(AppPermissions.Pages_TaskWorkItems_Create, L("CreateNewTaskWorkItem"));
+            taskWorkItems.CreateChildPermission(AppPermissions.Pages_TaskWorkItems_Edit, L("EditTaskWorkItem"));
+            taskWorkItems.CreateChildPermission(AppPermissions.Pages_TaskWorkItems_Delete, L("DeleteTaskWorkItem"));
+
+            var taskTeams = pages.CreateChildPermission(AppPermissions.Pages_TaskTeams, L("TaskTeams"));
+            taskTeams.CreateChildPermission(AppPermissions.Pages_TaskTeams_Create, L("CreateNewTaskTeam"));
+            taskTeams.CreateChildPermission(AppPermissions.Pages_TaskTeams_Edit, L("EditTaskTeam"));
+            taskTeams.CreateChildPermission(AppPermissions.Pages_TaskTeams_Delete, L("DeleteTaskTeam"));
+
             var jobTaskMaps = pages.CreateChildPermission(AppPermissions.Pages_JobTaskMaps, L("JobTaskMaps"));
             jobTaskMaps.CreateChildPermission(AppPermissions.Pages_JobTaskMaps_Create, L("CreateNewJobTaskMap"));
             jobTaskMaps.CreateChildPermission(AppPermissions.Pages_JobTaskMaps_Edit, L("EditJobTaskMap"));

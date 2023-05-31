@@ -6,6 +6,66 @@
     /// </summary>
     public static class AppPermissions
     {
+        public const string Pages_StoreThemeMaps = "Pages.StoreThemeMaps";
+        public const string Pages_StoreThemeMaps_Create = "Pages.StoreThemeMaps.Create";
+        public const string Pages_StoreThemeMaps_Edit = "Pages.StoreThemeMaps.Edit";
+        public const string Pages_StoreThemeMaps_Delete = "Pages.StoreThemeMaps.Delete";
+
+        public const string Pages_StoreMasterThemes = "Pages.StoreMasterThemes";
+        public const string Pages_StoreMasterThemes_Create = "Pages.StoreMasterThemes.Create";
+        public const string Pages_StoreMasterThemes_Edit = "Pages.StoreMasterThemes.Edit";
+        public const string Pages_StoreMasterThemes_Delete = "Pages.StoreMasterThemes.Delete";
+
+        public const string Pages_StoreWidgetContentMaps = "Pages.StoreWidgetContentMaps";
+        public const string Pages_StoreWidgetContentMaps_Create = "Pages.StoreWidgetContentMaps.Create";
+        public const string Pages_StoreWidgetContentMaps_Edit = "Pages.StoreWidgetContentMaps.Edit";
+        public const string Pages_StoreWidgetContentMaps_Delete = "Pages.StoreWidgetContentMaps.Delete";
+
+        public const string Pages_StoreWidgetProductMaps = "Pages.StoreWidgetProductMaps";
+        public const string Pages_StoreWidgetProductMaps_Create = "Pages.StoreWidgetProductMaps.Create";
+        public const string Pages_StoreWidgetProductMaps_Edit = "Pages.StoreWidgetProductMaps.Edit";
+        public const string Pages_StoreWidgetProductMaps_Delete = "Pages.StoreWidgetProductMaps.Delete";
+
+        public const string Pages_StoreWidgetMaps = "Pages.StoreWidgetMaps";
+        public const string Pages_StoreWidgetMaps_Create = "Pages.StoreWidgetMaps.Create";
+        public const string Pages_StoreWidgetMaps_Edit = "Pages.StoreWidgetMaps.Edit";
+        public const string Pages_StoreWidgetMaps_Delete = "Pages.StoreWidgetMaps.Delete";
+
+        public const string Pages_HubWidgetContentMaps = "Pages.HubWidgetContentMaps";
+        public const string Pages_HubWidgetContentMaps_Create = "Pages.HubWidgetContentMaps.Create";
+        public const string Pages_HubWidgetContentMaps_Edit = "Pages.HubWidgetContentMaps.Edit";
+        public const string Pages_HubWidgetContentMaps_Delete = "Pages.HubWidgetContentMaps.Delete";
+
+        public const string Pages_HubWidgetProductMaps = "Pages.HubWidgetProductMaps";
+        public const string Pages_HubWidgetProductMaps_Create = "Pages.HubWidgetProductMaps.Create";
+        public const string Pages_HubWidgetProductMaps_Edit = "Pages.HubWidgetProductMaps.Edit";
+        public const string Pages_HubWidgetProductMaps_Delete = "Pages.HubWidgetProductMaps.Delete";
+
+        public const string Pages_HubWidgetStoreMaps = "Pages.HubWidgetStoreMaps";
+        public const string Pages_HubWidgetStoreMaps_Create = "Pages.HubWidgetStoreMaps.Create";
+        public const string Pages_HubWidgetStoreMaps_Edit = "Pages.HubWidgetStoreMaps.Edit";
+        public const string Pages_HubWidgetStoreMaps_Delete = "Pages.HubWidgetStoreMaps.Delete";
+
+        public const string Pages_HubWidgetMaps = "Pages.HubWidgetMaps";
+        public const string Pages_HubWidgetMaps_Create = "Pages.HubWidgetMaps.Create";
+        public const string Pages_HubWidgetMaps_Edit = "Pages.HubWidgetMaps.Edit";
+        public const string Pages_HubWidgetMaps_Delete = "Pages.HubWidgetMaps.Delete";
+
+        public const string Pages_MasterWidgets = "Pages.MasterWidgets";
+        public const string Pages_MasterWidgets_Create = "Pages.MasterWidgets.Create";
+        public const string Pages_MasterWidgets_Edit = "Pages.MasterWidgets.Edit";
+        public const string Pages_MasterWidgets_Delete = "Pages.MasterWidgets.Delete";
+
+        public const string Pages_TaskWorkItems = "Pages.TaskWorkItems";
+        public const string Pages_TaskWorkItems_Create = "Pages.TaskWorkItems.Create";
+        public const string Pages_TaskWorkItems_Edit = "Pages.TaskWorkItems.Edit";
+        public const string Pages_TaskWorkItems_Delete = "Pages.TaskWorkItems.Delete";
+
+        public const string Pages_TaskTeams = "Pages.TaskTeams";
+        public const string Pages_TaskTeams_Create = "Pages.TaskTeams.Create";
+        public const string Pages_TaskTeams_Edit = "Pages.TaskTeams.Edit";
+        public const string Pages_TaskTeams_Delete = "Pages.TaskTeams.Delete";
+
         public const string Pages_JobTaskMaps = "Pages.JobTaskMaps";
         public const string Pages_JobTaskMaps_Create = "Pages.JobTaskMaps.Create";
         public const string Pages_JobTaskMaps_Edit = "Pages.JobTaskMaps.Edit";

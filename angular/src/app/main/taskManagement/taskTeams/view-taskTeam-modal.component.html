@@ -1,0 +1,87 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span>{{ l('Details') }}</span>
+                </h4>
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    (click)="close()"
+                    aria-label="Close"
+                    [disabled]="saving"
+                ></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('StartDate') }} :</h6>
+                        {{ item.taskTeam.startDate | luxonFormat : 'yyyy-LL-dd HH:mm:ss' }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('StartTime') }} :</h6>
+                        {{ item.taskTeam.startTime }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('EndTime') }} :</h6>
+                        {{ item.taskTeam.endTime }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('HourMinutes') }} :</h6>
+                        {{ item.taskTeam.hourMinutes }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('EndDate') }} :</h6>
+                        {{ item.taskTeam.endDate | luxonFormat : 'yyyy-LL-dd HH:mm:ss' }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('IsPrimary') }} :</h6>
+                        <div *ngIf="item.taskTeam.isPrimary" class="text-left">
+                            <i class="fa fa-check-circle text-success" title="True"></i>
+                        </div>
+                        <div *ngIf="!item.taskTeam.isPrimary" class="text-left">
+                            <i class="fa fa-times-circle" title="False"></i>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('EstimatedHour') }} :</h6>
+                        {{ item.taskTeam.estimatedHour }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{ l('SubTaskTitle') }} :</h6>
+                        {{ item.taskTeam.subTaskTitle }}
+                    </div>
+
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('TaskEvent') }}) {{ l('Name') }} :</h6>
+                        {{ item.taskEventName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('Employee') }}) {{ l('Name') }} :</h6>
+                        {{ item.employeeName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{ l('Contact') }}) {{ l('FullName') }} :</h6>
+                        {{ item.contactFullName }}
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button [disabled]="saving" type="button" class="btn btn-primary blue" (click)="close()">
+                    {{ l('Close') }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

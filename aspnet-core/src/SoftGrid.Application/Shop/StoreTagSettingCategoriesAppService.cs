@@ -15,6 +15,10 @@ using Abp.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Abp.UI;
 using SoftGrid.Storage;
+using System.Drawing;
+using System.IO;
+using SoftGrid.LookupData;
+using SoftGrid.LookupData.Enums;
 
 namespace SoftGrid.Shop
 {
@@ -23,12 +27,19 @@ namespace SoftGrid.Shop
     {
         private readonly IRepository<StoreTagSettingCategory, long> _storeTagSettingCategoryRepository;
         private readonly IStoreTagSettingCategoriesExcelExporter _storeTagSettingCategoriesExcelExporter;
+        private readonly IBinaryObjectManager _binaryObjectManager;
+        private readonly ITempFileCacheManager _tempFileCacheManager;
+        private readonly IRepository<MediaLibrary, long> _lookup_mediaLibraryRepository;
 
-        public StoreTagSettingCategoriesAppService(IRepository<StoreTagSettingCategory, long> storeTagSettingCategoryRepository, IStoreTagSettingCategoriesExcelExporter storeTagSettingCategoriesExcelExporter)
+        public StoreTagSettingCategoriesAppService(IRepository<StoreTagSettingCategory, long> storeTagSettingCategoryRepository, 
+            IStoreTagSettingCategoriesExcelExporter storeTagSettingCategoriesExcelExporter, IBinaryObjectManager binaryObjectManager,
+            ITempFileCacheManager tempFileCacheManager, IRepository<MediaLibrary, long> lookup_mediaLibraryRepository)
         {
             _storeTagSettingCategoryRepository = storeTagSettingCategoryRepository;
             _storeTagSettingCategoriesExcelExporter = storeTagSettingCategoriesExcelExporter;
-
+            _binaryObjectManager = binaryObjectManager;
+            _tempFileCacheManager = tempFileCacheManager;
+            _lookup_mediaLibraryRepository = lookup_mediaLibraryRepository;
         }
 
         public async Task<PagedResultDto<GetStoreTagSettingCategoryForViewDto>> GetAll(GetAllStoreTagSettingCategoriesInput input)
@@ -72,6 +83,10 @@ namespace SoftGrid.Shop
                         Id = o.Id,
                     }
                 };
+                if (o.ImageId != Guid.Empty)
+                {
+                    res.Picture = await _binaryObjectManager.GetStorePictureUrlAsync((Guid)o.ImageId, ".png");
+                }
 
                 results.Add(res);
             }
@@ -104,6 +119,10 @@ namespace SoftGrid.Shop
 
         public async Task CreateOrEdit(CreateOrEditStoreTagSettingCategoryDto input)
         {
+            if (input.FileToken != null)
+            {
+                await SavePhoto(input);
+            }
             if (input.Id == null)
             {
                 await Create(input);
@@ -115,7 +134,7 @@ namespace SoftGrid.Shop
         }
 
         [AbpAuthorize(AppPermissions.Pages_StoreTagSettingCategories_Create)]
-        protected virtual async Task Create(CreateOrEditStoreTagSettingCategoryDto input)
+        protected virtual async Task Create(CreateOrEditStoreTagSettingCategoryDto input) 
         {
             var storeTagSettingCategory = ObjectMapper.Map<StoreTagSettingCategory>(input);
 
@@ -166,6 +185,39 @@ namespace SoftGrid.Shop
             var storeTagSettingCategoryListDtos = await query.ToListAsync();
 
             return _storeTagSettingCategoriesExcelExporter.ExportToFile(storeTagSettingCategoryListDtos);
+        }
+
+        private async Task<CreateOrEditStoreTagSettingCategoryDto> SavePhoto(CreateOrEditStoreTagSettingCategoryDto input)
+        {
+            CreateOrEditStoreTagSettingCategoryDto tagSettingsCategoryDto = input;
+
+            byte[] byteArray;
+
+            var imageBytes = _tempFileCacheManager.GetFile(input.FileToken);
+            if (imageBytes == null)
+            {
+                throw new UserFriendlyException("There is no such image file with the token: " + input.FileToken);
+            }
+
+            using (var bmpImage = new Bitmap(new MemoryStream(imageBytes)))
+            {
+                using (var stream = new MemoryStream())
+                {
+                    byteArray = stream.ToArray();
+                }
+            }
+            byteArray = imageBytes;
+
+            //if (byteArray.Length > MaxProfilPictureBytes)
+            //{
+            //    throw new UserFriendlyException(L("ResizedProfilePicture_Warn_SizeLimit", AppConsts.ResizedMaxProfilPictureBytesUserFriendlyValue));
+            //}
+
+            var tagSettingsCategoryFile = new BinaryObject(AbpSession.TenantId, byteArray);
+            await _binaryObjectManager.SaveAsync(tagSettingsCategoryFile);
+            tagSettingsCategoryDto.ImageId = tagSettingsCategoryFile.Id;
+            return tagSettingsCategoryDto;
+
         }
 
     }

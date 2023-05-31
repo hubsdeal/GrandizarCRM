@@ -1,94 +1,84 @@
-﻿<div
-    bsModal
-    #createOrEditModal="bs-modal"
-    class="modal fade"
-    tabindex="-1"
-    role="dialog"
-    aria-labelledby="createOrEditModal"
-    aria-hidden="true"
-    [config]="{ backdrop: 'static' }"
->
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{ backdrop: 'static' }">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <form
-                *ngIf="active"
-                #storeTagSettingCategoryForm="ngForm"
-                novalidate
-                (ngSubmit)="save()"
-                autocomplete="off"
-            >
+            <form *ngIf="active" #storeTagSettingCategoryForm="ngForm" novalidate (ngSubmit)="save()"
+                autocomplete="off">
                 <div class="modal-header">
                     <h4 class="modal-title">
-                        <span *ngIf="storeTagSettingCategory.id">{{ l('EditStoreTagSettingCategory') }}</span>
-                        <span *ngIf="!storeTagSettingCategory.id">{{ l('CreateNewStoreTagSettingCategory') }}</span>
+                        <span *ngIf="storeTagSettingCategory.id">{{ l('Edit Store Tag Setting Category') }}</span>
+                        <span *ngIf="!storeTagSettingCategory.id">{{ l('Create New Store Tag Setting Category')
+                            }}</span>
                     </h4>
 
-                    <button
-                        type="button"
-                        class="btn-close"
-                        (click)="close()"
-                        aria-label="Close"
-                        [disabled]="saving"
-                    ></button>
+                    <button type="button" class="btn-close" (click)="close()" aria-label="Close"
+                        [disabled]="saving"></button>
                 </div>
                 <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <!--begin::Input group-->
+                            <div class="mb-7">
+                                <div class="image-input image-input-outline"
+                                    style="background-image: url(assets/common/images/c_logo.png)">
+                                    <div *ngIf="imageSrc" class="image-input-wrapper w-125px h-125px"
+                                        [style.background-image]="'url(' + imageSrc + ')'">
+                                    </div>
+                                    <label
+                                        class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+                                        data-kt-image-input-action="change" data-bs-toggle="tooltip"
+                                        aria-label="Change avatar" data-bs-original-title="Change avatar"
+                                        data-kt-initialized="1">
+                                        <i class="bi bi-pencil-fill fs-7"></i>
+                                        <input type="file" name="profile_avatar" id="customFile" ng2FileSelect
+                                            [uploader]="uploader" (change)="fileChangeEvent($event)"
+                                            accept=".png, .jpg, .jpeg">
+                                        <input type="hidden" name="avatar_remove">
+                                    </label>
+                                </div>
+                                <div class="form-text">Allowed file types: png, jpg, jpeg.
+                                </div>
+                            </div>
+                            <!--end::Input group-->
+                        </div>
+                    </div>
                     <div class="my-3">
-                        <label class="form-label" for="StoreTagSettingCategory_Name">{{ l('Name') }} *</label>
-                        <input
-                            type="text"
-                            #StoreTagSettingCategory_Name="ngModel"
-                            id="StoreTagSettingCategory_Name"
-                            class="form-control"
-                            [(ngModel)]="storeTagSettingCategory.name"
-                            name="Name"
-                            minlength="1"
-                            maxlength="128"
-                            required
-                        />
+                        <label class="form-label" for="StoreTagSettingCategory_Name">{{ l('Category Name') }} *</label>
+                        <input type="text" #StoreTagSettingCategory_Name="ngModel" id="StoreTagSettingCategory_Name"
+                            class="form-control" [(ngModel)]="storeTagSettingCategory.name" name="Name" minlength="1"
+                            maxlength="128" required />
                         <validation-messages [formCtrl]="StoreTagSettingCategory_Name"></validation-messages>
                     </div>
 
-                    <div class="my-3">
+                    <!-- <div class="my-3">
                         <label class="form-label" for="StoreTagSettingCategory_ImageId">{{ l('ImageId') }}</label>
-                        <input
-                            type="text"
-                            #StoreTagSettingCategory_ImageId="ngModel"
-                            id="StoreTagSettingCategory_ImageId"
-                            class="form-control"
-                            [(ngModel)]="storeTagSettingCategory.imageId"
-                            name="ImageId"
-                        />
+                        <input type="text" #StoreTagSettingCategory_ImageId="ngModel"
+                            id="StoreTagSettingCategory_ImageId" class="form-control"
+                            [(ngModel)]="storeTagSettingCategory.imageId" name="ImageId" />
                         <validation-messages [formCtrl]="StoreTagSettingCategory_ImageId"></validation-messages>
-                    </div>
+                    </div> -->
 
                     <div class="my-3">
                         <label class="form-label" for="StoreTagSettingCategory_Description">
                             {{ l('Description') }}
                         </label>
-                        <input
-                            type="text"
-                            #StoreTagSettingCategory_Description="ngModel"
-                            id="StoreTagSettingCategory_Description"
-                            class="form-control"
-                            [(ngModel)]="storeTagSettingCategory.description"
-                            name="Description"
-                            minlength="1"
-                            maxlength="2048"
-                        />
-                        <validation-messages [formCtrl]="StoreTagSettingCategory_Description"></validation-messages>
+                        <textarea id="StoreTagSettingCategory_Description" class="form-control"
+                            [(ngModel)]="storeTagSettingCategory.description" name="Description" minlength="1"
+                            maxlength="2048" cols="30" rows="10"></textarea>
+                        <!-- <input type="text" #StoreTagSettingCategory_Description="ngModel"
+                            id="StoreTagSettingCategory_Description" class="form-control"
+                            [(ngModel)]="storeTagSettingCategory.description" name="Description" minlength="1"
+                            maxlength="2048" />
+                        <validation-messages [formCtrl]="StoreTagSettingCategory_Description"></validation-messages> -->
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
                         {{ l('Cancel') }}
                     </button>
-                    <button
-                        type="submit"
-                        class="btn btn-primary blue"
-                        [disabled]="!storeTagSettingCategoryForm.form.valid"
-                        [buttonBusy]="saving"
-                        [busyText]="l('SavingWithThreeDot')"
-                    >
+                    <button type="submit" class="btn btn-primary blue"
+                        [disabled]="!storeTagSettingCategoryForm.form.valid" [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')">
                         <i class="fa fa-save"></i>
                         <span>{{ l('Save') }}</span>
                     </button>

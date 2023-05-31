@@ -1,4 +1,6 @@
-﻿using SoftGrid.CMS.Dtos;
+﻿using SoftGrid.WidgetManagement.Dtos;
+using SoftGrid.WidgetManagement;
+using SoftGrid.CMS.Dtos;
 using SoftGrid.CMS;
 using SoftGrid.DiscountManagement.Dtos;
 using SoftGrid.DiscountManagement;
@@ -68,6 +70,30 @@ namespace SoftGrid
     {
         public static void CreateMappings(IMapperConfigurationExpression configuration)
         {
+            configuration.CreateMap<CreateOrEditStoreThemeMapDto, StoreThemeMap>().ReverseMap();
+            configuration.CreateMap<StoreThemeMapDto, StoreThemeMap>().ReverseMap();
+            configuration.CreateMap<CreateOrEditStoreMasterThemeDto, StoreMasterTheme>().ReverseMap();
+            configuration.CreateMap<StoreMasterThemeDto, StoreMasterTheme>().ReverseMap();
+            configuration.CreateMap<CreateOrEditStoreWidgetContentMapDto, StoreWidgetContentMap>().ReverseMap();
+            configuration.CreateMap<StoreWidgetContentMapDto, StoreWidgetContentMap>().ReverseMap();
+            configuration.CreateMap<CreateOrEditStoreWidgetProductMapDto, StoreWidgetProductMap>().ReverseMap();
+            configuration.CreateMap<StoreWidgetProductMapDto, StoreWidgetProductMap>().ReverseMap();
+            configuration.CreateMap<CreateOrEditStoreWidgetMapDto, StoreWidgetMap>().ReverseMap();
+            configuration.CreateMap<StoreWidgetMapDto, StoreWidgetMap>().ReverseMap();
+            configuration.CreateMap<CreateOrEditHubWidgetContentMapDto, HubWidgetContentMap>().ReverseMap();
+            configuration.CreateMap<HubWidgetContentMapDto, HubWidgetContentMap>().ReverseMap();
+            configuration.CreateMap<CreateOrEditHubWidgetProductMapDto, HubWidgetProductMap>().ReverseMap();
+            configuration.CreateMap<HubWidgetProductMapDto, HubWidgetProductMap>().ReverseMap();
+            configuration.CreateMap<CreateOrEditHubWidgetStoreMapDto, HubWidgetStoreMap>().ReverseMap();
+            configuration.CreateMap<HubWidgetStoreMapDto, HubWidgetStoreMap>().ReverseMap();
+            configuration.CreateMap<CreateOrEditHubWidgetMapDto, HubWidgetMap>().ReverseMap();
+            configuration.CreateMap<HubWidgetMapDto, HubWidgetMap>().ReverseMap();
+            configuration.CreateMap<CreateOrEditMasterWidgetDto, MasterWidget>().ReverseMap();
+            configuration.CreateMap<MasterWidgetDto, MasterWidget>().ReverseMap();
+            configuration.CreateMap<CreateOrEditTaskWorkItemDto, TaskWorkItem>().ReverseMap();
+            configuration.CreateMap<TaskWorkItemDto, TaskWorkItem>().ReverseMap();
+            configuration.CreateMap<CreateOrEditTaskTeamDto, TaskTeam>().ReverseMap();
+            configuration.CreateMap<TaskTeamDto, TaskTeam>().ReverseMap();
             configuration.CreateMap<CreateOrEditJobTaskMapDto, JobTaskMap>().ReverseMap();
             configuration.CreateMap<JobTaskMapDto, JobTaskMap>().ReverseMap();
             configuration.CreateMap<CreateOrEditProductTaskMapDto, ProductTaskMap>().ReverseMap();

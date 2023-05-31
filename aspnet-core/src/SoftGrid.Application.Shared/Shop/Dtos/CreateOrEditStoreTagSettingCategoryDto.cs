@@ -16,5 +16,7 @@ namespace SoftGrid.Shop.Dtos
         [StringLength(StoreTagSettingCategoryConsts.MaxDescriptionLength, MinimumLength = StoreTagSettingCategoryConsts.MinDescriptionLength)]
         public string Description { get; set; }
 
+        public string FileToken { get; set; }
+
     }
 }

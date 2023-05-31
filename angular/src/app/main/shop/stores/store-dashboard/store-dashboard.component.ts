@@ -13,6 +13,7 @@ import { CreateOrEditStoreMediaModalComponent } from '../../storeMedias/create-o
 import { DomSanitizer } from '@angular/platform-browser';
 import { GeocodingService } from '@app/shared/chat-gpt-response-modal/services/chat-gpt-lat-long.service';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { StoreMasterTagSettingsServiceProxy } from '@shared/service-proxies/service-proxies';
 
 @Component({
   selector: 'app-store-dashboard',
@@ -29,7 +30,7 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
   bindingData: any;
   localOrVirtualStoreOptions: SelectItem[];
   storePublishedOptions: SelectItem[];
-  store: CreateOrEditStoreDto = new CreateOrEditStoreDto();
+  store: CreateOrEditStoreDto;
 
   tags: string[] = [];
 
@@ -71,6 +72,9 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
   selectedCountry: any;
   selectedState: any;
 
+  selectedStoreTagSettingCategory: any;
+  storeTagSettingCategoryOptions: any = []
+
   storeTags = [
     {
       id: "1",
@@ -86,6 +90,7 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
       value: "Customer Group"
     }
   ];
+  storeTagSettingCategoryId:number;
 
   constructor(
     injector: Injector,
@@ -96,13 +101,11 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
     private _stateServiceProxy: StatesServiceProxy,
     private _sanitizer: DomSanitizer,
     private geocodingService: GeocodingService,
+    private _storeMasterTagSettingsServiceProxy: StoreMasterTagSettingsServiceProxy,
     private dialog: MatDialog
   ) {
     super(injector);
     this.loadAllDropdown();
-    this.store.isLocalOrOnlineStore = true;
-    this.localOrVirtualStoreOptions = [{ label: 'Local Store', value: false }, { label: 'Virtual Store', value: true }];
-    this.storePublishedOptions = [{ label: 'Draft', value: false }, { label: 'Published', value: true }];
   }
 
   ngOnInit(): void {
@@ -110,6 +113,8 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
     this.storeId = parseInt(storeId);
     this.getStoreDetails(this.storeId);
     this.initFileUploader();
+    this.localOrVirtualStoreOptions = [{ label: 'Local Store', value: false }, { label: 'Virtual Store', value: true }];
+    this.storePublishedOptions = [{ label: 'Draft', value: false }, { label: 'Published', value: true }];
   }
   ngAfterViewInit() {
 
@@ -130,6 +135,9 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
     // this._storeServiceProxy.getAllTaxRateForTableDropdown().subscribe(result => {
     //   this.taxOptions = result;
     // });
+    this._storeMasterTagSettingsServiceProxy.getAllStoreTagSettingCategoryForLookupTable('', '', 0, 1000).subscribe(result => {
+      this.storeTagSettingCategoryOptions = result.items;
+    });
   }
 
   onCountryChange(event: any) {
@@ -177,11 +185,15 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
       this.numberOfRatings = result.numberOfRatings;
       this.ratingScore = result.ratingScore;
       this.primaryCategoryName = result.primaryCategoryName;
+      this.storeTagSettingCategoryId = result.store.storeTagSettingCategoryId;
       if (result.picture != null) {
         this.imageSrc = result.picture;
       }
+      console.log(result)
       this.getStoreMedia();
-    })
+    });
+    // console.log("db"+this.storeTagSettingCategoryId);
+    // console.log("db"+this.storeId);
   }
 
   checkUrlAvailability(id: number, url: string) {
@@ -352,6 +364,12 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
   drop(event: CdkDragDrop<string[]>) {
     console.log(this.storeTags, event.previousIndex, event.currentIndex);
     moveItemInArray(this.storeTags, event.previousIndex, event.currentIndex);
+  }
+
+  onStoreTagSettingCategoryClick(event: any) {
+    if (event.value != null) {
+      this.store.storeTagSettingCategoryId = event.value.id;
+    }
   }
 
 }

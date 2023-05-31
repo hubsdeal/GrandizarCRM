@@ -1,7 +1,7 @@
 ﻿import { AppConsts } from '@shared/AppConsts';
-import { Component, Injector, ViewEncapsulation, ViewChild } from '@angular/core';
+import { Component, Injector, ViewEncapsulation, ViewChild, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { StoreTagsServiceProxy, StoreTagDto } from '@shared/service-proxies/service-proxies';
+import { StoreTagsServiceProxy, StoreTagDto, MasterTagCategoryForDashboardViewDto } from '@shared/service-proxies/service-proxies';
 import { NotifyService } from 'abp-ng2-module';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { TokenAuthServiceProxy } from '@shared/service-proxies/service-proxies';
@@ -17,13 +17,15 @@ import { filter as _filter } from 'lodash-es';
 import { DateTime } from 'luxon';
 
 import { DateTimeService } from '@app/shared/common/timing/date-time.service';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
+    selector: 'appStoreTags',
     templateUrl: './storeTags.component.html',
     encapsulation: ViewEncapsulation.None,
     animations: [appModuleAnimation()],
 })
-export class StoreTagsComponent extends AppComponentBase {
+export class StoreTagsComponent extends AppComponentBase implements OnInit {
     @ViewChild('createOrEditStoreTagModal', { static: true })
     createOrEditStoreTagModal: CreateOrEditStoreTagModalComponent;
     @ViewChild('viewStoreTagModal', { static: true }) viewStoreTagModal: ViewStoreTagModalComponent;
@@ -43,6 +45,28 @@ export class StoreTagsComponent extends AppComponentBase {
     storeNameFilter = '';
     masterTagCategoryNameFilter = '';
     masterTagNameFilter = '';
+
+    @Input() storeId: number;
+    @Input() storeTagSettingCategoryId: number;
+
+    allStoreTags: MasterTagCategoryForDashboardViewDto[] = [];
+    showMoreAndShowLess = false;
+
+    storeTags = [
+        {
+            id: "1",
+            value: "Sales Status"
+        },
+
+        {
+            id: "2",
+            value: "Delivery Types"
+        },
+        {
+            id: "3",
+            value: "Customer Group"
+        }
+    ];
 
     constructor(
         injector: Injector,
@@ -138,4 +162,21 @@ export class StoreTagsComponent extends AppComponentBase {
 
         this.getStoreTags();
     }
+    getALlStoreTags() {
+        this._storeTagsServiceProxy.getStoreTagsByTagSetting(this.storeTagSettingCategoryId, this.storeId).subscribe((result) => {
+            this.allStoreTags = result;
+        });
+    }
+
+    drop(event: CdkDragDrop<string[]>) {
+        console.log(this.allStoreTags, event.previousIndex, event.currentIndex);
+        moveItemInArray(this.allStoreTags, event.previousIndex, event.currentIndex);
+    }
+
+    ngOnInit(): void {
+        this.getALlStoreTags();
+        console.log(this.storeId);
+        console.log(this.storeTagSettingCategoryId);
+    }
+
 }

@@ -1,4 +1,5 @@
-﻿using SoftGrid.CMS;
+﻿using SoftGrid.WidgetManagement;
+using SoftGrid.CMS;
 using SoftGrid.DiscountManagement;
 using SoftGrid.OrderManagement;
 using SoftGrid.SalesLeadManagement;
@@ -26,6 +27,30 @@ namespace SoftGrid.EntityFrameworkCore
 {
     public class SoftGridDbContext : AbpZeroDbContext<Tenant, Role, User, SoftGridDbContext>, IAbpPersistedGrantDbContext
     {
+        public virtual DbSet<StoreThemeMap> StoreThemeMaps { get; set; }
+
+        public virtual DbSet<StoreMasterTheme> StoreMasterThemes { get; set; }
+
+        public virtual DbSet<StoreWidgetContentMap> StoreWidgetContentMaps { get; set; }
+
+        public virtual DbSet<StoreWidgetProductMap> StoreWidgetProductMaps { get; set; }
+
+        public virtual DbSet<StoreWidgetMap> StoreWidgetMaps { get; set; }
+
+        public virtual DbSet<HubWidgetContentMap> HubWidgetContentMaps { get; set; }
+
+        public virtual DbSet<HubWidgetProductMap> HubWidgetProductMaps { get; set; }
+
+        public virtual DbSet<HubWidgetStoreMap> HubWidgetStoreMaps { get; set; }
+
+        public virtual DbSet<HubWidgetMap> HubWidgetMaps { get; set; }
+
+        public virtual DbSet<MasterWidget> MasterWidgets { get; set; }
+
+        public virtual DbSet<TaskWorkItem> TaskWorkItems { get; set; }
+
+        public virtual DbSet<TaskTeam> TaskTeams { get; set; }
+
         public virtual DbSet<JobTaskMap> JobTaskMaps { get; set; }
 
         public virtual DbSet<ProductTaskMap> ProductTaskMaps { get; set; }
@@ -356,10 +381,58 @@ namespace SoftGrid.EntityFrameworkCore
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<JobTaskMap>(j =>
+            modelBuilder.Entity<StoreThemeMap>(s =>
             {
-                j.HasIndex(e => new { e.TenantId });
+                s.HasIndex(e => new { e.TenantId });
             });
+            modelBuilder.Entity<StoreMasterTheme>(s =>
+                       {
+                           s.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<StoreWidgetContentMap>(s =>
+                       {
+                           s.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<StoreWidgetProductMap>(s =>
+                       {
+                           s.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<StoreWidgetMap>(s =>
+                       {
+                           s.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<HubWidgetContentMap>(h =>
+                       {
+                           h.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<HubWidgetProductMap>(h =>
+                       {
+                           h.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<HubWidgetStoreMap>(h =>
+                       {
+                           h.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<HubWidgetMap>(h =>
+                       {
+                           h.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<MasterWidget>(m =>
+                       {
+                           m.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<TaskWorkItem>(t =>
+                       {
+                           t.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<TaskTeam>(t =>
+                       {
+                           t.HasIndex(e => new { e.TenantId });
+                       });
+            modelBuilder.Entity<JobTaskMap>(j =>
+                       {
+                           j.HasIndex(e => new { e.TenantId });
+                       });
             modelBuilder.Entity<ProductTaskMap>(p =>
                        {
                            p.HasIndex(e => new { e.TenantId });

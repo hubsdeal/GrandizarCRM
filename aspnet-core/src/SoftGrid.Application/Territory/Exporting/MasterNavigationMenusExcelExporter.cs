@@ -48,7 +48,7 @@ namespace SoftGrid.Territory.Exporting
                         _ => _.MasterNavigationMenu.HasParentMenu,
                         _ => _.MasterNavigationMenu.ParentMenuId,
                         _ => _.MasterNavigationMenu.IconLink,
-                        _ => _.MasterNavigationMenu.MediaLink
+                        _ => _.MasterNavigationMenu.ContentLink
                         );
 
                 });

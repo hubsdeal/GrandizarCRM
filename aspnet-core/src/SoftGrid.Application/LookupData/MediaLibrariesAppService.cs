@@ -101,7 +101,7 @@ namespace SoftGrid.LookupData
             {
                 var res = new GetMediaLibraryForViewDto()
                 {
-                    MediaLibrary = new MediaLibraryDto
+                    MediaLibrary = new MediaLibraryDto 
                     {
 
                         Name = o.Name,
