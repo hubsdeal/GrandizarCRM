@@ -1,7 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-using SoftGrid.SeedData.StoredProc;
-
 
 namespace SoftGrid.Migrations
 {
@@ -29,7 +27,6 @@ namespace SoftGrid.Migrations
                 principalTable: "Hubs",
                 principalColumn: "Id");
 
-            SP_Seed.Up(migrationBuilder);
         }
 
         /// <inheritdoc />
