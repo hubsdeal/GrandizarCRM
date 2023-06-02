@@ -265,6 +265,8 @@ bs-days-calendar-view {
 .tag_block_custom {
     width: 100%;
 
+
+
     .row>* {
         padding: 5px;
     }
@@ -285,7 +287,8 @@ bs-days-calendar-view {
         margin-bottom: 10px;
         font-size: 11px;
         font-weight: 400;
-        padding: 3px 14px 5px 13px !important;
+        padding: 5px 14px 6px 14px !important;
+        border: 1px solid #cee5f9 !important;
     }
 
     .btn-outline-brand {
@@ -421,6 +424,11 @@ bs-days-calendar-view {
 
 //p-editor
 ::ng-deep {
+    .p-progress-spinner {
+        margin-top: -1px;
+        margin-left: -4px;
+    }
+
     .p-editor-container {
         border-radius: 8px;
     }

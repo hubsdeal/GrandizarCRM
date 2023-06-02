@@ -43,9 +43,15 @@
                             <div style="display: inline-block;" class="row w-100 pl-2">
                                 <span *ngFor="let tags of item.masterTags">
                                     <button type="button" class="btn btn-outline-brand btn-sm"
-                                        [class.active]="tags.isSelected">
-                                        <i *ngIf="!tags.isSelected" class="fas fa-plus mr-1"></i>
-                                        <i *ngIf="tags.isSelected" class="fas fa-check-circle mr-1"></i>
+                                        [class.active]="tags.isSelected" (click)="onTagSelect(tags)">
+                                        <p-progressSpinner
+                                            *ngIf="loader_anim_show && (tags.id==loaderSelectedMasterTagId)"
+                                            [style]="{width: '19px', height: '19px', position:'absolute'}"
+                                            styleClass="custom-spinner" strokeWidth="8" fill="#EEEEEE"
+                                            animationDuration=".5s">
+                                        </p-progressSpinner>
+                                        <i *ngIf="!tags.isSelected" class="fas fa-plus mr-2"></i>
+                                        <i *ngIf="tags.isSelected" class="fas fa-check-circle mr-2"></i>
                                         {{tags.name}}
                                     </button>
                                 </span>
