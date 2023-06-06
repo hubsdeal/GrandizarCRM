@@ -6409,6 +6409,9 @@ namespace SoftGrid.Migrations
                     b.Property<long?>("ParentCategoryId")
                         .HasColumnType("bigint");
 
+                    b.Property<long?>("ProductCategoryId")
+                        .HasColumnType("bigint");
+
                     b.Property<bool>("ProductOrService")
                         .HasColumnType("bit");
 
@@ -6422,6 +6425,8 @@ namespace SoftGrid.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("MediaLibraryId");
+
+                    b.HasIndex("ProductCategoryId");
 
                     b.HasIndex("TenantId");
 
@@ -11893,7 +11898,13 @@ namespace SoftGrid.Migrations
                         .WithMany()
                         .HasForeignKey("MediaLibraryId");
 
+                    b.HasOne("SoftGrid.Shop.ProductCategory", "ProductCategoryFk")
+                        .WithMany()
+                        .HasForeignKey("ProductCategoryId");
+
                     b.Navigation("MediaLibraryFk");
+
+                    b.Navigation("ProductCategoryFk");
                 });
 
             modelBuilder.Entity("SoftGrid.Shop.ProductCategoryMap", b =>

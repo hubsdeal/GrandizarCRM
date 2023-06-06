@@ -1,7 +1,7 @@
 ﻿import { AppConsts } from '@shared/AppConsts';
-import { Component, Injector, ViewEncapsulation, ViewChild } from '@angular/core';
+import { Component, Injector, ViewEncapsulation, ViewChild, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ProductTagsServiceProxy, ProductTagDto } from '@shared/service-proxies/service-proxies';
+import { ProductTagsServiceProxy, ProductTagDto, MasterTagCategoryForDashboardViewDto, MasterTagForDashboardViewDto, CreateOrEditProductTagDto } from '@shared/service-proxies/service-proxies';
 import { NotifyService } from 'abp-ng2-module';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { TokenAuthServiceProxy } from '@shared/service-proxies/service-proxies';
@@ -17,8 +17,10 @@ import { filter as _filter } from 'lodash-es';
 import { DateTime } from 'luxon';
 
 import { DateTimeService } from '@app/shared/common/timing/date-time.service';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
+    selector: 'app-productTags',
     templateUrl: './productTags.component.html',
     encapsulation: ViewEncapsulation.None,
     animations: [appModuleAnimation()],
@@ -43,6 +45,15 @@ export class ProductTagsComponent extends AppComponentBase {
     productNameFilter = '';
     masterTagCategoryNameFilter = '';
     masterTagNameFilter = '';
+
+    @Input() productId: number;
+    @Input() productCategoryId: number;
+
+    allProductTags: MasterTagCategoryForDashboardViewDto[] = [];
+    showMoreAndShowLess = false;
+
+    loader_anim_show: boolean = false;
+    loaderSelectedMasterTagId: number;
 
     constructor(
         injector: Injector,
@@ -137,5 +148,40 @@ export class ProductTagsComponent extends AppComponentBase {
         this.masterTagNameFilter = '';
 
         this.getProductTags();
+    }
+
+    getALlProductTags() {
+        this._productTagsServiceProxy.getProductTagsByTagSetting(this.productCategoryId, this.productId).subscribe((result) => {
+            debugger;
+            this.allProductTags = result;
+            this.loader_anim_show = false;
+        });
+    }
+
+    onTagSelect(event: MasterTagForDashboardViewDto) {
+        this.loader_anim_show = true;
+        this.loaderSelectedMasterTagId = event.id;
+        if (event.isSelected) {
+            this._productTagsServiceProxy.deleteByProductAndTag(this.productId, event.id).subscribe((result) => {
+                this.getALlProductTags();
+            });
+        } else {
+            var tag = new CreateOrEditProductTagDto();
+            tag.productId = this.productId;
+            tag.masterTagCategoryId = event.masterTagCategoryId;
+            tag.masterTagId = event.id;
+            this._productTagsServiceProxy.createOrEdit(tag).subscribe(result => {
+                this.getALlProductTags();
+            });
+        }
+    }
+
+    drop(event: CdkDragDrop<string[]>) {
+        console.log(this.allProductTags, event.previousIndex, event.currentIndex);
+        moveItemInArray(this.allProductTags, event.previousIndex, event.currentIndex);
+    }
+
+    ngOnInit(): void {
+        this.getALlProductTags();
     }
 }

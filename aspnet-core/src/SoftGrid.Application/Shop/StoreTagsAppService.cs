@@ -22,7 +22,7 @@ using SoftGrid.Storage;
 using SoftGrid.LookupData.Dtos;
 
 namespace SoftGrid.Shop
-{
+{ 
     [AbpAuthorize(AppPermissions.Pages_StoreTags)]
     public class StoreTagsAppService : SoftGridAppServiceBase, IStoreTagsAppService
     {

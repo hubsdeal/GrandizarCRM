@@ -6,6 +6,8 @@ namespace SoftGrid.Shop.Enums
 {
     public enum AnswerType
     {
-        Text = 1
+        True_false = 1,
+        Multiple_choice = 2,
+        Write_The_Answer = 3
     }
 }

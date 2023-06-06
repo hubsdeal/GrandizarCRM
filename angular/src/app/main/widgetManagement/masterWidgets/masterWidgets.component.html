@@ -1,18 +1,15 @@
 ﻿<div [@routerTransition]>
-    <sub-header [title]="'MasterWidgets' | localize" [description]="'MasterWidgetsHeaderInfo' | localize">
+    <sub-header [title]="'Master Widgets' | localize" [description]="">
         <div role="actions">
-            <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1">
+            <!-- <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1">
                 <i class="fa fa-file-excel"></i>
                 {{ l('ExportToExcel') }}
-            </button>
+            </button> -->
 
-            <button
-                *ngIf="isGranted('Pages.MasterWidgets.Create')"
-                (click)="createMasterWidget()"
-                class="btn btn-primary blue"
-            >
+            <button *ngIf="isGranted('Pages.MasterWidgets.Create')" (click)="createMasterWidget()"
+                class="btn btn-primary blue">
                 <i class="fa fa-plus"></i>
-                {{ l('CreateNewMasterWidget') }}
+                {{ l('Master Widget') }}
             </button>
         </div>
     </sub-header>
@@ -26,15 +23,9 @@
                             <div class="col-xl-12">
                                 <div class="my-3">
                                     <div class="input-group mb-3">
-                                        <input
-                                            [(ngModel)]="filterText"
-                                            (ngModelChange)="getMasterWidgets()"
-                                            name="filterText"
-                                            autoFocus
-                                            type="text"
-                                            class="form-control"
-                                            [placeholder]="l('SearchWithThreeDot')"
-                                        />
+                                        <input [(ngModel)]="filterText" (ngModelChange)="getMasterWidgets()"
+                                            name="filterText" autoFocus type="text" class="form-control"
+                                            [placeholder]="l('SearchWithThreeDot')" />
                                         <button class="btn btn-primary" type="submit" (click)="getMasterWidgets()">
                                             <i class="flaticon-search-1"></i>
                                         </button>
@@ -48,52 +39,31 @@
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="NameFilter">{{ l('Name') }}</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="NameFilter"
-                                        name="nameFilter"
-                                        [(ngModel)]="nameFilter"
-                                        (ngModelChange)="getMasterWidgets()"
-                                    />
+                                    <input type="text" class="form-control" id="NameFilter" name="nameFilter"
+                                        [(ngModel)]="nameFilter" (ngModelChange)="getMasterWidgets()" />
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="DescriptionFilter">{{ l('Description') }}</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="DescriptionFilter"
-                                        name="descriptionFilter"
-                                        [(ngModel)]="descriptionFilter"
-                                        (ngModelChange)="getMasterWidgets()"
-                                    />
+                                    <input type="text" class="form-control" id="DescriptionFilter"
+                                        name="descriptionFilter" [(ngModel)]="descriptionFilter"
+                                        (ngModelChange)="getMasterWidgets()" />
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="DesignCodeFilter">{{ l('DesignCode') }}</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="DesignCodeFilter"
-                                        name="designCodeFilter"
-                                        [(ngModel)]="designCodeFilter"
-                                        (ngModelChange)="getMasterWidgets()"
-                                    />
+                                    <input type="text" class="form-control" id="DesignCodeFilter"
+                                        name="designCodeFilter" [(ngModel)]="designCodeFilter"
+                                        (ngModelChange)="getMasterWidgets()" />
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="PublishFilterSelect">{{ l('Publish') }}</label>
-                                    <select
-                                        class="form-select"
-                                        name="PublishFilter"
-                                        id="PublishFilterSelect"
-                                        [(ngModel)]="publishFilter"
-                                        (ngModelChange)="getMasterWidgets()"
-                                    >
+                                    <select class="form-select" name="PublishFilter" id="PublishFilterSelect"
+                                        [(ngModel)]="publishFilter" (ngModelChange)="getMasterWidgets()">
                                         <option value="-1">{{ l('All') }}</option>
                                         <option value="0">{{ l('False') }}</option>
                                         <option value="1">{{ l('True') }}</option>
@@ -106,23 +76,14 @@
                                         {{ l('MinMax') }} {{ l('InternalDisplayNumber') }}
                                     </label>
                                     <div class="input-group">
-                                        <input
-                                            type="number"
-                                            class="form-control"
-                                            id="MinInternalDisplayNumberFilter"
+                                        <input type="number" class="form-control" id="MinInternalDisplayNumberFilter"
                                             [(ngModel)]="minInternalDisplayNumberFilter"
-                                            placeholder="{{ l('MinValue') }}"
-                                            name="minInternalDisplayNumberFilter"
-                                            (ngModelChange)="getMasterWidgets()"
-                                        />
-                                        <input
-                                            type="number"
-                                            class="form-control"
+                                            placeholder="{{ l('MinValue') }}" name="minInternalDisplayNumberFilter"
+                                            (ngModelChange)="getMasterWidgets()" />
+                                        <input type="number" class="form-control"
                                             [(ngModel)]="maxInternalDisplayNumberFilter"
-                                            placeholder="{{ l('MaxValue') }}"
-                                            name="maxInternalDisplayNumberFilter"
-                                            (ngModelChange)="getMasterWidgets()"
-                                        />
+                                            placeholder="{{ l('MaxValue') }}" name="maxInternalDisplayNumberFilter"
+                                            (ngModelChange)="getMasterWidgets()" />
                                     </div>
                                 </div>
                             </div>
@@ -131,41 +92,27 @@
                                     <label class="form-label" for="ThumbnailImageIdFilter">
                                         {{ l('ThumbnailImageId') }}
                                     </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="ThumbnailImageIdFilter"
-                                        name="thumbnailImageIdFilter"
-                                        [(ngModel)]="thumbnailImageIdFilter"
-                                    />
+                                    <input type="text" class="form-control" id="ThumbnailImageIdFilter"
+                                        name="thumbnailImageIdFilter" [(ngModel)]="thumbnailImageIdFilter" />
                                 </div>
                             </div>
 
                             <div class="col-md-12 mt-5">
-                                <button
-                                    (click)="resetFilters()"
-                                    class="btn btn-secondary btn-sm"
-                                    id="btn-reset-filters"
-                                >
+                                <button (click)="resetFilters()" class="btn btn-secondary btn-sm"
+                                    id="btn-reset-filters">
                                     Reset
                                 </button>
                             </div>
                         </div>
                         <div class="row my-4">
                             <div class="col-sm-12">
-                                <span
-                                    class="clickable-item text-muted"
-                                    *ngIf="!advancedFiltersAreShown"
-                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown"
-                                >
+                                <span class="clickable-item text-muted" *ngIf="!advancedFiltersAreShown"
+                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown">
                                     <i class="fa fa-angle-down"></i>
                                     {{ l('ShowAdvancedFilters') }}
                                 </span>
-                                <span
-                                    class="clickable-item text-muted"
-                                    *ngIf="advancedFiltersAreShown"
-                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown"
-                                >
+                                <span class="clickable-item text-muted" *ngIf="advancedFiltersAreShown"
+                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown">
                                     <i class="fa fa-angle-up"></i>
                                     {{ l('HideAdvancedFilters') }}
                                 </span>
@@ -177,62 +124,76 @@
                 <div class="row align-items-center">
                     <!--<Primeng-Datatable-Start>-->
                     <div class="primeng-datatable-container col-12" [busyIf]="primengTableHelper.isLoading">
-                        <p-table
-                            #dataTable
-                            (onLazyLoad)="getMasterWidgets($event)"
-                            [value]="primengTableHelper.records"
-                            rows="{{ primengTableHelper.defaultRecordsCountPerPage }}"
-                            [paginator]="false"
-                            [lazy]="true"
-                            [scrollable]="true"
-                            ScrollWidth="100%"
-                            [responsive]="primengTableHelper.isResponsive"
-                            [resizableColumns]="primengTableHelper.resizableColumns"
-                        >
+                        <p-table #dataTable (onLazyLoad)="getMasterWidgets($event)" [value]="primengTableHelper.records"
+                            rows="{{ primengTableHelper.defaultRecordsCountPerPage }}" [paginator]="false" [lazy]="true"
+                            [scrollable]="true" ScrollWidth="100%" [responsive]="primengTableHelper.isResponsive"
+                            [resizableColumns]="primengTableHelper.resizableColumns">
                             <ng-template pTemplate="header">
                                 <tr>
-                                    <th
-                                        style="width: 130px"
-                                        [hidden]="
-                                            !isGrantedAny('Pages.MasterWidgets.Edit', 'Pages.MasterWidgets.Delete')
-                                        "
-                                    >
-                                        {{ l('Actions') }}
+                                    
+                                    <th style="width: 150px">
+                                        {{ l('Widget Name') }}
                                     </th>
-                                    <th style="width: 150px" pSortableColumn="name">
-                                        {{ l('Name') }}
-                                        <p-sortIcon field="masterWidget.name"></p-sortIcon>
-                                    </th>
-                                    <th style="width: 150px" pSortableColumn="description">
+                                    <!-- <th style="width: 150px" pSortableColumn="description">
                                         {{ l('Description') }}
                                         <p-sortIcon field="masterWidget.description"></p-sortIcon>
+                                    </th> -->
+                                    <th style="width: 150px">
+                                        {{ l('Design Code') }}
                                     </th>
-                                    <th style="width: 150px" pSortableColumn="designCode">
-                                        {{ l('DesignCode') }}
-                                        <p-sortIcon field="masterWidget.designCode"></p-sortIcon>
-                                    </th>
-                                    <th style="width: 150px" pSortableColumn="publish">
+                                    <th style="width: 150px">
                                         {{ l('Publish') }}
-                                        <p-sortIcon field="masterWidget.publish"></p-sortIcon>
                                     </th>
-                                    <th style="width: 150px" pSortableColumn="internalDisplayNumber">
+                                    <!-- <th style="width: 150px" pSortableColumn="internalDisplayNumber">
                                         {{ l('InternalDisplayNumber') }}
                                         <p-sortIcon field="masterWidget.internalDisplayNumber"></p-sortIcon>
-                                    </th>
-                                    <th style="width: 150px" pSortableColumn="thumbnailImageId">
+                                    </th> -->
+                                    <!-- <th style="width: 150px" pSortableColumn="thumbnailImageId">
                                         {{ l('ThumbnailImageId') }}
                                         <p-sortIcon field="masterWidget.thumbnailImageId"></p-sortIcon>
+                                    </th> -->
+                                    <th style="width: 130px" [hidden]="
+                                            !isGrantedAny('Pages.MasterWidgets.Edit', 'Pages.MasterWidgets.Delete')
+                                        ">
+                                        {{ l('Actions') }}
                                     </th>
                                 </tr>
                             </ng-template>
                             <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
                                 <tr>
-                                    <td
-                                        style="width: 130px"
-                                        [hidden]="
+                                    
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Name') }}</span>
+                                        {{ record.masterWidget.name }}
+                                    </td>
+                                    <!-- <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Description') }}</span>
+                                        {{ record.masterWidget.description }}
+                                    </td> -->
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('DesignCode') }}</span>
+                                        {{ record.masterWidget.designCode }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Publish') }}</span>
+                                        <div *ngIf="record.masterWidget.publish">
+                                            <span class="badge badge-sm badge-success">Yes</span>
+                                        </div>
+                                        <div *ngIf="!record.masterWidget.publish">
+                                            <span class="badge badge-sm badge-danger">No</span>
+                                        </div>
+                                    </td>
+                                    <!-- <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('InternalDisplayNumber') }}</span>
+                                        {{ record.masterWidget.internalDisplayNumber }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('ThumbnailImageId') }}</span>
+                                        {{ record.masterWidget.thumbnailImageId }}
+                                    </td> -->
+                                    <td style="width: 130px" [hidden]="
                                             !isGrantedAny('Pages.MasterWidgets.Edit', 'Pages.MasterWidgets.Delete')
-                                        "
-                                    >
+                                        ">
                                         <div class="btn-group dropdown" dropdown container="body">
                                             <button class="dropdown-toggle btn btn-sm btn-primary" dropdownToggle>
                                                 <i class="fa fa-cog"></i>
@@ -240,69 +201,32 @@
                                                 {{ l('Actions') }}
                                             </button>
                                             <ul class="dropdown-menu" *dropdownMenu>
-                                                <li>
-                                                    <a
-                                                        href="javascript:;"
-                                                        class="dropdown-item"
-                                                        (click)="viewMasterWidgetModal.show(record)"
-                                                    >
+                                                <!-- <li>
+                                                    <a href="javascript:;" class="dropdown-item"
+                                                        (click)="viewMasterWidgetModal.show(record)">
                                                         {{ l('View') }}
                                                     </a>
-                                                </li>
+                                                </li> -->
                                                 <li>
-                                                    <a
-                                                        href="javascript:;"
+                                                    <a href="javascript:;"
                                                         *ngIf="permission.isGranted('Pages.MasterWidgets.Edit')"
-                                                        class="dropdown-item"
-                                                        (click)="
+                                                        class="dropdown-item" (click)="
                                                             createOrEditMasterWidgetModal.show(record.masterWidget.id)
-                                                        "
-                                                    >
+                                                        ">
                                                         {{ l('Edit') }}
                                                     </a>
                                                 </li>
                                                 <li>
-                                                    <a
-                                                        class="dropdown-item"
-                                                        href="javascript:;"
+                                                    <a class="dropdown-item" href="javascript:;"
                                                         *ngIf="permission.isGranted('Pages.MasterWidgets.Delete')"
-                                                        (click)="deleteMasterWidget(record.masterWidget)"
-                                                    >
+                                                        (click)="deleteMasterWidget(record.masterWidget)">
                                                         {{ l('Delete') }}
                                                     </a>
                                                 </li>
                                             </ul>
                                         </div>
                                     </td>
-                                    <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('Name') }}</span>
-                                        {{ record.masterWidget.name }}
-                                    </td>
-                                    <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('Description') }}</span>
-                                        {{ record.masterWidget.description }}
-                                    </td>
-                                    <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('DesignCode') }}</span>
-                                        {{ record.masterWidget.designCode }}
-                                    </td>
-                                    <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('Publish') }}</span>
-                                        <div *ngIf="record.masterWidget.publish" class="text-center">
-                                            <i class="fa fa-check-circle text-success" title="True"></i>
-                                        </div>
-                                        <div *ngIf="!record.masterWidget.publish" class="text-center">
-                                            <i class="fa fa-times-circle" title="False"></i>
-                                        </div>
-                                    </td>
-                                    <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('InternalDisplayNumber') }}</span>
-                                        {{ record.masterWidget.internalDisplayNumber }}
-                                    </td>
-                                    <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('ThumbnailImageId') }}</span>
-                                        {{ record.masterWidget.thumbnailImageId }}
-                                    </td>
+
                                 </tr>
                             </ng-template>
                         </p-table>
@@ -310,17 +234,13 @@
                             {{ l('NoData') }}
                         </div>
                         <div class="primeng-paging-container">
-                            <p-paginator
-                                [rows]="primengTableHelper.defaultRecordsCountPerPage"
-                                #paginator
+                            <p-paginator [rows]="primengTableHelper.defaultRecordsCountPerPage" #paginator
                                 (onPageChange)="getMasterWidgets($event)"
                                 [totalRecords]="primengTableHelper.totalRecordsCount"
                                 [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
-                                [showCurrentPageReport]="true"
-                                [currentPageReportTemplate]="
+                                [showCurrentPageReport]="true" [currentPageReportTemplate]="
                                     'TotalRecordsCount' | localize : primengTableHelper.totalRecordsCount
-                                "
-                            ></p-paginator>
+                                "></p-paginator>
                         </div>
                     </div>
                     <!--<Primeng-Datatable-End>-->
@@ -328,9 +248,7 @@
             </div>
         </div>
     </div>
-    <createOrEditMasterWidgetModal
-        #createOrEditMasterWidgetModal
-        (modalSave)="getMasterWidgets()"
-    ></createOrEditMasterWidgetModal>
+    <createOrEditMasterWidgetModal #createOrEditMasterWidgetModal (modalSave)="getMasterWidgets()">
+    </createOrEditMasterWidgetModal>
     <viewMasterWidgetModal #viewMasterWidgetModal></viewMasterWidgetModal>
 </div>

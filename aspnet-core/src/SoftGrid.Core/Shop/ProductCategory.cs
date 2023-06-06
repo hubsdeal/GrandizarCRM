@@ -40,5 +40,8 @@ namespace SoftGrid.Shop
         [ForeignKey("MediaLibraryId")]
         public MediaLibrary MediaLibraryFk { get; set; }
 
+        [ForeignKey("ProductCategoryId")]
+        public virtual ProductCategory ProductCategoryFk { get; set; }
+
     }
 }

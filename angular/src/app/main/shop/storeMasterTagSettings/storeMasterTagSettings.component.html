@@ -153,33 +153,28 @@
                             <ng-template pTemplate="header">
                                 <tr>
 
-                                    <th style="width: 200px" pSortableColumn="storeTagSettingCategoryFk.name">
-                                        {{ l('Store Type / Category') }}
-                                        <p-sortIcon field="storeTagSettingCategoryName"></p-sortIcon>
+                                    <th style="width: 200px">
+                                        {{ l('Store Business Type ') }}
                                     </th>
-                                    <th style="width: 150px" pSortableColumn="masterTagCategoryFk.name">
-                                        {{ l('Store Tag') }}
-                                        <p-sortIcon field="masterTagCategoryName"></p-sortIcon>
+                                    <th style="width: 150px">
+                                        {{ l('Tag Category') }}
                                     </th>
-                                    <th style="width: 150px" pSortableColumn="customTagTitle">
-                                        {{ l('Title') }}
-                                        <p-sortIcon field="storeMasterTagSetting.customTagTitle"></p-sortIcon>
+                                    <th style="width: 150px">
+                                        {{ l('Custom Title') }}
                                     </th>
-                                    <th style="width: 150px" pSortableColumn="customTagChatQuestion">
+                                    <th style="width: 150px">
                                         {{ l('Tag Questions') }}
-                                        <p-sortIcon field="storeMasterTagSetting.customTagChatQuestion"></p-sortIcon>
                                     </th>
-                                    <th style="width: 150px" pSortableColumn="displayPublic">
-                                        {{ l('Display Public') }}
-                                        <p-sortIcon field="storeMasterTagSetting.displayPublic"></p-sortIcon>
-                                    </th>
+                                    
                                     <!-- <th style="width: 150px" pSortableColumn="displaySequence">
                                         {{ l('DisplaySequence') }}
                                         <p-sortIcon field="storeMasterTagSetting.displaySequence"></p-sortIcon>
                                     </th> -->
-                                    <th style="width: 150px" pSortableColumn="answerTypeId">
+                                    <th style="width: 150px">
                                         {{ l('Answer Type') }}
-                                        <p-sortIcon field="storeMasterTagSetting.answerTypeId"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px">
+                                        {{ l('Display Public') }}
                                     </th>
                                     <th style="width: 130px" [hidden]="
                                             !isGrantedAny(
@@ -209,6 +204,15 @@
                                         <span class="p-column-title">{{ l('CustomTagChatQuestion') }}</span>
                                         {{ record.storeMasterTagSetting.customTagChatQuestion }}
                                     </td>
+                                    
+                                    <!-- <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('DisplaySequence') }}</span>
+                                        {{ record.storeMasterTagSetting.displaySequence }}
+                                    </td> -->
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('AnswerTypeId') }}</span>
+                                        {{ l(answerType[record.storeMasterTagSetting.answerTypeId]) }}
+                                    </td>
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('DisplayPublic') }}</span>
                                         <div *ngIf="record.storeMasterTagSetting.displayPublic">
@@ -217,14 +221,6 @@
                                         <div *ngIf="!record.storeMasterTagSetting.displayPublic">
                                             <span class="badge badge-danger badge">No</span>
                                         </div>
-                                    </td>
-                                    <!-- <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('DisplaySequence') }}</span>
-                                        {{ record.storeMasterTagSetting.displaySequence }}
-                                    </td> -->
-                                    <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('AnswerTypeId') }}</span>
-                                        {{ l(answerType[record.storeMasterTagSetting.answerTypeId]) }}
                                     </td>
                                     <td style="width: 130px" [hidden]="
                                             !isGrantedAny(

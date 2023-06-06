@@ -4,6 +4,8 @@ import { finalize } from 'rxjs/operators';
 import {
     ProductMasterTagSettingsServiceProxy,
     CreateOrEditProductMasterTagSettingDto,
+    ProductsServiceProxy,
+    AnswerType,
 } from '@shared/service-proxies/service-proxies';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { DateTime } from 'luxon';
@@ -33,9 +35,17 @@ export class CreateOrEditProductMasterTagSettingModalComponent extends AppCompon
     productCategoryName = '';
     masterTagCategoryName = '';
 
+    productCategoryOptions: any = []
+    selectedProductCategory: any;
+
+    selectedTagCategory: any;
+    masterTagCategoryOptions: any = []
+    answerTypeOptions: { value: any, label: string }[] = [];
+
     constructor(
         injector: Injector,
         private _productMasterTagSettingsServiceProxy: ProductMasterTagSettingsServiceProxy,
+        private _productsServiceProxy: ProductsServiceProxy,
         private _dateTimeService: DateTimeService
     ) {
         super(injector);
@@ -63,6 +73,18 @@ export class CreateOrEditProductMasterTagSettingModalComponent extends AppCompon
                     this.modal.show();
                 });
         }
+        this._productsServiceProxy.getAllProductCategoryForLookupTable('', '', 0, 10000).subscribe(result => {
+            this.productCategoryOptions = result.items;
+        });
+
+        this._productMasterTagSettingsServiceProxy.getAllMasterTagCategoryForLookupTable('', '', 0, 1000).subscribe(result => {
+            this.masterTagCategoryOptions = result.items;
+        })
+        for (const key in AnswerType) {
+            if (isNaN(Number(key))) {
+                this.answerTypeOptions.push({ value: AnswerType[key], label: key.replace(/_/g, ' ') });
+            }
+        }
     }
 
     save(): void {
@@ -80,6 +102,20 @@ export class CreateOrEditProductMasterTagSettingModalComponent extends AppCompon
                 this.close();
                 this.modalSave.emit(null);
             });
+    }
+
+    onProductCategoryClick(event: any) {
+        if (event.value != null) {
+            this.productMasterTagSetting.productCategoryId = event.value.id;
+        }
+    }
+
+    onMasterTagCategoryClick(event: any) {
+        if (event.value != null) {
+            this.productMasterTagSetting.masterTagCategoryId = event.value.id;
+            this.productMasterTagSetting.customTagTitle = event.value.displayName;
+            this.productMasterTagSetting.customTagChatQuestion = 'What is'+ ' ' + event.value.displayName + '?';
+        }
     }
 
     openSelectProductCategoryModal() {
@@ -118,5 +154,5 @@ export class CreateOrEditProductMasterTagSettingModalComponent extends AppCompon
         this.modal.hide();
     }
 
-    ngOnInit(): void {}
+    ngOnInit(): void { }
 }

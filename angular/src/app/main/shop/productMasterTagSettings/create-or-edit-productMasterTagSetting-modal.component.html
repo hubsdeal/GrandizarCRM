@@ -1,53 +1,26 @@
-﻿<div
-    bsModal
-    #createOrEditModal="bs-modal"
-    class="modal fade"
-    tabindex="-1"
-    role="dialog"
-    aria-labelledby="createOrEditModal"
-    aria-hidden="true"
-    [config]="{ backdrop: 'static' }"
->
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{ backdrop: 'static' }">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <form
-                *ngIf="active"
-                #productMasterTagSettingForm="ngForm"
-                novalidate
-                (ngSubmit)="save()"
-                autocomplete="off"
-            >
+            <form *ngIf="active" #productMasterTagSettingForm="ngForm" novalidate (ngSubmit)="save()"
+                autocomplete="off">
                 <div class="modal-header">
                     <h4 class="modal-title">
-                        <span *ngIf="productMasterTagSetting.id">{{ l('EditProductMasterTagSetting') }}</span>
-                        <span *ngIf="!productMasterTagSetting.id">{{ l('CreateNewProductMasterTagSetting') }}</span>
+                        <span *ngIf="productMasterTagSetting.id">{{ l('Edit Product Master Tag Setting') }}</span>
+                        <span *ngIf="!productMasterTagSetting.id">{{ l('Create Product Master Tag Setting') }}</span>
                     </h4>
 
-                    <button
-                        type="button"
-                        class="btn-close"
-                        (click)="close()"
-                        aria-label="Close"
-                        [disabled]="saving"
-                    ></button>
+                    <button type="button" class="btn-close" (click)="close()" aria-label="Close"
+                        [disabled]="saving"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="my-3">
-                        <label class="form-label" for="ProductCategoryName">{{ l('ProductCategory') }}</label>
+                    <!-- <div class="my-3">
+                        <label class="form-label" for="ProductCategoryName">{{ l('Product Category') }}</label>
                         <div class="input-group">
-                            <input
-                                class="form-control"
-                                id="ProductCategoryName"
-                                name="productCategoryName"
-                                [(ngModel)]="productCategoryName"
-                                type="text"
-                                disabled
-                            />
-                            <button
-                                class="btn btn-primary blue"
-                                (click)="openSelectProductCategoryModal()"
-                                type="button"
-                            >
+                            <input class="form-control" id="ProductCategoryName" name="productCategoryName"
+                                [(ngModel)]="productCategoryName" type="text" disabled />
+                            <button class="btn btn-primary blue" (click)="openSelectProductCategoryModal()"
+                                type="button">
                                 <i class="fa fa-search"></i>
                                 {{ l('Pick') }}
                             </button>
@@ -55,145 +28,132 @@
                                 <i class="fa fa-times"></i>
                             </button>
                         </div>
-                    </div>
-                    <input
-                        class="form-control"
-                        name="productMasterTagSetting.productCategoryId"
-                        [(ngModel)]="productMasterTagSetting.productCategoryId"
-                        type="text"
-                        required
-                        hidden
-                    />
+                       
+                    </div> -->
+                    <!-- <input class="form-control" name="productMasterTagSetting.productCategoryId"
+                        [(ngModel)]="productMasterTagSetting.productCategoryId" type="text" required hidden /> -->
 
-                    <div class="my-3">
-                        <label class="form-label" for="MasterTagCategoryName">{{ l('MasterTagCategory') }}</label>
+                    <div class="my-5 p_filter">
+                        <label class="form-label required" for="ProductCategoryName">
+                            Product Category
+                        </label>
+                        <p-dropdown [options]="productCategoryOptions" [filter]="true" [virtualScroll]="true"
+                            (onChange)="onProductCategoryClick($event)" placeholder="Select Product Category"
+                            [itemSize]="30" name="displayName" optionLabel="displayName" optionId="id"
+                            [(ngModel)]="selectedProductCategory" filterBy="displayName" required
+                            [style]="{ width: '100%' }"></p-dropdown>
+                    </div>
+
+                    <div class="my-5 p_filter">
+                        <label class="form-label" for="MasterTagCategoryName">{{ l('Store Tag Category') }}</label>
+                        <p-dropdown [options]="masterTagCategoryOptions" [filter]="true" [virtualScroll]="true"
+                            (onChange)="onMasterTagCategoryClick($event)" placeholder="Select Tag Category"
+                            [itemSize]="30" name="displayName" optionLabel="displayName" optionId="id"
+                            [(ngModel)]="selectedTagCategory" filterBy="displayName"
+                            [style]="{ width: '100%' }"></p-dropdown>
+                    </div>
+
+                    <!-- <div class="my-3">
+                        <label class="form-label" for="MasterTagCategoryName">{{ l('Tag Category') }}</label>
                         <div class="input-group">
-                            <input
-                                class="form-control"
-                                id="MasterTagCategoryName"
-                                name="masterTagCategoryName"
-                                [(ngModel)]="masterTagCategoryName"
-                                type="text"
-                                disabled
-                            />
-                            <button
-                                class="btn btn-primary blue"
-                                (click)="openSelectMasterTagCategoryModal()"
-                                type="button"
-                            >
+                            <input class="form-control" id="MasterTagCategoryName" name="masterTagCategoryName"
+                                [(ngModel)]="masterTagCategoryName" type="text" disabled />
+                            <button class="btn btn-primary blue" (click)="openSelectMasterTagCategoryModal()"
+                                type="button">
                                 <i class="fa fa-search"></i>
                                 {{ l('Pick') }}
                             </button>
-                            <button
-                                class="btn btn-danger btn-icon"
-                                type="button"
-                                (click)="setMasterTagCategoryIdNull()"
-                            >
+                            <button class="btn btn-danger btn-icon" type="button"
+                                (click)="setMasterTagCategoryIdNull()">
                                 <i class="fa fa-times"></i>
                             </button>
                         </div>
                     </div>
-                    <input
-                        class="form-control"
-                        name="productMasterTagSetting.masterTagCategoryId"
-                        [(ngModel)]="productMasterTagSetting.masterTagCategoryId"
-                        type="text"
-                        hidden
-                    />
+                    <input class="form-control" name="productMasterTagSetting.masterTagCategoryId"
+                        [(ngModel)]="productMasterTagSetting.masterTagCategoryId" type="text" hidden />
 
                     <div class="my5">
                         <label class="form-label" for="ProductMasterTagSetting_DisplaySequence">
                             {{ l('DisplaySequence') }}
                         </label>
-                        <input
-                            type="number"
-                            #ProductMasterTagSetting_DisplaySequence="ngModel"
-                            id="ProductMasterTagSetting_DisplaySequence"
-                            class="form-control"
-                            [(ngModel)]="productMasterTagSetting.displaySequence"
-                            name="DisplaySequence"
-                        />
+                        <input type="number" #ProductMasterTagSetting_DisplaySequence="ngModel"
+                            id="ProductMasterTagSetting_DisplaySequence" class="form-control"
+                            [(ngModel)]="productMasterTagSetting.displaySequence" name="DisplaySequence" />
                         <validation-messages [formCtrl]="ProductMasterTagSetting_DisplaySequence"></validation-messages>
-                    </div>
+                    </div> -->
 
                     <div class="my-3">
                         <label class="form-label" for="ProductMasterTagSetting_CustomTagTitle">
-                            {{ l('CustomTagTitle') }} *
+                            Title - (Customize if needed)
                         </label>
-                        <input
-                            type="text"
-                            #ProductMasterTagSetting_CustomTagTitle="ngModel"
-                            id="ProductMasterTagSetting_CustomTagTitle"
-                            class="form-control"
-                            [(ngModel)]="productMasterTagSetting.customTagTitle"
-                            name="CustomTagTitle"
-                            minlength="1"
-                            maxlength="128"
-                            required
-                        />
+                        <input type="text" #ProductMasterTagSetting_CustomTagTitle="ngModel"
+                            id="ProductMasterTagSetting_CustomTagTitle" class="form-control"
+                            [(ngModel)]="productMasterTagSetting.customTagTitle" name="CustomTagTitle" minlength="1"
+                            maxlength="128" required />
                         <validation-messages [formCtrl]="ProductMasterTagSetting_CustomTagTitle"></validation-messages>
                     </div>
 
                     <div class="my-3">
                         <label class="form-label" for="ProductMasterTagSetting_CustomTagChatQuestion">
-                            {{ l('CustomTagChatQuestion') }}
+                            Tag Questions
                         </label>
-                        <input
-                            type="text"
-                            #ProductMasterTagSetting_CustomTagChatQuestion="ngModel"
-                            id="ProductMasterTagSetting_CustomTagChatQuestion"
-                            class="form-control"
-                            [(ngModel)]="productMasterTagSetting.customTagChatQuestion"
-                            name="CustomTagChatQuestion"
-                            minlength="1"
-                            maxlength="512"
-                        />
+                        <input type="text" #ProductMasterTagSetting_CustomTagChatQuestion="ngModel"
+                            id="ProductMasterTagSetting_CustomTagChatQuestion" class="form-control"
+                            [(ngModel)]="productMasterTagSetting.customTagChatQuestion" name="CustomTagChatQuestion"
+                            minlength="1" maxlength="512" />
                         <validation-messages
-                            [formCtrl]="ProductMasterTagSetting_CustomTagChatQuestion"
-                        ></validation-messages>
+                            [formCtrl]="ProductMasterTagSetting_CustomTagChatQuestion"></validation-messages>
                     </div>
 
-                    <br />
+                    <!-- <br />
                     <label class="form-check form-check-custom form-check-solid">
-                        <input
-                            id="ProductMasterTagSetting_DisplayPublic"
-                            #ProductMasterTagSetting_DisplayPublic="ngModel"
-                            name="DisplayPublic"
-                            [(ngModel)]="productMasterTagSetting.displayPublic"
-                            type="checkbox"
-                            class="form-check-input"
-                        />
+                        <input id="ProductMasterTagSetting_DisplayPublic"
+                            #ProductMasterTagSetting_DisplayPublic="ngModel" name="DisplayPublic"
+                            [(ngModel)]="productMasterTagSetting.displayPublic" type="checkbox"
+                            class="form-check-input" />
                         <span class="form-check-label">
                             {{ l('DisplayPublic') }}
                         </span>
                     </label>
-                    <validation-messages [formCtrl]="ProductMasterTagSetting_DisplayPublic"></validation-messages>
-
-                    <div class="my-3">
+                    <validation-messages [formCtrl]="ProductMasterTagSetting_DisplayPublic"></validation-messages> -->
+                    <div class="my-5">
+                        <label class="form-label" for="ProductMasterTagSetting_AnswerTypeId">
+                            {{ l('Tag Answer Type') }}
+                        </label>
+                        <select class="form-select" name="AnswerTypeId"
+                            id="ProductMasterTagSetting_AnswerTypeId"
+                            [(ngModel)]="productMasterTagSetting.answerTypeId">
+                            <option value="-1">Select Answer Type</option>
+                            <option *ngFor="let item of answerTypeOptions" value="{{item.value}}">{{item.label}}</option>
+                        </select>
+                    </div>
+                    <!-- <div class="my-3">
                         <label class="form-label" for="ProductMasterTagSetting_AnswerTypeId">
                             {{ l('AnswerTypeId') }}
                         </label>
-                        <select
-                            class="form-select"
-                            #ProductMasterTagSetting_AnswerTypeId="ngModel"
-                            name="AnswerTypeId"
+                        <select class="form-select" #ProductMasterTagSetting_AnswerTypeId="ngModel" name="AnswerTypeId"
                             id="ProductMasterTagSetting_AnswerTypeId"
-                            [(ngModel)]="productMasterTagSetting.answerTypeId"
-                        ></select>
+                            [(ngModel)]="productMasterTagSetting.answerTypeId"></select>
                         <validation-messages [formCtrl]="ProductMasterTagSetting_AnswerTypeId"></validation-messages>
+                    </div> -->
+                    <div class="my-5">
+                        <label class="form-check form-check-custom form-check-solid">
+                            <input id="ProductMasterTagSetting_DisplayPublic"
+                                name="DisplayPublic" [(ngModel)]="productMasterTagSetting.displayPublic" type="checkbox"
+                                class="form-check-input" />
+                            <span class="form-check-label ms-3">
+                                {{ l('Display on Product Public Page') }}
+                            </span>
+                        </label>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
                         {{ l('Cancel') }}
                     </button>
-                    <button
-                        type="submit"
-                        class="btn btn-primary blue"
-                        [disabled]="!productMasterTagSettingForm.form.valid"
-                        [buttonBusy]="saving"
-                        [busyText]="l('SavingWithThreeDot')"
-                    >
+                    <button type="submit" class="btn btn-primary blue"
+                        [disabled]="!productMasterTagSettingForm.form.valid" [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')">
                         <i class="fa fa-save"></i>
                         <span>{{ l('Save') }}</span>
                     </button>
@@ -201,12 +161,8 @@
             </form>
         </div>
     </div>
-    <productMasterTagSettingProductCategoryLookupTableModal
-        #productMasterTagSettingProductCategoryLookupTableModal
-        (modalSave)="getNewProductCategoryId()"
-    ></productMasterTagSettingProductCategoryLookupTableModal>
-    <productMasterTagSettingMasterTagCategoryLookupTableModal
-        #productMasterTagSettingMasterTagCategoryLookupTableModal
-        (modalSave)="getNewMasterTagCategoryId()"
-    ></productMasterTagSettingMasterTagCategoryLookupTableModal>
+    <productMasterTagSettingProductCategoryLookupTableModal #productMasterTagSettingProductCategoryLookupTableModal
+        (modalSave)="getNewProductCategoryId()"></productMasterTagSettingProductCategoryLookupTableModal>
+    <productMasterTagSettingMasterTagCategoryLookupTableModal #productMasterTagSettingMasterTagCategoryLookupTableModal
+        (modalSave)="getNewMasterTagCategoryId()"></productMasterTagSettingMasterTagCategoryLookupTableModal>
 </div>

@@ -20,5 +20,6 @@ import { ProductTagMasterTagLookupTableModalComponent } from './productTag-maste
         ProductTagMasterTagLookupTableModalComponent,
     ],
     imports: [AppSharedModule, ProductTagRoutingModule, AdminSharedModule],
+    exports: [ProductTagsComponent, CreateOrEditProductTagModalComponent, ViewProductTagModalComponent],
 })
 export class ProductTagModule {}
