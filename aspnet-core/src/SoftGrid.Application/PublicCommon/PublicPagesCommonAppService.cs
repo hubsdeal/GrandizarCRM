@@ -115,7 +115,7 @@ namespace SoftGrid.PublicCommon
         //private readonly IRepository<ReservationTimeSlot, long> _reservationTimeSlotRepository;
         //private readonly IRepository<Reservation,long> _reservationRepository;
 
-        private readonly IRepository<HubNavigationMenu, long> _hubNavigationRepository;
+
         public PublicPagesCommonAppService(
             IRepository<ProductCategory, long> productCategoryRepository,
             IRepository<MediaLibrary, long> lookup_mediaLibraryRepository,
@@ -188,7 +188,7 @@ namespace SoftGrid.PublicCommon
             //IRepository<DeliveryType, int> deliveryTypeRepository,
             //IRepository<StoreDeliveryTypeMap, long> storeDeliveryTypeMapRepository,
             IRepository<StoreZipCodeMap, long> storeZipCodeMapRepository,
-            IRepository<StoreLocation, long> storeLocationRepository, IRepository<HubNavigationMenu, long> hubNavigationRepository
+            IRepository<StoreLocation, long> storeLocationRepository
             //IRepository<ReservationTimeSlot, long> reservationTimeSlotRepository,
             //IRepository<Reservation, long> reservationRepository
             )
@@ -267,7 +267,6 @@ namespace SoftGrid.PublicCommon
             //_storeDeliveryTypeMapRepository = storeDeliveryTypeMapRepository;
             //_storeZipCodeMapRepository = storeZipCodeMapRepository;
             _storeLocationRepository = storeLocationRepository;
-            _hubNavigationRepository = hubNavigationRepository;
             //_reservationTimeSlotRepository = reservationTimeSlotRepository;
             //_reservationRepository = reservationRepository;
         }
