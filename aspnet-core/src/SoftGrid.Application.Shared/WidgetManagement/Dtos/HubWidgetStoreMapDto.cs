@@ -33,6 +33,7 @@ namespace SoftGrid.WidgetManagement.Dtos
         public Guid? ThumbnailImageId { get; set; }
 
         public List<HwsStoreJsonViewDto> Stores { get; set; }
+        public List<HwsProductJsonViewDto> Products { get; set; }
 
     }
 
@@ -62,8 +63,29 @@ namespace SoftGrid.WidgetManagement.Dtos
         public object Country { get; set; }
         public object State { get; set; }
         public object StoreCategory { get; set; }
+        public bool? IsVerified { get; set; }
+        public int? DisplaySequence { get; set; }
     }
 
 
+
+    /// <summary>
+    /// Hub Store Widget Map Json View Dto | Store
+    /// </summary>
+    public class HwsProductJsonViewDto
+    {
+        public long? Id { get; set; }
+        public long? WidgetId { get; set; }
+        public long? HubId { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public int? TenantId { get; set; }
+        public int? Score { get; set; }
+        public long? StoreId { get; set; }
+        public long? RatingLikeId { get; set; }
+        public int? RatingLikeScore { get; set; }
+        public string RatingLikeName { get; set; }
+        public long? ContactId { get; set; }
+    }
 
 }

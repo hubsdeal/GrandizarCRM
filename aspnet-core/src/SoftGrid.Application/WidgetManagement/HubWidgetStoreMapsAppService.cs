@@ -288,7 +288,7 @@ namespace SoftGrid.WidgetManagement
                 .Include(c => c.StoreFk).ThenInclude(c => c.StoreCategoryFk).ThenInclude(c => c.PictureMediaLibraryFk)
                 .Include(c => c.StoreFk).ThenInclude(c => c.StoreCategoryFk).ThenInclude(c => c.MasterTagCategoryFk)
                 .Include(c => c.StoreFk).ThenInclude(c => c.StoreTagSettingCategoryFk)
-                .Where(c => c.HubWidgetMapFk.HubId == hubId).ToListAsync();
+                .Where(c => c.HubWidgetMapFk.HubId == hubId).ToListAsync(); // TODO: Make is Paginated. RB- #SRABAN
 
 
                 var widgets = dataList.Where(c => c.HubWidgetMapFk.MasterWidgetFk.Publish).Distinct()
@@ -308,72 +308,73 @@ namespace SoftGrid.WidgetManagement
 
                 foreach (var widget in widgets)
                 {
-                    widget.Stores = dataList.Where(c => c.HubWidgetMapFk?.MasterWidgetFk?.Id == widget.Id).Select(c => c.StoreFk).Select(c => new HwsStoreJsonViewDto
+                    widget.Stores = dataList.Where(c => c.HubWidgetMapFk?.MasterWidgetFk?.Id == widget.Id).Select(c => new HwsStoreJsonViewDto
                     {
                         Id = c?.Id,
                         WidgetId = widget.Id,
                         HubId = widget?.HubId,
-                        Name = c?.Name,
-                        Description = c?.Description,
-                        TenantId = c?.TenantId,
-                        Address = c?.Address,
-                        City = c?.City,
-                        CountryId = c?.CountryId,
+                        Name = c?.StoreFk?.Name,
+                        DisplaySequence = c?.DisplaySequence,
+                        TenantId = c?.StoreFk?.TenantId,
+                        Address = c?.StoreFk?.Address,
+                        City = c?.StoreFk?.City,
+                        CountryId = c?.StoreFk?.CountryId,
+                        IsVerified = c?.StoreFk?.IsVerified,
 
                         Country = new
                         {
-                            c?.CountryFk?.Id,
-                            c?.CountryFk?.Name,
-                            c?.CountryFk?.TenantId,
-                            c?.CountryFk?.FlagIcon,
-                            c?.CountryFk?.PhoneCode,
-                            c?.CountryFk?.Ticker,
+                            c?.StoreFk?.CountryFk?.Id,
+                            c?.StoreFk?.CountryFk?.Name,
+                            c?.StoreFk?.CountryFk?.TenantId,
+                            c?.StoreFk?.CountryFk?.FlagIcon,
+                            c?.StoreFk?.CountryFk?.PhoneCode,
+                            c?.StoreFk?.CountryFk?.Ticker,
                         },
 
 
-                        StateId = c?.StateId,
+                        StateId = c?.StoreFk?.StateId,
                         State = new
                         {
-                            c?.StateFk?.Id,
-                            c?.StateFk?.Name,
-                            c?.StateFk?.TenantId,
-                            c?.StateFk?.CountryId,
-                            c?.StateFk?.Ticker,
+                            c?.StoreFk?.StateFk?.Id,
+                            c?.StoreFk?.StateFk?.Name,
+                            c?.StoreFk?.StateFk?.TenantId,
+                            c?.StoreFk?.StateFk?.CountryId,
+                            c?.StoreFk?.StateFk?.Ticker,
                         },
 
 
-                        StoreCategoryId = c?.StoreCategoryId,
+                        StoreCategoryId = c?.StoreFk?.StoreCategoryId,
                         StoreCategory = new
                         {
-                            c?.StoreCategoryFk?.Id,
-                            c?.StoreCategoryFk?.Name,
-                            c?.StoreCategoryFk?.TenantId,
-                            c?.StoreCategoryFk?.DisplaySequence,
-                            c?.StoreCategoryFk?.Description,
-                            c?.StoreCategoryFk?.Synonyms,
+                            c?.StoreFk?.StoreCategoryFk?.Id,
+                            c?.StoreFk?.StoreCategoryFk?.Name,
+                            c?.StoreFk?.StoreCategoryFk?.TenantId,
+                            c?.StoreFk?.StoreCategoryFk?.DisplaySequence,
+                            c?.StoreFk?.StoreCategoryFk?.Description,
+                            c?.StoreFk?.StoreCategoryFk?.Synonyms,
 
                             #region MasterTagCategory
 
-                            c?.StoreCategoryFk?.MasterTagCategoryId,
+                            c?.StoreFk?.StoreCategoryFk?.MasterTagCategoryId,
                             MasterTagCategory = new
                             {
-                                c?.StoreCategoryFk?.MasterTagCategoryFk?.Id,
-                                c?.StoreCategoryFk?.MasterTagCategoryFk?.Name,
-                                c?.StoreCategoryFk?.MasterTagCategoryFk?.Description,
-                                c?.StoreCategoryFk?.MasterTagCategoryFk?.TenantId,
+                                c?.StoreFk?.StoreCategoryFk?.MasterTagCategoryFk?.Id,
+                                c?.StoreFk?.StoreCategoryFk?.MasterTagCategoryFk?.Name,
+                                c?.StoreFk?.StoreCategoryFk?.MasterTagCategoryFk?.Description,
+                                c?.StoreFk?.StoreCategoryFk?.MasterTagCategoryFk?.TenantId,
                             },
 
                             #endregion
 
                             #region PictureMediaLibrary
 
-                            c?.StoreCategoryFk?.PictureMediaLibraryId,
+                            c?.StoreFk?.StoreCategoryFk?.PictureMediaLibraryId,
                             PictureMediaLibrary = new
                             {
-                                c?.StoreCategoryFk?.PictureMediaLibraryFk?.Name,
-                                c?.StoreCategoryFk?.PictureMediaLibraryFk?.AltTag,
-                                c?.StoreCategoryFk?.PictureMediaLibraryFk?.TenantId,
-                                c?.StoreCategoryFk?.PictureMediaLibraryFk?.VirtualPath,
+                                c?.StoreFk?.StoreCategoryFk?.PictureMediaLibraryFk?.Name,
+                                c?.StoreFk?.StoreCategoryFk?.PictureMediaLibraryFk?.AltTag,
+                                c?.StoreFk?.StoreCategoryFk?.PictureMediaLibraryFk?.TenantId,
+                                c?.StoreFk?.StoreCategoryFk?.PictureMediaLibraryFk?.VirtualPath,
                             }
 
                             #endregion
