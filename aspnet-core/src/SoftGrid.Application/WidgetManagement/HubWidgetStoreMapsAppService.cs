@@ -291,137 +291,102 @@ namespace SoftGrid.WidgetManagement
                 .Where(c => c.HubWidgetMapFk.HubId == hubId).ToListAsync();
 
 
-
-
-
-
-
-                var result = dataList?.Select(c => new
-                {
-                    c.TenantId,
-                    c.DisplaySequence,
-
-                    c.HubWidgetMapId,
-                    MasterWidgetId = c.HubWidgetMapFk?.MasterWidgetFk?.Id,
-
-                    #region Widget
-
-                    Widget = new
+                var widgets = dataList.Where(c => c.HubWidgetMapFk.MasterWidgetFk.Publish).Distinct()
+                    .Select(c => new HwsMapWidgetJsonViewDto
                     {
-                        c.HubWidgetMapFk?.MasterWidgetFk?.Id,
-                        c.HubWidgetMapFk?.MasterWidgetFk?.Name,
-                        c.HubWidgetMapFk?.MasterWidgetFk?.Description,
-                        c.HubWidgetMapFk?.MasterWidgetFk?.DesignCode,
-                        c.HubWidgetMapFk?.MasterWidgetFk?.InternalDisplayNumber,
-                        c.HubWidgetMapFk?.MasterWidgetFk?.ThumbnailImageId,
-                        c.HubWidgetMapFk?.MasterWidgetFk?.TenantId,
-                        c.HubWidgetMapFk?.MasterWidgetFk?.Publish,
+                        Id = c.HubWidgetMapFk?.MasterWidgetFk?.Id,
+                        Name = c.HubWidgetMapFk?.MasterWidgetFk?.Name,
+                        Description = c.HubWidgetMapFk?.MasterWidgetFk?.Description,
+                        DesignCode = c.HubWidgetMapFk?.MasterWidgetFk?.DesignCode,
+                        InternalDisplayNumber = c.HubWidgetMapFk?.MasterWidgetFk?.InternalDisplayNumber,
+                        ThumbnailImageId = c.HubWidgetMapFk?.MasterWidgetFk?.ThumbnailImageId,
+                        TenantId = c.HubWidgetMapFk?.MasterWidgetFk?.TenantId,
+                        Publish = c.HubWidgetMapFk?.MasterWidgetFk?.Publish ?? false,
+                        HubId = c.HubWidgetMapFk?.HubId,
+                    }).ToList();
 
-                        #region Store
 
-                        Store = new
+                foreach (var widget in widgets)
+                {
+                    widget.Stores = dataList.Where(c => c.HubWidgetMapFk?.MasterWidgetFk?.Id == widget.Id).Select(c => c.StoreFk).Select(c => new HwsStoreJsonViewDto
+                    {
+                        Id = c?.Id,
+                        WidgetId = widget.Id,
+                        HubId = widget?.HubId,
+                        Name = c?.Name,
+                        Description = c?.Description,
+                        TenantId = c?.TenantId,
+                        Address = c?.Address,
+                        City = c?.City,
+                        CountryId = c?.CountryId,
+
+                        Country = new
                         {
-                            c.StoreFk?.Id,
-                            c.StoreFk?.Name,
-                            c.StoreFk?.TenantId,
-                            c.StoreFk?.Address,
-                            c.StoreFk?.City,
-
-                            c.StoreFk?.StateId,
-
-                            #region StoreState
-
-                            State = new
-                            {
-                                //add state fields here
-                                c.StoreFk?.StateFk?.Id,
-                                c.StoreFk?.StateFk?.Name,
-                                c.StoreFk?.StateFk?.TenantId,
-                                c.StoreFk?.StateFk?.CountryId,
-                                c.StoreFk?.StateFk?.Ticker,
-                            },
-
-                            #endregion
-
-
-                            c.StoreFk?.CountryId,
-
-                            #region Country
-
-                            Country = new
-                            {
-                                c.StoreFk?.CountryFk?.Id,
-                                c.StoreFk?.CountryFk?.Name,
-                                c.StoreFk?.CountryFk?.TenantId,
-                                c.StoreFk?.CountryFk?.FlagIcon,
-                                c.StoreFk?.CountryFk?.PhoneCode,
-                                c.StoreFk?.CountryFk?.Ticker,
-                            },
-
-                            #endregion
-
-                            c.StoreFk?.StoreCategoryId,
-
-                            #region StoreCategory
-
-                            StoreCategory = new
-                            {
-                                c.StoreFk?.StoreCategoryFk?.Id,
-                                c.StoreFk?.StoreCategoryFk?.Name,
-                                c.StoreFk?.StoreCategoryFk?.TenantId,
-                                c.StoreFk?.StoreCategoryFk?.DisplaySequence,
-                                c.StoreFk?.StoreCategoryFk?.Description,
-                                c.StoreFk?.StoreCategoryFk?.Synonyms,
-
-                                #region MasterTagCategory
-
-                                c.StoreFk?.StoreCategoryFk?.MasterTagCategoryId,
-                                MasterTagCategory = new
-                                {
-                                    c.StoreFk?.StoreCategoryFk?.MasterTagCategoryFk?.Id,
-                                    c.StoreFk?.StoreCategoryFk?.MasterTagCategoryFk?.Name,
-                                    c.StoreFk?.StoreCategoryFk?.MasterTagCategoryFk?.Description,
-                                    c.StoreFk?.StoreCategoryFk?.MasterTagCategoryFk?.TenantId,
-                                },
-
-                                #endregion
-
-                                #region PictureMediaLibrary
-
-                                c.StoreFk?.StoreCategoryFk?.PictureMediaLibraryId,
-                                PictureMediaLibrary = new
-                                {
-                                    c.StoreFk?.StoreCategoryFk?.PictureMediaLibraryFk?.Name,
-                                    c.StoreFk?.StoreCategoryFk?.PictureMediaLibraryFk?.AltTag,
-                                    c.StoreFk?.StoreCategoryFk?.PictureMediaLibraryFk?.TenantId,
-                                    c.StoreFk?.StoreCategoryFk?.PictureMediaLibraryFk?.VirtualPath,
-                                }
-
-                                #endregion
-
-
-
-                            },
-
-                            #endregion
+                            c?.CountryFk?.Id,
+                            c?.CountryFk?.Name,
+                            c?.CountryFk?.TenantId,
+                            c?.CountryFk?.FlagIcon,
+                            c?.CountryFk?.PhoneCode,
+                            c?.CountryFk?.Ticker,
                         },
 
-                        #endregion
-                    },
 
-                    #endregion
+                        StateId = c?.StateId,
+                        State = new
+                        {
+                            c?.StateFk?.Id,
+                            c?.StateFk?.Name,
+                            c?.StateFk?.TenantId,
+                            c?.StateFk?.CountryId,
+                            c?.StateFk?.Ticker,
+                        },
 
-                    c.StoreId,
+
+                        StoreCategoryId = c?.StoreCategoryId,
+                        StoreCategory = new
+                        {
+                            c?.StoreCategoryFk?.Id,
+                            c?.StoreCategoryFk?.Name,
+                            c?.StoreCategoryFk?.TenantId,
+                            c?.StoreCategoryFk?.DisplaySequence,
+                            c?.StoreCategoryFk?.Description,
+                            c?.StoreCategoryFk?.Synonyms,
+
+                            #region MasterTagCategory
+
+                            c?.StoreCategoryFk?.MasterTagCategoryId,
+                            MasterTagCategory = new
+                            {
+                                c?.StoreCategoryFk?.MasterTagCategoryFk?.Id,
+                                c?.StoreCategoryFk?.MasterTagCategoryFk?.Name,
+                                c?.StoreCategoryFk?.MasterTagCategoryFk?.Description,
+                                c?.StoreCategoryFk?.MasterTagCategoryFk?.TenantId,
+                            },
+
+                            #endregion
+
+                            #region PictureMediaLibrary
+
+                            c?.StoreCategoryFk?.PictureMediaLibraryId,
+                            PictureMediaLibrary = new
+                            {
+                                c?.StoreCategoryFk?.PictureMediaLibraryFk?.Name,
+                                c?.StoreCategoryFk?.PictureMediaLibraryFk?.AltTag,
+                                c?.StoreCategoryFk?.PictureMediaLibraryFk?.TenantId,
+                                c?.StoreCategoryFk?.PictureMediaLibraryFk?.VirtualPath,
+                            }
+
+                            #endregion
 
 
 
-                    c.Id
+                        },
 
+                    }).ToList();
 
-                });
+                }
 
-                //var dataList = await query.ToListAsync();
-                return result;
+                return widgets;
             }
             catch (Exception e)
             {
