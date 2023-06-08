@@ -3643,35 +3643,6 @@ namespace SoftGrid.PublicCommon
         }
 
 
-        [AbpAllowAnonymous]
-        public async Task<List<HubNavigationMenuDto>> GetHubNavMenu(long hubId)
-        {
-            var dataList = await _hubNavigationRepository.GetAll()
-                .Include(c => c.MasterNavigationMenuFk)
-                .Include(c => c.HubFk)
-                .Where(c => c.HubId == hubId)
-                .Select(c => new HubNavigationMenuDto()
-                {
-                    HubId = c.HubId,
-                    HubName = c.HubFk.Name,
-                    HasParentMenu = c.HasParentMenu,
-                    MasterNavigationMenuId = c.MasterNavigationMenuId,
-                    ParentMenuId = c.ParentMenuId,
-                    NavigationLink = c.NavigationLink,
-                    CustomName = c.CustomName,
-                    TenantId = c.TenantId,
-                    DisplaySequence = c.DisplaySequence,
-                    Id = c.Id,
-                    MenuName = c.MasterNavigationMenuFk.Name
-                }).ToListAsync();
-
-            //TODO: Update with AutoMapper
-            //var result = new List<HubNavigationMenuDto>();
-
-
-            return dataList;
-        }
-
 
 
         //[AbpAllowAnonymous]
