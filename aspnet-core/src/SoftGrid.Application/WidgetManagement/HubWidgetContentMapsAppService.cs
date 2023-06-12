@@ -9,6 +9,7 @@ using SoftGrid.Authorization;
 using SoftGrid.CMS;
 using SoftGrid.CMS.Enums;
 using SoftGrid.Dto;
+using SoftGrid.Storage;
 using SoftGrid.WidgetManagement.Dtos;
 using SoftGrid.WidgetManagement.Exporting;
 
@@ -27,14 +28,15 @@ namespace SoftGrid.WidgetManagement
         private readonly IHubWidgetContentMapsExcelExporter _hubWidgetContentMapsExcelExporter;
         private readonly IRepository<HubWidgetMap, long> _lookup_hubWidgetMapRepository;
         private readonly IRepository<Content, long> _lookup_contentRepository;
+        private readonly IBinaryObjectManager _binaryObjectManager;
 
-        public HubWidgetContentMapsAppService(IRepository<HubWidgetContentMap, long> hubWidgetContentMapRepository, IHubWidgetContentMapsExcelExporter hubWidgetContentMapsExcelExporter, IRepository<HubWidgetMap, long> lookup_hubWidgetMapRepository, IRepository<Content, long> lookup_contentRepository)
+        public HubWidgetContentMapsAppService(IRepository<HubWidgetContentMap, long> hubWidgetContentMapRepository, IHubWidgetContentMapsExcelExporter hubWidgetContentMapsExcelExporter, IRepository<HubWidgetMap, long> lookup_hubWidgetMapRepository, IRepository<Content, long> lookup_contentRepository, IBinaryObjectManager binaryObjectManager)
         {
             _hubWidgetContentMapRepository = hubWidgetContentMapRepository;
             _hubWidgetContentMapsExcelExporter = hubWidgetContentMapsExcelExporter;
             _lookup_hubWidgetMapRepository = lookup_hubWidgetMapRepository;
             _lookup_contentRepository = lookup_contentRepository;
-
+            _binaryObjectManager = binaryObjectManager;
         }
 
         public async Task<PagedResultDto<GetHubWidgetContentMapForViewDto>> GetAll(GetAllHubWidgetContentMapsInput input)
@@ -309,7 +311,7 @@ namespace SoftGrid.WidgetManagement
 
                 foreach (var widget in widgets)
                 {
-                    widget.Contents = dataList.Where(c => c.HubWidgetMapFk?.MasterWidgetFk?.Id == widget.Id).Select(c => new HwsContentJsonViewDto
+                    widget.Contents = dataList.Where(c => c.HubWidgetMapFk?.MasterWidgetFk?.Id == widget.Id).Select(async c => new HwsContentJsonViewDto
                     {
                         Id = c?.Id,
                         WidgetId = widget.Id,
@@ -329,6 +331,9 @@ namespace SoftGrid.WidgetManagement
                         BannerMediaLibraryAltTag = c?.ContentFk?.BannerMediaLibraryFk?.AltTag,
                         BannerMediaLibraryBinaryObjectId = c?.ContentFk?.BannerMediaLibraryFk?.BinaryObjectId,
                         BannerMediaLibraryBinaryVirtualPath = c?.ContentFk?.BannerMediaLibraryFk?.VirtualPath,
+                        BannerMediaLibraryBanner = (c.ContentFk?.BannerMediaLibraryFk?.BinaryObjectId != null && c.ContentFk?.BannerMediaLibraryFk?.BinaryObjectId != Guid.Empty)
+                            ? await _binaryObjectManager.GetOthersPictureUrlAsync((c.ContentFk?.BannerMediaLibraryFk?.BinaryObjectId ?? Guid.Empty), ".png")
+                            : ""
 
                     }).ToList();
 

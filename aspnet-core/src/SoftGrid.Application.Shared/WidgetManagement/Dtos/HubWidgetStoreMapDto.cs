@@ -35,7 +35,7 @@ namespace SoftGrid.WidgetManagement.Dtos
 
         public List<Task<HwsStoreJsonViewDto>> Stores { get; set; }
         public List<HwsProductJsonViewDto> Products { get; set; }
-        public List<HwsContentJsonViewDto> Contents { get; set; }
+        public List<Task<HwsContentJsonViewDto>> Contents { get; set; }
 
     }
 
@@ -115,5 +115,6 @@ namespace SoftGrid.WidgetManagement.Dtos
         public string BannerMediaLibraryAltTag { get; set; }
         public Guid? BannerMediaLibraryBinaryObjectId { get; set; }
         public string BannerMediaLibraryBinaryVirtualPath { get; set; }
+        public string BannerMediaLibraryBanner { get; set; }
     }
 }

@@ -212,6 +212,8 @@ namespace SoftGrid.Storage
             return fileUrl;
         }
 
+
+
         public string GetPictureUrl(Guid id, string extension)
         {
             if (id == Guid.Empty) return string.Empty;
