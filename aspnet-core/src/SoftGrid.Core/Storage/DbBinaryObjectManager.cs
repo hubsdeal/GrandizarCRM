@@ -1,13 +1,16 @@
-﻿using System;
-using System.IO;
-using System.Threading.Tasks;
-using Abp.Dependency;
+﻿using Abp.Dependency;
 using Abp.Domain.Repositories;
+
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
+
 using SoftGrid.Configuration;
 using SoftGrid.Url;
+
+using System;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace SoftGrid.Storage
 {
@@ -211,7 +214,7 @@ namespace SoftGrid.Storage
 
         public string GetPictureUrl(Guid id, string extension)
         {
-
+            if (id == Guid.Empty) return string.Empty;
             //var directory = new DirectoryInfo(_appFolders.TempFileDownloadFolder);
             string pictureUrl = string.Empty;
 

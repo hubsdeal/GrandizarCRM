@@ -308,21 +308,22 @@ namespace SoftGrid.WidgetManagement
 
                 foreach (var widget in widgets)
                 {
-                    widget.Products = dataList.Where(c => c.HubWidgetMapFk?.MasterWidgetFk?.Id == widget.Id).Select(c => c.ProductFk).Select(c => new HwsProductJsonViewDto
+                    widget.Products = dataList.Where(c => c.HubWidgetMapFk?.MasterWidgetFk?.Id == widget.Id).Select(c => new HwsProductJsonViewDto
                     {
                         Id = c?.Id,
                         WidgetId = widget.Id,
                         HubId = widget?.HubId,
-                        StoreId = c?.StoreId,
-                        Name = c?.Name,
-                        Description = c?.Description,
+                        StoreId = c?.ProductFk?.StoreId,
+                        Name = c?.ProductFk?.Name,
+                        Description = c?.ProductFk?.Description,
                         TenantId = c?.TenantId,
-                        Score = c?.Score,
-                        RatingLikeId = c?.RatingLikeId,
-                        RatingLikeScore = c?.RatingLikeFk?.Score,
-                        RatingLikeName = c?.RatingLikeFk?.Name,
+                        Score = c?.ProductFk?.Score,
+                        RatingLikeId = c?.ProductFk?.RatingLikeId,
+                        RatingLikeScore = c?.ProductFk?.RatingLikeFk?.Score,
+                        RatingLikeName = c?.ProductFk?.RatingLikeFk?.Name,
+                        DisplaySequence = c.DisplaySequence,
 
-                        ContactId = c?.ContactId,
+                        ContactId = c?.ProductFk?.ContactId,
 
 
                     }).ToList();

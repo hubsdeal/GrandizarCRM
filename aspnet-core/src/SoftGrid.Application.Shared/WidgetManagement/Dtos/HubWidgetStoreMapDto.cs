@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace SoftGrid.WidgetManagement.Dtos
 {
@@ -32,8 +33,9 @@ namespace SoftGrid.WidgetManagement.Dtos
         public int? InternalDisplayNumber { get; set; }
         public Guid? ThumbnailImageId { get; set; }
 
-        public List<HwsStoreJsonViewDto> Stores { get; set; }
+        public List<Task<HwsStoreJsonViewDto>> Stores { get; set; }
         public List<HwsProductJsonViewDto> Products { get; set; }
+        public List<HwsContentJsonViewDto> Contents { get; set; }
 
     }
 
@@ -86,6 +88,32 @@ namespace SoftGrid.WidgetManagement.Dtos
         public int? RatingLikeScore { get; set; }
         public string RatingLikeName { get; set; }
         public long? ContactId { get; set; }
+        public int? DisplaySequence { get; set; }
     }
 
+
+    /// <summary>
+    /// Hub Store Widget Map Json View Dto | Store
+    /// </summary>
+    public class HwsContentJsonViewDto
+    {
+        public long? Id { get; set; }
+        public long? WidgetId { get; set; }
+        public long? HubId { get; set; }
+        public string Title { get; set; }
+        public string Body { get; set; }
+        public int? TenantId { get; set; }
+        public int ContentTypeId { get; set; }
+        public string PublishTime { get; set; }
+        public bool? Published { get; set; }
+        public DateTime? PublishedDate { get; set; }
+        public string SeoDescription { get; set; }
+        public string SeoKeywords { get; set; }
+        public string SeoUrl { get; set; }
+        public long? BannerMediaLibraryId { get; set; }
+        public string BannerMediaLibraryName { get; set; }
+        public string BannerMediaLibraryAltTag { get; set; }
+        public Guid? BannerMediaLibraryBinaryObjectId { get; set; }
+        public string BannerMediaLibraryBinaryVirtualPath { get; set; }
+    }
 }

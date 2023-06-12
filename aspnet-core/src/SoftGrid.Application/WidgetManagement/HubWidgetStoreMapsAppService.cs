@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using SoftGrid.Authorization;
 using SoftGrid.Dto;
 using SoftGrid.Shop;
+using SoftGrid.Storage;
 using SoftGrid.WidgetManagement.Dtos;
 using SoftGrid.WidgetManagement.Exporting;
 
@@ -26,14 +27,15 @@ namespace SoftGrid.WidgetManagement
         private readonly IHubWidgetStoreMapsExcelExporter _hubWidgetStoreMapsExcelExporter;
         private readonly IRepository<HubWidgetMap, long> _lookup_hubWidgetMapRepository;
         private readonly IRepository<Store, long> _lookup_storeRepository;
+        private readonly IBinaryObjectManager _binaryObjectManager;
 
-        public HubWidgetStoreMapsAppService(IRepository<HubWidgetStoreMap, long> hubWidgetStoreMapRepository, IHubWidgetStoreMapsExcelExporter hubWidgetStoreMapsExcelExporter, IRepository<HubWidgetMap, long> lookup_hubWidgetMapRepository, IRepository<Store, long> lookup_storeRepository)
+        public HubWidgetStoreMapsAppService(IRepository<HubWidgetStoreMap, long> hubWidgetStoreMapRepository, IHubWidgetStoreMapsExcelExporter hubWidgetStoreMapsExcelExporter, IRepository<HubWidgetMap, long> lookup_hubWidgetMapRepository, IRepository<Store, long> lookup_storeRepository, IBinaryObjectManager binaryObjectManager)
         {
             _hubWidgetStoreMapRepository = hubWidgetStoreMapRepository;
             _hubWidgetStoreMapsExcelExporter = hubWidgetStoreMapsExcelExporter;
             _lookup_hubWidgetMapRepository = lookup_hubWidgetMapRepository;
             _lookup_storeRepository = lookup_storeRepository;
-
+            _binaryObjectManager = binaryObjectManager;
         }
 
         public async Task<PagedResultDto<GetHubWidgetStoreMapForViewDto>> GetAll(GetAllHubWidgetStoreMapsInput input)
@@ -285,6 +287,7 @@ namespace SoftGrid.WidgetManagement
                 .Include(c => c.HubWidgetMapFk).ThenInclude(c => c.MasterWidgetFk)
                 .Include(c => c.StoreFk).ThenInclude(c => c.CountryFk)
                 .Include(c => c.StoreFk).ThenInclude(c => c.StateFk)
+                .Include(c => c.StoreFk).ThenInclude(c => c.LogoMediaLibraryFk)
                 .Include(c => c.StoreFk).ThenInclude(c => c.StoreCategoryFk).ThenInclude(c => c.PictureMediaLibraryFk)
                 .Include(c => c.StoreFk).ThenInclude(c => c.StoreCategoryFk).ThenInclude(c => c.MasterTagCategoryFk)
                 .Include(c => c.StoreFk).ThenInclude(c => c.StoreTagSettingCategoryFk)
@@ -308,7 +311,7 @@ namespace SoftGrid.WidgetManagement
 
                 foreach (var widget in widgets)
                 {
-                    widget.Stores = dataList.Where(c => c.HubWidgetMapFk?.MasterWidgetFk?.Id == widget.Id).Select(c => new HwsStoreJsonViewDto
+                    widget.Stores = dataList.Where(c => c.HubWidgetMapFk?.MasterWidgetFk?.Id == widget.Id).Select(async c => new HwsStoreJsonViewDto
                     {
                         Id = c?.Id,
                         WidgetId = widget.Id,
@@ -375,6 +378,18 @@ namespace SoftGrid.WidgetManagement
                                 c?.StoreFk?.StoreCategoryFk?.PictureMediaLibraryFk?.AltTag,
                                 c?.StoreFk?.StoreCategoryFk?.PictureMediaLibraryFk?.TenantId,
                                 c?.StoreFk?.StoreCategoryFk?.PictureMediaLibraryFk?.VirtualPath,
+                            },
+
+
+                            LogoMediaLibrary = new
+                            {
+                                c?.StoreFk?.LogoMediaLibraryFk?.Name,
+                                c?.StoreFk?.LogoMediaLibraryFk?.AltTag,
+                                c?.StoreFk?.LogoMediaLibraryFk?.TenantId,
+                                c?.StoreFk?.LogoMediaLibraryFk?.VirtualPath,
+                                Logo = (c.StoreFk?.LogoMediaLibraryFk?.BinaryObjectId != null && c.StoreFk?.LogoMediaLibraryFk?.BinaryObjectId != Guid.Empty)
+                                    ? await _binaryObjectManager.GetStorePictureUrlAsync((c.StoreFk?.LogoMediaLibraryFk?.BinaryObjectId ?? Guid.Empty), ".png")
+                                    : ""
                             }
 
                             #endregion

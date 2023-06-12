@@ -1,23 +1,22 @@
-﻿using SoftGrid.WidgetManagement;
+﻿using Abp.Application.Services.Dto;
+using Abp.Authorization;
+using Abp.Domain.Repositories;
+using Abp.Linq.Extensions;
+
+using Microsoft.EntityFrameworkCore;
+
+using SoftGrid.Authorization;
 using SoftGrid.CMS;
+using SoftGrid.CMS.Enums;
+using SoftGrid.Dto;
+using SoftGrid.WidgetManagement.Dtos;
+using SoftGrid.WidgetManagement.Exporting;
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
-using Abp.Linq.Extensions;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using Abp.Domain.Repositories;
-using SoftGrid.WidgetManagement.Exporting;
-using SoftGrid.WidgetManagement.Dtos;
-using SoftGrid.Dto;
-using Abp.Application.Services.Dto;
-using SoftGrid.Authorization;
-using Abp.Extensions;
-using Abp.Authorization;
-using Microsoft.EntityFrameworkCore;
-using Abp.UI;
-using SoftGrid.Storage;
 
 namespace SoftGrid.WidgetManagement
 {
@@ -277,5 +276,74 @@ namespace SoftGrid.WidgetManagement
             );
         }
 
+
+
+        [AbpAllowAnonymous]
+        public async Task<dynamic> GetHubWidgetContentsByHubId(long hubId, int? contentTypeId = null)
+        {
+            try
+            {
+                var query = _hubWidgetContentMapRepository.GetAll()
+                .Include(c => c.HubWidgetMapFk).ThenInclude(c => c.MasterWidgetFk)
+                .Include(c => c.ContentFk).ThenInclude(c => c.BannerMediaLibraryFk)
+                .Where(c => c.HubWidgetMapFk.HubId == hubId);
+
+                List<HubWidgetContentMap> dataList = null;
+                if (contentTypeId > 0) dataList = await query.Where(c => c.ContentFk.ContentTypeId == (ContentType)contentTypeId).ToListAsync();
+                else dataList = await query.ToListAsync();
+
+                var widgets = dataList.Where(c => c.HubWidgetMapFk.MasterWidgetFk.Publish).Distinct()
+                    .Select(c => new HwsMapWidgetJsonViewDto
+                    {
+                        Id = c.HubWidgetMapFk?.MasterWidgetFk?.Id,
+                        Name = c.HubWidgetMapFk?.MasterWidgetFk?.Name,
+                        Description = c.HubWidgetMapFk?.MasterWidgetFk?.Description,
+                        DesignCode = c.HubWidgetMapFk?.MasterWidgetFk?.DesignCode,
+                        InternalDisplayNumber = c.HubWidgetMapFk?.MasterWidgetFk?.InternalDisplayNumber,
+                        ThumbnailImageId = c.HubWidgetMapFk?.MasterWidgetFk?.ThumbnailImageId,
+                        TenantId = c.HubWidgetMapFk?.MasterWidgetFk?.TenantId,
+                        Publish = c.HubWidgetMapFk?.MasterWidgetFk?.Publish ?? false,
+                        HubId = c.HubWidgetMapFk?.HubId,
+                    }).ToList();
+
+
+                foreach (var widget in widgets)
+                {
+                    widget.Contents = dataList.Where(c => c.HubWidgetMapFk?.MasterWidgetFk?.Id == widget.Id).Select(c => new HwsContentJsonViewDto
+                    {
+                        Id = c?.Id,
+                        WidgetId = widget.Id,
+                        HubId = widget?.HubId,
+                        Title = c?.ContentFk?.Title,
+                        Body = c?.ContentFk?.Body,
+                        TenantId = c?.TenantId,
+                        ContentTypeId = (c?.ContentFk?.ContentTypeId ?? 0) > 0 ? (int)(c?.ContentFk?.ContentTypeId ?? 0) : 0,
+                        PublishTime = c?.ContentFk?.PublishTime,
+                        Published = c?.ContentFk?.Published,
+                        PublishedDate = c?.ContentFk?.PublishedDate,
+                        SeoDescription = c?.ContentFk?.SeoDescription,
+                        SeoKeywords = c?.ContentFk?.SeoKeywords,
+                        SeoUrl = c?.ContentFk?.SeoUrl,
+                        BannerMediaLibraryId = c?.ContentFk?.BannerMediaLibraryId,
+                        BannerMediaLibraryName = c?.ContentFk?.BannerMediaLibraryFk?.Name,
+                        BannerMediaLibraryAltTag = c?.ContentFk?.BannerMediaLibraryFk?.AltTag,
+                        BannerMediaLibraryBinaryObjectId = c?.ContentFk?.BannerMediaLibraryFk?.BinaryObjectId,
+                        BannerMediaLibraryBinaryVirtualPath = c?.ContentFk?.BannerMediaLibraryFk?.VirtualPath,
+
+                    }).ToList();
+
+                }
+
+                return widgets;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+
+
+
+        }
     }
 }
