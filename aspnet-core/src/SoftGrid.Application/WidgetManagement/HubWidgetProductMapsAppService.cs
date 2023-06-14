@@ -1,23 +1,21 @@
-﻿using SoftGrid.WidgetManagement;
+﻿using Abp.Application.Services.Dto;
+using Abp.Authorization;
+using Abp.Domain.Repositories;
+using Abp.Linq.Extensions;
+
+using Microsoft.EntityFrameworkCore;
+
+using SoftGrid.Authorization;
+using SoftGrid.Dto;
 using SoftGrid.Shop;
+using SoftGrid.WidgetManagement.Dtos;
+using SoftGrid.WidgetManagement.Exporting;
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
-using Abp.Linq.Extensions;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using Abp.Domain.Repositories;
-using SoftGrid.WidgetManagement.Exporting;
-using SoftGrid.WidgetManagement.Dtos;
-using SoftGrid.Dto;
-using Abp.Application.Services.Dto;
-using SoftGrid.Authorization;
-using Abp.Extensions;
-using Abp.Authorization;
-using Microsoft.EntityFrameworkCore;
-using Abp.UI;
-using SoftGrid.Storage;
 
 namespace SoftGrid.WidgetManagement
 {
@@ -277,5 +275,71 @@ namespace SoftGrid.WidgetManagement
             );
         }
 
+
+
+        [AbpAllowAnonymous]
+        public async Task<dynamic> GetHubWidgetStoreProductsByHubId(long hubId)
+        {
+            try
+            {
+                var dataList = await _hubWidgetProductMapRepository.GetAll()
+                .Include(c => c.HubWidgetMapFk).ThenInclude(c => c.MasterWidgetFk)
+                .Include(c => c.ProductFk).ThenInclude(c => c.StoreFk)
+                .Include(c => c.ProductFk).ThenInclude(c => c.ContactFk)
+                .Include(c => c.ProductFk).ThenInclude(c => c.ProductCategoryFk)
+                .Include(c => c.ProductFk).ThenInclude(c => c.MediaLibraryFk)
+                .Include(c => c.ProductFk).ThenInclude(c => c.RatingLikeFk)
+                .Where(c => c.HubWidgetMapFk.HubId == hubId).ToListAsync();
+
+                var widgets = dataList.Where(c => c.HubWidgetMapFk.MasterWidgetFk.Publish).Distinct()
+                    .Select(c => new HwsMapWidgetJsonViewDto
+                    {
+                        Id = c.HubWidgetMapFk?.MasterWidgetFk?.Id,
+                        Name = c.HubWidgetMapFk?.MasterWidgetFk?.Name,
+                        Description = c.HubWidgetMapFk?.MasterWidgetFk?.Description,
+                        DesignCode = c.HubWidgetMapFk?.MasterWidgetFk?.DesignCode,
+                        InternalDisplayNumber = c.HubWidgetMapFk?.MasterWidgetFk?.InternalDisplayNumber,
+                        ThumbnailImageId = c.HubWidgetMapFk?.MasterWidgetFk?.ThumbnailImageId,
+                        TenantId = c.HubWidgetMapFk?.MasterWidgetFk?.TenantId,
+                        Publish = c.HubWidgetMapFk?.MasterWidgetFk?.Publish ?? false,
+                        HubId = c.HubWidgetMapFk?.HubId,
+                    }).ToList();
+
+
+                foreach (var widget in widgets)
+                {
+                    widget.Products = dataList.Where(c => c.HubWidgetMapFk?.MasterWidgetFk?.Id == widget.Id).Select(c => new HwsProductJsonViewDto
+                    {
+                        Id = c?.Id,
+                        WidgetId = widget.Id,
+                        HubId = widget?.HubId,
+                        StoreId = c?.ProductFk?.StoreId,
+                        Name = c?.ProductFk?.Name,
+                        Description = c?.ProductFk?.Description,
+                        TenantId = c?.TenantId,
+                        Score = c?.ProductFk?.Score,
+                        RatingLikeId = c?.ProductFk?.RatingLikeId,
+                        RatingLikeScore = c?.ProductFk?.RatingLikeFk?.Score,
+                        RatingLikeName = c?.ProductFk?.RatingLikeFk?.Name,
+                        DisplaySequence = c.DisplaySequence,
+
+                        ContactId = c?.ProductFk?.ContactId,
+
+
+                    }).ToList();
+
+                }
+
+                return widgets;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+
+
+
+        }
     }
 }

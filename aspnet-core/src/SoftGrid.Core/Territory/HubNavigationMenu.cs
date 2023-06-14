@@ -1,10 +1,8 @@
-﻿using SoftGrid.Territory;
-using SoftGrid.Territory;
-using System;
+﻿using Abp.Domain.Entities;
+using Abp.Domain.Entities.Auditing;
+
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Abp.Domain.Entities.Auditing;
-using Abp.Domain.Entities;
 
 namespace SoftGrid.Territory
 {
@@ -31,6 +29,5 @@ namespace SoftGrid.Territory
         public virtual bool? HasParentMenu { get; set; }
         public virtual long? ParentMenuId { get; set; }
         public virtual int? DisplaySequence { get; set; }
-
     }
 }

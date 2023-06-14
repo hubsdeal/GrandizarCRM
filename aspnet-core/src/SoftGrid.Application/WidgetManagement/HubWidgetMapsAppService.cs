@@ -1,25 +1,21 @@
-﻿using SoftGrid.Territory;
-using SoftGrid.WidgetManagement;
+﻿using Abp.Application.Services.Dto;
+using Abp.Authorization;
+using Abp.Domain.Repositories;
+using Abp.Linq.Extensions;
 
+using Microsoft.EntityFrameworkCore;
+
+using SoftGrid.Authorization;
+using SoftGrid.Dto;
+using SoftGrid.Territory;
+using SoftGrid.WidgetManagement.Dtos;
 using SoftGrid.WidgetManagement.Enums;
+using SoftGrid.WidgetManagement.Exporting;
 
-using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
-using Abp.Linq.Extensions;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using Abp.Domain.Repositories;
-using SoftGrid.WidgetManagement.Exporting;
-using SoftGrid.WidgetManagement.Dtos;
-using SoftGrid.Dto;
-using Abp.Application.Services.Dto;
-using SoftGrid.Authorization;
-using Abp.Extensions;
-using Abp.Authorization;
-using Microsoft.EntityFrameworkCore;
-using Abp.UI;
-using SoftGrid.Storage;
 
 namespace SoftGrid.WidgetManagement
 {
@@ -293,6 +289,32 @@ namespace SoftGrid.WidgetManagement
                 totalCount,
                 lookupTableDtoList
             );
+        }
+
+
+
+        [AbpAllowAnonymous]
+        public async Task<List<HubWidgetMapDto>> GetHubWidgetsByHubId(int hubId)
+        {
+            var hubWidgetMaps = await _hubWidgetMapRepository.GetAll().Include(c => c.MasterWidgetFk).Include(c => c.HubFk).Where(c => c.HubId == hubId).ToListAsync();
+
+            var dataList = ObjectMapper.Map<List<HubWidgetMapDto>>(hubWidgetMaps);
+            foreach (var hubWidgetMap in hubWidgetMaps)
+            {
+                var dto = dataList.FirstOrDefault(c => c.Id == hubWidgetMap.Id);
+                if (dto == null) continue;
+                if (hubWidgetMap.MasterWidgetFk is { Publish: true })
+                {
+                    dto.MasterWidgetName = hubWidgetMap.MasterWidgetFk?.Name;
+                    dto.MasterWidgetDescription = hubWidgetMap.MasterWidgetFk?.Description;
+                    dto.MasterWidgetDesignCode = hubWidgetMap.MasterWidgetFk?.DesignCode;
+                    dto.MasterWidgetInternalDisplayNumber = hubWidgetMap.MasterWidgetFk?.InternalDisplayNumber;
+                    dto.MasterWidgetThumbnailImageId = hubWidgetMap.MasterWidgetFk?.ThumbnailImageId;
+                }
+
+            }
+
+            return dataList;
         }
 
     }

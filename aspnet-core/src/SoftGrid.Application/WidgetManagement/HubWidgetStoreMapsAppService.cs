@@ -1,23 +1,22 @@
-﻿using SoftGrid.WidgetManagement;
+﻿using Abp.Application.Services.Dto;
+using Abp.Authorization;
+using Abp.Domain.Repositories;
+using Abp.Linq.Extensions;
+
+using Microsoft.EntityFrameworkCore;
+
+using SoftGrid.Authorization;
+using SoftGrid.Dto;
 using SoftGrid.Shop;
+using SoftGrid.Storage;
+using SoftGrid.WidgetManagement.Dtos;
+using SoftGrid.WidgetManagement.Exporting;
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
-using Abp.Linq.Extensions;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using Abp.Domain.Repositories;
-using SoftGrid.WidgetManagement.Exporting;
-using SoftGrid.WidgetManagement.Dtos;
-using SoftGrid.Dto;
-using Abp.Application.Services.Dto;
-using SoftGrid.Authorization;
-using Abp.Extensions;
-using Abp.Authorization;
-using Microsoft.EntityFrameworkCore;
-using Abp.UI;
-using SoftGrid.Storage;
 
 namespace SoftGrid.WidgetManagement
 {
@@ -28,14 +27,15 @@ namespace SoftGrid.WidgetManagement
         private readonly IHubWidgetStoreMapsExcelExporter _hubWidgetStoreMapsExcelExporter;
         private readonly IRepository<HubWidgetMap, long> _lookup_hubWidgetMapRepository;
         private readonly IRepository<Store, long> _lookup_storeRepository;
+        private readonly IBinaryObjectManager _binaryObjectManager;
 
-        public HubWidgetStoreMapsAppService(IRepository<HubWidgetStoreMap, long> hubWidgetStoreMapRepository, IHubWidgetStoreMapsExcelExporter hubWidgetStoreMapsExcelExporter, IRepository<HubWidgetMap, long> lookup_hubWidgetMapRepository, IRepository<Store, long> lookup_storeRepository)
+        public HubWidgetStoreMapsAppService(IRepository<HubWidgetStoreMap, long> hubWidgetStoreMapRepository, IHubWidgetStoreMapsExcelExporter hubWidgetStoreMapsExcelExporter, IRepository<HubWidgetMap, long> lookup_hubWidgetMapRepository, IRepository<Store, long> lookup_storeRepository, IBinaryObjectManager binaryObjectManager)
         {
             _hubWidgetStoreMapRepository = hubWidgetStoreMapRepository;
             _hubWidgetStoreMapsExcelExporter = hubWidgetStoreMapsExcelExporter;
             _lookup_hubWidgetMapRepository = lookup_hubWidgetMapRepository;
             _lookup_storeRepository = lookup_storeRepository;
-
+            _binaryObjectManager = binaryObjectManager;
         }
 
         public async Task<PagedResultDto<GetHubWidgetStoreMapForViewDto>> GetAll(GetAllHubWidgetStoreMapsInput input)
@@ -275,6 +275,143 @@ namespace SoftGrid.WidgetManagement
                 totalCount,
                 lookupTableDtoList
             );
+        }
+
+
+        [AbpAllowAnonymous]
+        public async Task<dynamic> GetHubWidgetStoresByHubId(long hubId)
+        {
+            try
+            {
+                var dataList = await _hubWidgetStoreMapRepository.GetAll()
+                .Include(c => c.HubWidgetMapFk).ThenInclude(c => c.MasterWidgetFk)
+                .Include(c => c.StoreFk).ThenInclude(c => c.CountryFk)
+                .Include(c => c.StoreFk).ThenInclude(c => c.StateFk)
+                .Include(c => c.StoreFk).ThenInclude(c => c.LogoMediaLibraryFk)
+                .Include(c => c.StoreFk).ThenInclude(c => c.StoreCategoryFk).ThenInclude(c => c.PictureMediaLibraryFk)
+                .Include(c => c.StoreFk).ThenInclude(c => c.StoreCategoryFk).ThenInclude(c => c.MasterTagCategoryFk)
+                .Include(c => c.StoreFk).ThenInclude(c => c.StoreTagSettingCategoryFk)
+                .Where(c => c.HubWidgetMapFk.HubId == hubId).ToListAsync(); // TODO: Make is Paginated. RB- #SRABAN
+
+
+                var widgets = dataList.Where(c => c.HubWidgetMapFk.MasterWidgetFk.Publish).Distinct()
+                    .Select(c => new HwsMapWidgetJsonViewDto
+                    {
+                        Id = c.HubWidgetMapFk?.MasterWidgetFk?.Id,
+                        Name = c.HubWidgetMapFk?.MasterWidgetFk?.Name,
+                        Description = c.HubWidgetMapFk?.MasterWidgetFk?.Description,
+                        DesignCode = c.HubWidgetMapFk?.MasterWidgetFk?.DesignCode,
+                        InternalDisplayNumber = c.HubWidgetMapFk?.MasterWidgetFk?.InternalDisplayNumber,
+                        ThumbnailImageId = c.HubWidgetMapFk?.MasterWidgetFk?.ThumbnailImageId,
+                        TenantId = c.HubWidgetMapFk?.MasterWidgetFk?.TenantId,
+                        Publish = c.HubWidgetMapFk?.MasterWidgetFk?.Publish ?? false,
+                        HubId = c.HubWidgetMapFk?.HubId,
+                    }).ToList();
+
+
+                foreach (var widget in widgets)
+                {
+                    widget.Stores = dataList.Where(c => c.HubWidgetMapFk?.MasterWidgetFk?.Id == widget.Id).Select(async c => new HwsStoreJsonViewDto
+                    {
+                        Id = c?.Id,
+                        WidgetId = widget.Id,
+                        HubId = widget?.HubId,
+                        Name = c?.StoreFk?.Name,
+                        DisplaySequence = c?.DisplaySequence,
+                        TenantId = c?.StoreFk?.TenantId,
+                        Address = c?.StoreFk?.Address,
+                        City = c?.StoreFk?.City,
+                        CountryId = c?.StoreFk?.CountryId,
+                        IsVerified = c?.StoreFk?.IsVerified,
+
+                        Country = new
+                        {
+                            c?.StoreFk?.CountryFk?.Id,
+                            c?.StoreFk?.CountryFk?.Name,
+                            c?.StoreFk?.CountryFk?.TenantId,
+                            c?.StoreFk?.CountryFk?.FlagIcon,
+                            c?.StoreFk?.CountryFk?.PhoneCode,
+                            c?.StoreFk?.CountryFk?.Ticker,
+                        },
+
+
+                        StateId = c?.StoreFk?.StateId,
+                        State = new
+                        {
+                            c?.StoreFk?.StateFk?.Id,
+                            c?.StoreFk?.StateFk?.Name,
+                            c?.StoreFk?.StateFk?.TenantId,
+                            c?.StoreFk?.StateFk?.CountryId,
+                            c?.StoreFk?.StateFk?.Ticker,
+                        },
+
+
+                        StoreCategoryId = c?.StoreFk?.StoreCategoryId,
+                        StoreCategory = new
+                        {
+                            c?.StoreFk?.StoreCategoryFk?.Id,
+                            c?.StoreFk?.StoreCategoryFk?.Name,
+                            c?.StoreFk?.StoreCategoryFk?.TenantId,
+                            c?.StoreFk?.StoreCategoryFk?.DisplaySequence,
+                            c?.StoreFk?.StoreCategoryFk?.Description,
+                            c?.StoreFk?.StoreCategoryFk?.Synonyms,
+
+                            #region MasterTagCategory
+
+                            c?.StoreFk?.StoreCategoryFk?.MasterTagCategoryId,
+                            MasterTagCategory = new
+                            {
+                                c?.StoreFk?.StoreCategoryFk?.MasterTagCategoryFk?.Id,
+                                c?.StoreFk?.StoreCategoryFk?.MasterTagCategoryFk?.Name,
+                                c?.StoreFk?.StoreCategoryFk?.MasterTagCategoryFk?.Description,
+                                c?.StoreFk?.StoreCategoryFk?.MasterTagCategoryFk?.TenantId,
+                            },
+
+                            #endregion
+
+                            #region PictureMediaLibrary
+
+                            c?.StoreFk?.StoreCategoryFk?.PictureMediaLibraryId,
+                            PictureMediaLibrary = new
+                            {
+                                c?.StoreFk?.StoreCategoryFk?.PictureMediaLibraryFk?.Name,
+                                c?.StoreFk?.StoreCategoryFk?.PictureMediaLibraryFk?.AltTag,
+                                c?.StoreFk?.StoreCategoryFk?.PictureMediaLibraryFk?.TenantId,
+                                c?.StoreFk?.StoreCategoryFk?.PictureMediaLibraryFk?.VirtualPath,
+                            },
+
+
+                            LogoMediaLibrary = new
+                            {
+                                c?.StoreFk?.LogoMediaLibraryFk?.Name,
+                                c?.StoreFk?.LogoMediaLibraryFk?.AltTag,
+                                c?.StoreFk?.LogoMediaLibraryFk?.TenantId,
+                                c?.StoreFk?.LogoMediaLibraryFk?.VirtualPath,
+                                Logo = (c.StoreFk?.LogoMediaLibraryFk?.BinaryObjectId != null && c.StoreFk?.LogoMediaLibraryFk?.BinaryObjectId != Guid.Empty)
+                                    ? await _binaryObjectManager.GetStorePictureUrlAsync((c.StoreFk?.LogoMediaLibraryFk?.BinaryObjectId ?? Guid.Empty), ".png")
+                                    : ""
+                            }
+
+                            #endregion
+
+
+
+                        },
+
+                    }).ToList();
+
+                }
+
+                return widgets;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+
+
+
         }
 
     }

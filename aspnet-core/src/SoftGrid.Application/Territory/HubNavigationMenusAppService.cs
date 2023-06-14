@@ -1,23 +1,19 @@
-﻿using SoftGrid.Territory;
-using SoftGrid.Territory;
+﻿using Abp.Application.Services.Dto;
+using Abp.Authorization;
+using Abp.Domain.Repositories;
+using Abp.Linq.Extensions;
 
-using System;
+using Microsoft.EntityFrameworkCore;
+
+using SoftGrid.Authorization;
+using SoftGrid.Dto;
+using SoftGrid.Territory.Dtos;
+using SoftGrid.Territory.Exporting;
+
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
-using Abp.Linq.Extensions;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using Abp.Domain.Repositories;
-using SoftGrid.Territory.Exporting;
-using SoftGrid.Territory.Dtos;
-using SoftGrid.Dto;
-using Abp.Application.Services.Dto;
-using SoftGrid.Authorization;
-using Abp.Extensions;
-using Abp.Authorization;
-using Microsoft.EntityFrameworkCore;
-using Abp.UI;
-using SoftGrid.Storage;
 
 namespace SoftGrid.Territory
 {
@@ -278,6 +274,39 @@ namespace SoftGrid.Territory
                 totalCount,
                 lookupTableDtoList
             );
+        }
+
+
+
+        [AbpAllowAnonymous]
+        public async Task<List<HubNavigationMenuDto>> GetHubNavMenu(long hubId)
+        {
+            var dataList = await _hubNavigationMenuRepository.GetAll()
+                .Include(c => c.MasterNavigationMenuFk)
+                .Include(c => c.HubFk)
+                .Where(c => c.HubId == hubId)
+                //var da = ObjectMapper.Map<List<HubNavigationMenuDto>>(dataList);
+
+                .Select(c => new HubNavigationMenuDto()
+                {
+                    HubId = c.HubId,
+                    HubName = c.HubFk.Name,
+                    HasParentMenu = c.HasParentMenu,
+                    MasterNavigationMenuId = c.MasterNavigationMenuId,
+                    ParentMenuId = c.ParentMenuId,
+                    NavigationLink = c.NavigationLink,
+                    CustomName = c.CustomName,
+                    TenantId = c.TenantId,
+                    DisplaySequence = c.DisplaySequence,
+                    Id = c.Id,
+                    MenuName = c.MasterNavigationMenuFk.Name
+                }).ToListAsync();
+
+            //TODO: Update with AutoMapper
+            //var result = new List<HubNavigationMenuDto>();
+
+
+            return dataList;
         }
 
     }

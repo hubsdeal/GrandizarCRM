@@ -114,6 +114,8 @@ namespace SoftGrid.PublicCommon
         private readonly IRepository<StoreLocation, long> _storeLocationRepository;
         //private readonly IRepository<ReservationTimeSlot, long> _reservationTimeSlotRepository;
         //private readonly IRepository<Reservation,long> _reservationRepository;
+
+
         public PublicPagesCommonAppService(
             IRepository<ProductCategory, long> productCategoryRepository,
             IRepository<MediaLibrary, long> lookup_mediaLibraryRepository,
@@ -3639,6 +3641,9 @@ namespace SoftGrid.PublicCommon
 
             return null;
         }
+
+
+
 
         //[AbpAllowAnonymous]
         //public async Task<TaxRate> GetTaxRateByZipCode(string zipCode, long stateId)

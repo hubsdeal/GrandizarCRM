@@ -1,7 +1,8 @@
-﻿using SoftGrid.WidgetManagement.Enums;
+﻿using Abp.Application.Services.Dto;
+
+using SoftGrid.WidgetManagement.Enums;
 
 using System;
-using Abp.Application.Services.Dto;
 
 namespace SoftGrid.WidgetManagement.Dtos
 {
@@ -16,6 +17,10 @@ namespace SoftGrid.WidgetManagement.Dtos
         public long HubId { get; set; }
 
         public long MasterWidgetId { get; set; }
-
+        public string MasterWidgetName { get; set; }
+        public string MasterWidgetDescription { get; set; }
+        public string MasterWidgetDesignCode { get; set; }
+        public int? MasterWidgetInternalDisplayNumber { get; set; }
+        public Guid? MasterWidgetThumbnailImageId { get; set; }
     }
 }
