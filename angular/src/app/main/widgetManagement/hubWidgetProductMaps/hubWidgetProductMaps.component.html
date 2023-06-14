@@ -1,18 +1,15 @@
 ﻿<div [@routerTransition]>
-    <sub-header [title]="'HubWidgetProductMaps' | localize" [description]="'HubWidgetProductMapsHeaderInfo' | localize">
+    <sub-header [title]="'Hub Widget Products' | localize" [description]="">
         <div role="actions">
-            <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1">
+            <!-- <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1">
                 <i class="fa fa-file-excel"></i>
                 {{ l('ExportToExcel') }}
-            </button>
+            </button> -->
 
-            <button
-                *ngIf="isGranted('Pages.HubWidgetProductMaps.Create')"
-                (click)="createHubWidgetProductMap()"
-                class="btn btn-primary blue"
-            >
+            <button *ngIf="isGranted('Pages.HubWidgetProductMaps.Create')" (click)="createHubWidgetProductMap()"
+                class="btn btn-primary blue">
                 <i class="fa fa-plus"></i>
-                {{ l('CreateNewHubWidgetProductMap') }}
+                {{ l('Hub Widget Product') }}
             </button>
         </div>
     </sub-header>
@@ -26,20 +23,11 @@
                             <div class="col-xl-12">
                                 <div class="my-3">
                                     <div class="input-group mb-3">
-                                        <input
-                                            [(ngModel)]="filterText"
-                                            (ngModelChange)="getHubWidgetProductMaps()"
-                                            name="filterText"
-                                            autoFocus
-                                            type="text"
-                                            class="form-control"
-                                            [placeholder]="l('SearchWithThreeDot')"
-                                        />
-                                        <button
-                                            class="btn btn-primary"
-                                            type="submit"
-                                            (click)="getHubWidgetProductMaps()"
-                                        >
+                                        <input [(ngModel)]="filterText" (ngModelChange)="getHubWidgetProductMaps()"
+                                            name="filterText" autoFocus type="text" class="form-control"
+                                            [placeholder]="l('SearchWithThreeDot')" />
+                                        <button class="btn btn-primary" type="submit"
+                                            (click)="getHubWidgetProductMaps()">
                                             <i class="flaticon-search-1"></i>
                                         </button>
                                     </div>
@@ -55,23 +43,13 @@
                                         {{ l('MinMax') }} {{ l('DisplaySequence') }}
                                     </label>
                                     <div class="input-group">
-                                        <input
-                                            type="number"
-                                            class="form-control"
-                                            id="MinDisplaySequenceFilter"
-                                            [(ngModel)]="minDisplaySequenceFilter"
-                                            placeholder="{{ l('MinValue') }}"
+                                        <input type="number" class="form-control" id="MinDisplaySequenceFilter"
+                                            [(ngModel)]="minDisplaySequenceFilter" placeholder="{{ l('MinValue') }}"
                                             name="minDisplaySequenceFilter"
-                                            (ngModelChange)="getHubWidgetProductMaps()"
-                                        />
-                                        <input
-                                            type="number"
-                                            class="form-control"
-                                            [(ngModel)]="maxDisplaySequenceFilter"
-                                            placeholder="{{ l('MaxValue') }}"
-                                            name="maxDisplaySequenceFilter"
-                                            (ngModelChange)="getHubWidgetProductMaps()"
-                                        />
+                                            (ngModelChange)="getHubWidgetProductMaps()" />
+                                        <input type="number" class="form-control" [(ngModel)]="maxDisplaySequenceFilter"
+                                            placeholder="{{ l('MaxValue') }}" name="maxDisplaySequenceFilter"
+                                            (ngModelChange)="getHubWidgetProductMaps()" />
                                     </div>
                                 </div>
                             </div>
@@ -81,13 +59,9 @@
                                     <label class="form-label" for="HubWidgetMapCustomNameFilter">
                                         ({{ l('HubWidgetMap') }}) {{ l('CustomName') }}
                                     </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="HubWidgetMapCustomNameFilter"
+                                    <input type="text" class="form-control" id="HubWidgetMapCustomNameFilter"
                                         name="hubWidgetMapCustomNameFilter"
-                                        [(ngModel)]="hubWidgetMapCustomNameFilter"
-                                    />
+                                        [(ngModel)]="hubWidgetMapCustomNameFilter" />
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -95,40 +69,26 @@
                                     <label class="form-label" for="ProductNameFilter">
                                         ({{ l('Product') }}) {{ l('Name') }}
                                     </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="ProductNameFilter"
-                                        name="productNameFilter"
-                                        [(ngModel)]="productNameFilter"
-                                    />
+                                    <input type="text" class="form-control" id="ProductNameFilter"
+                                        name="productNameFilter" [(ngModel)]="productNameFilter" />
                                 </div>
                             </div>
                             <div class="col-md-12 mt-5">
-                                <button
-                                    (click)="resetFilters()"
-                                    class="btn btn-secondary btn-sm"
-                                    id="btn-reset-filters"
-                                >
+                                <button (click)="resetFilters()" class="btn btn-secondary btn-sm"
+                                    id="btn-reset-filters">
                                     Reset
                                 </button>
                             </div>
                         </div>
                         <div class="row my-4">
                             <div class="col-sm-12">
-                                <span
-                                    class="clickable-item text-muted"
-                                    *ngIf="!advancedFiltersAreShown"
-                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown"
-                                >
+                                <span class="clickable-item text-muted" *ngIf="!advancedFiltersAreShown"
+                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown">
                                     <i class="fa fa-angle-down"></i>
                                     {{ l('ShowAdvancedFilters') }}
                                 </span>
-                                <span
-                                    class="clickable-item text-muted"
-                                    *ngIf="advancedFiltersAreShown"
-                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown"
-                                >
+                                <span class="clickable-item text-muted" *ngIf="advancedFiltersAreShown"
+                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown">
                                     <i class="fa fa-angle-up"></i>
                                     {{ l('HideAdvancedFilters') }}
                                 </span>
@@ -140,101 +100,37 @@
                 <div class="row align-items-center">
                     <!--<Primeng-Datatable-Start>-->
                     <div class="primeng-datatable-container col-12" [busyIf]="primengTableHelper.isLoading">
-                        <p-table
-                            #dataTable
-                            (onLazyLoad)="getHubWidgetProductMaps($event)"
+                        <p-table #dataTable (onLazyLoad)="getHubWidgetProductMaps($event)"
                             [value]="primengTableHelper.records"
-                            rows="{{ primengTableHelper.defaultRecordsCountPerPage }}"
-                            [paginator]="false"
-                            [lazy]="true"
-                            [scrollable]="true"
-                            ScrollWidth="100%"
-                            [responsive]="primengTableHelper.isResponsive"
-                            [resizableColumns]="primengTableHelper.resizableColumns"
-                        >
+                            rows="{{ primengTableHelper.defaultRecordsCountPerPage }}" [paginator]="false" [lazy]="true"
+                            [scrollable]="true" ScrollWidth="100%" [responsive]="primengTableHelper.isResponsive"
+                            [resizableColumns]="primengTableHelper.resizableColumns">
                             <ng-template pTemplate="header">
                                 <tr>
-                                    <th
-                                        style="width: 130px"
-                                        [hidden]="
-                                            !isGrantedAny(
-                                                'Pages.HubWidgetProductMaps.Edit',
-                                                'Pages.HubWidgetProductMaps.Delete'
-                                            )
-                                        "
-                                    >
-                                        {{ l('Actions') }}
+                                    
+                                    <th style="width: 150px">
+                                        {{ l('Widget Name') }}
                                     </th>
-                                    <th style="width: 150px" pSortableColumn="hubWidgetMapFk.customName">
-                                        {{ l('CustomName') }}
-                                        <p-sortIcon field="hubWidgetMapCustomName"></p-sortIcon>
-                                    </th>
-                                    <th style="width: 150px" pSortableColumn="productFk.name">
-                                        {{ l('Name') }}
-                                        <p-sortIcon field="productName"></p-sortIcon>
+                                    <th style="width: 150px">
+                                        {{ l('Product') }}
                                     </th>
                                     <th style="width: 150px" pSortableColumn="displaySequence">
                                         {{ l('DisplaySequence') }}
                                         <p-sortIcon field="hubWidgetProductMap.displaySequence"></p-sortIcon>
                                     </th>
-                                </tr>
-                            </ng-template>
-                            <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
-                                <tr>
-                                    <td
-                                        style="width: 130px"
-                                        [hidden]="
+                                    <th style="width: 130px" [hidden]="
                                             !isGrantedAny(
                                                 'Pages.HubWidgetProductMaps.Edit',
                                                 'Pages.HubWidgetProductMaps.Delete'
                                             )
-                                        "
-                                    >
-                                        <div class="btn-group dropdown" dropdown container="body">
-                                            <button class="dropdown-toggle btn btn-sm btn-primary" dropdownToggle>
-                                                <i class="fa fa-cog"></i>
-                                                <span class="caret"></span>
-                                                {{ l('Actions') }}
-                                            </button>
-                                            <ul class="dropdown-menu" *dropdownMenu>
-                                                <li>
-                                                    <a
-                                                        href="javascript:;"
-                                                        class="dropdown-item"
-                                                        (click)="viewHubWidgetProductMapModal.show(record)"
-                                                    >
-                                                        {{ l('View') }}
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a
-                                                        href="javascript:;"
-                                                        *ngIf="permission.isGranted('Pages.HubWidgetProductMaps.Edit')"
-                                                        class="dropdown-item"
-                                                        (click)="
-                                                            createOrEditHubWidgetProductMapModal.show(
-                                                                record.hubWidgetProductMap.id
-                                                            )
-                                                        "
-                                                    >
-                                                        {{ l('Edit') }}
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a
-                                                        class="dropdown-item"
-                                                        href="javascript:;"
-                                                        *ngIf="
-                                                            permission.isGranted('Pages.HubWidgetProductMaps.Delete')
-                                                        "
-                                                        (click)="deleteHubWidgetProductMap(record.hubWidgetProductMap)"
-                                                    >
-                                                        {{ l('Delete') }}
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </td>
+                                        ">
+                                        {{ l('Actions') }}
+                                    </th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
+                                <tr>
+                                    
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('CustomName') }}</span>
                                         {{ record.hubWidgetMapCustomName }}
@@ -247,6 +143,47 @@
                                         <span class="p-column-title">{{ l('DisplaySequence') }}</span>
                                         {{ record.hubWidgetProductMap.displaySequence }}
                                     </td>
+                                    <td style="width: 130px" [hidden]="
+                                            !isGrantedAny(
+                                                'Pages.HubWidgetProductMaps.Edit',
+                                                'Pages.HubWidgetProductMaps.Delete'
+                                            )
+                                        ">
+                                        <div class="btn-group dropdown" dropdown container="body">
+                                            <button class="dropdown-toggle btn btn-sm btn-primary" dropdownToggle>
+                                                <i class="fa fa-cog"></i>
+                                                <span class="caret"></span>
+                                                {{ l('Actions') }}
+                                            </button>
+                                            <ul class="dropdown-menu" *dropdownMenu>
+                                                <!-- <li>
+                                                    <a href="javascript:;" class="dropdown-item"
+                                                        (click)="viewHubWidgetProductMapModal.show(record)">
+                                                        {{ l('View') }}
+                                                    </a>
+                                                </li> -->
+                                                <li>
+                                                    <a href="javascript:;"
+                                                        *ngIf="permission.isGranted('Pages.HubWidgetProductMaps.Edit')"
+                                                        class="dropdown-item" (click)="
+                                                            createOrEditHubWidgetProductMapModal.show(
+                                                                record.hubWidgetProductMap.id
+                                                            )
+                                                        ">
+                                                        {{ l('Edit') }}
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="javascript:;" *ngIf="
+                                                            permission.isGranted('Pages.HubWidgetProductMaps.Delete')
+                                                        "
+                                                        (click)="deleteHubWidgetProductMap(record.hubWidgetProductMap)">
+                                                        {{ l('Delete') }}
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
                                 </tr>
                             </ng-template>
                         </p-table>
@@ -254,17 +191,13 @@
                             {{ l('NoData') }}
                         </div>
                         <div class="primeng-paging-container">
-                            <p-paginator
-                                [rows]="primengTableHelper.defaultRecordsCountPerPage"
-                                #paginator
+                            <p-paginator [rows]="primengTableHelper.defaultRecordsCountPerPage" #paginator
                                 (onPageChange)="getHubWidgetProductMaps($event)"
                                 [totalRecords]="primengTableHelper.totalRecordsCount"
                                 [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
-                                [showCurrentPageReport]="true"
-                                [currentPageReportTemplate]="
+                                [showCurrentPageReport]="true" [currentPageReportTemplate]="
                                     'TotalRecordsCount' | localize : primengTableHelper.totalRecordsCount
-                                "
-                            ></p-paginator>
+                                "></p-paginator>
                         </div>
                     </div>
                     <!--<Primeng-Datatable-End>-->
@@ -272,9 +205,7 @@
             </div>
         </div>
     </div>
-    <createOrEditHubWidgetProductMapModal
-        #createOrEditHubWidgetProductMapModal
-        (modalSave)="getHubWidgetProductMaps()"
-    ></createOrEditHubWidgetProductMapModal>
+    <createOrEditHubWidgetProductMapModal #createOrEditHubWidgetProductMapModal (modalSave)="getHubWidgetProductMaps()">
+    </createOrEditHubWidgetProductMapModal>
     <viewHubWidgetProductMapModal #viewHubWidgetProductMapModal></viewHubWidgetProductMapModal>
 </div>

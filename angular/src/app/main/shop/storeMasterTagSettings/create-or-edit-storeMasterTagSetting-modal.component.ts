@@ -111,6 +111,7 @@ export class CreateOrEditStoreMasterTagSettingModalComponent extends AppComponen
         if (event.value != null) {
             this.storeMasterTagSetting.masterTagCategoryId = event.value.id;
             this.storeMasterTagSetting.customTagTitle = event.value.displayName;
+            this.storeMasterTagSetting.customTagChatQuestion = 'What is'+ ' ' + event.value.displayName + '?';
         }
     }
     openSelectStoreTagSettingCategoryModal() {

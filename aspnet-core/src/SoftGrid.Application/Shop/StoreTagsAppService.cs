@@ -22,7 +22,7 @@ using SoftGrid.Storage;
 using SoftGrid.LookupData.Dtos;
 
 namespace SoftGrid.Shop
-{
+{ 
     [AbpAuthorize(AppPermissions.Pages_StoreTags)]
     public class StoreTagsAppService : SoftGridAppServiceBase, IStoreTagsAppService
     {
@@ -372,12 +372,18 @@ namespace SoftGrid.Shop
                     {
                         Name = tag.Name,
                         Id = tag.Id,
+                        MasterTagCategoryId = tag.MasterTagCategoryId,
                         IsSelected = await _storeTagRepository.FirstOrDefaultAsync(e => e.StoreId == storeId && e.MasterTagId == tag.Id) != null ? true : false
                     });
                 }
                 output.Add(item);
             }
             return output;
+        }
+
+        public async Task DeleteByStoreAndTag(long storeId, long masterTagId)
+        {
+            await _storeTagRepository.DeleteAsync(e => e.MasterTagId == masterTagId && e.StoreId == storeId);
         }
     }
 }

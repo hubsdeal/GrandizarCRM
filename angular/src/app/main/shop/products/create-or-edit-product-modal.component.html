@@ -43,7 +43,7 @@
                             </div>
                         </div>
                         <div class="col-xl-12">
-                            <div class="my-3">
+                            <!-- <div class="my-3">
                                 <label class="form-label" for="ProductCategoryName">{{ l('Primary Category') }}</label>
                                 <div class="input-group">
                                     <input class="form-control" id="ProductCategoryName" name="productCategoryName"
@@ -60,7 +60,18 @@
                                 </div>
                             </div>
                             <input class="form-control" name="product.productCategoryId"
-                                [(ngModel)]="product.productCategoryId" type="text" hidden />
+                                [(ngModel)]="product.productCategoryId" type="text" hidden /> -->
+                            <div class="my-5 p_filter">
+                                <label class="form-label required" for="ProductCategoryName">
+                                    Primary Category
+                                </label>
+                                <p-dropdown [options]="productCategoryOptions" [filter]="true"
+                                    [virtualScroll]="true" (onChange)="onProductCategoryClick($event)"
+                                    placeholder="Select Product Category" [itemSize]="30" name="displayName"
+                                    optionLabel="displayName" optionId="id"
+                                    [(ngModel)]="selectedProductCategory" filterBy="displayName" required
+                                    [style]="{ width: '100%' }"></p-dropdown>
+                            </div>
                         </div>
                         <!-- <div class="col-xl-6">
                             <div class="my-3">
@@ -327,7 +338,8 @@
                                 Save as Library
                             </div>
                             <div class="form-check form-check-solid form-switch form-check-custom fv-row">
-                                <input class="form-check-input w-45px h-30px" type="checkbox" id="allowmarketing" checked="checked">
+                                <input class="form-check-input w-45px h-30px" type="checkbox" id="allowmarketing"
+                                    checked="checked">
                                 <label class="form-check-label" for="allowmarketing"></label>
                             </div>
                         </div>

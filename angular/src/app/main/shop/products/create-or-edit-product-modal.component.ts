@@ -52,6 +52,9 @@ export class CreateOrEditProductModalComponent extends AppComponentBase implemen
     contactFullName = '';
     storeName = '';
 
+    productCategoryOptions: any = []
+    selectedProductCategory: any;
+
     constructor(
         injector: Injector,
         private _productsServiceProxy: ProductsServiceProxy,
@@ -91,8 +94,16 @@ export class CreateOrEditProductModalComponent extends AppComponentBase implemen
                 this.modal.show();
             });
         }
-    }
 
+        this._productsServiceProxy.getAllProductCategoryForLookupTable('','',0,10000).subscribe(result => {
+            this.productCategoryOptions = result.items;
+        });
+    }
+    onProductCategoryClick(event: any) {
+        if (event.value != null) {
+            this.product.productCategoryId = event.value.id;
+        }
+    }
     save(): void {
         this.saving = true;
 

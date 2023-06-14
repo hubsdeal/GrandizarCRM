@@ -59,6 +59,7 @@ export class ProductDashboardComponent extends AppComponentBase {
   // teams: any[] = [];
   // numberOfTasks: number;
   // numberOfNotes: number;
+  productCategoryId: number;
   constructor(
     injector: Injector,
     private route: ActivatedRoute,

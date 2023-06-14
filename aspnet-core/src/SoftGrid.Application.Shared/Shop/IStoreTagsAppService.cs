@@ -11,7 +11,7 @@ namespace SoftGrid.Shop
     {
         Task<PagedResultDto<GetStoreTagForViewDto>> GetAll(GetAllStoreTagsInput input);
 
-        Task<GetStoreTagForViewDto> GetStoreTagForView(long id);
+        Task<GetStoreTagForViewDto> GetStoreTagForView(long id); 
 
         Task<GetStoreTagForEditOutput> GetStoreTagForEdit(EntityDto<long> input);
 

@@ -39,6 +39,7 @@ import { KeyValueListManagerComponent } from './key-value-list-manager/key-value
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 @NgModule({
     imports: [
         CommonModule,
@@ -58,6 +59,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
         AutoCompleteModule,
         SelectButtonModule,
         DragDropModule,
+        ProgressSpinnerModule,
         NgxMaterialTimepickerModule
     ], 
     declarations: [
@@ -85,6 +87,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
         KeyValueListManagerComponent,
         SelectButtonModule,
         DragDropModule,
+        ProgressSpinnerModule,
         NgxMaterialTimepickerModule
     ],
     providers: [

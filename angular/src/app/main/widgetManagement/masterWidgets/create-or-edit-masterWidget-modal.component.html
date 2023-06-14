@@ -1,130 +1,78 @@
-﻿<div
-    bsModal
-    #createOrEditModal="bs-modal"
-    class="modal fade"
-    tabindex="-1"
-    role="dialog"
-    aria-labelledby="createOrEditModal"
-    aria-hidden="true"
-    [config]="{ backdrop: 'static' }"
->
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{ backdrop: 'static' }">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <form *ngIf="active" #masterWidgetForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
                 <div class="modal-header">
                     <h4 class="modal-title">
-                        <span *ngIf="masterWidget.id">{{ l('EditMasterWidget') }}</span>
-                        <span *ngIf="!masterWidget.id">{{ l('CreateNewMasterWidget') }}</span>
+                        <span *ngIf="masterWidget.id">{{ l('Edit Master Widget') }}</span>
+                        <span *ngIf="!masterWidget.id">{{ l('Create New Master Widget') }}</span>
                     </h4>
 
-                    <button
-                        type="button"
-                        class="btn-close"
-                        (click)="close()"
-                        aria-label="Close"
-                        [disabled]="saving"
-                    ></button>
+                    <button type="button" class="btn-close" (click)="close()" aria-label="Close"
+                        [disabled]="saving"></button>
                 </div>
                 <div class="modal-body">
                     <div class="my-3">
                         <label class="form-label" for="MasterWidget_Name">{{ l('Name') }} *</label>
-                        <input
-                            type="text"
-                            #MasterWidget_Name="ngModel"
-                            id="MasterWidget_Name"
-                            class="form-control"
-                            [(ngModel)]="masterWidget.name"
-                            name="Name"
-                            minlength="1"
-                            maxlength="512"
-                            required
-                        />
+                        <input type="text" #MasterWidget_Name="ngModel" id="MasterWidget_Name" class="form-control"
+                            [(ngModel)]="masterWidget.name" name="Name" minlength="1" maxlength="512" required />
                         <validation-messages [formCtrl]="MasterWidget_Name"></validation-messages>
+                    </div>
+
+                    
+
+                    <div class="my-3">
+                        <label class="form-label" for="MasterWidget_DesignCode">{{ l('Design Code') }}</label>
+                        <input type="text" #MasterWidget_DesignCode="ngModel" id="MasterWidget_DesignCode"
+                            class="form-control" [(ngModel)]="masterWidget.designCode" name="DesignCode" />
+                        <validation-messages [formCtrl]="MasterWidget_DesignCode"></validation-messages>
                     </div>
 
                     <div class="my-3">
                         <label class="form-label" for="MasterWidget_Description">{{ l('Description') }}</label>
-                        <input
-                            type="text"
-                            #MasterWidget_Description="ngModel"
-                            id="MasterWidget_Description"
-                            class="form-control"
-                            [(ngModel)]="masterWidget.description"
-                            name="Description"
-                        />
+                        <input type="text" #MasterWidget_Description="ngModel" id="MasterWidget_Description"
+                            class="form-control" [(ngModel)]="masterWidget.description" name="Description" />
                         <validation-messages [formCtrl]="MasterWidget_Description"></validation-messages>
                     </div>
 
+                    
+
                     <div class="my-3">
-                        <label class="form-label" for="MasterWidget_DesignCode">{{ l('DesignCode') }}</label>
-                        <input
-                            type="text"
-                            #MasterWidget_DesignCode="ngModel"
-                            id="MasterWidget_DesignCode"
-                            class="form-control"
-                            [(ngModel)]="masterWidget.designCode"
-                            name="DesignCode"
-                        />
-                        <validation-messages [formCtrl]="MasterWidget_DesignCode"></validation-messages>
+                        <label class="form-label" for="MasterWidget_InternalDisplayNumber">
+                            {{ l('Internal Display Number') }}
+                        </label>
+                        <input type="number" #MasterWidget_InternalDisplayNumber="ngModel"
+                            id="MasterWidget_InternalDisplayNumber" class="form-control"
+                            [(ngModel)]="masterWidget.internalDisplayNumber" name="InternalDisplayNumber" />
+                        <validation-messages [formCtrl]="MasterWidget_InternalDisplayNumber"></validation-messages>
                     </div>
 
                     <br />
                     <label class="form-check form-check-custom form-check-solid">
-                        <input
-                            id="MasterWidget_Publish"
-                            #MasterWidget_Publish="ngModel"
-                            name="Publish"
-                            [(ngModel)]="masterWidget.publish"
-                            type="checkbox"
-                            class="form-check-input"
-                        />
+                        <input id="MasterWidget_Publish" #MasterWidget_Publish="ngModel" name="Publish"
+                            [(ngModel)]="masterWidget.publish" type="checkbox" class="form-check-input" />
                         <span class="form-check-label">
                             {{ l('Publish') }}
                         </span>
                     </label>
                     <validation-messages [formCtrl]="MasterWidget_Publish"></validation-messages>
 
-                    <div class="my5">
-                        <label class="form-label" for="MasterWidget_InternalDisplayNumber">
-                            {{ l('InternalDisplayNumber') }}
-                        </label>
-                        <input
-                            type="number"
-                            #MasterWidget_InternalDisplayNumber="ngModel"
-                            id="MasterWidget_InternalDisplayNumber"
-                            class="form-control"
-                            [(ngModel)]="masterWidget.internalDisplayNumber"
-                            name="InternalDisplayNumber"
-                        />
-                        <validation-messages [formCtrl]="MasterWidget_InternalDisplayNumber"></validation-messages>
-                    </div>
-
-                    <div class="my-3">
+                    <!-- <div class="my-3">
                         <label class="form-label" for="MasterWidget_ThumbnailImageId">
                             {{ l('ThumbnailImageId') }}
                         </label>
-                        <input
-                            type="text"
-                            #MasterWidget_ThumbnailImageId="ngModel"
-                            id="MasterWidget_ThumbnailImageId"
-                            class="form-control"
-                            [(ngModel)]="masterWidget.thumbnailImageId"
-                            name="ThumbnailImageId"
-                        />
+                        <input type="text" #MasterWidget_ThumbnailImageId="ngModel" id="MasterWidget_ThumbnailImageId"
+                            class="form-control" [(ngModel)]="masterWidget.thumbnailImageId" name="ThumbnailImageId" />
                         <validation-messages [formCtrl]="MasterWidget_ThumbnailImageId"></validation-messages>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="modal-footer">
                     <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
                         {{ l('Cancel') }}
                     </button>
-                    <button
-                        type="submit"
-                        class="btn btn-primary blue"
-                        [disabled]="!masterWidgetForm.form.valid"
-                        [buttonBusy]="saving"
-                        [busyText]="l('SavingWithThreeDot')"
-                    >
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!masterWidgetForm.form.valid"
+                        [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')">
                         <i class="fa fa-save"></i>
                         <span>{{ l('Save') }}</span>
                     </button>

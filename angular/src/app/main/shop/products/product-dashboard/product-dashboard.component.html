@@ -27,7 +27,7 @@
             </div>
         </div>
         <!-- end Topbar -->
-        <div id="kt_app_content" class="app-content flex-column-fluid">
+        <div id="kt_app_content" *ngIf="product?.id" class="app-content flex-column-fluid">
             <div id="kt_app_content_container" class="app-container container-xxl">
                 <div class="card mb-6 mb-xl-9">
                     <div class="card-body pt-9 pb-0">
@@ -196,6 +196,12 @@
                                 <li class="nav-item">
                                     <a class="nav-link" data-bs-toggle="tab" href="#pr_orders">
                                         <i class="fas fa-cart-arrow-down"></i> Orders
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" data-bs-toggle="tab" href="#pr_tags">
+                                        <i class="fas fa-tags"></i> Tags
                                     </a>
                                 </li>
 
@@ -1658,7 +1664,7 @@
                                 </div>
                             </div>
 
-                            <div class="card mb-6">
+                            <!-- <div class="card mb-6">
                                 <div class="accordion-item">
                                     <h2 class="accordion-header" id="kt_accordion_1_header_1">
                                         <button class="accordion-button fs-4 fw-bold collapsed" type="button"
@@ -1917,7 +1923,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
 
                             <div class="card mb-6">
                                 <div class="accordion-item">
@@ -2035,7 +2041,7 @@
                                 </div>
                             </div>
 
-                            <div class="card mb-6">
+                            <!-- <div class="card mb-6">
                                 <div class="accordion-item">
                                     <h2 class="accordion-header" id="kt_accordion_1_header_1">
                                         <button class="accordion-button fs-4 fw-bold collapsed" type="button"
@@ -2296,7 +2302,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
 
                             <div class="card mb-6">
                                 <div class="accordion-item">
@@ -3565,6 +3571,9 @@
                             </div>
                             <!--end::Card body-->
                         </div>
+                    </div>
+                    <div class="tab-pane fade" id="pr_tags" role="tabpanel">
+                        <app-productTags *ngIf="product" [productCategoryId]="product.productCategoryId" [productId]="product.id"></app-productTags>
                     </div>
                     <div class="tab-pane fade" id="pr_customer" role="tabpanel">
                         <div class="card">
