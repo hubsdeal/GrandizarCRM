@@ -1,6 +1,0 @@
-apiVersion: v2
-name: dbmigrator
-appVersion: "1.0"
-description: SoftGrid Migrator Application
-version: 1.0.0
-type: application

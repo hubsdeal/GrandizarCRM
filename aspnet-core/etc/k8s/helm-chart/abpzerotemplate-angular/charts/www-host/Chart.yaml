@@ -1,6 +1,0 @@
-apiVersion: v2
-name: www-host
-appVersion: "1.0"
-description: SoftGrid Host WWW Application
-version: 1.0.0
-type: application
