@@ -7,5 +7,5 @@ export const environment = {
     production: false,
     hmr: false,
     appConfig: 'appconfig.json',
-    openAIapiKey: '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'
+    openAIapiKey: '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'
 };

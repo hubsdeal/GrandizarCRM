@@ -15,7 +15,7 @@
     "e2e": "gulp buildDev && protractor",
     "create-dynamic-bundles": "gulp buildDev",
     "nswag": "cd nswag/ && refresh.bat",
-    "start": "node --max-old-space-size=10240 ./node_modules/@angular/cli/bin/ng serve --host 0.0.0.0 --port 4300",
+    "start": "node --max-old-space-size=10240 ./node_modules/@angular/cli/bin/ng serve --host 0.0.0.0 --port 4200",
     "prod": "node --max-old-space-size=10240 ./node_modules/@angular/cli/bin/ng build --configuration production --aot"
   },
   "private": false,

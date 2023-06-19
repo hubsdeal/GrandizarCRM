@@ -77,9 +77,9 @@ export class CreateOrEditBusinessModalComponent extends AppComponentBase impleme
         this._businessesServiceProxy.getAllStateForTableDropdown().subscribe((result) => {
             this.allStates = result;
         });
-        this._businessesServiceProxy.getAllCityForTableDropdown().subscribe((result) => {
-            this.allCitys = result;
-        });
+        // this._businessesServiceProxy.getAllCityForTableDropdown().subscribe((result) => {
+        //     this.allCitys = result;
+        // });
     }
 
     save(): void {

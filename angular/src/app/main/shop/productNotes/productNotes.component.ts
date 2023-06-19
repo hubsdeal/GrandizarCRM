@@ -63,6 +63,7 @@ export class ProductNotesComponent extends AppComponentBase {
                 this.filterText,
                 this.notesFilter,
                 this.productNameFilter,
+                undefined,
                 this.primengTableHelper.getSorting(this.dataTable),
                 this.primengTableHelper.getSkipCount(this.paginator, event),
                 this.primengTableHelper.getMaxResultCount(this.paginator, event)

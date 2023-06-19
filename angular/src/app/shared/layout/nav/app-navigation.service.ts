@@ -33,40 +33,8 @@ export class AppNavigationService {
                         'flaticon-line-graph',
                         '/app/admin/hostDashboard'
                     ),
-                    new AppMenuItem('Master Task List', 'Pages.TaskEvents', 'flaticon2-list-2', '/app/main/taskManagement/taskEvents'),
-                    new AppMenuItem('My Task List', 'Pages.TaskEvents', 'flaticon2-list-2', '/app/main/taskManagement/myTaskEvents'),
-                    new AppMenuItem('Task Template', 'Pages.TaskEvents', 'flaticon2-list-2', '/app/main/taskManagement/taskLibrary'),
                 ]
             ),
-
-            new AppMenuItem(
-                'Store Management',
-                '',
-                'fas fa-store-alt',
-                '',
-                [],
-                [
-                    new AppMenuItem('Master Store List', 'Pages.Stores', 'flaticon2-list-1', '/app/main/shop/stores'),
-                    new AppMenuItem('My Store List', 'Pages.Stores', 'flaticon2-list-2', '/app/main/shop/myStores'),
-                    new AppMenuItem('Store Widgets', 'Pages.StoreWidgetMaps', 'fas fa-border-all', '/app/main/widgetManagement/storeWidgetMaps'),
-                ]
-            ),
-
-            new AppMenuItem(
-                'Product Catalog',
-                '',
-                'flaticon-open-box',
-                '',
-                [],
-                [
-                    new AppMenuItem('Master Product List', 'Pages.Products', 'flaticon2-list-1', '/app/main/shop/products'),
-                    new AppMenuItem('My Product List', 'Pages.Products', 'flaticon2-list-2', '/app/main/shop/myProducts'),
-                    new AppMenuItem('Product Libraries', 'Pages.Products', 'flaticon2-delivery-package', '/app/main/shop/productLibraries'),
-                    new AppMenuItem('ProductCategories', 'Pages.ProductCategories', 'flaticon-map', '/app/main/shop/productCategories'),
-                    new AppMenuItem('MediaLibrary', 'Pages.MediaLibraries', 'fas fa-photo-video', '/app/main/lookupData/mediaLibraries'),
-                ]
-            ),
-
             new AppMenuItem(
                 'Order Management',
                 '',
@@ -77,38 +45,47 @@ export class AppNavigationService {
                     new AppMenuItem('Master Order List', 'Pages.Orders', 'fas fa-list', '/app/main/orderManagement/orders'),
                     new AppMenuItem('My Order List', 'Pages.Orders', 'fas fa-list-alt', '/app/main/orderManagement/myOrders'),
                     new AppMenuItem('Abandoned Cart', 'Pages.Orders', 'fas fa-shopping-cart', '/app/main/orderManagement/abandonedCart'),
+                    new AppMenuItem('Wish List', 'Pages.WishLists', 'fas fa-heart', '/app/main/shop/wishLists'),
+                    new AppMenuItem('Shopping Cart', 'Pages.ShoppingCarts', 'fas fa-shopping-cart', '/app/main/shop/shoppingCarts'),
                 ]
             ),
-
             new AppMenuItem(
-                'Widget Management',
+                'Store Management',
                 '',
-                'fas fa-border-all',
+                'fas fa-store-alt',
                 '',
                 [],
                 [
-                    new AppMenuItem('Master Widgets', 'Pages.MasterWidgets', 'flaticon-more', '/app/main/widgetManagement/masterWidgets'),
-
-                    new AppMenuItem('Hub Widget Maps', 'Pages.HubWidgetMaps', 'flaticon-more', '/app/main/widgetManagement/hubWidgetMaps'),
-
-                    new AppMenuItem('Hub Widget Store Maps', 'Pages.HubWidgetStoreMaps', 'flaticon-more', '/app/main/widgetManagement/hubWidgetStoreMaps'),
-
-                    new AppMenuItem('Hub Widget Product Maps', 'Pages.HubWidgetProductMaps', 'flaticon-more', '/app/main/widgetManagement/hubWidgetProductMaps'),
-
-                    new AppMenuItem('Hub Widget Content Maps', 'Pages.HubWidgetContentMaps', 'flaticon-more', '/app/main/widgetManagement/hubWidgetContentMaps'),
-
-                    new AppMenuItem('Store Widget Maps', 'Pages.StoreWidgetMaps', 'flaticon-more', '/app/main/widgetManagement/storeWidgetMaps'),
-
-                    new AppMenuItem('Store Widget Product Maps', 'Pages.StoreWidgetProductMaps', 'flaticon-more', '/app/main/widgetManagement/storeWidgetProductMaps'),
-
-                    new AppMenuItem('Store Widget Content Maps', 'Pages.StoreWidgetContentMaps', 'flaticon-more', '/app/main/widgetManagement/storeWidgetContentMaps'),
-
-                    new AppMenuItem('Store Master Themes', 'Pages.StoreMasterThemes', 'flaticon-more', '/app/main/widgetManagement/storeMasterThemes'),
-
-                    new AppMenuItem('Store Theme Maps', 'Pages.StoreThemeMaps', 'flaticon-more', '/app/main/widgetManagement/storeThemeMaps'),
+                    new AppMenuItem('Master Store List', 'Pages.Stores', 'flaticon2-list-1', '/app/main/shop/stores'),
+                    new AppMenuItem('My Store List', 'Pages.Stores', 'flaticon2-list-2', '/app/main/shop/myStores'),
                 ]
             ),
-
+            new AppMenuItem(
+                'Product Catalog',
+                '',
+                'flaticon-open-box',
+                '',
+                [],
+                [
+                    new AppMenuItem('Master Product List', 'Pages.Products', 'flaticon2-list-1', '/app/main/shop/products'),
+                    new AppMenuItem('My Product List', 'Pages.Products', 'flaticon2-list-2', '/app/main/shop/myProducts'),
+                    new AppMenuItem('Product Library', 'Pages.Products', 'flaticon2-delivery-package', '/app/main/shop/productLibraries'),
+                    new AppMenuItem('Product Category', 'Pages.ProductCategories', 'flaticon-map', '/app/main/shop/productCategories'),
+                    new AppMenuItem('Media Library', 'Pages.MediaLibraries', 'fas fa-photo-video', '/app/main/lookupData/mediaLibraries'),
+                ]
+            ),
+            new AppMenuItem(
+                'Task & Schedule',
+                '',
+                'fas fa-list-alt',
+                '',
+                [],
+                [
+                    new AppMenuItem('Master Task List', 'Pages.TaskEvents', 'flaticon2-list-2', '/app/main/taskManagement/taskEvents'),
+                    new AppMenuItem('My Task List', 'Pages.TaskEvents', 'flaticon2-list-2', '/app/main/taskManagement/myTaskEvents'),
+                    new AppMenuItem('Task Template', 'Pages.TaskEvents', 'flaticon2-list-2', '/app/main/taskManagement/taskLibrary'),
+                ]
+            ),
 
 
             new AppMenuItem(
@@ -141,12 +118,10 @@ export class AppNavigationService {
                 '',
                 [],
                 [
-                    new AppMenuItem('Businesses', 'Pages.Businesses', 'fas fa-building', '/app/main/crm/businesses'),
-                    new AppMenuItem('MyCustomerList', 'Pages.Contacts', 'fas fa-user-friends', '/app/main/crm/contacts'),
-                    new AppMenuItem('MasterCustomerList', 'Pages.Contacts', 'fas fa-users', '/app/main/crm/contacts'),
-                    new AppMenuItem('PremiumCustomerList', 'Pages.Contacts', 'flaticon-medal', '/app/main/crm/contacts'),
-                    new AppMenuItem('ContactRepo', 'Pages.Contacts', 'flaticon-network', '/app/main/crm/contacts'),
-                    new AppMenuItem('ReferredContactList', 'Pages.Contacts', 'flaticon-share', '/app/main/crm/contacts'),
+                    new AppMenuItem('Company/Business List', 'Pages.Businesses', 'fas fa-building', '/app/main/crm/businesses'),
+                    new AppMenuItem('My Customer List', 'Pages.Contacts', 'fas fa-user-friends', '/app/main/crm/contacts'),
+                    new AppMenuItem('Master Customer List', 'Pages.Contacts', 'fas fa-users', '/app/main/crm/contacts'),
+                    new AppMenuItem('Premium Customer List', 'Pages.Contacts', 'flaticon-medal', '/app/main/crm/contacts'),
                 ]
             ),
 
@@ -184,7 +159,7 @@ export class AppNavigationService {
                 '',
                 [],
                 [
-                    new AppMenuItem('ConnectChannels', 'Pages.ConnectChannels', 'flaticon-more', '/app/main/lookupData/connectChannels'),
+                    //new AppMenuItem('ConnectChannels', 'Pages.ConnectChannels', 'flaticon-more', '/app/main/lookupData/connectChannels'),
 
                     new AppMenuItem('EmailTemplates', 'Pages.EmailTemplates', 'flaticon-more', '/app/main/lookupData/emailTemplates'),
 
@@ -460,42 +435,40 @@ export class AppNavigationService {
 
             // new AppMenuItem('DiscountCodeUserHistories', 'Pages.DiscountCodeUserHistories', 'flaticon-more', '/app/main/discountManagement/discountCodeUserHistories'),
 
-            new AppMenuItem('WishLists', 'Pages.WishLists', 'flaticon-more', '/app/main/shop/wishLists'),
 
-            new AppMenuItem('ShoppingCarts', 'Pages.ShoppingCarts', 'flaticon-more', '/app/main/shop/shoppingCarts'),
 
-            new AppMenuItem('ProductTeams', 'Pages.ProductTeams', 'flaticon-more', '/app/main/shop/productTeams'),
+            // new AppMenuItem('ProductTeams', 'Pages.ProductTeams', 'flaticon-more', '/app/main/shop/productTeams'),
 
 
 
-            new AppMenuItem('StoreTaskMaps', 'Pages.StoreTaskMaps', 'flaticon-more', '/app/main/taskManagement/storeTaskMaps'),
+            // new AppMenuItem('StoreTaskMaps', 'Pages.StoreTaskMaps', 'flaticon-more', '/app/main/taskManagement/storeTaskMaps'),
 
-            new AppMenuItem('BusinessDocuments', 'Pages.BusinessDocuments', 'flaticon-more', '/app/main/crm/businessDocuments'),
+            // new AppMenuItem('BusinessDocuments', 'Pages.BusinessDocuments', 'flaticon-more', '/app/main/crm/businessDocuments'),
 
-            new AppMenuItem('StoreTagSettingCategories', 'Pages.StoreTagSettingCategories', 'flaticon-more', '/app/main/shop/storeTagSettingCategories'),
+            // new AppMenuItem('StoreTagSettingCategories', 'Pages.StoreTagSettingCategories', 'flaticon-more', '/app/main/shop/storeTagSettingCategories'),
 
-            new AppMenuItem('StoreMasterTagSettings', 'Pages.StoreMasterTagSettings', 'flaticon-more', '/app/main/shop/storeMasterTagSettings'),
+            // new AppMenuItem('StoreMasterTagSettings', 'Pages.StoreMasterTagSettings', 'flaticon-more', '/app/main/shop/storeMasterTagSettings'),
 
-            new AppMenuItem('ProductMasterTagSettings', 'Pages.ProductMasterTagSettings', 'flaticon-more', '/app/main/shop/productMasterTagSettings'),
+            // new AppMenuItem('ProductMasterTagSettings', 'Pages.ProductMasterTagSettings', 'flaticon-more', '/app/main/shop/productMasterTagSettings'),
 
-            new AppMenuItem('ContactMasterTagSettings', 'Pages.ContactMasterTagSettings', 'flaticon-more', '/app/main/crm/contactMasterTagSettings'),
+            // new AppMenuItem('ContactMasterTagSettings', 'Pages.ContactMasterTagSettings', 'flaticon-more', '/app/main/crm/contactMasterTagSettings'),
 
-            new AppMenuItem('BusinessMasterTagSettings', 'Pages.BusinessMasterTagSettings', 'flaticon-more', '/app/main/crm/businessMasterTagSettings'),
+            // new AppMenuItem('BusinessMasterTagSettings', 'Pages.BusinessMasterTagSettings', 'flaticon-more', '/app/main/crm/businessMasterTagSettings'),
 
-            new AppMenuItem('JobMasterTagSettings', 'Pages.JobMasterTagSettings', 'flaticon-more', '/app/main/jobManagement/jobMasterTagSettings'),
+            // new AppMenuItem('JobMasterTagSettings', 'Pages.JobMasterTagSettings', 'flaticon-more', '/app/main/jobManagement/jobMasterTagSettings'),
 
-            new AppMenuItem('ContactTaskMaps', 'Pages.ContactTaskMaps', 'flaticon-more', '/app/main/crm/contactTaskMaps'),
+            // new AppMenuItem('ContactTaskMaps', 'Pages.ContactTaskMaps', 'flaticon-more', '/app/main/crm/contactTaskMaps'),
 
-            new AppMenuItem('ProductTaskMaps', 'Pages.ProductTaskMaps', 'flaticon-more', '/app/main/shop/productTaskMaps'),
+            // new AppMenuItem('ProductTaskMaps', 'Pages.ProductTaskMaps', 'flaticon-more', '/app/main/shop/productTaskMaps'),
 
-            new AppMenuItem('JobTaskMaps', 'Pages.JobTaskMaps', 'flaticon-more', '/app/main/jobManagement/jobTaskMaps'),
+            // new AppMenuItem('JobTaskMaps', 'Pages.JobTaskMaps', 'flaticon-more', '/app/main/jobManagement/jobTaskMaps'),
 
-            new AppMenuItem('TaskTeams', 'Pages.TaskTeams', 'flaticon-more', '/app/main/taskManagement/taskTeams'),
+            // new AppMenuItem('TaskTeams', 'Pages.TaskTeams', 'flaticon-more', '/app/main/taskManagement/taskTeams'),
 
-            new AppMenuItem('TaskWorkItems', 'Pages.TaskWorkItems', 'flaticon-more', '/app/main/taskManagement/taskWorkItems'),
+            // new AppMenuItem('TaskWorkItems', 'Pages.TaskWorkItems', 'flaticon-more', '/app/main/taskManagement/taskWorkItems'),
 
 
-            new AppMenuItem('Editions', 'Pages.Editions', 'flaticon-app', '/app/admin/editions'),
+            
             new AppMenuItem(
                 'Administration',
                 '',
@@ -567,6 +540,7 @@ export class AppNavigationService {
                         'flaticon-settings',
                         '/app/admin/tenantSettings'
                     ),
+                    new AppMenuItem('Editions', 'Pages.Editions', 'flaticon-app', '/app/admin/editions'),
                     new AppMenuItem(
                         'Notifications',
                         '',
@@ -590,12 +564,12 @@ export class AppNavigationService {
                     )
                 ]
             ),
-            new AppMenuItem(
-                'DemoUiComponents',
-                'Pages.DemoUiComponents',
-                'flaticon-shapes',
-                '/app/admin/demo-ui-components'
-            ),
+            // new AppMenuItem(
+            //     'DemoUiComponents',
+            //     'Pages.DemoUiComponents',
+            //     'flaticon-shapes',
+            //     '/app/admin/demo-ui-components'
+            // ),
         ]);
     }
 
