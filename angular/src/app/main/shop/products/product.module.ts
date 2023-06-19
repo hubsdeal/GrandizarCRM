@@ -15,6 +15,7 @@ import { ProductStoreLookupTableModalComponent } from './product-store-lookup-ta
 import { ProductDashboardComponent } from './product-dashboard/product-dashboard.component';
 import { ProductLibrariesComponent } from './product-libraries/product-libraries.component';
 import { ProductTagModule } from '../productTags/productTag.module';
+import { MyProductsComponent } from './my-products/my-products.component';
 
 @NgModule({
     declarations: [
@@ -30,7 +31,8 @@ import { ProductTagModule } from '../productTags/productTag.module';
         ProductContactLookupTableModalComponent,
         ProductStoreLookupTableModalComponent,
         ProductDashboardComponent,
-        ProductLibrariesComponent
+        ProductLibrariesComponent,
+        MyProductsComponent
     ],
     imports: [AppSharedModule, ProductRoutingModule, AdminSharedModule, ProductTagModule],
 })

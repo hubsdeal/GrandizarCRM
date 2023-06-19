@@ -60,7 +60,7 @@ export class AppNavigationService {
                 [],
                 [
                     new AppMenuItem('Master Product List', 'Pages.Products', 'flaticon2-list-1', '/app/main/shop/products'),
-                    new AppMenuItem('My Product List', 'Pages.Products', 'flaticon2-list-2', '/app/main/shop/products'),
+                    new AppMenuItem('My Product List', 'Pages.Products', 'flaticon2-list-2', '/app/main/shop/myProducts'),
                     new AppMenuItem('Product Libraries', 'Pages.Products', 'flaticon2-delivery-package', '/app/main/shop/productLibraries'),
                     new AppMenuItem('ProductCategories', 'Pages.ProductCategories', 'flaticon-map', '/app/main/shop/productCategories'),
                     new AppMenuItem('MediaLibrary', 'Pages.MediaLibraries', 'fas fa-photo-video', '/app/main/lookupData/mediaLibraries'),

@@ -11,6 +11,7 @@ import { MyTaskEventsComponent } from './taskManagement/taskEvents/my-task-event
 import { MyOrdersComponent } from './orderManagement/orders/my-orders/my-orders.component';
 import { AbandonedCartComponent } from './orderManagement/orders/abandoned-cart/abandoned-cart.component';
 import { SiteDefaultContentComponent } from './cms/contents/site-default-content/site-default-content.component';
+import { MyProductsComponent } from './shop/products/my-products/my-products.component';
 
 @NgModule({
     imports: [
@@ -982,6 +983,12 @@ import { SiteDefaultContentComponent } from './cms/contents/site-default-content
                         path: 'shop/products',
                         loadChildren: () => import('./shop/products/product.module').then(m => m.ProductModule),
                         data: { permission: 'Pages.Products' }
+                    },
+
+                    {
+                        path: 'shop/myProducts',
+                        data: { permission: 'Pages.Products' },
+                        component: MyProductsComponent,
                     },
                     
                     {

@@ -1,24 +1,101 @@
 ﻿<div [@routerTransition]>
-    <sub-header [title]="'StoreNotes' | localize" [description]="'StoreNotesHeaderInfo' | localize">
-        <div role="actions">
-            <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1">
-                <i class="fa fa-file-excel"></i>
-                {{ l('ExportToExcel') }}
-            </button>
 
-            <button
-                *ngIf="isGranted('Pages.StoreNotes.Create')"
-                (click)="createStoreNote()"
-                class="btn btn-primary blue"
-            >
-                <i class="fa fa-plus"></i>
-                {{ l('CreateNewStoreNote') }}
-            </button>
+    <div class="w-100 d-flex mb-6 ps-9 pe-9 mt-6 justify-content-between align-items-center ng-tns-c282-7">
+        <div class="d-flex">
+            <h1 class="fs-3 fw-bold  my-0 page-heading text-dark">
+                Notes
+            </h1>
         </div>
-    </sub-header>
+        <button *ngIf="isGranted('Pages.StoreNotes.Create')" (click)="createStoreNote()" class="btn btn-primary blue">
+            <i class="fa fa-plus"></i>
+            {{ l('Note') }}
+        </button>
+    </div>
 
     <div [class]="containerClass">
-        <div class="card card-custom gutter-b">
+        <div class="card mb-5 mb-xxl-8">
+            <!-- <div class="card-body pb-0">
+                <div class="d-flex align-items-center">
+                    <div class="d-flex align-items-center">
+                        <div class="symbol symbol-45px me-5">
+                            <img src="assets/common/images/default-profile-picture.png" alt="user">
+                        </div>
+                        <div class="d-flex flex-column">
+                            <a href="#" class="text-gray-600 text-hover-primary fs-6 fw-bold">
+                                Faisal Alam
+                            </a>
+                            <span class="text-gray-400 fw-bold">
+                                CEO, Jobaar
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <form id="kt_forms_widget_1_form" class="ql-quil ql-quil-plain pb-3">
+                    <div class="py-6 ql-container ql-snow">
+                        <textarea class="form-control" name="text" id="text" cols="30" rows="5"
+                            placeholder="Write notes...."></textarea>
+                    </div>
+                    <a href="javascript:;" class="btn btn-sm fw-bold btn-primary mt-3 mb-3">
+                        <i class="fas fa-save fa-2xl"></i></a>
+
+                    <div class="separator"></div>
+                </form>
+            </div> -->
+            <!--end::Body-->
+            <div class="card-body border rounded mb-5 pb-0" *ngFor="let item of allStoreNotes">
+                <div class="d-flex align-items-center mb-5">
+                    <div class="d-flex align-items-center flex-grow-1">
+                        <div class="symbol symbol-45px me-5">
+                            <img *ngIf="!item.picture" src="assets/common/images/default-profile-picture.png"
+                                alt="User">
+                            <img *ngIf="item.picture" src="{{item.picture}}" alt="User">
+                        </div>
+                        <div class="d-flex flex-column">
+                            <a href="javascript:;" class="text-gray-600 text-hover-primary fs-5 fw-bold">
+                                {{item.createdBy}} <span class="fs-6 text-gray-400">({{item.username}})</span>
+                            </a>
+                            <span class="text-gray-400 fw-bold">
+                                <span *ngIf="item.creationTime">{{item.creationTime
+                                    | luxonFormat : 'F'}} 
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="btn-group dropdown" dropdown container="body">
+                        <button class="dropdown-toggle btn btn-sm btn-primary" dropdownToggle>
+                            <i class="fa fa-cog"></i>
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" *dropdownMenu>
+                            <li>
+                                <a href="javascript:;"
+                                    *ngIf="permission.isGranted('Pages.StoreNotes.Edit')"
+                                    class="dropdown-item"
+                                    (click)="createOrEditStoreNoteModal.show(item.storeNote.id)">
+                                    {{ l('Edit') }}
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="javascript:;"
+                                    *ngIf="permission.isGranted('Pages.StoreNotes.Delete')"
+                                    (click)="deleteStoreNote(item.storeNote)">
+                                    {{ l('Delete') }}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="mb-7">
+                    <div class="text-gray-800 mb-5">
+                        {{item.storeNote.notes}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- <div class="card card-custom gutter-b">
             <div class="card-body">
                 <form class="form" autocomplete="off">
                     <div>
@@ -26,15 +103,9 @@
                             <div class="col-xl-12">
                                 <div class="my-3">
                                     <div class="input-group mb-3">
-                                        <input
-                                            [(ngModel)]="filterText"
-                                            (ngModelChange)="getStoreNotes()"
-                                            name="filterText"
-                                            autoFocus
-                                            type="text"
-                                            class="form-control"
-                                            [placeholder]="l('SearchWithThreeDot')"
-                                        />
+                                        <input [(ngModel)]="filterText" (ngModelChange)="getStoreNotes()"
+                                            name="filterText" autoFocus type="text" class="form-control"
+                                            [placeholder]="l('SearchWithThreeDot')" />
                                         <button class="btn btn-primary" type="submit" (click)="getStoreNotes()">
                                             <i class="flaticon-search-1"></i>
                                         </button>
@@ -48,14 +119,8 @@
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="NotesFilter">{{ l('Notes') }}</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="NotesFilter"
-                                        name="notesFilter"
-                                        [(ngModel)]="notesFilter"
-                                        (ngModelChange)="getStoreNotes()"
-                                    />
+                                    <input type="text" class="form-control" id="NotesFilter" name="notesFilter"
+                                        [(ngModel)]="notesFilter" (ngModelChange)="getStoreNotes()" />
                                 </div>
                             </div>
 
@@ -64,40 +129,26 @@
                                     <label class="form-label" for="StoreNameFilter">
                                         ({{ l('Store') }}) {{ l('Name') }}
                                     </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="StoreNameFilter"
-                                        name="storeNameFilter"
-                                        [(ngModel)]="storeNameFilter"
-                                    />
+                                    <input type="text" class="form-control" id="StoreNameFilter" name="storeNameFilter"
+                                        [(ngModel)]="storeNameFilter" />
                                 </div>
                             </div>
                             <div class="col-md-12 mt-5">
-                                <button
-                                    (click)="resetFilters()"
-                                    class="btn btn-secondary btn-sm"
-                                    id="btn-reset-filters"
-                                >
+                                <button (click)="resetFilters()" class="btn btn-secondary btn-sm"
+                                    id="btn-reset-filters">
                                     Reset
                                 </button>
                             </div>
                         </div>
                         <div class="row my-4">
                             <div class="col-sm-12">
-                                <span
-                                    class="clickable-item text-muted"
-                                    *ngIf="!advancedFiltersAreShown"
-                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown"
-                                >
+                                <span class="clickable-item text-muted" *ngIf="!advancedFiltersAreShown"
+                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown">
                                     <i class="fa fa-angle-down"></i>
                                     {{ l('ShowAdvancedFilters') }}
                                 </span>
-                                <span
-                                    class="clickable-item text-muted"
-                                    *ngIf="advancedFiltersAreShown"
-                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown"
-                                >
+                                <span class="clickable-item text-muted" *ngIf="advancedFiltersAreShown"
+                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown">
                                     <i class="fa fa-angle-up"></i>
                                     {{ l('HideAdvancedFilters') }}
                                 </span>
@@ -107,26 +158,15 @@
                 </form>
 
                 <div class="row align-items-center">
-                    <!--<Primeng-Datatable-Start>-->
                     <div class="primeng-datatable-container col-12" [busyIf]="primengTableHelper.isLoading">
-                        <p-table
-                            #dataTable
-                            (onLazyLoad)="getStoreNotes($event)"
-                            [value]="primengTableHelper.records"
-                            rows="{{ primengTableHelper.defaultRecordsCountPerPage }}"
-                            [paginator]="false"
-                            [lazy]="true"
-                            [scrollable]="true"
-                            ScrollWidth="100%"
-                            [responsive]="primengTableHelper.isResponsive"
-                            [resizableColumns]="primengTableHelper.resizableColumns"
-                        >
+                        <p-table #dataTable (onLazyLoad)="getStoreNotes($event)" [value]="primengTableHelper.records"
+                            rows="{{ primengTableHelper.defaultRecordsCountPerPage }}" [paginator]="false" [lazy]="true"
+                            [scrollable]="true" ScrollWidth="100%" [responsive]="primengTableHelper.isResponsive"
+                            [resizableColumns]="primengTableHelper.resizableColumns">
                             <ng-template pTemplate="header">
                                 <tr>
-                                    <th
-                                        style="width: 130px"
-                                        [hidden]="!isGrantedAny('Pages.StoreNotes.Edit', 'Pages.StoreNotes.Delete')"
-                                    >
+                                    <th style="width: 130px"
+                                        [hidden]="!isGrantedAny('Pages.StoreNotes.Edit', 'Pages.StoreNotes.Delete')">
                                         {{ l('Actions') }}
                                     </th>
                                     <th style="width: 150px" pSortableColumn="storeFk.name">
@@ -141,10 +181,8 @@
                             </ng-template>
                             <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
                                 <tr>
-                                    <td
-                                        style="width: 130px"
-                                        [hidden]="!isGrantedAny('Pages.StoreNotes.Edit', 'Pages.StoreNotes.Delete')"
-                                    >
+                                    <td style="width: 130px"
+                                        [hidden]="!isGrantedAny('Pages.StoreNotes.Edit', 'Pages.StoreNotes.Delete')">
                                         <div class="btn-group dropdown" dropdown container="body">
                                             <button class="dropdown-toggle btn btn-sm btn-primary" dropdownToggle>
                                                 <i class="fa fa-cog"></i>
@@ -153,31 +191,23 @@
                                             </button>
                                             <ul class="dropdown-menu" *dropdownMenu>
                                                 <li>
-                                                    <a
-                                                        href="javascript:;"
-                                                        class="dropdown-item"
-                                                        (click)="viewStoreNoteModal.show(record)"
-                                                    >
+                                                    <a href="javascript:;" class="dropdown-item"
+                                                        (click)="viewStoreNoteModal.show(record)">
                                                         {{ l('View') }}
                                                     </a>
                                                 </li>
                                                 <li>
-                                                    <a
-                                                        href="javascript:;"
+                                                    <a href="javascript:;"
                                                         *ngIf="permission.isGranted('Pages.StoreNotes.Edit')"
                                                         class="dropdown-item"
-                                                        (click)="createOrEditStoreNoteModal.show(record.storeNote.id)"
-                                                    >
+                                                        (click)="createOrEditStoreNoteModal.show(record.storeNote.id)">
                                                         {{ l('Edit') }}
                                                     </a>
                                                 </li>
                                                 <li>
-                                                    <a
-                                                        class="dropdown-item"
-                                                        href="javascript:;"
+                                                    <a class="dropdown-item" href="javascript:;"
                                                         *ngIf="permission.isGranted('Pages.StoreNotes.Delete')"
-                                                        (click)="deleteStoreNote(record.storeNote)"
-                                                    >
+                                                        (click)="deleteStoreNote(record.storeNote)">
                                                         {{ l('Delete') }}
                                                     </a>
                                                 </li>
@@ -199,24 +229,20 @@
                             {{ l('NoData') }}
                         </div>
                         <div class="primeng-paging-container">
-                            <p-paginator
-                                [rows]="primengTableHelper.defaultRecordsCountPerPage"
-                                #paginator
+                            <p-paginator [rows]="primengTableHelper.defaultRecordsCountPerPage" #paginator
                                 (onPageChange)="getStoreNotes($event)"
                                 [totalRecords]="primengTableHelper.totalRecordsCount"
                                 [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
-                                [showCurrentPageReport]="true"
-                                [currentPageReportTemplate]="
+                                [showCurrentPageReport]="true" [currentPageReportTemplate]="
                                     'TotalRecordsCount' | localize : primengTableHelper.totalRecordsCount
-                                "
-                            ></p-paginator>
+                                "></p-paginator>
                         </div>
                     </div>
-                    <!--<Primeng-Datatable-End>-->
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
-    <createOrEditStoreNoteModal #createOrEditStoreNoteModal (modalSave)="getStoreNotes()"></createOrEditStoreNoteModal>
+    <createOrEditStoreNoteModal #createOrEditStoreNoteModal (modalSave)="getAllStoreNotes(storeId)">
+    </createOrEditStoreNoteModal>
     <viewStoreNoteModal #viewStoreNoteModal></viewStoreNoteModal>
 </div>

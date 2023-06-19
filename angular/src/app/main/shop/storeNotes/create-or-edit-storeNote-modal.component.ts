@@ -26,6 +26,8 @@ export class CreateOrEditStoreNoteModalComponent extends AppComponentBase implem
 
     storeName = '';
 
+    storeId:number;
+
     constructor(
         injector: Injector,
         private _storeNotesServiceProxy: StoreNotesServiceProxy,
@@ -45,7 +47,9 @@ export class CreateOrEditStoreNoteModalComponent extends AppComponentBase implem
         } else {
             this._storeNotesServiceProxy.getStoreNoteForEdit(storeNoteId).subscribe((result) => {
                 this.storeNote = result.storeNote;
-
+                if(this.storeId){
+                    this.storeId = this.storeNote.storeId;
+                }
                 this.storeName = result.storeName;
 
                 this.active = true;
@@ -56,7 +60,9 @@ export class CreateOrEditStoreNoteModalComponent extends AppComponentBase implem
 
     save(): void {
         this.saving = true;
-
+        if(this.storeId) {
+            this.storeNote.storeId = this.storeId;
+        }
         this._storeNotesServiceProxy
             .createOrEdit(this.storeNote)
             .pipe(

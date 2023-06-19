@@ -16,5 +16,6 @@ import { StoreNoteStoreLookupTableModalComponent } from './storeNote-store-looku
         StoreNoteStoreLookupTableModalComponent,
     ],
     imports: [AppSharedModule, StoreNoteRoutingModule, AdminSharedModule],
+    exports: [StoreNotesComponent, CreateOrEditStoreNoteModalComponent, ViewStoreNoteModalComponent],
 })
 export class StoreNoteModule {}

@@ -1,5 +1,5 @@
 ﻿import { AppConsts } from '@shared/AppConsts';
-import { Component, Injector, ViewEncapsulation, ViewChild } from '@angular/core';
+import { Component, Injector, ViewEncapsulation, ViewChild, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StoreNotesServiceProxy, StoreNoteDto } from '@shared/service-proxies/service-proxies';
 import { NotifyService } from 'abp-ng2-module';
@@ -17,13 +17,15 @@ import { filter as _filter } from 'lodash-es';
 import { DateTime } from 'luxon';
 
 import { DateTimeService } from '@app/shared/common/timing/date-time.service';
+import { moment } from 'ngx-bootstrap/chronos/testing/chain';
 
 @Component({
+    selector: 'app-storeNotes',
     templateUrl: './storeNotes.component.html',
     encapsulation: ViewEncapsulation.None,
     animations: [appModuleAnimation()],
 })
-export class StoreNotesComponent extends AppComponentBase {
+export class StoreNotesComponent extends AppComponentBase implements OnInit {
     @ViewChild('createOrEditStoreNoteModal', { static: true })
     createOrEditStoreNoteModal: CreateOrEditStoreNoteModalComponent;
     @ViewChild('viewStoreNoteModal', { static: true }) viewStoreNoteModal: ViewStoreNoteModalComponent;
@@ -36,6 +38,10 @@ export class StoreNotesComponent extends AppComponentBase {
     notesFilter = '';
     storeNameFilter = '';
 
+    @Input() storeId: number;
+
+    allStoreNotes: any[] = [];
+
     constructor(
         injector: Injector,
         private _storeNotesServiceProxy: StoreNotesServiceProxy,
@@ -46,8 +52,19 @@ export class StoreNotesComponent extends AppComponentBase {
         private _dateTimeService: DateTimeService
     ) {
         super(injector);
+       
     }
 
+    ngOnInit(): void {
+        this.getAllStoreNotes(this.storeId);
+    }
+
+    getAllStoreNotes(id: number) {
+        this._storeNotesServiceProxy.getAll('', '', '', id, '', 0, 1000).subscribe((result) => {
+            this.allStoreNotes = result.items;
+            console.log(this.allStoreNotes);
+        });
+    }
     getStoreNotes(event?: LazyLoadEvent) {
         if (this.primengTableHelper.shouldResetPaging(event)) {
             this.paginator.changePage(0);
@@ -58,20 +75,21 @@ export class StoreNotesComponent extends AppComponentBase {
 
         this.primengTableHelper.showLoadingIndicator();
 
-        this._storeNotesServiceProxy
-            .getAll(
-                this.filterText,
-                this.notesFilter,
-                this.storeNameFilter,
-                this.primengTableHelper.getSorting(this.dataTable),
-                this.primengTableHelper.getSkipCount(this.paginator, event),
-                this.primengTableHelper.getMaxResultCount(this.paginator, event)
-            )
-            .subscribe((result) => {
-                this.primengTableHelper.totalRecordsCount = result.totalCount;
-                this.primengTableHelper.records = result.items;
-                this.primengTableHelper.hideLoadingIndicator();
-            });
+        // this._storeNotesServiceProxy
+        //     .getAll(
+        //         this.filterText,
+        //         this.notesFilter,
+        //         this.storeNameFilter,
+        //         undefined,
+        //         this.primengTableHelper.getSorting(this.dataTable),
+        //         this.primengTableHelper.getSkipCount(this.paginator, event),
+        //         this.primengTableHelper.getMaxResultCount(this.paginator, event)
+        //     )
+        //     .subscribe((result) => {
+        //         this.primengTableHelper.totalRecordsCount = result.totalCount;
+        //         this.primengTableHelper.records = result.items;
+        //         this.primengTableHelper.hideLoadingIndicator();
+        //     });
     }
 
     reloadPage(): void {
@@ -79,6 +97,7 @@ export class StoreNotesComponent extends AppComponentBase {
     }
 
     createStoreNote(): void {
+        this.createOrEditStoreNoteModal.storeId = this.storeId;
         this.createOrEditStoreNoteModal.show();
     }
 
@@ -86,7 +105,7 @@ export class StoreNotesComponent extends AppComponentBase {
         this.message.confirm('', this.l('AreYouSure'), (isConfirmed) => {
             if (isConfirmed) {
                 this._storeNotesServiceProxy.delete(storeNote.id).subscribe(() => {
-                    this.reloadPage();
+                    this.getAllStoreNotes(this.storeId);
                     this.notify.success(this.l('SuccessfullyDeleted'));
                 });
             }
@@ -108,4 +127,28 @@ export class StoreNotesComponent extends AppComponentBase {
 
         this.getStoreNotes();
     }
+
+    // creationDayCalcuation(date?: any): string {
+    //     var taskAssignTimeLeft = moment().diff(date, 'days');
+    //     if (taskAssignTimeLeft == 0) {
+    //         taskAssignTimeLeft = moment().diff(date, 'minutes');
+    //         if (taskAssignTimeLeft < 1) {
+    //             var fewMinutesAgo = 'just now';
+    //             return fewMinutesAgo;
+    //         }
+    //         else if (taskAssignTimeLeft < 5) {
+    //             var fewMinutesAgo = 'few minutes ago';
+    //             return fewMinutesAgo;
+    //         }
+    //         else if (taskAssignTimeLeft >= 59) {
+    //             taskAssignTimeLeft = moment().diff(date, 'hours');
+    //             var hourWord = taskAssignTimeLeft == 1 ? ' hour' : ' hours';
+    //             return taskAssignTimeLeft + hourWord + " ago"
+    //         }
+    //         return taskAssignTimeLeft + " minutes ago"
+    //     }
+
+    //     var dayWord = taskAssignTimeLeft == 1 ? ' day' : ' days';
+    //     return taskAssignTimeLeft.toString() + dayWord + " ago";
+    // }
 }

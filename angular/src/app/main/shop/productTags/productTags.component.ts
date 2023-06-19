@@ -152,7 +152,6 @@ export class ProductTagsComponent extends AppComponentBase {
 
     getALlProductTags() {
         this._productTagsServiceProxy.getProductTagsByTagSetting(this.productCategoryId, this.productId).subscribe((result) => {
-            debugger;
             this.allProductTags = result;
             this.loader_anim_show = false;
         });

@@ -15,20 +15,61 @@
                         <li class="breadcrumb-item">
                             <span class="bullet bg-gray-400 w-5px h-2px"></span>
                         </li>
-                        <li routerLink="['/app/main/shop/products']" class="breadcrumb-item cursor-pointer text-muted">
-                            Store List</li>
+                        <li [routerLink]="['/app/main/shop/myProducts']" class="breadcrumb-item cursor-pointer text-muted">
+                            My Product List</li>
                     </ul>
                 </div>
                 <div class="d-flex align-items-center gap-2 gap-lg-3">
-                    <a routerLink="['/app/main/shop/products']" href="javascript:;"
-                        class="btn btn-sm fw-bold btn-primary" data-bs-toggle="modal"
-                        data-bs-target="#kt_modal_create_app"><i class="fas fa-arrow-alt-circle-left fa-2xl"></i></a>
+                    <a [routerLink]="['/app/main/shop/myProducts']" href="javascript:;"
+                        class="btn btn-sm fw-bold btn-primary" ><i class="fas fa-arrow-alt-circle-left fa-2xl"></i></a>
                 </div>
             </div>
         </div>
         <!-- end Topbar -->
         <div id="kt_app_content" *ngIf="product?.id" class="app-content flex-column-fluid">
             <div id="kt_app_content_container" class="app-container container-xxl">
+                <div class="card mb-6">
+                    <div class="card-body">
+                        <h5 class="mb-4 text-dark">Account Management</h5>
+                        <div class="d-flex align-items-center">
+                            <!-- After finishing the API modification by "Zillur vai" we will start the development of the task map based on store id -->
+                            <!-- Zillur vai will provide the API and Way to work on this -->
+                            <a href="javascript:;" class="btn btn-primary me-3">
+                                <i class="fas fa-list fs-3"></i>
+                                Task
+                            </a>
+
+                            <a href="javascript:;" class="btn btn-info me-3">
+                                <i class="fas fa-comment-dots fs-3"></i>
+                                Notes
+                            </a>
+                            <a href="javascript:;" class="btn btn-info me-3">
+                                <i class="fas fa-dollar-sign fs-3"></i>
+                                Sales Status
+                            </a>
+                            <div class="symbol-group symbol-hover">
+                                <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
+                                    data-bs-original-title="Alan Warden" data-kt-initialized="1">
+                                    <span class="symbol-label bg-warning text-inverse-warning fw-bold">A</span>
+                                </div>
+                                <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
+                                    data-bs-original-title="Susan Redwood" data-kt-initialized="1">
+                                    <span class="symbol-label bg-primary text-inverse-primary fw-bold">S</span>
+                                </div>
+                                <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
+                                    data-bs-original-title="Perry Matthew" data-kt-initialized="1">
+                                    <span class="symbol-label bg-info text-inverse-info fw-bold">P</span>
+                                </div>
+                                <a href="javascript:;" class="symbol symbol-35px symbol-circle" data-bs-toggle="modal"
+                                    data-bs-target="#kt_modal_view_users">
+                                    <span class="symbol-label bg-dark text-inverse-dark fs-8 fw-bold"
+                                        data-bs-toggle="tooltip" data-bs-trigger="hover"
+                                        data-bs-original-title="View more users" data-kt-initialized="1">+42</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="card mb-6 mb-xl-9">
                     <div class="card-body pt-9 pb-0">
                         <div class="d-flex flex-wrap flex-sm-nowrap mb-6">
