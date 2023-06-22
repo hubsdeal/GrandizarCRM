@@ -14,7 +14,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-xl-12">
+                        <!-- <div class="col-xl-12">
                             <div class="my-3 g_prime_btn">
                                 <div class="p-inputgroup">
                                     <button type="button" pButton label="">
@@ -23,8 +23,8 @@
                                     <input type="text" disabled pInputText placeholder="Add from Product Library" />
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-xl-12">
+                        </div> -->
+                        <div class="col-xl-12" *ngIf="!isTemplate">
                             <div class="my-3 g_prime_btn">
                                 <div class="p-inputgroup">
                                     <button type="button" pButton label="">
@@ -32,6 +32,18 @@
                                     </button>
                                     <input type="text" disabled pInputText placeholder="Add from My Product List" />
                                 </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-12" *ngIf="!isTemplate">
+                            <div class="my-5 p_filter">
+                                <label class="form-label" for="ProductCategoryName">
+                                    Select from Product Library
+                                </label>
+                                <p-dropdown [options]="productLibraryOptions" [filter]="true" [virtualScroll]="true"
+                                    (onChange)="onProductLibraryClick($event)" placeholder="Select Product Library"
+                                    [itemSize]="30" name="displayName" optionLabel="displayName" optionId="id"
+                                    [(ngModel)]="selectedProductLibrary" filterBy="displayName" 
+                                    [style]="{ width: '100%' }"></p-dropdown>
                             </div>
                         </div>
                         <div class="col-xl-12">
@@ -65,15 +77,35 @@
                                 <label class="form-label required" for="ProductCategoryName">
                                     Primary Category
                                 </label>
-                                <p-dropdown [options]="productCategoryOptions" [filter]="true"
-                                    [virtualScroll]="true" (onChange)="onProductCategoryClick($event)"
-                                    placeholder="Select Product Category" [itemSize]="30" name="displayName"
-                                    optionLabel="displayName" optionId="id"
+                                <p-dropdown [options]="productCategoryOptions" [filter]="true" [virtualScroll]="true"
+                                    (onChange)="onProductCategoryClick($event)" placeholder="Select Product Category"
+                                    [itemSize]="30" name="displayName" optionLabel="displayName" optionId="id"
                                     [(ngModel)]="selectedProductCategory" filterBy="displayName" required
                                     [style]="{ width: '100%' }"></p-dropdown>
                             </div>
                         </div>
-                        <!-- <div class="col-xl-6">
+                        <div class="col-xl-12">
+                            <div class="my-3">
+                                <label class="form-label" for="StoreName">{{ l('Store') }}</label>
+                                <div class="input-group">
+                                    <input class="form-control" id="StoreName" name="storeName" [(ngModel)]="storeName"
+                                        type="text" disabled />
+                                    <button class="btn btn-primary blue" (click)="openSelectStoreModal()" type="button">
+                                        <i class="fa fa-search"></i>
+                                        {{ l('Pick') }}
+                                    </button>
+                                    <button class="btn btn-danger btn-icon" type="button" (click)="setStoreIdNull()">
+                                        <i class="fa fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <input class="form-control" name="product.storeId" [(ngModel)]="product.storeId" type="text"
+                                hidden />
+                        </div>
+
+                    </div>
+                    <div class="row" *ngIf="isTemplate">
+                        <div class="col-xl-12">
                             <div class="my-3">
                                 <label class="form-label" for="MediaLibraryName">{{ l('Photo/Video') }}</label>
                                 <div class="input-group">
@@ -95,7 +127,7 @@
                         </div>
                         <div class="col-xl-6">
                             <div class="my-3">
-                                <label class="form-label" for="MeasurementUnitName">{{ l('MeasurementUnit') }}</label>
+                                <label class="form-label" for="MeasurementUnitName">{{ l('Measurement Unit') }}</label>
                                 <div class="input-group">
                                     <input class="form-control" id="MeasurementUnitName" name="measurementUnitName"
                                         [(ngModel)]="measurementUnitName" type="text" disabled />
@@ -148,189 +180,164 @@
                                     class="form-control" [(ngModel)]="product.salePrice" name="SalePrice" />
                                 <validation-messages [formCtrl]="Product_SalePrice"></validation-messages>
                             </div>
-                        </div> -->
+                        </div>
+                        <div class="my-3 col-xl-6">
+                            <label class="form-label" for="Product_UnitPrice">{{ l('UnitPrice') }}</label>
+                            <input type="number" #Product_UnitPrice="ngModel" id="Product_UnitPrice"
+                                class="form-control" [(ngModel)]="product.unitPrice" name="UnitPrice" />
+                            <validation-messages [formCtrl]="Product_UnitPrice"></validation-messages>
+                        </div>
+
+                        <div class="my-3 col-xl-6">
+                            <label class="form-label" for="Product_MeasurementAmount">{{ l('Measurement Amount')
+                                }}</label>
+                            <input type="number" #Product_MeasurementAmount="ngModel" id="Product_MeasurementAmount"
+                                class="form-control" [(ngModel)]="product.measurementAmount" name="MeasurementAmount" />
+                            <validation-messages [formCtrl]="Product_MeasurementAmount"></validation-messages>
+                        </div>
+
                         <div class="col-xl-12">
-                            <div class="my-3">
-                                <label class="form-label" for="StoreName">{{ l('Store') }}</label>
-                                <div class="input-group">
-                                    <input class="form-control" id="StoreName" name="storeName" [(ngModel)]="storeName"
-                                        type="text" disabled />
-                                    <button class="btn btn-primary blue" (click)="openSelectStoreModal()" type="button">
-                                        <i class="fa fa-search"></i>
-                                        {{ l('Pick') }}
-                                    </button>
-                                    <button class="btn btn-danger btn-icon" type="button" (click)="setStoreIdNull()">
-                                        <i class="fa fa-times"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <input class="form-control" name="product.storeId" [(ngModel)]="product.storeId" type="text"
-                                hidden />
-                        </div>
-
-                    </div>
-
-
-
-
-
-
-
-                    <!-- <div class="my-3">
-                        <label class="form-label" for="RatingLikeName">{{ l('RatingLike') }}</label>
-                        <div class="input-group">
-                            <input class="form-control" id="RatingLikeName" name="ratingLikeName"
-                                [(ngModel)]="ratingLikeName" type="text" disabled />
-                            <button class="btn btn-primary blue" (click)="openSelectRatingLikeModal()" type="button">
-                                <i class="fa fa-search"></i>
-                                {{ l('Pick') }}
-                            </button>
-                            <button class="btn btn-danger btn-icon" type="button" (click)="setRatingLikeIdNull()">
-                                <i class="fa fa-times"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <input class="form-control" name="product.ratingLikeId" [(ngModel)]="product.ratingLikeId"
-                        type="text" hidden /> -->
-
-                    <!-- <div class="my-3">
-                        <label class="form-label" for="ContactFullName">{{ l('Contact') }}</label>
-                        <div class="input-group">
-                            <input class="form-control" id="ContactFullName" name="contactFullName"
-                                [(ngModel)]="contactFullName" type="text" disabled />
-                            <button class="btn btn-primary blue" (click)="openSelectContactModal()" type="button">
-                                <i class="fa fa-search"></i>
-                                {{ l('Pick') }}
-                            </button>
-                            <button class="btn btn-danger btn-icon" type="button" (click)="setContactIdNull()">
-                                <i class="fa fa-times"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <input class="form-control" name="product.contactId" [(ngModel)]="product.contactId" type="text"
-                        hidden /> -->
-
-
-
-
-
-                    <!-- <div class="my-3">
-                        <label class="form-label" for="Product_ShortDescription">{{ l('ShortDescription') }}</label>
-                        <input type="text" #Product_ShortDescription="ngModel" id="Product_ShortDescription"
-                            class="form-control" [(ngModel)]="product.shortDescription" name="ShortDescription" />
-                        <validation-messages [formCtrl]="Product_ShortDescription"></validation-messages>
-                    </div>
-
-                    <div class="my-3">
-                        <label class="form-label" for="Product_Description">{{ l('Description') }}</label>
-                        <input type="text" #Product_Description="ngModel" id="Product_Description" class="form-control"
-                            [(ngModel)]="product.description" name="Description" />
-                        <validation-messages [formCtrl]="Product_Description"></validation-messages>
-                    </div> -->
-
-                    <!-- <div class="my-3">
-                        <label class="form-label" for="Product_Sku">{{ l('Sku') }}</label>
-                        <input type="text" #Product_Sku="ngModel" id="Product_Sku" class="form-control"
-                            [(ngModel)]="product.sku" name="Sku" minlength="1" maxlength="128" />
-                        <validation-messages [formCtrl]="Product_Sku"></validation-messages>
-                    </div>
-
-                    <div class="my-3">
-                        <label class="form-label" for="Product_Url">{{ l('Url') }}</label>
-                        <input type="text" #Product_Url="ngModel" id="Product_Url" class="form-control"
-                            [(ngModel)]="product.url" name="Url" minlength="1" maxlength="1024" />
-                        <validation-messages [formCtrl]="Product_Url"></validation-messages>
-                    </div>
-
-                    <div class="my-3">
-                        <label class="form-label" for="Product_SeoTitle">{{ l('SeoTitle') }}</label>
-                        <input type="text" #Product_SeoTitle="ngModel" id="Product_SeoTitle" class="form-control"
-                            [(ngModel)]="product.seoTitle" name="SeoTitle" minlength="1" maxlength="1024" />
-                        <validation-messages [formCtrl]="Product_SeoTitle"></validation-messages>
-                    </div>
-
-                    <div class="my-3">
-                        <label class="form-label" for="Product_MetaKeywords">{{ l('MetaKeywords') }}</label>
-                        <input type="text" #Product_MetaKeywords="ngModel" id="Product_MetaKeywords"
-                            class="form-control" [(ngModel)]="product.metaKeywords" name="MetaKeywords" minlength="1"
-                            maxlength="512" />
-                        <validation-messages [formCtrl]="Product_MetaKeywords"></validation-messages>
-                    </div>
-
-                    <div class="my-3">
-                        <label class="form-label" for="Product_MetaDescription">{{ l('MetaDescription') }}</label>
-                        <input type="text" #Product_MetaDescription="ngModel" id="Product_MetaDescription"
-                            class="form-control" [(ngModel)]="product.metaDescription" name="MetaDescription" />
-                        <validation-messages [formCtrl]="Product_MetaDescription"></validation-messages>
-                    </div> -->
-
-
-                    <!-- 
-                    <div class="my5">
-                        <label class="form-label" for="Product_PriceDiscountPercentage">
-                            {{ l('PriceDiscountPercentage') }}
-                        </label>
-                        <input type="number" #Product_PriceDiscountPercentage="ngModel"
-                            id="Product_PriceDiscountPercentage" class="form-control"
-                            [(ngModel)]="product.priceDiscountPercentage" name="PriceDiscountPercentage" />
-                        <validation-messages [formCtrl]="Product_PriceDiscountPercentage"></validation-messages>
-                    </div>
-
-                    <br />
-                    <label class="form-check form-check-custom form-check-solid">
-                        <input id="Product_CallForPrice" #Product_CallForPrice="ngModel" name="CallForPrice"
-                            [(ngModel)]="product.callForPrice" type="checkbox" class="form-check-input" />
-                        <span class="form-check-label">
-                            {{ l('CallForPrice') }}
-                        </span>
-                    </label>
-                    <validation-messages [formCtrl]="Product_CallForPrice"></validation-messages>
-
-                    <div class="my5">
-                        <label class="form-label" for="Product_UnitPrice">{{ l('UnitPrice') }}</label>
-                        <input type="number" #Product_UnitPrice="ngModel" id="Product_UnitPrice" class="form-control"
-                            [(ngModel)]="product.unitPrice" name="UnitPrice" />
-                        <validation-messages [formCtrl]="Product_UnitPrice"></validation-messages>
-                    </div>
-
-                    <div class="my5">
-                        <label class="form-label" for="Product_MeasurementAmount">{{ l('MeasurementAmount') }}</label>
-                        <input type="number" #Product_MeasurementAmount="ngModel" id="Product_MeasurementAmount"
-                            class="form-control" [(ngModel)]="product.measurementAmount" name="MeasurementAmount" />
-                        <validation-messages [formCtrl]="Product_MeasurementAmount"></validation-messages>
-                    </div>
-
-                    <br />
-                    <label class="form-check form-check-custom form-check-solid">
-                        <input id="Product_IsTaxExempt" #Product_IsTaxExempt="ngModel" name="IsTaxExempt"
-                            [(ngModel)]="product.isTaxExempt" type="checkbox" class="form-check-input" />
-                        <span class="form-check-label">
-                            {{ l('IsTaxExempt') }}
-                        </span>
-                    </label>
-                    <validation-messages [formCtrl]="Product_IsTaxExempt"></validation-messages> -->
-                    <div class="row">
-                        <!-- <div class="col-xl-6">
                             <div class="my-3">
                                 <label class="form-label" for="Product_StockQuantity">{{ l('Stock Quantity') }}</label>
                                 <input type="number" #Product_StockQuantity="ngModel" id="Product_StockQuantity"
                                     class="form-control" [(ngModel)]="product.stockQuantity" name="StockQuantity" />
                                 <validation-messages [formCtrl]="Product_StockQuantity"></validation-messages>
                             </div>
-                        </div> -->
-                        <div class="col-xl-12 d-flex align-items-end pb-4">
+                        </div>
+
+                        <div class="my-3 col-xl-6">
+                            <label class="form-label" for="Product_Sku">{{ l('Sku') }}</label>
+                            <input type="text" #Product_Sku="ngModel" id="Product_Sku" class="form-control"
+                                [(ngModel)]="product.sku" name="Sku" minlength="1" maxlength="128" />
+                            <validation-messages [formCtrl]="Product_Sku"></validation-messages>
+                        </div>
+
+                        <div class="my-3 col-xl-6">
+                            <label class="form-label" for="Product_Url">{{ l('Url') }}</label>
+                            <input type="text" #Product_Url="ngModel" id="Product_Url" class="form-control"
+                                [(ngModel)]="product.url" name="Url" minlength="1" maxlength="1024" />
+                            <validation-messages [formCtrl]="Product_Url"></validation-messages>
+                        </div>
+
+                        <div class="my-3 col-xl-12">
+                            <label class="form-label" for="Product_SeoTitle">{{ l('Seo Title') }}</label>
+                            <input type="text" #Product_SeoTitle="ngModel" id="Product_SeoTitle" class="form-control"
+                                [(ngModel)]="product.seoTitle" name="SeoTitle" minlength="1" maxlength="1024" />
+                            <validation-messages [formCtrl]="Product_SeoTitle"></validation-messages>
+                        </div>
+
+                        <div class="my-3 col-xl-12">
+                            <label class="form-label" for="Product_MetaKeywords">{{ l('Meta Keywords') }}</label>
+                            <input type="text" #Product_MetaKeywords="ngModel" id="Product_MetaKeywords"
+                                class="form-control" [(ngModel)]="product.metaKeywords" name="MetaKeywords"
+                                minlength="1" maxlength="512" />
+                            <validation-messages [formCtrl]="Product_MetaKeywords"></validation-messages>
+                        </div>
+
+                        <div class="my-3 col-xl-12">
+                            <label class="form-label" for="Product_MetaDescription">{{ l('Meta Description') }}</label>
+                            <textarea #Product_MetaDescription="ngModel" id="Product_MetaDescription"
+                                class="form-control" [(ngModel)]="product.metaDescription" name="MetaDescription"
+                                cols="30" rows="10"></textarea>
+                            <validation-messages [formCtrl]="Product_MetaDescription"></validation-messages>
+                        </div>
+
+
+
+                        <div class="col-xl-12">
                             <div class="my-3">
-                                <label class="form-check form-check-custom form-check-solid">
-                                    <input id="Product_IsDisplayStockQuantity" #Product_IsDisplayStockQuantity="ngModel"
-                                        name="IsDisplayStockQuantity" [(ngModel)]="product.isDisplayStockQuantity"
-                                        type="checkbox" class="form-check-input" />
-                                    <span class="form-check-label">
-                                        {{ l('Display Stock Quantity') }}
-                                    </span>
-                                </label>
-                                <validation-messages [formCtrl]="Product_IsDisplayStockQuantity"></validation-messages>
+                                <label class="form-label" for="Product_ShortDescription">{{ l('Short Description')
+                                    }}</label>
+                                <p-editor id="Product_ShortDescription" [(ngModel)]="product.shortDescription"
+                                    name="ShortDescription" ngDefaultControl [style]="{ height: '300px' }"
+                                    placeholder="'Type here...'"></p-editor>
                             </div>
                         </div>
+                        <div class="col-xl-12">
+                            <div class="my-3">
+                                <label class="form-label" for="Product_Description">{{ l('Description') }}</label>
+                                <p-editor id="Product_Description" [(ngModel)]="product.description" name="Description"
+                                    ngDefaultControl [style]="{ height: '300px' }"
+                                    placeholder="'Type here...'"></p-editor>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-12">
+                            <div class="my-3">
+                                <label class="form-label" for="Product_InternalNotes">{{ l('Internal Notes') }}</label>
+                                <textarea #Product_InternalNotes="ngModel" id="Product_InternalNotes"
+                                    class="form-control" [(ngModel)]="product.internalNotes" name="InternalNotes"
+                                    cols="30" rows="10"></textarea>
+                                <validation-messages [formCtrl]="Product_InternalNotes"></validation-messages>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-12">
+                            <div class="my-3">
+                                <label class="form-check form-check-custom form-check-solid">
+                                    <input id="Product_IsPackageProduct" #Product_IsPackageProduct="ngModel"
+                                        name="IsPackageProduct" [(ngModel)]="product.isPackageProduct" type="checkbox"
+                                        class="form-check-input" />
+                                    <span class="form-check-label">
+                                        {{ l('Package Product') }}
+                                    </span>
+                                </label>
+                                <validation-messages [formCtrl]="Product_IsPackageProduct"></validation-messages>
+                            </div>
+
+
+                            <div class="my-3">
+                                <label class="form-check form-check-custom form-check-solid">
+                                    <input id="Product_IsWholeSaleProduct" #Product_IsWholeSaleProduct="ngModel"
+                                        name="IsWholeSaleProduct" [(ngModel)]="product.isWholeSaleProduct"
+                                        type="checkbox" class="form-check-input" />
+                                    <span class="form-check-label">
+                                        {{ l('Whole Sale Product') }}
+                                    </span>
+                                </label>
+                                <validation-messages [formCtrl]="Product_IsWholeSaleProduct"></validation-messages>
+                            </div>
+
+                            <div class="my-3">
+                                <label class="form-check form-check-custom form-check-solid">
+                                    <input id="Product_IsPublished" #Product_IsPublished="ngModel" name="IsPublished"
+                                        [(ngModel)]="product.isPublished" type="checkbox" class="form-check-input" />
+                                    <span class="form-check-label">
+                                        {{ l('Publish') }}
+                                    </span>
+                                </label>
+                                <validation-messages [formCtrl]="Product_IsPublished"></validation-messages>
+                            </div>
+                            <div class="my-3">
+                                <label class="form-check form-check-custom form-check-solid">
+                                    <input id="Product_IsTaxExempt" name="IsTaxExempt" [(ngModel)]="product.isTaxExempt"
+                                        type="checkbox" class="form-check-input" />
+                                    <span class="form-check-label">
+                                        {{ l('Tax Exempt') }}
+                                    </span>
+                                </label>
+                            </div>
+                            <div class="my-3">
+                                <label class="form-check form-check-custom form-check-solid">
+                                    <input id="Product_CallForPrice" #Product_CallForPrice="ngModel" name="CallForPrice"
+                                        [(ngModel)]="product.callForPrice" type="checkbox" class="form-check-input" />
+                                    <span class="form-check-label">
+                                        {{ l('Call for Price') }}
+                                    </span>
+                                </label>
+                                <validation-messages [formCtrl]="Product_CallForPrice"></validation-messages>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        <!--begin::Input group-->
+                        <div class="fv-row mb-7 mt-7 fv-plugins-icon-container select_button_custom">
+                            <p-selectButton [options]="productServiceOptions" name="productServiceOptions"
+                                id="productServiceOptions" [(ngModel)]="product.isService" optionLabel="label"
+                                optionValue="value"></p-selectButton>
+                        </div>
+                        <!--end::Input group-->
 
                         <!-- Need to implement save as product library -->
                         <div class="col-xl-12 d-flex align-items-center">
@@ -338,124 +345,15 @@
                                 Save as Library
                             </div>
                             <div class="form-check form-check-solid form-switch form-check-custom fv-row">
-                                <input class="form-check-input w-45px h-30px" type="checkbox" id="allowmarketing"
-                                    checked="checked">
-                                <label class="form-check-label" for="allowmarketing"></label>
+                                <input class="form-check-input w-45px h-30px" type="checkbox" id="isTemplate"
+                                    name="isTemplate" [(ngModel)]="product.isTemplate">
+                                <label class="form-check-label" for="isTemplate"></label>
                             </div>
                         </div>
                     </div>
-
-
-
-
-                    <!-- <div class="d-flex my-3 mt-5 flex-wrap">
-                        <div class="me-2">
-                            <label class="form-check form-check-custom form-check-solid">
-                                <input id="Product_IsPackageProduct" #Product_IsPackageProduct="ngModel"
-                                    name="IsPackageProduct" [(ngModel)]="product.isPackageProduct" type="checkbox"
-                                    class="form-check-input" />
-                                <span class="form-check-label">
-                                    {{ l('Package Product') }}
-                                </span>
-                            </label>
-                            <validation-messages [formCtrl]="Product_IsPackageProduct"></validation-messages>
-                        </div>
-
-                        <div class="ms-2">
-                            <label class="form-check form-check-custom form-check-solid">
-                                <input id="Product_IsService" #Product_IsService="ngModel" name="IsService"
-                                    [(ngModel)]="product.isService" type="checkbox" class="form-check-input" />
-                                <span class="form-check-label">
-                                    {{ l('Service') }}
-                                </span>
-                            </label>
-                            <validation-messages [formCtrl]="Product_IsService"></validation-messages>
-                        </div>
-
-                        <div class="ms-2">
-                            <label class="form-check form-check-custom form-check-solid">
-                                <input id="Product_IsWholeSaleProduct" #Product_IsWholeSaleProduct="ngModel"
-                                    name="IsWholeSaleProduct" [(ngModel)]="product.isWholeSaleProduct" type="checkbox"
-                                    class="form-check-input" />
-                                <span class="form-check-label">
-                                    {{ l('Whole Sale Product') }}
-                                </span>
-                            </label>
-                            <validation-messages [formCtrl]="Product_IsWholeSaleProduct"></validation-messages>
-                        </div>
-                    </div>
-                    <div class="my-3">
-                        <label class="form-check form-check-custom form-check-solid">
-                            <input id="Product_IsTemplate" #Product_IsTemplate="ngModel" name="IsTemplate"
-                                [(ngModel)]="product.isTemplate" type="checkbox" class="form-check-input" />
-                            <span class="form-check-label">
-                                {{ l('Template') }}
-                            </span>
-                        </label>
-                        <validation-messages [formCtrl]="Product_IsTemplate"></validation-messages>
-                    </div>
-                    <div class="my-3">
-                        <label class="form-check form-check-custom form-check-solid">
-                            <input id="Product_IsPublished" #Product_IsPublished="ngModel" name="IsPublished"
-                                [(ngModel)]="product.isPublished" type="checkbox" class="form-check-input" />
-                            <span class="form-check-label">
-                                {{ l('Published') }}
-                            </span>
-                        </label>
-                        <validation-messages [formCtrl]="Product_IsPublished"></validation-messages>
-                    </div> -->
-
-
-
-                    <!-- <div class="my-3">
-                        <label class="form-label" for="Product_InternalNotes">{{ l('InternalNotes') }}</label>
-                        <input type="text" #Product_InternalNotes="ngModel" id="Product_InternalNotes"
-                            class="form-control" [(ngModel)]="product.internalNotes" name="InternalNotes" />
-                        <validation-messages [formCtrl]="Product_InternalNotes"></validation-messages>
-                    </div>
-
-                    <br /> -->
-
-                    <!-- 
-                    <div class="my5">
-                        <label class="form-label" for="Product_PriceDiscountAmount">
-                            {{ l('PriceDiscountAmount') }}
-                        </label>
-                        <input type="number" #Product_PriceDiscountAmount="ngModel" id="Product_PriceDiscountAmount"
-                            class="form-control" [(ngModel)]="product.priceDiscountAmount" name="PriceDiscountAmount" />
-                        <validation-messages [formCtrl]="Product_PriceDiscountAmount"></validation-messages>
-                    </div>
-
-                    <br /> -->
-
-
-                    <!-- <div class="my-3">
-                        <label class="form-label" for="Product_ProductManufacturerSku">
-                            {{ l('ProductManufacturerSku') }}
-                        </label>
-                        <input type="text" #Product_ProductManufacturerSku="ngModel" id="Product_ProductManufacturerSku"
-                            class="form-control" [(ngModel)]="product.productManufacturerSku"
-                            name="ProductManufacturerSku" minlength="1" maxlength="128" />
-                        <validation-messages [formCtrl]="Product_ProductManufacturerSku"></validation-messages>
-                    </div>
-
-                    <br />
-                    <label class="form-check form-check-custom form-check-solid">
-                        <input id="Product_ByOrderOnly" #Product_ByOrderOnly="ngModel" name="ByOrderOnly"
-                            [(ngModel)]="product.byOrderOnly" type="checkbox" class="form-check-input" />
-                        <span class="form-check-label">
-                            {{ l('ByOrderOnly') }}
-                        </span>
-                    </label>
-                    <validation-messages [formCtrl]="Product_ByOrderOnly"></validation-messages>
-
-                    <div class="my5">
-                        <label class="form-label" for="Product_Score">{{ l('Score') }}</label>
-                        <input type="number" #Product_Score="ngModel" id="Product_Score" class="form-control"
-                            [(ngModel)]="product.score" name="Score" />
-                        <validation-messages [formCtrl]="Product_Score"></validation-messages>
-                    </div> -->
                 </div>
+
+
                 <div class="modal-footer">
                     <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
                         {{ l('Cancel') }}
@@ -470,11 +368,13 @@
         </div>
     </div>
     <productProductCategoryLookupTableModal #productProductCategoryLookupTableModal
-        (modalSave)="getNewProductCategoryId()"></productProductCategoryLookupTableModal>
+        (modalSave)="getNewProductCategoryId()">
+    </productProductCategoryLookupTableModal>
     <productMediaLibraryLookupTableModal #productMediaLibraryLookupTableModal (modalSave)="getNewMediaLibraryId()">
     </productMediaLibraryLookupTableModal>
     <productMeasurementUnitLookupTableModal #productMeasurementUnitLookupTableModal
-        (modalSave)="getNewMeasurementUnitId()"></productMeasurementUnitLookupTableModal>
+        (modalSave)="getNewMeasurementUnitId()">
+    </productMeasurementUnitLookupTableModal>
     <productCurrencyLookupTableModal #productCurrencyLookupTableModal (modalSave)="getNewCurrencyId()">
     </productCurrencyLookupTableModal>
     <productRatingLikeLookupTableModal #productRatingLikeLookupTableModal (modalSave)="getNewRatingLikeId()">
