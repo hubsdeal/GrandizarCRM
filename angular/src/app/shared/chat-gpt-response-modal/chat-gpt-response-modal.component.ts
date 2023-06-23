@@ -59,7 +59,7 @@ export class ChatGptResponseModalComponent implements OnInit {
         model: 'text-davinci-003',//'text-davinci-003',//"text-curie-001",
         prompt: promptText,//this.generatePrompt(animal),
         temperature: 0.95,
-        max_tokens: 150,
+        max_tokens: 1500,
         top_p: 1.0,
         frequency_penalty: 0.0,
         presence_penalty: 0.0,
@@ -67,8 +67,13 @@ export class ChatGptResponseModalComponent implements OnInit {
       this.showSpinner = true;
       let apiResponse = await openai.createCompletion(requestData);
       this.response = apiResponse.data as ResponseModel;
-      const lines = this.response.choices[0].text.split('\n');
-      const recordFormat = lines.map(line => `<br> ${line}`).join('\n');
+      // const lines = this.response.choices[0].text.split('\n');
+      // const recordFormat = lines.map(line => `<br> ${line}`).join('\n');
+      const lines = this.response.choices[0].text.trim().split('\n');
+      const recordFormat = lines.map(line => `<br> ${line}`).join('\n').trim();
+      this.responseText = recordFormat;
+
+
       this.responseText = recordFormat
       this.showSpinner = false;
     } catch (error: any) {

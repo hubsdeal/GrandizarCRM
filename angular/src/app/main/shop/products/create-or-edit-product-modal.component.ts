@@ -16,6 +16,9 @@ import { ProductStoreLookupTableModalComponent } from './product-store-lookup-ta
 import { Router } from '@angular/router';
 import { result } from 'lodash-es';
 import { SelectItem } from 'primeng/api';
+import { MatDialog } from '@angular/material/dialog';
+import { Title } from '@angular/platform-browser';
+import { ChatGptResponseModalComponent } from '@app/shared/chat-gpt-response-modal/chat-gpt-response-modal.component';
 
 @Component({
     selector: 'createOrEditProductModal',
@@ -67,7 +70,9 @@ export class CreateOrEditProductModalComponent extends AppComponentBase implemen
         injector: Injector,
         private _productsServiceProxy: ProductsServiceProxy,
         private _dateTimeService: DateTimeService,
-        private _router: Router
+        private _router: Router,
+        private dialog: MatDialog,
+        private titleService: Title
     ) {
         super(injector);
     }
@@ -280,4 +285,18 @@ export class CreateOrEditProductModalComponent extends AppComponentBase implemen
     }
 
     ngOnInit(): void { }
+
+    openAiModalProductCreate(): void {
+        const productShortDesc = "Write a  short description for a product where product name is Organic Mustard Oil and product brand is Saffola"
+        var modalTitle = "AI Text Generator - Product Description"
+        const dialogRef = this.dialog.open(ChatGptResponseModalComponent, {
+          data: { promtFromAnotherComponent: productShortDesc, feildName: '', modalTitle: modalTitle },
+          width: '1100px',
+        });
+    
+        dialogRef.afterClosed().subscribe(result => {
+          console.log(result)
+          //this.bindingData = result.data;
+        });
+      }
 }

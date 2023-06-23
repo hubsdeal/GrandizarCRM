@@ -42,7 +42,7 @@
                                 <p-dropdown [options]="productLibraryOptions" [filter]="true" [virtualScroll]="true"
                                     (onChange)="onProductLibraryClick($event)" placeholder="Select Product Library"
                                     [itemSize]="30" name="displayName" optionLabel="displayName" optionId="id"
-                                    [(ngModel)]="selectedProductLibrary" filterBy="displayName" 
+                                    [(ngModel)]="selectedProductLibrary" filterBy="displayName"
                                     [style]="{ width: '100%' }"></p-dropdown>
                             </div>
                         </div>
@@ -84,6 +84,12 @@
                                     [style]="{ width: '100%' }"></p-dropdown>
                             </div>
                         </div>
+                        <!-- <div class="my-3 col-xl-12 d-flex-justify-content-center">
+                            <button class="btn btn-sm btn-light-primary" (click)="openAiModalProductCreate()">
+                                <i class="fa-file-signature fas me-2"></i>
+                                Generate Product Data
+                            </button>
+                        </div> -->
                         <div class="col-xl-12">
                             <div class="my-3">
                                 <label class="form-label" for="StoreName">{{ l('Store') }}</label>
