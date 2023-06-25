@@ -1,13 +1,15 @@
-import { AfterViewInit, Component, Injector, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Injector, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Title } from '@angular/platform-browser';
+import { DomSanitizer, Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { ChatGptResponseModalComponent } from '@app/shared/chat-gpt-response-modal/chat-gpt-response-modal.component';
 import { AppComponentBase } from '@shared/common/app-component-base';
-import { CreateOrEditProductDto, ProductsServiceProxy } from '@shared/service-proxies/service-proxies';
+import { CreateOrEditProductDto, CreateOrEditProductMediaDto, GetProductMediaForViewDto, GetStoreMediaForViewDto, ProductMediasServiceProxy, ProductsServiceProxy } from '@shared/service-proxies/service-proxies';
 import { TokenService } from 'abp-ng2-module';
+import { FileUploader, FileUploaderOptions } from 'ng2-file-upload';
 import { SelectItem } from 'primeng/api';
 import { finalize } from 'rxjs';
+import { CreateOrEditProductMediaModalComponent } from '../../productMedias/create-or-edit-productMedia-modal.component';
 
 @Component({
   selector: 'app-product-dashboard',
@@ -28,6 +30,15 @@ export class ProductDashboardComponent extends AppComponentBase {
   mediaLibraryName = '';
   categoryName: string;
   picture: string;
+  video: string;
+  images: GetProductMediaForViewDto[] = [];
+  videos: any[] = [];
+
+
+  imageSrc: any = 'assets/common/images/c_logo.png';
+  public uploader: FileUploader;
+  public temporaryPictureUrl: string;
+  private _uploaderOptions: FileUploaderOptions = {};
   publish: Boolean = false;
 
   storeName: string;
@@ -73,12 +84,17 @@ export class ProductDashboardComponent extends AppComponentBase {
   measurementUnitName: string;
   isManufacturerSkuAvailble: boolean = false;
   isManufacturerSkuNotAvailble: boolean = false;
+  temporaryMediaLibraryId: number;
+
+  @ViewChild('createOrEditProductMediaModal', { static: true }) createOrEditProductMediaModal: CreateOrEditProductMediaModalComponent;
   constructor(
     injector: Injector,
     private route: ActivatedRoute,
     private _tokenService: TokenService,
     private dialog: MatDialog,
     private _productsServiceProxy: ProductsServiceProxy,
+    private _productMediasServiceProxy:ProductMediasServiceProxy,
+    private _sanitizer: DomSanitizer,
     private titleService: Title
   ) {
     super(injector);
@@ -121,6 +137,7 @@ export class ProductDashboardComponent extends AppComponentBase {
         this.product.isService = true;
       }
       console.log(this.product)
+      this.getProductPhotos();
     });
 
 
@@ -267,5 +284,75 @@ export class ProductDashboardComponent extends AppComponentBase {
         this.isManufacturerSkuAvailble = false;
       }
     });
+  }
+
+
+  createProductMediaPhoto(): void {
+    this.createOrEditProductMediaModal.selectUploadPhoto = true;
+    this.createOrEditProductMediaModal.productId = this.productId;
+    this.createOrEditProductMediaModal.show();
+  }
+
+  createProductMediaVideo(): void {
+    this.createOrEditProductMediaModal.selectAddVideo = true;
+    this.createOrEditProductMediaModal.productId = this.productId;
+    this.createOrEditProductMediaModal.show();
+  }
+
+  getSafeEmbeddedVideoUrl(url: string) {
+    return this._sanitizer.bypassSecurityTrustResourceUrl(url);
+  }
+  getProductPhotos() {
+
+    this.images = [];
+    this.videos = [];
+    this._productMediasServiceProxy.getAllByProductIdForDashboard(
+      this.productId
+    ).subscribe(result => {
+      this.images.push(...result.items);
+      this.videos.push(...result.items.filter(x => x.videoUrl != null));
+    });
+  }
+
+  onPhotoOrVideoClick(data: any) {
+    if (data.picture) {
+      this.picture = data.picture;
+      this.temporaryMediaLibraryId = data.productMedia.mediaLibraryId;
+    } else if (data.videoUrl) {
+      this.video = data.videoUrl;
+      this.temporaryMediaLibraryId = data.productMedia.mediaLibraryId;
+    }
+  }
+  deleteMedia(id: number) {
+    this._productMediasServiceProxy.delete(id).subscribe(result => {
+      this.notify.success(this.l('DeletedSuccessfully'));
+      this.getProductDetails(this.productId);
+    })
+  }
+
+  uploadProductMedia(event: any) {
+    if (event) {
+      var media = new CreateOrEditProductMediaDto();
+      media.productId = this.productId;
+      media.mediaLibraryId = event;
+      this._productMediasServiceProxy.createOrEdit(media).subscribe(result => {
+        this.notify.info(this.l('SavedSuccessfully'));
+        if (this.product.mediaLibraryId == null){
+          this.product.mediaLibraryId = event;
+          this._productsServiceProxy.createOrEdit(this.product).subscribe(r => {
+            this.getProductDetails(this.productId);
+            this.temporaryMediaLibraryId = event;
+          });
+        }
+        this.getProductDetails(this.productId);
+      });
+    }
+  }
+
+  onPrimaryProductPhotoOrVideoClick() {
+    this.product.mediaLibraryId = this.temporaryMediaLibraryId;
+    this._productsServiceProxy.createOrEdit(this.product).subscribe(result => {
+      this.notify.info('Updated Successfully');
+    })
   }
 }

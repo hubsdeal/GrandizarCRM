@@ -18,5 +18,6 @@ import { ContactDashboardComponent } from './contact-dashboard/contact-dashboard
           ContactDashboardComponent,
     ],
     imports: [AppSharedModule, ContactRoutingModule, AdminSharedModule],
+    exports: [ContactsComponent, CreateOrEditContactModalComponent, ViewContactModalComponent, ContactUserLookupTableModalComponent],
 })
 export class ContactModule {}
