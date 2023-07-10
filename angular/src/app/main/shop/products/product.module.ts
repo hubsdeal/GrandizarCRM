@@ -16,6 +16,9 @@ import { ProductDashboardComponent } from './product-dashboard/product-dashboard
 import { ProductLibrariesComponent } from './product-libraries/product-libraries.component';
 import { ProductTagModule } from '../productTags/productTag.module';
 import { MyProductsComponent } from './my-products/my-products.component';
+import { ProductMediaModule } from '../productMedias/productMedia.module';
+import { OrderModule } from '@app/main/orderManagement/orders/order.module';
+import { ContactModule } from '@app/main/crm/contacts/contact.module';
 
 @NgModule({
     declarations: [
@@ -34,6 +37,6 @@ import { MyProductsComponent } from './my-products/my-products.component';
         ProductLibrariesComponent,
         MyProductsComponent
     ],
-    imports: [AppSharedModule, ProductRoutingModule, AdminSharedModule, ProductTagModule],
+    imports: [AppSharedModule, ProductRoutingModule, AdminSharedModule, ProductTagModule, ProductMediaModule, OrderModule, ContactModule],
 })
 export class ProductModule {}

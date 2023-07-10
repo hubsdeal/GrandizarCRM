@@ -15,6 +15,10 @@ import { ProductContactLookupTableModalComponent } from './product-contact-looku
 import { ProductStoreLookupTableModalComponent } from './product-store-lookup-table-modal.component';
 import { Router } from '@angular/router';
 import { result } from 'lodash-es';
+import { SelectItem } from 'primeng/api';
+import { MatDialog } from '@angular/material/dialog';
+import { Title } from '@angular/platform-browser';
+import { ChatGptResponseModalComponent } from '@app/shared/chat-gpt-response-modal/chat-gpt-response-modal.component';
 
 @Component({
     selector: 'createOrEditProductModal',
@@ -55,11 +59,20 @@ export class CreateOrEditProductModalComponent extends AppComponentBase implemen
     productCategoryOptions: any = []
     selectedProductCategory: any;
 
+    productLibraryOptions: any = []
+    selectedProductLibrary: any;
+
+
+    productServiceOptions: SelectItem[];
+
+    isTemplate: boolean = false;
     constructor(
         injector: Injector,
         private _productsServiceProxy: ProductsServiceProxy,
         private _dateTimeService: DateTimeService,
-        private _router: Router
+        private _router: Router,
+        private dialog: MatDialog,
+        private titleService: Title
     ) {
         super(injector);
     }
@@ -75,6 +88,12 @@ export class CreateOrEditProductModalComponent extends AppComponentBase implemen
             this.ratingLikeName = '';
             this.contactFullName = '';
             this.storeName = '';
+            this.product.isService = true;
+            if (this.isTemplate) {
+                this.product.isTemplate = true;
+            } else {
+                this.product.isTemplate = false;
+            }
 
             this.active = true;
             this.modal.show();
@@ -95,17 +114,61 @@ export class CreateOrEditProductModalComponent extends AppComponentBase implemen
             });
         }
 
-        this._productsServiceProxy.getAllProductCategoryForLookupTable('','',0,10000).subscribe(result => {
+        this._productsServiceProxy.getAllProductCategoryForLookupTable('', '', 0, 10000).subscribe(result => {
             this.productCategoryOptions = result.items;
         });
+        this._productsServiceProxy.getAllProductLibraryForTableDropdown().subscribe(result => {
+            this.productLibraryOptions = result;
+        });
+        this.productServiceOptions = [{ label: 'Product', value: true }, { label: 'Service', value: false }];
     }
     onProductCategoryClick(event: any) {
         if (event.value != null) {
             this.product.productCategoryId = event.value.id;
         }
     }
+
+    onProductLibraryClick(event: any) {
+        if (event.value != null) {
+            this._productsServiceProxy.getProductForEdit(event.value.id).subscribe((result) => {
+                this.product.name = result.product.name;
+                this.product.storeId = result.product.storeId;
+                this.product.productCategoryId = result.product.productCategoryId;
+                this.product.mediaLibraryId = result.product.mediaLibraryId;
+                this.product.measurementUnitId = result.product.measurementUnitId;
+                this.product.currencyId = result.product.currencyId;
+                this.product.ratingLikeId = result.product.ratingLikeId;
+                this.product.contactId = result.product.contactId;
+                this.product.regularPrice = result.product.regularPrice;
+                this.product.salePrice = result.product.salePrice;
+                this.product.unitPrice = result.product.unitPrice;
+                this.product.measurementAmount = result.product.measurementAmount;
+                this.product.isService = result.product.isService;
+                this.product.stockQuantity = result.product.stockQuantity;
+                this.product.sku = result.product.sku;
+                this.product.url = result.product.url;
+                this.product.seoTitle = result.product.seoTitle;
+                this.product.metaKeywords = result.product.metaKeywords;
+                this.product.metaDescription = result.product.metaDescription;
+                this.product.shortDescription = result.product.shortDescription;
+                this.product.description = result.product.description;
+                this.product.internalNotes = result.product.internalNotes;
+                this.product.isPackageProduct = result.product.isPackageProduct;
+                this.product.isWholeSaleProduct = result.product.isWholeSaleProduct;
+                this.product.isPublished = result.product.isPublished;
+                this.product.isTaxExempt = result.product.isTaxExempt;
+                this.product.callForPrice = result.product.callForPrice;
+            });
+        }
+    }
     save(): void {
         this.saving = true;
+
+        if (this.isTemplate) {
+            this.product.isTemplate = true;
+        } else {
+            this.product.isTemplate = false;
+        }
 
         this._productsServiceProxy
             .createOrEdit(this.product)
@@ -114,11 +177,11 @@ export class CreateOrEditProductModalComponent extends AppComponentBase implemen
                     this.saving = false;
                 })
             )
-            .subscribe(result=> {
+            .subscribe(result => {
                 this.notify.info(this.l('SavedSuccessfully'));
                 this.close();
                 this.modalSave.emit(null);
-                this._router.navigate(['/app/main/shop/products/dashboard/',result])
+                this._router.navigate(['/app/main/shop/products/dashboard/', result])
             });
     }
 
@@ -222,4 +285,18 @@ export class CreateOrEditProductModalComponent extends AppComponentBase implemen
     }
 
     ngOnInit(): void { }
+
+    openAiModalProductCreate(): void {
+        const productShortDesc = "Write a  short description for a product where product name is Organic Mustard Oil and product brand is Saffola"
+        var modalTitle = "AI Text Generator - Product Description"
+        const dialogRef = this.dialog.open(ChatGptResponseModalComponent, {
+          data: { promtFromAnotherComponent: productShortDesc, feildName: '', modalTitle: modalTitle },
+          width: '1100px',
+        });
+    
+        dialogRef.afterClosed().subscribe(result => {
+          console.log(result)
+          //this.bindingData = result.data;
+        });
+      }
 }

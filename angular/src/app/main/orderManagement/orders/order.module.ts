@@ -34,5 +34,19 @@ import { AbandonedCartComponent } from './abandoned-cart/abandoned-cart.componen
         AbandonedCartComponent,
     ],
     imports: [AppSharedModule, OrderRoutingModule, AdminSharedModule],
+    exports: [OrdersComponent,
+        CreateOrEditOrderModalComponent,
+        ViewOrderModalComponent,
+
+        OrderStateLookupTableModalComponent,
+        OrderCountryLookupTableModalComponent,
+        OrderContactLookupTableModalComponent,
+        OrderOrderStatusLookupTableModalComponent,
+        OrderCurrencyLookupTableModalComponent,
+        OrderStoreLookupTableModalComponent,
+        OrderOrderSalesChannelLookupTableModalComponent,
+        OrderDashboardComponent,
+        MyOrdersComponent,
+        AbandonedCartComponent],
 })
 export class OrderModule {}
