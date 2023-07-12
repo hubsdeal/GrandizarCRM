@@ -18,5 +18,6 @@ import { HubWidgetMapMasterWidgetLookupTableModalComponent } from './hubWidgetMa
         HubWidgetMapMasterWidgetLookupTableModalComponent,
     ],
     imports: [AppSharedModule, HubWidgetMapRoutingModule, AdminSharedModule],
+    exports: [HubWidgetMapsComponent, CreateOrEditHubWidgetMapModalComponent, ViewHubWidgetMapModalComponent],
 })
 export class HubWidgetMapModule {}

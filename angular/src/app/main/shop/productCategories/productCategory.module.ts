@@ -6,6 +6,7 @@ import { ProductCategoriesComponent } from './productCategories.component';
 import { CreateOrEditProductCategoryModalComponent } from './create-or-edit-productCategory-modal.component';
 import { ViewProductCategoryModalComponent } from './view-productCategory-modal.component';
 import { ProductCategoryMediaLibraryLookupTableModalComponent } from './productCategory-mediaLibrary-lookup-table-modal.component';
+import { NodeService } from './nodeservice';
 
 @NgModule({
     declarations: [
@@ -16,5 +17,6 @@ import { ProductCategoryMediaLibraryLookupTableModalComponent } from './productC
         ProductCategoryMediaLibraryLookupTableModalComponent,
     ],
     imports: [AppSharedModule, ProductCategoryRoutingModule, AdminSharedModule],
+    providers: [ NodeService ]
 })
 export class ProductCategoryModule {}

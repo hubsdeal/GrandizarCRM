@@ -18,21 +18,18 @@
                             <!--begin::Input group-->
                             <div class="mb-7">
                                 <div class="image-input image-input-outline"
-                                    style="background-image: url(assets/common/images/c_logo.png)">
-                                    <div *ngIf="imageSrc"
-                                        class="image-input-wrapper w-125px h-125px"
+                                    style="background-image: url(assets/common/images/location.png)">
+                                    <div *ngIf="imageSrc" class="image-input-wrapper w-125px h-125px"
                                         [style.background-image]="'url(' + imageSrc + ')'">
                                     </div>
                                     <label
                                         class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
                                         data-kt-image-input-action="change" data-bs-toggle="tooltip"
-                                        aria-label="Change avatar"
-                                        data-bs-original-title="Change avatar"
+                                        aria-label="Change avatar" data-bs-original-title="Change avatar"
                                         data-kt-initialized="1">
                                         <i class="bi bi-pencil-fill fs-7"></i>
-                                        <input type="file" name="profile_avatar" id="customFile"
-                                            ng2FileSelect [uploader]="uploader"
-                                            (change)="fileChangeEvent($event)"
+                                        <input type="file" name="profile_avatar" id="customFile" ng2FileSelect
+                                            [uploader]="uploader" (change)="fileChangeEvent($event)"
                                             accept=".png, .jpg, .jpeg">
                                         <input type="hidden" name="avatar_remove">
                                     </label>
@@ -42,14 +39,17 @@
                             </div>
                             <!--end::Input group-->
                         </div>
-                        <div class="col-xl-9">
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-12">
                             <div class="mt-0 mb-3">
                                 <label class="form-label" for="Hub_Name">{{ l('Name') }} *</label>
                                 <input type="text" #Hub_Name="ngModel" id="Hub_Name" class="form-control"
                                     [(ngModel)]="hub.name" name="Name" minlength="1" maxlength="128" required />
                                 <validation-messages [formCtrl]="Hub_Name"></validation-messages>
                             </div>
-
+                        </div>
+                        <div class="col-xl-12">
                             <div class="my-3">
                                 <label class="form-label" for="HubTypeName">{{ l('HubType') }}</label>
                                 <select name="hub.hubTypeId" [(ngModel)]="hub.hubTypeId" class="form-select" required>
@@ -60,8 +60,30 @@
                                 </select>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
+                        <div class="col-xl-12">
+                            <label class="form-check form-check-custom form-check-solid my-3 mt-5 ">
+                                <input id="Hub_HasParentHub" #Hub_HasParentHub="ngModel" name="HasParentHub"
+                                    [(ngModel)]="hub.hasParentHub" type="checkbox" class="form-check-input" />
+                                <span class="form-check-label">
+                                    {{ l('Has Parent Hub') }}
+                                </span>
+                            </label>
+                            <validation-messages [formCtrl]="Hub_HasParentHub"></validation-messages>
+
+                            <div class="my-3" *ngIf="hub.hasParentHub">
+                                <label class="form-label required" for="Hub_ParentHubId">{{ l('Parent Hub') }}</label>
+                                <!-- <input type="number" #Hub_ParentHubId="ngModel" id="Hub_ParentHubId"
+                                    class="form-control" [(ngModel)]="hub.parentHubId" name="ParentHubId" />
+                                <validation-messages [formCtrl]="Hub_ParentHubId"></validation-messages> -->
+                                <select name="hub.parentHubId" [(ngModel)]="hub.parentHubId"
+                                    class="form-select" required>
+                                    <option value="">{{ l('Select Parent Hub') }}</option>
+                                    <option *ngFor="let item of allHubs" value="{{ item.id }}">
+                                        {{ item.displayName }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
                         <div class="col-xl-6">
                             <div class="my-3 p_filter">
                                 <label class="form-label" for="CountryName">{{ l('Country') }}</label>
@@ -238,34 +260,17 @@
                         type="text" hidden /> -->
 
 
-                    <label class="form-check form-check-custom form-check-solid my-3 mt-5 ">
-                        <input id="Hub_HasParentHub" #Hub_HasParentHub="ngModel" name="HasParentHub"
-                            [(ngModel)]="hub.hasParentHub" type="checkbox" class="form-check-input" />
-                        <span class="form-check-label">
-                            {{ l('Has Parent Hub') }}
-                        </span>
-                    </label>
-                    <validation-messages [formCtrl]="Hub_HasParentHub"></validation-messages>
 
-                    <div class="my-3" *ngIf="hub.hasParentHub">
-                        <label class="form-label" for="Hub_ParentHubId">{{ l('Parent Hub') }}</label>
-                        <input type="number" #Hub_ParentHubId="ngModel" id="Hub_ParentHubId" class="form-control"
-                            [(ngModel)]="hub.parentHubId" name="ParentHubId" />
-                        <validation-messages [formCtrl]="Hub_ParentHubId"></validation-messages>
+                    <div class="mb-3 mt-3">
+                        <label class="form-check form-check-custom form-check-solid">
+                            <input id="Hub_Live" #Hub_Live="ngModel" name="Live" [(ngModel)]="hub.live" type="checkbox"
+                                class="form-check-input" />
+                            <span class="form-check-label">
+                                {{ l('Live') }}
+                            </span>
+                        </label>
+                        <validation-messages [formCtrl]="Hub_Live"></validation-messages>
                     </div>
-
-
-
-                    <br />
-                    <label class="form-check form-check-custom form-check-solid">
-                        <input id="Hub_Live" #Hub_Live="ngModel" name="Live" [(ngModel)]="hub.live" type="checkbox"
-                            class="form-check-input" />
-                        <span class="form-check-label">
-                            {{ l('Live') }}
-                        </span>
-                    </label>
-                    <validation-messages [formCtrl]="Hub_Live"></validation-messages>
-                    <br>
                     <!-- <div class="my-3">
                         <label class="form-label" for="Hub_Url">{{ l('Url') }}</label>
                         <input type="text" #Hub_Url="ngModel" id="Hub_Url" class="form-control" [(ngModel)]="hub.url"
@@ -278,12 +283,11 @@
                             [(ngModel)]="hub.partnerOrOwned" optionLabel="label" optionValue="value"></p-selectButton>
                     </div>
 
-                    <div class="my-3">
+                    <!-- <div class="my-3">
                         <label class="form-label" for="Hub_Description">
                             <div class="d-flex align-items-end justify-content-between">
                                 <span class="required">About Hub</span>
-                                <button class="btn btn-sm btn-light-primary"
-                                    (click)="openAiModalPr('About Hub')">
+                                <button class="btn btn-sm btn-light-primary" (click)="openAiModalPr('About Hub')">
                                     <i class="fa-file-signature fas me-2"></i>
                                     Generate about Hub
                                 </button>
@@ -291,7 +295,7 @@
                         </label>
                         <p-editor id="Description" name="Description" [(ngModel)]="hub.description" ngDefaultControl
                             [style]="{ height: '200px' }" placeholder="'Type here...'"></p-editor>
-                    </div>
+                    </div> -->
 
                     <!-- <label class="form-check form-check-custom form-check-solid">
                         <input id="Hub_PartnerOrOwned" #Hub_PartnerOrOwned="ngModel" name="PartnerOrOwned"

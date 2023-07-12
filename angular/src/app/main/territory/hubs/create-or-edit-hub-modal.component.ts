@@ -13,6 +13,7 @@ import {
     StatesServiceProxy,
     CitiesServiceProxy,
     CountiesServiceProxy,
+    HubWidgetMapsServiceProxy,
 } from '@shared/service-proxies/service-proxies';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { DateTime } from 'luxon';
@@ -66,13 +67,14 @@ export class CreateOrEditHubModalComponent extends AppComponentBase implements O
     selectedCity: any;
     selectedCounty: any;
 
-    imageSrc: any = 'assets/common/images/c_logo.png';
+    imageSrc: any = 'assets/common/images/location.png';
     public uploader: FileUploader;
     public temporaryPictureUrl: string;
     private _uploaderOptions: FileUploaderOptions = {};
 
     chatGPTPromt: string;
     productShortDesc: string;
+    allHubs: any[];
 
     constructor(
         injector: Injector,
@@ -83,6 +85,7 @@ export class CreateOrEditHubModalComponent extends AppComponentBase implements O
         private _dateTimeService: DateTimeService,
         private dialog: MatDialog,
         private _tokenService: TokenService,
+        private _hubWidgetMapsServiceProxy: HubWidgetMapsServiceProxy,
         private geocodingService: GeocodingService
     ) {
         super(injector);
@@ -142,6 +145,15 @@ export class CreateOrEditHubModalComponent extends AppComponentBase implements O
             this.allCurrencys = result;
         });
         this.partnerAndOwnedOptions = [{ label: 'Corporate Owned', value: true }, { label: 'Partner', value: false }];
+        this._hubWidgetMapsServiceProxy
+            .getAllHubForLookupTable(
+                '',
+                '',
+                0,
+                10000
+            ).subscribe(result => {
+                this.allHubs = result.items;
+            });
     }
 
     saveHub(fileToken?: string): void {
@@ -326,13 +338,13 @@ export class CreateOrEditHubModalComponent extends AppComponentBase implements O
         this.productShortDesc = "Write a  short description for a hub where hub name is Newyork"
         var modalTitle = "AI Text Generator - About Hub"
         const dialogRef = this.dialog.open(ChatGptResponseModalComponent, {
-          data: { promtFromAnotherComponent: this.productShortDesc, feildName: feildName, modalTitle: modalTitle },
-          width: '1100px',
+            data: { promtFromAnotherComponent: this.productShortDesc, feildName: feildName, modalTitle: modalTitle },
+            width: '1100px',
         });
-    
+
         dialogRef.afterClosed().subscribe(result => {
-          console.log(result)
-          this.hub.description = result.data;
+            console.log(result)
+            this.hub.description = result.data;
         });
-      }
+    }
 }

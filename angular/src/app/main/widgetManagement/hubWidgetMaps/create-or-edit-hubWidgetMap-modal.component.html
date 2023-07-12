@@ -13,7 +13,7 @@
                         [disabled]="saving"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="my-3">
+                    <div class="my-3" *ngIf="!hubId">
                         <label class="form-label" for="HubName">{{ l('Hub') }}</label>
                         <div class="input-group">
                             <input class="form-control" id="HubName" name="hubName" [(ngModel)]="hubName" type="text"
@@ -27,7 +27,7 @@
                             </button>
                         </div>
                     </div>
-                    <input class="form-control" name="hubWidgetMap.hubId" [(ngModel)]="hubWidgetMap.hubId" type="text"
+                    <input  *ngIf="!hubId" class="form-control" name="hubWidgetMap.hubId" [(ngModel)]="hubWidgetMap.hubId" type="text"
                         required hidden />
 
                     <div class="my-3">

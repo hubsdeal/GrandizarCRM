@@ -30,6 +30,8 @@ export class CreateOrEditHubWidgetMapModalComponent extends AppComponentBase imp
     hubName = '';
     masterWidgetName = '';
 
+    hubId
+
     constructor(
         injector: Injector,
         private _hubWidgetMapsServiceProxy: HubWidgetMapsServiceProxy,
@@ -50,7 +52,7 @@ export class CreateOrEditHubWidgetMapModalComponent extends AppComponentBase imp
         } else {
             this._hubWidgetMapsServiceProxy.getHubWidgetMapForEdit(hubWidgetMapId).subscribe((result) => {
                 this.hubWidgetMap = result.hubWidgetMap;
-
+                this.hubId = result.hubWidgetMap.hubId;
                 this.hubName = result.hubName;
                 this.masterWidgetName = result.masterWidgetName;
 
@@ -62,7 +64,9 @@ export class CreateOrEditHubWidgetMapModalComponent extends AppComponentBase imp
 
     save(): void {
         this.saving = true;
-
+        if(this.hubId){
+            this.hubWidgetMap.hubId = this.hubId;
+        }
         this._hubWidgetMapsServiceProxy
             .createOrEdit(this.hubWidgetMap)
             .pipe(

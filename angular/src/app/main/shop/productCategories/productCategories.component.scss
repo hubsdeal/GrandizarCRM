@@ -1,0 +1,96 @@
+.pro-cat__img{
+    width: 25px;
+    height: 25px;
+}
+
+.pro-name__cat{
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #565656;
+    line-height: 2.4rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-left: 1rem;
+}
+
+tr, td{
+    padding: 1px 2px !important;
+}
+
+.kt-media img {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    border-radius: 50% !important;
+}
+
+.kt-media.kt-media--success span {
+    background: #cacaca;
+    color: #5867dd;
+}
+
+// :host ::ng-deep .ui-treetable .ui-treetable-tbody > tr > td{
+//     background-color: inherit;
+//     border: 0px solid #c8c8c8 !important;
+//     transition: box-shadow 0.2s;
+// }
+
+// :host ::ng-deep .ui-treetable .ui-treetable-thead > tr > th{
+//     padding: 0.571em 0.857em;
+//     border: 0px solid #c8c8c8 !important;
+//     font-weight: 700;
+//     color: #333333;
+//     background-color: #f4f4f4;
+// }
+
+body .ui-treetable .ui-treetable-thead > tr > th {
+    padding: 0.571em 0.857em;
+    border: 0px solid #c8c8c8 !important;
+    font-weight: 700;
+    color: #333333;
+    background-color: #f4f4f4;
+}
+
+body .ui-treetable .ui-treetable-tbody > tr > td {
+    background-color: inherit;
+    border: 0px solid #c8c8c8;
+    transition: box-shadow 0.2s;
+}
+
+.cat_badge{
+    padding-top: 8px !important;
+    padding-bottom: 9px !important;
+    margin-left: 8px;
+}
+
+.new_ui_dropdown {
+    // :host ::ng-deep .ui-dropdown {
+    //     display: block;
+    //     position: relative;
+    //     cursor: pointer;
+    //     width: 100% !important;
+    //     border: 1px solid #ced4da !important;
+    // }
+
+    p-dropdown .ui-dropdown {
+        display: block;
+        position: relative;
+        cursor: pointer;
+        width: 100% !important;
+        border: 1px solid #ced4da !important;
+        height: 3rem;
+        padding-top: 1px;
+    }
+
+    // :host ::ng-deep .ui-dropdown-label-container {
+    //     padding-top: 2px !important;
+    //     padding-bottom: 2px !important;
+    // }
+
+    p-dropdown .ui-dropdown-label-container {
+        padding-top: 2px !important;
+        padding-bottom: 2px !important;
+    }
+
+}

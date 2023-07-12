@@ -34,10 +34,10 @@
                         <div class="d-flex flex-wrap flex-sm-nowrap mb-6">
                             <div
                                 class="d-flex flex-center flex-shrink-0 bg-light rounded w-100px h-100px w-lg-150px h-lg-150px me-7 mb-4">
-                                <!-- <img class="dashboard_header_image" src="/assets/common/images/app-logo-on-dark.svg"
-                                    alt="image"> -->
-                                <span class="dashboard_header_name">
-                                    RR
+                                <img *ngIf="imageSrc!=null" class="dashboard_header_image" src="{{imageSrc}}"
+                                    alt="image">
+                                <span *ngIf="imageSrc==null && hub.name" class="dashboard_header_name">
+                                    {{hub.name | nameSplit}}
                                 </span>
                             </div>
 
@@ -47,35 +47,35 @@
                                         <div class="d-flex align-items-center mb-1">
                                             <a href="javascript:;"
                                                 class="text-gray-800 text-hover-primary fs-2 fw-bold me-3">
-                                                Houston, TX
+                                                {{hub.name}}
                                             </a>
-                                            <span class="badge badge-success text-white me-auto">
+                                            <span *ngIf="hub.live" class="badge badge-success text-white me-auto">
                                                 <i class="fas fa-check-circle text-white me-1"></i> Live
                                             </span>
-                                            <span class="badge badge-primary text-center ms-2">
-                                                City
+                                            <span *ngIf="hubTypeName" class="badge badge-primary text-center ms-2">
+                                                {{hubTypeName}}
                                             </span>
                                         </div>
-                                        <div
+                                        <div *ngIf="cityName || stateName || countryName || countyName"
                                             class="d-flex flex-wrap fw-semibold mb-1 align-items-center fs-6 text-gray-500">
                                             <i class="fas fa-map-marked-alt me-2"></i>
-                                            San Francisco, CA
+                                            {{hubAddress}}
                                         </div>
-                                        <div
+                                        <div *ngIf="hub.phone"
                                             class="d-flex flex-wrap fw-semibold mb-1 align-items-center fs-6 text-gray-500">
                                             <i class="fas fa-phone-alt me-2"></i>
-                                            +880177721292
+                                            {{hub.phone}}
                                         </div>
-                                        <div
+                                        <div *ngIf="hub.yearlyRevenue"
                                             class="d-flex flex-wrap fw-semibold mb-1 align-items-center fs-6 text-gray-500">
-                                            <i class="fas fa-envelope me-2"></i>
-                                            rashedrontbd4u@gmail.com
+                                            <i class="fas fa-hand-holding-dollar me-2"></i>
+                                            ${{hub.yearlyRevenue}}
                                         </div>
-                                        <div title="Manager"
+                                        <!-- <div title="Manager"
                                             class="d-flex flex-wrap fw-semibold mb-1 align-items-center fs-6 text-gray-500">
                                             <i class="fas fa-user me-2"></i>
                                             Rashedur Rahman
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
 
@@ -230,8 +230,7 @@
                                                 </span>
                                                 <!--end::Svg Icon-->
                                                 <input type="text" data-kt-ecommerce-category-filter="search"
-                                                    class="form-control form-control-solid w-250px ps-14"
-                                                    placeholder="Search Category">
+                                                    class="form-control w-250px ps-14" placeholder="Search Category">
                                             </div>
                                             <!--end::Search-->
                                         </div>
@@ -1188,8 +1187,7 @@
                                                 </span>
                                                 <!--end::Svg Icon-->
                                                 <input type="text" data-kt-ecommerce-product-filter="search"
-                                                    class="form-control form-control-solid w-250px ps-14"
-                                                    placeholder="Search Product">
+                                                    class="form-control w-250px ps-14" placeholder="Search Product">
                                             </div>
                                             <!--end::Search-->
                                         </div>
@@ -3137,19 +3135,24 @@
                                 </li>
 
                                 <li class="nav-item">
+                                    <a class="nav-link" data-bs-toggle="tab" href="#hub_widgets">
+                                        <i class="fas fa-layer-group"></i> Hub Widgets
+                                    </a>
+                                </li>
+                                <!-- <li class="nav-item">
                                     <a class="nav-link" data-bs-toggle="tab" href="#hub_locality">
                                         <i class="fas fa-search-location"></i> Localities
                                     </a>
-                                </li>
+                                </li> -->
 
-                                <li class="nav-item">
+                                <!-- <li class="nav-item">
                                     <a class="nav-link" data-bs-toggle="tab" href="#hub_cities">
                                         <i class="fas fa-city"></i> Cities
                                     </a>
-                                </li>
+                                </li> -->
                                 <li class="nav-item">
                                     <a class="nav-link" data-bs-toggle="tab" href="#hub_zipcodes">
-                                        <i class="fas fa-location-arrow"></i> Zip Codes
+                                        <i class="fas fa-location-arrow"></i> Zip Code & Cities
                                     </a>
                                 </li>
                                 <li class="nav-item">
@@ -3175,15 +3178,15 @@
                                     <div id="kt_account_settings_profile_details" class="collapse show">
                                         <div class="card-body pt-10">
                                             <!--begin::Form-->
-                                            <form id="kt_ecommerce_settings_general_form"
-                                                class="form fv-plugins-bootstrap5 fv-plugins-framework" action="#">
+                                            <form class="form fv-plugins-bootstrap5 fv-plugins-framework"
+                                                #hubForm="ngForm" novalidate (ngSubmit)="save()">
                                                 <!--begin::Input group-->
                                                 <div class="mb-7">
                                                     <div class="image-input image-input-outline"
-                                                        data-kt-image-input="true"
-                                                        style="background-image: url(assets/common/images/default-profile-picture.png)">
-                                                        <div class="image-input-wrapper w-125px h-125px"
-                                                            style="background-image: url(assets/common/images/default-profile-picture.png)">
+                                                        style="background-image: url(assets/common/images/location.png)">
+                                                        <div *ngIf="imageSrc"
+                                                            class="image-input-wrapper w-125px h-125px"
+                                                            [style.background-image]="'url(' + imageSrc + ')'">
                                                         </div>
                                                         <label
                                                             class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
@@ -3192,7 +3195,10 @@
                                                             data-bs-original-title="Change avatar"
                                                             data-kt-initialized="1">
                                                             <i class="bi bi-pencil-fill fs-7"></i>
-                                                            <input type="file" name="avatar" accept=".png, .jpg, .jpeg">
+                                                            <input type="file" name="profile_avatar" id="customFile"
+                                                                ng2FileSelect [uploader]="uploader"
+                                                                (change)="fileChangeEvent($event)"
+                                                                accept=".png, .jpg, .jpeg">
                                                             <input type="hidden" name="avatar_remove">
                                                         </label>
                                                     </div>
@@ -3204,10 +3210,12 @@
                                                     <label class="fs-6 fw-semibold form-label mt-3">
                                                         <span class="required">Hub Type</span>
                                                     </label>
-                                                    <select class="form-control form-control-solid" name="state"
-                                                        id="state">
-                                                        <option value="1">Select Hub Type</option>
-                                                        <option value="1">City</option>
+                                                    <select name="hub.hubTypeId" [(ngModel)]="hub.hubTypeId"
+                                                        class="form-select " required>
+                                                        <option value="">{{ l('SelectAHubType') }}</option>
+                                                        <option *ngFor="let item of allHubTypes" value="{{ item.id }}">
+                                                            {{ item.displayName }}
+                                                        </option>
                                                     </select>
                                                 </div>
 
@@ -3215,52 +3223,45 @@
                                                     <label class="fs-6 fw-semibold form-label mt-3">
                                                         <span class="required">Name</span>
                                                     </label>
-                                                    <input type="text" class="form-control form-control-solid"
-                                                        name="email" value="New York">
+                                                    <input type="text" [(ngModel)]="hub.name" class="form-control"
+                                                        name="name">
+                                                </div>
+
+                                                <div class="fv-row mb-7 fv-plugins-icon-container d-flex">
+                                                    <label class="fs-6 fw-semibold form-label mt-3 me-3">
+                                                        <span>Has Parent Hub</span>
+                                                    </label>
+                                                    <div
+                                                        class="form-check form-check-solid form-switch form-check-custom fv-row">
+                                                        <input class="form-check-input w-45px h-30px" type="checkbox"
+                                                            name="hasParentHub" [(ngModel)]="hub.hasParentHub"
+                                                            id="hasParentHub" checked="checked">
+                                                        <label class="form-check-label" for="hasParentHub"></label>
+                                                    </div>
+                                                </div>
+                                                <div *ngIf="hub.hasParentHub"
+                                                    class="fv-row mb-7 fv-plugins-icon-container">
+                                                    <label class="fs-6 fw-semibold form-label mt-3">
+                                                        <span class="required">Parent Hub</span>
+                                                    </label>
+                                                    <select name="hub.parentHubId" [(ngModel)]="hub.parentHubId"
+                                                        class="form-select" required>
+                                                        <option value="">{{ l('Select Parent Hub') }}</option>
+                                                        <option *ngFor="let item of allHubs" value="{{ item.id }}">
+                                                            {{ item.displayName }}
+                                                        </option>
+                                                    </select>
                                                 </div>
 
                                                 <!--begin::Row-->
                                                 <div class="row row-cols-1 row-cols-sm-2 rol-cols-md-1 row-cols-lg-2">
-                                                    <div class="col">
+                                                    <div class="col-12">
                                                         <div class="fv-row mb-7 fv-plugins-icon-container">
                                                             <label class="fs-6 fw-semibold form-label mt-3">
                                                                 <span class="required">Mobile</span>
                                                             </label>
-                                                            <input type="text" class="form-control form-control-solid"
-                                                                name="email" value="">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col">
-                                                        <div class="fv-row mb-7">
-                                                            <label class="fs-6 fw-semibold form-label mt-3">
-                                                                <span>Email</span>
-                                                            </label>
-                                                            <input type="email" class="form-control form-control-solid"
-                                                                name="phone" value="">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!--end::Row-->
-                                                <!--begin::Row-->
-                                                <div class="row row-cols-1 row-cols-sm-2 rol-cols-md-1 row-cols-lg-2">
-                                                    <div class="col">
-                                                        <div class="fv-row mb-7 fv-plugins-icon-container">
-                                                            <label class="fs-6 fw-semibold form-label mt-3">
-                                                                <span class="required">City</span>
-                                                            </label>
-                                                            <input type="text" class="form-control form-control-solid"
-                                                                name="email" value="">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col">
-                                                        <div class="fv-row mb-7">
-                                                            <label class="fs-6 fw-semibold form-label mt-3">
-                                                                <span>State</span>
-                                                            </label>
-                                                            <select class="form-control form-control-solid" name="state"
-                                                                id="state">
-                                                                <option value="1">Select State</option>
-                                                            </select>
+                                                            <input type="text" class="form-control" name="email"
+                                                                [(ngModel)]="hub.phone">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -3272,23 +3273,68 @@
                                                             <label class="fs-6 fw-semibold form-label mt-3">
                                                                 <span>Country</span>
                                                             </label>
-                                                            <select class="form-control form-control-solid" name="state"
-                                                                id="state">
-                                                                <option value="1">Select Country</option>
-                                                            </select>
+                                                            <p-dropdown [options]="allCountrys" [filter]="true"
+                                                                [virtualScroll]="true"
+                                                                (onChange)="onCountryChange($event)"
+                                                                placeholder="Select Country" [itemSize]="30"
+                                                                name="displayName" optionLabel="displayName"
+                                                                optionId="id" [(ngModel)]="selectedCountry"
+                                                                filterBy="displayName"
+                                                                [style]="{ width: '100%' }"></p-dropdown>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="fv-row mb-7">
+                                                            <label class="fs-6 fw-semibold form-label mt-3">
+                                                                <span>State</span>
+                                                            </label>
+                                                            <p-dropdown [options]="allStates" [filter]="true"
+                                                                [virtualScroll]="true"
+                                                                (onChange)="onStateChange($event)"
+                                                                placeholder="Select State" [itemSize]="30"
+                                                                name="displayName" optionLabel="displayName"
+                                                                optionId="id" [(ngModel)]="selectedState"
+                                                                filterBy="displayName"
+                                                                [style]="{ width: '100%' }"></p-dropdown>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--end::Row-->
+                                                <!--begin::Row-->
+                                                <div class="row row-cols-1 row-cols-sm-2 rol-cols-md-1 row-cols-lg-2">
+
+                                                    <div class="col">
+                                                        <div class="fv-row mb-7 fv-plugins-icon-container">
+                                                            <label class="fs-6 fw-semibold form-label mt-3">
+                                                                <span>County</span>
+                                                            </label>
+                                                            <p-dropdown [options]="allCountys" [filter]="true"
+                                                                [virtualScroll]="true"
+                                                                (onChange)="onCountyChange($event)"
+                                                                placeholder="Select County" [itemSize]="30"
+                                                                name="displayName" optionLabel="displayName"
+                                                                optionId="id" [(ngModel)]="selectedCounty"
+                                                                filterBy="displayName"
+                                                                [style]="{ width: '100%' }"></p-dropdown>
                                                         </div>
                                                     </div>
                                                     <div class="col">
                                                         <div class="fv-row mb-7 fv-plugins-icon-container">
                                                             <label class="fs-6 fw-semibold form-label mt-3">
-                                                                <span class="required">Currency</span>
+                                                                <span>City</span>
                                                             </label>
-                                                            <input type="text" class="form-control form-control-solid"
-                                                                name="email" value="">
+                                                            <p-dropdown [options]="allCitys" [filter]="true"
+                                                                [virtualScroll]="true" (onChange)="onCityChange($event)"
+                                                                placeholder="Select City" [itemSize]="30"
+                                                                name="displayName" optionLabel="displayName"
+                                                                optionId="id" [(ngModel)]="selectedCity"
+                                                                filterBy="displayName"
+                                                                [style]="{ width: '100%' }"></p-dropdown>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <!--end::Row-->
+
                                                 <!--begin::Row-->
                                                 <div class="row row-cols-1 row-cols-sm-2 rol-cols-md-1 row-cols-lg-2">
                                                     <div class="col">
@@ -3296,17 +3342,20 @@
                                                             <label class="fs-6 fw-semibold form-label mt-3">
                                                                 <span>Yearly Revenue</span>
                                                             </label>
-                                                            <input type="text" class="form-control form-control-solid"
-                                                                name="email" value="">
+                                                            <input type="number" id="Hub_EstimatedPopulation"
+                                                                class="form-control"
+                                                                [(ngModel)]="hub.estimatedPopulation"
+                                                                name="EstimatedPopulation" />
                                                         </div>
                                                     </div>
                                                     <div class="col">
                                                         <div class="fv-row mb-7 fv-plugins-icon-container">
                                                             <label class="fs-6 fw-semibold form-label mt-3">
-                                                                <span class="required">Population</span>
+                                                                <span class="required">EST. Population</span>
                                                             </label>
-                                                            <input type="text" class="form-control form-control-solid"
-                                                                name="email" value="">
+                                                            <input type="text" id="Hub_YearlyRevenue"
+                                                                class="form-control" [(ngModel)]="hub.yearlyRevenue"
+                                                                name="YearlyRevenue" />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -3317,32 +3366,57 @@
                                                     <div class="col">
                                                         <div class="fv-row mb-7">
                                                             <label class="fs-6 fw-semibold form-label mt-3">
-                                                                <span class="required">Latitude</span>
+                                                                <span>Latitude</span>
                                                             </label>
-                                                            <input type="text" class="form-control form-control-solid"
-                                                                name="email" value="">
+                                                            <input type="number" #Hub_Latitude="ngModel"
+                                                                id="Hub_Latitude" class="form-control"
+                                                                [(ngModel)]="hub.latitude" name="Latitude" />
                                                         </div>
                                                     </div>
                                                     <div class="col">
                                                         <div class="fv-row mb-7">
                                                             <label class="fs-6 fw-semibold form-label mt-3">
-                                                                <span class="required">Longitude</span>
+                                                                <span>Longitude</span>
                                                             </label>
-                                                            <input type="text" class="form-control form-control-solid"
-                                                                name="email" value="">
+                                                            <input type="number" #Hub_Longitude="ngModel"
+                                                                id="Hub_Longitude" class="form-control"
+                                                                [(ngModel)]="hub.longitude" name="Longitude" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="cold-flex align-items-end">
+                                                        <div class="d-flex align-items-end">
+                                                            <a href="javascript:;" (click)="getCoordinates()"
+                                                                class="btn btn mb-0 ms-4 fw-bold btn-primary">
+                                                                <i class="fa fa-map-marker"></i> Get Lat. Long. Data
+                                                            </a>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <!--end::Row-->
                                                 <!--begin::Row-->
                                                 <div class="row row-cols-1 row-cols-sm-2 rol-cols-md-1 row-cols-lg-2">
-                                                    <div class="col">
+                                                    <!-- <div class="col">
                                                         <div class="fv-row mb-7 fv-plugins-icon-container">
                                                             <label class="fs-6 fw-semibold form-label mt-3">
                                                                 <span class="required">Manager</span>
                                                             </label>
-                                                            <input type="text" class="form-control form-control-solid"
+                                                            <input type="text" class="form-control"
                                                                 name="email" value="">
+                                                        </div>
+                                                    </div> -->
+                                                    <div class="col">
+                                                        <div class="fv-row mb-7 fv-plugins-icon-container">
+                                                            <label class="fs-6 fw-semibold form-label mt-3">
+                                                                <span class="required">Currency</span>
+                                                            </label>
+                                                            <select name="hub.currencyId" [(ngModel)]="hub.currencyId"
+                                                                class="form-select">
+                                                                <option value="">{{ l('SelectACurrency') }}</option>
+                                                                <option *ngFor="let item of allCurrencys"
+                                                                    value="{{ item.id }}">
+                                                                    {{ item.displayName }}
+                                                                </option>
+                                                            </select>
                                                         </div>
                                                     </div>
                                                     <div class="col">
@@ -3350,8 +3424,10 @@
                                                             <label class="fs-6 fw-semibold form-label mt-3">
                                                                 <span>Office Full Address</span>
                                                             </label>
-                                                            <input type="text" class="form-control form-control-solid"
-                                                                name="phone" value="">
+                                                            <input type="text" id="Hub_OfficeFullAddress"
+                                                                class="form-control" [(ngModel)]="hub.officeFullAddress"
+                                                                name="OfficeFullAddress" minlength="1"
+                                                                maxlength="1500" />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -3359,10 +3435,10 @@
 
                                                 <div class="fv-row mb-7 fv-plugins-icon-container">
                                                     <label class="fs-6 fw-semibold form-label mt-3">
-                                                        <span class="required">URL</span>
+                                                        <span>URL</span>
                                                     </label>
-                                                    <input type="text" class="form-control form-control-solid"
-                                                        name="email" value="New York">
+                                                    <input type="text" class="form-control" name="url"
+                                                        [(ngModel)]="hub.url">
                                                 </div>
 
                                                 <div class="fv-row mb-7 fv-plugins-icon-container d-flex">
@@ -3371,21 +3447,18 @@
                                                     </label>
                                                     <div
                                                         class="form-check form-check-solid form-switch form-check-custom fv-row">
-                                                        <input class="form-check-input w-45px h-30px" type="checkbox"
-                                                            id="allowmarketing" checked="checked">
-                                                        <label class="form-check-label" for="allowmarketing"></label>
+                                                        <input class="form-check-input w-45px h-30px" type="checkbox" name="live"
+                                                            id="live" [(ngModel)]="hub.live">
+                                                        <label class="form-check-label" for="live"></label>
                                                     </div>
                                                 </div>
 
                                                 <div class="fv-row mb-7 fv-plugins-icon-container d-flex">
-                                                    <label class="fs-6 fw-semibold form-label mt-3 me-3">
-                                                        <span class="required">Partner or Owner</span>
-                                                    </label>
-                                                    <div
-                                                        class="form-check form-check-solid form-switch form-check-custom fv-row">
-                                                        <input class="form-check-input w-45px h-30px" type="checkbox"
-                                                            id="allowmarketing" checked="checked">
-                                                        <label class="form-check-label" for="allowmarketing"></label>
+                                                    <div class="my-5 select_button_custom">
+                                                        <p-selectButton [options]="partnerAndOwnedOptions"
+                                                            name="PartnerOrOwned" id="PartnerOrOwned"
+                                                            [(ngModel)]="hub.partnerOrOwned" optionLabel="label"
+                                                            optionValue="value"></p-selectButton>
                                                     </div>
                                                 </div>
                                                 <!--begin::Input group-->
@@ -3400,8 +3473,9 @@
                                                             </button>
                                                         </div>
                                                     </label>
-                                                    <textarea class="form-control form-control-solid" [(ngModel)]="bindingData" name="bindingData" id="bindingData"
-                                                        cols="30" rows="10"></textarea>
+                                                    <p-editor id="Description" name="Description" ngDefaultControl
+                                                        [(ngModel)]="hub.description" [style]="{ height: '300px' }"
+                                                        placeholder="'Type here...'"></p-editor>
                                                 </div>
                                                 <!--end::Input group-->
 
@@ -3410,15 +3484,12 @@
                                                 <!--end::Separator-->
                                                 <!--begin::Action buttons-->
                                                 <div class="d-flex justify-content-end">
-                                                    <!--begin::Button-->
-                                                    <button type="submit" data-kt-contacts-type="submit"
-                                                        class="btn btn-primary">
-                                                        <span class="indicator-label">Save</span>
-                                                        <span class="indicator-progress">Please wait...
-                                                            <span
-                                                                class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                                    <button type="submit" class="btn btn-primary blue"
+                                                        [disabled]="!hubForm.form.valid" [buttonBusy]="saving"
+                                                        [busyText]="l('SavingWithThreeDot')">
+                                                        <i class="fa fa-save"></i>
+                                                        <span>{{ l('Save') }}</span>
                                                     </button>
-                                                    <!--end::Button-->
                                                 </div>
                                                 <!--end::Action buttons-->
                                             </form>
@@ -3427,14 +3498,14 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="hub_locality" role="tabpanel">
-                                Localities
+                            <div class="tab-pane fade" id="hub_widgets" role="tabpanel">
+                                <app-hubWidgetMaps *ngIf="hubId" [hubId]="hubId"></app-hubWidgetMaps>
                             </div>
-                            <div class="tab-pane fade" id="hub_cities" role="tabpanel">
+                            <!-- <div class="tab-pane fade" id="hub_cities" role="tabpanel">
                                 Cities
-                            </div>
+                            </div> -->
                             <div class="tab-pane fade" id="hub_zipcodes" role="tabpanel">
-                                Zip Code
+                                Zip Code and cities
                             </div>
                             <div class="tab-pane fade" id="hub_navigation_menu" role="tabpanel">
                                 Master Navigation Menu

@@ -1,5 +1,5 @@
 ﻿import { AppConsts } from '@shared/AppConsts';
-import { Component, Injector, ViewEncapsulation, ViewChild } from '@angular/core';
+import { Component, Injector, ViewEncapsulation, ViewChild, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HubWidgetMapsServiceProxy, HubWidgetMapDto, WidgetType } from '@shared/service-proxies/service-proxies';
 import { NotifyService } from 'abp-ng2-module';
@@ -19,6 +19,7 @@ import { DateTime } from 'luxon';
 import { DateTimeService } from '@app/shared/common/timing/date-time.service';
 
 @Component({
+    selector: 'app-hubWidgetMaps',
     templateUrl: './hubWidgetMaps.component.html',
     encapsulation: ViewEncapsulation.None,
     animations: [appModuleAnimation()],
@@ -43,6 +44,7 @@ export class HubWidgetMapsComponent extends AppComponentBase {
     masterWidgetNameFilter = '';
 
     widgetType = WidgetType;
+    @Input() hubId:number;
 
     constructor(
         injector: Injector,
@@ -67,7 +69,8 @@ export class HubWidgetMapsComponent extends AppComponentBase {
         this.primengTableHelper.showLoadingIndicator();
 
         this._hubWidgetMapsServiceProxy
-            .getAll(
+            .getAllWidgetsByHubId(
+                this.hubId,
                 this.filterText,
                 this.customNameFilter,
                 this.maxDisplaySequenceFilter == null
@@ -95,6 +98,7 @@ export class HubWidgetMapsComponent extends AppComponentBase {
     }
 
     createHubWidgetMap(): void {
+        this.createOrEditHubWidgetMapModal.hubId = this.hubId;
         this.createOrEditHubWidgetMapModal.show();
     }
 

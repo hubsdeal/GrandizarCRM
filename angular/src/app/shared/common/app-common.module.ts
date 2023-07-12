@@ -40,6 +40,7 @@ import { SelectButtonModule } from 'primeng/selectbutton';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { TreeTableModule } from 'primeng/treetable';
 @NgModule({
     imports: [
         CommonModule,
@@ -60,7 +61,8 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
         SelectButtonModule,
         DragDropModule,
         ProgressSpinnerModule,
-        NgxMaterialTimepickerModule
+        NgxMaterialTimepickerModule,
+        TreeTableModule
     ], 
     declarations: [
         TimeZoneComboComponent,
@@ -88,7 +90,8 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
         SelectButtonModule,
         DragDropModule,
         ProgressSpinnerModule,
-        NgxMaterialTimepickerModule
+        NgxMaterialTimepickerModule,
+        TreeTableModule
     ],
     providers: [
         DateTimeService,

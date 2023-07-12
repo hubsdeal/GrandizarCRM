@@ -24,7 +24,7 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
   @ViewChild('createOrEditStoreMediaModal', { static: true })
   createOrEditStoreMediaModal: CreateOrEditStoreMediaModalComponent;
   saving = false;
-  storeId: number;
+  storeId: number; 
   productShortDesc: string;
   modalTile: string
   bindingData: any;

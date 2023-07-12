@@ -1,16 +1,13 @@
 ﻿<div [@routerTransition]>
     <sub-header [title]="'ProductCategories' | localize" [description]="'ProductCategoriesHeaderInfo' | localize">
         <div role="actions">
-            <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1">
+            <!-- <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1">
                 <i class="fa fa-file-excel"></i>
                 {{ l('ExportToExcel') }}
-            </button>
+            </button> -->
 
-            <button
-                *ngIf="isGranted('Pages.ProductCategories.Create')"
-                (click)="createProductCategory()"
-                class="btn btn-primary blue"
-            >
+            <button *ngIf="isGranted('Pages.ProductCategories.Create')" (click)="createProductCategory()"
+                class="btn btn-primary blue">
                 <i class="fa fa-plus"></i>
                 {{ l('CreateNewProductCategory') }}
             </button>
@@ -26,16 +23,10 @@
                             <div class="col-xl-12">
                                 <div class="my-3">
                                     <div class="input-group mb-3">
-                                        <input
-                                            [(ngModel)]="filterText"
-                                            (ngModelChange)="getProductCategories()"
-                                            name="filterText"
-                                            autoFocus
-                                            type="text"
-                                            class="form-control"
-                                            [placeholder]="l('SearchWithThreeDot')"
-                                        />
-                                        <button class="btn btn-primary" type="submit" (click)="getProductCategories()">
+                                        <input [(ngModel)]="filterText" (ngModelChange)="getProductCategoriesTreeNode()"
+                                            name="filterText" autoFocus type="text" class="form-control"
+                                            [placeholder]="l('SearchWithThreeDot')" />
+                                        <button class="btn btn-primary" type="submit" (click)="getProductCategoriesTreeNode()">
                                             <i class="flaticon-search-1"></i>
                                         </button>
                                     </div>
@@ -48,27 +39,16 @@
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="NameFilter">{{ l('Name') }}</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="NameFilter"
-                                        name="nameFilter"
-                                        [(ngModel)]="nameFilter"
-                                        (ngModelChange)="getProductCategories()"
-                                    />
+                                    <input type="text" class="form-control" id="NameFilter" name="nameFilter"
+                                        [(ngModel)]="nameFilter" (ngModelChange)="getProductCategoriesTreeNode()" />
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="DescriptionFilter">{{ l('Description') }}</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="DescriptionFilter"
-                                        name="descriptionFilter"
-                                        [(ngModel)]="descriptionFilter"
-                                        (ngModelChange)="getProductCategories()"
-                                    />
+                                    <input type="text" class="form-control" id="DescriptionFilter"
+                                        name="descriptionFilter" [(ngModel)]="descriptionFilter"
+                                        (ngModelChange)="getProductCategoriesTreeNode()" />
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -76,13 +56,9 @@
                                     <label class="form-label" for="HasParentCategoryFilterSelect">
                                         {{ l('HasParentCategory') }}
                                     </label>
-                                    <select
-                                        class="form-select"
-                                        name="HasParentCategoryFilter"
-                                        id="HasParentCategoryFilterSelect"
-                                        [(ngModel)]="hasParentCategoryFilter"
-                                        (ngModelChange)="getProductCategories()"
-                                    >
+                                    <select class="form-select" name="HasParentCategoryFilter"
+                                        id="HasParentCategoryFilterSelect" [(ngModel)]="hasParentCategoryFilter"
+                                        (ngModelChange)="getProductCategoriesTreeNode()">
                                         <option value="-1">{{ l('All') }}</option>
                                         <option value="0">{{ l('False') }}</option>
                                         <option value="1">{{ l('True') }}</option>
@@ -95,63 +71,35 @@
                                         {{ l('MinMax') }} {{ l('ParentCategoryId') }}
                                     </label>
                                     <div class="input-group">
-                                        <input
-                                            type="number"
-                                            class="form-control"
-                                            id="MinParentCategoryIdFilter"
-                                            [(ngModel)]="minParentCategoryIdFilter"
-                                            placeholder="{{ l('MinValue') }}"
-                                            name="minParentCategoryIdFilter"
-                                            (ngModelChange)="getProductCategories()"
-                                        />
-                                        <input
-                                            type="number"
-                                            class="form-control"
-                                            [(ngModel)]="maxParentCategoryIdFilter"
-                                            placeholder="{{ l('MaxValue') }}"
-                                            name="maxParentCategoryIdFilter"
-                                            (ngModelChange)="getProductCategories()"
-                                        />
+                                        <input type="number" class="form-control" id="MinParentCategoryIdFilter"
+                                            [(ngModel)]="minParentCategoryIdFilter" placeholder="{{ l('MinValue') }}"
+                                            name="minParentCategoryIdFilter" (ngModelChange)="getProductCategoriesTreeNode()" />
+                                        <input type="number" class="form-control"
+                                            [(ngModel)]="maxParentCategoryIdFilter" placeholder="{{ l('MaxValue') }}"
+                                            name="maxParentCategoryIdFilter" (ngModelChange)="getProductCategoriesTreeNode()" />
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="UrlFilter">{{ l('Url') }}</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="UrlFilter"
-                                        name="urlFilter"
-                                        [(ngModel)]="urlFilter"
-                                        (ngModelChange)="getProductCategories()"
-                                    />
+                                    <input type="text" class="form-control" id="UrlFilter" name="urlFilter"
+                                        [(ngModel)]="urlFilter" (ngModelChange)="getProductCategoriesTreeNode()" />
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="MetaTitleFilter">{{ l('MetaTitle') }}</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="MetaTitleFilter"
-                                        name="metaTitleFilter"
-                                        [(ngModel)]="metaTitleFilter"
-                                        (ngModelChange)="getProductCategories()"
-                                    />
+                                    <input type="text" class="form-control" id="MetaTitleFilter" name="metaTitleFilter"
+                                        [(ngModel)]="metaTitleFilter" (ngModelChange)="getProductCategoriesTreeNode()" />
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="MetaKeywordsFilter">{{ l('MetaKeywords') }}</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="MetaKeywordsFilter"
-                                        name="metaKeywordsFilter"
-                                        [(ngModel)]="metaKeywordsFilter"
-                                        (ngModelChange)="getProductCategories()"
-                                    />
+                                    <input type="text" class="form-control" id="MetaKeywordsFilter"
+                                        name="metaKeywordsFilter" [(ngModel)]="metaKeywordsFilter"
+                                        (ngModelChange)="getProductCategoriesTreeNode()" />
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -160,23 +108,12 @@
                                         {{ l('MinMax') }} {{ l('DisplaySequence') }}
                                     </label>
                                     <div class="input-group">
-                                        <input
-                                            type="number"
-                                            class="form-control"
-                                            id="MinDisplaySequenceFilter"
-                                            [(ngModel)]="minDisplaySequenceFilter"
-                                            placeholder="{{ l('MinValue') }}"
-                                            name="minDisplaySequenceFilter"
-                                            (ngModelChange)="getProductCategories()"
-                                        />
-                                        <input
-                                            type="number"
-                                            class="form-control"
-                                            [(ngModel)]="maxDisplaySequenceFilter"
-                                            placeholder="{{ l('MaxValue') }}"
-                                            name="maxDisplaySequenceFilter"
-                                            (ngModelChange)="getProductCategories()"
-                                        />
+                                        <input type="number" class="form-control" id="MinDisplaySequenceFilter"
+                                            [(ngModel)]="minDisplaySequenceFilter" placeholder="{{ l('MinValue') }}"
+                                            name="minDisplaySequenceFilter" (ngModelChange)="getProductCategoriesTreeNode()" />
+                                        <input type="number" class="form-control" [(ngModel)]="maxDisplaySequenceFilter"
+                                            placeholder="{{ l('MaxValue') }}" name="maxDisplaySequenceFilter"
+                                            (ngModelChange)="getProductCategoriesTreeNode()" />
                                     </div>
                                 </div>
                             </div>
@@ -185,13 +122,9 @@
                                     <label class="form-label" for="ProductOrServiceFilterSelect">
                                         {{ l('ProductOrService') }}
                                     </label>
-                                    <select
-                                        class="form-select"
-                                        name="ProductOrServiceFilter"
-                                        id="ProductOrServiceFilterSelect"
-                                        [(ngModel)]="productOrServiceFilter"
-                                        (ngModelChange)="getProductCategories()"
-                                    >
+                                    <select class="form-select" name="ProductOrServiceFilter"
+                                        id="ProductOrServiceFilterSelect" [(ngModel)]="productOrServiceFilter"
+                                        (ngModelChange)="getProductCategoriesTreeNode()">
                                         <option value="-1">{{ l('All') }}</option>
                                         <option value="0">{{ l('False') }}</option>
                                         <option value="1">{{ l('True') }}</option>
@@ -204,40 +137,26 @@
                                     <label class="form-label" for="MediaLibraryNameFilter">
                                         ({{ l('MediaLibrary') }}) {{ l('Name') }}
                                     </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="MediaLibraryNameFilter"
-                                        name="mediaLibraryNameFilter"
-                                        [(ngModel)]="mediaLibraryNameFilter"
-                                    />
+                                    <input type="text" class="form-control" id="MediaLibraryNameFilter"
+                                        name="mediaLibraryNameFilter" [(ngModel)]="mediaLibraryNameFilter" />
                                 </div>
                             </div>
                             <div class="col-md-12 mt-5">
-                                <button
-                                    (click)="resetFilters()"
-                                    class="btn btn-secondary btn-sm"
-                                    id="btn-reset-filters"
-                                >
+                                <button (click)="resetFilters()" class="btn btn-secondary btn-sm"
+                                    id="btn-reset-filters">
                                     Reset
                                 </button>
                             </div>
                         </div>
                         <div class="row my-4">
                             <div class="col-sm-12">
-                                <span
-                                    class="clickable-item text-muted"
-                                    *ngIf="!advancedFiltersAreShown"
-                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown"
-                                >
+                                <span class="clickable-item text-muted" *ngIf="!advancedFiltersAreShown"
+                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown">
                                     <i class="fa fa-angle-down"></i>
                                     {{ l('ShowAdvancedFilters') }}
                                 </span>
-                                <span
-                                    class="clickable-item text-muted"
-                                    *ngIf="advancedFiltersAreShown"
-                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown"
-                                >
+                                <span class="clickable-item text-muted" *ngIf="advancedFiltersAreShown"
+                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown">
                                     <i class="fa fa-angle-up"></i>
                                     {{ l('HideAdvancedFilters') }}
                                 </span>
@@ -248,30 +167,20 @@
 
                 <div class="row align-items-center">
                     <!--<Primeng-Datatable-Start>-->
-                    <div class="primeng-datatable-container col-12" [busyIf]="primengTableHelper.isLoading">
-                        <p-table
-                            #dataTable
-                            (onLazyLoad)="getProductCategories($event)"
+                    <!-- <div class="primeng-datatable-container col-12" [busyIf]="primengTableHelper.isLoading">
+                        <p-table #dataTable (onLazyLoad)="getProductCategories($event)"
                             [value]="primengTableHelper.records"
-                            rows="{{ primengTableHelper.defaultRecordsCountPerPage }}"
-                            [paginator]="false"
-                            [lazy]="true"
-                            [scrollable]="true"
-                            ScrollWidth="100%"
-                            [responsive]="primengTableHelper.isResponsive"
-                            [resizableColumns]="primengTableHelper.resizableColumns"
-                        >
+                            rows="{{ primengTableHelper.defaultRecordsCountPerPage }}" [paginator]="false" [lazy]="true"
+                            [scrollable]="true" ScrollWidth="100%" [responsive]="primengTableHelper.isResponsive"
+                            [resizableColumns]="primengTableHelper.resizableColumns">
                             <ng-template pTemplate="header">
                                 <tr>
-                                    <th
-                                        style="width: 130px"
-                                        [hidden]="
+                                    <th style="width: 130px" [hidden]="
                                             !isGrantedAny(
                                                 'Pages.ProductCategories.Edit',
                                                 'Pages.ProductCategories.Delete'
                                             )
-                                        "
-                                    >
+                                        ">
                                         {{ l('Actions') }}
                                     </th>
                                     <th style="width: 150px" pSortableColumn="mediaLibraryFk.name">
@@ -318,15 +227,12 @@
                             </ng-template>
                             <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
                                 <tr>
-                                    <td
-                                        style="width: 130px"
-                                        [hidden]="
+                                    <td style="width: 130px" [hidden]="
                                             !isGrantedAny(
                                                 'Pages.ProductCategories.Edit',
                                                 'Pages.ProductCategories.Delete'
                                             )
-                                        "
-                                    >
+                                        ">
                                         <div class="btn-group dropdown" dropdown container="body">
                                             <button class="dropdown-toggle btn btn-sm btn-primary" dropdownToggle>
                                                 <i class="fa fa-cog"></i>
@@ -335,35 +241,26 @@
                                             </button>
                                             <ul class="dropdown-menu" *dropdownMenu>
                                                 <li>
-                                                    <a
-                                                        href="javascript:;"
-                                                        class="dropdown-item"
-                                                        (click)="viewProductCategoryModal.show(record)"
-                                                    >
+                                                    <a href="javascript:;" class="dropdown-item"
+                                                        (click)="viewProductCategoryModal.show(record)">
                                                         {{ l('View') }}
                                                     </a>
                                                 </li>
                                                 <li>
-                                                    <a
-                                                        href="javascript:;"
+                                                    <a href="javascript:;"
                                                         *ngIf="permission.isGranted('Pages.ProductCategories.Edit')"
-                                                        class="dropdown-item"
-                                                        (click)="
+                                                        class="dropdown-item" (click)="
                                                             createOrEditProductCategoryModal.show(
                                                                 record.productCategory.id
                                                             )
-                                                        "
-                                                    >
+                                                        ">
                                                         {{ l('Edit') }}
                                                     </a>
                                                 </li>
                                                 <li>
-                                                    <a
-                                                        class="dropdown-item"
-                                                        href="javascript:;"
+                                                    <a class="dropdown-item" href="javascript:;"
                                                         *ngIf="permission.isGranted('Pages.ProductCategories.Delete')"
-                                                        (click)="deleteProductCategory(record.productCategory)"
-                                                    >
+                                                        (click)="deleteProductCategory(record.productCategory)">
                                                         {{ l('Delete') }}
                                                     </a>
                                                 </li>
@@ -427,27 +324,148 @@
                             {{ l('NoData') }}
                         </div>
                         <div class="primeng-paging-container">
-                            <p-paginator
-                                [rows]="primengTableHelper.defaultRecordsCountPerPage"
-                                #paginator
+                            <p-paginator [rows]="primengTableHelper.defaultRecordsCountPerPage" #paginator
                                 (onPageChange)="getProductCategories($event)"
                                 [totalRecords]="primengTableHelper.totalRecordsCount"
                                 [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
-                                [showCurrentPageReport]="true"
-                                [currentPageReportTemplate]="
+                                [showCurrentPageReport]="true" [currentPageReportTemplate]="
                                     'TotalRecordsCount' | localize : primengTableHelper.totalRecordsCount
-                                "
-                            ></p-paginator>
+                                "></p-paginator>
                         </div>
-                    </div>
+                    </div> -->
+                    <p-treeTable [value]="productCategories" [paginator]="false" [rows]="10">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th style="width: 300px;">{{l('Name')}}</th>
+                                <!-- <th style="width: 75px;" class="text-center"> {{l('Published')}}</th> -->
+
+                                <th style="width: 80px;" class="text-center"> {{l('#Products')}}</th>
+
+                                <th style="width: 150px;" class="text-center"> {{l('Teams')}}</th>
+
+                                <th style="width: 130px;" class="text-center">Action </th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-rowNode let-rowData="rowData">
+                            <tr>
+                                <td style="width: 300px;" class="ml-2 mt-2 mb-1">
+                                    <div class="d-flex">
+                                        <p-treeTableToggler class="mb-3" [rowNode]="rowNode"></p-treeTableToggler>
+
+                                        <div>
+                                            <img *ngIf="rowData.picture" class="image pro-cat__img mt-1"
+                                                src="{{rowData.picture}}" alt="rowData.name" />
+                                            <img *ngIf="!rowData.picture" class="image pro-cat__img mt-1"
+                                                src="{{defaultimage}}" alt="rowData.name" />
+                                        </div>
+                                        <div class="pro-name__cat">
+                                            <a href="javascript:;"
+                                                [routerLink]="['/app/main/shop/productCategories/dashboard', rowData.id]">
+                                                {{rowData.name}}
+                                                <span title="Publish" *ngIf="rowData.published"
+                                                    class="kt-badge kt-badge--success kt-badge--inline kt-badge--pill cat_badge kt-badge--rounded">Yes</span>
+                                                <span title="Not Publish" *ngIf="!rowData.published"
+                                                    class="kt-badge kt-badge--danger kt-badge--inline kt-badge--pill cat_badge kt-badge--rounded">No</span>
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                </td>
+
+
+                                <!-- <td class="text-center" style="width:75px">
+                                    <div *ngIf="rowData.published" class="text-muted">
+                                        <span class="kt-badge kt-badge--success kt-badge--inline kt-badge--pill kt-badge--rounded">Yes</span>
+                                    </div>
+                                    <div *ngIf="!rowData.published" class="text-muted">
+                                        <span class="kt-badge kt-badge--danger kt-badge--inline kt-badge--pill kt-badge--rounded">No</span>
+                                    </div>
+                                </td> -->
+
+                                <td class="text-center" style="width:80px">
+                                    <a href="javascript:;" [routerLink]="['/app/main/shop/products']"
+                                        [queryParams]="{categoryId:rowData.id}">{{rowData.numberOfProducts}}</a>
+                                </td>
+
+                                <td class="text-center" style="width:150px">
+                                    <div style="justify-content: center;"
+                                        class="kt-section__content d-flex mb-1 flex-wrap kt-section__content--solid--">
+                                        <div *ngFor="let record of rowData.assignees"
+                                            class="d-flex justify-content-center">
+                                            <span *ngIf="record.employeePicture!=null" title="{{record.employeeName}}"
+                                                class="kt-media kt-media--sm kt-margin-r-5 kt-margin-t-5">
+                                                <img src="{{record.employeePicture}}" alt="image">
+                                            </span>
+                                            <span *ngIf="record.employeePicture==null" title="{{record.employeeName}}"
+                                                class="kt-media kt-media--sm kt-media--success kt-media--circle kt-margin-r-5 kt-margin-t-5">
+                                                <span>{{teamNameSplit(record.employeeName)}}</span>
+                                            </span>
+                                        </div>
+
+                                    </div>
+                                </td>
+
+                                <td class="text-center" style="width: 130px"
+                                    [hidden]="!isGrantedAny('Pages.ProductCategories.Edit', 'Pages.ProductCategories.Delete')">
+                                    <div class="btn-group dropdown" dropdown container="body" normalizePosition>
+                                        <button class="dropdown-toggle btn btn-sm btn-secondary" dropdownToggle>
+                                            <i class="fa fa-cog"></i><span class="caret"></span>
+                                        </button>
+                                        <ul style="margin-left: -11.7rem;" class="dropdown-menu" *dropdownMenu>
+                                            <li>
+                                                <!-- <a 
+                                                    (click)="viewProductCategoryModal.show(rowData)">{{l('View')}}</a> -->
+                                            </li>
+                                            <li>
+                                                <a *ngIf="permission.isGranted('Pages.ProductCategories.Edit')"
+                                                    href="javascript:;"
+                                                    [routerLink]="['/app/main/shop/productCategories/dashboard', rowData.id]">{{l('Edit')}}</a>
+                                                <!-- (click)="createOrEditProductCategoryModal.show(rowData.id)" -->
+                                            </li>
+                                            <!-- <li>
+                                                <a (click)="editChildCategoryDisplaySequence(rowData.id)"
+                                                    *ngIf="permission.isGranted('Pages.ProductCategories.Edit') && rowData.hasChildren"
+                                                    href="javascript:;">{{l('Child Sequence')}}</a>
+                                            </li> -->
+                                            <li>
+                                                <a *ngIf="permission.isGranted('Pages.ProductCategories.Delete')"
+                                                    href="javascript:;"
+                                                    (click)="deleteProductCategory(rowData)">{{l('Delete')}}</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-treeTable>
+
+                    <!-- <div class="card">
+                        <p-treeTable [value]="files" [scrollable]="true" [tableStyle]="{'min-width':'50rem'}">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Size</th>
+                                    <th>Type</th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-rowNode let-rowData="rowData">
+                                <tr [ttRow]="rowNode">
+                                    <td>
+                                        <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
+                                        {{ rowData.name }}
+                                    </td>
+                                    <td>{{ rowData.size }}</td>
+                                    <td>{{ rowData.type }}</td>
+                                </tr>
+                            </ng-template>
+                        </p-treeTable>
+                    </div> -->
                     <!--<Primeng-Datatable-End>-->
                 </div>
             </div>
         </div>
     </div>
-    <createOrEditProductCategoryModal
-        #createOrEditProductCategoryModal
-        (modalSave)="getProductCategories()"
-    ></createOrEditProductCategoryModal>
+    <createOrEditProductCategoryModal #createOrEditProductCategoryModal  (modalSave)="getProductCategoriesTreeNode()">
+    </createOrEditProductCategoryModal>
     <viewProductCategoryModal #viewProductCategoryModal></viewProductCategoryModal>
 </div>
