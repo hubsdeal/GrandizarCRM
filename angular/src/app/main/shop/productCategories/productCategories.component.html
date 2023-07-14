@@ -412,14 +412,14 @@
                                             <i class="fa fa-cog"></i><span class="caret"></span>
                                         </button>
                                         <ul style="margin-left: -11.7rem;" class="dropdown-menu" *dropdownMenu>
-                                            <li>
-                                                <!-- <a 
-                                                    (click)="viewProductCategoryModal.show(rowData)">{{l('View')}}</a> -->
-                                            </li>
+                                            <!-- <li>
+                                                <a 
+                                                    (click)="viewProductCategoryModal.show(rowData)">{{l('View')}}</a>
+                                            </li> -->
                                             <li>
                                                 <a *ngIf="permission.isGranted('Pages.ProductCategories.Edit')"
                                                     href="javascript:;"
-                                                    [routerLink]="['/app/main/shop/productCategories/dashboard', rowData.id]">{{l('Edit')}}</a>
+                                                    (click)="createOrEditProductCategoryModal.show(rowData.id)">{{l('Edit')}}</a>
                                                 <!-- (click)="createOrEditProductCategoryModal.show(rowData.id)" -->
                                             </li>
                                             <!-- <li>

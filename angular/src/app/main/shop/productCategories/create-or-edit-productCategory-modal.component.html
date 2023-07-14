@@ -1,13 +1,5 @@
-﻿<div
-    bsModal
-    #createOrEditModal="bs-modal"
-    class="modal fade"
-    tabindex="-1"
-    role="dialog"
-    aria-labelledby="createOrEditModal"
-    aria-hidden="true"
-    [config]="{ backdrop: 'static' }"
->
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{ backdrop: 'static' }">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <form *ngIf="active" #productCategoryForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
@@ -17,26 +9,15 @@
                         <span *ngIf="!productCategory.id">{{ l('CreateNewProductCategory') }}</span>
                     </h4>
 
-                    <button
-                        type="button"
-                        class="btn-close"
-                        (click)="close()"
-                        aria-label="Close"
-                        [disabled]="saving"
-                    ></button>
+                    <button type="button" class="btn-close" (click)="close()" aria-label="Close"
+                        [disabled]="saving"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="my-3">
+                    <!-- <div class="my-5">
                         <label class="form-label" for="MediaLibraryName">{{ l('MediaLibrary') }}</label>
                         <div class="input-group">
-                            <input
-                                class="form-control"
-                                id="MediaLibraryName"
-                                name="mediaLibraryName"
-                                [(ngModel)]="mediaLibraryName"
-                                type="text"
-                                disabled
-                            />
+                            <input class="form-control" id="MediaLibraryName" name="mediaLibraryName"
+                                [(ngModel)]="mediaLibraryName" type="text" disabled />
                             <button class="btn btn-primary blue" (click)="openSelectMediaLibraryModal()" type="button">
                                 <i class="fa fa-search"></i>
                                 {{ l('Pick') }}
@@ -46,161 +27,130 @@
                             </button>
                         </div>
                     </div>
-                    <input
-                        class="form-control"
-                        name="productCategory.mediaLibraryId"
-                        [(ngModel)]="productCategory.mediaLibraryId"
-                        type="text"
-                        hidden
-                    />
+                    <input class="form-control" name="productCategory.mediaLibraryId"
+                        [(ngModel)]="productCategory.mediaLibraryId" type="text" hidden /> -->
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <!--begin::Input group-->
+                            <div class="mb-7">
+                                <div class="image-input image-input-outline"
+                                    style="background-image: url(assets/common/images/location.png)">
+                                    <div *ngIf="imageSrc" class="image-input-wrapper w-125px h-125px"
+                                        [style.background-image]="'url(' + imageSrc + ')'">
+                                    </div>
+                                    <label
+                                        class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+                                        data-kt-image-input-action="change" data-bs-toggle="tooltip"
+                                        aria-label="Change avatar" data-bs-original-title="Change avatar"
+                                        data-kt-initialized="1">
+                                        <i class="bi bi-pencil-fill fs-7"></i>
+                                        <input type="file" name="profile_avatar" id="customFile" ng2FileSelect
+                                            [uploader]="uploader" (change)="fileChangeEvent($event)"
+                                            accept=".png, .jpg, .jpeg">
+                                        <input type="hidden" name="avatar_remove">
+                                    </label>
+                                </div>
+                                <div class="form-text">Allowed file types: png, jpg, jpeg.
+                                </div>
+                            </div>
+                            <!--end::Input group-->
+                        </div>
+                    </div>
 
-                    <div class="my-3">
+                    <div class="my-5">
                         <label class="form-label" for="ProductCategory_Name">{{ l('Name') }} *</label>
-                        <input
-                            type="text"
-                            #ProductCategory_Name="ngModel"
-                            id="ProductCategory_Name"
-                            class="form-control"
-                            [(ngModel)]="productCategory.name"
-                            name="Name"
-                            minlength="1"
-                            maxlength="128"
-                            required
-                        />
+                        <input type="text" #ProductCategory_Name="ngModel" id="ProductCategory_Name"
+                            class="form-control" [(ngModel)]="productCategory.name" name="Name" minlength="1"
+                            maxlength="128" required />
                         <validation-messages [formCtrl]="ProductCategory_Name"></validation-messages>
                     </div>
 
-                    <div class="my-3">
+                    <!-- <div class="my-5">
                         <label class="form-label" for="ProductCategory_Description">{{ l('Description') }}</label>
-                        <input
-                            type="text"
-                            #ProductCategory_Description="ngModel"
-                            id="ProductCategory_Description"
-                            class="form-control"
-                            [(ngModel)]="productCategory.description"
-                            name="Description"
-                        />
+                        <input type="text" #ProductCategory_Description="ngModel" id="ProductCategory_Description"
+                            class="form-control" [(ngModel)]="productCategory.description" name="Description" />
                         <validation-messages [formCtrl]="ProductCategory_Description"></validation-messages>
-                    </div>
+                    </div> -->
 
-                    <br />
-                    <label class="form-check form-check-custom form-check-solid">
-                        <input
-                            id="ProductCategory_HasParentCategory"
-                            #ProductCategory_HasParentCategory="ngModel"
-                            name="HasParentCategory"
-                            [(ngModel)]="productCategory.hasParentCategory"
-                            type="checkbox"
-                            class="form-check-input"
-                        />
-                        <span class="form-check-label">
-                            {{ l('HasParentCategory') }}
-                        </span>
-                    </label>
-                    <validation-messages [formCtrl]="ProductCategory_HasParentCategory"></validation-messages>
-
-                    <div class="my5">
-                        <label class="form-label" for="ProductCategory_ParentCategoryId">
-                            {{ l('ParentCategoryId') }}
+                    <div class="my-5">
+                        <label class="form-check form-check-custom form-check-solid">
+                            <input id="ProductCategory_HasParentCategory" #ProductCategory_HasParentCategory="ngModel"
+                                name="HasParentCategory" [(ngModel)]="productCategory.hasParentCategory" type="checkbox"
+                                class="form-check-input" />
+                            <span class="form-check-label">
+                                {{ l('HasParentCategory') }}
+                            </span>
                         </label>
-                        <input
-                            type="number"
-                            #ProductCategory_ParentCategoryId="ngModel"
-                            id="ProductCategory_ParentCategoryId"
-                            class="form-control"
-                            [(ngModel)]="productCategory.parentCategoryId"
-                            name="ParentCategoryId"
-                        />
-                        <validation-messages [formCtrl]="ProductCategory_ParentCategoryId"></validation-messages>
+                        <validation-messages [formCtrl]="ProductCategory_HasParentCategory"></validation-messages>
                     </div>
 
-                    <div class="my-3">
+                    <div class="my-5" *ngIf="productCategory.hasParentCategory">
+                        <label class="form-label" for="ProductCategory_ParentCategoryId">
+                            {{ l('Parent Category') }}
+                        </label>
+                        <select name="parentCategoryId" [(ngModel)]="productCategory.parentCategoryId"
+                            class="form-select " required>
+                            <option value="">{{ l('Select Parent Category') }}</option>
+                            <option *ngFor="let item of allParentCategories" value="{{ item.id }}">
+                                {{ item.displayName }}
+                            </option>
+                        </select>
+                        <!-- <input type="number" #ProductCategory_ParentCategoryId="ngModel"
+                            id="ProductCategory_ParentCategoryId" class="form-control"
+                            [(ngModel)]="productCategory.parentCategoryId" name="ParentCategoryId" />
+                        <validation-messages [formCtrl]="ProductCategory_ParentCategoryId"></validation-messages> -->
+                    </div>
+
+                    <div class="my-5">
                         <label class="form-label" for="ProductCategory_Url">{{ l('Url') }}</label>
-                        <input
-                            type="text"
-                            #ProductCategory_Url="ngModel"
-                            id="ProductCategory_Url"
-                            class="form-control"
-                            [(ngModel)]="productCategory.url"
-                            name="Url"
-                            minlength="1"
-                            maxlength="512"
-                        />
+                        <input type="text" #ProductCategory_Url="ngModel" id="ProductCategory_Url" class="form-control"
+                            [(ngModel)]="productCategory.url" name="Url" minlength="1" maxlength="512" />
                         <validation-messages [formCtrl]="ProductCategory_Url"></validation-messages>
                     </div>
 
-                    <div class="my-3">
+                    <!-- <div class="my-5">
                         <label class="form-label" for="ProductCategory_MetaTitle">{{ l('MetaTitle') }}</label>
-                        <input
-                            type="text"
-                            #ProductCategory_MetaTitle="ngModel"
-                            id="ProductCategory_MetaTitle"
-                            class="form-control"
-                            [(ngModel)]="productCategory.metaTitle"
-                            name="MetaTitle"
-                            minlength="1"
-                            maxlength="128"
-                        />
+                        <input type="text" #ProductCategory_MetaTitle="ngModel" id="ProductCategory_MetaTitle"
+                            class="form-control" [(ngModel)]="productCategory.metaTitle" name="MetaTitle" minlength="1"
+                            maxlength="128" />
                         <validation-messages [formCtrl]="ProductCategory_MetaTitle"></validation-messages>
                     </div>
 
-                    <div class="my-3">
+                    <div class="my-5">
                         <label class="form-label" for="ProductCategory_MetaKeywords">{{ l('MetaKeywords') }}</label>
-                        <input
-                            type="text"
-                            #ProductCategory_MetaKeywords="ngModel"
-                            id="ProductCategory_MetaKeywords"
-                            class="form-control"
-                            [(ngModel)]="productCategory.metaKeywords"
-                            name="MetaKeywords"
-                            minlength="1"
-                            maxlength="512"
-                        />
+                        <input type="text" #ProductCategory_MetaKeywords="ngModel" id="ProductCategory_MetaKeywords"
+                            class="form-control" [(ngModel)]="productCategory.metaKeywords" name="MetaKeywords"
+                            minlength="1" maxlength="512" />
                         <validation-messages [formCtrl]="ProductCategory_MetaKeywords"></validation-messages>
-                    </div>
+                    </div> -->
 
-                    <div class="my5">
+                    <div class="my-5">
                         <label class="form-label" for="ProductCategory_DisplaySequence">
                             {{ l('DisplaySequence') }}
                         </label>
-                        <input
-                            type="number"
-                            #ProductCategory_DisplaySequence="ngModel"
-                            id="ProductCategory_DisplaySequence"
-                            class="form-control"
-                            [(ngModel)]="productCategory.displaySequence"
-                            name="DisplaySequence"
-                        />
+                        <input type="number" #ProductCategory_DisplaySequence="ngModel"
+                            id="ProductCategory_DisplaySequence" class="form-control"
+                            [(ngModel)]="productCategory.displaySequence" name="DisplaySequence" />
                         <validation-messages [formCtrl]="ProductCategory_DisplaySequence"></validation-messages>
                     </div>
-
-                    <br />
-                    <label class="form-check form-check-custom form-check-solid">
-                        <input
-                            id="ProductCategory_ProductOrService"
-                            #ProductCategory_ProductOrService="ngModel"
-                            name="ProductOrService"
-                            [(ngModel)]="productCategory.productOrService"
-                            type="checkbox"
-                            class="form-check-input"
-                        />
-                        <span class="form-check-label">
-                            {{ l('ProductOrService') }}
-                        </span>
-                    </label>
-                    <validation-messages [formCtrl]="ProductCategory_ProductOrService"></validation-messages>
+                    <div class="my-5">
+                        <label class="form-check form-check-custom form-check-solid">
+                            <input id="ProductCategory_ProductOrService" #ProductCategory_ProductOrService="ngModel"
+                                name="ProductOrService" [(ngModel)]="productCategory.productOrService" type="checkbox"
+                                class="form-check-input" />
+                            <span class="form-check-label">
+                                {{ l('ProductOrService') }}
+                            </span>
+                        </label>
+                        <validation-messages [formCtrl]="ProductCategory_ProductOrService"></validation-messages>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
                         {{ l('Cancel') }}
                     </button>
-                    <button
-                        type="submit"
-                        class="btn btn-primary blue"
-                        [disabled]="!productCategoryForm.form.valid"
-                        [buttonBusy]="saving"
-                        [busyText]="l('SavingWithThreeDot')"
-                    >
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!productCategoryForm.form.valid"
+                        [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')">
                         <i class="fa fa-save"></i>
                         <span>{{ l('Save') }}</span>
                     </button>
@@ -208,8 +158,6 @@
             </form>
         </div>
     </div>
-    <productCategoryMediaLibraryLookupTableModal
-        #productCategoryMediaLibraryLookupTableModal
-        (modalSave)="getNewMediaLibraryId()"
-    ></productCategoryMediaLibraryLookupTableModal>
+    <productCategoryMediaLibraryLookupTableModal #productCategoryMediaLibraryLookupTableModal
+        (modalSave)="getNewMediaLibraryId()"></productCategoryMediaLibraryLookupTableModal>
 </div>
