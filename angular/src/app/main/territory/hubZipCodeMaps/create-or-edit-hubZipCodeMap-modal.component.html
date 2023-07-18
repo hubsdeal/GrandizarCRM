@@ -1,13 +1,5 @@
-﻿<div
-    bsModal
-    #createOrEditModal="bs-modal"
-    class="modal fade"
-    tabindex="-1"
-    role="dialog"
-    aria-labelledby="createOrEditModal"
-    aria-hidden="true"
-    [config]="{ backdrop: 'static' }"
->
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{ backdrop: 'static' }">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <form *ngIf="active" #hubZipCodeMapForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
@@ -17,26 +9,15 @@
                         <span *ngIf="!hubZipCodeMap.id">{{ l('CreateNewHubZipCodeMap') }}</span>
                     </h4>
 
-                    <button
-                        type="button"
-                        class="btn-close"
-                        (click)="close()"
-                        aria-label="Close"
-                        [disabled]="saving"
-                    ></button>
+                    <button type="button" class="btn-close" (click)="close()" aria-label="Close"
+                        [disabled]="saving"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="my-3">
+                    <!-- <div class="my-3">
                         <label class="form-label" for="HubName">{{ l('Hub') }}</label>
                         <div class="input-group">
-                            <input
-                                class="form-control"
-                                id="HubName"
-                                name="hubName"
-                                [(ngModel)]="hubName"
-                                type="text"
-                                disabled
-                            />
+                            <input class="form-control" id="HubName" name="hubName" [(ngModel)]="hubName" type="text"
+                                disabled />
                             <button class="btn btn-primary blue" (click)="openSelectHubModal()" type="button">
                                 <i class="fa fa-search"></i>
                                 {{ l('Pick') }}
@@ -46,26 +27,14 @@
                             </button>
                         </div>
                     </div>
-                    <input
-                        class="form-control"
-                        name="hubZipCodeMap.hubId"
-                        [(ngModel)]="hubZipCodeMap.hubId"
-                        type="text"
-                        required
-                        hidden
-                    />
+                    <input class="form-control" name="hubZipCodeMap.hubId" [(ngModel)]="hubZipCodeMap.hubId" type="text"
+                        required hidden /> -->
 
                     <div class="my-3">
                         <label class="form-label" for="CityName">{{ l('City') }}</label>
                         <div class="input-group">
-                            <input
-                                class="form-control"
-                                id="CityName"
-                                name="cityName"
-                                [(ngModel)]="cityName"
-                                type="text"
-                                disabled
-                            />
+                            <input class="form-control" id="CityName" name="cityName" [(ngModel)]="cityName" type="text"
+                                disabled />
                             <button class="btn btn-primary blue" (click)="openSelectCityModal()" type="button">
                                 <i class="fa fa-search"></i>
                                 {{ l('Pick') }}
@@ -75,25 +44,14 @@
                             </button>
                         </div>
                     </div>
-                    <input
-                        class="form-control"
-                        name="hubZipCodeMap.cityId"
-                        [(ngModel)]="hubZipCodeMap.cityId"
-                        type="text"
-                        hidden
-                    />
+                    <input class="form-control" name="hubZipCodeMap.cityId" [(ngModel)]="hubZipCodeMap.cityId"
+                        type="text" hidden />
 
                     <div class="my-3">
                         <label class="form-label" for="ZipCodeName">{{ l('ZipCode') }}</label>
                         <div class="input-group">
-                            <input
-                                class="form-control"
-                                id="ZipCodeName"
-                                name="zipCodeName"
-                                [(ngModel)]="zipCodeName"
-                                type="text"
-                                disabled
-                            />
+                            <input class="form-control" id="ZipCodeName" name="zipCodeName" [(ngModel)]="zipCodeName"
+                                type="text" disabled />
                             <button class="btn btn-primary blue" (click)="openSelectZipCodeModal()" type="button">
                                 <i class="fa fa-search"></i>
                                 {{ l('Pick') }}
@@ -103,41 +61,22 @@
                             </button>
                         </div>
                     </div>
-                    <input
-                        class="form-control"
-                        name="hubZipCodeMap.zipCodeId"
-                        [(ngModel)]="hubZipCodeMap.zipCodeId"
-                        type="text"
-                        hidden
-                    />
+                    <input class="form-control" name="hubZipCodeMap.zipCodeId" [(ngModel)]="hubZipCodeMap.zipCodeId"
+                        type="text" hidden />
 
                     <div class="my-3">
                         <label class="form-label" for="HubZipCodeMap_CityName">{{ l('CityName') }}</label>
-                        <input
-                            type="text"
-                            #HubZipCodeMap_CityName="ngModel"
-                            id="HubZipCodeMap_CityName"
-                            class="form-control"
-                            [(ngModel)]="hubZipCodeMap.cityName"
-                            name="CityName"
-                            minlength="1"
-                            maxlength="128"
-                        />
+                        <input type="text" #HubZipCodeMap_CityName="ngModel" id="HubZipCodeMap_CityName"
+                            class="form-control" [(ngModel)]="hubZipCodeMap.cityName" name="CityName" minlength="1"
+                            maxlength="128" />
                         <validation-messages [formCtrl]="HubZipCodeMap_CityName"></validation-messages>
                     </div>
 
                     <div class="my-3">
                         <label class="form-label" for="HubZipCodeMap_ZipCode">{{ l('ZipCode') }}</label>
-                        <input
-                            type="text"
-                            #HubZipCodeMap_ZipCode="ngModel"
-                            id="HubZipCodeMap_ZipCode"
-                            class="form-control"
-                            [(ngModel)]="hubZipCodeMap.zipCode"
-                            name="ZipCode"
-                            minlength="1"
-                            maxlength="50"
-                        />
+                        <input type="text" #HubZipCodeMap_ZipCode="ngModel" id="HubZipCodeMap_ZipCode"
+                            class="form-control" [(ngModel)]="hubZipCodeMap.zipCode" name="ZipCode" minlength="1"
+                            maxlength="50" />
                         <validation-messages [formCtrl]="HubZipCodeMap_ZipCode"></validation-messages>
                     </div>
                 </div>
@@ -145,13 +84,8 @@
                     <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
                         {{ l('Cancel') }}
                     </button>
-                    <button
-                        type="submit"
-                        class="btn btn-primary blue"
-                        [disabled]="!hubZipCodeMapForm.form.valid"
-                        [buttonBusy]="saving"
-                        [busyText]="l('SavingWithThreeDot')"
-                    >
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!hubZipCodeMapForm.form.valid"
+                        [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')">
                         <i class="fa fa-save"></i>
                         <span>{{ l('Save') }}</span>
                     </button>
@@ -159,16 +93,10 @@
             </form>
         </div>
     </div>
-    <hubZipCodeMapHubLookupTableModal
-        #hubZipCodeMapHubLookupTableModal
-        (modalSave)="getNewHubId()"
-    ></hubZipCodeMapHubLookupTableModal>
-    <hubZipCodeMapCityLookupTableModal
-        #hubZipCodeMapCityLookupTableModal
-        (modalSave)="getNewCityId()"
-    ></hubZipCodeMapCityLookupTableModal>
-    <hubZipCodeMapZipCodeLookupTableModal
-        #hubZipCodeMapZipCodeLookupTableModal
-        (modalSave)="getNewZipCodeId()"
-    ></hubZipCodeMapZipCodeLookupTableModal>
+    <hubZipCodeMapHubLookupTableModal #hubZipCodeMapHubLookupTableModal (modalSave)="getNewHubId()">
+    </hubZipCodeMapHubLookupTableModal>
+    <hubZipCodeMapCityLookupTableModal #hubZipCodeMapCityLookupTableModal (modalSave)="getNewCityId()">
+    </hubZipCodeMapCityLookupTableModal>
+    <hubZipCodeMapZipCodeLookupTableModal #hubZipCodeMapZipCodeLookupTableModal (modalSave)="getNewZipCodeId()">
+    </hubZipCodeMapZipCodeLookupTableModal>
 </div>

@@ -10,6 +10,10 @@ import { HubDashboardComponent } from './hub-dashboard/hub-dashboard.component';
 import { MyHubListComponent } from './my-hub-list/my-hub-list.component';
 import { StoreModule } from '@app/main/shop/stores/store.module';
 import { HubWidgetMapModule } from '@app/main/widgetManagement/hubWidgetMaps/hubWidgetMap.module';
+import { HubZipCodeMapModule } from '../hubZipCodeMaps/hubZipCodeMap.module';
+import { HubNavigationMenuModule } from '../hubNavigationMenus/hubNavigationMenu.module';
+import { HubSalesProjectionModule } from '../hubSalesProjections/hubSalesProjection.module';
+import { HubAccountTeamModule } from '../hubAccountTeams/hubAccountTeam.module';
 
 @NgModule({
     declarations: [
@@ -21,6 +25,9 @@ import { HubWidgetMapModule } from '@app/main/widgetManagement/hubWidgetMaps/hub
           HubDashboardComponent,
           MyHubListComponent,
     ],
-    imports: [AppSharedModule, HubRoutingModule, AdminSharedModule, StoreModule, HubWidgetMapModule],
+    imports: [AppSharedModule, HubRoutingModule, AdminSharedModule, StoreModule, HubWidgetMapModule, HubZipCodeMapModule, HubNavigationMenuModule,
+        HubSalesProjectionModule,
+        HubAccountTeamModule
+    ],
 })
 export class HubModule {}

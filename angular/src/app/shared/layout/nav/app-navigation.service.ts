@@ -149,6 +149,8 @@ export class AppNavigationService {
                     new AppMenuItem('Master Hub List', 'Pages.Hubs', 'flaticon2-list-1', '/app/main/territory/hubs'),
 
                     new AppMenuItem('My Hub List', 'Pages.Hubs', 'flaticon2-list-2', '/app/main/territory/myHubs'),
+
+                    new AppMenuItem('Master Sales Projection', 'Pages.Hubs', 'fas fa-percentage', '/app/main/territory/hubSalesProjections'),
                 ]
             ),
 

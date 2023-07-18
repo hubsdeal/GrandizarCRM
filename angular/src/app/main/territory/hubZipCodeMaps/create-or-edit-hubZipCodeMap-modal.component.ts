@@ -34,6 +34,8 @@ export class CreateOrEditHubZipCodeMapModalComponent extends AppComponentBase im
     cityName = '';
     zipCodeName = '';
 
+    hubId:number;
+
     constructor(
         injector: Injector,
         private _hubZipCodeMapsServiceProxy: HubZipCodeMapsServiceProxy,
@@ -55,7 +57,9 @@ export class CreateOrEditHubZipCodeMapModalComponent extends AppComponentBase im
         } else {
             this._hubZipCodeMapsServiceProxy.getHubZipCodeMapForEdit(hubZipCodeMapId).subscribe((result) => {
                 this.hubZipCodeMap = result.hubZipCodeMap;
-
+                if(this.hubId){
+                    this.hubId = result.hubZipCodeMap.hubId
+                }
                 this.hubName = result.hubName;
                 this.cityName = result.cityName;
                 this.zipCodeName = result.zipCodeName;
@@ -68,7 +72,9 @@ export class CreateOrEditHubZipCodeMapModalComponent extends AppComponentBase im
 
     save(): void {
         this.saving = true;
-
+        if(this.hubId){
+            this.hubZipCodeMap.hubId = this.hubId;
+        }
         this._hubZipCodeMapsServiceProxy
             .createOrEdit(this.hubZipCodeMap)
             .pipe(

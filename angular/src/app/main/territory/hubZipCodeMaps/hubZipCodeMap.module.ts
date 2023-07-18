@@ -20,5 +20,6 @@ import { HubZipCodeMapZipCodeLookupTableModalComponent } from './hubZipCodeMap-z
         HubZipCodeMapZipCodeLookupTableModalComponent,
     ],
     imports: [AppSharedModule, HubZipCodeMapRoutingModule, AdminSharedModule],
+    exports: [HubZipCodeMapsComponent, CreateOrEditHubZipCodeMapModalComponent, ViewHubZipCodeMapModalComponent],
 })
 export class HubZipCodeMapModule {}

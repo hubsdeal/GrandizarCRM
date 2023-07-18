@@ -22,5 +22,13 @@ import { HubSalesProjectionCurrencyLookupTableModalComponent } from './hubSalesP
         HubSalesProjectionCurrencyLookupTableModalComponent,
     ],
     imports: [AppSharedModule, HubSalesProjectionRoutingModule, AdminSharedModule],
+    exports: [HubSalesProjectionsComponent,
+        CreateOrEditHubSalesProjectionModalComponent,
+        ViewHubSalesProjectionModalComponent,
+
+        HubSalesProjectionHubLookupTableModalComponent,
+        HubSalesProjectionProductCategoryLookupTableModalComponent,
+        HubSalesProjectionStoreLookupTableModalComponent,
+        HubSalesProjectionCurrencyLookupTableModalComponent,],
 })
-export class HubSalesProjectionModule {}
+export class HubSalesProjectionModule { }

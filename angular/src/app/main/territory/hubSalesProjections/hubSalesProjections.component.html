@@ -1,18 +1,15 @@
 ﻿<div [@routerTransition]>
-    <sub-header [title]="'HubSalesProjections' | localize" [description]="'HubSalesProjectionsHeaderInfo' | localize">
+    <sub-header [title]="'Hub Sales Projections' | localize" [description]="'HubSalesProjectionsHeaderInfo' | localize">
         <div role="actions">
-            <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1">
+            <!-- <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1">
                 <i class="fa fa-file-excel"></i>
                 {{ l('ExportToExcel') }}
-            </button>
+            </button> -->
 
-            <button
-                *ngIf="isGranted('Pages.HubSalesProjections.Create')"
-                (click)="createHubSalesProjection()"
-                class="btn btn-primary blue"
-            >
+            <button *ngIf="isGranted('Pages.HubSalesProjections.Create')" (click)="createHubSalesProjection()"
+                class="btn btn-primary blue">
                 <i class="fa fa-plus"></i>
-                {{ l('CreateNewHubSalesProjection') }}
+                {{ l('Sales Projection') }}
             </button>
         </div>
     </sub-header>
@@ -26,20 +23,11 @@
                             <div class="col-xl-12">
                                 <div class="my-3">
                                     <div class="input-group mb-3">
-                                        <input
-                                            [(ngModel)]="filterText"
-                                            (ngModelChange)="getHubSalesProjections()"
-                                            name="filterText"
-                                            autoFocus
-                                            type="text"
-                                            class="form-control"
-                                            [placeholder]="l('SearchWithThreeDot')"
-                                        />
-                                        <button
-                                            class="btn btn-primary"
-                                            type="submit"
-                                            (click)="getHubSalesProjections()"
-                                        >
+                                        <input [(ngModel)]="filterText" (ngModelChange)="getHubSalesProjections()"
+                                            name="filterText" autoFocus type="text" class="form-control"
+                                            [placeholder]="l('SearchWithThreeDot')" />
+                                        <button class="btn btn-primary" type="submit"
+                                            (click)="getHubSalesProjections()">
                                             <i class="flaticon-search-1"></i>
                                         </button>
                                     </div>
@@ -55,23 +43,12 @@
                                         {{ l('MinMax') }} {{ l('DurationTypeId') }}
                                     </label>
                                     <div class="input-group">
-                                        <input
-                                            type="number"
-                                            class="form-control"
-                                            id="MinDurationTypeIdFilter"
-                                            [(ngModel)]="minDurationTypeIdFilter"
-                                            placeholder="{{ l('MinValue') }}"
-                                            name="minDurationTypeIdFilter"
-                                            (ngModelChange)="getHubSalesProjections()"
-                                        />
-                                        <input
-                                            type="number"
-                                            class="form-control"
-                                            [(ngModel)]="maxDurationTypeIdFilter"
-                                            placeholder="{{ l('MaxValue') }}"
-                                            name="maxDurationTypeIdFilter"
-                                            (ngModelChange)="getHubSalesProjections()"
-                                        />
+                                        <input type="number" class="form-control" id="MinDurationTypeIdFilter"
+                                            [(ngModel)]="minDurationTypeIdFilter" placeholder="{{ l('MinValue') }}"
+                                            name="minDurationTypeIdFilter" (ngModelChange)="getHubSalesProjections()" />
+                                        <input type="number" class="form-control" [(ngModel)]="maxDurationTypeIdFilter"
+                                            placeholder="{{ l('MaxValue') }}" name="maxDurationTypeIdFilter"
+                                            (ngModelChange)="getHubSalesProjections()" />
                                     </div>
                                 </div>
                             </div>
@@ -79,27 +56,15 @@
                                 <div class="my-3">
                                     <label class="form-label" for="MinStartDateFilter">{{ l('StartDateRange') }}</label>
                                     <div class="input-group">
-                                        <input
-                                            class="form-control m-input"
-                                            id="MinStartDateFilter"
-                                            name="MinStartDateFilter"
-                                            type="datetime"
-                                            bsDatepicker
-                                            placeholder="{{ l('MinValue') }}"
-                                            [(ngModel)]="minStartDateFilter"
-                                            (ngModelChange)="getHubSalesProjections()"
-                                        />
+                                        <input class="form-control m-input" id="MinStartDateFilter"
+                                            name="MinStartDateFilter" type="datetime" bsDatepicker
+                                            placeholder="{{ l('MinValue') }}" [(ngModel)]="minStartDateFilter"
+                                            (ngModelChange)="getHubSalesProjections()" />
                                         <span style="line-height: 40px; padding: 0 15px 0 15px">&mdash;</span>
-                                        <input
-                                            class="form-control m-input"
-                                            id="MaxStartDateFilter"
-                                            name="MaxStartDateFilter"
-                                            type="datetime"
-                                            bsDatepicker
-                                            placeholder="{{ l('MaxValue') }}"
-                                            [(ngModel)]="maxStartDateFilter"
-                                            (ngModelChange)="getHubSalesProjections()"
-                                        />
+                                        <input class="form-control m-input" id="MaxStartDateFilter"
+                                            name="MaxStartDateFilter" type="datetime" bsDatepicker
+                                            placeholder="{{ l('MaxValue') }}" [(ngModel)]="maxStartDateFilter"
+                                            (ngModelChange)="getHubSalesProjections()" />
                                     </div>
                                 </div>
                             </div>
@@ -107,27 +72,15 @@
                                 <div class="my-3">
                                     <label class="form-label" for="MinEndDateFilter">{{ l('EndDateRange') }}</label>
                                     <div class="input-group">
-                                        <input
-                                            class="form-control m-input"
-                                            id="MinEndDateFilter"
-                                            name="MinEndDateFilter"
-                                            type="datetime"
-                                            bsDatepicker
-                                            placeholder="{{ l('MinValue') }}"
-                                            [(ngModel)]="minEndDateFilter"
-                                            (ngModelChange)="getHubSalesProjections()"
-                                        />
+                                        <input class="form-control m-input" id="MinEndDateFilter"
+                                            name="MinEndDateFilter" type="datetime" bsDatepicker
+                                            placeholder="{{ l('MinValue') }}" [(ngModel)]="minEndDateFilter"
+                                            (ngModelChange)="getHubSalesProjections()" />
                                         <span style="line-height: 40px; padding: 0 15px 0 15px">&mdash;</span>
-                                        <input
-                                            class="form-control m-input"
-                                            id="MaxEndDateFilter"
-                                            name="MaxEndDateFilter"
-                                            type="datetime"
-                                            bsDatepicker
-                                            placeholder="{{ l('MaxValue') }}"
-                                            [(ngModel)]="maxEndDateFilter"
-                                            (ngModelChange)="getHubSalesProjections()"
-                                        />
+                                        <input class="form-control m-input" id="MaxEndDateFilter"
+                                            name="MaxEndDateFilter" type="datetime" bsDatepicker
+                                            placeholder="{{ l('MaxValue') }}" [(ngModel)]="maxEndDateFilter"
+                                            (ngModelChange)="getHubSalesProjections()" />
                                     </div>
                                 </div>
                             </div>
@@ -137,23 +90,14 @@
                                         {{ l('MinMax') }} {{ l('ExpectedSalesAmount') }}
                                     </label>
                                     <div class="input-group">
-                                        <input
-                                            type="number"
-                                            class="form-control"
-                                            id="MinExpectedSalesAmountFilter"
-                                            [(ngModel)]="minExpectedSalesAmountFilter"
-                                            placeholder="{{ l('MinValue') }}"
+                                        <input type="number" class="form-control" id="MinExpectedSalesAmountFilter"
+                                            [(ngModel)]="minExpectedSalesAmountFilter" placeholder="{{ l('MinValue') }}"
                                             name="minExpectedSalesAmountFilter"
-                                            (ngModelChange)="getHubSalesProjections()"
-                                        />
-                                        <input
-                                            type="number"
-                                            class="form-control"
-                                            [(ngModel)]="maxExpectedSalesAmountFilter"
-                                            placeholder="{{ l('MaxValue') }}"
+                                            (ngModelChange)="getHubSalesProjections()" />
+                                        <input type="number" class="form-control"
+                                            [(ngModel)]="maxExpectedSalesAmountFilter" placeholder="{{ l('MaxValue') }}"
                                             name="maxExpectedSalesAmountFilter"
-                                            (ngModelChange)="getHubSalesProjections()"
-                                        />
+                                            (ngModelChange)="getHubSalesProjections()" />
                                     </div>
                                 </div>
                             </div>
@@ -163,23 +107,14 @@
                                         {{ l('MinMax') }} {{ l('ActualSalesAmount') }}
                                     </label>
                                     <div class="input-group">
-                                        <input
-                                            type="number"
-                                            class="form-control"
-                                            id="MinActualSalesAmountFilter"
-                                            [(ngModel)]="minActualSalesAmountFilter"
-                                            placeholder="{{ l('MinValue') }}"
+                                        <input type="number" class="form-control" id="MinActualSalesAmountFilter"
+                                            [(ngModel)]="minActualSalesAmountFilter" placeholder="{{ l('MinValue') }}"
                                             name="minActualSalesAmountFilter"
-                                            (ngModelChange)="getHubSalesProjections()"
-                                        />
-                                        <input
-                                            type="number"
-                                            class="form-control"
-                                            [(ngModel)]="maxActualSalesAmountFilter"
-                                            placeholder="{{ l('MaxValue') }}"
+                                            (ngModelChange)="getHubSalesProjections()" />
+                                        <input type="number" class="form-control"
+                                            [(ngModel)]="maxActualSalesAmountFilter" placeholder="{{ l('MaxValue') }}"
                                             name="maxActualSalesAmountFilter"
-                                            (ngModelChange)="getHubSalesProjections()"
-                                        />
+                                            (ngModelChange)="getHubSalesProjections()" />
                                     </div>
                                 </div>
                             </div>
@@ -189,13 +124,8 @@
                                     <label class="form-label" for="HubNameFilter">
                                         ({{ l('Hub') }}) {{ l('Name') }}
                                     </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="HubNameFilter"
-                                        name="hubNameFilter"
-                                        [(ngModel)]="hubNameFilter"
-                                    />
+                                    <input type="text" class="form-control" id="HubNameFilter" name="hubNameFilter"
+                                        [(ngModel)]="hubNameFilter" />
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -203,13 +133,8 @@
                                     <label class="form-label" for="ProductCategoryNameFilter">
                                         ({{ l('ProductCategory') }}) {{ l('Name') }}
                                     </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="ProductCategoryNameFilter"
-                                        name="productCategoryNameFilter"
-                                        [(ngModel)]="productCategoryNameFilter"
-                                    />
+                                    <input type="text" class="form-control" id="ProductCategoryNameFilter"
+                                        name="productCategoryNameFilter" [(ngModel)]="productCategoryNameFilter" />
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -217,13 +142,8 @@
                                     <label class="form-label" for="StoreNameFilter">
                                         ({{ l('Store') }}) {{ l('Name') }}
                                     </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="StoreNameFilter"
-                                        name="storeNameFilter"
-                                        [(ngModel)]="storeNameFilter"
-                                    />
+                                    <input type="text" class="form-control" id="StoreNameFilter" name="storeNameFilter"
+                                        [(ngModel)]="storeNameFilter" />
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -231,40 +151,26 @@
                                     <label class="form-label" for="CurrencyNameFilter">
                                         ({{ l('Currency') }}) {{ l('Name') }}
                                     </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="CurrencyNameFilter"
-                                        name="currencyNameFilter"
-                                        [(ngModel)]="currencyNameFilter"
-                                    />
+                                    <input type="text" class="form-control" id="CurrencyNameFilter"
+                                        name="currencyNameFilter" [(ngModel)]="currencyNameFilter" />
                                 </div>
                             </div>
                             <div class="col-md-12 mt-5">
-                                <button
-                                    (click)="resetFilters()"
-                                    class="btn btn-secondary btn-sm"
-                                    id="btn-reset-filters"
-                                >
+                                <button (click)="resetFilters()" class="btn btn-secondary btn-sm"
+                                    id="btn-reset-filters">
                                     Reset
                                 </button>
                             </div>
                         </div>
                         <div class="row my-4">
                             <div class="col-sm-12">
-                                <span
-                                    class="clickable-item text-muted"
-                                    *ngIf="!advancedFiltersAreShown"
-                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown"
-                                >
+                                <span class="clickable-item text-muted" *ngIf="!advancedFiltersAreShown"
+                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown">
                                     <i class="fa fa-angle-down"></i>
                                     {{ l('ShowAdvancedFilters') }}
                                 </span>
-                                <span
-                                    class="clickable-item text-muted"
-                                    *ngIf="advancedFiltersAreShown"
-                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown"
-                                >
+                                <span class="clickable-item text-muted" *ngIf="advancedFiltersAreShown"
+                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown">
                                     <i class="fa fa-angle-up"></i>
                                     {{ l('HideAdvancedFilters') }}
                                 </span>
@@ -276,31 +182,14 @@
                 <div class="row align-items-center">
                     <!--<Primeng-Datatable-Start>-->
                     <div class="primeng-datatable-container col-12" [busyIf]="primengTableHelper.isLoading">
-                        <p-table
-                            #dataTable
-                            (onLazyLoad)="getHubSalesProjections($event)"
+                        <p-table #dataTable (onLazyLoad)="getHubSalesProjections($event)"
                             [value]="primengTableHelper.records"
-                            rows="{{ primengTableHelper.defaultRecordsCountPerPage }}"
-                            [paginator]="false"
-                            [lazy]="true"
-                            [scrollable]="true"
-                            ScrollWidth="100%"
-                            [responsive]="primengTableHelper.isResponsive"
-                            [resizableColumns]="primengTableHelper.resizableColumns"
-                        >
+                            rows="{{ primengTableHelper.defaultRecordsCountPerPage }}" [paginator]="false" [lazy]="true"
+                            [scrollable]="true" ScrollWidth="100%" [responsive]="primengTableHelper.isResponsive"
+                            [resizableColumns]="primengTableHelper.resizableColumns">
                             <ng-template pTemplate="header">
                                 <tr>
-                                    <th
-                                        style="width: 130px"
-                                        [hidden]="
-                                            !isGrantedAny(
-                                                'Pages.HubSalesProjections.Edit',
-                                                'Pages.HubSalesProjections.Delete'
-                                            )
-                                        "
-                                    >
-                                        {{ l('Actions') }}
-                                    </th>
+
                                     <th style="width: 150px" pSortableColumn="hubFk.name">
                                         {{ l('Name') }}
                                         <p-sortIcon field="hubName"></p-sortIcon>
@@ -337,62 +226,19 @@
                                         {{ l('ActualSalesAmount') }}
                                         <p-sortIcon field="hubSalesProjection.actualSalesAmount"></p-sortIcon>
                                     </th>
+                                    <th style="width: 130px" [hidden]="
+                                    !isGrantedAny(
+                                        'Pages.HubSalesProjections.Edit',
+                                        'Pages.HubSalesProjections.Delete'
+                                    )
+                                ">
+                                        {{ l('Actions') }}
+                                    </th>
                                 </tr>
                             </ng-template>
                             <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
                                 <tr>
-                                    <td
-                                        style="width: 130px"
-                                        [hidden]="
-                                            !isGrantedAny(
-                                                'Pages.HubSalesProjections.Edit',
-                                                'Pages.HubSalesProjections.Delete'
-                                            )
-                                        "
-                                    >
-                                        <div class="btn-group dropdown" dropdown container="body">
-                                            <button class="dropdown-toggle btn btn-sm btn-primary" dropdownToggle>
-                                                <i class="fa fa-cog"></i>
-                                                <span class="caret"></span>
-                                                {{ l('Actions') }}
-                                            </button>
-                                            <ul class="dropdown-menu" *dropdownMenu>
-                                                <li>
-                                                    <a
-                                                        href="javascript:;"
-                                                        class="dropdown-item"
-                                                        (click)="viewHubSalesProjectionModal.show(record)"
-                                                    >
-                                                        {{ l('View') }}
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a
-                                                        href="javascript:;"
-                                                        *ngIf="permission.isGranted('Pages.HubSalesProjections.Edit')"
-                                                        class="dropdown-item"
-                                                        (click)="
-                                                            createOrEditHubSalesProjectionModal.show(
-                                                                record.hubSalesProjection.id
-                                                            )
-                                                        "
-                                                    >
-                                                        {{ l('Edit') }}
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a
-                                                        class="dropdown-item"
-                                                        href="javascript:;"
-                                                        *ngIf="permission.isGranted('Pages.HubSalesProjections.Delete')"
-                                                        (click)="deleteHubSalesProjection(record.hubSalesProjection)"
-                                                    >
-                                                        {{ l('Delete') }}
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </td>
+                                    
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('Name') }}</span>
                                         {{ record.hubName }}
@@ -435,6 +281,46 @@
                                         <span class="p-column-title">{{ l('ActualSalesAmount') }}</span>
                                         {{ record.hubSalesProjection.actualSalesAmount }}
                                     </td>
+                                    <td style="width: 130px" [hidden]="
+                                            !isGrantedAny(
+                                                'Pages.HubSalesProjections.Edit',
+                                                'Pages.HubSalesProjections.Delete'
+                                            )
+                                        ">
+                                        <div class="btn-group dropdown" dropdown container="body">
+                                            <button class="dropdown-toggle btn btn-sm btn-primary" dropdownToggle>
+                                                <i class="fa fa-cog"></i>
+                                                <span class="caret"></span>
+                                                {{ l('Actions') }}
+                                            </button>
+                                            <ul class="dropdown-menu" *dropdownMenu>
+                                                <li>
+                                                    <a href="javascript:;" class="dropdown-item"
+                                                        (click)="viewHubSalesProjectionModal.show(record)">
+                                                        {{ l('View') }}
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:;"
+                                                        *ngIf="permission.isGranted('Pages.HubSalesProjections.Edit')"
+                                                        class="dropdown-item" (click)="
+                                                            createOrEditHubSalesProjectionModal.show(
+                                                                record.hubSalesProjection.id
+                                                            )
+                                                        ">
+                                                        {{ l('Edit') }}
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="javascript:;"
+                                                        *ngIf="permission.isGranted('Pages.HubSalesProjections.Delete')"
+                                                        (click)="deleteHubSalesProjection(record.hubSalesProjection)">
+                                                        {{ l('Delete') }}
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
                                 </tr>
                             </ng-template>
                         </p-table>
@@ -442,17 +328,13 @@
                             {{ l('NoData') }}
                         </div>
                         <div class="primeng-paging-container">
-                            <p-paginator
-                                [rows]="primengTableHelper.defaultRecordsCountPerPage"
-                                #paginator
+                            <p-paginator [rows]="primengTableHelper.defaultRecordsCountPerPage" #paginator
                                 (onPageChange)="getHubSalesProjections($event)"
                                 [totalRecords]="primengTableHelper.totalRecordsCount"
                                 [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
-                                [showCurrentPageReport]="true"
-                                [currentPageReportTemplate]="
+                                [showCurrentPageReport]="true" [currentPageReportTemplate]="
                                     'TotalRecordsCount' | localize : primengTableHelper.totalRecordsCount
-                                "
-                            ></p-paginator>
+                                "></p-paginator>
                         </div>
                     </div>
                     <!--<Primeng-Datatable-End>-->
@@ -460,9 +342,7 @@
             </div>
         </div>
     </div>
-    <createOrEditHubSalesProjectionModal
-        #createOrEditHubSalesProjectionModal
-        (modalSave)="getHubSalesProjections()"
-    ></createOrEditHubSalesProjectionModal>
+    <createOrEditHubSalesProjectionModal #createOrEditHubSalesProjectionModal (modalSave)="getHubSalesProjections()">
+    </createOrEditHubSalesProjectionModal>
     <viewHubSalesProjectionModal #viewHubSalesProjectionModal></viewHubSalesProjectionModal>
 </div>

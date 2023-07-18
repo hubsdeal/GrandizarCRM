@@ -144,6 +144,17 @@
                         </label>
                         <validation-messages [formCtrl]="ProductCategory_ProductOrService"></validation-messages>
                     </div>
+
+                    <div class="my-5">
+                        <label class="form-check form-check-custom form-check-solid">
+                            <input id="published"
+                                name="published" [(ngModel)]="productCategory.published" type="checkbox"
+                                class="form-check-input" />
+                            <span class="form-check-label">
+                                {{ l('Published') }}
+                            </span>
+                        </label>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">

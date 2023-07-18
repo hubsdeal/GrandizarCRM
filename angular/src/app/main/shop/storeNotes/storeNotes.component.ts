@@ -1,7 +1,7 @@
 ﻿import { AppConsts } from '@shared/AppConsts';
 import { Component, Injector, ViewEncapsulation, ViewChild, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { StoreNotesServiceProxy, StoreNoteDto } from '@shared/service-proxies/service-proxies';
+import { StoreNotesServiceProxy, StoreNoteDto, PublicPagesCommonServiceProxy } from '@shared/service-proxies/service-proxies';
 import { NotifyService } from 'abp-ng2-module';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { TokenAuthServiceProxy } from '@shared/service-proxies/service-proxies';
@@ -49,6 +49,7 @@ export class StoreNotesComponent extends AppComponentBase implements OnInit {
         private _tokenAuth: TokenAuthServiceProxy,
         private _activatedRoute: ActivatedRoute,
         private _fileDownloadService: FileDownloadService,
+        private _publicPagesCommonServicePrxoy:PublicPagesCommonServiceProxy,
         private _dateTimeService: DateTimeService
     ) {
         super(injector);

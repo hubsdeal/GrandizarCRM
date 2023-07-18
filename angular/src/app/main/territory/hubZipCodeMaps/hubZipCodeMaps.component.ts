@@ -1,5 +1,5 @@
 ﻿import { AppConsts } from '@shared/AppConsts';
-import { Component, Injector, ViewEncapsulation, ViewChild } from '@angular/core';
+import { Component, Injector, ViewEncapsulation, ViewChild, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HubZipCodeMapsServiceProxy, HubZipCodeMapDto } from '@shared/service-proxies/service-proxies';
 import { NotifyService } from 'abp-ng2-module';
@@ -19,6 +19,7 @@ import { DateTime } from 'luxon';
 import { DateTimeService } from '@app/shared/common/timing/date-time.service';
 
 @Component({
+    selector: 'app-hubZipCodeMaps',
     templateUrl: './hubZipCodeMaps.component.html',
     encapsulation: ViewEncapsulation.None,
     animations: [appModuleAnimation()],
@@ -37,6 +38,8 @@ export class HubZipCodeMapsComponent extends AppComponentBase {
     zipCodeFilter = '';
     hubNameFilter = '';
     zipCodeNameFilter = '';
+
+    @Input() hubId:number;
 
     constructor(
         injector: Injector,
@@ -61,7 +64,8 @@ export class HubZipCodeMapsComponent extends AppComponentBase {
         this.primengTableHelper.showLoadingIndicator();
 
         this._hubZipCodeMapsServiceProxy
-            .getAll(
+            .getAllByHubId(
+                this.hubId,
                 this.filterText,
                 this.cityNameFilter,
                 this.zipCodeFilter,
@@ -83,6 +87,7 @@ export class HubZipCodeMapsComponent extends AppComponentBase {
     }
 
     createHubZipCodeMap(): void {
+        this.createOrEditHubZipCodeMapModal.hubId = this.hubId;
         this.createOrEditHubZipCodeMapModal.show();
     }
 

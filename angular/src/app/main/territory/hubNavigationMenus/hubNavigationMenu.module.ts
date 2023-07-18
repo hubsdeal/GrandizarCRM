@@ -18,5 +18,6 @@ import { HubNavigationMenuMasterNavigationMenuLookupTableModalComponent } from '
         HubNavigationMenuMasterNavigationMenuLookupTableModalComponent,
     ],
     imports: [AppSharedModule, HubNavigationMenuRoutingModule, AdminSharedModule],
+    exports: [HubNavigationMenusComponent, CreateOrEditHubNavigationMenuModalComponent, ViewHubNavigationMenuModalComponent],
 })
 export class HubNavigationMenuModule {}

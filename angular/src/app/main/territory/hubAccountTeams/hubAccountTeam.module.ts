@@ -20,5 +20,6 @@ import { HubAccountTeamUserLookupTableModalComponent } from './hubAccountTeam-us
         HubAccountTeamUserLookupTableModalComponent,
     ],
     imports: [AppSharedModule, HubAccountTeamRoutingModule, AdminSharedModule],
+    exports: [HubAccountTeamsComponent, CreateOrEditHubAccountTeamModalComponent, ViewHubAccountTeamModalComponent],
 })
 export class HubAccountTeamModule {}
