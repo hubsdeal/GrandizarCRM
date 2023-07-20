@@ -18,5 +18,6 @@ import { HubProductProductLookupTableModalComponent } from './hubProduct-product
         HubProductProductLookupTableModalComponent,
     ],
     imports: [AppSharedModule, HubProductRoutingModule, AdminSharedModule],
+    exports: [HubProductsComponent, CreateOrEditHubProductModalComponent, ViewHubProductModalComponent],
 })
 export class HubProductModule {}

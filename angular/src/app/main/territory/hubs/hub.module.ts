@@ -14,6 +14,8 @@ import { HubZipCodeMapModule } from '../hubZipCodeMaps/hubZipCodeMap.module';
 import { HubNavigationMenuModule } from '../hubNavigationMenus/hubNavigationMenu.module';
 import { HubSalesProjectionModule } from '../hubSalesProjections/hubSalesProjection.module';
 import { HubAccountTeamModule } from '../hubAccountTeams/hubAccountTeam.module';
+import { HubProductCategoryModule } from '../hubProductCategories/hubProductCategory.module';
+import { HubProductModule } from '../hubProducts/hubProduct.module';
 
 @NgModule({
     declarations: [
@@ -22,12 +24,14 @@ import { HubAccountTeamModule } from '../hubAccountTeams/hubAccountTeam.module';
         ViewHubModalComponent,
 
         HubMediaLibraryLookupTableModalComponent,
-          HubDashboardComponent,
-          MyHubListComponent,
+        HubDashboardComponent,
+        MyHubListComponent,
     ],
     imports: [AppSharedModule, HubRoutingModule, AdminSharedModule, StoreModule, HubWidgetMapModule, HubZipCodeMapModule, HubNavigationMenuModule,
         HubSalesProjectionModule,
-        HubAccountTeamModule
+        HubAccountTeamModule,
+        HubProductCategoryModule,
+        HubProductModule
     ],
 })
-export class HubModule {}
+export class HubModule { }

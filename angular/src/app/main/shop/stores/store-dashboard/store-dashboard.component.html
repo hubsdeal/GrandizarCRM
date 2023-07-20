@@ -633,6 +633,139 @@
 
                                                 <!--begin::Separator-->
                                                 <div class="separator mb-6"></div>
+
+                                                <div class="card mb-5">
+                                                    <div class="card-body pt-10">
+                                                        <div
+                                                            class="notice d-flex bg-light-primary rounded border-primary border border-dashed mb-9 p-6">
+                                                            <span class="svg-icon svg-icon-2tx svg-icon-primary me-4">
+                                                                <svg width="24" height="24" viewBox="0 0 24 24"
+                                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path opacity="0.3"
+                                                                        d="M22 19V17C22 16.4 21.6 16 21 16H8V3C8 2.4 7.6 2 7 2H5C4.4 2 4 2.4 4 3V19C4 19.6 4.4 20 5 20H21C21.6 20 22 19.6 22 19Z"
+                                                                        fill="currentColor"></path>
+                                                                    <path
+                                                                        d="M20 5V21C20 21.6 19.6 22 19 22H17C16.4 22 16 21.6 16 21V8H8V4H19C19.6 4 20 4.4 20 5ZM3 8H4V4H3C2.4 4 2 4.4 2 5V7C2 7.6 2.4 8 3 8Z"
+                                                                        fill="currentColor"></path>
+                                                                </svg>
+                                                            </span>
+                                                            <div class="d-flex flex-stack flex-grow-1">
+                                                                <div class="fw-semibold">
+                                                                    <div class="fs-6 text-gray-700">By connecting your
+                                                                        social
+                                                                        accounts, you can easily share your products and
+                                                                        services with your followers.
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--end::Notice-->
+                                                        <!--begin::Items-->
+                                                        <div class="py-2">
+                                                            <!--begin::Item-->
+                                                            <div class="d-flex flex-stack">
+                                                                <div class="d-flex w-100 align-items-center">
+                                                                    <i class="fab fa-facebook-square fs-3x me-3"></i>
+                                                                    <div class="w-100">
+                                                                        <div class="d-flex flex-column">
+                                                                            <input type="text" name="facebook"
+                                                                                class="form-control form-control-md form-control-solid"
+                                                                                placeholder="Facebook"
+                                                                                [(ngModel)]="store.facebook">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!--end::Item-->
+                                                            <div class="separator separator-dashed my-5"></div>
+                                                            <!--begin::Item-->
+                                                            <div class="d-flex flex-stack">
+                                                                <div class="d-flex w-100 align-items-center">
+                                                                    <i class="fab fa-linkedin-in fs-3x me-3"></i>
+                                                                    <div class="w-100">
+                                                                        <div class="d-flex flex-column">
+                                                                            <input type="text" name="linkedIn"
+                                                                                class="form-control form-control-md form-control-solid"
+                                                                                placeholder="LinkedIn"
+                                                                                [(ngModel)]="store.linkedIn">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!--end::Item-->
+                                                            <div class="separator separator-dashed my-5"></div>
+                                                            <!--begin::Item-->
+                                                            <div class="d-flex flex-stack">
+                                                                <div class="d-flex w-100 align-items-center">
+                                                                    <i class="fab fa-instagram-square fs-3x me-3"></i>
+                                                                    <div class="w-100">
+                                                                        <div class="d-flex flex-column">
+                                                                            <input type="text" name="instagram"
+                                                                                class="form-control form-control-md form-control-solid"
+                                                                                placeholder="Instagram"
+                                                                                [(ngModel)]="store.instagram">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!--end::Item-->
+                                                            <div class="separator separator-dashed my-5"></div>
+                                                            <!--begin::Item-->
+                                                            <div class="d-flex flex-stack">
+                                                                <div class="d-flex w-100 align-items-center">
+                                                                    <i class="fab fa-youtube-square fs-3x me-3"></i>
+                                                                    <div class="w-100">
+                                                                        <div class="d-flex flex-column">
+                                                                            <input type="text" name="Youtube"
+                                                                                class="form-control form-control-md form-control-solid"
+                                                                                placeholder="Youtube"
+                                                                                [(ngModel)]="store.youtube">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!--end::Item-->
+                                                        </div>
+                                                        <!--end::Items-->
+                                                    </div>
+                                                </div>
+
+                                                <div class="separator mb-6"></div>
+                                                <div class="card mb-5">
+                                                    <div class="card-body">
+                                                        <!--begin::Item-->
+                                                        <div class="d-flex flex-stack mb-6">
+                                                            <div class="d-flex w-100 align-items-center">
+                                                                <div class="w-100">
+                                                                    <div class="d-flex flex-column">
+                                                                        <input type="text" name="metaTag"
+                                                                            class="form-control form-control-md form-control-solid"
+                                                                            placeholder="Meta Tag"
+                                                                            [(ngModel)]="store.metaTag">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--end::Item-->
+                                                        <!--begin::Item-->
+                                                        <div class="d-flex flex-stack">
+                                                            <div class="d-flex w-100 align-items-center">
+                                                                <div class="w-100">
+                                                                    <div class="d-flex flex-column">
+                                                                        <textarea name="metaDescription"
+                                                                            id="metaDescription" cols="30" rows="10"
+                                                                            class="form-control form-control-md form-control-solid"
+                                                                            [(ngModel)]="store.metaDescription"
+                                                                            placeholder="Meta Description"></textarea>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--end::Item-->
+                                                    </div>
+                                                </div>
+                                                <div class="separator mb-6"></div>
+
                                                 <!--end::Separator-->
                                                 <!--begin::Action buttons-->
                                                 <div class="d-flex justify-content-end">
@@ -1407,197 +1540,6 @@
                                 </div>
                             </div>
 
-                            <div class="card mb-6">
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header" id="kt_accordion_1_header_1">
-                                        <button class="accordion-button fs-4 fw-bold collapsed" type="button"
-                                            data-bs-toggle="collapse" data-bs-target="#kt_accordion_1_body_8"
-                                            aria-expanded="true" aria-controls="kt_accordion_1_body_1">
-                                            <i class="fas fa-hand-holding-heart fa-1x me-2"></i> Store Social and
-                                            Professional Network Links
-                                        </button>
-                                    </h2>
-                                    <div id="kt_accordion_1_body_8" class="accordion-collapse collapse"
-                                        aria-labelledby="kt_accordion_1_header_1" data-bs-parent="#kt_accordion_1">
-                                        <div class="card mb-5 mb-xl-8">
-                                            <div class="card-body pt-10">
-                                                <div
-                                                    class="notice d-flex bg-light-primary rounded border-primary border border-dashed mb-9 p-6">
-                                                    <span class="svg-icon svg-icon-2tx svg-icon-primary me-4">
-                                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                            xmlns="http://www.w3.org/2000/svg">
-                                                            <path opacity="0.3"
-                                                                d="M22 19V17C22 16.4 21.6 16 21 16H8V3C8 2.4 7.6 2 7 2H5C4.4 2 4 2.4 4 3V19C4 19.6 4.4 20 5 20H21C21.6 20 22 19.6 22 19Z"
-                                                                fill="currentColor"></path>
-                                                            <path
-                                                                d="M20 5V21C20 21.6 19.6 22 19 22H17C16.4 22 16 21.6 16 21V8H8V4H19C19.6 4 20 4.4 20 5ZM3 8H4V4H3C2.4 4 2 4.4 2 5V7C2 7.6 2.4 8 3 8Z"
-                                                                fill="currentColor"></path>
-                                                        </svg>
-                                                    </span>
-                                                    <div class="d-flex flex-stack flex-grow-1">
-                                                        <div class="fw-semibold">
-                                                            <div class="fs-6 text-gray-700">By connecting your social
-                                                                accounts, you can easily share your products and
-                                                                services with your followers.
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!--end::Notice-->
-                                                <!--begin::Items-->
-                                                <div class="py-2">
-                                                    <!--begin::Item-->
-                                                    <div class="d-flex flex-stack">
-                                                        <div class="d-flex w-100 align-items-center">
-                                                            <i class="fab fa-facebook-square fs-3x me-3"></i>
-                                                            <div class="w-100">
-                                                                <div class="d-flex flex-column">
-                                                                    <input type="text" name="company"
-                                                                        class="form-control form-control-md form-control-solid"
-                                                                        placeholder="Facebook"
-                                                                        value="https://www.facebook.com">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <!--end::Item-->
-                                                    <div class="separator separator-dashed my-5"></div>
-                                                    <!--begin::Item-->
-                                                    <div class="d-flex flex-stack">
-                                                        <div class="d-flex w-100 align-items-center">
-                                                            <i class="fab fa-linkedin-in fs-3x me-3"></i>
-                                                            <div class="w-100">
-                                                                <div class="d-flex flex-column">
-                                                                    <input type="text" name="company"
-                                                                        class="form-control form-control-md form-control-solid"
-                                                                        placeholder="LinkedIn"
-                                                                        value="https://www.linkedIn.com">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <!--end::Item-->
-                                                    <div class="separator separator-dashed my-5"></div>
-                                                    <!--begin::Item-->
-                                                    <div class="d-flex flex-stack">
-                                                        <div class="d-flex w-100 align-items-center">
-                                                            <i class="fab fa-twitter-square fs-3x me-3"></i>
-                                                            <div class="w-100">
-                                                                <div class="d-flex flex-column">
-                                                                    <input type="text" name="company"
-                                                                        class="form-control form-control-md form-control-solid"
-                                                                        placeholder="twitter"
-                                                                        value="https://www.twitter.com">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <!--end::Item-->
-                                                    <div class="separator separator-dashed my-5"></div>
-                                                    <!--begin::Item-->
-                                                    <div class="d-flex flex-stack">
-                                                        <div class="d-flex w-100 align-items-center">
-                                                            <i class="fab fa-pinterest-square fs-3x me-3"></i>
-                                                            <div class="w-100">
-                                                                <div class="d-flex flex-column">
-                                                                    <input type="text" name="company"
-                                                                        class="form-control form-control-md form-control-solid"
-                                                                        placeholder="Pinterest"
-                                                                        value="https://www.Pinterest.com">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <!--end::Item-->
-                                                    <div class="separator separator-dashed my-5"></div>
-                                                    <!--begin::Item-->
-                                                    <div class="d-flex flex-stack">
-                                                        <div class="d-flex w-100 align-items-center">
-                                                            <i class="fab fa-instagram-square fs-3x me-3"></i>
-                                                            <div class="w-100">
-                                                                <div class="d-flex flex-column">
-                                                                    <input type="text" name="company"
-                                                                        class="form-control form-control-md form-control-solid"
-                                                                        placeholder="Instagram"
-                                                                        value="https://www.Instagram.com">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <!--end::Item-->
-                                                    <div class="separator separator-dashed my-5"></div>
-                                                    <!--begin::Item-->
-                                                    <div class="d-flex flex-stack">
-                                                        <div class="d-flex w-100 align-items-center">
-                                                            <i class="fab fa-youtube-square fs-3x me-3"></i>
-                                                            <div class="w-100">
-                                                                <div class="d-flex flex-column">
-                                                                    <input type="text" name="company"
-                                                                        class="form-control form-control-md form-control-solid"
-                                                                        placeholder="Youtube"
-                                                                        value="https://www.Youtube.com">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <!--end::Item-->
-                                                </div>
-                                                <!--end::Items-->
-                                            </div>
-                                            <!--end::Card body-->
-                                            <!--begin::Card footer-->
-                                            <div class="card-footer border-0 d-flex justify-content-center pb-0 pt-0">
-                                                <button class="btn btn-sm btn-light-primary">Save Changes</button>
-                                            </div>
-                                            <!--end::Card footer-->
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="card mb-6">
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header" id="kt_accordion_1_header_1">
-                                        <button class="accordion-button fs-4 fw-bold collapsed" type="button"
-                                            data-bs-toggle="collapse" data-bs-target="#kt_accordion_1_body_9"
-                                            aria-expanded="true" aria-controls="kt_accordion_1_body_1">
-                                            <i class="fas fa-search fa-1x me-2"></i>
-                                            Store SEO
-                                        </button>
-                                    </h2>
-                                    <div id="kt_accordion_1_body_9" class="accordion-collapse collapse"
-                                        aria-labelledby="kt_accordion_1_header_1" data-bs-parent="#kt_accordion_1">
-                                        <div class="card-body">
-                                            <!--begin::Item-->
-                                            <div class="d-flex flex-stack mb-6">
-                                                <div class="d-flex w-100 align-items-center">
-                                                    <div class="w-100">
-                                                        <div class="d-flex flex-column">
-                                                            <input type="text" name="company"
-                                                                class="form-control form-control-md form-control-solid"
-                                                                placeholder="Meta Tag" value="">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--end::Item-->
-                                            <!--begin::Item-->
-                                            <div class="d-flex flex-stack">
-                                                <div class="d-flex w-100 align-items-center">
-                                                    <div class="w-100">
-                                                        <div class="d-flex flex-column">
-                                                            <textarea name="" id="" cols="30" rows="10"
-                                                                class="form-control form-control-md form-control-solid"
-                                                                placeholder="Meta Description"></textarea>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--end::Item-->
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
 
                             <div class="card mb-6">
                                 <div class="accordion-item">

@@ -58,6 +58,7 @@ export class AppNavigationService {
                 [
                     new AppMenuItem('Master Store List', 'Pages.Stores', 'flaticon2-list-1', '/app/main/shop/stores'),
                     new AppMenuItem('My Store List', 'Pages.Stores', 'flaticon2-list-2', '/app/main/shop/myStores'),
+                    new AppMenuItem('Store Data Settings', 'Pages.Stores', 'fas fa-database', '/app/main/shop/storeMasterTagSettings'),
                 ]
             ),
             new AppMenuItem(
