@@ -19,6 +19,7 @@ import { DateTime } from 'luxon';
 import { DateTimeService } from '@app/shared/common/timing/date-time.service';
 
 @Component({
+    selector: 'app-hubBusinesses',
     templateUrl: './hubBusinesses.component.html',
     encapsulation: ViewEncapsulation.None,
     animations: [appModuleAnimation()],

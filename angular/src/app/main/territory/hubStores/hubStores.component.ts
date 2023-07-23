@@ -19,6 +19,7 @@ import { DateTime } from 'luxon';
 import { DateTimeService } from '@app/shared/common/timing/date-time.service';
 
 @Component({
+    selector: 'app-hubStores',
     templateUrl: './hubStores.component.html',
     encapsulation: ViewEncapsulation.None,
     animations: [appModuleAnimation()],
@@ -40,6 +41,9 @@ export class HubStoresComponent extends AppComponentBase {
     minDisplaySequenceFilterEmpty: number;
     hubNameFilter = '';
     storeNameFilter = '';
+
+    selectedAll: boolean = false;
+    selectedInput: number[] = [];
 
     constructor(
         injector: Injector,
@@ -86,6 +90,25 @@ export class HubStoresComponent extends AppComponentBase {
             });
     }
 
+    onChangesSelectAll() {
+        for (var i = 0; i < this.primengTableHelper.records.length; i++) {
+            this.primengTableHelper.records[i].selected = this.selectedAll;
+        }
+    }
+
+    checkIfAllSelected() {
+        this.selectedAll = this.primengTableHelper.records.every(function (item: any) {
+            return item.selected == true;
+        })
+    }
+
+    refreshCheckboxReloadList() {
+        this.selectedAll = false;
+        for (var i = 0; i < this.primengTableHelper.records.length; i++) {
+            this.primengTableHelper.records[i].selected = false;
+        }
+        this.reloadPage();
+    }
     reloadPage(): void {
         this.paginator.changePage(this.paginator.getPage());
     }

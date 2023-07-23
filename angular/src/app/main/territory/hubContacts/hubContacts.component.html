@@ -1,23 +1,33 @@
 ﻿<div [@routerTransition]>
-    <sub-header [title]="'HubContacts' | localize" [description]="'HubContactsHeaderInfo' | localize">
+    <!-- <sub-header [title]="'HubContacts' | localize" [description]="'HubContactsHeaderInfo' | localize">
         <div role="actions">
             <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1">
                 <i class="fa fa-file-excel"></i>
                 {{ l('ExportToExcel') }}
             </button>
 
-            <button
-                *ngIf="isGranted('Pages.HubContacts.Create')"
-                (click)="createHubContact()"
-                class="btn btn-primary blue"
-            >
+            <button *ngIf="isGranted('Pages.HubContacts.Create')" (click)="createHubContact()"
+                class="btn btn-primary blue">
                 <i class="fa fa-plus"></i>
                 {{ l('CreateNewHubContact') }}
             </button>
         </div>
-    </sub-header>
-
-    <div [class]="containerClass">
+    </sub-header> -->
+    <div class="w-100 d-flex mb-6 mt-6 justify-content-between align-items-center">
+        <div class="d-flex">
+            <h1 class="fs-3 fw-bold  my-0 page-heading text-dark">
+                Hub Contacts
+            </h1>
+            <span style="cursor: pointer;" class="badge badge-primary badge ms-2">
+                Total: {{primengTableHelper.totalRecordsCount}}
+            </span>
+        </div>
+        <button *ngIf="isGranted('Pages.HubContacts.Create')" (click)="createHubContact()" class="btn btn-primary blue">
+            <i class="fa fa-plus"></i>
+            {{ l('Contacts') }}
+        </button>
+    </div>
+    <div class="w-100">
         <div class="card card-custom gutter-b">
             <div class="card-body">
                 <form class="form" autocomplete="off">
@@ -26,15 +36,9 @@
                             <div class="col-xl-12">
                                 <div class="my-3">
                                     <div class="input-group mb-3">
-                                        <input
-                                            [(ngModel)]="filterText"
-                                            (ngModelChange)="getHubContacts()"
-                                            name="filterText"
-                                            autoFocus
-                                            type="text"
-                                            class="form-control"
-                                            [placeholder]="l('SearchWithThreeDot')"
-                                        />
+                                        <input [(ngModel)]="filterText" (ngModelChange)="getHubContacts()"
+                                            name="filterText" autoFocus type="text" class="form-control"
+                                            [placeholder]="l('SearchWithThreeDot')" />
                                         <button class="btn btn-primary" type="submit" (click)="getHubContacts()">
                                             <i class="flaticon-search-1"></i>
                                         </button>
@@ -51,23 +55,12 @@
                                         {{ l('MinMax') }} {{ l('DisplayScore') }}
                                     </label>
                                     <div class="input-group">
-                                        <input
-                                            type="number"
-                                            class="form-control"
-                                            id="MinDisplayScoreFilter"
-                                            [(ngModel)]="minDisplayScoreFilter"
-                                            placeholder="{{ l('MinValue') }}"
-                                            name="minDisplayScoreFilter"
-                                            (ngModelChange)="getHubContacts()"
-                                        />
-                                        <input
-                                            type="number"
-                                            class="form-control"
-                                            [(ngModel)]="maxDisplayScoreFilter"
-                                            placeholder="{{ l('MaxValue') }}"
-                                            name="maxDisplayScoreFilter"
-                                            (ngModelChange)="getHubContacts()"
-                                        />
+                                        <input type="number" class="form-control" id="MinDisplayScoreFilter"
+                                            [(ngModel)]="minDisplayScoreFilter" placeholder="{{ l('MinValue') }}"
+                                            name="minDisplayScoreFilter" (ngModelChange)="getHubContacts()" />
+                                        <input type="number" class="form-control" [(ngModel)]="maxDisplayScoreFilter"
+                                            placeholder="{{ l('MaxValue') }}" name="maxDisplayScoreFilter"
+                                            (ngModelChange)="getHubContacts()" />
                                     </div>
                                 </div>
                             </div>
@@ -77,13 +70,8 @@
                                     <label class="form-label" for="HubNameFilter">
                                         ({{ l('Hub') }}) {{ l('Name') }}
                                     </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="HubNameFilter"
-                                        name="hubNameFilter"
-                                        [(ngModel)]="hubNameFilter"
-                                    />
+                                    <input type="text" class="form-control" id="HubNameFilter" name="hubNameFilter"
+                                        [(ngModel)]="hubNameFilter" />
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -91,40 +79,26 @@
                                     <label class="form-label" for="ContactFullNameFilter">
                                         ({{ l('Contact') }}) {{ l('FullName') }}
                                     </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="ContactFullNameFilter"
-                                        name="contactFullNameFilter"
-                                        [(ngModel)]="contactFullNameFilter"
-                                    />
+                                    <input type="text" class="form-control" id="ContactFullNameFilter"
+                                        name="contactFullNameFilter" [(ngModel)]="contactFullNameFilter" />
                                 </div>
                             </div>
                             <div class="col-md-12 mt-5">
-                                <button
-                                    (click)="resetFilters()"
-                                    class="btn btn-secondary btn-sm"
-                                    id="btn-reset-filters"
-                                >
+                                <button (click)="resetFilters()" class="btn btn-secondary btn-sm"
+                                    id="btn-reset-filters">
                                     Reset
                                 </button>
                             </div>
                         </div>
                         <div class="row my-4">
                             <div class="col-sm-12">
-                                <span
-                                    class="clickable-item text-muted"
-                                    *ngIf="!advancedFiltersAreShown"
-                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown"
-                                >
+                                <span class="clickable-item text-muted" *ngIf="!advancedFiltersAreShown"
+                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown">
                                     <i class="fa fa-angle-down"></i>
                                     {{ l('ShowAdvancedFilters') }}
                                 </span>
-                                <span
-                                    class="clickable-item text-muted"
-                                    *ngIf="advancedFiltersAreShown"
-                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown"
-                                >
+                                <span class="clickable-item text-muted" *ngIf="advancedFiltersAreShown"
+                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown">
                                     <i class="fa fa-angle-up"></i>
                                     {{ l('HideAdvancedFilters') }}
                                 </span>
@@ -136,86 +110,155 @@
                 <div class="row align-items-center">
                     <!--<Primeng-Datatable-Start>-->
                     <div class="primeng-datatable-container col-12" [busyIf]="primengTableHelper.isLoading">
-                        <p-table
-                            #dataTable
-                            (onLazyLoad)="getHubContacts($event)"
-                            [value]="primengTableHelper.records"
-                            rows="{{ primengTableHelper.defaultRecordsCountPerPage }}"
-                            [paginator]="false"
-                            [lazy]="true"
-                            [scrollable]="true"
-                            ScrollWidth="100%"
-                            [responsive]="primengTableHelper.isResponsive"
-                            [resizableColumns]="primengTableHelper.resizableColumns"
-                        >
+                        <p-table #dataTable (onLazyLoad)="getHubContacts($event)" [value]="primengTableHelper.records"
+                            rows="{{ primengTableHelper.defaultRecordsCountPerPage }}" [paginator]="false" [lazy]="true"
+                            [scrollable]="true" ScrollWidth="100%" [responsive]="primengTableHelper.isResponsive"
+                            [resizableColumns]="primengTableHelper.resizableColumns">
                             <ng-template pTemplate="header">
                                 <tr>
-                                    <th
-                                        style="width: 130px"
-                                        [hidden]="!isGrantedAny('Pages.HubContacts.Edit', 'Pages.HubContacts.Delete')"
-                                    >
+                                    <th style="width:30px; text-align: center;">
+                                        <label
+                                            class="form-check form-check-custom form-check-inline form-check-solid is-invalid">
+                                            <input class="form-check-input" type="checkbox" value="1">
+                                            <span class="fw-semibold ps-2 fs-6">
+                                            </span>
+                                        </label>
+                                    </th>
+                                    <th style="width: 200px">
+                                        {{l('Name')}}
+                                    </th>
+                                    <th style="width: 220px">
+                                        {{l('Address')}}
+                                    </th>
+                                    <th style="width: 180px">
+                                        {{l('Mobile')}}
+                                    </th>
+                                    <th style="width: 180px">
+                                        {{l('Email')}}
+                                    </th>
+                                    <th style="width: 75px; text-align: center;">
+                                        {{l('Connect')}}
+                                    </th>
+
+                                    <th style="width: 150px; text-align: center;">
+                                        {{l('Social Profile')}}
+                                    </th>
+                                    <th style="width: 65px">
+                                        {{l('Wallet')}}
+                                    </th>
+
+                                    <th style="width: 150px; text-align: center;">
+                                        {{l('Orders')}}
+                                    </th>
+                                    <th style="width: 150px; text-align: center;">
+                                        {{l('Membership')}}
+                                    </th>
+
+                                    <th style="width: 130px"
+                                        [hidden]="!isGrantedAny('Pages.HubContacts.Edit', 'Pages.HubContacts.Delete')">
                                         {{ l('Actions') }}
-                                    </th>
-                                    <th style="width: 150px" pSortableColumn="hubFk.name">
-                                        {{ l('Name') }}
-                                        <p-sortIcon field="hubName"></p-sortIcon>
-                                    </th>
-                                    <th style="width: 150px" pSortableColumn="contactFk.fullName">
-                                        {{ l('FullName') }}
-                                        <p-sortIcon field="contactFullName"></p-sortIcon>
-                                    </th>
-                                    <th style="width: 150px" pSortableColumn="displayScore">
-                                        {{ l('DisplayScore') }}
-                                        <p-sortIcon field="hubContact.displayScore"></p-sortIcon>
                                     </th>
                                 </tr>
                             </ng-template>
                             <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
                                 <tr>
-                                    <td
-                                        style="width: 130px"
-                                        [hidden]="!isGrantedAny('Pages.HubContacts.Edit', 'Pages.HubContacts.Delete')"
-                                    >
-                                        <div class="btn-group dropdown" dropdown container="body">
-                                            <button class="dropdown-toggle btn btn-sm btn-primary" dropdownToggle>
-                                                <i class="fa fa-cog"></i>
-                                                <span class="caret"></span>
-                                                {{ l('Actions') }}
-                                            </button>
-                                            <ul class="dropdown-menu" *dropdownMenu>
-                                                <li>
-                                                    <a
-                                                        href="javascript:;"
-                                                        class="dropdown-item"
-                                                        (click)="viewHubContactModal.show(record)"
-                                                    >
-                                                        {{ l('View') }}
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a
-                                                        href="javascript:;"
-                                                        *ngIf="permission.isGranted('Pages.HubContacts.Edit')"
-                                                        class="dropdown-item"
-                                                        (click)="createOrEditHubContactModal.show(record.hubContact.id)"
-                                                    >
-                                                        {{ l('Edit') }}
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a
-                                                        class="dropdown-item"
-                                                        href="javascript:;"
-                                                        *ngIf="permission.isGranted('Pages.HubContacts.Delete')"
-                                                        (click)="deleteHubContact(record.hubContact)"
-                                                    >
-                                                        {{ l('Delete') }}
-                                                    </a>
-                                                </li>
-                                            </ul>
+                                    <td style="width: 30px;">
+                                        <label
+                                            class="form-check form-check-custom form-check-inline form-check-solid is-invalid">
+                                            <input class="form-check-input" type="checkbox" value="1">
+                                            <span class="fw-semibold ps-2 fs-6">
+                                            </span>
+                                        </label>
+                                    </td>
+                                    <td style="width:200px">
+                                        <span class="p-column-title"> {{l('Name')}}</span>
+                                        <div style="width: 200px;" class="text-truncate" title="{{ record.contactFullName }}">
+                                            <a class="table_title text-primary" href="javascript:;" [routerLink]="['/app/main/crm/contacts/dashboard',record.id]">
+                                                {{ record.contactFullName }}
+                                                <i class="ml-2 fas fa-check-circle text-success"></i>
+                                            </a>
+                                        </div>
+                                        <div style="width: 200px;" class="text-truncate" title="Job TItle">
+                                            <small>
+                                                Software Engineer
+                                            </small>
+                                        </div>
+                                        <div style="width: 200px;" class="text-truncate" title="Company Name">
+                                            <small>
+                                                Jobaar Technology LTD
+                                            </small>
                                         </div>
                                     </td>
-                                    <td style="width: 150px">
+                                    <td style="width:220px" title="Address">
+                                        <span class="p-column-title"> {{l('FullAddress')}}</span>
+                                        <div style="width: 220px;" class="text-truncate">
+                                            <span>
+                                                Dhaka, Bangladesh
+                                            </span>
+                                        </div>
+                                    </td>
+                                    <td style="width:180px">
+                                        <span class="p-column-title"> {{l('Mobile')}}</span>
+                                        <div title="Mobile: 01777221292">
+                                            <span 
+                                                style="cursor: pointer;">
+                                               <i class="fas fa-mobile-alt text-primary mr-2"></i> 01777221292
+                                            </span>
+                                            <!-- <span *ngIf="!record.contact.mobile" style="cursor: pointer;">
+                                                -
+                                            </span> -->
+                                        </div>
+                                        <div style="cursor: pointer;" title="Office Phone: 01777221292">
+                                            <i class="fas fa-phone-alt me-1 text-primary"></i> 
+                                            <span>01777221292</span>
+                                        </div>
+                                    </td>
+
+                                    <td style="width:180px">
+                                        <span class="p-column-title"> {{l('Email')}}</span>
+                                        <div style="width: 180px;" class="text-truncate" title="Personal Email: rashed@gamil.com">
+                                            <span style="cursor: pointer;">
+                                               <i class="fas fa-envelope text-primary"></i> rashed@gamil.com
+                                            </span>
+                                        </div>
+
+                                        <div  style="width: 180px;" class="text-truncate" title="Business Email: rashed@gamil.com">
+                                            <span style="cursor: pointer;">
+                                               <i class="fas fa-envelope-open text-primary"></i> rashed@gamil.com
+                                            </span>
+                                        </div>
+                                    </td>
+                                    <td style="width:75px; text-align: center;">
+                                        <span class="p-column-title">{{ l('Connect') }}</span>
+                                        <a href="javascript:;">
+                                            <i class="fas fa-comments"></i></a>
+                                    </td>
+                                    <td style="width:150px; text-align: center;">
+                                        <span class="p-column-title"> {{l('Social')}}</span>
+                                        <span>
+                                            <a class="text-primary me-2 fa-1x" href="javascript:;"
+                                                target="_blank"><i class="fab fa-facebook-f"></i></a>
+                                        </span>
+                                        <span>
+                                            <a class="text-primary fa-1x" href="javascript:;"
+                                                target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                                        </span>
+                                    </td>
+                                    <td style="width:65px">
+                                        <span class="p-column-title"> {{l('Wallet')}}</span>
+                                        $10
+                                    </td>
+                                    <td style="width:150px; text-align: center;">
+                                        <span class="p-column-title"> {{l('Orders')}}</span>
+                                        10
+                                    </td>
+
+                                    <td style="width:150px; text-align: center;">
+                                        <span class="p-column-title"> {{l('MembershipType')}}</span>
+                                        <span class="badge badge-success">Premium Member</span>
+                                    </td>
+                                    
+                                    <!-- <td style="width: 150px">
                                         <span class="p-column-title">{{ l('Name') }}</span>
                                         {{ record.hubName }}
                                     </td>
@@ -226,6 +269,39 @@
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('DisplayScore') }}</span>
                                         {{ record.hubContact.displayScore }}
+                                    </td> -->
+                                    <td style="width: 130px"
+                                        [hidden]="!isGrantedAny('Pages.HubContacts.Edit', 'Pages.HubContacts.Delete')">
+                                        <div class="btn-group dropdown" dropdown container="body">
+                                            <button class="dropdown-toggle btn btn-sm btn-primary" dropdownToggle>
+                                                <i class="fa fa-cog"></i>
+                                                <span class="caret"></span>
+                                                {{ l('Actions') }}
+                                            </button>
+                                            <ul class="dropdown-menu" *dropdownMenu>
+                                                <!-- <li>
+                                                    <a href="javascript:;" class="dropdown-item"
+                                                        (click)="viewHubContactModal.show(record)">
+                                                        {{ l('View') }}
+                                                    </a>
+                                                </li> -->
+                                                <li>
+                                                    <a href="javascript:;"
+                                                        *ngIf="permission.isGranted('Pages.HubContacts.Edit')"
+                                                        class="dropdown-item"
+                                                        (click)="createOrEditHubContactModal.show(record.hubContact.id)">
+                                                        {{ l('Edit') }}
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="javascript:;"
+                                                        *ngIf="permission.isGranted('Pages.HubContacts.Delete')"
+                                                        (click)="deleteHubContact(record.hubContact)">
+                                                        {{ l('Delete') }}
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </td>
                                 </tr>
                             </ng-template>
@@ -234,17 +310,13 @@
                             {{ l('NoData') }}
                         </div>
                         <div class="primeng-paging-container">
-                            <p-paginator
-                                [rows]="primengTableHelper.defaultRecordsCountPerPage"
-                                #paginator
+                            <p-paginator [rows]="primengTableHelper.defaultRecordsCountPerPage" #paginator
                                 (onPageChange)="getHubContacts($event)"
                                 [totalRecords]="primengTableHelper.totalRecordsCount"
                                 [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
-                                [showCurrentPageReport]="true"
-                                [currentPageReportTemplate]="
+                                [showCurrentPageReport]="true" [currentPageReportTemplate]="
                                     'TotalRecordsCount' | localize : primengTableHelper.totalRecordsCount
-                                "
-                            ></p-paginator>
+                                "></p-paginator>
                         </div>
                     </div>
                     <!--<Primeng-Datatable-End>-->
@@ -252,9 +324,7 @@
             </div>
         </div>
     </div>
-    <createOrEditHubContactModal
-        #createOrEditHubContactModal
-        (modalSave)="getHubContacts()"
-    ></createOrEditHubContactModal>
+    <createOrEditHubContactModal #createOrEditHubContactModal (modalSave)="getHubContacts()">
+    </createOrEditHubContactModal>
     <viewHubContactModal #viewHubContactModal></viewHubContactModal>
 </div>

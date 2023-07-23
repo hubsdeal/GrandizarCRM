@@ -16,6 +16,9 @@ import { HubSalesProjectionModule } from '../hubSalesProjections/hubSalesProject
 import { HubAccountTeamModule } from '../hubAccountTeams/hubAccountTeam.module';
 import { HubProductCategoryModule } from '../hubProductCategories/hubProductCategory.module';
 import { HubProductModule } from '../hubProducts/hubProduct.module';
+import { HubStoreModule } from '../hubStores/hubStore.module';
+import { HubContactModule } from '../hubContacts/hubContact.module';
+import { HubBusinessModule } from '../hubBusinesses/hubBusiness.module';
 
 @NgModule({
     declarations: [
@@ -31,7 +34,10 @@ import { HubProductModule } from '../hubProducts/hubProduct.module';
         HubSalesProjectionModule,
         HubAccountTeamModule,
         HubProductCategoryModule,
-        HubProductModule
+        HubProductModule,
+        HubStoreModule,
+        HubContactModule,
+        HubBusinessModule
     ],
 })
 export class HubModule { }

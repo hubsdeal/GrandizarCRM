@@ -18,5 +18,6 @@ import { HubContactContactLookupTableModalComponent } from './hubContact-contact
         HubContactContactLookupTableModalComponent,
     ],
     imports: [AppSharedModule, HubContactRoutingModule, AdminSharedModule],
+    exports: [HubContactsComponent, CreateOrEditHubContactModalComponent, ViewHubContactModalComponent],
 })
 export class HubContactModule {}
