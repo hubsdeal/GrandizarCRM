@@ -18,5 +18,6 @@ import { HubStoreStoreLookupTableModalComponent } from './hubStore-store-lookup-
         HubStoreStoreLookupTableModalComponent,
     ],
     imports: [AppSharedModule, HubStoreRoutingModule, AdminSharedModule],
+    exports: [HubStoresComponent, CreateOrEditHubStoreModalComponent, ViewHubStoreModalComponent],
 })
 export class HubStoreModule {}

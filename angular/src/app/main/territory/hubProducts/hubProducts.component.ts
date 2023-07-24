@@ -43,6 +43,9 @@ export class HubProductsComponent extends AppComponentBase {
     productNameFilter = '';
     @Input() hubId: number;
 
+    selectedAll: boolean = false;
+    selectedInput: number[] = [];
+
     constructor(
         injector: Injector,
         private _hubProductsServiceProxy: HubProductsServiceProxy,
@@ -84,7 +87,25 @@ export class HubProductsComponent extends AppComponentBase {
                 this.primengTableHelper.hideLoadingIndicator();
             });
     }
+    onChangesSelectAll() {
+        for (var i = 0; i < this.primengTableHelper.records.length; i++) {
+            this.primengTableHelper.records[i].selected = this.selectedAll;
+        }
+    }
 
+    checkIfAllSelected() {
+        this.selectedAll = this.primengTableHelper.records.every(function (item: any) {
+            return item.selected == true;
+        })
+    }
+
+    refreshCheckboxReloadList() {
+        this.selectedAll = false;
+        for (var i = 0; i < this.primengTableHelper.records.length; i++) {
+            this.primengTableHelper.records[i].selected = false;
+        }
+        this.reloadPage();
+    }
     reloadPage(): void {
         this.paginator.changePage(this.paginator.getPage());
     }

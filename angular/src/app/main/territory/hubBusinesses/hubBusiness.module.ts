@@ -18,5 +18,6 @@ import { HubBusinessBusinessLookupTableModalComponent } from './hubBusiness-busi
         HubBusinessBusinessLookupTableModalComponent,
     ],
     imports: [AppSharedModule, HubBusinessRoutingModule, AdminSharedModule],
+    exports: [HubBusinessesComponent, CreateOrEditHubBusinessModalComponent, ViewHubBusinessModalComponent],
 })
 export class HubBusinessModule {}
