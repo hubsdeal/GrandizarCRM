@@ -26,7 +26,7 @@
                     ></button>
                 </div>
                 <div class="modal-body">
-                    <div class="my-3">
+                    <div class="my-3" *ngIf="!hubId">
                         <label class="form-label" for="HubName">{{ l('Hub') }}</label>
                         <div class="input-group">
                             <input
@@ -50,7 +50,7 @@
                         class="form-control"
                         name="hubProduct.hubId"
                         [(ngModel)]="hubProduct.hubId"
-                        type="text"
+                        type="text" *ngIf="!hubId"
                         required
                         hidden
                     />
@@ -100,7 +100,7 @@
                     </label>
                     <validation-messages [formCtrl]="HubProduct_Published"></validation-messages>
 
-                    <div class="my5">
+                    <!-- <div class="my5">
                         <label class="form-label" for="HubProduct_DisplayScore">{{ l('DisplayScore') }}</label>
                         <input
                             type="number"
@@ -111,7 +111,7 @@
                             name="DisplayScore"
                         />
                         <validation-messages [formCtrl]="HubProduct_DisplayScore"></validation-messages>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="modal-footer">
                     <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
