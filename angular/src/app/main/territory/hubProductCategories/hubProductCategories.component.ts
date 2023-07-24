@@ -1,5 +1,5 @@
 ﻿import { AppConsts } from '@shared/AppConsts';
-import { Component, Injector, ViewEncapsulation, ViewChild } from '@angular/core';
+import { Component, Injector, ViewEncapsulation, ViewChild, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HubProductCategoriesServiceProxy, HubProductCategoryDto } from '@shared/service-proxies/service-proxies';
 import { NotifyService } from 'abp-ng2-module';
@@ -42,7 +42,7 @@ export class HubProductCategoriesComponent extends AppComponentBase {
     minDisplayScoreFilterEmpty: number;
     hubNameFilter = '';
     productCategoryNameFilter = '';
-
+    @Input() hubId: number; 
     constructor(
         injector: Injector,
         private _hubProductCategoriesServiceProxy: HubProductCategoriesServiceProxy,
@@ -66,7 +66,8 @@ export class HubProductCategoriesComponent extends AppComponentBase {
         this.primengTableHelper.showLoadingIndicator();
 
         this._hubProductCategoriesServiceProxy
-            .getAll(
+            .getAllByHubId(
+                this.hubId,
                 this.filterText,
                 this.publishedFilter,
                 this.maxDisplayScoreFilter == null ? this.maxDisplayScoreFilterEmpty : this.maxDisplayScoreFilter,

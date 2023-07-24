@@ -29,6 +29,7 @@ export class CreateOrEditHubProductModalComponent extends AppComponentBase imple
 
     hubName = '';
     productName = '';
+    hubId:number;
 
     constructor(
         injector: Injector,
@@ -50,7 +51,7 @@ export class CreateOrEditHubProductModalComponent extends AppComponentBase imple
         } else {
             this._hubProductsServiceProxy.getHubProductForEdit(hubProductId).subscribe((result) => {
                 this.hubProduct = result.hubProduct;
-
+                this.hubId = result.hubProduct.hubId;
                 this.hubName = result.hubName;
                 this.productName = result.productName;
 
@@ -62,7 +63,9 @@ export class CreateOrEditHubProductModalComponent extends AppComponentBase imple
 
     save(): void {
         this.saving = true;
-
+        if(this.hubId != null){
+            this.hubProduct.hubId = this.hubId;
+        }
         this._hubProductsServiceProxy
             .createOrEdit(this.hubProduct)
             .pipe(

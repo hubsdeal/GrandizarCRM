@@ -222,11 +222,11 @@
                             </ul>
                         </div> 
                         <div class="tab-content" id="myTabContent">
-                            <div class="tab-pane fade show active" id="hubs_categories" role="tabpanel">
-                                <app-hubProductCategories></app-hubProductCategories>
+                            <div class="tab-pane fade show active" id="hubs_categories" role="tabpanel" *ngIf="hub.id">
+                                <app-hubProductCategories [hubId]="hub.id"></app-hubProductCategories>
                             </div>
-                            <div class="tab-pane fade" id="hub_products" role="tabpanel">
-                                <app-hubProducts></app-hubProducts>
+                            <div class="tab-pane fade" id="hub_products" role="tabpanel" *ngIf="hub.id">
+                                <app-hubProducts [hubId]="hub.id"></app-hubProducts>
                             </div>
                         </div>
                     </div>
