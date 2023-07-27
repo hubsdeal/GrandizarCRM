@@ -30,6 +30,8 @@ export class CreateOrEditHubStoreModalComponent extends AppComponentBase impleme
     hubName = '';
     storeName = '';
 
+    hubId:number;
+
     constructor(
         injector: Injector,
         private _hubStoresServiceProxy: HubStoresServiceProxy,
@@ -50,7 +52,7 @@ export class CreateOrEditHubStoreModalComponent extends AppComponentBase impleme
         } else {
             this._hubStoresServiceProxy.getHubStoreForEdit(hubStoreId).subscribe((result) => {
                 this.hubStore = result.hubStore;
-
+                this.hubId = result.hubStore.hubId;
                 this.hubName = result.hubName;
                 this.storeName = result.storeName;
 
@@ -62,7 +64,7 @@ export class CreateOrEditHubStoreModalComponent extends AppComponentBase impleme
 
     save(): void {
         this.saving = true;
-
+        this.hubStore.hubId = this.hubId;
         this._hubStoresServiceProxy
             .createOrEdit(this.hubStore)
             .pipe(
