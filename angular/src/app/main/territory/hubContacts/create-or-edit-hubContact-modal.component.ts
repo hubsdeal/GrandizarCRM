@@ -29,6 +29,7 @@ export class CreateOrEditHubContactModalComponent extends AppComponentBase imple
 
     hubName = '';
     contactFullName = '';
+    hubId: number;
 
     constructor(
         injector: Injector,
@@ -50,7 +51,7 @@ export class CreateOrEditHubContactModalComponent extends AppComponentBase imple
         } else {
             this._hubContactsServiceProxy.getHubContactForEdit(hubContactId).subscribe((result) => {
                 this.hubContact = result.hubContact;
-
+                this.hubId = result.hubContact.hubId;
                 this.hubName = result.hubName;
                 this.contactFullName = result.contactFullName;
 
@@ -62,7 +63,7 @@ export class CreateOrEditHubContactModalComponent extends AppComponentBase imple
 
     save(): void {
         this.saving = true;
-
+        this.hubContact.hubId = this.hubId;
         this._hubContactsServiceProxy
             .createOrEdit(this.hubContact)
             .pipe(

@@ -1,5 +1,5 @@
 ﻿import { AppConsts } from '@shared/AppConsts';
-import { Component, Injector, ViewEncapsulation, ViewChild } from '@angular/core';
+import { Component, Injector, ViewEncapsulation, ViewChild, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HubBusinessesServiceProxy, HubBusinessDto } from '@shared/service-proxies/service-proxies';
 import { NotifyService } from 'abp-ng2-module';
@@ -41,7 +41,9 @@ export class HubBusinessesComponent extends AppComponentBase {
     minDisplayScoreFilterEmpty: number;
     hubNameFilter = '';
     businessNameFilter = '';
-
+    
+    @Input() hubId:number;
+    selectedAll: boolean = false;
     constructor(
         injector: Injector,
         private _hubBusinessesServiceProxy: HubBusinessesServiceProxy,
@@ -65,7 +67,8 @@ export class HubBusinessesComponent extends AppComponentBase {
         this.primengTableHelper.showLoadingIndicator();
 
         this._hubBusinessesServiceProxy
-            .getAll(
+            .getAllByHubId(
+                this.hubId,
                 this.filterText,
                 this.publishedFilter,
                 this.maxDisplayScoreFilter == null ? this.maxDisplayScoreFilterEmpty : this.maxDisplayScoreFilter,
@@ -88,6 +91,7 @@ export class HubBusinessesComponent extends AppComponentBase {
     }
 
     createHubBusiness(): void {
+        this.createOrEditHubBusinessModal.hubId = this.hubId;
         this.createOrEditHubBusinessModal.show();
     }
 
@@ -100,6 +104,18 @@ export class HubBusinessesComponent extends AppComponentBase {
                 });
             }
         });
+    }
+
+    onChangesSelectAll() {
+        for (var i = 0; i < this.primengTableHelper.records.length; i++) {
+            this.primengTableHelper.records[i].selected = this.selectedAll;
+        }
+    }
+
+    checkIfAllSelected() {
+        this.selectedAll = this.primengTableHelper.records.every(function (item: any) {
+            return item.selected == true;
+        })
     }
 
     exportToExcel(): void {
