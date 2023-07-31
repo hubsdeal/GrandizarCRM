@@ -45,18 +45,10 @@
                                 Notes
                             </a>
                             <div class="symbol-group symbol-hover">
-                                <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
-                                    data-bs-original-title="Alan Warden" data-kt-initialized="1">
-                                    <span class="symbol-label bg-warning text-inverse-warning fw-bold">A</span>
-                                </div>
-                                <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
-                                    data-bs-original-title="Susan Redwood" data-kt-initialized="1">
-                                    <span class="symbol-label bg-primary text-inverse-primary fw-bold">S</span>
-                                </div>
-                                <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
-                                    aria-label="Barry Walter" data-bs-original-title="Barry Walter"
-                                    data-kt-initialized="1">
-                                    <img alt="Pic" src="/assets/common/images/default-profile-picture.png">
+                                <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" data-kt-initialized="1"
+                                *ngFor="let item of teams">
+                                    <span *ngIf="item.picture==null" class="symbol-label bg-warning text-inverse-warning fw-bold">{{item.employeeName | nameSplit}}</span>
+                                    <img *ngIf="item.picture!=null" alt="Pic" src="{{item.picture}}">
                                 </div>
                                 <a href="javascript:;" class="symbol symbol-35px symbol-circle"
                                     (click)="createProductAccountTeam()">
@@ -3343,7 +3335,7 @@
     </createOrEditProductMediaModal>
     <createOrEditProductTaskMapModal #createOrEditProductTaskMapModal>
     </createOrEditProductTaskMapModal>
-    <createOrEditProductAccountTeamModal #createOrEditProductAccountTeamModal>
+    <createOrEditProductAccountTeamModal #createOrEditProductAccountTeamModal (modalSave)="ngOnInit()">
     </createOrEditProductAccountTeamModal>
     <createOrEditProductNoteModal #createOrEditProductNoteModal>
     </createOrEditProductNoteModal>
