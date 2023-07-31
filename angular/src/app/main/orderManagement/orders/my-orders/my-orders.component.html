@@ -1,17 +1,29 @@
 <div [@routerTransition]>
-    <sub-header [title]="'My Order List' | localize" [description]="'OrdersHeaderInfo' | localize">
+    <!-- <sub-header [title]="'My Order List' | localize" [description]="">
         <div role="actions">
-            <!-- <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1">
+            <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1">
                 <i class="fa fa-file-excel"></i>
                 {{ l('ExportToExcel') }}
-            </button> -->
+            </button>
 
             <button *ngIf="isGranted('Pages.Orders.Create')" (click)="createOrder()" class="btn btn-primary blue">
                 <i class="fa fa-plus"></i>
-                {{ l('My Orders') }}
+                {{ l('Orders') }}
             </button>
         </div>
-    </sub-header>
+    </sub-header> -->
+    <div class="w-100 d-flex mb-6 ps-9 pe-9 mt-6 justify-content-between align-items-center">
+        <div class="d-flex">
+            <h1 class="fs-3 fw-bold  my-0 page-heading text-dark">
+                My Orders
+            </h1>
+        </div>
+        <button *ngIf="isGranted('Pages.Orders.Create')" (click)="createOrder()" class="btn btn-primary blue">
+            <i class="fa fa-plus"></i>
+            {{ l('Orders') }}
+        </button>
+    </div>
+
 
     <div [class]="containerClass">
         <div class="card card-custom gutter-b">
@@ -37,7 +49,8 @@
 
                             <div class="col-md-3">
                                 <div class="my-3">
-                                    <label class="form-label" for="InvoiceNumberFilter">{{ l('Invoice Number') }}</label>
+                                    <label class="form-label" for="InvoiceNumberFilter">{{ l('Invoice Number')
+                                        }}</label>
                                     <input type="text" class="form-control" id="InvoiceNumberFilter"
                                         name="invoiceNumberFilter" [(ngModel)]="invoiceNumberFilter"
                                         (ngModelChange)="getOrders()" />
@@ -118,7 +131,7 @@
                                         name="orderStatusNameFilter" [(ngModel)]="orderStatusNameFilter" />
                                 </div>
                             </div>
-                            
+
                             <!-- <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="DeliveryAddressFilter">
@@ -303,7 +316,7 @@
                                         name="contactFullNameFilter" [(ngModel)]="contactFullNameFilter" />
                                 </div>
                             </div> -->
-                            
+
                             <!-- <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="CurrencyNameFilter">
@@ -376,7 +389,7 @@
                                         {{l('Order Status')}}
                                     </th>
 
-                                    
+
                                     <!-- <th style="width: 150px" pSortableColumn="stateFk.name">
                                         {{ l('Name') }}
                                         <p-sortIcon field="stateName"></p-sortIcon>
@@ -521,12 +534,14 @@
                                     <td style="width:150px; text-align: center;">
                                         <div *ngIf="record.order.paymentCompleted">
                                             <button class="btn btn-success btn-sm ">
-                                                Paid <span class="badge badge-circle badge-primary ms-2">${{record.order.totalAmount}}</span>
+                                                Paid <span
+                                                    class="badge badge-circle badge-primary ms-2">${{record.order.totalAmount}}</span>
                                             </button>
                                         </div>
                                         <div *ngIf="!record.order.paymentCompleted">
                                             <button class="btn btn-danger btn-sm ">
-                                                Unpaid <span class="badge badge-circle badge-warning ms-2">${{record.order.totalAmount}}</span>
+                                                Unpaid <span
+                                                    class="badge badge-circle badge-warning ms-2">${{record.order.totalAmount}}</span>
                                             </button>
                                         </div>
                                     </td>
@@ -562,7 +577,7 @@
                                         <span class="p-column-title">{{ l('FullName') }}</span>
                                         {{ record.contactFullName }}
                                     </td> -->
-                                    
+
                                     <!-- <td style="width: 150px">
                                         <span class="p-column-title">{{ l('Name') }}</span>
                                         {{ record.currencyName }}

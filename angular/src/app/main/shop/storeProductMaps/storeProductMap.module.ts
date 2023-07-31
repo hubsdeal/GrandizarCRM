@@ -18,5 +18,13 @@ import { StoreProductMapProductLookupTableModalComponent } from './storeProductM
         StoreProductMapProductLookupTableModalComponent,
     ],
     imports: [AppSharedModule, StoreProductMapRoutingModule, AdminSharedModule],
+    exports:[
+        StoreProductMapsComponent,
+        CreateOrEditStoreProductMapModalComponent,
+        ViewStoreProductMapModalComponent,
+
+        StoreProductMapStoreLookupTableModalComponent,
+        StoreProductMapProductLookupTableModalComponent,
+    ]
 })
 export class StoreProductMapModule {}

@@ -135,9 +135,9 @@
                                     <th style="width: 150px">
                                         {{l('Sales Price')}}
                                     </th>
-                                    <th style="width: 150px">
+                                    <!-- <th style="width: 150px">
                                         {{l('Member Price')}}
-                                    </th>
+                                    </th> -->
                                     <th style="width: 150px">
                                         {{l('Inventory')}}
                                     </th>
@@ -194,10 +194,10 @@
                                         <span class="p-column-title">{{ l('Sale Price') }}</span>
                                         <span *ngIf="record.salesPrice">${{record.salesPrice}}</span>
                                     </td>
-                                    <td style="width: 150px">
+                                    <!-- <td style="width: 150px">
                                         <span class="p-column-title">{{ l('Name') }}</span>
                                         <span *ngIf="record.membershipPrice"> ${{record.membershipPrice}}</span>
-                                    </td>
+                                    </td> -->
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('Name') }}</span>
                                         {{record.stockQuantity}}
@@ -211,12 +211,12 @@
                                                 {{ l('Actions') }}
                                             </button>
                                             <ul class="dropdown-menu" *dropdownMenu>
-                                                <li>
+                                                <!-- <li>
                                                     <a href="javascript:;" class="dropdown-item"
                                                         (click)="viewHubProductModal.show(record)">
                                                         {{ l('View') }}
                                                     </a>
-                                                </li>
+                                                </li> -->
                                                 <li>
                                                     <a href="javascript:;"
                                                         *ngIf="permission.isGranted('Pages.HubProducts.Edit')"
