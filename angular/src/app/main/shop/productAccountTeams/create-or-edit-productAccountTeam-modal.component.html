@@ -55,7 +55,7 @@
                         hidden
                     />
 
-                    <div class="my-3">
+                    <div class="my-3" *ngIf="!productId">
                         <label class="form-label" for="ProductName">{{ l('Product') }}</label>
                         <div class="input-group">
                             <input
@@ -75,7 +75,7 @@
                             </button>
                         </div>
                     </div>
-                    <input
+                    <input *ngIf="!productId"
                         class="form-control"
                         name="productAccountTeam.productId"
                         [(ngModel)]="productAccountTeam.productId"
