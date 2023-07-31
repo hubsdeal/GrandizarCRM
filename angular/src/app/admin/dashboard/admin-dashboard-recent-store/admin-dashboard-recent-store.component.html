@@ -1,0 +1,462 @@
+<div [@routerTransition]>
+    <div [ngClass]="{'app-container': !isFromDashboard, 'container-fluid': !isFromDashboard}">
+        <div class="card card-custom gutter-b">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <!--<Primeng-Datatable-Start>-->
+                    <div class="primeng-datatable-container col-12" [busyIf]="primengTableHelper.isLoading">
+                        <p-table #dataTable (onLazyLoad)="getStores($event)" [value]="primengTableHelper.records"
+                            rows="{{ primengTableHelper.defaultRecordsCountPerPage }}" [paginator]="false" [lazy]="true"
+                            [scrollable]="true" ScrollWidth="100%" [responsive]="primengTableHelper.isResponsive"
+                            [resizableColumns]="primengTableHelper.resizableColumns">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <!-- <th style="width:30px; text-align: center;">
+                                        <label
+                                            class="form-check form-check-custom form-check-inline form-check-solid is-invalid">
+                                            <input class="form-check-input" (change)="onChangesSelectAll()"
+                                                [(ngModel)]="selectedAll" type="checkbox">
+                                            <span class="fw-semibold ps-2 fs-6">
+                                            </span>
+                                        </label>
+                                    </th> -->
+                                    <th style="width: 45px;">
+                                    </th>
+                                    <th style="width: 420px">
+                                        {{l('Name')}}
+                                    </th>
+                                    <th style="width: 180px;">
+                                        {{l('Mobile')}}
+                                    </th>
+                                    <th style="width: 220px;">
+                                        {{l('Email')}}
+                                    </th>
+                                    <th style="width: 90px; text-align:center">
+                                        {{l('Connect')}}
+                                    </th>
+                                    <th style="width: 150px;text-align: center;">
+                                        {{l('#Product')}}
+                                    </th>
+                                    <th style="width: 150px; text-align: center; ">
+                                        {{l('Published')}}
+                                    </th>
+                                    <th style="width: 150px; text-align: center; ">
+                                        {{l('Local Store')}}
+                                    </th>
+                                    <th style="width: 150px; text-align: center;">
+                                        {{l('Verified')}}
+                                    </th>
+                                    <th style="width: 120px" pSortableColumn="displaySequence">
+                                        Score
+                                        <p-sortIcon field="store.displaySequence"></p-sortIcon>
+                                    </th>
+                                    <!-- <th style="width: 150px" pSortableColumn="logoMediaLibraryFk.name">
+                                        {{ l('Name') }}
+                                        <p-sortIcon field="mediaLibraryName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="countryFk.name">
+                                        {{ l('Name') }}
+                                        <p-sortIcon field="countryName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="stateFk.name">
+                                        {{ l('Name') }}
+                                        <p-sortIcon field="stateName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="ratingLikeFk.name">
+                                        {{ l('Name') }}
+                                        <p-sortIcon field="ratingLikeName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="storeCategoryFk.name">
+                                        {{ l('Name') }}
+                                        <p-sortIcon field="masterTagName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="name">
+                                        {{ l('Name') }}
+                                        <p-sortIcon field="store.name"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="storeUrl">
+                                        {{ l('StoreUrl') }}
+                                        <p-sortIcon field="store.storeUrl"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="description">
+                                        {{ l('Description') }}
+                                        <p-sortIcon field="store.description"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="metaTag">
+                                        {{ l('MetaTag') }}
+                                        <p-sortIcon field="store.metaTag"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="metaDescription">
+                                        {{ l('MetaDescription') }}
+                                        <p-sortIcon field="store.metaDescription"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="fullAddress">
+                                        {{ l('FullAddress') }}
+                                        <p-sortIcon field="store.fullAddress"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="address">
+                                        {{ l('Address') }}
+                                        <p-sortIcon field="store.address"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="city">
+                                        {{ l('City') }}
+                                        <p-sortIcon field="store.city"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="latitude">
+                                        {{ l('Latitude') }}
+                                        <p-sortIcon field="store.latitude"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="longitude">
+                                        {{ l('Longitude') }}
+                                        <p-sortIcon field="store.longitude"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="phone">
+                                        {{ l('Phone') }}
+                                        <p-sortIcon field="store.phone"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="mobile">
+                                        {{ l('Mobile') }}
+                                        <p-sortIcon field="store.mobile"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="email">
+                                        {{ l('Email') }}
+                                        <p-sortIcon field="store.email"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="isPublished">
+                                        {{ l('IsPublished') }}
+                                        <p-sortIcon field="store.isPublished"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="facebook">
+                                        {{ l('Facebook') }}
+                                        <p-sortIcon field="store.facebook"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="instagram">
+                                        {{ l('Instagram') }}
+                                        <p-sortIcon field="store.instagram"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="linkedIn">
+                                        {{ l('LinkedIn') }}
+                                        <p-sortIcon field="store.linkedIn"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="youtube">
+                                        {{ l('Youtube') }}
+                                        <p-sortIcon field="store.youtube"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="fax">
+                                        {{ l('Fax') }}
+                                        <p-sortIcon field="store.fax"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="zipCode">
+                                        {{ l('ZipCode') }}
+                                        <p-sortIcon field="store.zipCode"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="website">
+                                        {{ l('Website') }}
+                                        <p-sortIcon field="store.website"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="yearOfEstablishment">
+                                        {{ l('YearOfEstablishment') }}
+                                        <p-sortIcon field="store.yearOfEstablishment"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="displaySequence">
+                                        {{ l('DisplaySequence') }}
+                                        <p-sortIcon field="store.displaySequence"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="score">
+                                        {{ l('Score') }}
+                                        <p-sortIcon field="store.score"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="legalName">
+                                        {{ l('LegalName') }}
+                                        <p-sortIcon field="store.legalName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="isLocalOrOnlineStore">
+                                        {{ l('IsLocalOrOnlineStore') }}
+                                        <p-sortIcon field="store.isLocalOrOnlineStore"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="isVerified">
+                                        {{ l('IsVerified') }}
+                                        <p-sortIcon field="store.isVerified"></p-sortIcon>
+                                    </th> -->
+                                    <th style="width: 130px"
+                                        [hidden]="!isGrantedAny('Pages.Stores.Edit', 'Pages.Stores.Delete')">
+                                        {{ l('Actions') }}
+                                    </th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
+                                <tr>
+                                    <!-- <td style="width: 30px;">
+                                        <label
+                                            class="form-check form-check-custom form-check-inline form-check-solid is-invalid mb-2">
+                                            <input class="form-check-input" type="checkbox"
+                                                [(ngModel)]="record.selected" (change)="checkIfAllSelected()">
+                                            <span class="fw-semibold ps-2 fs-6">
+                                            </span>
+                                        </label>
+                                    </td> -->
+                                    <td style="text-align: left; width: 45px;">
+                                        <i *ngIf="!record.wishListId" class="flaticon-black fav_icon_store"
+                                            (click)="onDisLikeClick(record.id)"></i>
+                                        <i *ngIf="record.wishListId" class="flaticon-black fav_icon_store fav_heart"
+                                            (click)="onLikeClick(record.wishListId)"></i>
+                                        <!-- <i *ngIf="record.wishListId" class="flaticon-black fav_icon_store fav_heart" (click)="onLikeClick(record.wishListId)"></i> -->
+                                    </td>
+                                    <td style="width: 420px">
+                                        <span class="p-column-title">{{ l('Name') }}</span>
+                                        <div class="d-flex align-items-center">
+                                            <div class="square_logo_box shadow-sm">
+                                                <img *ngIf="record.picture"
+                                                    src="{{record.picture != null? record.picture:'/assets/common/images/sampleProfilePics/noimg.png'}}"
+                                                    class="mw-100" alt="">
+                                                <span *ngIf="!record.picture">{{ record.name | nameSplit}}</span>
+                                            </div>
+                                            <div class="d-flex flex-wrap flex-grow-1 mt-n2 mt-lg-n1">
+                                                <div class="d-flex flex-column flex-grow-1 my-lg-0 my-2 pe-3">
+                                                    <a href="javascript:;" title="{{ record.name }}"
+                                                        [routerLink]="['/app/main/shop/stores/dashboard',record.id]"
+                                                        class="fs-5 text-gray-800 text-hover-primary fw-bold">
+                                                        {{ record.name }}
+                                                        <i *ngIf="record.isPublished"
+                                                            class="fas fa-check-circle ml-1 mr-0 text-success"
+                                                            title="Published"></i>
+                                                    </a>
+                                                    <span class="text-gray-400 fw-semibold fs-7 my-0"
+                                                        *ngIf="record.primaryCategoryName">
+                                                        <i class="fas fa-tags mr-1"></i>
+                                                        {{record.primaryCategoryName}}
+                                                    </span>
+                                                    <span
+                                                        *ngIf="record.city || record.stateName || record.countryName || record.zipCode"
+                                                        class="text-gray-400 fw-semibold fs-7 my-1">
+                                                        <i class="fas fa-map-marked-alt mr-1"></i>
+                                                        <span>
+                                                            {{ record.city }}
+                                                        </span>
+                                                        <span
+                                                            *ngIf="record.city && (record.stateName || record.countryName || record.zipCode)">,
+                                                        </span>
+                                                        <span>
+                                                            {{ record.stateName }}
+                                                        </span>
+                                                        <span
+                                                            *ngIf="record.stateName && (record.countryName || record.zipCode)">,
+                                                        </span>
+                                                        <span>
+                                                            {{ record.countryName }}
+                                                        </span>
+                                                        <span *ngIf=" record.countryName && record.zipCode">,
+                                                        </span>
+                                                        <span>
+                                                            {{ record.zipCode }}
+                                                        </span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td style="width: 180px">
+                                        <span class="p-column-title">{{ l('Mobile') }}</span>
+                                        <i *ngIf="record.mobile " class="fas fa-phone-alt mr-1"></i>
+                                        {{ record.mobile }}
+                                    </td>
+                                    <td style="width: 220px">
+                                        <span class="p-column-title">{{ l('Email') }}</span>
+                                        <i *ngIf="record.email" class="fas fa-envelope"></i>
+                                        {{ record.email }}
+                                    </td>
+                                    <td style="width: 90px; text-align: center;">
+                                        <span class="p-column-title">{{ l('Connect') }}</span>
+                                        <i class="fas fa-comments text-primary"></i>
+                                    </td>
+                                    <td style="width: 150px; text-align: center;">
+                                        <span class="p-column-title">{{ l('#Products') }}</span>
+                                        {{record.numberOfProducts}}
+                                    </td>
+                                    <td style="width:150px; text-align: center;">
+                                        <span class="p-column-title">{{ l('Published?') }}</span>
+                                        <div *ngIf="record.isPublished">
+                                            <span style="width: 3rem;" class="badge badge-success">Yes</span>
+                                        </div>
+                                        <div *ngIf="!record.isPublished">
+                                            <span style="width: 3rem;" class="badge badge-danger">No</span>
+                                        </div>
+                                    </td>
+                                    <td style="width:150px; text-align: center;">
+                                        <span class="p-column-title">{{ l('Local Store') }}</span>
+                                        <div *ngIf="!record.isLocalOrOnlineStore">
+                                            <span style="width: 3rem;" class="badge badge-success">Yes</span>
+                                        </div>
+                                        <div *ngIf="record.isLocalOrOnlineStore">
+                                            <span style="width: 3rem;" class="badge badge-danger">No</span>
+                                        </div>
+                                    </td>
+                                    <td style="width:150px; text-align: center;">
+                                        <span class="p-column-title">{{ l('Verified') }}</span>
+                                        <div *ngIf="record.isVerified">
+                                            <span style="width: 3rem;" class="badge badge-success">Yes</span>
+                                        </div>
+                                        <div *ngIf="!record.isVerified">
+                                            <span style="width: 3rem;" class="badge badge-danger">No</span>
+                                        </div>
+                                    </td>
+
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Sequence') }}</span>
+                                        {{ record.displaySequence }}
+                                    </td>
+                                    <!-- <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('MetaTag') }}</span>
+                                        {{ record.metaTag }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('MetaDescription') }}</span>
+                                        {{ record.metaDescription }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('FullAddress') }}</span>
+                                        {{ record.fullAddress }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Address') }}</span>
+                                        {{ record.address }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('City') }}</span>
+                                        {{ record.city }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Latitude') }}</span>
+                                        {{ record.latitude }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Longitude') }}</span>
+                                        {{ record.longitude }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Phone') }}</span>
+                                        {{ record.phone }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Mobile') }}</span>
+                                        {{ record.mobile }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Email') }}</span>
+                                        {{ record.email }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('IsPublished') }}</span>
+                                        <div *ngIf="record.isPublished" class="text-center">
+                                            <i class="fa fa-check-circle text-success" title="True"></i>
+                                        </div>
+                                        <div *ngIf="!record.isPublished" class="text-center">
+                                            <i class="fa fa-times-circle" title="False"></i>
+                                        </div>
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Facebook') }}</span>
+                                        {{ record.facebook }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Instagram') }}</span>
+                                        {{ record.instagram }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('LinkedIn') }}</span>
+                                        {{ record.linkedIn }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Youtube') }}</span>
+                                        {{ record.youtube }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Fax') }}</span>
+                                        {{ record.fax }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('ZipCode') }}</span>
+                                        {{ record.zipCode }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Website') }}</span>
+                                        {{ record.website }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('YearOfEstablishment') }}</span>
+                                        {{ record.yearOfEstablishment }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('DisplaySequence') }}</span>
+                                        {{ record.displaySequence }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Score') }}</span>
+                                        {{ record.score }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('LegalName') }}</span>
+                                        {{ record.legalName }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('IsLocalOrOnlineStore') }}</span>
+                                        <div *ngIf="record.isLocalOrOnlineStore" class="text-center">
+                                            <i class="fa fa-check-circle text-success" title="True"></i>
+                                        </div>
+                                        <div *ngIf="!record.isLocalOrOnlineStore" class="text-center">
+                                            <i class="fa fa-times-circle" title="False"></i>
+                                        </div>
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('IsVerified') }}</span>
+                                        <div *ngIf="record.isVerified" class="text-center">
+                                            <i class="fa fa-check-circle text-success" title="True"></i>
+                                        </div>
+                                        <div *ngIf="!record.isVerified" class="text-center">
+                                            <i class="fa fa-times-circle" title="False"></i>
+                                        </div>
+                                    </td> -->
+                                    <td style="width: 130px"
+                                        [hidden]="!isGrantedAny('Pages.Stores.Edit', 'Pages.Stores.Delete')">
+                                        <div class="btn-group dropdown" dropdown container="body">
+                                            <button class="dropdown-toggle btn btn-sm btn-primary" dropdownToggle>
+                                                <i class="fa fa-cog"></i>
+                                                <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu" *dropdownMenu>
+                                                <!-- <li>
+                                                    <a href="javascript:;" class="dropdown-item"
+                                                        (click)="viewStoreModal.show(record)">
+                                                        {{ l('View') }}
+                                                    </a>
+                                                </li> -->
+                                                <li>
+                                                    <a href="javascript:;"
+                                                        *ngIf="permission.isGranted('Pages.Stores.Edit')"
+                                                        class="dropdown-item"
+                                                        (click)="createOrEditStoreModal.show(record.id)">
+                                                        {{ l('Edit') }}
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="javascript:;"
+                                                        *ngIf="permission.isGranted('Pages.Stores.Delete')"
+                                                        (click)="deleteStore(record.store)">
+                                                        {{ l('Delete') }}
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+
+                    </div>
+                    <!--<Primeng-Datatable-End>-->
+                </div>
+            </div>
+        </div>
+    </div>
+ 
+</div>
