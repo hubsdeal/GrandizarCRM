@@ -19,6 +19,9 @@ import { MyProductsComponent } from './my-products/my-products.component';
 import { ProductMediaModule } from '../productMedias/productMedia.module';
 import { OrderModule } from '@app/main/orderManagement/orders/order.module';
 import { ContactModule } from '@app/main/crm/contacts/contact.module';
+import { ProductTaskMapModule } from '../productTaskMaps/productTaskMap.module';
+import { ProductNoteModule } from '../productNotes/productNote.module';
+import { ProductAccountTeamModule } from '../productAccountTeams/productAccountTeam.module';
 
 @NgModule({
     declarations: [
@@ -37,6 +40,8 @@ import { ContactModule } from '@app/main/crm/contacts/contact.module';
         ProductLibrariesComponent,
         MyProductsComponent
     ],
-    imports: [AppSharedModule, ProductRoutingModule, AdminSharedModule, ProductTagModule, ProductMediaModule, OrderModule, ContactModule],
+    imports: [AppSharedModule, ProductRoutingModule, AdminSharedModule, ProductTagModule, ProductMediaModule,
+        OrderModule, ContactModule, ProductTaskMapModule, ProductNoteModule,
+        ProductAccountTeamModule],
 })
-export class ProductModule {}
+export class ProductModule { }

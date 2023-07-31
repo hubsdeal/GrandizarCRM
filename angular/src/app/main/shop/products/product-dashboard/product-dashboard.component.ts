@@ -10,6 +10,9 @@ import { FileUploader, FileUploaderOptions } from 'ng2-file-upload';
 import { SelectItem } from 'primeng/api';
 import { finalize } from 'rxjs';
 import { CreateOrEditProductMediaModalComponent } from '../../productMedias/create-or-edit-productMedia-modal.component';
+import { CreateOrEditProductAccountTeamModalComponent } from '../../productAccountTeams/create-or-edit-productAccountTeam-modal.component';
+import { CreateOrEditProductNoteModalComponent } from '../../productNotes/create-or-edit-productNote-modal.component';
+import { CreateOrEditProductTaskMapModalComponent } from '../../productTaskMaps/create-or-edit-productTaskMap-modal.component';
 
 @Component({
   selector: 'app-product-dashboard',
@@ -18,6 +21,12 @@ import { CreateOrEditProductMediaModalComponent } from '../../productMedias/crea
 })
 export class ProductDashboardComponent extends AppComponentBase {
 
+  @ViewChild('createOrEditProductAccountTeamModal', { static: true })
+  createOrEditProductAccountTeamModal: CreateOrEditProductAccountTeamModalComponent;
+  @ViewChild('createOrEditProductNoteModal', { static: true })
+  createOrEditProductNoteModal: CreateOrEditProductNoteModalComponent;
+  @ViewChild('createOrEditProductTaskMapModal', { static: true })
+    createOrEditProductTaskMapModal: CreateOrEditProductTaskMapModalComponent;
   saving = false;
   productShortDesc: string;
   bindingData: any;
@@ -93,7 +102,7 @@ export class ProductDashboardComponent extends AppComponentBase {
     private _tokenService: TokenService,
     private dialog: MatDialog,
     private _productsServiceProxy: ProductsServiceProxy,
-    private _productMediasServiceProxy:ProductMediasServiceProxy,
+    private _productMediasServiceProxy: ProductMediasServiceProxy,
     private _sanitizer: DomSanitizer,
     private titleService: Title
   ) {
@@ -337,7 +346,7 @@ export class ProductDashboardComponent extends AppComponentBase {
       media.mediaLibraryId = event;
       this._productMediasServiceProxy.createOrEdit(media).subscribe(result => {
         this.notify.info(this.l('SavedSuccessfully'));
-        if (this.product.mediaLibraryId == null){
+        if (this.product.mediaLibraryId == null) {
           this.product.mediaLibraryId = event;
           this._productsServiceProxy.createOrEdit(this.product).subscribe(r => {
             this.getProductDetails(this.productId);
@@ -355,4 +364,16 @@ export class ProductDashboardComponent extends AppComponentBase {
       this.notify.info('Updated Successfully');
     })
   }
+
+  createProductAccountTeam(): void {
+    this.createOrEditProductAccountTeamModal.show();
+  }
+
+  createProductNote(): void {
+    this.createOrEditProductNoteModal.show();
+  }
+
+  createProductTaskMap(): void {
+    this.createOrEditProductTaskMapModal.show();
+}
 }

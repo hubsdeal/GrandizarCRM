@@ -35,18 +35,14 @@
                         <div class="d-flex align-items-center">
                             <!-- After finishing the API modification by "Zillur vai" we will start the development of the task map based on store id -->
                             <!-- Zillur vai will provide the API and Way to work on this -->
-                            <a href="javascript:;" class="btn btn-primary me-3">
+                            <a href="javascript:;" class="btn btn-primary me-3" (click)="createProductTaskMap()">
                                 <i class="fas fa-list fs-3"></i>
                                 Task
                             </a>
 
-                            <a href="javascript:;" class="btn btn-info me-3">
+                            <a href="javascript:;" class="btn btn-info me-3" (click)="createProductNote()">
                                 <i class="fas fa-comment-dots fs-3"></i>
                                 Notes
-                            </a>
-                            <a href="javascript:;" class="btn btn-info me-3">
-                                <i class="fas fa-dollar-sign fs-3"></i>
-                                Sales Status
                             </a>
                             <div class="symbol-group symbol-hover">
                                 <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
@@ -58,14 +54,15 @@
                                     <span class="symbol-label bg-primary text-inverse-primary fw-bold">S</span>
                                 </div>
                                 <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
-                                    data-bs-original-title="Perry Matthew" data-kt-initialized="1">
-                                    <span class="symbol-label bg-info text-inverse-info fw-bold">P</span>
+                                    aria-label="Barry Walter" data-bs-original-title="Barry Walter"
+                                    data-kt-initialized="1">
+                                    <img alt="Pic" src="/assets/common/images/default-profile-picture.png">
                                 </div>
-                                <a href="javascript:;" class="symbol symbol-35px symbol-circle" data-bs-toggle="modal"
-                                    data-bs-target="#kt_modal_view_users">
-                                    <span class="symbol-label bg-dark text-inverse-dark fs-8 fw-bold"
-                                        data-bs-toggle="tooltip" data-bs-trigger="hover"
-                                        data-bs-original-title="View more users" data-kt-initialized="1">+42</span>
+                                <a href="javascript:;" class="symbol symbol-35px symbol-circle"
+                                    (click)="createProductAccountTeam()">
+                                    <span class="symbol-label bg-dark text-inverse-dark fs-8 fw-bold">
+                                        <i class="fas fa-plus"></i>
+                                    </span>
                                 </a>
                             </div>
                         </div>
@@ -2364,7 +2361,7 @@
                                 </div>
                             </div> -->
 
-                            
+
 
                             <!-- <div class="card mb-6">
                                 <div class="accordion-item">
@@ -3302,7 +3299,39 @@
                         </div>
                     </div>
                     <div class="tab-pane fade" id="internaldb" role="tabpanel">
-                        .storetaxes..
+                        <div class="card">
+                            <div class="card-body">
+                                <ul class="nav nav-tabs nav-line-tabs nav-line-tabs-2x mb-5 fs-6">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" data-bs-toggle="tab" href="#m_tasks_m">
+                                            <i class="fas fa-tasks-alt mr-2"></i> Task
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" data-bs-toggle="tab" href="#m_notes_m">
+                                            <i class="fas fa-note-sticky mr-2"></i> Notes
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" data-bs-toggle="tab" href="#m_teams_m">
+                                            <i class="fas fa-user-friends mr-2"></i> Teams
+                                        </a>
+                                    </li>
+                                </ul>
+
+                                <div class="tab-content" id="myTabContent">
+                                    <div class="tab-pane fade show active" id="m_tasks_m" role="tabpanel">
+                                        <app-productTaskMaps></app-productTaskMaps>
+                                    </div>
+                                    <div class="tab-pane fade" id="m_notes_m" role="tabpanel">
+                                        <app-productNotes></app-productNotes>
+                                    </div>
+                                    <div class="tab-pane fade" id="m_teams_m" role="tabpanel">
+                                        <app-productAccountTeams></app-productAccountTeams>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -3312,4 +3341,10 @@
 
     <createOrEditProductMediaModal #createOrEditProductMediaModal (saveProductMedia)="uploadProductMedia($event)">
     </createOrEditProductMediaModal>
+    <createOrEditProductTaskMapModal #createOrEditProductTaskMapModal>
+    </createOrEditProductTaskMapModal>
+    <createOrEditProductAccountTeamModal #createOrEditProductAccountTeamModal>
+    </createOrEditProductAccountTeamModal>
+    <createOrEditProductNoteModal #createOrEditProductNoteModal>
+    </createOrEditProductNoteModal>
 </div>
