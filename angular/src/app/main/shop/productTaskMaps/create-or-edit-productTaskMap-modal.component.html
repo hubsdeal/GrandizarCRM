@@ -1,42 +1,154 @@
-﻿<div
-    bsModal
-    #createOrEditModal="bs-modal"
-    class="modal fade"
-    tabindex="-1"
-    role="dialog"
-    aria-labelledby="createOrEditModal"
-    aria-hidden="true"
-    [config]="{ backdrop: 'static' }"
->
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{ backdrop: 'static' }">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <form *ngIf="active" #productTaskMapForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
                 <div class="modal-header">
                     <h4 class="modal-title">
-                        <span *ngIf="productTaskMap.id">{{ l('EditProductTaskMap') }}</span>
-                        <span *ngIf="!productTaskMap.id">{{ l('CreateNewProductTaskMap') }}</span>
+                        <span *ngIf="productTaskMap.id">{{ l('Edit Product Task') }}</span>
+                        <span *ngIf="!productTaskMap.id">{{ l('Create New Product Task') }}</span>
                     </h4>
 
-                    <button
-                        type="button"
-                        class="btn-close"
-                        (click)="close()"
-                        aria-label="Close"
-                        [disabled]="saving"
-                    ></button>
+                    <button type="button" class="btn-close" (click)="close()" aria-label="Close"
+                        [disabled]="saving"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="my-3">
+                    <div class="my-5 p_filter">
+                        <label class="form-label" for="team">{{ l('Select from Template') }}</label>
+                        <p-dropdown [options]="allTeams" [filter]="true" [virtualScroll]="true"
+                            placeholder="Select from Template" [itemSize]="30" name="displayName"
+                            optionLabel="displayName" optionId="id" [(ngModel)]="allTemplate" filterBy="displayName"
+                            [style]="{ width: '100%' }"></p-dropdown>
+                    </div>
+                    <div class="my-5">
+                        <label class="form-label" for="TaskEvent_Name">{{ l('Task Title') }} *</label>
+                        <input type="text" #TaskEvent_Name="ngModel" id="TaskEvent_Name" class="form-control"
+                            [(ngModel)]="taskEvent.name" name="Name" minlength="1" maxlength="2048" required />
+                        <validation-messages [formCtrl]="TaskEvent_Name"></validation-messages>
+                    </div>
+                    <div class="my-5">
+                        <label class="form-label" for="TaskEvent_Description">{{ l('Description') }}</label>
+                        <p-editor id="description" name="description" [(ngModel)]="taskEvent.description"
+                            ngDefaultControl [style]="{ height: '300px' }" placeholder="'Type here...'"></p-editor>
+                    </div>
+
+
+
+                    <div class="my-5">
+                        <label class="form-label" for="TaskStatusName">{{ l('Task Status') }}</label>
+                        <select name="taskEvent.taskStatusId" [(ngModel)]="taskEvent.taskStatusId" class="form-select">
+                            <option value="">{{ l('SelectATaskStatus') }}</option>
+                            <option *ngFor="let item of allTaskStatuss" value="{{ item.id }}">
+                                {{ item.displayName }}
+                            </option>
+                        </select>
+                    </div>
+
+
+                    <div class="my-5 select_button_custom">
+                        <label class="form-label" for="TaskStatusName">{{ l('Priority') }}</label>
+                        <p-selectButton [options]="priorityOptions" name="priorityOptions" id="priorityOptions"
+                            [(ngModel)]="taskEvent.priority" optionLabel="label" optionValue="value"></p-selectButton>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-6">
+                            <div class="my-5">
+                                <label class="form-label" for="TaskEvent_EventDate">{{ l('Start Date') }}</label>
+                                <input class="form-control m-input" #TaskEvent_EventDate type="datetime" bsDatepicker
+                                    datePickerLuxonModifier [(date)]="taskEvent.eventDate" id="TaskEvent_EventDate"
+                                    name="TaskEvent_EventDate" />
+                                <validation-messages [formCtrl]="TaskEvent_EventDate"></validation-messages>
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="my-5">
+                                <label class="form-label" for="TaskEvent_EndDate">{{ l('End Date') }}</label>
+                                <input class="form-control m-input" #TaskEvent_EndDate type="datetime" bsDatepicker
+                                    datePickerLuxonModifier [(date)]="taskEvent.endDate" id="TaskEvent_EndDate"
+                                    name="TaskEvent_EndDate" />
+                                <validation-messages [formCtrl]="TaskEvent_EndDate"></validation-messages>
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="my-5">
+                                <label class="form-label" for="TaskEvent_StartTime">{{ l('Start Time') }}</label>
+                                <input class="form-control" [(ngModel)]="taskEvent.startTime" name="StartTime"
+                                    [ngxTimepicker]="startTime" aria-label="12hr format" type="text" readonly>
+                                <ngx-material-timepicker #startTime (timeSet)="startTimeValue($event)">
+                                </ngx-material-timepicker>
+                                <!-- <input type="text" #TaskEvent_StartTime="ngModel" id="TaskEvent_StartTime"
+                                    class="form-control" [(ngModel)]="taskEvent.startTime" name="StartTime"
+                                    minlength="1" maxlength="50" />
+                                <validation-messages [formCtrl]="TaskEvent_StartTime"></validation-messages> -->
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="my-5">
+                                <label class="form-label" for="TaskEvent_EndTime">{{ l('End Time') }}</label>
+                                <input class="form-control" [(ngModel)]="taskEvent.endTime" name="EndTime"
+                                    [ngxTimepicker]="endTime" aria-label="12hr format" type="text" readonly>
+                                <ngx-material-timepicker #endTime (timeSet)="endTimeValue($event)">
+                                </ngx-material-timepicker>
+                                <!-- <input type="text" #TaskEvent_EndTime="ngModel" id="TaskEvent_EndTime"
+                                    class="form-control" [(ngModel)]="taskEvent.endTime" name="EndTime" minlength="1"
+                                    maxlength="50" />
+                                <validation-messages [formCtrl]="TaskEvent_EndTime"></validation-messages> -->
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="my-5">
+                                <label class="form-label" for="TaskEvent_EstimatedTime">{{ l('Estimated Hours')
+                                    }}</label>
+                                <input type="text" #TaskEvent_EstimatedTime="ngModel" id="TaskEvent_EstimatedTime"
+                                    class="form-control" [(ngModel)]="taskEvent.estimatedTime" name="EstimatedTime"
+                                    minlength="1" maxlength="50" />
+                                <validation-messages [formCtrl]="TaskEvent_EstimatedTime"></validation-messages>
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="my-5">
+                                <label class="form-label" for="TaskEvent_ActualTime">{{ l('Actual Hours') }}</label>
+                                <input type="text" #TaskEvent_ActualTime="ngModel" id="TaskEvent_ActualTime"
+                                    class="form-control" [(ngModel)]="taskEvent.actualTime" name="ActualTime"
+                                    minlength="1" maxlength="50" />
+                                <validation-messages [formCtrl]="TaskEvent_ActualTime"></validation-messages>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="my-5 p_filter">
+                                <label class="form-label" for="team">{{ l('Team') }}</label>
+                                <p-dropdown [options]="allTeams" [filter]="true" [virtualScroll]="true"
+                                    placeholder="Select Team" [itemSize]="30" name="displayName"
+                                    optionLabel="displayName" optionId="id" [(ngModel)]="selectedTeam"
+                                    filterBy="displayName" [style]="{ width: '100%' }"></p-dropdown>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="my-5 p_filter">
+                                <label class="form-label" for="team">{{ l('Tag') }}</label>
+                                <p-dropdown [options]="allTags" [filter]="true" [virtualScroll]="true"
+                                    placeholder="Select Tag" [itemSize]="30" name="displayName"
+                                    optionLabel="displayName" optionId="id" [(ngModel)]="selectedTag"
+                                    filterBy="displayName" [style]="{ width: '100%' }"></p-dropdown>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Need to implement save as task library -->
+                    <div class="col-xl-12 d-flex align-items-center">
+                        <div class="me-5 fw-semibold text-gray">
+                            Save as Library
+                        </div>
+                        <div class="form-check form-check-solid form-switch form-check-custom fv-row">
+                            <input class="form-check-input w-45px h-30px" type="checkbox" id="allowmarketing"
+                                checked="checked">
+                            <label class="form-check-label" for="allowmarketing"></label>
+                        </div>
+                    </div>
+                    <!-- <div class="my-3">
                         <label class="form-label" for="ProductName">{{ l('Product') }}</label>
                         <div class="input-group">
-                            <input
-                                class="form-control"
-                                id="ProductName"
-                                name="productName"
-                                [(ngModel)]="productName"
-                                type="text"
-                                disabled
-                            />
+                            <input class="form-control" id="ProductName" name="productName" [(ngModel)]="productName"
+                                type="text" disabled />
                             <button class="btn btn-primary blue" (click)="openSelectProductModal()" type="button">
                                 <i class="fa fa-search"></i>
                                 {{ l('Pick') }}
@@ -46,25 +158,14 @@
                             </button>
                         </div>
                     </div>
-                    <input
-                        class="form-control"
-                        name="productTaskMap.productId"
-                        [(ngModel)]="productTaskMap.productId"
-                        type="text"
-                        hidden
-                    />
+                    <input class="form-control" name="productTaskMap.productId" [(ngModel)]="productTaskMap.productId"
+                        type="text" hidden />
 
                     <div class="my-3">
                         <label class="form-label" for="TaskEventName">{{ l('TaskEvent') }}</label>
                         <div class="input-group">
-                            <input
-                                class="form-control"
-                                id="TaskEventName"
-                                name="taskEventName"
-                                [(ngModel)]="taskEventName"
-                                type="text"
-                                disabled
-                            />
+                            <input class="form-control" id="TaskEventName" name="taskEventName"
+                                [(ngModel)]="taskEventName" type="text" disabled />
                             <button class="btn btn-primary blue" (click)="openSelectTaskEventModal()" type="button">
                                 <i class="fa fa-search"></i>
                                 {{ l('Pick') }}
@@ -74,31 +175,16 @@
                             </button>
                         </div>
                     </div>
-                    <input
-                        class="form-control"
-                        name="productTaskMap.taskEventId"
-                        [(ngModel)]="productTaskMap.taskEventId"
-                        type="text"
-                        required
-                        hidden
-                    />
+                    <input class="form-control" name="productTaskMap.taskEventId"
+                        [(ngModel)]="productTaskMap.taskEventId" type="text" required hidden />
 
                     <div class="my-3">
                         <label class="form-label" for="ProductCategoryName">{{ l('ProductCategory') }}</label>
                         <div class="input-group">
-                            <input
-                                class="form-control"
-                                id="ProductCategoryName"
-                                name="productCategoryName"
-                                [(ngModel)]="productCategoryName"
-                                type="text"
-                                disabled
-                            />
-                            <button
-                                class="btn btn-primary blue"
-                                (click)="openSelectProductCategoryModal()"
-                                type="button"
-                            >
+                            <input class="form-control" id="ProductCategoryName" name="productCategoryName"
+                                [(ngModel)]="productCategoryName" type="text" disabled />
+                            <button class="btn btn-primary blue" (click)="openSelectProductCategoryModal()"
+                                type="button">
                                 <i class="fa fa-search"></i>
                                 {{ l('Pick') }}
                             </button>
@@ -107,25 +193,15 @@
                             </button>
                         </div>
                     </div>
-                    <input
-                        class="form-control"
-                        name="productTaskMap.productCategoryId"
-                        [(ngModel)]="productTaskMap.productCategoryId"
-                        type="text"
-                        hidden
-                    />
+                    <input class="form-control" name="productTaskMap.productCategoryId"
+                        [(ngModel)]="productTaskMap.productCategoryId" type="text" hidden /> -->
                 </div>
                 <div class="modal-footer">
                     <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
                         {{ l('Cancel') }}
                     </button>
-                    <button
-                        type="submit"
-                        class="btn btn-primary blue"
-                        [disabled]="!productTaskMapForm.form.valid"
-                        [buttonBusy]="saving"
-                        [busyText]="l('SavingWithThreeDot')"
-                    >
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!productTaskMapForm.form.valid"
+                        [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')">
                         <i class="fa fa-save"></i>
                         <span>{{ l('Save') }}</span>
                     </button>
@@ -133,16 +209,10 @@
             </form>
         </div>
     </div>
-    <productTaskMapProductLookupTableModal
-        #productTaskMapProductLookupTableModal
-        (modalSave)="getNewProductId()"
-    ></productTaskMapProductLookupTableModal>
-    <productTaskMapTaskEventLookupTableModal
-        #productTaskMapTaskEventLookupTableModal
-        (modalSave)="getNewTaskEventId()"
-    ></productTaskMapTaskEventLookupTableModal>
-    <productTaskMapProductCategoryLookupTableModal
-        #productTaskMapProductCategoryLookupTableModal
-        (modalSave)="getNewProductCategoryId()"
-    ></productTaskMapProductCategoryLookupTableModal>
+    <productTaskMapProductLookupTableModal #productTaskMapProductLookupTableModal (modalSave)="getNewProductId()">
+    </productTaskMapProductLookupTableModal>
+    <productTaskMapTaskEventLookupTableModal #productTaskMapTaskEventLookupTableModal (modalSave)="getNewTaskEventId()">
+    </productTaskMapTaskEventLookupTableModal>
+    <productTaskMapProductCategoryLookupTableModal #productTaskMapProductCategoryLookupTableModal
+        (modalSave)="getNewProductCategoryId()"></productTaskMapProductCategoryLookupTableModal>
 </div>

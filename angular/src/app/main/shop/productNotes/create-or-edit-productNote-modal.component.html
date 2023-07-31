@@ -1,13 +1,5 @@
-﻿<div
-    bsModal
-    #createOrEditModal="bs-modal"
-    class="modal fade"
-    tabindex="-1"
-    role="dialog"
-    aria-labelledby="createOrEditModal"
-    aria-hidden="true"
-    [config]="{ backdrop: 'static' }"
->
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{ backdrop: 'static' }">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <form *ngIf="active" #productNoteForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
@@ -17,26 +9,15 @@
                         <span *ngIf="!productNote.id">{{ l('CreateNewProductNote') }}</span>
                     </h4>
 
-                    <button
-                        type="button"
-                        class="btn-close"
-                        (click)="close()"
-                        aria-label="Close"
-                        [disabled]="saving"
-                    ></button>
+                    <button type="button" class="btn-close" (click)="close()" aria-label="Close"
+                        [disabled]="saving"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="my-3">
+                    <!-- <div class="my-3">
                         <label class="form-label" for="ProductName">{{ l('Product') }}</label>
                         <div class="input-group">
-                            <input
-                                class="form-control"
-                                id="ProductName"
-                                name="productName"
-                                [(ngModel)]="productName"
-                                type="text"
-                                disabled
-                            />
+                            <input class="form-control" id="ProductName" name="productName" [(ngModel)]="productName"
+                                type="text" disabled />
                             <button class="btn btn-primary blue" (click)="openSelectProductModal()" type="button">
                                 <i class="fa fa-search"></i>
                                 {{ l('Pick') }}
@@ -46,39 +27,20 @@
                             </button>
                         </div>
                     </div>
-                    <input
-                        class="form-control"
-                        name="productNote.productId"
-                        [(ngModel)]="productNote.productId"
-                        type="text"
-                        required
-                        hidden
-                    />
-
+                    <input class="form-control" name="productNote.productId" [(ngModel)]="productNote.productId"
+                        type="text" required hidden /> -->
                     <div class="my-3">
-                        <label class="form-label" for="ProductNote_Notes">{{ l('Notes') }}</label>
-                        <input
-                            type="text"
-                            #ProductNote_Notes="ngModel"
-                            id="ProductNote_Notes"
-                            class="form-control"
-                            [(ngModel)]="productNote.notes"
-                            name="Notes"
-                        />
-                        <validation-messages [formCtrl]="ProductNote_Notes"></validation-messages>
+                        <label class="form-label" for="StoreNote_Notes">{{ l('Notes') }}</label>
+                        <textarea type="text" id="ProductNote_Notes" class="form-control"
+                            [(ngModel)]="productNote.notes" name="Notes" cols="30" rows="10"></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
                         {{ l('Cancel') }}
                     </button>
-                    <button
-                        type="submit"
-                        class="btn btn-primary blue"
-                        [disabled]="!productNoteForm.form.valid"
-                        [buttonBusy]="saving"
-                        [busyText]="l('SavingWithThreeDot')"
-                    >
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!productNoteForm.form.valid"
+                        [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')">
                         <i class="fa fa-save"></i>
                         <span>{{ l('Save') }}</span>
                     </button>
@@ -86,8 +48,6 @@
             </form>
         </div>
     </div>
-    <productNoteProductLookupTableModal
-        #productNoteProductLookupTableModal
-        (modalSave)="getNewProductId()"
-    ></productNoteProductLookupTableModal>
+    <productNoteProductLookupTableModal #productNoteProductLookupTableModal (modalSave)="getNewProductId()">
+    </productNoteProductLookupTableModal>
 </div>
