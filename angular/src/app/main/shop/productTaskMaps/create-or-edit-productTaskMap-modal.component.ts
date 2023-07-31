@@ -1,7 +1,7 @@
 ﻿import { Component, ViewChild, Injector, Output, EventEmitter, OnInit, ElementRef } from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs/operators';
-import { ProductTaskMapsServiceProxy, CreateOrEditProductTaskMapDto } from '@shared/service-proxies/service-proxies';
+import { ProductTaskMapsServiceProxy, CreateOrEditProductTaskMapDto, CreateOrEditTaskEventDto, TaskEventTaskStatusLookupTableDto, TaskEventsServiceProxy } from '@shared/service-proxies/service-proxies';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { DateTime } from 'luxon';
 
@@ -9,6 +9,7 @@ import { DateTimeService } from '@app/shared/common/timing/date-time.service';
 import { ProductTaskMapProductLookupTableModalComponent } from './productTaskMap-product-lookup-table-modal.component';
 import { ProductTaskMapTaskEventLookupTableModalComponent } from './productTaskMap-taskEvent-lookup-table-modal.component';
 import { ProductTaskMapProductCategoryLookupTableModalComponent } from './productTaskMap-productCategory-lookup-table-modal.component';
+import { SelectItem } from 'primeng/api';
 
 @Component({
     selector: 'createOrEditProductTaskMapModal',
@@ -34,9 +35,29 @@ export class CreateOrEditProductTaskMapModalComponent extends AppComponentBase i
     taskEventName = '';
     productCategoryName = '';
 
+    taskEvent: CreateOrEditTaskEventDto = new CreateOrEditTaskEventDto();
+
+    taskStatusName = '';
+
+    allTaskStatuss: TaskEventTaskStatusLookupTableDto[];
+
+    taskStatusOptions: SelectItem[];
+    priorityOptions: SelectItem[];
+
+    selectedTemplate:any;
+    allTemplate:any[]=[{id:1,displayName:"template 1"},{id:2,displayName:"template 2"},{id:3,displayName:"template 3"}]
+
+    selectedTeam:any;
+    allTeams:any[]=[{id:1,displayName:"Team 1"},{id:2,displayName:"Team 2"},{id:3,displayName:"Team 3"}]
+
+    selectedTag:any;
+    allTags:any[]=[{id:1,displayName:"Tag 1"},{id:2,displayName:"Tag 2"},{id:3,displayName:"Tag 3"}]
+
+
     constructor(
         injector: Injector,
         private _productTaskMapsServiceProxy: ProductTaskMapsServiceProxy,
+        private _taskEventsServiceProxy: TaskEventsServiceProxy,
         private _dateTimeService: DateTimeService
     ) {
         super(injector);
@@ -64,6 +85,11 @@ export class CreateOrEditProductTaskMapModalComponent extends AppComponentBase i
                 this.modal.show();
             });
         }
+        this._taskEventsServiceProxy.getAllTaskStatusForTableDropdown().subscribe((result) => {
+            this.allTaskStatuss = result;
+        });
+        this.taskStatusOptions = [{ label: 'Completed', value: true }, { label: 'Open', value: false }];
+        this.priorityOptions = [{ label: 'High', value: true }, { label: 'Low', value: false }];
     }
 
     save(): void {
@@ -129,6 +155,15 @@ export class CreateOrEditProductTaskMapModalComponent extends AppComponentBase i
         this.active = false;
         this.modal.hide();
     }
+
+    startTimeValue(value: any) {
+        this.taskEvent.startTime = value;
+    }
+
+    endTimeValue(value: any) {
+        this.taskEvent.endTime = value;
+    }
+
 
     ngOnInit(): void {}
 }
