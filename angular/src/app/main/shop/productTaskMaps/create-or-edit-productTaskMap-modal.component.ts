@@ -10,6 +10,7 @@ import { ProductTaskMapProductLookupTableModalComponent } from './productTaskMap
 import { ProductTaskMapTaskEventLookupTableModalComponent } from './productTaskMap-taskEvent-lookup-table-modal.component';
 import { ProductTaskMapProductCategoryLookupTableModalComponent } from './productTaskMap-productCategory-lookup-table-modal.component';
 import { SelectItem } from 'primeng/api';
+import { result } from 'lodash-es';
 
 @Component({
     selector: 'createOrEditProductTaskMapModal',
@@ -35,7 +36,7 @@ export class CreateOrEditProductTaskMapModalComponent extends AppComponentBase i
     taskEventName = '';
     productCategoryName = '';
 
-    taskEvent: CreateOrEditTaskEventDto = new CreateOrEditTaskEventDto();
+    taskEvent: CreateOrEditProductTaskMapDto = new CreateOrEditProductTaskMapDto();
 
     taskStatusName = '';
 
@@ -44,15 +45,15 @@ export class CreateOrEditProductTaskMapModalComponent extends AppComponentBase i
     taskStatusOptions: SelectItem[];
     priorityOptions: SelectItem[];
 
-    selectedTemplate:any;
-    allTemplate:any[]=[{id:1,displayName:"template 1"},{id:2,displayName:"template 2"},{id:3,displayName:"template 3"}]
+    selectedTemplate: any;
+    allTemplate: any[] = []
 
-    selectedTeam:any;
-    allTeams:any[]=[{id:1,displayName:"Team 1"},{id:2,displayName:"Team 2"},{id:3,displayName:"Team 3"}]
+    selectedTeam: any;
+    allTeams: any[] = [{ id: 1, displayName: "Team 1" }, { id: 2, displayName: "Team 2" }, { id: 3, displayName: "Team 3" }]
 
-    selectedTag:any;
-    allTags:any[]=[{id:1,displayName:"Tag 1"},{id:2,displayName:"Tag 2"},{id:3,displayName:"Tag 3"}]
-
+    selectedTag: any;
+    allTags: any[] = [{ id: 1, displayName: "Tag 1" }, { id: 2, displayName: "Tag 2" }, { id: 3, displayName: "Tag 3" }]
+    productId: number;
 
     constructor(
         injector: Injector,
@@ -64,6 +65,7 @@ export class CreateOrEditProductTaskMapModalComponent extends AppComponentBase i
     }
 
     show(productTaskMapId?: number): void {
+        this.getAllTaskTemplates();
         if (!productTaskMapId) {
             this.productTaskMap = new CreateOrEditProductTaskMapDto();
             this.productTaskMap.id = productTaskMapId;
@@ -94,9 +96,11 @@ export class CreateOrEditProductTaskMapModalComponent extends AppComponentBase i
 
     save(): void {
         this.saving = true;
-
+        if (this.productId) {
+            this.taskEvent.productId = this.productId;
+        }
         this._productTaskMapsServiceProxy
-            .createOrEdit(this.productTaskMap)
+            .createOrEdit(this.taskEvent)
             .pipe(
                 finalize(() => {
                     this.saving = false;
@@ -165,5 +169,29 @@ export class CreateOrEditProductTaskMapModalComponent extends AppComponentBase i
     }
 
 
-    ngOnInit(): void {}
+    ngOnInit(): void { }
+
+    getAllTaskTemplates() {
+        this._taskEventsServiceProxy.getAllTaskTemplateForDropdown().subscribe(result => {
+            this.allTemplate = result;
+        })
+    }
+
+    onTaskTemplateSelect(event: any) {
+        if(event!=null && event.value!=null){
+            this._taskEventsServiceProxy.getTaskEventForEdit(event.value.id).subscribe(result=>{
+                this.taskEvent.name=result.taskEvent.name;
+                this.taskEvent.description=result.taskEvent.description;
+                this.taskEvent.priority=result.taskEvent.priority;
+                this.taskEvent.eventDate=result.taskEvent.eventDate;
+                this.taskEvent.endDate=result.taskEvent.endDate;
+                this.taskEvent.startTime=result.taskEvent.startTime;
+                this.taskEvent.endTime=result.taskEvent.endTime;
+                this.taskEvent.estimatedTime=result.taskEvent.estimatedTime;
+                this.taskEvent.actualTime=result.taskEvent.actualTime;
+                this.taskEvent.template=false;
+            });
+        }
+        console.log(event);
+    }
 }

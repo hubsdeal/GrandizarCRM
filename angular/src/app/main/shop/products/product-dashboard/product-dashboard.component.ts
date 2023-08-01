@@ -4,7 +4,7 @@ import { DomSanitizer, Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { ChatGptResponseModalComponent } from '@app/shared/chat-gpt-response-modal/chat-gpt-response-modal.component';
 import { AppComponentBase } from '@shared/common/app-component-base';
-import { CreateOrEditProductDto, CreateOrEditProductMediaDto, GetProductAccountTeamForViewDto, GetProductMediaForViewDto, GetStoreMediaForViewDto, ProductAccountTeamsServiceProxy, ProductMediasServiceProxy, ProductsServiceProxy, ProductTeamsServiceProxy } from '@shared/service-proxies/service-proxies';
+import { CreateOrEditProductDto, CreateOrEditProductMediaDto, GetProductAccountTeamForViewDto, GetProductMediaForViewDto, GetStoreMediaForViewDto, ProductAccountTeamsServiceProxy, ProductDashboardStatisticsForViewDto, ProductMediasServiceProxy, ProductsServiceProxy, ProductTeamsServiceProxy } from '@shared/service-proxies/service-proxies';
 import { TokenService } from 'abp-ng2-module';
 import { FileUploader, FileUploaderOptions } from 'ng2-file-upload';
 import { SelectItem } from 'primeng/api';
@@ -94,6 +94,9 @@ export class ProductDashboardComponent extends AppComponentBase {
   isManufacturerSkuAvailble: boolean = false;
   isManufacturerSkuNotAvailble: boolean = false;
   temporaryMediaLibraryId: number;
+  publicViewUrl:string;
+
+  statistics: ProductDashboardStatisticsForViewDto = new ProductDashboardStatisticsForViewDto();
 
   @ViewChild('createOrEditProductMediaModal', { static: true }) createOrEditProductMediaModal: CreateOrEditProductMediaModalComponent;
   constructor(
@@ -118,12 +121,13 @@ export class ProductDashboardComponent extends AppComponentBase {
     this.loadAllDropdown();
     this.getProductDetails(this.productId);
     this.getProductTeams(this.productId);
+    this.getStatisticsData();
   }
   ngAfterViewInit() {
 
   }
 
-  getProductTeams(productId:number){
+  getProductTeams(productId: number) {
     this._productAccountTeamsServiceProxy.getAllByProductId(productId).subscribe(result => {
       this.teams = result.items;
     });
@@ -150,6 +154,7 @@ export class ProductDashboardComponent extends AppComponentBase {
       this.membershipName = result.membershipName;
       this.measurementUnitName = result.measurementUnitName;
       this.allProductAdditionalCategory = result.additionalCategories;
+      this.publicViewUrl=result.publicViewUrl;
       if (!result.product.isService) {
         this.product.isService = true;
       }
@@ -379,10 +384,18 @@ export class ProductDashboardComponent extends AppComponentBase {
   }
 
   createProductNote(): void {
+    this.createOrEditProductNoteModal.productId = this.productId;
     this.createOrEditProductNoteModal.show();
   }
 
   createProductTaskMap(): void {
+    this.createOrEditProductTaskMapModal.productId = this.productId;
     this.createOrEditProductTaskMapModal.show();
+  }
+
+  getStatisticsData() {
+    this._productsServiceProxy.getProductDashboardStatistics(this.productId).subscribe(result => {
+      this.statistics = result;
+    });
   }
 }

@@ -1,7 +1,7 @@
 ﻿import { Component, ViewChild, Injector, Output, EventEmitter, OnInit, ElementRef } from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs/operators';
-import { ProductNotesServiceProxy, CreateOrEditProductNoteDto } from '@shared/service-proxies/service-proxies';
+import { ProductNotesServiceProxy, CreateOrEditProductNoteDto, HostDashboardServiceProxy } from '@shared/service-proxies/service-proxies';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { DateTime } from 'luxon';
 
@@ -25,6 +25,7 @@ export class CreateOrEditProductNoteModalComponent extends AppComponentBase impl
     productNote: CreateOrEditProductNoteDto = new CreateOrEditProductNoteDto();
 
     productName = '';
+    productId: number;
 
     constructor(
         injector: Injector,
@@ -33,7 +34,6 @@ export class CreateOrEditProductNoteModalComponent extends AppComponentBase impl
     ) {
         super(injector);
     }
-
     show(productNoteId?: number): void {
         if (!productNoteId) {
             this.productNote = new CreateOrEditProductNoteDto();
@@ -56,7 +56,9 @@ export class CreateOrEditProductNoteModalComponent extends AppComponentBase impl
 
     save(): void {
         this.saving = true;
-
+        if (this.productId) {
+            this.productNote.productId = this.productId;
+        }
         this._productNotesServiceProxy
             .createOrEdit(this.productNote)
             .pipe(
@@ -92,5 +94,5 @@ export class CreateOrEditProductNoteModalComponent extends AppComponentBase impl
         this.modal.hide();
     }
 
-    ngOnInit(): void {}
+    ngOnInit(): void { }
 }
