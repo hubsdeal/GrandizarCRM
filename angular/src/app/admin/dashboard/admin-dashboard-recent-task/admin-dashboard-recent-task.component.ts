@@ -54,6 +54,7 @@ export class AdminDashboardRecentTaskComponent  extends AppComponentBase {
   value: number = 50;
 
   selectedAll: boolean = false;
+  
   constructor(
       injector: Injector,
       private _taskEventsServiceProxy: TaskEventsServiceProxy,
