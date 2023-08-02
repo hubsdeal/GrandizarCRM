@@ -4,7 +4,7 @@ import { DomSanitizer, Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { ChatGptResponseModalComponent } from '@app/shared/chat-gpt-response-modal/chat-gpt-response-modal.component';
 import { AppComponentBase } from '@shared/common/app-component-base';
-import { CreateOrEditProductDto, CreateOrEditProductMediaDto, GetProductAccountTeamForViewDto, GetProductMediaForViewDto, GetStoreMediaForViewDto, ProductAccountTeamsServiceProxy, ProductDashboardStatisticsForViewDto, ProductMediasServiceProxy, ProductsServiceProxy, ProductTeamsServiceProxy } from '@shared/service-proxies/service-proxies';
+import { CreateOrEditProductDto, CreateOrEditProductMediaDto, GetProductAccountTeamForViewDto, GetProductMediaForViewDto, GetStoreMediaForViewDto, ProductAccountTeamsServiceProxy, ProductDashboardStatisticsForViewDto, ProductMediasServiceProxy, ProductsServiceProxy, ProductStoreLookupTableDto, ProductTeamsServiceProxy } from '@shared/service-proxies/service-proxies';
 import { TokenService } from 'abp-ng2-module';
 import { FileUploader, FileUploaderOptions } from 'ng2-file-upload';
 import { SelectItem } from 'primeng/api';
@@ -86,7 +86,7 @@ export class ProductDashboardComponent extends AppComponentBase {
   selectedProductCategory: any;
 
 
-  storeOptions: any = []
+  storeOptions: any=[];
   selectedStore: any;
 
 
@@ -155,6 +155,7 @@ export class ProductDashboardComponent extends AppComponentBase {
       this.measurementUnitName = result.measurementUnitName;
       this.allProductAdditionalCategory = result.additionalCategories;
       this.publicViewUrl=result.publicViewUrl;
+      //this.selectedProductCategory = result.product.productCategoryId;
       if (!result.product.isService) {
         this.product.isService = true;
       }
@@ -175,6 +176,7 @@ export class ProductDashboardComponent extends AppComponentBase {
     });
     this._productsServiceProxy.getAllStoreForLookupTable('', '', 0, 10000).subscribe(result => {
       this.storeOptions = result.items;
+      console.log(this.storeOptions)
     });
     this._productsServiceProxy.getAllMeasurementUnitForLookupTable('', '', 0, 10000).subscribe(result => {
       this.measurementUnitOptions = result.items;
@@ -187,19 +189,19 @@ export class ProductDashboardComponent extends AppComponentBase {
     });
   }
 
-  onProductCategoryClick(event: any) {
-    console.log(event);
-    if (event.value != null) {
-      this.product.productCategoryId = event.value.id;
-    }
-  }
+  // onProductCategoryClick(event: any) {
+  //   console.log(event);
+  //   if (event.value != null) {
+  //     this.product.productCategoryId = event.value.id;
+  //   }
+  // }
 
-  onStoreClick(event: any) {
-    console.log(event);
-    if (event.value != null) {
-      this.product.storeId = event.value.id;
-    }
-  }
+  // onStoreClick(event: any) {
+  //   console.log(event);
+  //   if (event.value != null) {
+  //     this.product.storeId = event.value.id;
+  //   }
+  // }
 
 
   openAiModalPr(fieldName: string): void {
