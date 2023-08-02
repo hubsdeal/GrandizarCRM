@@ -13,6 +13,9 @@ import { MyStoresComponent } from './my-stores/my-stores.component';
 import { TaskEventModule } from '@app/main/taskManagement/taskEvents/taskEvent.module';
 import { StoreTagModule } from '../storeTags/storeTag.module';
 import { StoreNoteModule } from '../storeNotes/storeNote.module';
+import { OrderModule } from '@app/main/orderManagement/orders/order.module';
+import { StoreProductMapModule } from '../storeProductMaps/storeProductMap.module';
+import { StoreContactMapModule } from '../storeContactMaps/storeContactMap.module';
 
 @NgModule({
     declarations: [
@@ -25,7 +28,11 @@ import { StoreNoteModule } from '../storeNotes/storeNote.module';
         StoreDashboardComponent,
         MyStoresComponent,
     ],
-    imports: [AppSharedModule, StoreRoutingModule, AdminSharedModule, StoreMediaModule, TaskEventModule, StoreTagModule, StoreNoteModule],
+    imports: [AppSharedModule, StoreRoutingModule, AdminSharedModule, StoreMediaModule, TaskEventModule, StoreTagModule, StoreNoteModule,
+        OrderModule,
+        StoreProductMapModule,
+        StoreContactMapModule
+    ],
     exports:[
         MyStoresComponent,
         CreateOrEditStoreModalComponent,

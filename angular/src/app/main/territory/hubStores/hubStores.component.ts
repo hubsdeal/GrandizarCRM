@@ -1,5 +1,5 @@
 ﻿import { AppConsts } from '@shared/AppConsts';
-import { Component, Injector, ViewEncapsulation, ViewChild } from '@angular/core';
+import { Component, Injector, ViewEncapsulation, ViewChild, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HubStoresServiceProxy, HubStoreDto } from '@shared/service-proxies/service-proxies';
 import { NotifyService } from 'abp-ng2-module';
@@ -44,6 +44,7 @@ export class HubStoresComponent extends AppComponentBase {
 
     selectedAll: boolean = false;
     selectedInput: number[] = [];
+    @Input() hubId:number;
 
     constructor(
         injector: Injector,
@@ -68,7 +69,8 @@ export class HubStoresComponent extends AppComponentBase {
         this.primengTableHelper.showLoadingIndicator();
 
         this._hubStoresServiceProxy
-            .getAll(
+            .getAllByHubId(
+                this.hubId,
                 this.filterText,
                 this.publishedFilter,
                 this.maxDisplaySequenceFilter == null
@@ -114,6 +116,7 @@ export class HubStoresComponent extends AppComponentBase {
     }
 
     createHubStore(): void {
+        this.createOrEditHubStoreModal.hubId = this.hubId;
         this.createOrEditHubStoreModal.show();
     }
 

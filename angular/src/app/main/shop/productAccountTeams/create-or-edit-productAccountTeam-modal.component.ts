@@ -32,6 +32,7 @@ export class CreateOrEditProductAccountTeamModalComponent extends AppComponentBa
 
     employeeName = '';
     productName = '';
+    productId: number;
 
     constructor(
         injector: Injector,
@@ -69,7 +70,9 @@ export class CreateOrEditProductAccountTeamModalComponent extends AppComponentBa
 
     save(): void {
         this.saving = true;
-
+        if(this.productId){
+            this.productAccountTeam.productId = this.productId;
+        }
         this._productAccountTeamsServiceProxy
             .createOrEdit(this.productAccountTeam)
             .pipe(

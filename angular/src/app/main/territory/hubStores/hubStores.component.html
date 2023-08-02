@@ -55,12 +55,12 @@
                                     <select class="form-select" name="PublishedFilter" id="PublishedFilterSelect"
                                         [(ngModel)]="publishedFilter" (ngModelChange)="getHubStores()">
                                         <option value="-1">{{ l('All') }}</option>
-                                        <option value="0">{{ l('False') }}</option>
-                                        <option value="1">{{ l('True') }}</option>
+                                        <option value="0">{{ l('No') }}</option>
+                                        <option value="1">{{ l('Yes') }}</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <!-- <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="MinDisplaySequenceFilter">
                                         {{ l('MinMax') }} {{ l('DisplaySequence') }}
@@ -84,11 +84,11 @@
                                     <input type="text" class="form-control" id="HubNameFilter" name="hubNameFilter"
                                         [(ngModel)]="hubNameFilter" />
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="StoreNameFilter">
-                                        ({{ l('Store') }}) {{ l('Name') }}
+                                        Store
                                     </label>
                                     <input type="text" class="form-control" id="StoreNameFilter" name="storeNameFilter"
                                         [(ngModel)]="storeNameFilter" />

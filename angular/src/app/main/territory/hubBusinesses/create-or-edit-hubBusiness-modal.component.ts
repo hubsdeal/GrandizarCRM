@@ -25,6 +25,8 @@ export class CreateOrEditHubBusinessModalComponent extends AppComponentBase impl
     active = false;
     saving = false;
 
+    hubId:number
+
     hubBusiness: CreateOrEditHubBusinessDto = new CreateOrEditHubBusinessDto();
 
     hubName = '';
@@ -50,7 +52,7 @@ export class CreateOrEditHubBusinessModalComponent extends AppComponentBase impl
         } else {
             this._hubBusinessesServiceProxy.getHubBusinessForEdit(hubBusinessId).subscribe((result) => {
                 this.hubBusiness = result.hubBusiness;
-
+                this.hubId = result.hubBusiness.hubId;
                 this.hubName = result.hubName;
                 this.businessName = result.businessName;
 
@@ -62,7 +64,7 @@ export class CreateOrEditHubBusinessModalComponent extends AppComponentBase impl
 
     save(): void {
         this.saving = true;
-
+        this.hubBusiness.hubId = this.hubId;
         this._hubBusinessesServiceProxy
             .createOrEdit(this.hubBusiness)
             .pipe(

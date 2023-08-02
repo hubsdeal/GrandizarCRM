@@ -4,12 +4,15 @@ import { DomSanitizer, Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { ChatGptResponseModalComponent } from '@app/shared/chat-gpt-response-modal/chat-gpt-response-modal.component';
 import { AppComponentBase } from '@shared/common/app-component-base';
-import { CreateOrEditProductDto, CreateOrEditProductMediaDto, GetProductMediaForViewDto, GetStoreMediaForViewDto, ProductMediasServiceProxy, ProductsServiceProxy } from '@shared/service-proxies/service-proxies';
+import { CreateOrEditProductDto, CreateOrEditProductMediaDto, GetProductAccountTeamForViewDto, GetProductMediaForViewDto, GetStoreMediaForViewDto, ProductAccountTeamsServiceProxy, ProductDashboardStatisticsForViewDto, ProductMediasServiceProxy, ProductsServiceProxy, ProductTeamsServiceProxy } from '@shared/service-proxies/service-proxies';
 import { TokenService } from 'abp-ng2-module';
 import { FileUploader, FileUploaderOptions } from 'ng2-file-upload';
 import { SelectItem } from 'primeng/api';
 import { finalize } from 'rxjs';
 import { CreateOrEditProductMediaModalComponent } from '../../productMedias/create-or-edit-productMedia-modal.component';
+import { CreateOrEditProductAccountTeamModalComponent } from '../../productAccountTeams/create-or-edit-productAccountTeam-modal.component';
+import { CreateOrEditProductNoteModalComponent } from '../../productNotes/create-or-edit-productNote-modal.component';
+import { CreateOrEditProductTaskMapModalComponent } from '../../productTaskMaps/create-or-edit-productTaskMap-modal.component';
 
 @Component({
   selector: 'app-product-dashboard',
@@ -18,6 +21,12 @@ import { CreateOrEditProductMediaModalComponent } from '../../productMedias/crea
 })
 export class ProductDashboardComponent extends AppComponentBase {
 
+  @ViewChild('createOrEditProductAccountTeamModal', { static: true })
+  createOrEditProductAccountTeamModal: CreateOrEditProductAccountTeamModalComponent;
+  @ViewChild('createOrEditProductNoteModal', { static: true })
+  createOrEditProductNoteModal: CreateOrEditProductNoteModalComponent;
+  @ViewChild('createOrEditProductTaskMapModal', { static: true })
+  createOrEditProductTaskMapModal: CreateOrEditProductTaskMapModalComponent;
   saving = false;
   productShortDesc: string;
   bindingData: any;
@@ -68,7 +77,7 @@ export class ProductDashboardComponent extends AppComponentBase {
   ratingLikeOptions: any;
   publishOptions: SelectItem[];
 
-  // teams: any[] = [];
+  teams: GetProductAccountTeamForViewDto[] = [];
   // numberOfTasks: number;
   // numberOfNotes: number;
   productCategoryId: number;
@@ -85,6 +94,9 @@ export class ProductDashboardComponent extends AppComponentBase {
   isManufacturerSkuAvailble: boolean = false;
   isManufacturerSkuNotAvailble: boolean = false;
   temporaryMediaLibraryId: number;
+  publicViewUrl:string;
+
+  statistics: ProductDashboardStatisticsForViewDto = new ProductDashboardStatisticsForViewDto();
 
   @ViewChild('createOrEditProductMediaModal', { static: true }) createOrEditProductMediaModal: CreateOrEditProductMediaModalComponent;
   constructor(
@@ -93,9 +105,10 @@ export class ProductDashboardComponent extends AppComponentBase {
     private _tokenService: TokenService,
     private dialog: MatDialog,
     private _productsServiceProxy: ProductsServiceProxy,
-    private _productMediasServiceProxy:ProductMediasServiceProxy,
+    private _productMediasServiceProxy: ProductMediasServiceProxy,
     private _sanitizer: DomSanitizer,
-    private titleService: Title
+    private titleService: Title,
+    private _productAccountTeamsServiceProxy: ProductAccountTeamsServiceProxy
   ) {
     super(injector);
     this.productPublishedOptions = [{ label: 'Draft', value: false }, { label: 'Published', value: true }];
@@ -107,9 +120,17 @@ export class ProductDashboardComponent extends AppComponentBase {
     this.productId = parseInt(productId);
     this.loadAllDropdown();
     this.getProductDetails(this.productId);
+    this.getProductTeams(this.productId);
+    this.getStatisticsData();
   }
   ngAfterViewInit() {
 
+  }
+
+  getProductTeams(productId: number) {
+    this._productAccountTeamsServiceProxy.getAllByProductId(productId).subscribe(result => {
+      this.teams = result.items;
+    });
   }
 
   getProductDetails(id: number) {
@@ -133,6 +154,7 @@ export class ProductDashboardComponent extends AppComponentBase {
       this.membershipName = result.membershipName;
       this.measurementUnitName = result.measurementUnitName;
       this.allProductAdditionalCategory = result.additionalCategories;
+      this.publicViewUrl=result.publicViewUrl;
       if (!result.product.isService) {
         this.product.isService = true;
       }
@@ -337,7 +359,7 @@ export class ProductDashboardComponent extends AppComponentBase {
       media.mediaLibraryId = event;
       this._productMediasServiceProxy.createOrEdit(media).subscribe(result => {
         this.notify.info(this.l('SavedSuccessfully'));
-        if (this.product.mediaLibraryId == null){
+        if (this.product.mediaLibraryId == null) {
           this.product.mediaLibraryId = event;
           this._productsServiceProxy.createOrEdit(this.product).subscribe(r => {
             this.getProductDetails(this.productId);
@@ -354,5 +376,26 @@ export class ProductDashboardComponent extends AppComponentBase {
     this._productsServiceProxy.createOrEdit(this.product).subscribe(result => {
       this.notify.info('Updated Successfully');
     })
+  }
+
+  createProductAccountTeam(): void {
+    this.createOrEditProductAccountTeamModal.productId = this.productId;
+    this.createOrEditProductAccountTeamModal.show();
+  }
+
+  createProductNote(): void {
+    this.createOrEditProductNoteModal.productId = this.productId;
+    this.createOrEditProductNoteModal.show();
+  }
+
+  createProductTaskMap(): void {
+    this.createOrEditProductTaskMapModal.productId = this.productId;
+    this.createOrEditProductTaskMapModal.show();
+  }
+
+  getStatisticsData() {
+    this._productsServiceProxy.getProductDashboardStatistics(this.productId).subscribe(result => {
+      this.statistics = result;
+    });
   }
 }

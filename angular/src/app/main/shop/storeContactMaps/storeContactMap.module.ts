@@ -18,5 +18,13 @@ import { StoreContactMapContactLookupTableModalComponent } from './storeContactM
         StoreContactMapContactLookupTableModalComponent,
     ],
     imports: [AppSharedModule, StoreContactMapRoutingModule, AdminSharedModule],
+    exports:[
+        StoreContactMapsComponent,
+        CreateOrEditStoreContactMapModalComponent,
+        ViewStoreContactMapModalComponent,
+
+        StoreContactMapStoreLookupTableModalComponent,
+        StoreContactMapContactLookupTableModalComponent,
+    ]
 })
 export class StoreContactMapModule {}

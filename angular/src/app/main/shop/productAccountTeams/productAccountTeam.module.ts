@@ -18,5 +18,11 @@ import { ProductAccountTeamProductLookupTableModalComponent } from './productAcc
         ProductAccountTeamProductLookupTableModalComponent,
     ],
     imports: [AppSharedModule, ProductAccountTeamRoutingModule, AdminSharedModule],
+    exports:[ProductAccountTeamsComponent,
+        CreateOrEditProductAccountTeamModalComponent,
+        ViewProductAccountTeamModalComponent,
+
+        ProductAccountTeamEmployeeLookupTableModalComponent,
+        ProductAccountTeamProductLookupTableModalComponent,]
 })
 export class ProductAccountTeamModule {}

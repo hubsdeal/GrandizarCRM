@@ -1,5 +1,5 @@
 ﻿import { AppConsts } from '@shared/AppConsts';
-import { Component, Injector, ViewEncapsulation, ViewChild } from '@angular/core';
+import { Component, Injector, ViewEncapsulation, ViewChild, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HubContactsServiceProxy, HubContactDto } from '@shared/service-proxies/service-proxies';
 import { NotifyService } from 'abp-ng2-module';
@@ -41,6 +41,9 @@ export class HubContactsComponent extends AppComponentBase {
     hubNameFilter = '';
     contactFullNameFilter = '';
 
+    @Input() hubId: number;
+    selectedAll: boolean = false;
+
     constructor(
         injector: Injector,
         private _hubContactsServiceProxy: HubContactsServiceProxy,
@@ -63,17 +66,17 @@ export class HubContactsComponent extends AppComponentBase {
 
         this.primengTableHelper.showLoadingIndicator();
 
-        this._hubContactsServiceProxy
-            .getAll(
-                this.filterText,
-                this.maxDisplayScoreFilter == null ? this.maxDisplayScoreFilterEmpty : this.maxDisplayScoreFilter,
-                this.minDisplayScoreFilter == null ? this.minDisplayScoreFilterEmpty : this.minDisplayScoreFilter,
-                this.hubNameFilter,
-                this.contactFullNameFilter,
-                this.primengTableHelper.getSorting(this.dataTable),
-                this.primengTableHelper.getSkipCount(this.paginator, event),
-                this.primengTableHelper.getMaxResultCount(this.paginator, event)
-            )
+        this._hubContactsServiceProxy.getAllByHubId(
+            this.hubId,
+            this.filterText,
+            this.maxDisplayScoreFilter == null ? this.maxDisplayScoreFilterEmpty : this.maxDisplayScoreFilter,
+            this.minDisplayScoreFilter == null ? this.minDisplayScoreFilterEmpty : this.minDisplayScoreFilter,
+            this.hubNameFilter,
+            this.contactFullNameFilter,
+            this.primengTableHelper.getSorting(this.dataTable),
+            this.primengTableHelper.getSkipCount(this.paginator, event),
+            this.primengTableHelper.getMaxResultCount(this.paginator, event)
+        )
             .subscribe((result) => {
                 this.primengTableHelper.totalRecordsCount = result.totalCount;
                 this.primengTableHelper.records = result.items;
@@ -86,7 +89,20 @@ export class HubContactsComponent extends AppComponentBase {
     }
 
     createHubContact(): void {
+        this.createOrEditHubContactModal.hubId = this.hubId;
         this.createOrEditHubContactModal.show();
+    }
+
+    onChangesSelectAll() {
+        for (var i = 0; i < this.primengTableHelper.records.length; i++) {
+            this.primengTableHelper.records[i].selected = this.selectedAll;
+        }
+    }
+
+    checkIfAllSelected() {
+        this.selectedAll = this.primengTableHelper.records.every(function (item: any) {
+            return item.selected == true;
+        })
     }
 
     deleteHubContact(hubContact: HubContactDto): void {

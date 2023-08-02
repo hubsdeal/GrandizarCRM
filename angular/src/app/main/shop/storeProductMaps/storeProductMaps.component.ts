@@ -19,6 +19,7 @@ import { DateTime } from 'luxon';
 import { DateTimeService } from '@app/shared/common/timing/date-time.service';
 
 @Component({
+    selector: 'app-storeProductMaps',
     templateUrl: './storeProductMaps.component.html',
     encapsulation: ViewEncapsulation.None,
     animations: [appModuleAnimation()],
@@ -41,6 +42,10 @@ export class StoreProductMapsComponent extends AppComponentBase {
     minDisplaySequenceFilterEmpty: number;
     storeNameFilter = '';
     productNameFilter = '';
+
+
+    selectedAll: boolean = false;
+    selectedInput: number[] = [];
 
     constructor(
         injector: Injector,
@@ -134,5 +139,25 @@ export class StoreProductMapsComponent extends AppComponentBase {
         this.productNameFilter = '';
 
         this.getStoreProductMaps();
+    }
+
+    onChangesSelectAll() {
+        for (var i = 0; i < this.primengTableHelper.records.length; i++) {
+            this.primengTableHelper.records[i].selected = this.selectedAll;
+        }
+    }
+
+    checkIfAllSelected() {
+        this.selectedAll = this.primengTableHelper.records.every(function (item: any) {
+            return item.selected == true;
+        })
+    }
+
+    refreshCheckboxReloadList() {
+        this.selectedAll = false;
+        for (var i = 0; i < this.primengTableHelper.records.length; i++) {
+            this.primengTableHelper.records[i].selected = false;
+        }
+        this.reloadPage();
     }
 }

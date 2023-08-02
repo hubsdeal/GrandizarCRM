@@ -16,5 +16,10 @@ import { ProductNoteProductLookupTableModalComponent } from './productNote-produ
         ProductNoteProductLookupTableModalComponent,
     ],
     imports: [AppSharedModule, ProductNoteRoutingModule, AdminSharedModule],
+    exports:[ProductNotesComponent,
+        CreateOrEditProductNoteModalComponent,
+        ViewProductNoteModalComponent,
+
+        ProductNoteProductLookupTableModalComponent,]
 })
 export class ProductNoteModule {}

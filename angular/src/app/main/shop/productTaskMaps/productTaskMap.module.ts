@@ -20,5 +20,12 @@ import { ProductTaskMapProductCategoryLookupTableModalComponent } from './produc
         ProductTaskMapProductCategoryLookupTableModalComponent,
     ],
     imports: [AppSharedModule, ProductTaskMapRoutingModule, AdminSharedModule],
+    exports: [ProductTaskMapsComponent,
+        CreateOrEditProductTaskMapModalComponent,
+        ViewProductTaskMapModalComponent,
+
+        ProductTaskMapProductLookupTableModalComponent,
+        ProductTaskMapTaskEventLookupTableModalComponent,
+        ProductTaskMapProductCategoryLookupTableModalComponent,]
 })
 export class ProductTaskMapModule {}

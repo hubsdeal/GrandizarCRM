@@ -1,7 +1,7 @@
 ﻿import { AppConsts } from '@shared/AppConsts';
 import { Component, Injector, ViewEncapsulation, ViewChild, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { HubProductsServiceProxy, HubProductDto } from '@shared/service-proxies/service-proxies';
+import { HubProductsServiceProxy, HubProductDto, HubProductCategoriesServiceProxy } from '@shared/service-proxies/service-proxies';
 import { NotifyService } from 'abp-ng2-module';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { TokenAuthServiceProxy } from '@shared/service-proxies/service-proxies';
@@ -46,6 +46,10 @@ export class HubProductsComponent extends AppComponentBase {
     selectedAll: boolean = false;
     selectedInput: number[] = [];
 
+
+    allCategories: any[] = [];
+    
+
     constructor(
         injector: Injector,
         private _hubProductsServiceProxy: HubProductsServiceProxy,
@@ -53,6 +57,7 @@ export class HubProductsComponent extends AppComponentBase {
         private _tokenAuth: TokenAuthServiceProxy,
         private _activatedRoute: ActivatedRoute,
         private _fileDownloadService: FileDownloadService,
+        private _hubProductCategoriesServiceProxy: HubProductCategoriesServiceProxy,
         private _dateTimeService: DateTimeService
     ) {
         super(injector);
@@ -84,8 +89,26 @@ export class HubProductsComponent extends AppComponentBase {
             .subscribe((result) => {
                 this.primengTableHelper.totalRecordsCount = result.totalCount;
                 this.primengTableHelper.records = result.items;
+                this.getHubCategories();
                 this.primengTableHelper.hideLoadingIndicator();
             });
+    }
+
+
+    getHubCategories() {
+        this._hubProductCategoriesServiceProxy.getAllByHubId(
+            this.hubId,
+            this.filterText,
+            this.publishedFilter,
+            this.maxDisplayScoreFilter == null ? this.maxDisplayScoreFilterEmpty : this.maxDisplayScoreFilter,
+            this.minDisplayScoreFilter == null ? this.minDisplayScoreFilterEmpty : this.minDisplayScoreFilter,
+            this.hubNameFilter,
+            '',
+            '',
+            0,
+            100000).subscribe(result => {
+            this.allCategories = result.items;
+        });
     }
     onChangesSelectAll() {
         for (var i = 0; i < this.primengTableHelper.records.length; i++) {
