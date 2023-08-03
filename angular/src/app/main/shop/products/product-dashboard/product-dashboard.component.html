@@ -2,7 +2,7 @@
     <div class="d-flex flex-column flex-column-fluid">
         <!-- topbar -->
         <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
-            <div id="kt_app_toolbar_container" class="app-container container-xxl d-flex flex-stack">
+            <div id="kt_app_toolbar_container" class="app-container d-flex flex-stack">
                 <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
                     <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">
                         Product Dashboard
@@ -28,7 +28,7 @@
         </div>
         <!-- end Topbar -->
         <div id="kt_app_content" *ngIf="product?.id" class="app-content flex-column-fluid">
-            <div id="kt_app_content_container" class="app-container container-xxl">
+            <div id="kt_app_content_container" class="app-container">
                 <div class="card mb-6">
                     <div class="card-body">
                         <h5 class="mb-4 text-dark">Account Management</h5>
@@ -140,7 +140,7 @@
                                     </div>
 
                                     <div class="d-flex mb-4 select_button_custom">
-                                        <a href="{{publicViewUrl}}" target="_blank" class="btn btn-sm btn-success me-4"><i
+                                        <a href="{{publicViewUrl}}" target="_blank" class="btn btn-sm btn-success me-4 pt-3"><i
                                                 class="fas fa-eye fs-6 "></i>
                                             Public View</a>
                                         <p-selectButton [options]="productPublishedOptions"
@@ -305,7 +305,6 @@
                                                 <!--end::Input group-->
 
                                                 <!--begin::Input group-->
-                                                <!--begin::Input group-->
                                                 <div class="fv-row mb-7 fv-plugins-icon-container">
                                                     <div class="p_filter">
                                                         <label class="form-label required" for="ProductCategoryName">
@@ -314,13 +313,11 @@
                                                         <p-dropdown [options]="storeOptions" [filter]="true"
                                                             [virtualScroll]="true"
                                                             placeholder="Select Store" [itemSize]="30"
-                                                            name="displayName" optionLabel="displayName" optionValue="id"
+                                                            name="storeName" optionLabel="displayName" optionValue="id" optionId="storeId"
                                                             [(ngModel)]="product.storeId" filterBy="displayName" required
                                                             [style]="{ width: '100%' }"></p-dropdown>
-                                                            {{product.storeId}}
                                                     </div>
                                                 </div>
-                                                <!--end::Input group-->
                                                 <!--end::Input group-->
 
                                                 <!--begin::Input group-->
@@ -1203,7 +1200,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
 
                             <div class="card mb-6">
                                 <div class="accordion-item">
