@@ -48,66 +48,115 @@
                     </div>
                     <input class="form-control" name="mediaLibrary.masterTagId" [(ngModel)]="mediaLibrary.masterTagId"
                         type="text" hidden /> -->
-                    <div class="my-3">
-                        <label class="form-label" for="HubTypeName">{{ l('Media Type') }}</label>
-                        <select name="mediaLibrary.masterTagId" [(ngModel)]="mediaLibrary.masterTagId"
-                            class="form-select" required>
-                            <option value="">{{ l('Select Media Type') }}</option>
-                            <option *ngFor="let item of allMasterTags" value="{{ item.id }}">
-                                {{ item.displayName }}
-                            </option>
-                        </select>
-                    </div>
+                    <div *ngIf="isChangeProductVideo">
+                        <div class="my-3">
+                            <label class="form-label" for="MediaLibrary_Name">{{ l('Name') }} *</label>
+                            <input type="text" #MediaLibrary_Name="ngModel" id="MediaLibrary_Name" class="form-control"
+                                [(ngModel)]="mediaLibrary.name" name="Name" minlength="1" maxlength="512" required />
+                            <validation-messages [formCtrl]="MediaLibrary_Name"></validation-messages>
+                        </div>
 
-                    <div class="my-3" *ngIf="mediaLibrary.masterTagId==2">
-                        <label class="form-label" for="MediaLibrary_Name">{{ l('Name') }} *</label>
-                        <input type="text" #MediaLibrary_Name="ngModel" id="MediaLibrary_Name" class="form-control"
-                            [(ngModel)]="mediaLibrary.name" name="Name" minlength="1" maxlength="512" required />
-                        <validation-messages [formCtrl]="MediaLibrary_Name"></validation-messages>
-                    </div>
+                        <div class="my-3">
+                            <label class="form-label" for="MediaLibrary_VideoLink">{{ l('Video Link') }}</label>
+                            <input type="text" #MediaLibrary_VideoLink="ngModel" id="MediaLibrary_VideoLink"
+                                class="form-control" [(ngModel)]="mediaLibrary.videoLink" name="VideoLink" minlength="1"
+                                maxlength="1500" />
+                            <validation-messages [formCtrl]="MediaLibrary_VideoLink"></validation-messages>
+                        </div>
 
-                    <div class="my-3" *ngIf="mediaLibrary.masterTagId==2">
-                        <label class="form-label" for="MediaLibrary_VideoLink">{{ l('Video Link') }}</label>
-                        <input type="text" #MediaLibrary_VideoLink="ngModel" id="MediaLibrary_VideoLink"
-                            class="form-control" [(ngModel)]="mediaLibrary.videoLink" name="VideoLink" minlength="1"
-                            maxlength="1500" />
-                        <validation-messages [formCtrl]="MediaLibrary_VideoLink"></validation-messages>
                     </div>
+                    <!-- from list -->
+                    <div *ngIf="!isChangeProductPicture && !isChangeProductVideo">
+                        <div class="my-3">
+                            <label class="form-label" for="HubTypeName">{{ l('Media Type') }}</label>
+                            <select name="mediaLibrary.masterTagId" [(ngModel)]="mediaLibrary.masterTagId"
+                                class="form-select" required>
+                                <option value="">{{ l('Select Media Type') }}</option>
+                                <option *ngFor="let item of allMasterTags" value="{{ item.id }}">
+                                    {{ item.displayName }}
+                                </option>
+                            </select>
+                        </div>
 
-                    <div class="my-3">
-                        <label class="form-label" for="MediaLibrary_SeoTag">{{ l('SEO Tag') }}</label>
-                        <input type="text" #MediaLibrary_SeoTag="ngModel" id="MediaLibrary_SeoTag" class="form-control"
-                            [(ngModel)]="mediaLibrary.seoTag" name="SeoTag" minlength="1" maxlength="256" />
-                        <validation-messages [formCtrl]="MediaLibrary_SeoTag"></validation-messages>
-                    </div>
+                        <div class="my-3" *ngIf="mediaLibrary.masterTagId==2">
+                            <label class="form-label" for="MediaLibrary_Name">{{ l('Name') }} *</label>
+                            <input type="text" #MediaLibrary_Name="ngModel" id="MediaLibrary_Name" class="form-control"
+                                [(ngModel)]="mediaLibrary.name" name="Name" minlength="1" maxlength="512" required />
+                            <validation-messages [formCtrl]="MediaLibrary_Name"></validation-messages>
+                        </div>
 
-                    <div class="my-3">
-                        <label class="form-label" for="MediaLibrary_AltTag">{{ l('Alt Tag') }}</label>
-                        <input type="text" #MediaLibrary_AltTag="ngModel" id="MediaLibrary_AltTag" class="form-control"
-                            [(ngModel)]="mediaLibrary.altTag" name="AltTag" minlength="1" maxlength="256" />
-                        <validation-messages [formCtrl]="MediaLibrary_AltTag"></validation-messages>
-                    </div>
+                        <div class="my-3" *ngIf="mediaLibrary.masterTagId==2">
+                            <label class="form-label" for="MediaLibrary_VideoLink">{{ l('Video Link') }}</label>
+                            <input type="text" #MediaLibrary_VideoLink="ngModel" id="MediaLibrary_VideoLink"
+                                class="form-control" [(ngModel)]="mediaLibrary.videoLink" name="VideoLink" minlength="1"
+                                maxlength="1500" />
+                            <validation-messages [formCtrl]="MediaLibrary_VideoLink"></validation-messages>
+                        </div>
 
-                    <div class="new_media_file" *ngIf="mediaLibrary.masterTagId ==1">
-                        <div class="kt-avatar kt-avatar--outline my-3" id="kt_contacts_edit_avatar">
-                            <label class="kt-avatar__upload" data-toggle="kt-tooltip" title=""
-                                data-original-title="Change avatar">
-                                <i class="fas fa-plus-circle"></i> Upload New
-                                <input type="file" ng2FileSelect [uploader]="uploader"
-                                    (change)="fileChangeEvent($event)" name="customFile" id="customFile"
-                                    accept=".png, .jpg, .jpeg">
-                            </label>
-                            <span class="kt-avatar__cancel" data-toggle="kt-tooltip" title=""
-                                data-original-title="Cancel avatar">
-                                <i class="fa fa-times"></i>
-                            </span>
+                        <div class="my-3">
+                            <label class="form-label" for="MediaLibrary_SeoTag">{{ l('SEO Tag') }}</label>
+                            <input type="text" #MediaLibrary_SeoTag="ngModel" id="MediaLibrary_SeoTag"
+                                class="form-control" [(ngModel)]="mediaLibrary.seoTag" name="SeoTag" minlength="1"
+                                maxlength="256" />
+                            <validation-messages [formCtrl]="MediaLibrary_SeoTag"></validation-messages>
+                        </div>
+
+                        <div class="my-3">
+                            <label class="form-label" for="MediaLibrary_AltTag">{{ l('Alt Tag') }}</label>
+                            <input type="text" #MediaLibrary_AltTag="ngModel" id="MediaLibrary_AltTag"
+                                class="form-control" [(ngModel)]="mediaLibrary.altTag" name="AltTag" minlength="1"
+                                maxlength="256" />
+                            <validation-messages [formCtrl]="MediaLibrary_AltTag"></validation-messages>
                         </div>
                     </div>
+                    <div *ngIf="!isChangeProductVideo">
+                        <div class="new_media_file">
+                            <div class="d-flex">
+                                <div class="kt-avatar kt-avatar--outline me-3" id="kt_contacts_edit_avatar">
+                                    <label class="kt-avatar__upload" data-toggle="kt-tooltip" title=""
+                                        data-original-title="Change avatar">
+                                        <i class="fas fa-plus-circle"></i> Upload New
+                                        <input type="file" ng2FileSelect [uploader]="uploader"
+                                            (change)="fileChangeEvent($event)" name="customFile" id="customFile"
+                                            accept=".png, .jpg, .jpeg">
+                                    </label>
+                                    <span class="kt-avatar__cancel" data-toggle="kt-tooltip" title=""
+                                        data-original-title="Cancel avatar">
+                                        <i class="fa fa-times"></i>
+                                    </span>
+                                </div>
+                                <div *ngIf="isChangeProductPicture" class="kt-avatar kt-avatar--outline me-3"
+                                    id="kt_contacts_edit_avatar">
+                                    <label class="kt-avatar__upload" data-toggle="kt-tooltip"
+                                        (click)="openSelectMediaLibraryModal()" title=""
+                                        data-original-title="Change avatar">
+                                        <i class="fas fa-plus-circle"></i> HD Photo Library
+                                    </label>
+                                    <span (click)="setMediaLibraryIdNull()" class="kt-avatar__cancel"
+                                        data-toggle="kt-tooltip" title="" data-original-title="Cancel avatar">
+                                        <i class="fa fa-times"></i>
+                                    </span>
+                                </div>
 
-                    <div *ngIf="imageSrc" class="col-md-12 p-4 text-center mt-4 border">
-                        <img [src]="imageSrc"  class="uploaded_img">
+                                <div *ngIf="isChangeProductPicture" class="kt-avatar kt-avatar--outline"
+                                    id="kt_contacts_edit_avatar">
+                                    <label class="kt-avatar__upload" data-toggle="kt-tooltip"
+                                        (click)="openSelectMyMediaLibraryModal()" title=""
+                                        data-original-title="Change avatar">
+                                        <i class="fas fa-plus-circle"></i> My Photos
+                                    </label>
+                                    <span class="kt-avatar__cancel" data-toggle="kt-tooltip" title=""
+                                        data-original-title="Cancel avatar">
+                                        <i class="fa fa-times"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div *ngIf="imageSrc" class="col-md-12 p-4 text-center mt-4 border">
+                            <img [src]="imageSrc" class="uploaded_img">
+                        </div>
                     </div>
-
 
                     <!-- <div class="my-3">
                         <label class="form-label" for="MediaLibrary_Size">{{ l('Size') }}</label>
@@ -178,4 +227,6 @@
         (modalSave)="getNewMasterTagCategoryId()"></mediaLibraryMasterTagCategoryLookupTableModal>
     <mediaLibraryMasterTagLookupTableModal #mediaLibraryMasterTagLookupTableModal (modalSave)="getNewMasterTagId()">
     </mediaLibraryMasterTagLookupTableModal>
+    <productMediaMediaLibraryLookupTableModal #productMediaMediaLibraryLookupTableModal (selectedMedia)="getNewMediaLibraryId($event)">
+    </productMediaMediaLibraryLookupTableModal>
 </div>

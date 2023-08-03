@@ -22,6 +22,7 @@ import { ContactModule } from '@app/main/crm/contacts/contact.module';
 import { ProductTaskMapModule } from '../productTaskMaps/productTaskMap.module';
 import { ProductNoteModule } from '../productNotes/productNote.module';
 import { ProductAccountTeamModule } from '../productAccountTeams/productAccountTeam.module';
+import { MediaLibraryModule } from '@app/main/lookupData/mediaLibraries/mediaLibrary.module';
 
 @NgModule({
     declarations: [
@@ -42,6 +43,7 @@ import { ProductAccountTeamModule } from '../productAccountTeams/productAccountT
     ],
     imports: [AppSharedModule, ProductRoutingModule, AdminSharedModule, ProductTagModule, ProductMediaModule,
         OrderModule, ContactModule, ProductTaskMapModule, ProductNoteModule,
-        ProductAccountTeamModule],
+        ProductAccountTeamModule,
+        MediaLibraryModule],
 })
 export class ProductModule { }

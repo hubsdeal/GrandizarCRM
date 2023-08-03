@@ -112,6 +112,7 @@ export class MediaLibrariesComponent extends AppComponentBase implements OnInit{
     }
 
     createMediaLibrary(): void {
+        this.createOrEditMediaLibraryModal.isFromMediaLibraryList = true;
         this.createOrEditMediaLibraryModal.show();
     }
 

@@ -1179,7 +1179,7 @@
                                                         <div class="border border-dashed border-gray-300 rounded me-5">
                                                             <div class="overlay sm_bottom_gallery">
                                                                 <a href="javascript:;"
-                                                                    (click)="createProductMediaPhoto()">
+                                                                    (click)="changeProductMediaModal()">
                                                                     <span><i
                                                                             class="fas fa-plus-circle text-primary"></i></span>
                                                                     <span class="text-primary fs-5 fw-bold">Photo</span>
@@ -3425,4 +3425,6 @@
     </createOrEditProductAccountTeamModal>
     <createOrEditProductNoteModal #createOrEditProductNoteModal>
     </createOrEditProductNoteModal>
+    <createOrEditMediaLibraryModal #createOrEditMediaLibraryModalForProductMedia (saveProductMedia)="changeProductMedia($event)">
+    </createOrEditMediaLibraryModal>
 </div>

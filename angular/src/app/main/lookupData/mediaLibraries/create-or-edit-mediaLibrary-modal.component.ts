@@ -1,7 +1,7 @@
 ﻿import { Component, ViewChild, Injector, Output, EventEmitter, OnInit, ElementRef } from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs/operators';
-import { MediaLibrariesServiceProxy, CreateOrEditMediaLibraryDto, MediaLibraryMasterTagLookupTableDto } from '@shared/service-proxies/service-proxies';
+import { MediaLibrariesServiceProxy, CreateOrEditMediaLibraryDto, MediaLibraryMasterTagLookupTableDto, ProductMediasServiceProxy } from '@shared/service-proxies/service-proxies';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { DateTime } from 'luxon';
 
@@ -11,6 +11,8 @@ import { MediaLibraryMasterTagLookupTableModalComponent } from './mediaLibrary-m
 import { FileItem, FileUploader, FileUploaderOptions } from 'ng2-file-upload';
 import { AppConsts } from '@shared/AppConsts';
 import { IAjaxResponse, TokenService } from 'abp-ng2-module';
+import { ProductMediaMediaLibraryLookupTableModalComponent } from '@app/main/shop/productMedias/productMedia-mediaLibrary-lookup-table-modal.component';
+import { AppSessionService } from '@shared/common/session/app-session.service';
 
 @Component({
     selector: 'createOrEditMediaLibraryModal',
@@ -22,9 +24,10 @@ export class CreateOrEditMediaLibraryModalComponent extends AppComponentBase imp
     mediaLibraryMasterTagCategoryLookupTableModal: MediaLibraryMasterTagCategoryLookupTableModalComponent;
     @ViewChild('mediaLibraryMasterTagLookupTableModal', { static: true })
     mediaLibraryMasterTagLookupTableModal: MediaLibraryMasterTagLookupTableModalComponent;
+    @ViewChild('productMediaMediaLibraryLookupTableModal', { static: true }) productMediaMediaLibraryLookupTableModal: ProductMediaMediaLibraryLookupTableModalComponent;
 
     @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
-
+    @Output() saveProductMedia: EventEmitter<number> = new EventEmitter<number>();
     active = false;
     saving = false;
 
@@ -44,10 +47,19 @@ export class CreateOrEditMediaLibraryModalComponent extends AppComponentBase imp
     imageSrc: any = '';
     imageSize: any;
     imageExtension: any;
+    isChangeProductPicture: boolean = false;
+
+    isChangeProductVideo: boolean = false;
+    productId: number;
+    isFromMediaLibraryList: boolean = false;
+
+    //allSelectedMedias: MediaLibraryFromSpDto[] = [];
 
     constructor(
         injector: Injector,
         private _mediaLibrariesServiceProxy: MediaLibrariesServiceProxy,
+        private _appSessionService: AppSessionService,
+        private _productMediasServiceProxy: ProductMediasServiceProxy,
         private _dateTimeService: DateTimeService,
         private _tokenService: TokenService
     ) {
@@ -200,6 +212,23 @@ export class CreateOrEditMediaLibraryModalComponent extends AppComponentBase imp
         this.masterTagName = this.mediaLibraryMasterTagLookupTableModal.displayName;
     }
 
+    openSelectMediaLibraryModal() {
+        this.productMediaMediaLibraryLookupTableModal.show();
+    }
+    openSelectMyMediaLibraryModal() {
+        console.log(this._appSessionService.userId);
+        //this.productMediaMediaLibraryLookupTableModal.employeeUserId = this._appSessionService.userId;
+        this.productMediaMediaLibraryLookupTableModal.show();
+    }
+
+    setMediaLibraryIdNull() {
+        this.mediaName = '';
+        this.mediaPicture = null;
+        this.mediaId = null;
+
+    }
+
+
     close(): void {
         this.active = false;
         this.modal.hide();
@@ -207,5 +236,11 @@ export class CreateOrEditMediaLibraryModalComponent extends AppComponentBase imp
 
     ngOnInit(): void {
         this.initFileUploader();
+    }
+
+    getNewMediaLibraryId(event: any) {
+        if (event) {
+            //this.allSelectedMedias = event;
+        }
     }
 }

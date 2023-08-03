@@ -26,6 +26,7 @@ export class ProductMediaMediaLibraryLookupTableModalComponent extends AppCompon
     @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
     active = false;
     saving = false;
+    employeeUserId:number;
 
     constructor(injector: Injector, private _productMediasServiceProxy: ProductMediasServiceProxy) {
         super(injector);

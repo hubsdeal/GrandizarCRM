@@ -7,6 +7,7 @@ import { CreateOrEditMediaLibraryModalComponent } from './create-or-edit-mediaLi
 import { ViewMediaLibraryModalComponent } from './view-mediaLibrary-modal.component';
 import { MediaLibraryMasterTagCategoryLookupTableModalComponent } from './mediaLibrary-masterTagCategory-lookup-table-modal.component';
 import { MediaLibraryMasterTagLookupTableModalComponent } from './mediaLibrary-masterTag-lookup-table-modal.component';
+import { ProductMediaModule } from '@app/main/shop/productMedias/productMedia.module';
 
 @NgModule({
     declarations: [
@@ -17,6 +18,7 @@ import { MediaLibraryMasterTagLookupTableModalComponent } from './mediaLibrary-m
         MediaLibraryMasterTagCategoryLookupTableModalComponent,
         MediaLibraryMasterTagLookupTableModalComponent,
     ],
-    imports: [AppSharedModule, MediaLibraryRoutingModule, AdminSharedModule],
+    imports: [AppSharedModule, MediaLibraryRoutingModule, AdminSharedModule, ProductMediaModule],
+    exports: [MediaLibrariesComponent, CreateOrEditMediaLibraryModalComponent, ViewMediaLibraryModalComponent],
 })
 export class MediaLibraryModule {}

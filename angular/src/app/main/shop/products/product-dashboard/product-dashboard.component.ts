@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Injector, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Injector, OnInit, Output, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DomSanitizer, Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
@@ -13,6 +13,7 @@ import { CreateOrEditProductMediaModalComponent } from '../../productMedias/crea
 import { CreateOrEditProductAccountTeamModalComponent } from '../../productAccountTeams/create-or-edit-productAccountTeam-modal.component';
 import { CreateOrEditProductNoteModalComponent } from '../../productNotes/create-or-edit-productNote-modal.component';
 import { CreateOrEditProductTaskMapModalComponent } from '../../productTaskMaps/create-or-edit-productTaskMap-modal.component';
+import { CreateOrEditMediaLibraryModalComponent } from '@app/main/lookupData/mediaLibraries/create-or-edit-mediaLibrary-modal.component';
 
 @Component({
   selector: 'app-product-dashboard',
@@ -27,6 +28,7 @@ export class ProductDashboardComponent extends AppComponentBase {
   createOrEditProductNoteModal: CreateOrEditProductNoteModalComponent;
   @ViewChild('createOrEditProductTaskMapModal', { static: true })
   createOrEditProductTaskMapModal: CreateOrEditProductTaskMapModalComponent;
+  @ViewChild('createOrEditMediaLibraryModalForProductMedia', { static: true }) createOrEditMediaLibraryModalForProductMedia: CreateOrEditMediaLibraryModalComponent;
   saving = false;
   productShortDesc: string;
   bindingData: any;
@@ -86,7 +88,7 @@ export class ProductDashboardComponent extends AppComponentBase {
   selectedProductCategory: any;
 
 
-  storeOptions: any=[];
+  storeOptions: any = [];
   selectedStore: any;
 
 
@@ -94,11 +96,14 @@ export class ProductDashboardComponent extends AppComponentBase {
   isManufacturerSkuAvailble: boolean = false;
   isManufacturerSkuNotAvailble: boolean = false;
   temporaryMediaLibraryId: number;
-  publicViewUrl:string;
+  publicViewUrl: string;
 
   statistics: ProductDashboardStatisticsForViewDto = new ProductDashboardStatisticsForViewDto();
 
   @ViewChild('createOrEditProductMediaModal', { static: true }) createOrEditProductMediaModal: CreateOrEditProductMediaModalComponent;
+
+  @Output() makePrimaryClick: EventEmitter<any> = new EventEmitter<any>();
+  
   constructor(
     injector: Injector,
     private route: ActivatedRoute,
@@ -154,7 +159,7 @@ export class ProductDashboardComponent extends AppComponentBase {
       this.membershipName = result.membershipName;
       this.measurementUnitName = result.measurementUnitName;
       this.allProductAdditionalCategory = result.additionalCategories;
-      this.publicViewUrl=result.publicViewUrl;
+      this.publicViewUrl = result.publicViewUrl;
       //this.selectedProductCategory = result.product.productCategoryId;
       if (!result.product.isService) {
         this.product.isService = true;
@@ -399,5 +404,31 @@ export class ProductDashboardComponent extends AppComponentBase {
     this._productsServiceProxy.getProductDashboardStatistics(this.productId).subscribe(result => {
       this.statistics = result;
     });
+  }
+
+  changeProductMediaModal(): void {
+    this.createOrEditMediaLibraryModalForProductMedia.isChangeProductPicture = true;
+    this.createOrEditMediaLibraryModalForProductMedia.productId = this.productId;
+    this.createOrEditMediaLibraryModalForProductMedia.show();
+  }
+  changeProductMedia(event: any) {
+    if (event) {
+      var media = new CreateOrEditProductMediaDto();
+      media.productId = this.productId;
+      media.mediaLibraryId = event;
+      this._productMediasServiceProxy.createOrEdit(media).subscribe(result => {
+        this.notify.info(this.l('SavedSuccessfully'));
+        if (this.product.mediaLibraryId == null) {
+          this.product.mediaLibraryId = event;
+          this._productsServiceProxy.createOrEdit(this.product).subscribe(r => {
+            this.getProductDetails(this.productId);
+            this.temporaryMediaLibraryId = event;
+            this.makePrimaryClick.emit(null);
+          });
+        }
+        this.getProductPhotos();
+      });
+    }
+
   }
 }
