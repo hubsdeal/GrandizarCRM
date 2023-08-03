@@ -226,7 +226,7 @@ export class ProductDashboardComponent extends AppComponentBase {
 
   openAiModal(fieldName: string): void {
     const productName = this.product.name;
-    const promt = `Generate product data as json format with key pair and the key is Product_URL, SKU, Manufacturer_SKU, SEO_Title, Meta_Keywords, 
+    const promt = `Generate product data as json format with key pair and the key is Product_URL, SKU, Manufacturer_SKU, SEO_Title, Meta_Keywords,
                   Meta_Description, Product_Description, Product_Short_Description where the Product Name is ${productName} and the product Category is ${this.categoryName}`;
     var modalTitle = `AI Text Generator - ${fieldName}`;
     const dialogRef = this.dialog.open(ChatGptResponseModalComponent, {
