@@ -33,7 +33,7 @@
 
                     <div class="row align-items-center">
                         <div class="primeng-datatable-container" [busyIf]="primengTableHelper.isLoading">
-                            <p-table #dataTable (onLazyLoad)="getAll($event)" [value]="primengTableHelper.records"
+                            <!-- <p-table #dataTable (onLazyLoad)="getAll($event)" [value]="primengTableHelper.records"
                                 rows="5" [paginator]="false" [lazy]="true" [scrollable]="true" ScrollWidth="100%"
                                 [responsive]="primengTableHelper.isResponsive"
                                 [resizableColumns]="primengTableHelper.resizableColumns">
@@ -62,13 +62,56 @@
                                         </td>
                                     </tr>
                                 </ng-template>
-                            </p-table>
+                            </p-table> -->
+
+                            <div class="row">
+                                <div class="col-xl-4 col-md-4 col-12 mb-4"
+                                    *ngFor="let record of primengTableHelper.records">
+                                    <div class="bulk_check">
+                                        <div class="form-check form-check-custom form-check-solid">
+                                            <input class="form-check-input me-3" name="checkbox_input" type="checkbox"
+                                                [(ngModel)]="record.selected" (change)="checkIfAllSelected()">
+                                            <label class="form-check-label"
+                                                for="kt_docs_formvalidation_checkbox_option_1">
+                                                <div class="fw-semibold text-gray-800"></div>
+                                            </label>
+                                        </div>
+                                        <!-- <label class="kt-checkbox kt-checkbox--tick kt-checkbox--brand">
+                                            <input type="checkbox" [(ngModel)]="record.selected"
+                                                (change)="checkIfAllSelected()">
+                                            <span></span>
+                                        </label> -->
+                                    </div>
+                                    <a href="javascript:;">
+                                        <div class="main_category_box_media">
+                                            <div class="second_box">
+                                                <img src="{{record.picture!=null?record.picture:'assets/images/p1.png'}}"
+                                                    alt="image">
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <!-- <div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
+                                {{l('NoData')}}
+                            </div> -->
+                            <!-- <div class="primeng-paging-container">
+
+                                <p-paginator [rows]="primengTableHelper.defaultRecordsMediaLibraryCountPerPage"
+                                    #paginator (onPageChange)="paginate($event)"
+                                    styleClass="mediaLibrary-lookup-table-paginator"
+                                    [totalRecords]="primengTableHelper.totalRecordsCount"
+                                    [rowsPerPageOptions]="primengTableHelper.predefinedMediaLibraryRecordsCountPerPage">
+                                </p-paginator>
+
+                            </div>
+                             -->
                             <div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
                                 {{ l('NoData') }}
                             </div>
                             <div class="primeng-paging-container">
                                 <p-paginator rows="{{ primengTableHelper.defaultRecordsCountPerPage }}" #paginator
-                                    styleClass="mediaLibrary-lookup-table-paginator" (onPageChange)="getAll($event)"
+                                    styleClass="mediaLibrary-lookup-table-paginator" (onPageChange)="paginate($event)"
                                     [totalRecords]="primengTableHelper.totalRecordsCount"
                                     [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
                                     [showCurrentPageReport]="true" [currentPageReportTemplate]="
@@ -81,9 +124,8 @@
             </div>
 
             <div class="modal-footer">
-                <button [disabled]="saving" type="button" class="btn btn-primary blue" (click)="close()">
-                    {{ l('Close') }}
-                </button>
+                <button type="button" class="btn btn-secondary" (click)="close()">{{l("Close")}}</button>
+                <button type="button" class="btn btn-primary blue" (click)="onSave()">{{l("Save")}}</button>
             </div>
         </div>
     </div>

@@ -153,8 +153,18 @@
                             </div>
                         </div>
 
-                        <div *ngIf="imageSrc" class="col-md-12 p-4 text-center mt-4 border">
+                        <!-- <div *ngIf="imageSrc" class="col-md-12 p-4 text-center mt-4 border">
                             <img [src]="imageSrc" class="uploaded_img">
+                        </div> -->
+                        <div *ngIf="imageSrc" class="col-md-12 p-4 text-center mt-4 border">
+                            <img [src]="imageSrc"  class="uploaded_img">
+                        </div>
+                        <div *ngIf="allSelectedMedias.length>0" class="row mt-4">
+                            <div *ngFor="let item of allSelectedMedias" class="col-xl-3 mb-3">
+                                <div class="p-3 border shadow-sm media_bulk_select">
+                                    <img src="{{item.picture}}" alt="Image">
+                                </div>
+                            </div>
                         </div>
                     </div>
 

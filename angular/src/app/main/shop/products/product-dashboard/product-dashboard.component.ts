@@ -29,6 +29,8 @@ export class ProductDashboardComponent extends AppComponentBase {
   @ViewChild('createOrEditProductTaskMapModal', { static: true })
   createOrEditProductTaskMapModal: CreateOrEditProductTaskMapModalComponent;
   @ViewChild('createOrEditMediaLibraryModalForProductMedia', { static: true }) createOrEditMediaLibraryModalForProductMedia: CreateOrEditMediaLibraryModalComponent;
+  @ViewChild('createOrEditMediaLibraryModalForProductMediaVideo', { static: true }) createOrEditMediaLibraryModalForProductMediaVideo: CreateOrEditMediaLibraryModalComponent;
+
   saving = false;
   productShortDesc: string;
   bindingData: any;
@@ -343,6 +345,12 @@ export class ProductDashboardComponent extends AppComponentBase {
     });
   }
 
+  onAddVideo() {
+    this.createOrEditMediaLibraryModalForProductMediaVideo.isChangeProductVideo = true;
+    this.createOrEditMediaLibraryModalForProductMediaVideo.productId = this.productId;
+    this.createOrEditMediaLibraryModalForProductMediaVideo.show();
+  }
+
   onPhotoOrVideoClick(data: any) {
     if (data.picture) {
       this.picture = data.picture;
@@ -352,11 +360,11 @@ export class ProductDashboardComponent extends AppComponentBase {
       this.temporaryMediaLibraryId = data.productMedia.mediaLibraryId;
     }
   }
-  deleteMedia(id: number) {
+  deleteProductMedia(id: number) {
     this._productMediasServiceProxy.delete(id).subscribe(result => {
       this.notify.success(this.l('DeletedSuccessfully'));
-      this.getProductDetails(this.productId);
-    })
+      this.getProductPhotos();
+    });
   }
 
   uploadProductMedia(event: any) {
@@ -374,6 +382,20 @@ export class ProductDashboardComponent extends AppComponentBase {
           });
         }
         this.getProductDetails(this.productId);
+      });
+    }
+  }
+
+  changeProductPrimaryPicture(event: any) {
+    if (event) {
+      this._productsServiceProxy.getProductForEdit(this.productId).subscribe(result => {
+        var product = result.product;
+        product.mediaLibraryId = event;
+
+        this._productsServiceProxy.createOrEdit(product).subscribe(result => {
+          this.notify.info(this.l('SavedSuccessfully'));
+          this.getProductDetails(this.productId);
+        });
       });
     }
   }

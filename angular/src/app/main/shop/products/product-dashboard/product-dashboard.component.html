@@ -1139,7 +1139,7 @@
                                                                         <div
                                                                             class="overlay-layer bg-dark bg-opacity-10 rounded">
                                                                             <a href="javascript:;"
-                                                                                (click)="deleteMedia(item.productMedia.id)">
+                                                                                (click)="deleteProductMedia(item.productMedia.id)">
                                                                                 <i
                                                                                     class="fas fa-times-circle text-primary"></i>
                                                                             </a>
@@ -1154,7 +1154,7 @@
                                                                             style="cursor: pointer;">
                                                                             <iframe
                                                                                 [src]="getSafeEmbeddedVideoUrl(item.videoUrl)"
-                                                                                style="width: 100%;height: auto; "
+                                                                                style="width: 100%; height: 4.8rem;"
                                                                                 frameborder="0"
                                                                                 allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                                                                                 allowfullscreen>
@@ -1163,7 +1163,7 @@
                                                                         <div
                                                                             class="overlay-layer bg-dark bg-opacity-10 rounded">
                                                                             <a href="javascript:;"
-                                                                                (click)="deleteMedia(item.productMedia.id)">
+                                                                                (click)="deleteProductMedia(item.productMedia.id)">
                                                                                 <i
                                                                                     class="fas fa-times-circle text-primary"></i>
                                                                             </a>
@@ -1186,7 +1186,7 @@
                                                         <div class="border border-dashed border-gray-300 rounded me-5">
                                                             <div class="overlay sm_bottom_gallery">
                                                                 <a href="javascript:;"
-                                                                    (click)="createProductMediaVideo()">
+                                                                    (click)="onAddVideo()">
                                                                     <span><i
                                                                             class="fas fa-plus-circle text-primary"></i></span>
                                                                     <span class="text-primary fs-5 fw-bold">Video</span>
@@ -3414,14 +3414,21 @@
 
     </div>
 
-    <createOrEditProductMediaModal #createOrEditProductMediaModal (saveProductMedia)="uploadProductMedia($event)">
-    </createOrEditProductMediaModal>
+    <!-- <createOrEditProductMediaModal #createOrEditProductMediaModal (saveProductMedia)="uploadProductMedia($event)">
+    </createOrEditProductMediaModal> -->
+    <createOrEditMediaLibraryModal #createOrEditMediaLibraryModal (saveProductMedia)="changeProductPrimaryPicture($event)" (modalSave)="getProductPhotos()">
+    </createOrEditMediaLibraryModal>
+
+    <createOrEditMediaLibraryModal #createOrEditMediaLibraryModalForProductMedia (saveProductMedia)="changeProductMedia($event)" (modalSave)="getProductPhotos()">
+    </createOrEditMediaLibraryModal>
+
+    <createOrEditMediaLibraryModal #createOrEditMediaLibraryModalForProductMediaVideo (saveProductMedia)="changeProductMedia($event)" (modalSave)="getProductPhotos()">
+    </createOrEditMediaLibraryModal>
+
     <createOrEditProductTaskMapModal #createOrEditProductTaskMapModal>
     </createOrEditProductTaskMapModal>
     <createOrEditProductAccountTeamModal #createOrEditProductAccountTeamModal (modalSave)="ngOnInit()">
     </createOrEditProductAccountTeamModal>
     <createOrEditProductNoteModal #createOrEditProductNoteModal>
     </createOrEditProductNoteModal>
-    <createOrEditMediaLibraryModal #createOrEditMediaLibraryModalForProductMedia (saveProductMedia)="changeProductMedia($event)">
-    </createOrEditMediaLibraryModal>
 </div>
