@@ -109,7 +109,7 @@
                             <validation-messages [formCtrl]="MediaLibrary_AltTag"></validation-messages>
                         </div>
                     </div>
-                    <div *ngIf="!isChangeProductVideo">
+                    <div *ngIf="!isChangeProductVideo && mediaLibrary.masterTagId ==1">
                         <div class="new_media_file">
                             <div class="d-flex">
                                 <div class="kt-avatar kt-avatar--outline me-3" id="kt_contacts_edit_avatar">

@@ -1179,7 +1179,17 @@
                                                                     (click)="changeProductMediaModal()">
                                                                     <span><i
                                                                             class="fas fa-plus-circle text-primary"></i></span>
-                                                                    <span class="text-primary fs-5 fw-bold">Photo</span>
+                                                                    <span class="text-primary fs-7 fw-bold">Photo</span>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="border border-dashed border-gray-300 rounded me-5">
+                                                            <div class="overlay sm_bottom_gallery">
+                                                                <a href="javascript:;"
+                                                                    (click)="createBulkMediaUpload()">
+                                                                    <span><i
+                                                                            class="fas fa-plus-circle text-primary"></i></span>
+                                                                    <span class="text-primary fs-7 fw-bold">Bulk Photo</span>
                                                                 </a>
                                                             </div>
                                                         </div>
@@ -1189,7 +1199,7 @@
                                                                     (click)="onAddVideo()">
                                                                     <span><i
                                                                             class="fas fa-plus-circle text-primary"></i></span>
-                                                                    <span class="text-primary fs-5 fw-bold">Video</span>
+                                                                    <span class="text-primary fs-7 fw-bold">Video</span>
                                                                 </a>
                                                             </div>
                                                         </div>
@@ -3431,4 +3441,5 @@
     </createOrEditProductAccountTeamModal>
     <createOrEditProductNoteModal #createOrEditProductNoteModal>
     </createOrEditProductNoteModal>
+    <app-create-or-edit-bulk-product-media-library-modal #createOrEditModal (modalSave)="getProductPhotos()"></app-create-or-edit-bulk-product-media-library-modal>
 </div>

@@ -14,6 +14,7 @@ import { CreateOrEditProductAccountTeamModalComponent } from '../../productAccou
 import { CreateOrEditProductNoteModalComponent } from '../../productNotes/create-or-edit-productNote-modal.component';
 import { CreateOrEditProductTaskMapModalComponent } from '../../productTaskMaps/create-or-edit-productTaskMap-modal.component';
 import { CreateOrEditMediaLibraryModalComponent } from '@app/main/lookupData/mediaLibraries/create-or-edit-mediaLibrary-modal.component';
+import { CreateOrEditBulkProductMediaLibraryModalComponent } from './create-or-edit-bulk-product-media-library-modal/create-or-edit-bulk-product-media-library-modal.component';
 
 @Component({
   selector: 'app-product-dashboard',
@@ -30,7 +31,7 @@ export class ProductDashboardComponent extends AppComponentBase {
   createOrEditProductTaskMapModal: CreateOrEditProductTaskMapModalComponent;
   @ViewChild('createOrEditMediaLibraryModalForProductMedia', { static: true }) createOrEditMediaLibraryModalForProductMedia: CreateOrEditMediaLibraryModalComponent;
   @ViewChild('createOrEditMediaLibraryModalForProductMediaVideo', { static: true }) createOrEditMediaLibraryModalForProductMediaVideo: CreateOrEditMediaLibraryModalComponent;
-
+  @ViewChild('createOrEditModal', { static: true }) createOrEditModal: CreateOrEditBulkProductMediaLibraryModalComponent;
   saving = false;
   productShortDesc: string;
   bindingData: any;
@@ -105,7 +106,7 @@ export class ProductDashboardComponent extends AppComponentBase {
   @ViewChild('createOrEditProductMediaModal', { static: true }) createOrEditProductMediaModal: CreateOrEditProductMediaModalComponent;
 
   @Output() makePrimaryClick: EventEmitter<any> = new EventEmitter<any>();
-  
+
   constructor(
     injector: Injector,
     private route: ActivatedRoute,
@@ -406,7 +407,10 @@ export class ProductDashboardComponent extends AppComponentBase {
       this.notify.info('Updated Successfully');
     })
   }
-
+  createBulkMediaUpload(): void {
+    this.createOrEditModal.productId = this.productId;
+    this.createOrEditModal.show();
+  }
   createProductAccountTeam(): void {
     this.createOrEditProductAccountTeamModal.productId = this.productId;
     this.createOrEditProductAccountTeamModal.show();

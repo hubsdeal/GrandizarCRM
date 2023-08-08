@@ -23,6 +23,7 @@ import { ProductTaskMapModule } from '../productTaskMaps/productTaskMap.module';
 import { ProductNoteModule } from '../productNotes/productNote.module';
 import { ProductAccountTeamModule } from '../productAccountTeams/productAccountTeam.module';
 import { MediaLibraryModule } from '@app/main/lookupData/mediaLibraries/mediaLibrary.module';
+import { CreateOrEditBulkProductMediaLibraryModalComponent } from './product-dashboard/create-or-edit-bulk-product-media-library-modal/create-or-edit-bulk-product-media-library-modal.component';
 
 @NgModule({
     declarations: [
@@ -39,7 +40,8 @@ import { MediaLibraryModule } from '@app/main/lookupData/mediaLibraries/mediaLib
         ProductStoreLookupTableModalComponent,
         ProductDashboardComponent,
         ProductLibrariesComponent,
-        MyProductsComponent
+        MyProductsComponent,
+        CreateOrEditBulkProductMediaLibraryModalComponent
     ],
     imports: [AppSharedModule, ProductRoutingModule, AdminSharedModule, ProductTagModule, ProductMediaModule,
         OrderModule, ContactModule, ProductTaskMapModule, ProductNoteModule,

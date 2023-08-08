@@ -1,15 +1,20 @@
 ﻿<div [@routerTransition]>
-    <sub-header [title]="'MediaLibraries' | localize" [description]="'MediaLibrariesHeaderInfo' | localize">
+    <sub-header [title]="'MediaLibraries' | localize" [description]="">
         <div role="actions">
-            <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1">
+            <!-- <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1">
                 <i class="fa fa-file-excel"></i>
                 {{ l('ExportToExcel') }}
-            </button>
+            </button> -->
 
             <button *ngIf="isGranted('Pages.MediaLibraries.Create')" (click)="createMediaLibrary()"
                 class="btn btn-primary blue">
                 <i class="fa fa-plus"></i>
                 {{ l('CreateNewMediaLibrary') }}
+            </button>
+            <button *ngIf="isGranted('Pages.MediaLibraries.Create')" (click)="createBulkMediaUpload()" 
+                class="btn btn-primary blue">
+                <i class="fa fa-plus"></i>
+                {{ l('Bulk Media Upload') }}
             </button>
         </div>
     </sub-header>
@@ -370,4 +375,6 @@
     <createOrEditMediaLibraryModal #createOrEditMediaLibraryModal (modalSave)="getMediaLibraries()">
     </createOrEditMediaLibraryModal>
     <viewMediaLibraryModal #viewMediaLibraryModal></viewMediaLibraryModal>
+    <app-create-or-edit-bulk-media-library-modal #createOrEditModal (modalSave)="getMediaLibraries()">
+    </app-create-or-edit-bulk-media-library-modal>
 </div>
