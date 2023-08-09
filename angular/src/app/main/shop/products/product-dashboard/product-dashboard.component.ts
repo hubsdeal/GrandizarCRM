@@ -1,10 +1,10 @@
-import { AfterViewInit, Component, Injector, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Injector, OnInit, Output, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DomSanitizer, Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { ChatGptResponseModalComponent } from '@app/shared/chat-gpt-response-modal/chat-gpt-response-modal.component';
 import { AppComponentBase } from '@shared/common/app-component-base';
-import { CreateOrEditProductDto, CreateOrEditProductMediaDto, GetProductAccountTeamForViewDto, GetProductMediaForViewDto, GetStoreMediaForViewDto, ProductAccountTeamsServiceProxy, ProductDashboardStatisticsForViewDto, ProductMediasServiceProxy, ProductsServiceProxy, ProductTeamsServiceProxy } from '@shared/service-proxies/service-proxies';
+import { CreateOrEditProductDto, CreateOrEditProductMediaDto, GetProductAccountTeamForViewDto, GetProductMediaForViewDto, GetStoreMediaForViewDto, ProductAccountTeamsServiceProxy, ProductDashboardStatisticsForViewDto, ProductMediasServiceProxy, ProductsServiceProxy, ProductStoreLookupTableDto, ProductTeamsServiceProxy } from '@shared/service-proxies/service-proxies';
 import { TokenService } from 'abp-ng2-module';
 import { FileUploader, FileUploaderOptions } from 'ng2-file-upload';
 import { SelectItem } from 'primeng/api';
@@ -13,6 +13,8 @@ import { CreateOrEditProductMediaModalComponent } from '../../productMedias/crea
 import { CreateOrEditProductAccountTeamModalComponent } from '../../productAccountTeams/create-or-edit-productAccountTeam-modal.component';
 import { CreateOrEditProductNoteModalComponent } from '../../productNotes/create-or-edit-productNote-modal.component';
 import { CreateOrEditProductTaskMapModalComponent } from '../../productTaskMaps/create-or-edit-productTaskMap-modal.component';
+import { CreateOrEditMediaLibraryModalComponent } from '@app/main/lookupData/mediaLibraries/create-or-edit-mediaLibrary-modal.component';
+import { CreateOrEditBulkProductMediaLibraryModalComponent } from './create-or-edit-bulk-product-media-library-modal/create-or-edit-bulk-product-media-library-modal.component';
 
 @Component({
   selector: 'app-product-dashboard',
@@ -27,6 +29,9 @@ export class ProductDashboardComponent extends AppComponentBase {
   createOrEditProductNoteModal: CreateOrEditProductNoteModalComponent;
   @ViewChild('createOrEditProductTaskMapModal', { static: true })
   createOrEditProductTaskMapModal: CreateOrEditProductTaskMapModalComponent;
+  @ViewChild('createOrEditMediaLibraryModalForProductMedia', { static: true }) createOrEditMediaLibraryModalForProductMedia: CreateOrEditMediaLibraryModalComponent;
+  @ViewChild('createOrEditMediaLibraryModalForProductMediaVideo', { static: true }) createOrEditMediaLibraryModalForProductMediaVideo: CreateOrEditMediaLibraryModalComponent;
+  @ViewChild('createOrEditModal', { static: true }) createOrEditModal: CreateOrEditBulkProductMediaLibraryModalComponent;
   saving = false;
   productShortDesc: string;
   bindingData: any;
@@ -86,7 +91,7 @@ export class ProductDashboardComponent extends AppComponentBase {
   selectedProductCategory: any;
 
 
-  storeOptions: any = []
+  storeOptions: any = [];
   selectedStore: any;
 
 
@@ -94,11 +99,14 @@ export class ProductDashboardComponent extends AppComponentBase {
   isManufacturerSkuAvailble: boolean = false;
   isManufacturerSkuNotAvailble: boolean = false;
   temporaryMediaLibraryId: number;
-  publicViewUrl:string;
+  publicViewUrl: string;
 
   statistics: ProductDashboardStatisticsForViewDto = new ProductDashboardStatisticsForViewDto();
 
   @ViewChild('createOrEditProductMediaModal', { static: true }) createOrEditProductMediaModal: CreateOrEditProductMediaModalComponent;
+
+  @Output() makePrimaryClick: EventEmitter<any> = new EventEmitter<any>();
+
   constructor(
     injector: Injector,
     private route: ActivatedRoute,
@@ -154,7 +162,8 @@ export class ProductDashboardComponent extends AppComponentBase {
       this.membershipName = result.membershipName;
       this.measurementUnitName = result.measurementUnitName;
       this.allProductAdditionalCategory = result.additionalCategories;
-      this.publicViewUrl=result.publicViewUrl;
+      this.publicViewUrl = result.publicViewUrl;
+      //this.selectedProductCategory = result.product.productCategoryId;
       if (!result.product.isService) {
         this.product.isService = true;
       }
@@ -175,6 +184,7 @@ export class ProductDashboardComponent extends AppComponentBase {
     });
     this._productsServiceProxy.getAllStoreForLookupTable('', '', 0, 10000).subscribe(result => {
       this.storeOptions = result.items;
+      console.log(this.storeOptions)
     });
     this._productsServiceProxy.getAllMeasurementUnitForLookupTable('', '', 0, 10000).subscribe(result => {
       this.measurementUnitOptions = result.items;
@@ -187,19 +197,19 @@ export class ProductDashboardComponent extends AppComponentBase {
     });
   }
 
-  onProductCategoryClick(event: any) {
-    console.log(event);
-    if (event.value != null) {
-      this.product.productCategoryId = event.value.id;
-    }
-  }
+  // onProductCategoryClick(event: any) {
+  //   console.log(event);
+  //   if (event.value != null) {
+  //     this.product.productCategoryId = event.value.id;
+  //   }
+  // }
 
-  onStoreClick(event: any) {
-    console.log(event);
-    if (event.value != null) {
-      this.product.storeId = event.value.id;
-    }
-  }
+  // onStoreClick(event: any) {
+  //   console.log(event);
+  //   if (event.value != null) {
+  //     this.product.storeId = event.value.id;
+  //   }
+  // }
 
 
   openAiModalPr(fieldName: string): void {
@@ -224,7 +234,7 @@ export class ProductDashboardComponent extends AppComponentBase {
 
   openAiModal(fieldName: string): void {
     const productName = this.product.name;
-    const promt = `Generate product data as json format with key pair and the key is Product_URL, SKU, Manufacturer_SKU, SEO_Title, Meta_Keywords, 
+    const promt = `Generate product data as json format with key pair and the key is Product_URL, SKU, Manufacturer_SKU, SEO_Title, Meta_Keywords,
                   Meta_Description, Product_Description, Product_Short_Description where the Product Name is ${productName} and the product Category is ${this.categoryName}`;
     var modalTitle = `AI Text Generator - ${fieldName}`;
     const dialogRef = this.dialog.open(ChatGptResponseModalComponent, {
@@ -336,6 +346,12 @@ export class ProductDashboardComponent extends AppComponentBase {
     });
   }
 
+  onAddVideo() {
+    this.createOrEditMediaLibraryModalForProductMediaVideo.isChangeProductVideo = true;
+    this.createOrEditMediaLibraryModalForProductMediaVideo.productId = this.productId;
+    this.createOrEditMediaLibraryModalForProductMediaVideo.show();
+  }
+
   onPhotoOrVideoClick(data: any) {
     if (data.picture) {
       this.picture = data.picture;
@@ -345,11 +361,11 @@ export class ProductDashboardComponent extends AppComponentBase {
       this.temporaryMediaLibraryId = data.productMedia.mediaLibraryId;
     }
   }
-  deleteMedia(id: number) {
+  deleteProductMedia(id: number) {
     this._productMediasServiceProxy.delete(id).subscribe(result => {
       this.notify.success(this.l('DeletedSuccessfully'));
-      this.getProductDetails(this.productId);
-    })
+      this.getProductPhotos();
+    });
   }
 
   uploadProductMedia(event: any) {
@@ -371,13 +387,30 @@ export class ProductDashboardComponent extends AppComponentBase {
     }
   }
 
+  changeProductPrimaryPicture(event: any) {
+    if (event) {
+      this._productsServiceProxy.getProductForEdit(this.productId).subscribe(result => {
+        var product = result.product;
+        product.mediaLibraryId = event;
+
+        this._productsServiceProxy.createOrEdit(product).subscribe(result => {
+          this.notify.info(this.l('SavedSuccessfully'));
+          this.getProductDetails(this.productId);
+        });
+      });
+    }
+  }
+
   onPrimaryProductPhotoOrVideoClick() {
     this.product.mediaLibraryId = this.temporaryMediaLibraryId;
     this._productsServiceProxy.createOrEdit(this.product).subscribe(result => {
       this.notify.info('Updated Successfully');
     })
   }
-
+  createBulkMediaUpload(): void {
+    this.createOrEditModal.productId = this.productId;
+    this.createOrEditModal.show();
+  }
   createProductAccountTeam(): void {
     this.createOrEditProductAccountTeamModal.productId = this.productId;
     this.createOrEditProductAccountTeamModal.show();
@@ -397,5 +430,31 @@ export class ProductDashboardComponent extends AppComponentBase {
     this._productsServiceProxy.getProductDashboardStatistics(this.productId).subscribe(result => {
       this.statistics = result;
     });
+  }
+
+  changeProductMediaModal(): void {
+    this.createOrEditMediaLibraryModalForProductMedia.isChangeProductPicture = true;
+    this.createOrEditMediaLibraryModalForProductMedia.productId = this.productId;
+    this.createOrEditMediaLibraryModalForProductMedia.show();
+  }
+  changeProductMedia(event: any) {
+    if (event) {
+      var media = new CreateOrEditProductMediaDto();
+      media.productId = this.productId;
+      media.mediaLibraryId = event;
+      this._productMediasServiceProxy.createOrEdit(media).subscribe(result => {
+        this.notify.info(this.l('SavedSuccessfully'));
+        if (this.product.mediaLibraryId == null) {
+          this.product.mediaLibraryId = event;
+          this._productsServiceProxy.createOrEdit(this.product).subscribe(r => {
+            this.getProductDetails(this.productId);
+            this.temporaryMediaLibraryId = event;
+            this.makePrimaryClick.emit(null);
+          });
+        }
+        this.getProductPhotos();
+      });
+    }
+
   }
 }

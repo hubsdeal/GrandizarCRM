@@ -3,6 +3,8 @@ import { ModalDirective } from 'ngx-bootstrap/modal';
 import {
     ProductMediasServiceProxy,
     ProductMediaMediaLibraryLookupTableDto,
+    MediaLibraryFromSpDto,
+    MediaLibrariesServiceProxy,
 } from '@shared/service-proxies/service-proxies';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { Table } from 'primeng/table';
@@ -26,14 +28,25 @@ export class ProductMediaMediaLibraryLookupTableModalComponent extends AppCompon
     @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
     active = false;
     saving = false;
+    employeeUserId:number;
 
-    constructor(injector: Injector, private _productMediasServiceProxy: ProductMediasServiceProxy) {
+
+    picture: string;
+
+    selectedAll: boolean = false;
+    selectedInput:any[] = [];
+    @Output() selectedMedia: EventEmitter<MediaLibraryFromSpDto[]> = new EventEmitter<MediaLibraryFromSpDto[]>();
+    skipCount: number=0;
+    maxResultCount: number = 48;
+    constructor(injector: Injector, private _productMediasServiceProxy: ProductMediasServiceProxy,
+        private _mediaLibrariesServiceProxy: MediaLibrariesServiceProxy) {
         super(injector);
     }
 
+   
     show(): void {
         this.active = true;
-        this.paginator.rows = 5;
+        //this.paginator.rows = 5;
         this.getAll();
         this.modal.show();
     }
@@ -43,25 +56,37 @@ export class ProductMediaMediaLibraryLookupTableModalComponent extends AppCompon
             return;
         }
 
-        if (this.primengTableHelper.shouldResetPaging(event)) {
-            this.paginator.changePage(0);
-            if (this.primengTableHelper.records && this.primengTableHelper.records.length > 0) {
-                return;
-            }
-        }
+        // if (this.primengTableHelper.shouldResetPaging(event)) {
+        //     this.paginator.changePage(0);
+        //     if (this.primengTableHelper.records && this.primengTableHelper.records.length > 0) {
+        //         return;
+        //     }
+        // }
 
         this.primengTableHelper.showLoadingIndicator();
 
-        this._productMediasServiceProxy
-            .getAllMediaLibraryForLookupTable(
-                this.filterText,
-                this.primengTableHelper.getSorting(this.dataTable),
-                this.primengTableHelper.getSkipCount(this.paginator, event),
-                this.primengTableHelper.getMaxResultCount(this.paginator, event)
+        this._mediaLibrariesServiceProxy.getAllMediaLibrariesBySp(
+            1,
+            this.employeeUserId,
+            this.filterText,
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            this.skipCount,
+            this.maxResultCount
             )
             .subscribe((result) => {
                 this.primengTableHelper.totalRecordsCount = result.totalCount;
-                this.primengTableHelper.records = result.items;
+                this.primengTableHelper.records = result.mediaLibraries;
                 this.primengTableHelper.hideLoadingIndicator();
             });
     }
@@ -70,9 +95,10 @@ export class ProductMediaMediaLibraryLookupTableModalComponent extends AppCompon
         this.paginator.changePage(this.paginator.getPage());
     }
 
-    setAndSave(mediaLibrary: ProductMediaMediaLibraryLookupTableDto) {
-        this.id = mediaLibrary.id;
-        this.displayName = mediaLibrary.displayName;
+    etAndSave(record:any) {
+        this.id = record.id;
+        this.displayName = record.name;
+        this.picture=record.picture;
         this.active = false;
         this.modal.hide();
         this.modalSave.emit(null);
@@ -82,5 +108,30 @@ export class ProductMediaMediaLibraryLookupTableModalComponent extends AppCompon
         this.active = false;
         this.modal.hide();
         this.modalSave.emit(null);
+    }
+    paginate(event: any) {
+        this.skipCount = event.first;
+        this.maxResultCount = event.rows;
+        this.getAll();
+    }
+
+    checkIfAllSelected() {
+        this.selectedAll = this.primengTableHelper.records.every(function (item: any) {
+            return item.selected == true;
+        })
+    }
+
+    refreshCheckboxReloadList() {
+        this.selectedAll = false;
+        for (var i = 0; i < this.primengTableHelper.records.length; i++) {
+            this.primengTableHelper.records[i].selected = false;
+        }
+        this.reloadPage();
+    }
+
+    onSave(){
+        this.selectedInput = this.primengTableHelper.records.filter(x => x.selected == true);
+        this.selectedMedia.emit(this.selectedInput);
+        this.modal.hide();
     }
 }

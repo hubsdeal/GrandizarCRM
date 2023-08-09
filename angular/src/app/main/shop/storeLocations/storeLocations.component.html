@@ -1,18 +1,15 @@
 ﻿<div [@routerTransition]>
-    <sub-header [title]="'StoreLocations' | localize" [description]="'StoreLocationsHeaderInfo' | localize">
+    <sub-header [title]="'Store Locations' | localize" [description]="">
         <div role="actions">
             <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1">
                 <i class="fa fa-file-excel"></i>
                 {{ l('ExportToExcel') }}
             </button>
 
-            <button
-                *ngIf="isGranted('Pages.StoreLocations.Create')"
-                (click)="createStoreLocation()"
-                class="btn btn-primary blue"
-            >
+            <button *ngIf="isGranted('Pages.StoreLocations.Create')" (click)="createStoreLocation()"
+                class="btn btn-primary blue">
                 <i class="fa fa-plus"></i>
-                {{ l('CreateNewStoreLocation') }}
+                {{ l('Store Location') }}
             </button>
         </div>
     </sub-header>
@@ -26,15 +23,9 @@
                             <div class="col-xl-12">
                                 <div class="my-3">
                                     <div class="input-group mb-3">
-                                        <input
-                                            [(ngModel)]="filterText"
-                                            (ngModelChange)="getStoreLocations()"
-                                            name="filterText"
-                                            autoFocus
-                                            type="text"
-                                            class="form-control"
-                                            [placeholder]="l('SearchWithThreeDot')"
-                                        />
+                                        <input [(ngModel)]="filterText" (ngModelChange)="getStoreLocations()"
+                                            name="filterText" autoFocus type="text" class="form-control"
+                                            [placeholder]="l('SearchWithThreeDot')" />
                                         <button class="btn btn-primary" type="submit" (click)="getStoreLocations()">
                                             <i class="flaticon-search-1"></i>
                                         </button>
@@ -48,27 +39,17 @@
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="LocationNameFilter">{{ l('LocationName') }}</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="LocationNameFilter"
-                                        name="locationNameFilter"
-                                        [(ngModel)]="locationNameFilter"
-                                        (ngModelChange)="getStoreLocations()"
-                                    />
+                                    <input type="text" class="form-control" id="LocationNameFilter"
+                                        name="locationNameFilter" [(ngModel)]="locationNameFilter"
+                                        (ngModelChange)="getStoreLocations()" />
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="FullAddressFilter">{{ l('FullAddress') }}</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="FullAddressFilter"
-                                        name="fullAddressFilter"
-                                        [(ngModel)]="fullAddressFilter"
-                                        (ngModelChange)="getStoreLocations()"
-                                    />
+                                    <input type="text" class="form-control" id="FullAddressFilter"
+                                        name="fullAddressFilter" [(ngModel)]="fullAddressFilter"
+                                        (ngModelChange)="getStoreLocations()" />
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -77,23 +58,12 @@
                                         {{ l('MinMax') }} {{ l('Latitude') }}
                                     </label>
                                     <div class="input-group">
-                                        <input
-                                            type="number"
-                                            class="form-control"
-                                            id="MinLatitudeFilter"
-                                            [(ngModel)]="minLatitudeFilter"
-                                            placeholder="{{ l('MinValue') }}"
-                                            name="minLatitudeFilter"
-                                            (ngModelChange)="getStoreLocations()"
-                                        />
-                                        <input
-                                            type="number"
-                                            class="form-control"
-                                            [(ngModel)]="maxLatitudeFilter"
-                                            placeholder="{{ l('MaxValue') }}"
-                                            name="maxLatitudeFilter"
-                                            (ngModelChange)="getStoreLocations()"
-                                        />
+                                        <input type="number" class="form-control" id="MinLatitudeFilter"
+                                            [(ngModel)]="minLatitudeFilter" placeholder="{{ l('MinValue') }}"
+                                            name="minLatitudeFilter" (ngModelChange)="getStoreLocations()" />
+                                        <input type="number" class="form-control" [(ngModel)]="maxLatitudeFilter"
+                                            placeholder="{{ l('MaxValue') }}" name="maxLatitudeFilter"
+                                            (ngModelChange)="getStoreLocations()" />
                                     </div>
                                 </div>
                             </div>
@@ -103,76 +73,41 @@
                                         {{ l('MinMax') }} {{ l('Longitude') }}
                                     </label>
                                     <div class="input-group">
-                                        <input
-                                            type="number"
-                                            class="form-control"
-                                            id="MinLongitudeFilter"
-                                            [(ngModel)]="minLongitudeFilter"
-                                            placeholder="{{ l('MinValue') }}"
-                                            name="minLongitudeFilter"
-                                            (ngModelChange)="getStoreLocations()"
-                                        />
-                                        <input
-                                            type="number"
-                                            class="form-control"
-                                            [(ngModel)]="maxLongitudeFilter"
-                                            placeholder="{{ l('MaxValue') }}"
-                                            name="maxLongitudeFilter"
-                                            (ngModelChange)="getStoreLocations()"
-                                        />
+                                        <input type="number" class="form-control" id="MinLongitudeFilter"
+                                            [(ngModel)]="minLongitudeFilter" placeholder="{{ l('MinValue') }}"
+                                            name="minLongitudeFilter" (ngModelChange)="getStoreLocations()" />
+                                        <input type="number" class="form-control" [(ngModel)]="maxLongitudeFilter"
+                                            placeholder="{{ l('MaxValue') }}" name="maxLongitudeFilter"
+                                            (ngModelChange)="getStoreLocations()" />
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="AddressFilter">{{ l('Address') }}</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="AddressFilter"
-                                        name="addressFilter"
-                                        [(ngModel)]="addressFilter"
-                                        (ngModelChange)="getStoreLocations()"
-                                    />
+                                    <input type="text" class="form-control" id="AddressFilter" name="addressFilter"
+                                        [(ngModel)]="addressFilter" (ngModelChange)="getStoreLocations()" />
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="MobileFilter">{{ l('Mobile') }}</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="MobileFilter"
-                                        name="mobileFilter"
-                                        [(ngModel)]="mobileFilter"
-                                        (ngModelChange)="getStoreLocations()"
-                                    />
+                                    <input type="text" class="form-control" id="MobileFilter" name="mobileFilter"
+                                        [(ngModel)]="mobileFilter" (ngModelChange)="getStoreLocations()" />
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="EmailFilter">{{ l('Email') }}</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="EmailFilter"
-                                        name="emailFilter"
-                                        [(ngModel)]="emailFilter"
-                                        (ngModelChange)="getStoreLocations()"
-                                    />
+                                    <input type="text" class="form-control" id="EmailFilter" name="emailFilter"
+                                        [(ngModel)]="emailFilter" (ngModelChange)="getStoreLocations()" />
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="ZipCodeFilter">{{ l('ZipCode') }}</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="ZipCodeFilter"
-                                        name="zipCodeFilter"
-                                        [(ngModel)]="zipCodeFilter"
-                                        (ngModelChange)="getStoreLocations()"
-                                    />
+                                    <input type="text" class="form-control" id="ZipCodeFilter" name="zipCodeFilter"
+                                        [(ngModel)]="zipCodeFilter" (ngModelChange)="getStoreLocations()" />
                                 </div>
                             </div>
 
@@ -181,13 +116,8 @@
                                     <label class="form-label" for="CityNameFilter">
                                         ({{ l('City') }}) {{ l('Name') }}
                                     </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="CityNameFilter"
-                                        name="cityNameFilter"
-                                        [(ngModel)]="cityNameFilter"
-                                    />
+                                    <input type="text" class="form-control" id="CityNameFilter" name="cityNameFilter"
+                                        [(ngModel)]="cityNameFilter" />
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -195,13 +125,8 @@
                                     <label class="form-label" for="StateNameFilter">
                                         ({{ l('State') }}) {{ l('Name') }}
                                     </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="StateNameFilter"
-                                        name="stateNameFilter"
-                                        [(ngModel)]="stateNameFilter"
-                                    />
+                                    <input type="text" class="form-control" id="StateNameFilter" name="stateNameFilter"
+                                        [(ngModel)]="stateNameFilter" />
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -209,13 +134,8 @@
                                     <label class="form-label" for="CountryNameFilter">
                                         ({{ l('Country') }}) {{ l('Name') }}
                                     </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="CountryNameFilter"
-                                        name="countryNameFilter"
-                                        [(ngModel)]="countryNameFilter"
-                                    />
+                                    <input type="text" class="form-control" id="CountryNameFilter"
+                                        name="countryNameFilter" [(ngModel)]="countryNameFilter" />
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -223,40 +143,26 @@
                                     <label class="form-label" for="StoreNameFilter">
                                         ({{ l('Store') }}) {{ l('Name') }}
                                     </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="StoreNameFilter"
-                                        name="storeNameFilter"
-                                        [(ngModel)]="storeNameFilter"
-                                    />
+                                    <input type="text" class="form-control" id="StoreNameFilter" name="storeNameFilter"
+                                        [(ngModel)]="storeNameFilter" />
                                 </div>
                             </div>
                             <div class="col-md-12 mt-5">
-                                <button
-                                    (click)="resetFilters()"
-                                    class="btn btn-secondary btn-sm"
-                                    id="btn-reset-filters"
-                                >
+                                <button (click)="resetFilters()" class="btn btn-secondary btn-sm"
+                                    id="btn-reset-filters">
                                     Reset
                                 </button>
                             </div>
                         </div>
                         <div class="row my-4">
                             <div class="col-sm-12">
-                                <span
-                                    class="clickable-item text-muted"
-                                    *ngIf="!advancedFiltersAreShown"
-                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown"
-                                >
+                                <span class="clickable-item text-muted" *ngIf="!advancedFiltersAreShown"
+                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown">
                                     <i class="fa fa-angle-down"></i>
                                     {{ l('ShowAdvancedFilters') }}
                                 </span>
-                                <span
-                                    class="clickable-item text-muted"
-                                    *ngIf="advancedFiltersAreShown"
-                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown"
-                                >
+                                <span class="clickable-item text-muted" *ngIf="advancedFiltersAreShown"
+                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown">
                                     <i class="fa fa-angle-up"></i>
                                     {{ l('HideAdvancedFilters') }}
                                 </span>
@@ -268,26 +174,16 @@
                 <div class="row align-items-center">
                     <!--<Primeng-Datatable-Start>-->
                     <div class="primeng-datatable-container col-12" [busyIf]="primengTableHelper.isLoading">
-                        <p-table
-                            #dataTable
-                            (onLazyLoad)="getStoreLocations($event)"
+                        <p-table #dataTable (onLazyLoad)="getStoreLocations($event)"
                             [value]="primengTableHelper.records"
-                            rows="{{ primengTableHelper.defaultRecordsCountPerPage }}"
-                            [paginator]="false"
-                            [lazy]="true"
-                            [scrollable]="true"
-                            ScrollWidth="100%"
-                            [responsive]="primengTableHelper.isResponsive"
-                            [resizableColumns]="primengTableHelper.resizableColumns"
-                        >
+                            rows="{{ primengTableHelper.defaultRecordsCountPerPage }}" [paginator]="false" [lazy]="true"
+                            [scrollable]="true" ScrollWidth="100%" [responsive]="primengTableHelper.isResponsive"
+                            [resizableColumns]="primengTableHelper.resizableColumns">
                             <ng-template pTemplate="header">
                                 <tr>
-                                    <th
-                                        style="width: 130px"
-                                        [hidden]="
+                                    <th style="width: 130px" [hidden]="
                                             !isGrantedAny('Pages.StoreLocations.Edit', 'Pages.StoreLocations.Delete')
-                                        "
-                                    >
+                                        ">
                                         {{ l('Actions') }}
                                     </th>
                                     <th style="width: 150px" pSortableColumn="cityFk.name">
@@ -342,12 +238,9 @@
                             </ng-template>
                             <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
                                 <tr>
-                                    <td
-                                        style="width: 130px"
-                                        [hidden]="
+                                    <td style="width: 130px" [hidden]="
                                             !isGrantedAny('Pages.StoreLocations.Edit', 'Pages.StoreLocations.Delete')
-                                        "
-                                    >
+                                        ">
                                         <div class="btn-group dropdown" dropdown container="body">
                                             <button class="dropdown-toggle btn btn-sm btn-primary" dropdownToggle>
                                                 <i class="fa fa-cog"></i>
@@ -356,33 +249,24 @@
                                             </button>
                                             <ul class="dropdown-menu" *dropdownMenu>
                                                 <li>
-                                                    <a
-                                                        href="javascript:;"
-                                                        class="dropdown-item"
-                                                        (click)="viewStoreLocationModal.show(record)"
-                                                    >
+                                                    <a href="javascript:;" class="dropdown-item"
+                                                        (click)="viewStoreLocationModal.show(record)">
                                                         {{ l('View') }}
                                                     </a>
                                                 </li>
                                                 <li>
-                                                    <a
-                                                        href="javascript:;"
+                                                    <a href="javascript:;"
                                                         *ngIf="permission.isGranted('Pages.StoreLocations.Edit')"
-                                                        class="dropdown-item"
-                                                        (click)="
+                                                        class="dropdown-item" (click)="
                                                             createOrEditStoreLocationModal.show(record.storeLocation.id)
-                                                        "
-                                                    >
+                                                        ">
                                                         {{ l('Edit') }}
                                                     </a>
                                                 </li>
                                                 <li>
-                                                    <a
-                                                        class="dropdown-item"
-                                                        href="javascript:;"
+                                                    <a class="dropdown-item" href="javascript:;"
                                                         *ngIf="permission.isGranted('Pages.StoreLocations.Delete')"
-                                                        (click)="deleteStoreLocation(record.storeLocation)"
-                                                    >
+                                                        (click)="deleteStoreLocation(record.storeLocation)">
                                                         {{ l('Delete') }}
                                                     </a>
                                                 </li>
@@ -444,17 +328,13 @@
                             {{ l('NoData') }}
                         </div>
                         <div class="primeng-paging-container">
-                            <p-paginator
-                                [rows]="primengTableHelper.defaultRecordsCountPerPage"
-                                #paginator
+                            <p-paginator [rows]="primengTableHelper.defaultRecordsCountPerPage" #paginator
                                 (onPageChange)="getStoreLocations($event)"
                                 [totalRecords]="primengTableHelper.totalRecordsCount"
                                 [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
-                                [showCurrentPageReport]="true"
-                                [currentPageReportTemplate]="
+                                [showCurrentPageReport]="true" [currentPageReportTemplate]="
                                     'TotalRecordsCount' | localize : primengTableHelper.totalRecordsCount
-                                "
-                            ></p-paginator>
+                                "></p-paginator>
                         </div>
                     </div>
                     <!--<Primeng-Datatable-End>-->
@@ -462,9 +342,7 @@
             </div>
         </div>
     </div>
-    <createOrEditStoreLocationModal
-        #createOrEditStoreLocationModal
-        (modalSave)="getStoreLocations()"
-    ></createOrEditStoreLocationModal>
+    <createOrEditStoreLocationModal #createOrEditStoreLocationModal (modalSave)="getStoreLocations()">
+    </createOrEditStoreLocationModal>
     <viewStoreLocationModal #viewStoreLocationModal></viewStoreLocationModal>
 </div>

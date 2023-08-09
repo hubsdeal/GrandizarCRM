@@ -7,9 +7,10 @@ import { CreateOrEditTaskEventModalComponent } from './create-or-edit-taskEvent-
 import { ViewTaskEventModalComponent } from './view-taskEvent-modal.component';
 import { TaskEventsDashboardComponent } from './task-events-dashboard/task-events-dashboard.component';
 import { MyTaskEventsComponent } from './my-task-events/my-task-events.component';
+import { TaskEventsLibraryComponent } from './task-events-library/task-events-library.component';
 
 @NgModule({
-    declarations: [TaskEventsComponent, CreateOrEditTaskEventModalComponent, ViewTaskEventModalComponent, TaskEventsDashboardComponent, MyTaskEventsComponent],
+    declarations: [TaskEventsComponent, CreateOrEditTaskEventModalComponent, ViewTaskEventModalComponent, TaskEventsDashboardComponent, MyTaskEventsComponent, TaskEventsLibraryComponent],
     imports: [AppSharedModule, TaskEventRoutingModule, AdminSharedModule],
     exports: [TaskEventsComponent, CreateOrEditTaskEventModalComponent, ViewTaskEventModalComponent, TaskEventsDashboardComponent, MyTaskEventsComponent],
 })

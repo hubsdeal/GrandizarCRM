@@ -17,6 +17,8 @@ import { NgxBootstrapDatePickerConfigService } from 'assets/ngx-bootstrap/ngx-bo
 import { SubheaderModule } from '@app/shared/common/sub-header/subheader.module';
 import { MasterDataIndexComponent } from './lookupData/master-data-index/master-data-index.component';
 import { TaskLibrariesComponent } from './taskManagement/task-libraries/task-libraries.component';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { MultiSelectModule } from 'primeng/multiselect';
 
 NgxBootstrapDatePickerConfigService.registerNgxBootstrapDatePickerLocales();
 
@@ -35,6 +37,8 @@ NgxBootstrapDatePickerConfigService.registerNgxBootstrapDatePickerLocales();
         BsDropdownModule.forRoot(),
         PopoverModule.forRoot(),
         SubheaderModule,
+        NgMultiSelectDropDownModule.forRoot(),
+        MultiSelectModule
     ],
     declarations: [
     MasterDataIndexComponent,

@@ -381,8 +381,8 @@ bs-days-calendar-view {
         }
 
         img {
-            width: 100%;
-            height: 100%;
+            height: 5.5rem;
+            max-width: 5.5rem;
             object-fit: contain;
         }
 
@@ -1028,7 +1028,7 @@ bs-days-calendar-view {
 
 }
 
-.badge_with_delete{
+.badge_with_delete {
     height: 30px;
     min-width: 150px;
     display: flex;
@@ -1038,4 +1038,31 @@ bs-days-calendar-view {
 
 .alert-light {
     color: #000000 !important;
+}
+
+
+.media_bulk_select {
+    width: 13.6rem;
+    height: 13rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+        width: 100%;
+        height: 11rem;
+        object-fit: scale-down;
+        image-rendering: -webkit-optimize-contrast;
+    }
+}
+
+.uploaded_img {
+    width: 30rem;
+    height: 25rem;
+    object-fit: scale-down;
+    image-rendering: -webkit-optimize-contrast;
+}
+
+.p-multiselect {
+    display: flex !important;
 }

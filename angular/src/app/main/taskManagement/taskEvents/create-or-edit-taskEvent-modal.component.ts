@@ -5,6 +5,7 @@ import {
     TaskEventsServiceProxy,
     CreateOrEditTaskEventDto,
     TaskEventTaskStatusLookupTableDto,
+    TaskTeamEmployeeLookupTableDto,
     TaskTeamsServiceProxy,
 } from '@shared/service-proxies/service-proxies';
 import { AppComponentBase } from '@shared/common/app-component-base';
@@ -45,16 +46,22 @@ export class CreateOrEditTaskEventModalComponent extends AppComponentBase implem
     selectedTag:any;
     allTags:any[]=[{id:1,displayName:"Tag 1"},{id:2,displayName:"Tag 2"},{id:3,displayName:"Tag 3"}]
 
+    employeeList: TaskTeamEmployeeLookupTableDto[] = [];
+    selectedEmployees: TaskTeamEmployeeLookupTableDto[] = [];
+
     constructor(
         injector: Injector,
         private _taskEventsServiceProxy: TaskEventsServiceProxy,
-        private _taskTeamServiceProxy: TaskTeamsServiceProxy,
+        private _taskTeamsServiceProxy: TaskTeamsServiceProxy,
         private _dateTimeService: DateTimeService
     ) {
         super(injector);
     }
 
     show(taskEventId?: number): void {
+        this._taskTeamsServiceProxy.getAllEmployeeForLookupTable('','',0,1000).subscribe(result => {
+            this.employeeList = result.items;
+        });
         if (!taskEventId) {
             this.taskEvent = new CreateOrEditTaskEventDto();
             this.taskEvent.id = taskEventId;
@@ -100,6 +107,18 @@ export class CreateOrEditTaskEventModalComponent extends AppComponentBase implem
             });
     }
 
+    onEmployeeSelect(event: any) {
+        // if (event) {
+        //     let index =this.taskEvent.teams?this.taskEvent.teams.findIndex(x => x.id == event.itemValue.id):-1;
+        //     if(index<0){
+        //         this.taskEvent.teams = event.value;
+        //     }else if(index>=0 && this.taskEvent.id){
+        //         this._taskTeamsServiceProxy.deleteByTask(this.taskEvent.id,event.itemValue.id).subscribe(result=>{
+        //             this.taskEvent.teams.splice(index, 1);
+        //         });
+        //     }
+        // }
+    }
     close(): void {
         this.active = false;
         this.modal.hide();

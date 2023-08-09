@@ -19,6 +19,7 @@ import { DateTime } from 'luxon';
 import { DateTimeService } from '@app/shared/common/timing/date-time.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { DecimalPipe } from '@angular/common';
+import { CreateOrEditBulkMediaLibraryModalComponent } from './create-or-edit-bulk-media-library-modal/create-or-edit-bulk-media-library-modal.component';
 
 @Component({
     templateUrl: './mediaLibraries.component.html',
@@ -30,6 +31,8 @@ export class MediaLibrariesComponent extends AppComponentBase implements OnInit{
     @ViewChild('createOrEditMediaLibraryModal', { static: true })
     createOrEditMediaLibraryModal: CreateOrEditMediaLibraryModalComponent;
     @ViewChild('viewMediaLibraryModal', { static: true }) viewMediaLibraryModal: ViewMediaLibraryModalComponent;
+
+    @ViewChild('createOrEditModal', { static: true }) createOrEditModal: CreateOrEditBulkMediaLibraryModalComponent;
 
     @ViewChild('dataTable', { static: true }) dataTable: Table;
     @ViewChild('paginator', { static: true }) paginator: Paginator;
@@ -112,7 +115,11 @@ export class MediaLibrariesComponent extends AppComponentBase implements OnInit{
     }
 
     createMediaLibrary(): void {
+        this.createOrEditMediaLibraryModal.isFromMediaLibraryList = true;
         this.createOrEditMediaLibraryModal.show();
+    }
+    createBulkMediaUpload(): void {
+        this.createOrEditModal.show();
     }
 
     deleteMediaLibrary(mediaLibrary: MediaLibraryDto): void {

@@ -7165,6 +7165,13 @@ next-tick@^1.1.0:
   resolved "https://registry.npmjs.org/next-tick/-/next-tick-1.1.0.tgz"
   integrity sha512-CXdUiJembsNjuToQvxayPZF9Vqht7hewsvy2sOWafLvi2awflj9mOC6bHIg50orX8IJvWKY9wYQ/zB2kogPslQ==
 
+ng-multiselect-dropdown@^0.2.14:
+  version "0.2.14"
+  resolved "https://registry.yarnpkg.com/ng-multiselect-dropdown/-/ng-multiselect-dropdown-0.2.14.tgz#77f199cf1bf25f08fd73fbcadd1f1375c77fa578"
+  integrity sha512-S+dPT/Xskh5fJVQMAb0qUVSwoE+VJ8C9XUDe6C4/3/Cd43o2F3SHHHOXfOhcQfqkZYkGeJOmzRfc57aOohr4dA==
+  dependencies:
+    tslib "^1.9.0"
+
 ng-recaptcha@^11.0.0:
   version "11.0.0"
   resolved "https://registry.npmjs.org/ng-recaptcha/-/ng-recaptcha-11.0.0.tgz"

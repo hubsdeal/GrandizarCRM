@@ -18,6 +18,6 @@ import { ProductMediaMediaLibraryLookupTableModalComponent } from './productMedi
         ProductMediaMediaLibraryLookupTableModalComponent,
     ],
     imports: [AppSharedModule, ProductMediaRoutingModule, AdminSharedModule],
-    exports: [ProductMediasComponent, CreateOrEditProductMediaModalComponent, ViewProductMediaModalComponent],
+    exports: [ProductMediasComponent, CreateOrEditProductMediaModalComponent, ViewProductMediaModalComponent, ProductMediaMediaLibraryLookupTableModalComponent],
 })
 export class ProductMediaModule {}

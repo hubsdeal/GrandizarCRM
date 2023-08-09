@@ -1,0 +1,119 @@
+<style>
+    .my-drop-zone {
+        border: dotted 3px lightgray;
+        min-height: 70px;
+    }
+    
+    .nv-file-over {
+        border: dotted 3px red;
+    }
+    /* Default class applied to drop zones on over */
+    
+    .another-file-over-class {
+        border: dotted 3px green;
+    }
+</style>
+<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <form *ngIf="active" #mediaLibraryForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span>{{l("Upload Bulk Media")}}</span>
+                    </h4>
+                    <button type="button" class="btn-close" (click)="close()" aria-label="Close"
+                        [disabled]="saving"></button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="row">
+
+                        <div class="col-md-12">
+
+                            <h3>Select files</h3>
+
+                            <div ng2FileDrop [ngClass]="{'nv-file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event)" [uploader]="uploader" class="well my-drop-zone">
+                                Drop one or more files here
+                            </div>
+
+
+                            <br/> or Select files
+                            <input type="file" ng2FileSelect [uploader]="uploader" multiple /><br/>
+
+
+                        </div>
+
+                        <div class="col-md-12" style="margin-bottom: 40px">
+
+                            <h3>Upload</h3>
+                            <p>Toatl Files: {{ uploader?.queue?.length }}</p>
+
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th width="50%">Name</th>
+                                        <th>Size</th>
+                                        <th>Progress</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of uploader.queue">
+                                        <td><strong>{{ item?.file?.name }}</strong></td>
+                                        <td *ngIf="uploader.options.isHTML5" nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
+                                        <td *ngIf="uploader.options.isHTML5">
+                                            <div class="progress" style="margin-bottom: 0;">
+                                                <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div>
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <span *ngIf="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                                            <span *ngIf="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                                            <span *ngIf="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                                        </td>
+                                        <td nowrap>
+                                            <button type="button" class="btn btn-warning btn-xs" (click)="item.cancel()" [disabled]="!item.isUploading">
+                                            <span class="glyphicon glyphicon-ban-circle"></span> Cancel
+                                        </button>
+                                            <button type="button" class="btn btn-danger btn-xs" (click)="item.remove()">
+                                            <span class="glyphicon glyphicon-trash"></span> Remove
+                                        </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <div>
+                                <div>
+                                    Upload progress:
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="form-group mb-4">
+                        <label for="MediaLibrary_SeoTag">{{l("Seo Tag")}} *</label>
+                        <input type="text" id="MediaLibrary_SeoTag" class="form-control" [(ngModel)]="seoTag" name="SeoTag" minlength="0" maxlength="512" required/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="MediaLibrary_AltTag">{{l("Alt Tag")}} *</label>
+                        <input type="text" id="MediaLibrary_AltTag" class="form-control" [(ngModel)]="altTag" name="AltTag" minlength="0" maxlength="512" required/>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="button" class="btn btn-primary blue" (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length || seoTag==null || altTag==null"><i class="fa fa-save"></i>
+                        <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
