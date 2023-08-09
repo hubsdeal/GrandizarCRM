@@ -41,6 +41,7 @@ import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { TreeTableModule } from 'primeng/treetable';
+import { MultiSelectModule } from 'primeng/multiselect';
 @NgModule({
     imports: [
         CommonModule,
@@ -62,7 +63,8 @@ import { TreeTableModule } from 'primeng/treetable';
         DragDropModule,
         ProgressSpinnerModule,
         NgxMaterialTimepickerModule,
-        TreeTableModule
+        TreeTableModule,
+        MultiSelectModule
     ], 
     declarations: [
         TimeZoneComboComponent,
@@ -91,7 +93,8 @@ import { TreeTableModule } from 'primeng/treetable';
         DragDropModule,
         ProgressSpinnerModule,
         NgxMaterialTimepickerModule,
-        TreeTableModule
+        TreeTableModule,
+        MultiSelectModule
     ],
     providers: [
         DateTimeService,
