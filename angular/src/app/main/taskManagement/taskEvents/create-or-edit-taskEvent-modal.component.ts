@@ -68,6 +68,7 @@ export class CreateOrEditTaskEventModalComponent extends AppComponentBase implem
             this.taskEvent.eventDate = this._dateTimeService.getStartOfDay();
             this.taskEvent.endDate = this._dateTimeService.getStartOfDay();
             this.taskStatusName = '';
+            this.taskEvent.completionPercentage =0;
             //this.taskEvent.status = false;
             this.taskEvent.priority = false;
             this.active = true;
@@ -107,18 +108,7 @@ export class CreateOrEditTaskEventModalComponent extends AppComponentBase implem
             });
     }
 
-    onEmployeeSelect(event: any) {
-        // if (event) {
-        //     let index =this.taskEvent.teams?this.taskEvent.teams.findIndex(x => x.id == event.itemValue.id):-1;
-        //     if(index<0){
-        //         this.taskEvent.teams = event.value;
-        //     }else if(index>=0 && this.taskEvent.id){
-        //         this._taskTeamsServiceProxy.deleteByTask(this.taskEvent.id,event.itemValue.id).subscribe(result=>{
-        //             this.taskEvent.teams.splice(index, 1);
-        //         });
-        //     }
-        // }
-    }
+   
     close(): void {
         this.active = false;
         this.modal.hide();
@@ -142,7 +132,7 @@ export class CreateOrEditTaskEventModalComponent extends AppComponentBase implem
        });
     }
     getTeamList() {
-        this._taskTeamServiceProxy.getTaskTeamForDropdown().subscribe(result=>{
+        this._taskTeamsServiceProxy.getTaskTeamForDropdown().subscribe(result=>{
             this.allTeams = result;
        });
     }
@@ -161,7 +151,7 @@ export class CreateOrEditTaskEventModalComponent extends AppComponentBase implem
             if(index<0){
                 this.taskEvent.teams = event.value;
             }else if(index>=0 && this.taskEvent.id){
-                // this._taskTeamServiceProxy.deleteByTask(this.taskEvent.id,event.itemValue.id).subscribe(result=>{
+                // this._taskTeamsServiceProxy.deleteByTask(this.taskEvent.id,event.itemValue.id).subscribe(result=>{
                 //     this.taskEvent.teams.splice(index, 1);
                 // });
             }

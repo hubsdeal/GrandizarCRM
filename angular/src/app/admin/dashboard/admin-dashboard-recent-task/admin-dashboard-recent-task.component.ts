@@ -109,7 +109,7 @@ export class AdminDashboardRecentTaskComponent  extends AppComponentBase {
           )
           .subscribe((result) => {
               this.primengTableHelper.totalRecordsCount = result.totalCount;
-              this.primengTableHelper.records = result.items;
+              this.primengTableHelper.records = result.taskEvents;
               this.primengTableHelper.hideLoadingIndicator();
           });
   }
