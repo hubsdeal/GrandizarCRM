@@ -15,10 +15,10 @@
                 <div class="modal-body">
                     <div class="my-5 p_filter">
                         <label class="form-label" for="team">{{ l('Select from Template') }}</label>
-                        <p-dropdown [options]="allTeams" [filter]="true" [virtualScroll]="true"
+                        <p-dropdown [options]="allTemplate" [filter]="true" [virtualScroll]="true"
                             placeholder="Select from Template" [itemSize]="30" name="displayName"
-                            optionLabel="displayName" optionId="id" [(ngModel)]="allTemplate" filterBy="displayName"
-                            [style]="{ width: '100%' }"></p-dropdown>
+                            optionLabel="displayName" optionId="id" [(ngModel)]="selectedTemplate" filterBy="displayName"
+                            [style]="{ width: '100%' }" (onChange)="onTemplateSelect($event)"></p-dropdown>
                     </div>
                     <div class="my-5">
                         <label class="form-label" for="TaskEvent_Name">{{ l('Task Title') }} *</label>
@@ -143,10 +143,12 @@
                         <div class="col-md-12">
                             <div class="my-5 p_filter">
                                 <label class="form-label" for="team">{{ l('Team') }}</label>
-                                <p-dropdown [options]="allTeams" [filter]="true" [virtualScroll]="true"
+                                <!-- <p-dropdown [options]="allTeams" [filter]="true" [virtualScroll]="true"
                                     placeholder="Select Team" [itemSize]="30" name="displayName"
                                     optionLabel="displayName" optionId="id" [(ngModel)]="selectedTeam"
-                                    filterBy="displayName" [style]="{ width: '100%' }"></p-dropdown>
+                                    filterBy="displayName" [style]="{ width: '100%' }"></p-dropdown> -->
+                                    <!-- <p-multiSelect name="employee" id="employee" [options]="employeeList" [(ngModel)]="selectedEmployees" optionLabel="displayName" [virtualScroll]="true"  class="multiselect-custom-virtual-scroll" (onChange)="onEmployeeSelect($event)">
+                                    </p-multiSelect> -->
                             </div>
                         </div>
                         <div class="col-md-12">
