@@ -47,6 +47,18 @@ export class AppNavigationService {
                     new AppMenuItem('Abandoned Cart', 'Pages.Orders', 'fas fa-shopping-cart', '/app/main/orderManagement/abandonedCart'),
                     new AppMenuItem('Wish List', 'Pages.WishLists', 'fas fa-heart', '/app/main/shop/wishLists'),
                     new AppMenuItem('Shopping Cart', 'Pages.ShoppingCarts', 'fas fa-shopping-cart', '/app/main/shop/shoppingCarts'),
+                    new AppMenuItem('Sales Lead', 'Pages.Leads', 'flaticon-more', '/app/main/salesLeadManagement/leads'),
+                ]
+            ),
+            new AppMenuItem(
+                'Delivery Management',
+                '',
+                'fas fa-shopping-cart',
+                '',
+                [],
+                [
+                    new AppMenuItem('Delivery Team', 'Pages.Employees', 'fas fa-users', '/app/main/crm/employees'),
+                    new AppMenuItem('Order & Delivery Tracking', 'Pages.Employees', 'fas fa-users', '/app/main/crm/employees'),
                 ]
             ),
             new AppMenuItem(

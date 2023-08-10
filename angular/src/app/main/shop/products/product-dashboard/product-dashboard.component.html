@@ -45,9 +45,11 @@
                                 Notes
                             </a>
                             <div class="symbol-group symbol-hover">
-                                <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" data-kt-initialized="1"
-                                *ngFor="let item of teams">
-                                    <span *ngIf="item.picture==null" [class.border-active-primary]="item.primary" class="symbol-label bg-primary text-inverse-warning fw-bold">{{item.employeeName | nameSplit}}</span>
+                                <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
+                                    data-kt-initialized="1" *ngFor="let item of teams">
+                                    <span *ngIf="item.picture==null" [class.border-active-primary]="item.primary"
+                                        class="symbol-label bg-primary text-inverse-warning fw-bold">{{item.employeeName
+                                        | nameSplit}}</span>
                                     <img *ngIf="item.picture!=null" alt="Pic" src="{{item.picture}}">
                                 </div>
                                 <a href="javascript:;" class="symbol symbol-35px symbol-circle"
@@ -140,8 +142,8 @@
                                     </div>
 
                                     <div class="d-flex mb-4 select_button_custom">
-                                        <a href="{{publicViewUrl}}" target="_blank" class="btn btn-sm btn-success me-4 pt-3"><i
-                                                class="fas fa-eye fs-6 "></i>
+                                        <a href="{{publicViewUrl}}" target="_blank"
+                                            class="btn btn-sm btn-success me-4 pt-3"><i class="fas fa-eye fs-6 "></i>
                                             Public View</a>
                                         <p-selectButton [options]="productPublishedOptions"
                                             name="productPublishedOptions" id="productPublishedOptions"
@@ -193,8 +195,11 @@
 
                                     <div class="symbol-group symbol-hover mb-3">
                                         <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
-                                            data-bs-original-title="Alan Warden" data-kt-initialized="1" *ngFor="let item of teams">
-                                            <span *ngIf="item.picture==null" class="symbol-label bg-warning text-inverse-warning fw-bold">{{item.employeeName | nameSplit}}</span>
+                                            data-bs-original-title="Alan Warden" data-kt-initialized="1"
+                                            *ngFor="let item of teams">
+                                            <span *ngIf="item.picture==null"
+                                                class="symbol-label bg-warning text-inverse-warning fw-bold">{{item.employeeName
+                                                | nameSplit}}</span>
                                             <img *ngIf="item.picture!=null" alt="Pic" src="{{item.picture}}">
                                         </div>
                                     </div>
@@ -311,11 +316,11 @@
                                                             Store
                                                         </label>
                                                         <p-dropdown [options]="storeOptions" [filter]="true"
-                                                            [virtualScroll]="true"
-                                                            placeholder="Select Store" [itemSize]="30"
-                                                            name="storeName" optionLabel="displayName" optionValue="id" optionId="storeId"
-                                                            [(ngModel)]="product.storeId" filterBy="displayName" required
-                                                            [style]="{ width: '100%' }"></p-dropdown>
+                                                            [virtualScroll]="true" placeholder="Select Store"
+                                                            [itemSize]="30" name="storeName" optionLabel="displayName"
+                                                            optionValue="id" optionId="storeId"
+                                                            [(ngModel)]="product.storeId" filterBy="displayName"
+                                                            required [style]="{ width: '100%' }"></p-dropdown>
                                                     </div>
                                                 </div>
                                                 <!--end::Input group-->
@@ -327,11 +332,12 @@
                                                             Primary Category
                                                         </label>
                                                         <p-dropdown [options]="productCategoryOptions" [filter]="true"
-                                                            [virtualScroll]="true"
-                                                            placeholder="Select Product Category" [itemSize]="30"
-                                                            name="displayName" optionLabel="displayName" optionValue="id" optionId="id"
-                                                            [(ngModel)]="product.productCategoryId" filterBy="displayName"
-                                                            required [style]="{ width: '100%' }"></p-dropdown>
+                                                            [virtualScroll]="true" placeholder="Select Product Category"
+                                                            [itemSize]="30" name="displayName" optionLabel="displayName"
+                                                            optionValue="id" optionId="id"
+                                                            [(ngModel)]="product.productCategoryId"
+                                                            filterBy="displayName" required
+                                                            [style]="{ width: '100%' }"></p-dropdown>
                                                     </div>
                                                 </div>
                                                 <!--end::Input group-->
@@ -1189,14 +1195,14 @@
                                                                     (click)="createBulkMediaUpload()">
                                                                     <span><i
                                                                             class="fas fa-plus-circle text-primary"></i></span>
-                                                                    <span class="text-primary fs-7 fw-bold">Bulk Photo</span>
+                                                                    <span class="text-primary fs-7 fw-bold">Bulk
+                                                                        Photo</span>
                                                                 </a>
                                                             </div>
                                                         </div>
                                                         <div class="border border-dashed border-gray-300 rounded me-5">
                                                             <div class="overlay sm_bottom_gallery">
-                                                                <a href="javascript:;"
-                                                                    (click)="onAddVideo()">
+                                                                <a href="javascript:;" (click)="onAddVideo()">
                                                                     <span><i
                                                                             class="fas fa-plus-circle text-primary"></i></span>
                                                                     <span class="text-primary fs-7 fw-bold">Video</span>
@@ -1216,6 +1222,210 @@
                                 <div class="accordion-item">
                                     <h2 class="accordion-header" id="kt_accordion_1_header_1">
                                         <button class="accordion-button fs-4 fw-bold collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#kt_accordion_1_body_413"
+                                            aria-expanded="true" aria-controls="kt_accordion_1_body_1">
+                                            <i class="fa fa-dollar fa-1x me-2"></i> Product Variant Price
+                                        </button>
+                                    </h2>
+                                    <div id="kt_accordion_1_body_413" class="accordion-collapse collapse"
+                                        aria-labelledby="kt_accordion_1_header_1" data-bs-parent="#kt_accordion_1">
+                                        <div class="card-body">
+
+                                            <!-- Variant Price -->
+                                            <div
+                                                class="notice shadow d-flex bg-white rounded border-primary border border-dashed mb-9 p-6">
+                                                <span class="svg-icon svg-icon-2tx svg-icon-primary me-4">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <rect x="2" y="2" width="9" height="9" rx="2"
+                                                            fill="currentColor" />
+                                                        <rect opacity="0.3" x="13" y="2" width="9" height="9" rx="2"
+                                                            fill="currentColor" />
+                                                        <rect opacity="0.3" x="13" y="13" width="9" height="9" rx="2"
+                                                            fill="currentColor" />
+                                                        <rect opacity="0.3" x="2" y="13" width="9" height="9" rx="2"
+                                                            fill="currentColor" />
+                                                    </svg>
+                                                </span>
+                                                <div class="d-flex flex-stack flex-grow-1 price_block">
+                                                    <div class="fw-semibold w-100">
+                                                        <h4 class="text-gray-900 fw-bold">
+                                                            Product Variant - Upsell and Cross Sell
+                                                        </h4>
+                                                        <div class="fs-6">
+                                                            <!--begin::Form-->
+                                                            <form id="kt_ecommerce_settings_general_form"
+                                                                class="form fv-plugins-bootstrap5 fv-plugins-framework"
+                                                                action="#">
+
+                                                                <div class="row mb-7">
+                                                                    <div class="col-xl-3">
+                                                                        <div class="fv-row">
+                                                                            <label
+                                                                                class="fs-6 fw-semibold form-label mt-3">
+                                                                                <span class="required">
+                                                                                    Variant Category
+                                                                                </span>
+                                                                            </label>
+                                                                            <select
+                                                                                class="form-control form-control-sm form-control-solid"
+                                                                                name="state" id="state">
+                                                                                <option value="1">Size</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-xl-3">
+                                                                        <div class="fv-row">
+                                                                            <label
+                                                                                class="fs-6 fw-semibold form-label mt-3">
+                                                                                <span class="required">
+                                                                                    Variant Name
+                                                                                </span>
+                                                                            </label>
+                                                                            <select
+                                                                                class="form-control form-control-sm form-control-solid"
+                                                                                name="state" id="state">
+                                                                                <option value="1">Large</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-xl-2">
+                                                                        <div class="fv-row">
+                                                                            <label
+                                                                                class="fs-6 fw-semibold form-label mt-3">
+                                                                                <span class="required">
+                                                                                    Price</span>
+                                                                            </label>
+                                                                            <input type="text"
+                                                                                class="form-control form-control-sm form-control-solid"
+                                                                                name="email" value="">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-xl-12 d-flex">
+                                                                        <div class="variant_photo">
+                                                                            <img src="assets/common/images/p1.png"
+                                                                                alt="">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-xl-12 d-flex align-items-end">
+                                                                        <!--begin::Button-->
+                                                                        <button type="submit"
+                                                                            data-kt-contacts-type="submit"
+                                                                            class="btn btn-primary btn-sm">
+                                                                            <span class="indicator-label">Save</span>
+                                                                            <span class="indicator-progress">Please
+                                                                                wait...
+                                                                                <span
+                                                                                    class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                                                        </button>
+                                                                        <!--end::Button-->
+                                                                    </div>
+                                                                </div>
+
+                                                                <!--begin::Separator-->
+                                                                <div class="separator mb-6"></div>
+                                                                <!--end::Separator-->
+                                                            </form>
+                                                            <!--End::Form-->
+                                                            <div class="row">
+                                                                <div class="col-xl-4 mb-6">
+                                                                    <div
+                                                                        class="bg-white shadow-sm rounded border-gray-300 border border-dashed p-6 shadow">
+                                                                        <div class="variant_photo mb-3 m-0">
+                                                                            <img src="assets/common/images/p1.png"
+                                                                                alt="">
+                                                                        </div>
+                                                                        <div class="fs-6 mb-2">
+                                                                            <span class="text-gray-400">
+                                                                                Variant Name:
+                                                                            </span>
+                                                                            <span class="text-gray-500 fw-bold">
+                                                                                Blue
+                                                                            </span>
+                                                                        </div>
+                                                                        <div class="fs-6 mb-2">
+                                                                            <span class="text-gray-400">
+                                                                                Product Price:
+                                                                            </span>
+                                                                            <span class="text-gray-500 fw-bold">
+                                                                                $10
+                                                                            </span>
+                                                                        </div>
+                                                                        <div class="fs-6 mb-2">
+                                                                            <span class="text-gray-400">
+                                                                                Add ons Price:
+                                                                            </span>
+                                                                            <span class="text-gray-500 fw-bold">
+                                                                                $1
+                                                                            </span>
+                                                                        </div>
+                                                                        <div class="fs-6 mb-2">
+                                                                            <span class="text-gray-400">
+                                                                                Total Price:
+                                                                            </span>
+                                                                            <span class="text-primary fw-bold">
+                                                                                $11
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-xl-4 mb-6">
+                                                                    <div
+                                                                        class="bg-white shadow-sm rounded border-gray-300 border border-dashed p-6 shadow">
+                                                                        <div class="variant_photo mb-3 m-0">
+                                                                            <img src="assets/common/images/p1.png"
+                                                                                alt="">
+                                                                        </div>
+                                                                        <div class="fs-6 mb-2">
+                                                                            <span class="text-gray-400">
+                                                                                Variant Name:
+                                                                            </span>
+                                                                            <span class="text-gray-500 fw-bold">
+                                                                                Blue
+                                                                            </span>
+                                                                        </div>
+                                                                        <div class="fs-6 mb-2">
+                                                                            <span class="text-gray-400">
+                                                                                Product Price:
+                                                                            </span>
+                                                                            <span class="text-gray-500 fw-bold">
+                                                                                $10
+                                                                            </span>
+                                                                        </div>
+                                                                        <div class="fs-6 mb-2">
+                                                                            <span class="text-gray-400">
+                                                                                Add ons Price:
+                                                                            </span>
+                                                                            <span class="text-gray-500 fw-bold">
+                                                                                $1
+                                                                            </span>
+                                                                        </div>
+                                                                        <div class="fs-6 mb-2">
+                                                                            <span class="text-gray-400">
+                                                                                Total Price:
+                                                                            </span>
+                                                                            <span class="text-primary fw-bold">
+                                                                                $11
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- End Variant Price -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="card mb-6">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="kt_accordion_1_header_1">
+                                        <button class="accordion-button fs-4 fw-bold collapsed" type="button"
                                             data-bs-toggle="collapse" data-bs-target="#kt_accordion_1_body_5"
                                             aria-expanded="true" aria-controls="kt_accordion_1_body_1">
                                             <i class="fas fa-cart-arrow-down fa-1x me-2"></i>
@@ -1224,8 +1434,55 @@
                                     </h2>
                                     <div id="kt_accordion_1_body_5" class="accordion-collapse collapse"
                                         aria-labelledby="kt_accordion_1_header_1" data-bs-parent="#kt_accordion_1">
-                                        <div class="card-body">
+                                        <div class="card-body p-4 pt-0 pb-5">
+                                            <app-crossSellProducts *ngIf="product"
+                                                [productId]="product.id"></app-crossSellProducts>
+                                            <!-- <div class="row" *ngIf="crossSellProducts.length>1">
+                                                <div class="col-xl-3 col-lg-3 col-md-4 col-sm-12"
+                                                    *ngFor="let productView of crossSellProducts">
+                                                    <div class="product_slide_box">
+                                                        <div class="product-grid">
+                                                            <div class="product-image">
+                                                                <a href="javascript:;" class="image">
+                                                                    <img class="pic-1"
+                                                                        [src]="productView.picture ? productView.picture : '/assets/common/images/p1.png'">
+                                                                    <img class="pic-2"
+                                                                        [src]="productView.picture ? productView.picture : '/assets/common/images/p1.png'">
+                                                                </a>
+                                                            </div>
+                                                            <div class="product-content">
+                                                                <ul class="rating justify-content-center">
+                                                                    <li *ngFor="let star of [1, 2, 3, 4, 5]"
+                                                                        class="fas fa-star"
+                                                                        [ngClass]="{'star_active': star <= productView.numberOfRatings, 'star_not_active': star > productView.numberOfRatings}">
+                                                                    </li>
 
+                                                                </ul>
+                                                                <h3 class="title"><a href="javascript:;">
+                                                                        {{productView.product?.name}}</a></h3>
+                                                                <div class="price"
+                                                                    *ngIf="productView.product?.regularPrice && productView.product?.salesPrice">
+                                                                    <span>${{productView.product?.regularPrice | number
+                                                                        : '1.2-2'}}</span>
+                                                                    ${{productView.product?.salesPrice | number :
+                                                                    '1.2-2'}}
+                                                                </div>
+                                                                <div class="price"
+                                                                    *ngIf="!productView.product?.salesPrice">
+                                                                    <span>${{productView.product?.regularPrice | number
+                                                                        : '1.2-2'}}</span>
+                                                                </div>
+                                                                <div class="product-button-group">
+                                                                    <a (click)="onDeleteCrossSellProduct(productId, productView.product?.id)"
+                                                                        class="product-like-icon" href="javascript:;"><i
+                                                                            class="fa fa-trash-alt"></i>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div> -->
                                         </div>
                                     </div>
                                 </div>
@@ -1243,8 +1500,9 @@
                                     </h2>
                                     <div id="kt_accordion_1_body_rltd" class="accordion-collapse collapse"
                                         aria-labelledby="kt_accordion_1_header_1" data-bs-parent="#kt_accordion_1">
-                                        <div class="card-body">
-
+                                        <div class="card-body p-4 pt-0 pb-5">
+                                            <app-RelatedProducts *ngIf="product"
+                                                [productId]="product.id"></app-RelatedProducts>
                                         </div>
                                     </div>
                                 </div>
@@ -2167,7 +2425,7 @@
                                             data-bs-toggle="collapse" data-bs-target="#kt_accordion_1_body_faq"
                                             aria-expanded="true" aria-controls="kt_accordion_1_body_1">
                                             <i class="flaticon-info fa-1x me-2"></i>
-                                            Product & Services FAQ
+                                            Product & Services FAQ and Extended Q&A Tags (v2)
                                         </button>
                                     </h2>
                                     <div id="kt_accordion_1_body_faq" class="accordion-collapse collapse"
@@ -2370,7 +2628,7 @@
                                             data-bs-toggle="collapse" data-bs-target="#kt_accordion_1_body_csqa"
                                             aria-expanded="true" aria-controls="kt_accordion_1_body_1">
                                             <i class="fas fa-question-circle fa-1x me-2"></i>
-                                            Customer Question & Answer
+                                            Customer Online Question & Answer (v2)
                                         </button>
                                     </h2>
                                     <div id="kt_accordion_1_body_csqa" class="accordion-collapse collapse"
@@ -2388,7 +2646,8 @@
                                         <button class="accordion-button fs-4 fw-bold collapsed" type="button"
                                             data-bs-toggle="collapse" data-bs-target="#kt_accordion_1_body_4"
                                             aria-expanded="true" aria-controls="kt_accordion_1_body_1">
-                                            <i class="fa fa-dollar fa-1x me-2"></i> Additional Price List (v2)
+                                            <i class="fa fa-dollar fa-1x me-2"></i> B2B Price, Membership Price, Flash
+                                            Sale Price, Subscription Price (v2)
                                         </button>
                                     </h2>
                                     <div id="kt_accordion_1_body_4" class="accordion-collapse collapse"
@@ -3246,7 +3505,7 @@
                     </div> -->
                     <div class="tab-pane fade" id="pr_leads" role="tabpanel">
                         <div class="card mb-6">
-                            <div class="card-body">
+                            <!-- <div class="card-body">
                                 <div class="row">
                                     <div class="col-xl-4 mb-6">
                                         <div
@@ -3286,7 +3545,8 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
+                            <app-salesLeadManagement></app-salesLeadManagement>
                         </div>
                     </div>
                     <div class="tab-pane fade" id="pr_seller_team" role="tabpanel">
@@ -3294,8 +3554,7 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-xl-6">
-                                        <div
-                                            class="w-100 p-5 border-1 border-dashed rounded border-gray-300">
+                                        <div class="w-100 p-5 border-1 border-dashed rounded border-gray-300">
                                             <div class="d-flex justify-content-between align-baseline">
                                                 <div class="d-flex gap-7 align-items-center">
                                                     <div class="symbol symbol-circle symbol-100px">
@@ -3306,9 +3565,8 @@
                                                         <h3 class="mb-0">Emma Smith</h3>
                                                         <div class="d-flex align-items-center gap-2">
                                                             <span class="svg-icon svg-icon-2">
-                                                                <svg width="24" height="24"
-                                                                    viewBox="0 0 24 24" fill="none"
-                                                                    xmlns="http://www.w3.org/2000/svg">
+                                                                <svg width="24" height="24" viewBox="0 0 24 24"
+                                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
                                                                     <path opacity="0.3"
                                                                         d="M21 19H3C2.4 19 2 18.6 2 18V6C2 5.4 2.4 5 3 5H21C21.6 5 22 5.4 22 6V18C22 18.6 21.6 19 21 19Z"
                                                                         fill="currentColor"></path>
@@ -3322,9 +3580,8 @@
                                                         </div>
                                                         <div class="d-flex align-items-center gap-2">
                                                             <span class="svg-icon svg-icon-2">
-                                                                <svg width="24" height="24"
-                                                                    viewBox="0 0 24 24" fill="none"
-                                                                    xmlns="http://www.w3.org/2000/svg">
+                                                                <svg width="24" height="24" viewBox="0 0 24 24"
+                                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
                                                                     <path
                                                                         d="M5 20H19V21C19 21.6 18.6 22 18 22H6C5.4 22 5 21.6 5 21V20ZM19 3C19 2.4 18.6 2 18 2H6C5.4 2 5 2.4 5 3V4H19V3Z"
                                                                         fill="currentColor"></path>
@@ -3348,8 +3605,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="card-toolbar gap-3">
-                                                    <button
-                                                        class="btn btn-sm btn-light btn-active-light-primary"
+                                                    <button class="btn btn-sm btn-light btn-active-light-primary"
                                                         data-kt-drawer-show="true"
                                                         data-kt-drawer-target="#kt_drawer_chat">
                                                         <span class="svg-icon svg-icon-2">
@@ -3426,13 +3682,16 @@
 
     <!-- <createOrEditProductMediaModal #createOrEditProductMediaModal (saveProductMedia)="uploadProductMedia($event)">
     </createOrEditProductMediaModal> -->
-    <createOrEditMediaLibraryModal #createOrEditMediaLibraryModal (saveProductMedia)="changeProductPrimaryPicture($event)" (modalSave)="getProductPhotos()">
+    <createOrEditMediaLibraryModal #createOrEditMediaLibraryModal
+        (saveProductMedia)="changeProductPrimaryPicture($event)" (modalSave)="getProductPhotos()">
     </createOrEditMediaLibraryModal>
 
-    <createOrEditMediaLibraryModal #createOrEditMediaLibraryModalForProductMedia (saveProductMedia)="changeProductMedia($event)" (modalSave)="getProductPhotos()">
+    <createOrEditMediaLibraryModal #createOrEditMediaLibraryModalForProductMedia
+        (saveProductMedia)="changeProductMedia($event)" (modalSave)="getProductPhotos()">
     </createOrEditMediaLibraryModal>
 
-    <createOrEditMediaLibraryModal #createOrEditMediaLibraryModalForProductMediaVideo (saveProductMedia)="changeProductMedia($event)" (modalSave)="getProductPhotos()">
+    <createOrEditMediaLibraryModal #createOrEditMediaLibraryModalForProductMediaVideo
+        (saveProductMedia)="changeProductMedia($event)" (modalSave)="getProductPhotos()">
     </createOrEditMediaLibraryModal>
 
     <createOrEditProductTaskMapModal #createOrEditProductTaskMapModal>
@@ -3441,5 +3700,6 @@
     </createOrEditProductAccountTeamModal>
     <createOrEditProductNoteModal #createOrEditProductNoteModal>
     </createOrEditProductNoteModal>
-    <app-create-or-edit-bulk-product-media-library-modal #createOrEditModal (modalSave)="getProductPhotos()"></app-create-or-edit-bulk-product-media-library-modal>
+    <app-create-or-edit-bulk-product-media-library-modal #createOrEditModal
+        (modalSave)="getProductPhotos()"></app-create-or-edit-bulk-product-media-library-modal>
 </div>

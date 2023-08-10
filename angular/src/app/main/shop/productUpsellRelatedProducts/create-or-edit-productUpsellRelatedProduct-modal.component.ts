@@ -29,7 +29,7 @@ export class CreateOrEditProductUpsellRelatedProductModalComponent extends AppCo
         new CreateOrEditProductUpsellRelatedProductDto();
 
     productName = '';
-
+    productId:number;
     constructor(
         injector: Injector,
         private _productUpsellRelatedProductsServiceProxy: ProductUpsellRelatedProductsServiceProxy,
@@ -51,7 +51,7 @@ export class CreateOrEditProductUpsellRelatedProductModalComponent extends AppCo
                 .getProductUpsellRelatedProductForEdit(productUpsellRelatedProductId)
                 .subscribe((result) => {
                     this.productUpsellRelatedProduct = result.productUpsellRelatedProduct;
-
+                    this.productId = result.productUpsellRelatedProduct.primaryProductId;
                     this.productName = result.productName;
 
                     this.active = true;
@@ -62,7 +62,7 @@ export class CreateOrEditProductUpsellRelatedProductModalComponent extends AppCo
 
     save(): void {
         this.saving = true;
-
+        this.productUpsellRelatedProduct.primaryProductId  = this.productId;
         this._productUpsellRelatedProductsServiceProxy
             .createOrEdit(this.productUpsellRelatedProduct)
             .pipe(
@@ -78,18 +78,18 @@ export class CreateOrEditProductUpsellRelatedProductModalComponent extends AppCo
     }
 
     openSelectProductModal() {
-        this.productUpsellRelatedProductProductLookupTableModal.id = this.productUpsellRelatedProduct.primaryProductId;
+        this.productUpsellRelatedProductProductLookupTableModal.id = this.productUpsellRelatedProduct.relatedProductId;
         this.productUpsellRelatedProductProductLookupTableModal.displayName = this.productName;
         this.productUpsellRelatedProductProductLookupTableModal.show();
     }
 
     setPrimaryProductIdNull() {
-        this.productUpsellRelatedProduct.primaryProductId = null;
+        this.productUpsellRelatedProduct.relatedProductId = null;
         this.productName = '';
     }
 
     getNewPrimaryProductId() {
-        this.productUpsellRelatedProduct.primaryProductId = this.productUpsellRelatedProductProductLookupTableModal.id;
+        this.productUpsellRelatedProduct.relatedProductId = this.productUpsellRelatedProductProductLookupTableModal.id;
         this.productName = this.productUpsellRelatedProductProductLookupTableModal.displayName;
     }
 

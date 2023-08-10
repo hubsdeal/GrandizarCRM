@@ -107,6 +107,7 @@ export class ProductDashboardComponent extends AppComponentBase {
 
   @Output() makePrimaryClick: EventEmitter<any> = new EventEmitter<any>();
 
+  
   constructor(
     injector: Injector,
     private route: ActivatedRoute,

@@ -6,6 +6,7 @@ import { ProductUpsellRelatedProductsComponent } from './productUpsellRelatedPro
 import { CreateOrEditProductUpsellRelatedProductModalComponent } from './create-or-edit-productUpsellRelatedProduct-modal.component';
 import { ViewProductUpsellRelatedProductModalComponent } from './view-productUpsellRelatedProduct-modal.component';
 import { ProductUpsellRelatedProductProductLookupTableModalComponent } from './productUpsellRelatedProduct-product-lookup-table-modal.component';
+import { SwiperModule } from 'swiper/angular';
 
 @NgModule({
     declarations: [
@@ -15,6 +16,13 @@ import { ProductUpsellRelatedProductProductLookupTableModalComponent } from './p
 
         ProductUpsellRelatedProductProductLookupTableModalComponent,
     ],
-    imports: [AppSharedModule, ProductUpsellRelatedProductRoutingModule, AdminSharedModule],
+    imports: [AppSharedModule, ProductUpsellRelatedProductRoutingModule, AdminSharedModule, SwiperModule],
+    exports: [
+        ProductUpsellRelatedProductsComponent,
+        CreateOrEditProductUpsellRelatedProductModalComponent,
+        ViewProductUpsellRelatedProductModalComponent,
+
+        ProductUpsellRelatedProductProductLookupTableModalComponent,
+    ]
 })
 export class ProductUpsellRelatedProductModule {}

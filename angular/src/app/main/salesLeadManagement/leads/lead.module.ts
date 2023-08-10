@@ -32,5 +32,19 @@ import { LeadHubLookupTableModalComponent } from './lead-hub-lookup-table-modal.
         LeadHubLookupTableModalComponent,
     ],
     imports: [AppSharedModule, LeadRoutingModule, AdminSharedModule],
+    exports: [LeadsComponent,
+        CreateOrEditLeadModalComponent,
+        ViewLeadModalComponent,
+
+        LeadContactLookupTableModalComponent,
+        LeadBusinessLookupTableModalComponent,
+        LeadProductLookupTableModalComponent,
+        LeadProductCategoryLookupTableModalComponent,
+        LeadStoreLookupTableModalComponent,
+        LeadEmployeeLookupTableModalComponent,
+        LeadLeadSourceLookupTableModalComponent,
+        LeadLeadPipelineStageLookupTableModalComponent,
+        LeadHubLookupTableModalComponent
+    ]
 })
 export class LeadModule {}

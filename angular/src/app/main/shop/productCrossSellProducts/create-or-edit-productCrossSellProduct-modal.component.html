@@ -1,48 +1,24 @@
-﻿<div
-    bsModal
-    #createOrEditModal="bs-modal"
-    class="modal fade"
-    tabindex="-1"
-    role="dialog"
-    aria-labelledby="createOrEditModal"
-    aria-hidden="true"
-    [config]="{ backdrop: 'static' }"
->
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{ backdrop: 'static' }">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <form
-                *ngIf="active"
-                #productCrossSellProductForm="ngForm"
-                novalidate
-                (ngSubmit)="save()"
-                autocomplete="off"
-            >
+            <form *ngIf="active" #productCrossSellProductForm="ngForm" novalidate (ngSubmit)="save()"
+                autocomplete="off">
                 <div class="modal-header">
                     <h4 class="modal-title">
                         <span *ngIf="productCrossSellProduct.id">{{ l('EditProductCrossSellProduct') }}</span>
                         <span *ngIf="!productCrossSellProduct.id">{{ l('CreateNewProductCrossSellProduct') }}</span>
                     </h4>
 
-                    <button
-                        type="button"
-                        class="btn-close"
-                        (click)="close()"
-                        aria-label="Close"
-                        [disabled]="saving"
-                    ></button>
+                    <button type="button" class="btn-close" (click)="close()" aria-label="Close"
+                        [disabled]="saving"></button>
                 </div>
                 <div class="modal-body">
                     <div class="my-3">
-                        <label class="form-label" for="ProductName">{{ l('Product') }}</label>
+                        <label class="form-label" for="ProductName">{{ l('Cross Sale Product') }}</label>
                         <div class="input-group">
-                            <input
-                                class="form-control"
-                                id="ProductName"
-                                name="productName"
-                                [(ngModel)]="productName"
-                                type="text"
-                                disabled
-                            />
+                            <input class="form-control" id="ProductName" name="productName" [(ngModel)]="productName"
+                                type="text" disabled />
                             <button class="btn btn-primary blue" (click)="openSelectProductModal()" type="button">
                                 <i class="fa fa-search"></i>
                                 {{ l('Pick') }}
@@ -52,42 +28,18 @@
                             </button>
                         </div>
                     </div>
-                    <input
-                        class="form-control"
-                        name="productCrossSellProduct.primaryProductId"
-                        [(ngModel)]="productCrossSellProduct.primaryProductId"
-                        type="text"
-                        required
-                        hidden
-                    />
+                    <input class="form-control" name="productCrossSellProduct.crossProductId"
+                        [(ngModel)]="productCrossSellProduct.crossProductId" type="text" required hidden />
 
-                    <div class="my5">
-                        <label class="form-label" for="ProductCrossSellProduct_CrossProductId">
-                            {{ l('CrossProductId') }}
-                        </label>
-                        <input
-                            type="number"
-                            #ProductCrossSellProduct_CrossProductId="ngModel"
-                            id="ProductCrossSellProduct_CrossProductId"
-                            class="form-control"
-                            [(ngModel)]="productCrossSellProduct.crossProductId"
-                            name="CrossProductId"
-                        />
-                        <validation-messages [formCtrl]="ProductCrossSellProduct_CrossProductId"></validation-messages>
-                    </div>
+                    
 
-                    <div class="my5">
+                    <div class="my-5">
                         <label class="form-label" for="ProductCrossSellProduct_CrossSellScore">
-                            {{ l('CrossSellScore') }}
+                            {{ l('Cross Sell Score') }}
                         </label>
-                        <input
-                            type="number"
-                            #ProductCrossSellProduct_CrossSellScore="ngModel"
-                            id="ProductCrossSellProduct_CrossSellScore"
-                            class="form-control"
-                            [(ngModel)]="productCrossSellProduct.crossSellScore"
-                            name="CrossSellScore"
-                        />
+                        <input type="number" #ProductCrossSellProduct_CrossSellScore="ngModel"
+                            id="ProductCrossSellProduct_CrossSellScore" class="form-control"
+                            [(ngModel)]="productCrossSellProduct.crossSellScore" name="CrossSellScore" />
                         <validation-messages [formCtrl]="ProductCrossSellProduct_CrossSellScore"></validation-messages>
                     </div>
                 </div>
@@ -95,13 +47,9 @@
                     <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
                         {{ l('Cancel') }}
                     </button>
-                    <button
-                        type="submit"
-                        class="btn btn-primary blue"
-                        [disabled]="!productCrossSellProductForm.form.valid"
-                        [buttonBusy]="saving"
-                        [busyText]="l('SavingWithThreeDot')"
-                    >
+                    <button type="submit" class="btn btn-primary blue"
+                        [disabled]="!productCrossSellProductForm.form.valid" [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')">
                         <i class="fa fa-save"></i>
                         <span>{{ l('Save') }}</span>
                     </button>
@@ -109,8 +57,6 @@
             </form>
         </div>
     </div>
-    <productCrossSellProductProductLookupTableModal
-        #productCrossSellProductProductLookupTableModal
-        (modalSave)="getNewPrimaryProductId()"
-    ></productCrossSellProductProductLookupTableModal>
+    <productCrossSellProductProductLookupTableModal #productCrossSellProductProductLookupTableModal
+        (modalSave)="getNewPrimaryProductId()"></productCrossSellProductProductLookupTableModal>
 </div>

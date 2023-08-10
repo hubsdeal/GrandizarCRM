@@ -64,6 +64,7 @@ import { ZeroTemplateHttpConfigurationService } from './zero-template-http-confi
         ApiServiceProxies.ReturnTypesServiceProxy,        
         ApiServiceProxies.ProductUpsellRelatedProductsServiceProxy,        
         ApiServiceProxies.ProductCrossSellProductsServiceProxy,        
+        ApiServiceProxies.PublicPagesCommonServiceProxy,        
         ApiServiceProxies.ProductAccountTeamsServiceProxy,        
         ApiServiceProxies.SubscriptionTypesServiceProxy,        
         ApiServiceProxies.ProductSubscriptionMapsServiceProxy,        

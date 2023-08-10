@@ -19,7 +19,7 @@ import { MasterDataIndexComponent } from './lookupData/master-data-index/master-
 import { TaskLibrariesComponent } from './taskManagement/task-libraries/task-libraries.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { MultiSelectModule } from 'primeng/multiselect';
-
+import { SwiperModule } from "swiper/angular";
 NgxBootstrapDatePickerConfigService.registerNgxBootstrapDatePickerLocales();
 
 @NgModule({
@@ -38,7 +38,8 @@ NgxBootstrapDatePickerConfigService.registerNgxBootstrapDatePickerLocales();
         PopoverModule.forRoot(),
         SubheaderModule,
         NgMultiSelectDropDownModule.forRoot(),
-        MultiSelectModule
+        MultiSelectModule,
+        SwiperModule
     ],
     declarations: [
     MasterDataIndexComponent,
