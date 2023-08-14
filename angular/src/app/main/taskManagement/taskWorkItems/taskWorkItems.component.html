@@ -1,24 +1,764 @@
 ﻿<div [@routerTransition]>
-    <sub-header [title]="'TaskWorkItems' | localize" [description]="'TaskWorkItemsHeaderInfo' | localize">
+    <!-- <sub-header [title]="'TaskWorkItems' | localize" [description]="'TaskWorkItemsHeaderInfo' | localize">
         <div role="actions">
             <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1">
                 <i class="fa fa-file-excel"></i>
                 {{ l('ExportToExcel') }}
             </button>
 
-            <button
-                *ngIf="isGranted('Pages.TaskWorkItems.Create')"
-                (click)="createTaskWorkItem()"
-                class="btn btn-primary blue"
-            >
+            <button *ngIf="isGranted('Pages.TaskWorkItems.Create')" (click)="createTaskWorkItem()"
+                class="btn btn-primary blue">
                 <i class="fa fa-plus"></i>
                 {{ l('CreateNewTaskWorkItem') }}
             </button>
         </div>
-    </sub-header>
+    </sub-header> -->
+    <div class="w-100 d-flex mb-6 ps-9 pe-9 mt-6 justify-content-between align-items-center ng-tns-c282-7">
+        <div class="d-flex">
+            <h1 class="fs-3 fw-bold  my-0 page-heading text-dark">
+                Work Items
+            </h1>
+        </div>
+        <button *ngIf="isGranted('Pages.TaskWorkItems.Create')" (click)="createTaskWorkItem()"
+            class="btn btn-primary blue">
+            <i class="fa fa-plus"></i>
+            Work Items
+        </button>
+    </div>
 
     <div [class]="containerClass">
-        <div class="card card-custom gutter-b">
+        <div class="row g-6 g-xl-9">
+            <!--begin::Col-->
+            <div class="col-md-6 col-xl-4">
+                <!--begin::Card-->
+                <a href="../../demo1/dist/apps/projects/project.html" class="card shadow-sm border-hover-primary">
+                    <!--begin::Card header-->
+                    <div class="card-header border-0 pt-9">
+                        <!--begin::Card Title-->
+                        <div class="card-title m-0">
+                            <!--begin::Avatar-->
+                            <div class="symbol symbol-50px w-50px bg-light">
+                                <img src="assets/media/svg/brand-logos/plurk.svg" alt="image" class="p-3">
+                            </div>
+                            <!--end::Avatar-->
+                        </div>
+                        <!--end::Car Title-->
+                        <!--begin::Card toolbar-->
+                        <div class="card-toolbar">
+                            <span class="badge badge-light-primary fw-bold me-auto px-4 py-3">In
+                                Progress</span>
+                        </div>
+                        <!--end::Card toolbar-->
+                    </div>
+                    <!--end:: Card header-->
+                    <!--begin:: Card body-->
+                    <div class="card-body p-9">
+                        <!--begin::Name-->
+                        <div class="fs-3 fw-bold text-dark">Fitnes App</div>
+                        <!--end::Name-->
+                        <!--begin::Description-->
+                        <p class="text-gray-400 fw-semibold fs-5 mt-1 mb-7">CRM App
+                            application to HR efficiency</p>
+                        <!--end::Description-->
+                        <!--begin::Info-->
+                        <div class="d-flex flex-wrap mb-5">
+                            <!--begin::Due-->
+                            <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-7 mb-3">
+                                <div class="fs-6 text-gray-800 fw-bold">Oct 25, 2023</div>
+                                <div class="fw-semibold text-gray-400">Due Date</div>
+                            </div>
+                            <!--end::Due-->
+                            <!--begin::Budget-->
+                            <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 mb-3">
+                                <div class="fs-6 text-gray-800 fw-bold">$284,900.00</div>
+                                <div class="fw-semibold text-gray-400">Budget</div>
+                            </div>
+                            <!--end::Budget-->
+                        </div>
+                        <!--end::Info-->
+                        <!--begin::Progress-->
+                        <div class="h-4px w-100 bg-light mb-5" data-bs-toggle="tooltip"
+                            aria-label="This project 50% completed" data-bs-original-title="This project 50% completed"
+                            data-kt-initialized="1">
+                            <div class="bg-primary rounded h-4px" role="progressbar" style="width: 50%"
+                                aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <!--end::Progress-->
+                        <!--begin::Users-->
+                        <div class="symbol-group symbol-hover">
+                            <!--begin::User-->
+                            <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
+                                aria-label="Emma Smith" data-bs-original-title="Emma Smith" data-kt-initialized="1">
+                                <img alt="Pic" src="assets/media/avatars/300-6.jpg">
+                            </div>
+                            <!--begin::User-->
+                            <!--begin::User-->
+                            <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
+                                aria-label="Rudy Stone" data-bs-original-title="Rudy Stone" data-kt-initialized="1">
+                                <img alt="Pic" src="assets/media/avatars/300-1.jpg">
+                            </div>
+                            <!--begin::User-->
+                            <!--begin::User-->
+                            <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
+                                data-bs-original-title="Susan Redwood" data-kt-initialized="1">
+                                <span class="symbol-label bg-primary text-inverse-primary fw-bold">S</span>
+                            </div>
+                            <!--begin::User-->
+                        </div>
+                        <!--end::Users-->
+                    </div>
+                    <!--end:: Card body-->
+                </a>
+                <!--end::Card-->
+            </div>
+            <!--end::Col-->
+            <!--begin::Col-->
+            <div class="col-md-6 col-xl-4">
+                <!--begin::Card-->
+                <a href="../../demo1/dist/apps/projects/project.html" class="card shadow-sm border-hover-primary">
+                    <!--begin::Card header-->
+                    <div class="card-header border-0 pt-9">
+                        <!--begin::Card Title-->
+                        <div class="card-title m-0">
+                            <!--begin::Avatar-->
+                            <div class="symbol symbol-50px w-50px bg-light">
+                                <img src="assets/media/svg/brand-logos/disqus.svg" alt="image" class="p-3">
+                            </div>
+                            <!--end::Avatar-->
+                        </div>
+                        <!--end::Car Title-->
+                        <!--begin::Card toolbar-->
+                        <div class="card-toolbar">
+                            <span class="badge badge-light fw-bold me-auto px-4 py-3">Pending</span>
+                        </div>
+                        <!--end::Card toolbar-->
+                    </div>
+                    <!--end:: Card header-->
+                    <!--begin:: Card body-->
+                    <div class="card-body p-9">
+                        <!--begin::Name-->
+                        <div class="fs-3 fw-bold text-dark">Leaf CRM</div>
+                        <!--end::Name-->
+                        <!--begin::Description-->
+                        <p class="text-gray-400 fw-semibold fs-5 mt-1 mb-7">CRM App
+                            application to HR efficiency</p>
+                        <!--end::Description-->
+                        <!--begin::Info-->
+                        <div class="d-flex flex-wrap mb-5">
+                            <!--begin::Due-->
+                            <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-7 mb-3">
+                                <div class="fs-6 text-gray-800 fw-bold">May 10, 2021</div>
+                                <div class="fw-semibold text-gray-400">Due Date</div>
+                            </div>
+                            <!--end::Due-->
+                            <!--begin::Budget-->
+                            <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 mb-3">
+                                <div class="fs-6 text-gray-800 fw-bold">$36,400.00</div>
+                                <div class="fw-semibold text-gray-400">Budget</div>
+                            </div>
+                            <!--end::Budget-->
+                        </div>
+                        <!--end::Info-->
+                        <!--begin::Progress-->
+                        <div class="h-4px w-100 bg-light mb-5" data-bs-toggle="tooltip"
+                            aria-label="This project 30% completed" data-bs-original-title="This project 30% completed"
+                            data-kt-initialized="1">
+                            <div class="bg-info rounded h-4px" role="progressbar" style="width: 30%" aria-valuenow="30"
+                                aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <!--end::Progress-->
+                        <!--begin::Users-->
+                        <div class="symbol-group symbol-hover">
+                            <!--begin::User-->
+                            <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
+                                data-bs-original-title="Alan Warden" data-kt-initialized="1">
+                                <span class="symbol-label bg-warning text-inverse-warning fw-bold">A</span>
+                            </div>
+                            <!--begin::User-->
+                            <!--begin::User-->
+                            <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
+                                aria-label="Brian Cox" data-bs-original-title="Brian Cox" data-kt-initialized="1">
+                                <img alt="Pic" src="assets/media/avatars/300-5.jpg">
+                            </div>
+                            <!--begin::User-->
+                        </div>
+                        <!--end::Users-->
+                    </div>
+                    <!--end:: Card body-->
+                </a>
+                <!--end::Card-->
+            </div>
+            <!--end::Col-->
+            <!--begin::Col-->
+            <div class="col-md-6 col-xl-4">
+                <!--begin::Card-->
+                <a href="../../demo1/dist/apps/projects/project.html" class="card shadow-sm border-hover-primary">
+                    <!--begin::Card header-->
+                    <div class="card-header border-0 pt-9">
+                        <!--begin::Card Title-->
+                        <div class="card-title m-0">
+                            <!--begin::Avatar-->
+                            <div class="symbol symbol-50px w-50px bg-light">
+                                <img src="assets/media/svg/brand-logos/figma-1.svg" alt="image" class="p-3">
+                            </div>
+                            <!--end::Avatar-->
+                        </div>
+                        <!--end::Car Title-->
+                        <!--begin::Card toolbar-->
+                        <div class="card-toolbar">
+                            <span class="badge badge-light-success fw-bold me-auto px-4 py-3">Completed</span>
+                        </div>
+                        <!--end::Card toolbar-->
+                    </div>
+                    <!--end:: Card header-->
+                    <!--begin:: Card body-->
+                    <div class="card-body p-9">
+                        <!--begin::Name-->
+                        <div class="fs-3 fw-bold text-dark">Atica Banking</div>
+                        <!--end::Name-->
+                        <!--begin::Description-->
+                        <p class="text-gray-400 fw-semibold fs-5 mt-1 mb-7">CRM App
+                            application to HR efficiency</p>
+                        <!--end::Description-->
+                        <!--begin::Info-->
+                        <div class="d-flex flex-wrap mb-5">
+                            <!--begin::Due-->
+                            <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-7 mb-3">
+                                <div class="fs-6 text-gray-800 fw-bold">Mar 14, 2021</div>
+                                <div class="fw-semibold text-gray-400">Due Date</div>
+                            </div>
+                            <!--end::Due-->
+                            <!--begin::Budget-->
+                            <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 mb-3">
+                                <div class="fs-6 text-gray-800 fw-bold">$605,100.00</div>
+                                <div class="fw-semibold text-gray-400">Budget</div>
+                            </div>
+                            <!--end::Budget-->
+                        </div>
+                        <!--end::Info-->
+                        <!--begin::Progress-->
+                        <div class="h-4px w-100 bg-light mb-5" data-bs-toggle="tooltip"
+                            aria-label="This project 100% completed"
+                            data-bs-original-title="This project 100% completed" data-kt-initialized="1">
+                            <div class="bg-success rounded h-4px" role="progressbar" style="width: 100%"
+                                aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <!--end::Progress-->
+                        <!--begin::Users-->
+                        <div class="symbol-group symbol-hover">
+                            <!--begin::User-->
+                            <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" aria-label="Mad Macy"
+                                data-bs-original-title="Mad Macy" data-kt-initialized="1">
+                                <img alt="Pic" src="assets/media/avatars/300-2.jpg">
+                            </div>
+                            <!--begin::User-->
+                            <!--begin::User-->
+                            <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
+                                aria-label="Cris Willson" data-bs-original-title="Cris Willson" data-kt-initialized="1">
+                                <img alt="Pic" src="assets/media/avatars/300-9.jpg">
+                            </div>
+                            <!--begin::User-->
+                            <!--begin::User-->
+                            <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
+                                data-bs-original-title="Mike Garcie" data-kt-initialized="1">
+                                <span class="symbol-label bg-info text-inverse-info fw-bold">M</span>
+                            </div>
+                            <!--begin::User-->
+                        </div>
+                        <!--end::Users-->
+                    </div>
+                    <!--end:: Card body-->
+                </a>
+                <!--end::Card-->
+            </div>
+            <!--end::Col-->
+            <!--begin::Col-->
+            <div class="col-md-6 col-xl-4">
+                <!--begin::Card-->
+                <a href="../../demo1/dist/apps/projects/project.html" class="card shadow-sm border-hover-primary">
+                    <!--begin::Card header-->
+                    <div class="card-header border-0 pt-9">
+                        <!--begin::Card Title-->
+                        <div class="card-title m-0">
+                            <!--begin::Avatar-->
+                            <div class="symbol symbol-50px w-50px bg-light">
+                                <img src="assets/media/svg/brand-logos/sentry-3.svg" alt="image" class="p-3">
+                            </div>
+                            <!--end::Avatar-->
+                        </div>
+                        <!--end::Car Title-->
+                        <!--begin::Card toolbar-->
+                        <div class="card-toolbar">
+                            <span class="badge badge-light fw-bold me-auto px-4 py-3">Pending</span>
+                        </div>
+                        <!--end::Card toolbar-->
+                    </div>
+                    <!--end:: Card header-->
+                    <!--begin:: Card body-->
+                    <div class="card-body p-9">
+                        <!--begin::Name-->
+                        <div class="fs-3 fw-bold text-dark">Finance Dispatch</div>
+                        <!--end::Name-->
+                        <!--begin::Description-->
+                        <p class="text-gray-400 fw-semibold fs-5 mt-1 mb-7">CRM App
+                            application to HR efficiency</p>
+                        <!--end::Description-->
+                        <!--begin::Info-->
+                        <div class="d-flex flex-wrap mb-5">
+                            <!--begin::Due-->
+                            <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-7 mb-3">
+                                <div class="fs-6 text-gray-800 fw-bold">Sep 22, 2023</div>
+                                <div class="fw-semibold text-gray-400">Due Date</div>
+                            </div>
+                            <!--end::Due-->
+                            <!--begin::Budget-->
+                            <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 mb-3">
+                                <div class="fs-6 text-gray-800 fw-bold">$284,900.00</div>
+                                <div class="fw-semibold text-gray-400">Budget</div>
+                            </div>
+                            <!--end::Budget-->
+                        </div>
+                        <!--end::Info-->
+                        <!--begin::Progress-->
+                        <div class="h-4px w-100 bg-light mb-5" data-bs-toggle="tooltip"
+                            aria-label="This project 60% completed" data-bs-original-title="This project 60% completed"
+                            data-kt-initialized="1">
+                            <div class="bg-info rounded h-4px" role="progressbar" style="width: 60%" aria-valuenow="60"
+                                aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <!--end::Progress-->
+                        <!--begin::Users-->
+                        <div class="symbol-group symbol-hover">
+                            <!--begin::User-->
+                            <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
+                                data-bs-original-title="Nich Warden" data-kt-initialized="1">
+                                <span class="symbol-label bg-warning text-inverse-warning fw-bold">N</span>
+                            </div>
+                            <!--begin::User-->
+                            <!--begin::User-->
+                            <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
+                                data-bs-original-title="Rob Otto" data-kt-initialized="1">
+                                <span class="symbol-label bg-success text-inverse-success fw-bold">R</span>
+                            </div>
+                            <!--begin::User-->
+                        </div>
+                        <!--end::Users-->
+                    </div>
+                    <!--end:: Card body-->
+                </a>
+                <!--end::Card-->
+            </div>
+            <!--end::Col-->
+            <!--begin::Col-->
+            <div class="col-md-6 col-xl-4">
+                <!--begin::Card-->
+                <a href="../../demo1/dist/apps/projects/project.html" class="card shadow-sm border-hover-primary">
+                    <!--begin::Card header-->
+                    <div class="card-header border-0 pt-9">
+                        <!--begin::Card Title-->
+                        <div class="card-title m-0">
+                            <!--begin::Avatar-->
+                            <div class="symbol symbol-50px w-50px bg-light">
+                                <img src="assets/media/svg/brand-logos/xing-icon.svg" alt="image" class="p-3">
+                            </div>
+                            <!--end::Avatar-->
+                        </div>
+                        <!--end::Car Title-->
+                        <!--begin::Card toolbar-->
+                        <div class="card-toolbar">
+                            <span class="badge badge-light-primary fw-bold me-auto px-4 py-3">In
+                                Progress</span>
+                        </div>
+                        <!--end::Card toolbar-->
+                    </div>
+                    <!--end:: Card header-->
+                    <!--begin:: Card body-->
+                    <div class="card-body p-9">
+                        <!--begin::Name-->
+                        <div class="fs-3 fw-bold text-dark">9 Degree</div>
+                        <!--end::Name-->
+                        <!--begin::Description-->
+                        <p class="text-gray-400 fw-semibold fs-5 mt-1 mb-7">CRM App
+                            application to HR efficiency</p>
+                        <!--end::Description-->
+                        <!--begin::Info-->
+                        <div class="d-flex flex-wrap mb-5">
+                            <!--begin::Due-->
+                            <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-7 mb-3">
+                                <div class="fs-6 text-gray-800 fw-bold">Sep 22, 2023</div>
+                                <div class="fw-semibold text-gray-400">Due Date</div>
+                            </div>
+                            <!--end::Due-->
+                            <!--begin::Budget-->
+                            <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 mb-3">
+                                <div class="fs-6 text-gray-800 fw-bold">$284,900.00</div>
+                                <div class="fw-semibold text-gray-400">Budget</div>
+                            </div>
+                            <!--end::Budget-->
+                        </div>
+                        <!--end::Info-->
+                        <!--begin::Progress-->
+                        <div class="h-4px w-100 bg-light mb-5" data-bs-toggle="tooltip"
+                            aria-label="This project 40% completed" data-bs-original-title="This project 40% completed"
+                            data-kt-initialized="1">
+                            <div class="bg-primary rounded h-4px" role="progressbar" style="width: 40%"
+                                aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <!--end::Progress-->
+                        <!--begin::Users-->
+                        <div class="symbol-group symbol-hover">
+                            <!--begin::User-->
+                            <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
+                                aria-label="Francis Mitcham" data-bs-original-title="Francis Mitcham"
+                                data-kt-initialized="1">
+                                <img alt="Pic" src="assets/media/avatars/300-20.jpg">
+                            </div>
+                            <!--begin::User-->
+                            <!--begin::User-->
+                            <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
+                                aria-label="Michelle Swanston" data-bs-original-title="Michelle Swanston"
+                                data-kt-initialized="1">
+                                <img alt="Pic" src="assets/media/avatars/300-7.jpg">
+                            </div>
+                            <!--begin::User-->
+                            <!--begin::User-->
+                            <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
+                                data-bs-original-title="Susan Redwood" data-kt-initialized="1">
+                                <span class="symbol-label bg-primary text-inverse-primary fw-bold">S</span>
+                            </div>
+                            <!--begin::User-->
+                        </div>
+                        <!--end::Users-->
+                    </div>
+                    <!--end:: Card body-->
+                </a>
+                <!--end::Card-->
+            </div>
+            <!--end::Col-->
+            <!--begin::Col-->
+            <div class="col-md-6 col-xl-4">
+                <!--begin::Card-->
+                <a href="../../demo1/dist/apps/projects/project.html" class="card shadow-sm border-hover-primary">
+                    <!--begin::Card header-->
+                    <div class="card-header border-0 pt-9">
+                        <!--begin::Card Title-->
+                        <div class="card-title m-0">
+                            <!--begin::Avatar-->
+                            <div class="symbol symbol-50px w-50px bg-light">
+                                <img src="assets/media/svg/brand-logos/tvit.svg" alt="image" class="p-3">
+                            </div>
+                            <!--end::Avatar-->
+                        </div>
+                        <!--end::Car Title-->
+                        <!--begin::Card toolbar-->
+                        <div class="card-toolbar">
+                            <span class="badge badge-light-primary fw-bold me-auto px-4 py-3">In
+                                Progress</span>
+                        </div>
+                        <!--end::Card toolbar-->
+                    </div>
+                    <!--end:: Card header-->
+                    <!--begin:: Card body-->
+                    <div class="card-body p-9">
+                        <!--begin::Name-->
+                        <div class="fs-3 fw-bold text-dark">GoPro App</div>
+                        <!--end::Name-->
+                        <!--begin::Description-->
+                        <p class="text-gray-400 fw-semibold fs-5 mt-1 mb-7">CRM App
+                            application to HR efficiency</p>
+                        <!--end::Description-->
+                        <!--begin::Info-->
+                        <div class="d-flex flex-wrap mb-5">
+                            <!--begin::Due-->
+                            <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-7 mb-3">
+                                <div class="fs-6 text-gray-800 fw-bold">Jun 24, 2023</div>
+                                <div class="fw-semibold text-gray-400">Due Date</div>
+                            </div>
+                            <!--end::Due-->
+                            <!--begin::Budget-->
+                            <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 mb-3">
+                                <div class="fs-6 text-gray-800 fw-bold">$284,900.00</div>
+                                <div class="fw-semibold text-gray-400">Budget</div>
+                            </div>
+                            <!--end::Budget-->
+                        </div>
+                        <!--end::Info-->
+                        <!--begin::Progress-->
+                        <div class="h-4px w-100 bg-light mb-5" data-bs-toggle="tooltip"
+                            aria-label="This project 70% completed" data-bs-original-title="This project 70% completed"
+                            data-kt-initialized="1">
+                            <div class="bg-primary rounded h-4px" role="progressbar" style="width: 70%"
+                                aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <!--end::Progress-->
+                        <!--begin::Users-->
+                        <div class="symbol-group symbol-hover">
+                            <!--begin::User-->
+                            <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
+                                aria-label="Melody Macy" data-bs-original-title="Melody Macy" data-kt-initialized="1">
+                                <img alt="Pic" src="assets/media/avatars/300-2.jpg">
+                            </div>
+                            <!--begin::User-->
+                            <!--begin::User-->
+                            <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
+                                data-bs-original-title="Robin Watterman" data-kt-initialized="1">
+                                <span class="symbol-label bg-success text-inverse-success fw-bold">R</span>
+                            </div>
+                            <!--begin::User-->
+                        </div>
+                        <!--end::Users-->
+                    </div>
+                    <!--end:: Card body-->
+                </a>
+                <!--end::Card-->
+            </div>
+            <!--end::Col-->
+            <!--begin::Col-->
+            <div class="col-md-6 col-xl-4">
+                <!--begin::Card-->
+                <a href="../../demo1/dist/apps/projects/project.html" class="card shadow-sm border-hover-primary">
+                    <!--begin::Card header-->
+                    <div class="card-header border-0 pt-9">
+                        <!--begin::Card Title-->
+                        <div class="card-title m-0">
+                            <!--begin::Avatar-->
+                            <div class="symbol symbol-50px w-50px bg-light">
+                                <img src="assets/media/svg/brand-logos/aven.svg" alt="image" class="p-3">
+                            </div>
+                            <!--end::Avatar-->
+                        </div>
+                        <!--end::Car Title-->
+                        <!--begin::Card toolbar-->
+                        <div class="card-toolbar">
+                            <span class="badge badge-light-primary fw-bold me-auto px-4 py-3">In
+                                Progress</span>
+                        </div>
+                        <!--end::Card toolbar-->
+                    </div>
+                    <!--end:: Card header-->
+                    <!--begin:: Card body-->
+                    <div class="card-body p-9">
+                        <!--begin::Name-->
+                        <div class="fs-3 fw-bold text-dark">Buldozer CRM</div>
+                        <!--end::Name-->
+                        <!--begin::Description-->
+                        <p class="text-gray-400 fw-semibold fs-5 mt-1 mb-7">CRM App
+                            application to HR efficiency</p>
+                        <!--end::Description-->
+                        <!--begin::Info-->
+                        <div class="d-flex flex-wrap mb-5">
+                            <!--begin::Due-->
+                            <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-7 mb-3">
+                                <div class="fs-6 text-gray-800 fw-bold">Nov 10, 2023</div>
+                                <div class="fw-semibold text-gray-400">Due Date</div>
+                            </div>
+                            <!--end::Due-->
+                            <!--begin::Budget-->
+                            <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 mb-3">
+                                <div class="fs-6 text-gray-800 fw-bold">$284,900.00</div>
+                                <div class="fw-semibold text-gray-400">Budget</div>
+                            </div>
+                            <!--end::Budget-->
+                        </div>
+                        <!--end::Info-->
+                        <!--begin::Progress-->
+                        <div class="h-4px w-100 bg-light mb-5" data-bs-toggle="tooltip"
+                            aria-label="This project 70% completed" data-bs-original-title="This project 70% completed"
+                            data-kt-initialized="1">
+                            <div class="bg-primary rounded h-4px" role="progressbar" style="width: 70%"
+                                aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <!--end::Progress-->
+                        <!--begin::Users-->
+                        <div class="symbol-group symbol-hover">
+                            <!--begin::User-->
+                            <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
+                                aria-label="Melody Macy" data-bs-original-title="Melody Macy" data-kt-initialized="1">
+                                <img alt="Pic" src="assets/media/avatars/300-2.jpg">
+                            </div>
+                            <!--begin::User-->
+                            <!--begin::User-->
+                            <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
+                                aria-label="John Mixin" data-bs-original-title="John Mixin" data-kt-initialized="1">
+                                <img alt="Pic" src="assets/media/avatars/300-14.jpg">
+                            </div>
+                            <!--begin::User-->
+                            <!--begin::User-->
+                            <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
+                                data-bs-original-title="Emma Smith" data-kt-initialized="1">
+                                <span class="symbol-label bg-primary text-inverse-primary fw-bold">S</span>
+                            </div>
+                            <!--begin::User-->
+                        </div>
+                        <!--end::Users-->
+                    </div>
+                    <!--end:: Card body-->
+                </a>
+                <!--end::Card-->
+            </div>
+            <!--end::Col-->
+            <!--begin::Col-->
+            <div class="col-md-6 col-xl-4">
+                <!--begin::Card-->
+                <a href="../../demo1/dist/apps/projects/project.html" class="card shadow-sm border-hover-primary">
+                    <!--begin::Card header-->
+                    <div class="card-header border-0 pt-9">
+                        <!--begin::Card Title-->
+                        <div class="card-title m-0">
+                            <!--begin::Avatar-->
+                            <div class="symbol symbol-50px w-50px bg-light">
+                                <img src="assets/media/svg/brand-logos/treva.svg" alt="image" class="p-3">
+                            </div>
+                            <!--end::Avatar-->
+                        </div>
+                        <!--end::Car Title-->
+                        <!--begin::Card toolbar-->
+                        <div class="card-toolbar">
+                            <span class="badge badge-light-danger fw-bold me-auto px-4 py-3">Overdue</span>
+                        </div>
+                        <!--end::Card toolbar-->
+                    </div>
+                    <!--end:: Card header-->
+                    <!--begin:: Card body-->
+                    <div class="card-body p-9">
+                        <!--begin::Name-->
+                        <div class="fs-3 fw-bold text-dark">Aviasales App</div>
+                        <!--end::Name-->
+                        <!--begin::Description-->
+                        <p class="text-gray-400 fw-semibold fs-5 mt-1 mb-7">CRM App
+                            application to HR efficiency</p>
+                        <!--end::Description-->
+                        <!--begin::Info-->
+                        <div class="d-flex flex-wrap mb-5">
+                            <!--begin::Due-->
+                            <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-7 mb-3">
+                                <div class="fs-6 text-gray-800 fw-bold">Feb 21, 2023</div>
+                                <div class="fw-semibold text-gray-400">Due Date</div>
+                            </div>
+                            <!--end::Due-->
+                            <!--begin::Budget-->
+                            <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 mb-3">
+                                <div class="fs-6 text-gray-800 fw-bold">$284,900.00</div>
+                                <div class="fw-semibold text-gray-400">Budget</div>
+                            </div>
+                            <!--end::Budget-->
+                        </div>
+                        <!--end::Info-->
+                        <!--begin::Progress-->
+                        <div class="h-4px w-100 bg-light mb-5" data-bs-toggle="tooltip"
+                            aria-label="This project 10% completed" data-bs-original-title="This project 10% completed"
+                            data-kt-initialized="1">
+                            <div class="bg-danger rounded h-4px" role="progressbar" style="width: 10%"
+                                aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <!--end::Progress-->
+                        <!--begin::Users-->
+                        <div class="symbol-group symbol-hover">
+                            <!--begin::User-->
+                            <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
+                                data-bs-original-title="Alan Warden" data-kt-initialized="1">
+                                <span class="symbol-label bg-warning text-inverse-warning fw-bold">A</span>
+                            </div>
+                            <!--begin::User-->
+                            <!--begin::User-->
+                            <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
+                                aria-label="Brian Cox" data-bs-original-title="Brian Cox" data-kt-initialized="1">
+                                <img alt="Pic" src="assets/media/avatars/300-5.jpg">
+                            </div>
+                            <!--begin::User-->
+                        </div>
+                        <!--end::Users-->
+                    </div>
+                    <!--end:: Card body-->
+                </a>
+                <!--end::Card-->
+            </div>
+            <!--end::Col-->
+            <!--begin::Col-->
+            <div class="col-md-6 col-xl-4">
+                <!--begin::Card-->
+                <a href="../../demo1/dist/apps/projects/project.html" class="card shadow-sm border-hover-primary">
+                    <!--begin::Card header-->
+                    <div class="card-header border-0 pt-9">
+                        <!--begin::Card Title-->
+                        <div class="card-title m-0">
+                            <!--begin::Avatar-->
+                            <div class="symbol symbol-50px w-50px bg-light">
+                                <img src="assets/media/svg/brand-logos/kanba.svg" alt="image" class="p-3">
+                            </div>
+                            <!--end::Avatar-->
+                        </div>
+                        <!--end::Car Title-->
+                        <!--begin::Card toolbar-->
+                        <div class="card-toolbar">
+                            <span class="badge badge-light-success fw-bold me-auto px-4 py-3">Completed</span>
+                        </div>
+                        <!--end::Card toolbar-->
+                    </div>
+                    <!--end:: Card header-->
+                    <!--begin:: Card body-->
+                    <div class="card-body p-9">
+                        <!--begin::Name-->
+                        <div class="fs-3 fw-bold text-dark">Oppo CRM</div>
+                        <!--end::Name-->
+                        <!--begin::Description-->
+                        <p class="text-gray-400 fw-semibold fs-5 mt-1 mb-7">CRM App
+                            application to HR efficiency</p>
+                        <!--end::Description-->
+                        <!--begin::Info-->
+                        <div class="d-flex flex-wrap mb-5">
+                            <!--begin::Due-->
+                            <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-7 mb-3">
+                                <div class="fs-6 text-gray-800 fw-bold">Mar 10, 2023</div>
+                                <div class="fw-semibold text-gray-400">Due Date</div>
+                            </div>
+                            <!--end::Due-->
+                            <!--begin::Budget-->
+                            <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 mb-3">
+                                <div class="fs-6 text-gray-800 fw-bold">$284,900.00</div>
+                                <div class="fw-semibold text-gray-400">Budget</div>
+                            </div>
+                            <!--end::Budget-->
+                        </div>
+                        <!--end::Info-->
+                        <!--begin::Progress-->
+                        <div class="h-4px w-100 bg-light mb-5" data-bs-toggle="tooltip"
+                            aria-label="This project 100% completed"
+                            data-bs-original-title="This project 100% completed" data-kt-initialized="1">
+                            <div class="bg-success rounded h-4px" role="progressbar" style="width: 100%"
+                                aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <!--end::Progress-->
+                        <!--begin::Users-->
+                        <div class="symbol-group symbol-hover">
+                            <!--begin::User-->
+                            <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
+                                aria-label="Nick Macy" data-bs-original-title="Nick Macy" data-kt-initialized="1">
+                                <img alt="Pic" src="assets/media/avatars/300-2.jpg">
+                            </div>
+                            <!--begin::User-->
+                            <!--begin::User-->
+                            <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
+                                aria-label="Sean Paul" data-bs-original-title="Sean Paul" data-kt-initialized="1">
+                                <img alt="Pic" src="assets/media/avatars/300-9.jpg">
+                            </div>
+                            <!--begin::User-->
+                            <!--begin::User-->
+                            <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
+                                data-bs-original-title="Mike Collin" data-kt-initialized="1">
+                                <span class="symbol-label bg-info text-inverse-info fw-bold">M</span>
+                            </div>
+                            <!--begin::User-->
+                        </div>
+                        <!--end::Users-->
+                    </div>
+                    <!--end:: Card body-->
+                </a>
+                <!--end::Card-->
+            </div>
+            <!--end::Col-->
+        </div>
+        <!-- <div class="card card-custom gutter-b">
             <div class="card-body">
                 <form class="form" autocomplete="off">
                     <div>
@@ -26,15 +766,9 @@
                             <div class="col-xl-12">
                                 <div class="my-3">
                                     <div class="input-group mb-3">
-                                        <input
-                                            [(ngModel)]="filterText"
-                                            (ngModelChange)="getTaskWorkItems()"
-                                            name="filterText"
-                                            autoFocus
-                                            type="text"
-                                            class="form-control"
-                                            [placeholder]="l('SearchWithThreeDot')"
-                                        />
+                                        <input [(ngModel)]="filterText" (ngModelChange)="getTaskWorkItems()"
+                                            name="filterText" autoFocus type="text" class="form-control"
+                                            [placeholder]="l('SearchWithThreeDot')" />
                                         <button class="btn btn-primary" type="submit" (click)="getTaskWorkItems()">
                                             <i class="flaticon-search-1"></i>
                                         </button>
@@ -48,14 +782,8 @@
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="NameFilter">{{ l('Name') }}</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="NameFilter"
-                                        name="nameFilter"
-                                        [(ngModel)]="nameFilter"
-                                        (ngModelChange)="getTaskWorkItems()"
-                                    />
+                                    <input type="text" class="form-control" id="NameFilter" name="nameFilter"
+                                        [(ngModel)]="nameFilter" (ngModelChange)="getTaskWorkItems()" />
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -63,54 +791,32 @@
                                     <label class="form-label" for="EstimatedHoursFilter">
                                         {{ l('EstimatedHours') }}
                                     </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="EstimatedHoursFilter"
-                                        name="estimatedHoursFilter"
-                                        [(ngModel)]="estimatedHoursFilter"
-                                        (ngModelChange)="getTaskWorkItems()"
-                                    />
+                                    <input type="text" class="form-control" id="EstimatedHoursFilter"
+                                        name="estimatedHoursFilter" [(ngModel)]="estimatedHoursFilter"
+                                        (ngModelChange)="getTaskWorkItems()" />
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="ActualHoursFilter">{{ l('ActualHours') }}</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="ActualHoursFilter"
-                                        name="actualHoursFilter"
-                                        [(ngModel)]="actualHoursFilter"
-                                        (ngModelChange)="getTaskWorkItems()"
-                                    />
+                                    <input type="text" class="form-control" id="ActualHoursFilter"
+                                        name="actualHoursFilter" [(ngModel)]="actualHoursFilter"
+                                        (ngModelChange)="getTaskWorkItems()" />
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="MinStartDateFilter">{{ l('StartDateRange') }}</label>
                                     <div class="input-group">
-                                        <input
-                                            class="form-control m-input"
-                                            id="MinStartDateFilter"
-                                            name="MinStartDateFilter"
-                                            type="datetime"
-                                            bsDatepicker
-                                            placeholder="{{ l('MinValue') }}"
-                                            [(ngModel)]="minStartDateFilter"
-                                            (ngModelChange)="getTaskWorkItems()"
-                                        />
+                                        <input class="form-control m-input" id="MinStartDateFilter"
+                                            name="MinStartDateFilter" type="datetime" bsDatepicker
+                                            placeholder="{{ l('MinValue') }}" [(ngModel)]="minStartDateFilter"
+                                            (ngModelChange)="getTaskWorkItems()" />
                                         <span style="line-height: 40px; padding: 0 15px 0 15px">&mdash;</span>
-                                        <input
-                                            class="form-control m-input"
-                                            id="MaxStartDateFilter"
-                                            name="MaxStartDateFilter"
-                                            type="datetime"
-                                            bsDatepicker
-                                            placeholder="{{ l('MaxValue') }}"
-                                            [(ngModel)]="maxStartDateFilter"
-                                            (ngModelChange)="getTaskWorkItems()"
-                                        />
+                                        <input class="form-control m-input" id="MaxStartDateFilter"
+                                            name="MaxStartDateFilter" type="datetime" bsDatepicker
+                                            placeholder="{{ l('MaxValue') }}" [(ngModel)]="maxStartDateFilter"
+                                            (ngModelChange)="getTaskWorkItems()" />
                                     </div>
                                 </div>
                             </div>
@@ -118,54 +824,30 @@
                                 <div class="my-3">
                                     <label class="form-label" for="MinEndDateFilter">{{ l('EndDateRange') }}</label>
                                     <div class="input-group">
-                                        <input
-                                            class="form-control m-input"
-                                            id="MinEndDateFilter"
-                                            name="MinEndDateFilter"
-                                            type="datetime"
-                                            bsDatepicker
-                                            placeholder="{{ l('MinValue') }}"
-                                            [(ngModel)]="minEndDateFilter"
-                                            (ngModelChange)="getTaskWorkItems()"
-                                        />
+                                        <input class="form-control m-input" id="MinEndDateFilter"
+                                            name="MinEndDateFilter" type="datetime" bsDatepicker
+                                            placeholder="{{ l('MinValue') }}" [(ngModel)]="minEndDateFilter"
+                                            (ngModelChange)="getTaskWorkItems()" />
                                         <span style="line-height: 40px; padding: 0 15px 0 15px">&mdash;</span>
-                                        <input
-                                            class="form-control m-input"
-                                            id="MaxEndDateFilter"
-                                            name="MaxEndDateFilter"
-                                            type="datetime"
-                                            bsDatepicker
-                                            placeholder="{{ l('MaxValue') }}"
-                                            [(ngModel)]="maxEndDateFilter"
-                                            (ngModelChange)="getTaskWorkItems()"
-                                        />
+                                        <input class="form-control m-input" id="MaxEndDateFilter"
+                                            name="MaxEndDateFilter" type="datetime" bsDatepicker
+                                            placeholder="{{ l('MaxValue') }}" [(ngModel)]="maxEndDateFilter"
+                                            (ngModelChange)="getTaskWorkItems()" />
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="StartTimeFilter">{{ l('StartTime') }}</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="StartTimeFilter"
-                                        name="startTimeFilter"
-                                        [(ngModel)]="startTimeFilter"
-                                        (ngModelChange)="getTaskWorkItems()"
-                                    />
+                                    <input type="text" class="form-control" id="StartTimeFilter" name="startTimeFilter"
+                                        [(ngModel)]="startTimeFilter" (ngModelChange)="getTaskWorkItems()" />
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="EndTimeFilter">{{ l('EndTime') }}</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="EndTimeFilter"
-                                        name="endTimeFilter"
-                                        [(ngModel)]="endTimeFilter"
-                                        (ngModelChange)="getTaskWorkItems()"
-                                    />
+                                    <input type="text" class="form-control" id="EndTimeFilter" name="endTimeFilter"
+                                        [(ngModel)]="endTimeFilter" (ngModelChange)="getTaskWorkItems()" />
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -173,13 +855,8 @@
                                     <label class="form-label" for="OpenOrClosedFilterSelect">
                                         {{ l('OpenOrClosed') }}
                                     </label>
-                                    <select
-                                        class="form-select"
-                                        name="OpenOrClosedFilter"
-                                        id="OpenOrClosedFilterSelect"
-                                        [(ngModel)]="openOrClosedFilter"
-                                        (ngModelChange)="getTaskWorkItems()"
-                                    >
+                                    <select class="form-select" name="OpenOrClosedFilter" id="OpenOrClosedFilterSelect"
+                                        [(ngModel)]="openOrClosedFilter" (ngModelChange)="getTaskWorkItems()">
                                         <option value="-1">{{ l('All') }}</option>
                                         <option value="0">{{ l('False') }}</option>
                                         <option value="1">{{ l('True') }}</option>
@@ -192,23 +869,14 @@
                                         {{ l('MinMax') }} {{ l('CompletionPercentage') }}
                                     </label>
                                     <div class="input-group">
-                                        <input
-                                            type="number"
-                                            class="form-control"
-                                            id="MinCompletionPercentageFilter"
+                                        <input type="number" class="form-control" id="MinCompletionPercentageFilter"
                                             [(ngModel)]="minCompletionPercentageFilter"
-                                            placeholder="{{ l('MinValue') }}"
-                                            name="minCompletionPercentageFilter"
-                                            (ngModelChange)="getTaskWorkItems()"
-                                        />
-                                        <input
-                                            type="number"
-                                            class="form-control"
+                                            placeholder="{{ l('MinValue') }}" name="minCompletionPercentageFilter"
+                                            (ngModelChange)="getTaskWorkItems()" />
+                                        <input type="number" class="form-control"
                                             [(ngModel)]="maxCompletionPercentageFilter"
-                                            placeholder="{{ l('MaxValue') }}"
-                                            name="maxCompletionPercentageFilter"
-                                            (ngModelChange)="getTaskWorkItems()"
-                                        />
+                                            placeholder="{{ l('MaxValue') }}" name="maxCompletionPercentageFilter"
+                                            (ngModelChange)="getTaskWorkItems()" />
                                     </div>
                                 </div>
                             </div>
@@ -218,13 +886,8 @@
                                     <label class="form-label" for="TaskEventNameFilter">
                                         ({{ l('TaskEvent') }}) {{ l('Name') }}
                                     </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="TaskEventNameFilter"
-                                        name="taskEventNameFilter"
-                                        [(ngModel)]="taskEventNameFilter"
-                                    />
+                                    <input type="text" class="form-control" id="TaskEventNameFilter"
+                                        name="taskEventNameFilter" [(ngModel)]="taskEventNameFilter" />
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -232,40 +895,26 @@
                                     <label class="form-label" for="EmployeeNameFilter">
                                         ({{ l('Employee') }}) {{ l('Name') }}
                                     </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="EmployeeNameFilter"
-                                        name="employeeNameFilter"
-                                        [(ngModel)]="employeeNameFilter"
-                                    />
+                                    <input type="text" class="form-control" id="EmployeeNameFilter"
+                                        name="employeeNameFilter" [(ngModel)]="employeeNameFilter" />
                                 </div>
                             </div>
                             <div class="col-md-12 mt-5">
-                                <button
-                                    (click)="resetFilters()"
-                                    class="btn btn-secondary btn-sm"
-                                    id="btn-reset-filters"
-                                >
+                                <button (click)="resetFilters()" class="btn btn-secondary btn-sm"
+                                    id="btn-reset-filters">
                                     Reset
                                 </button>
                             </div>
                         </div>
                         <div class="row my-4">
                             <div class="col-sm-12">
-                                <span
-                                    class="clickable-item text-muted"
-                                    *ngIf="!advancedFiltersAreShown"
-                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown"
-                                >
+                                <span class="clickable-item text-muted" *ngIf="!advancedFiltersAreShown"
+                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown">
                                     <i class="fa fa-angle-down"></i>
                                     {{ l('ShowAdvancedFilters') }}
                                 </span>
-                                <span
-                                    class="clickable-item text-muted"
-                                    *ngIf="advancedFiltersAreShown"
-                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown"
-                                >
+                                <span class="clickable-item text-muted" *ngIf="advancedFiltersAreShown"
+                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown">
                                     <i class="fa fa-angle-up"></i>
                                     {{ l('HideAdvancedFilters') }}
                                 </span>
@@ -275,28 +924,16 @@
                 </form>
 
                 <div class="row align-items-center">
-                    <!--<Primeng-Datatable-Start>-->
                     <div class="primeng-datatable-container col-12" [busyIf]="primengTableHelper.isLoading">
-                        <p-table
-                            #dataTable
-                            (onLazyLoad)="getTaskWorkItems($event)"
-                            [value]="primengTableHelper.records"
-                            rows="{{ primengTableHelper.defaultRecordsCountPerPage }}"
-                            [paginator]="false"
-                            [lazy]="true"
-                            [scrollable]="true"
-                            ScrollWidth="100%"
-                            [responsive]="primengTableHelper.isResponsive"
-                            [resizableColumns]="primengTableHelper.resizableColumns"
-                        >
+                        <p-table #dataTable (onLazyLoad)="getTaskWorkItems($event)" [value]="primengTableHelper.records"
+                            rows="{{ primengTableHelper.defaultRecordsCountPerPage }}" [paginator]="false" [lazy]="true"
+                            [scrollable]="true" ScrollWidth="100%" [responsive]="primengTableHelper.isResponsive"
+                            [resizableColumns]="primengTableHelper.resizableColumns">
                             <ng-template pTemplate="header">
                                 <tr>
-                                    <th
-                                        style="width: 130px"
-                                        [hidden]="
+                                    <th style="width: 130px" [hidden]="
                                             !isGrantedAny('Pages.TaskWorkItems.Edit', 'Pages.TaskWorkItems.Delete')
-                                        "
-                                    >
+                                        ">
                                         {{ l('Actions') }}
                                     </th>
                                     <th style="width: 150px" pSortableColumn="taskEventFk.name">
@@ -347,12 +984,9 @@
                             </ng-template>
                             <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
                                 <tr>
-                                    <td
-                                        style="width: 130px"
-                                        [hidden]="
+                                    <td style="width: 130px" [hidden]="
                                             !isGrantedAny('Pages.TaskWorkItems.Edit', 'Pages.TaskWorkItems.Delete')
-                                        "
-                                    >
+                                        ">
                                         <div class="btn-group dropdown" dropdown container="body">
                                             <button class="dropdown-toggle btn btn-sm btn-primary" dropdownToggle>
                                                 <i class="fa fa-cog"></i>
@@ -361,33 +995,24 @@
                                             </button>
                                             <ul class="dropdown-menu" *dropdownMenu>
                                                 <li>
-                                                    <a
-                                                        href="javascript:;"
-                                                        class="dropdown-item"
-                                                        (click)="viewTaskWorkItemModal.show(record)"
-                                                    >
+                                                    <a href="javascript:;" class="dropdown-item"
+                                                        (click)="viewTaskWorkItemModal.show(record)">
                                                         {{ l('View') }}
                                                     </a>
                                                 </li>
                                                 <li>
-                                                    <a
-                                                        href="javascript:;"
+                                                    <a href="javascript:;"
                                                         *ngIf="permission.isGranted('Pages.TaskWorkItems.Edit')"
-                                                        class="dropdown-item"
-                                                        (click)="
+                                                        class="dropdown-item" (click)="
                                                             createOrEditTaskWorkItemModal.show(record.taskWorkItem.id)
-                                                        "
-                                                    >
+                                                        ">
                                                         {{ l('Edit') }}
                                                     </a>
                                                 </li>
                                                 <li>
-                                                    <a
-                                                        class="dropdown-item"
-                                                        href="javascript:;"
+                                                    <a class="dropdown-item" href="javascript:;"
                                                         *ngIf="permission.isGranted('Pages.TaskWorkItems.Delete')"
-                                                        (click)="deleteTaskWorkItem(record.taskWorkItem)"
-                                                    >
+                                                        (click)="deleteTaskWorkItem(record.taskWorkItem)">
                                                         {{ l('Delete') }}
                                                     </a>
                                                 </li>
@@ -456,27 +1081,21 @@
                             {{ l('NoData') }}
                         </div>
                         <div class="primeng-paging-container">
-                            <p-paginator
-                                [rows]="primengTableHelper.defaultRecordsCountPerPage"
-                                #paginator
+                            <p-paginator [rows]="primengTableHelper.defaultRecordsCountPerPage" #paginator
                                 (onPageChange)="getTaskWorkItems($event)"
                                 [totalRecords]="primengTableHelper.totalRecordsCount"
                                 [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
-                                [showCurrentPageReport]="true"
-                                [currentPageReportTemplate]="
+                                [showCurrentPageReport]="true" [currentPageReportTemplate]="
                                     'TotalRecordsCount' | localize : primengTableHelper.totalRecordsCount
-                                "
-                            ></p-paginator>
+                                "></p-paginator>
                         </div>
                     </div>
-                    <!--<Primeng-Datatable-End>-->
                 </div>
             </div>
-        </div>
+        </div> -->
+
     </div>
-    <createOrEditTaskWorkItemModal
-        #createOrEditTaskWorkItemModal
-        (modalSave)="getTaskWorkItems()"
-    ></createOrEditTaskWorkItemModal>
+    <createOrEditTaskWorkItemModal #createOrEditTaskWorkItemModal (modalSave)="getTaskWorkItems()">
+    </createOrEditTaskWorkItemModal>
     <viewTaskWorkItemModal #viewTaskWorkItemModal></viewTaskWorkItemModal>
 </div>
