@@ -36,10 +36,12 @@ export class CreateOrEditTaskEventModalComponent extends AppComponentBase implem
     priorityOptions: SelectItem[];
 
     selectedTemplate:any;
-    allTemplate:any[]=[{id:1,displayName:"template 1"},{id:2,displayName:"template 2"},{id:3,displayName:"template 3"}]
+    allTemplate:any[]=[]
+    //[{id:1,displayName:"template 1"},{id:2,displayName:"template 2"},{id:3,displayName:"template 3"}]
 
     selectedTeam:any;
-    allTeams:any[]=[{id:1,displayName:"Team 1"},{id:2,displayName:"Team 2"},{id:3,displayName:"Team 3"}]
+    allTeams:any[];
+    //=[{id:1,displayName:"Team 1"},{id:2,displayName:"Team 2"},{id:3,displayName:"Team 3"}]
 
     selectedTag:any;
     allTags:any[]=[{id:1,displayName:"Tag 1"},{id:2,displayName:"Tag 2"},{id:3,displayName:"Tag 3"}]
@@ -66,6 +68,7 @@ export class CreateOrEditTaskEventModalComponent extends AppComponentBase implem
             this.taskEvent.eventDate = this._dateTimeService.getStartOfDay();
             this.taskEvent.endDate = this._dateTimeService.getStartOfDay();
             this.taskStatusName = '';
+            this.taskEvent.completionPercentage =0;
             //this.taskEvent.status = false;
             this.taskEvent.priority = false;
             this.active = true;
@@ -85,6 +88,7 @@ export class CreateOrEditTaskEventModalComponent extends AppComponentBase implem
         });
         this.taskStatusOptions = [{ label: 'Completed', value: true }, { label: 'Open', value: false }];
         this.priorityOptions = [{ label: 'High', value: true }, { label: 'Low', value: false }];
+        this.getTempleteList()
     }
 
     save(): void {
@@ -104,24 +108,16 @@ export class CreateOrEditTaskEventModalComponent extends AppComponentBase implem
             });
     }
 
-    onEmployeeSelect(event: any) {
-        // if (event) {
-        //     let index =this.taskEvent.teams?this.taskEvent.teams.findIndex(x => x.id == event.itemValue.id):-1;
-        //     if(index<0){
-        //         this.taskEvent.teams = event.value;
-        //     }else if(index>=0 && this.taskEvent.id){
-        //         this._taskTeamsServiceProxy.deleteByTask(this.taskEvent.id,event.itemValue.id).subscribe(result=>{
-        //             this.taskEvent.teams.splice(index, 1);
-        //         });
-        //     }
-        // }
-    }
+   
     close(): void {
         this.active = false;
         this.modal.hide();
     }
 
-    ngOnInit(): void { }
+    ngOnInit(): void {
+
+        //this.allTemplate
+    }
 
     startTimeValue(value: any) {
         this.taskEvent.startTime = value;
@@ -130,5 +126,40 @@ export class CreateOrEditTaskEventModalComponent extends AppComponentBase implem
     endTimeValue(value: any) {
         this.taskEvent.endTime = value;
     }
+    getTempleteList() {
+        this._taskEventsServiceProxy.getAllTaskTemplateForDropdown().subscribe(result=>{
+            this.allTemplate = result;
+       });
+    }
+    getTeamList() {
+        this._taskTeamsServiceProxy.getTaskTeamForDropdown().subscribe(result=>{
+            this.allTeams = result;
+       });
+    }
+    onTemplateSelect(event) {
+        // console.log(event);
+        // debugger
+        this._taskEventsServiceProxy.getTaskEventForEdit(event.value.id).subscribe(result => {
+            this.taskEvent = result.taskEvent;
+            this.taskEvent.template = false;
+            this.taskEvent.id = null;
+        });
+    }
+    onEmployeeSelect(event: any) {
+        if (event) {
+            let index =this.taskEvent.teams?this.taskEvent.teams.findIndex(x => x.id == event.itemValue.id):-1;
+            if(index<0){
+                this.taskEvent.teams = event.value;
+            }else if(index>=0 && this.taskEvent.id){
+                // this._taskTeamsServiceProxy.deleteByTask(this.taskEvent.id,event.itemValue.id).subscribe(result=>{
+                //     this.taskEvent.teams.splice(index, 1);
+                // });
+            }
+        }
 
+        // console.log(event);
+        // if (event.value.length > 0) {
+
+        // }
+    }
 }
