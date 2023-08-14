@@ -50,10 +50,12 @@ export class TaskEventsComponent extends AppComponentBase {
     taskStatusNameFilter = '';
 
     selectedTeam:any;
-    allTeams:any[]=[{id:1,displayName:"Team 1"},{id:2,displayName:"Team 2"},{id:3,displayName:"Team 3"}]
+    allTeams:any[]
+    //=[{id:1,displayName:"Team 1"},{id:2,displayName:"Team 2"},{id:3,displayName:"Team 3"}]
 
     selectedTag:any;
-    allTags:any[]=[{id:1,displayName:"Tag 1"},{id:2,displayName:"Tag 2"},{id:3,displayName:"Tag 3"}]
+    allTags:any[]
+    //=[{id:1,displayName:"Tag 1"},{id:2,displayName:"Tag 2"},{id:3,displayName:"Tag 3"}]
 
     value: number = 50;
 
@@ -112,7 +114,7 @@ export class TaskEventsComponent extends AppComponentBase {
             )
             .subscribe((result) => {
                 this.primengTableHelper.totalRecordsCount = result.totalCount;
-                this.primengTableHelper.records = result.items;
+                this.primengTableHelper.records = result.taskEvents;
                 this.primengTableHelper.hideLoadingIndicator();
             });
     }

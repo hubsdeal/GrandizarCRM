@@ -328,15 +328,15 @@
                                                 class="fs-5 text-gray-800 text-hover-primary fw-bold">
                                                 {{ record.taskEvent.name }}
                                             </a>
-                                            <span class="text-gray-400 fw-semibold fs-7 my-0">
+                                            <!-- <span class="text-gray-400 fw-semibold fs-7 my-0">
                                                 <i class="fas fa-tags mr-1"></i>
                                                 Web Development, Web Design, Software Development
-                                            </span>
+                                            </span> -->
                                         </div>
                                     </td>
                                     <td style="width:180px;">
                                         <span *ngIf="record.taskEvent.eventDate">
-                                            {{record.taskEvent.eventDate | luxonFormat : 'dd-MM-yyyy'}}
+                                            {{record.taskEvent.eventDate | luxonFormat : 'dd-MM-yyyy'}} 
                                         </span>
                                         <span *ngIf="record.taskEvent.startTime && record.taskEvent.eventDate">(</span>
                                         <span *ngIf="record.taskEvent.startTime">{{record.taskEvent.startTime}}</span>
@@ -358,41 +358,30 @@
                                     </td>
                                     <td style="width: 180px; text-align: center;">
                                         <div class="symbol-group symbol-hover flex-nowrap d-flex justify-content-center">
-                                            <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
+                                            <div *ngFor="let team of record.team" class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
                                                 data-bs-original-title="Alan Warden" data-kt-initialized="1">
-                                                <span
-                                                    class="symbol-label bg-warning text-inverse-warning fw-bold">A</span>
-                                            </div>
-                                            <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
-                                                data-bs-original-title="Susan Redwood" data-kt-initialized="1">
-                                                <span
-                                                    class="symbol-label bg-primary text-inverse-primary fw-bold">S</span>
-                                            </div>
-                                            <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
-                                                data-bs-original-title="Perry Matthew" data-kt-initialized="1">
-                                                <span
-                                                    class="symbol-label bg-danger text-inverse-danger fw-bold">P</span>
-                                            </div>
-                                            <a href="javascript:;" class="symbol symbol-35px symbol-circle" data-bs-toggle="modal"
-                                                data-bs-target="#kt_modal_view_users">
-                                                <span class="symbol-label bg-dark text-gray-300 fs-8 fw-bold">+42</span>
-                                            </a>
+                                                
+                                                <span *ngIf ="!team.picture" title="{{team.employeeName}}"
+                                                    class="symbol-label bg-warning text-inverse-warning fw-bold">{{team.employeeName | nameSplit}}</span>
+                                                    <img *ngIf ="team.picture" alt="Pic" src="{{team.picture}}">
+                                                </div>
+                                           
                                         </div>
                                     </td>
                                     <td style="width: 180px; text-align: center;">
                                         <div>
-                                            <input type="text" pInputText [(ngModel)]="value" class="w-full"/>
+                                            <input type="text" pInputText [(ngModel)]="record.taskEvent.completionPercentage" class="w-full"/>
                                             <p-slider [(ngModel)]="value" class="w-full"></p-slider>
                                         </div>
                                     </td>
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('Status') }}</span>
-                                        <div *ngIf="record.taskEvent.status" class="text-center">
-                                            <span class="badge badge-primary badge-sm">Completed</span>
+                                        <div *ngIf="record.taskStatusName" class="text-center">
+                                            <span class="badge badge-primary badge-sm">{{record.taskStatusName}}</span>
                                         </div>
-                                        <div *ngIf="!record.taskEvent.status" class="text-center">
+                                        <!-- <div *ngIf="!record.taskEvent.status" class="text-center">
                                             <span class="badge badge-danger badge-sm">Open</span>
-                                        </div>
+                                        </div> -->
                                     </td>
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('Priority') }}</span>
