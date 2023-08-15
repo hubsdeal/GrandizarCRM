@@ -54,7 +54,7 @@
                     <!--begin:: Card body-->
                     <div class="card-body p-9">
                         <!--begin::Name-->
-                        <div class="fs-3 fw-bold text-dark">{{workItem.taskWorkItem.name}}</div>
+                        <div class="fs-3 fw-bold text-dark mb-5">{{workItem.taskWorkItem.name}}</div>
                         <!--end::Name-->
                         <!--begin::Description-->
                         <!-- <p class="text-gray-400 fw-semibold fs-5 mt-1 mb-7">CRM App
@@ -63,13 +63,35 @@
                         <!--begin::Info-->
                         <div class="d-flex flex-wrap mb-5">
                             <!--begin::Due-->
-                            <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-7 mb-3">
+                            <div class="border border-gray-300 border-dashed rounded  py-3 px-4 me-3 mb-3 w-60">
+                                <div class="fs-6 text-gray-800 fw-bold" *ngIf="workItem.taskWorkItem.startDate">{{workItem.taskWorkItem.startDate | luxonFormat : 'dd-MM-yyyy'}}
+                                    <span *ngIf="workItem.taskWorkItem.startTime && workItem.taskWorkItem.startDate">(</span>
+                                    <span *ngIf="workItem.taskWorkItem.startTime">{{workItem.taskWorkItem.startTime}}</span>
+                                    <span *ngIf="workItem.taskWorkItem.startTime && workItem.taskWorkItem.startDate">)</span>
+                                </div>
+                                <div class="fw-semibold text-gray-400">Start Date</div>
+                            </div>
+                            <div class="border border-gray-300 border-dashed rounded  py-3 px-4 mb-3 w-30">
+                                <div class="fs-6 text-gray-800 fw-bold" *ngIf="workItem.taskWorkItem.endDate">{{workItem.taskWorkItem.estimatedHours}} Hr.
+                                </div>
+                                <div class="fw-semibold text-gray-400">Est. Time</div>
+                            </div>
+                            
+                        </div>
+                        <div class="d-flex flex-wrap mb-5">
+                            <!--begin::Due-->
+                            <div class="border border-gray-300 border-dashed rounded  py-3 px-4 me-3 mb-3 w-60">
                                 <div class="fs-6 text-gray-800 fw-bold" *ngIf="workItem.taskWorkItem.endDate">{{workItem.taskWorkItem.endDate | luxonFormat : 'dd-MM-yyyy'}}
                                     <span *ngIf="workItem.taskWorkItem.endTime && workItem.taskWorkItem.endDate">(</span>
                                     <span *ngIf="workItem.taskWorkItem.endTime">{{workItem.taskWorkItem.endTime}}</span>
                                     <span *ngIf="workItem.taskWorkItem.endTime && workItem.taskWorkItem.endDate">)</span>
                                 </div>
-                                <div class="fw-semibold text-gray-400">Due Date</div>
+                                <div class="fw-semibold text-gray-400">End Date</div>
+                            </div>
+                            <div class="border border-gray-300 border-dashed rounded  py-3 px-4 mb-3 w-30">
+                                <div class="fs-6 text-gray-800 fw-bold" *ngIf="workItem.taskWorkItem.endDate">{{workItem.taskWorkItem.actualHours}} Hr.
+                                </div>
+                                <div class="fw-semibold text-gray-400">Actual Time</div>
                             </div>
                             <!--end::Due-->
                             <!--begin::Budget-->
@@ -79,6 +101,7 @@
                             </div> -->
                             <!--end::Budget-->
                         </div>
+
                         <!--end::Info-->
                         <!--begin::Progress-->
                         <div class="h-4px w-100 bg-light mb-5" data-bs-toggle="tooltip"
@@ -452,7 +475,7 @@
         </div> -->
 
     </div>
-    <createOrEditTaskWorkItemModal #createOrEditTaskWorkItemModal (modalSave)="getTaskWorkItems()">
+    <createOrEditTaskWorkItemModal #createOrEditTaskWorkItemModal  (modalSave)="getTaskWorkItems()">
     </createOrEditTaskWorkItemModal>
     <viewTaskWorkItemModal #viewTaskWorkItemModal></viewTaskWorkItemModal>
 </div>

@@ -1,5 +1,5 @@
 ﻿import { AppConsts } from '@shared/AppConsts';
-import { Component, Injector, ViewEncapsulation, ViewChild, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Injector, ViewEncapsulation, ViewChild, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TaskWorkItemsServiceProxy, TaskWorkItemDto } from '@shared/service-proxies/service-proxies';
 import { NotifyService } from 'abp-ng2-module';
@@ -24,7 +24,7 @@ import { DateTimeService } from '@app/shared/common/timing/date-time.service';
     encapsulation: ViewEncapsulation.None,
     animations: [appModuleAnimation()],
 })
-export class TaskWorkItemsComponent extends AppComponentBase {
+export class TaskWorkItemsComponent extends AppComponentBase implements OnInit{
     @ViewChild('createOrEditTaskWorkItemModal', { static: true })
     createOrEditTaskWorkItemModal: CreateOrEditTaskWorkItemModalComponent;
     @ViewChild('viewTaskWorkItemModal', { static: true }) viewTaskWorkItemModal: ViewTaskWorkItemModalComponent;
@@ -53,6 +53,7 @@ export class TaskWorkItemsComponent extends AppComponentBase {
     
     @Input() taskEventId: number;
 
+
     @Output() totalCount: EventEmitter<any> = new EventEmitter<any>();
   
     loggedInEmployeeId: number;
@@ -70,16 +71,19 @@ export class TaskWorkItemsComponent extends AppComponentBase {
         private _dateTimeService: DateTimeService
     ) {
         super(injector);
-        this.getTaskWorkItems();
+       // this.getTaskWorkItems();
     }
-    getTaskWorkItems(event?: LazyLoadEvent) {
+    ngOnInit(): void {
+       this.getTaskWorkItems();
+      }
+    getTaskWorkItems() {
         // if (this.primengTableHelper.shouldResetPaging(event)) {
         //   this.paginator.changePage(0);
         //   return;
         // }
     
         // this.primengTableHelper.showLoadingIndicator();
-    
+
         this._taskWorkItemsServiceProxy.getAllByTaskEventId(
           this.taskEventId,
           this.filterText,
@@ -131,7 +135,9 @@ export class TaskWorkItemsComponent extends AppComponentBase {
         this.paginator.changePage(this.paginator.getPage());
     }
 
+
     createTaskWorkItem(): void {
+        this.createOrEditTaskWorkItemModal.taskEventId = this.taskEventId;
         this.createOrEditTaskWorkItemModal.show();
     }
 
