@@ -324,7 +324,7 @@
                                         <span class="p-column-title">{{ l('Name') }}</span>
                                         <div class="d-flex flex-column flex-grow-1 my-lg-0 my-2 pe-3">
                                             <a href="javascript:;" title=" {{ record.taskEvent.name }}"
-                                                [routerLink]="['/app/main/taskManagement/taskEvents/dashboard',record.id]"
+                                                [routerLink]="['/app/main/taskManagement/taskEvents/dashboard',record.taskEvent.id]"
                                                 class="fs-5 text-gray-800 text-hover-primary fw-bold">
                                                 {{ record.taskEvent.name }}
                                             </a>
@@ -364,7 +364,7 @@
                                                 <span *ngIf ="!team.picture" title="{{team.employeeName}}"
                                                     class="symbol-label bg-warning text-inverse-warning fw-bold">{{team.employeeName | nameSplit}}</span>
                                                     <img *ngIf ="team.picture" alt="Pic" src="{{team.picture}}">
-                                                </div>
+                                            </div>
                                            
                                         </div>
                                     </td>
