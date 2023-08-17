@@ -34,21 +34,21 @@
                             <div class="w-100">
                                 <div class="d-flex justify-content-between align-items-start flex-wrap mb-2">
                                     <div class="d-flex flex-column">
-                                        <div class="d-flex align-items-center mb-3">
+                                        <!-- <div class="d-flex align-items-center mb-3">
                                             <a href="javascript:;"
                                                 class="text-gray-800 text-hover-primary fs-2 fw-bold me-3">
                                                 Job Data - Indeed USA
                                             </a>
-                                        </div>
+                                        </div> -->
                                         <div
                                             class="d-flex flex-wrap fw-semibold mb-1 align-items-center fs-6 text-gray-500">
                                             <i class="fas fa-user-gear me-2 ms-1"></i>
-                                            Created By: Faisal Alam
+                                            Created By: {{taskEvent.createdBy}}
                                         </div>
                                         <div
                                             class="d-flex flex-wrap fw-semibold mb-1 align-items-center fs-6 text-gray-500">
                                             <i class="fas fa-calendar me-2"></i>
-                                            Date: Jan 31, 2023
+                                            Date: {{taskEvent.creationTime | luxonFormat : 'dd-MM-yyyy'}}
                                         </div>
                                         <div class="d-flex flex-column justify-content-end pe-0">
                                             <!--begin::Title-->
@@ -58,26 +58,15 @@
                                             <!--end::Title-->
                                             <!--begin::Users group-->
                                             <div class="symbol-group symbol-hover flex-nowrap">
-                                                <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
+                                                <div *ngFor="let team of taskEvent.team"
+                                                    class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
                                                     data-bs-original-title="Alan Warden" data-kt-initialized="1">
-                                                    <span
-                                                        class="symbol-label bg-warning text-inverse-warning fw-bold">A</span>
+
+                                                    <span *ngIf="!team.picture" title="{{team.employeeName}}"
+                                                        class="symbol-label bg-warning text-inverse-warning fw-bold">{{team.employeeName
+                                                        | nameSplit}}</span>
+                                                    <img *ngIf="team.picture" alt="Pic" src="{{team.picture}}">
                                                 </div>
-                                                <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
-                                                    data-bs-original-title="Susan Redwood" data-kt-initialized="1">
-                                                    <span
-                                                        class="symbol-label bg-primary text-inverse-primary fw-bold">S</span>
-                                                </div>
-                                                <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
-                                                    data-bs-original-title="Perry Matthew" data-kt-initialized="1">
-                                                    <span
-                                                        class="symbol-label bg-danger text-inverse-danger fw-bold">P</span>
-                                                </div>
-                                                <a href="#" class="symbol symbol-35px symbol-circle"
-                                                    data-bs-toggle="modal" data-bs-target="#kt_modal_view_users">
-                                                    <span
-                                                        class="symbol-label bg-dark text-gray-300 fs-8 fw-bold">+42</span>
-                                                </a>
                                             </div>
                                             <!--end::Users group-->
                                         </div>
@@ -91,10 +80,12 @@
                                 <i class="fas fa-edit fs-5 me-2"></i> Edit
                             </a>
                             <a href="javascript:;" class="btn btn-sm btn-success">
-                                Completed</a>
-                            <a href="javascript:;" class="btn btn-sm btn-warning">
-                                Low
-                            </a>
+                                {{taskEvent.taskStatusName}}</a>
+                            <a href="javascript:;" *ngIf="taskEvent.taskEvent.priority" class="btn btn-sm btn-danger">
+                                High</a>
+                            <a href="javascript:;" *ngIf="!taskEvent.taskEvent.priority" class="btn btn-sm btn-warning">
+                                Low</a>
+
                             <a href="javascript:;" class="btn btn-sm btn-secondary"><i
                                     class="fas fa-plus-circle fs-5 me-2"></i>
                                 Tags
@@ -117,9 +108,11 @@
                             <div id="kt_accordion_1_body_1" class="accordion-collapse collapse show"
                                 aria-labelledby="kt_accordion_1_header_1" data-bs-parent="#kt_accordion_1">
                                 <div class="card-body pt-10">
-                                    <p-editor id="description" name="description" ngDefaultControl
+                                    <!-- <p-editor id="description" name="description" ngDefaultControl
                                         [style]="{ height: '400px' }"
-                                        placeholder="'Description goes here...'"></p-editor>
+                                        placeholder="'Description goes here...'"></p-editor> -->
+                                        <p-editor id="description" name="description" [(ngModel)]="taskEvent.taskEvent.description"
+                            ngDefaultControl [style]="{ height: '400px' }" placeholder="'Type here...'"></p-editor>
                                 </div>
                             </div>
                         </div>
@@ -128,7 +121,8 @@
                     <div class="card mb-6">
                         <div class="card-body pt-10">
                             <div class="d-flex">
-                                <h3 class="me-3 text-primary">Reference:</h3> <h3>Add Task Reference</h3>
+                                <h3 class="me-3 text-primary">Reference:</h3>
+                                <h3>Add Task Reference</h3>
                             </div>
                         </div>
                     </div>
@@ -171,7 +165,7 @@
                             <div class="tab-content" id="myTabContent">
                                 <!--begin:::Tab pane-->
                                 <div class="tab-pane fade active show" id="task_work_tasks" role="tabpanel">
-                                    <app-taskWorkItems></app-taskWorkItems>
+                                    <app-taskWorkItems *ngIf="taskEventId" [taskEventId]="taskEventId"></app-taskWorkItems>
                                 </div>
                                 <!--end:::Tab pane-->
 
@@ -276,7 +270,8 @@
                                                 <div class="d-flex align-items-center flex-grow-1">
                                                     <!--begin::Avatar-->
                                                     <div class="symbol symbol-45px me-5">
-                                                        <img src="assets/common/images/default-profile-picture.png" alt="User">
+                                                        <img src="assets/common/images/default-profile-picture.png"
+                                                            alt="User">
                                                     </div>
                                                     <!--end::Avatar-->
                                                     <!--begin::Info-->
@@ -364,9 +359,14 @@
                                                         <span class="symbol-label bg-light-success">
                                                             <!--begin::Svg Icon | path: icons/duotune/abstract/abs027.svg-->
                                                             <span class="svg-icon svg-icon-2x svg-icon-success">
-                                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                    <path opacity="0.3" d="M21.25 18.525L13.05 21.825C12.35 22.125 11.65 22.125 10.95 21.825L2.75 18.525C1.75 18.125 1.75 16.725 2.75 16.325L4.04999 15.825L10.25 18.325C10.85 18.525 11.45 18.625 12.05 18.625C12.65 18.625 13.25 18.525 13.85 18.325L20.05 15.825L21.35 16.325C22.35 16.725 22.35 18.125 21.25 18.525ZM13.05 16.425L21.25 13.125C22.25 12.725 22.25 11.325 21.25 10.925L13.05 7.62502C12.35 7.32502 11.65 7.32502 10.95 7.62502L2.75 10.925C1.75 11.325 1.75 12.725 2.75 13.125L10.95 16.425C11.65 16.725 12.45 16.725 13.05 16.425Z" fill="currentColor"></path>
-                                                                    <path d="M11.05 11.025L2.84998 7.725C1.84998 7.325 1.84998 5.925 2.84998 5.525L11.05 2.225C11.75 1.925 12.45 1.925 13.15 2.225L21.35 5.525C22.35 5.925 22.35 7.325 21.35 7.725L13.05 11.025C12.45 11.325 11.65 11.325 11.05 11.025Z" fill="currentColor"></path>
+                                                                <svg width="24" height="24" viewBox="0 0 24 24"
+                                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path opacity="0.3"
+                                                                        d="M21.25 18.525L13.05 21.825C12.35 22.125 11.65 22.125 10.95 21.825L2.75 18.525C1.75 18.125 1.75 16.725 2.75 16.325L4.04999 15.825L10.25 18.325C10.85 18.525 11.45 18.625 12.05 18.625C12.65 18.625 13.25 18.525 13.85 18.325L20.05 15.825L21.35 16.325C22.35 16.725 22.35 18.125 21.25 18.525ZM13.05 16.425L21.25 13.125C22.25 12.725 22.25 11.325 21.25 10.925L13.05 7.62502C12.35 7.32502 11.65 7.32502 10.95 7.62502L2.75 10.925C1.75 11.325 1.75 12.725 2.75 13.125L10.95 16.425C11.65 16.725 12.45 16.725 13.05 16.425Z"
+                                                                        fill="currentColor"></path>
+                                                                    <path
+                                                                        d="M11.05 11.025L2.84998 7.725C1.84998 7.325 1.84998 5.925 2.84998 5.525L11.05 2.225C11.75 1.925 12.45 1.925 13.15 2.225L21.35 5.525C22.35 5.925 22.35 7.325 21.35 7.725L13.05 11.025C12.45 11.325 11.65 11.325 11.05 11.025Z"
+                                                                        fill="currentColor"></path>
                                                                 </svg>
                                                             </span>
                                                             <!--end::Svg Icon-->
@@ -375,7 +375,9 @@
                                                     <!--end::Symbol-->
                                                     <!--begin::Text-->
                                                     <div class="d-flex flex-column">
-                                                        <a href="#" class="text-dark text-hover-primary fs-6 fw-bold">Api Document</a>
+                                                        <a href="#"
+                                                            class="text-dark text-hover-primary fs-6 fw-bold">Api
+                                                            Document</a>
                                                         <span class="text-muted fw-bold">PDF</span>
                                                     </div>
                                                     <!--end::Text-->
@@ -390,9 +392,14 @@
                                                         <span class="symbol-label bg-light-success">
                                                             <!--begin::Svg Icon | path: icons/duotune/abstract/abs027.svg-->
                                                             <span class="svg-icon svg-icon-2x svg-icon-success">
-                                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                    <path opacity="0.3" d="M21.25 18.525L13.05 21.825C12.35 22.125 11.65 22.125 10.95 21.825L2.75 18.525C1.75 18.125 1.75 16.725 2.75 16.325L4.04999 15.825L10.25 18.325C10.85 18.525 11.45 18.625 12.05 18.625C12.65 18.625 13.25 18.525 13.85 18.325L20.05 15.825L21.35 16.325C22.35 16.725 22.35 18.125 21.25 18.525ZM13.05 16.425L21.25 13.125C22.25 12.725 22.25 11.325 21.25 10.925L13.05 7.62502C12.35 7.32502 11.65 7.32502 10.95 7.62502L2.75 10.925C1.75 11.325 1.75 12.725 2.75 13.125L10.95 16.425C11.65 16.725 12.45 16.725 13.05 16.425Z" fill="currentColor"></path>
-                                                                    <path d="M11.05 11.025L2.84998 7.725C1.84998 7.325 1.84998 5.925 2.84998 5.525L11.05 2.225C11.75 1.925 12.45 1.925 13.15 2.225L21.35 5.525C22.35 5.925 22.35 7.325 21.35 7.725L13.05 11.025C12.45 11.325 11.65 11.325 11.05 11.025Z" fill="currentColor"></path>
+                                                                <svg width="24" height="24" viewBox="0 0 24 24"
+                                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path opacity="0.3"
+                                                                        d="M21.25 18.525L13.05 21.825C12.35 22.125 11.65 22.125 10.95 21.825L2.75 18.525C1.75 18.125 1.75 16.725 2.75 16.325L4.04999 15.825L10.25 18.325C10.85 18.525 11.45 18.625 12.05 18.625C12.65 18.625 13.25 18.525 13.85 18.325L20.05 15.825L21.35 16.325C22.35 16.725 22.35 18.125 21.25 18.525ZM13.05 16.425L21.25 13.125C22.25 12.725 22.25 11.325 21.25 10.925L13.05 7.62502C12.35 7.32502 11.65 7.32502 10.95 7.62502L2.75 10.925C1.75 11.325 1.75 12.725 2.75 13.125L10.95 16.425C11.65 16.725 12.45 16.725 13.05 16.425Z"
+                                                                        fill="currentColor"></path>
+                                                                    <path
+                                                                        d="M11.05 11.025L2.84998 7.725C1.84998 7.325 1.84998 5.925 2.84998 5.525L11.05 2.225C11.75 1.925 12.45 1.925 13.15 2.225L21.35 5.525C22.35 5.925 22.35 7.325 21.35 7.725L13.05 11.025C12.45 11.325 11.65 11.325 11.05 11.025Z"
+                                                                        fill="currentColor"></path>
                                                                 </svg>
                                                             </span>
                                                             <!--end::Svg Icon-->
@@ -401,7 +408,9 @@
                                                     <!--end::Symbol-->
                                                     <!--begin::Text-->
                                                     <div class="d-flex flex-column">
-                                                        <a href="#" class="text-dark text-hover-primary fs-6 fw-bold">Api Document</a>
+                                                        <a href="#"
+                                                            class="text-dark text-hover-primary fs-6 fw-bold">Api
+                                                            Document</a>
                                                         <span class="text-muted fw-bold">PDF</span>
                                                     </div>
                                                     <!--end::Text-->
@@ -416,9 +425,14 @@
                                                         <span class="symbol-label bg-light-success">
                                                             <!--begin::Svg Icon | path: icons/duotune/abstract/abs027.svg-->
                                                             <span class="svg-icon svg-icon-2x svg-icon-success">
-                                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                    <path opacity="0.3" d="M21.25 18.525L13.05 21.825C12.35 22.125 11.65 22.125 10.95 21.825L2.75 18.525C1.75 18.125 1.75 16.725 2.75 16.325L4.04999 15.825L10.25 18.325C10.85 18.525 11.45 18.625 12.05 18.625C12.65 18.625 13.25 18.525 13.85 18.325L20.05 15.825L21.35 16.325C22.35 16.725 22.35 18.125 21.25 18.525ZM13.05 16.425L21.25 13.125C22.25 12.725 22.25 11.325 21.25 10.925L13.05 7.62502C12.35 7.32502 11.65 7.32502 10.95 7.62502L2.75 10.925C1.75 11.325 1.75 12.725 2.75 13.125L10.95 16.425C11.65 16.725 12.45 16.725 13.05 16.425Z" fill="currentColor"></path>
-                                                                    <path d="M11.05 11.025L2.84998 7.725C1.84998 7.325 1.84998 5.925 2.84998 5.525L11.05 2.225C11.75 1.925 12.45 1.925 13.15 2.225L21.35 5.525C22.35 5.925 22.35 7.325 21.35 7.725L13.05 11.025C12.45 11.325 11.65 11.325 11.05 11.025Z" fill="currentColor"></path>
+                                                                <svg width="24" height="24" viewBox="0 0 24 24"
+                                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path opacity="0.3"
+                                                                        d="M21.25 18.525L13.05 21.825C12.35 22.125 11.65 22.125 10.95 21.825L2.75 18.525C1.75 18.125 1.75 16.725 2.75 16.325L4.04999 15.825L10.25 18.325C10.85 18.525 11.45 18.625 12.05 18.625C12.65 18.625 13.25 18.525 13.85 18.325L20.05 15.825L21.35 16.325C22.35 16.725 22.35 18.125 21.25 18.525ZM13.05 16.425L21.25 13.125C22.25 12.725 22.25 11.325 21.25 10.925L13.05 7.62502C12.35 7.32502 11.65 7.32502 10.95 7.62502L2.75 10.925C1.75 11.325 1.75 12.725 2.75 13.125L10.95 16.425C11.65 16.725 12.45 16.725 13.05 16.425Z"
+                                                                        fill="currentColor"></path>
+                                                                    <path
+                                                                        d="M11.05 11.025L2.84998 7.725C1.84998 7.325 1.84998 5.925 2.84998 5.525L11.05 2.225C11.75 1.925 12.45 1.925 13.15 2.225L21.35 5.525C22.35 5.925 22.35 7.325 21.35 7.725L13.05 11.025C12.45 11.325 11.65 11.325 11.05 11.025Z"
+                                                                        fill="currentColor"></path>
                                                                 </svg>
                                                             </span>
                                                             <!--end::Svg Icon-->
@@ -427,7 +441,9 @@
                                                     <!--end::Symbol-->
                                                     <!--begin::Text-->
                                                     <div class="d-flex flex-column">
-                                                        <a href="#" class="text-dark text-hover-primary fs-6 fw-bold">Api Document</a>
+                                                        <a href="#"
+                                                            class="text-dark text-hover-primary fs-6 fw-bold">Api
+                                                            Document</a>
                                                         <span class="text-muted fw-bold">PDF</span>
                                                     </div>
                                                     <!--end::Text-->
@@ -442,9 +458,14 @@
                                                         <span class="symbol-label bg-light-success">
                                                             <!--begin::Svg Icon | path: icons/duotune/abstract/abs027.svg-->
                                                             <span class="svg-icon svg-icon-2x svg-icon-success">
-                                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                    <path opacity="0.3" d="M21.25 18.525L13.05 21.825C12.35 22.125 11.65 22.125 10.95 21.825L2.75 18.525C1.75 18.125 1.75 16.725 2.75 16.325L4.04999 15.825L10.25 18.325C10.85 18.525 11.45 18.625 12.05 18.625C12.65 18.625 13.25 18.525 13.85 18.325L20.05 15.825L21.35 16.325C22.35 16.725 22.35 18.125 21.25 18.525ZM13.05 16.425L21.25 13.125C22.25 12.725 22.25 11.325 21.25 10.925L13.05 7.62502C12.35 7.32502 11.65 7.32502 10.95 7.62502L2.75 10.925C1.75 11.325 1.75 12.725 2.75 13.125L10.95 16.425C11.65 16.725 12.45 16.725 13.05 16.425Z" fill="currentColor"></path>
-                                                                    <path d="M11.05 11.025L2.84998 7.725C1.84998 7.325 1.84998 5.925 2.84998 5.525L11.05 2.225C11.75 1.925 12.45 1.925 13.15 2.225L21.35 5.525C22.35 5.925 22.35 7.325 21.35 7.725L13.05 11.025C12.45 11.325 11.65 11.325 11.05 11.025Z" fill="currentColor"></path>
+                                                                <svg width="24" height="24" viewBox="0 0 24 24"
+                                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path opacity="0.3"
+                                                                        d="M21.25 18.525L13.05 21.825C12.35 22.125 11.65 22.125 10.95 21.825L2.75 18.525C1.75 18.125 1.75 16.725 2.75 16.325L4.04999 15.825L10.25 18.325C10.85 18.525 11.45 18.625 12.05 18.625C12.65 18.625 13.25 18.525 13.85 18.325L20.05 15.825L21.35 16.325C22.35 16.725 22.35 18.125 21.25 18.525ZM13.05 16.425L21.25 13.125C22.25 12.725 22.25 11.325 21.25 10.925L13.05 7.62502C12.35 7.32502 11.65 7.32502 10.95 7.62502L2.75 10.925C1.75 11.325 1.75 12.725 2.75 13.125L10.95 16.425C11.65 16.725 12.45 16.725 13.05 16.425Z"
+                                                                        fill="currentColor"></path>
+                                                                    <path
+                                                                        d="M11.05 11.025L2.84998 7.725C1.84998 7.325 1.84998 5.925 2.84998 5.525L11.05 2.225C11.75 1.925 12.45 1.925 13.15 2.225L21.35 5.525C22.35 5.925 22.35 7.325 21.35 7.725L13.05 11.025C12.45 11.325 11.65 11.325 11.05 11.025Z"
+                                                                        fill="currentColor"></path>
                                                                 </svg>
                                                             </span>
                                                             <!--end::Svg Icon-->
@@ -453,7 +474,9 @@
                                                     <!--end::Symbol-->
                                                     <!--begin::Text-->
                                                     <div class="d-flex flex-column">
-                                                        <a href="#" class="text-dark text-hover-primary fs-6 fw-bold">Api Document</a>
+                                                        <a href="#"
+                                                            class="text-dark text-hover-primary fs-6 fw-bold">Api
+                                                            Document</a>
                                                         <span class="text-muted fw-bold">PDF</span>
                                                     </div>
                                                     <!--end::Text-->
@@ -468,9 +491,14 @@
                                                         <span class="symbol-label bg-light-success">
                                                             <!--begin::Svg Icon | path: icons/duotune/abstract/abs027.svg-->
                                                             <span class="svg-icon svg-icon-2x svg-icon-success">
-                                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                    <path opacity="0.3" d="M21.25 18.525L13.05 21.825C12.35 22.125 11.65 22.125 10.95 21.825L2.75 18.525C1.75 18.125 1.75 16.725 2.75 16.325L4.04999 15.825L10.25 18.325C10.85 18.525 11.45 18.625 12.05 18.625C12.65 18.625 13.25 18.525 13.85 18.325L20.05 15.825L21.35 16.325C22.35 16.725 22.35 18.125 21.25 18.525ZM13.05 16.425L21.25 13.125C22.25 12.725 22.25 11.325 21.25 10.925L13.05 7.62502C12.35 7.32502 11.65 7.32502 10.95 7.62502L2.75 10.925C1.75 11.325 1.75 12.725 2.75 13.125L10.95 16.425C11.65 16.725 12.45 16.725 13.05 16.425Z" fill="currentColor"></path>
-                                                                    <path d="M11.05 11.025L2.84998 7.725C1.84998 7.325 1.84998 5.925 2.84998 5.525L11.05 2.225C11.75 1.925 12.45 1.925 13.15 2.225L21.35 5.525C22.35 5.925 22.35 7.325 21.35 7.725L13.05 11.025C12.45 11.325 11.65 11.325 11.05 11.025Z" fill="currentColor"></path>
+                                                                <svg width="24" height="24" viewBox="0 0 24 24"
+                                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path opacity="0.3"
+                                                                        d="M21.25 18.525L13.05 21.825C12.35 22.125 11.65 22.125 10.95 21.825L2.75 18.525C1.75 18.125 1.75 16.725 2.75 16.325L4.04999 15.825L10.25 18.325C10.85 18.525 11.45 18.625 12.05 18.625C12.65 18.625 13.25 18.525 13.85 18.325L20.05 15.825L21.35 16.325C22.35 16.725 22.35 18.125 21.25 18.525ZM13.05 16.425L21.25 13.125C22.25 12.725 22.25 11.325 21.25 10.925L13.05 7.62502C12.35 7.32502 11.65 7.32502 10.95 7.62502L2.75 10.925C1.75 11.325 1.75 12.725 2.75 13.125L10.95 16.425C11.65 16.725 12.45 16.725 13.05 16.425Z"
+                                                                        fill="currentColor"></path>
+                                                                    <path
+                                                                        d="M11.05 11.025L2.84998 7.725C1.84998 7.325 1.84998 5.925 2.84998 5.525L11.05 2.225C11.75 1.925 12.45 1.925 13.15 2.225L21.35 5.525C22.35 5.925 22.35 7.325 21.35 7.725L13.05 11.025C12.45 11.325 11.65 11.325 11.05 11.025Z"
+                                                                        fill="currentColor"></path>
                                                                 </svg>
                                                             </span>
                                                             <!--end::Svg Icon-->
@@ -479,7 +507,9 @@
                                                     <!--end::Symbol-->
                                                     <!--begin::Text-->
                                                     <div class="d-flex flex-column">
-                                                        <a href="#" class="text-dark text-hover-primary fs-6 fw-bold">Api Document</a>
+                                                        <a href="#"
+                                                            class="text-dark text-hover-primary fs-6 fw-bold">Api
+                                                            Document</a>
                                                         <span class="text-muted fw-bold">PDF</span>
                                                     </div>
                                                     <!--end::Text-->
@@ -494,9 +524,14 @@
                                                         <span class="symbol-label bg-light-success">
                                                             <!--begin::Svg Icon | path: icons/duotune/abstract/abs027.svg-->
                                                             <span class="svg-icon svg-icon-2x svg-icon-success">
-                                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                    <path opacity="0.3" d="M21.25 18.525L13.05 21.825C12.35 22.125 11.65 22.125 10.95 21.825L2.75 18.525C1.75 18.125 1.75 16.725 2.75 16.325L4.04999 15.825L10.25 18.325C10.85 18.525 11.45 18.625 12.05 18.625C12.65 18.625 13.25 18.525 13.85 18.325L20.05 15.825L21.35 16.325C22.35 16.725 22.35 18.125 21.25 18.525ZM13.05 16.425L21.25 13.125C22.25 12.725 22.25 11.325 21.25 10.925L13.05 7.62502C12.35 7.32502 11.65 7.32502 10.95 7.62502L2.75 10.925C1.75 11.325 1.75 12.725 2.75 13.125L10.95 16.425C11.65 16.725 12.45 16.725 13.05 16.425Z" fill="currentColor"></path>
-                                                                    <path d="M11.05 11.025L2.84998 7.725C1.84998 7.325 1.84998 5.925 2.84998 5.525L11.05 2.225C11.75 1.925 12.45 1.925 13.15 2.225L21.35 5.525C22.35 5.925 22.35 7.325 21.35 7.725L13.05 11.025C12.45 11.325 11.65 11.325 11.05 11.025Z" fill="currentColor"></path>
+                                                                <svg width="24" height="24" viewBox="0 0 24 24"
+                                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path opacity="0.3"
+                                                                        d="M21.25 18.525L13.05 21.825C12.35 22.125 11.65 22.125 10.95 21.825L2.75 18.525C1.75 18.125 1.75 16.725 2.75 16.325L4.04999 15.825L10.25 18.325C10.85 18.525 11.45 18.625 12.05 18.625C12.65 18.625 13.25 18.525 13.85 18.325L20.05 15.825L21.35 16.325C22.35 16.725 22.35 18.125 21.25 18.525ZM13.05 16.425L21.25 13.125C22.25 12.725 22.25 11.325 21.25 10.925L13.05 7.62502C12.35 7.32502 11.65 7.32502 10.95 7.62502L2.75 10.925C1.75 11.325 1.75 12.725 2.75 13.125L10.95 16.425C11.65 16.725 12.45 16.725 13.05 16.425Z"
+                                                                        fill="currentColor"></path>
+                                                                    <path
+                                                                        d="M11.05 11.025L2.84998 7.725C1.84998 7.325 1.84998 5.925 2.84998 5.525L11.05 2.225C11.75 1.925 12.45 1.925 13.15 2.225L21.35 5.525C22.35 5.925 22.35 7.325 21.35 7.725L13.05 11.025C12.45 11.325 11.65 11.325 11.05 11.025Z"
+                                                                        fill="currentColor"></path>
                                                                 </svg>
                                                             </span>
                                                             <!--end::Svg Icon-->
@@ -505,7 +540,9 @@
                                                     <!--end::Symbol-->
                                                     <!--begin::Text-->
                                                     <div class="d-flex flex-column">
-                                                        <a href="#" class="text-dark text-hover-primary fs-6 fw-bold">Api Document</a>
+                                                        <a href="#"
+                                                            class="text-dark text-hover-primary fs-6 fw-bold">Api
+                                                            Document</a>
                                                         <span class="text-muted fw-bold">PDF</span>
                                                     </div>
                                                     <!--end::Text-->
@@ -520,9 +557,14 @@
                                                         <span class="symbol-label bg-light-success">
                                                             <!--begin::Svg Icon | path: icons/duotune/abstract/abs027.svg-->
                                                             <span class="svg-icon svg-icon-2x svg-icon-success">
-                                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                    <path opacity="0.3" d="M21.25 18.525L13.05 21.825C12.35 22.125 11.65 22.125 10.95 21.825L2.75 18.525C1.75 18.125 1.75 16.725 2.75 16.325L4.04999 15.825L10.25 18.325C10.85 18.525 11.45 18.625 12.05 18.625C12.65 18.625 13.25 18.525 13.85 18.325L20.05 15.825L21.35 16.325C22.35 16.725 22.35 18.125 21.25 18.525ZM13.05 16.425L21.25 13.125C22.25 12.725 22.25 11.325 21.25 10.925L13.05 7.62502C12.35 7.32502 11.65 7.32502 10.95 7.62502L2.75 10.925C1.75 11.325 1.75 12.725 2.75 13.125L10.95 16.425C11.65 16.725 12.45 16.725 13.05 16.425Z" fill="currentColor"></path>
-                                                                    <path d="M11.05 11.025L2.84998 7.725C1.84998 7.325 1.84998 5.925 2.84998 5.525L11.05 2.225C11.75 1.925 12.45 1.925 13.15 2.225L21.35 5.525C22.35 5.925 22.35 7.325 21.35 7.725L13.05 11.025C12.45 11.325 11.65 11.325 11.05 11.025Z" fill="currentColor"></path>
+                                                                <svg width="24" height="24" viewBox="0 0 24 24"
+                                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path opacity="0.3"
+                                                                        d="M21.25 18.525L13.05 21.825C12.35 22.125 11.65 22.125 10.95 21.825L2.75 18.525C1.75 18.125 1.75 16.725 2.75 16.325L4.04999 15.825L10.25 18.325C10.85 18.525 11.45 18.625 12.05 18.625C12.65 18.625 13.25 18.525 13.85 18.325L20.05 15.825L21.35 16.325C22.35 16.725 22.35 18.125 21.25 18.525ZM13.05 16.425L21.25 13.125C22.25 12.725 22.25 11.325 21.25 10.925L13.05 7.62502C12.35 7.32502 11.65 7.32502 10.95 7.62502L2.75 10.925C1.75 11.325 1.75 12.725 2.75 13.125L10.95 16.425C11.65 16.725 12.45 16.725 13.05 16.425Z"
+                                                                        fill="currentColor"></path>
+                                                                    <path
+                                                                        d="M11.05 11.025L2.84998 7.725C1.84998 7.325 1.84998 5.925 2.84998 5.525L11.05 2.225C11.75 1.925 12.45 1.925 13.15 2.225L21.35 5.525C22.35 5.925 22.35 7.325 21.35 7.725L13.05 11.025C12.45 11.325 11.65 11.325 11.05 11.025Z"
+                                                                        fill="currentColor"></path>
                                                                 </svg>
                                                             </span>
                                                             <!--end::Svg Icon-->
@@ -531,7 +573,9 @@
                                                     <!--end::Symbol-->
                                                     <!--begin::Text-->
                                                     <div class="d-flex flex-column">
-                                                        <a href="#" class="text-dark text-hover-primary fs-6 fw-bold">Api Document</a>
+                                                        <a href="#"
+                                                            class="text-dark text-hover-primary fs-6 fw-bold">Api
+                                                            Document</a>
                                                         <span class="text-muted fw-bold">PDF</span>
                                                     </div>
                                                     <!--end::Text-->

@@ -44,7 +44,7 @@ export class AdminDashboardRecentTaskComponent  extends AppComponentBase {
   estimatedTimeFilter = '';
   hourAndMinutesFilter = '';
   taskStatusNameFilter = '';
-
+  selectedEmployeesId:number;
   selectedTeam:any;
   allTeams:any[]=[{id:1,displayName:"Team 1"},{id:2,displayName:"Team 2"},{id:3,displayName:"Team 3"}]
 
@@ -103,6 +103,7 @@ export class AdminDashboardRecentTaskComponent  extends AppComponentBase {
               this.estimatedTimeFilter,
               this.hourAndMinutesFilter,
               this.taskStatusNameFilter,
+              this.selectedEmployeesId,
               '',
               0,
               10

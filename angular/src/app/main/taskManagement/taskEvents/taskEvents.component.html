@@ -54,11 +54,18 @@
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="StatusFilterSelect">{{ l('Status') }}</label>
-                                    <select class="form-select" name="StatusFilter" id="StatusFilterSelect"
+                                    <!-- <select class="form-select" name="StatusFilter" id="StatusFilterSelect"
                                         [(ngModel)]="statusFilter" (ngModelChange)="getTaskEvents()">
                                         <option value="-1">{{ l('All') }}</option>
                                         <option value="0">{{ l('Open') }}</option>
                                         <option value="1">{{ l('Completed') }}</option>
+                                    </select> -->
+                                    <select class="form-select" name="StatusFilter" id="StatusFilterSelect"
+                                    [(ngModel)]="statusFilter" (ngModelChange)="getTaskEvents()">
+                                        <option value="-1">{{ l('All') }}</option>
+                                        <option *ngFor="let item of allTaskStatuss" value="{{ item.id }}">
+                                            {{ item.displayName }}
+                                        </option>
                                     </select>
                                 </div>
                             </div>
@@ -92,10 +99,15 @@
                             <div class="col-md-3">
                                 <div class="my-3 p_filter">
                                     <label class="form-label" for="team">{{ l('Team') }}</label>
-                                    <p-dropdown [options]="allTeams" [filter]="true" [virtualScroll]="true"
-                                        placeholder="Select Team" [itemSize]="30" name="displayName"
-                                        optionLabel="displayName" optionId="id" [(ngModel)]="selectedTeam"
-                                        filterBy="displayName" [style]="{ width: '100%' }"></p-dropdown>
+                                    <p-dropdown [options]="employeeList" [filter]="true" [virtualScroll]="true"
+                                        placeholder="Select Team" [itemSize]="30" name="employee"
+                                        optionLabel="displayName" optionId="id" [(ngModel)]="selectedEmployees"
+                                        filterBy="displayName" [style]="{ width: '100%' }" (onChange)="onEmployeeSelect($event)"></p-dropdown> 
+                                        <!-- <p-multiSelect name="employee" id="employee" [options]="employeeList"
+                                    [(ngModel)]="selectedEmployees" optionLabel="displayName" [virtualScroll]="true"
+                                    [filter]="true" [itemSize]="34" [maxSelectedLabels]="2"  placeholder="Select Team"
+                                    class="multiselect-custom-virtual-scroll" (onChange)="onEmployeeSelect($event)"> 
+                                </p-multiSelect>-->
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -324,7 +336,7 @@
                                         <span class="p-column-title">{{ l('Name') }}</span>
                                         <div class="d-flex flex-column flex-grow-1 my-lg-0 my-2 pe-3">
                                             <a href="javascript:;" title=" {{ record.taskEvent.name }}"
-                                                [routerLink]="['/app/main/taskManagement/taskEvents/dashboard',record.id]"
+                                                [routerLink]="['/app/main/taskManagement/taskEvents/dashboard',record.taskEvent.id]"
                                                 class="fs-5 text-gray-800 text-hover-primary fw-bold">
                                                 {{ record.taskEvent.name }}
                                             </a>
@@ -364,7 +376,7 @@
                                                 <span *ngIf ="!team.picture" title="{{team.employeeName}}"
                                                     class="symbol-label bg-warning text-inverse-warning fw-bold">{{team.employeeName | nameSplit}}</span>
                                                     <img *ngIf ="team.picture" alt="Pic" src="{{team.picture}}">
-                                                </div>
+                                            </div>
                                            
                                         </div>
                                     </td>
