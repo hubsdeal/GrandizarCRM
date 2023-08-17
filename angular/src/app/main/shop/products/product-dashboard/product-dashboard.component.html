@@ -1254,9 +1254,8 @@
                                                         </h4>
                                                         <div class="fs-6">
                                                             <!--begin::Form-->
-                                                            <form id="kt_ecommerce_settings_general_form"
-                                                                class="form fv-plugins-bootstrap5 fv-plugins-framework"
-                                                                action="#">
+                                                            <form #productVariantForm="ngForm"
+                                                                class="form fv-plugins-bootstrap5 fv-plugins-framework">
 
                                                                 <div class="row mb-7">
                                                                     <div class="col-xl-3">
@@ -1267,10 +1266,18 @@
                                                                                     Variant Category
                                                                                 </span>
                                                                             </label>
-                                                                            <select
-                                                                                class="form-control form-control-sm form-control-solid"
-                                                                                name="state" id="state">
-                                                                                <option value="1">Size</option>
+                                                                            <select name="variantCategory" required
+                                                                                (change)="onVariantCategorySelect($event.target.value)"
+                                                                                id="variantCategory"
+                                                                                [(ngModel)]="productVariant.productVariantCategoryId"
+                                                                                class="form-control form-control-sm">
+                                                                                <option value="">Select Category
+                                                                                </option>
+                                                                                <option
+                                                                                    *ngFor="let item of allVariantCategoryOptions"
+                                                                                    value="{{item.id}}">
+                                                                                    {{item.displayName}}
+                                                                                </option>
                                                                             </select>
                                                                         </div>
                                                                     </div>
@@ -1282,10 +1289,17 @@
                                                                                     Variant Name
                                                                                 </span>
                                                                             </label>
-                                                                            <select
-                                                                                class="form-control form-control-sm form-control-solid"
-                                                                                name="state" id="state">
-                                                                                <option value="1">Large</option>
+                                                                            <select name="variantName" required
+                                                                                [(ngModel)]="productVariant.productVariantId"
+                                                                                id="variantName"
+                                                                                class="form-control form-control-sm">
+                                                                                <option value="">Select Variant
+                                                                                </option>
+                                                                                <option
+                                                                                    *ngFor="let item of allVariantOptions"
+                                                                                    value="{{item.id}}">
+                                                                                    {{item.displayName}}
+                                                                                </option>
                                                                             </select>
                                                                         </div>
                                                                     </div>
@@ -1296,117 +1310,129 @@
                                                                                 <span class="required">
                                                                                     Price</span>
                                                                             </label>
-                                                                            <input type="text"
-                                                                                class="form-control form-control-sm form-control-solid"
-                                                                                name="email" value="">
+                                                                            <input name="variantPrice" id="variantPrice"
+                                                                                [(ngModel)]="productVariant.price"
+                                                                                class="form-control  form-control-sm"
+                                                                                type="text">
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-xl-12 d-flex">
-                                                                        <div class="variant_photo">
-                                                                            <img src="assets/common/images/p1.png"
-                                                                                alt="">
+                                                                        <div *ngFor="let item of images">
+                                                                            <div class="variant_photo me-4"
+                                                                                [class.variant_select]="productVariant.mediaLibraryId==item.productMedia.mediaLibraryId">
+                                                                                <span
+                                                                                    *ngIf="item.picture!=null && item.videoUrl==null">
+                                                                                    <img (click)="OnVariantImageClick(item)"
+                                                                                        class="variant_image_all"
+                                                                                        src="{{item.picture}}"
+                                                                                        alt="image">
+                                                                                </span>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-xl-12 d-flex align-items-end">
-                                                                        <!--begin::Button-->
-                                                                        <button type="submit"
-                                                                            data-kt-contacts-type="submit"
-                                                                            class="btn btn-primary btn-sm">
-                                                                            <span class="indicator-label">Save</span>
-                                                                            <span class="indicator-progress">Please
-                                                                                wait...
-                                                                                <span
-                                                                                    class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                                                        <button type="button"
+                                                                            (click)="saveCustomVariant()"
+                                                                            [disabled]="!productVariantForm.form.valid"
+                                                                            class="btn mt-2 btn-sm btn-bg-primary btn-color-white">
+                                                                            <i class="fas fa-save"></i>
+                                                                            Save
                                                                         </button>
-                                                                        <!--end::Button-->
                                                                     </div>
                                                                 </div>
-
-                                                                <!--begin::Separator-->
-                                                                <div class="separator mb-6"></div>
-                                                                <!--end::Separator-->
+                                                                <div *ngIf="allAddedVariants.length>0"
+                                                                    class="separator mb-6"></div>
                                                             </form>
                                                             <!--End::Form-->
                                                             <div class="row">
-                                                                <div class="col-xl-4 mb-6">
+                                                                <div class="col-xl-4 mb-6"
+                                                                    *ngFor="let record of allAddedVariants">
                                                                     <div
                                                                         class="bg-white shadow-sm rounded border-gray-300 border border-dashed p-6 shadow">
-                                                                        <div class="variant_photo mb-3 m-0">
-                                                                            <img src="assets/common/images/p1.png"
-                                                                                alt="">
+                                                                        <div class="d-flex justify-content-between">
+                                                                            <div class="variant_photo mb-3 m-0">
+                                                                                <img *ngIf="record.picture"
+                                                                                    class="variant_image_all"
+                                                                                    src="{{record.picture}}"
+                                                                                    alt="image">
+                                                                                <img *ngIf="!record.picture"
+                                                                                    class="variant_image_all"
+                                                                                    src="assets/common/images/p1.png"
+                                                                                    alt="image">
+                                                                            </div>
+                                                                            <a href="javascript:;"
+                                                                                (click)="onDeleteProductByVariant(record.id)"
+                                                                                class="btn btn-icon btn-active-light-primary w-30px h-30px">
+                                                                                <span class="svg-icon svg-icon-3">
+                                                                                    <svg width="24" height="24"
+                                                                                        viewBox="0 0 24 24" fill="none"
+                                                                                        xmlns="http://www.w3.org/2000/svg">
+                                                                                        <path
+                                                                                            d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z"
+                                                                                            fill="currentColor"></path>
+                                                                                        <path opacity="0.5"
+                                                                                            d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z"
+                                                                                            fill="currentColor"></path>
+                                                                                        <path opacity="0.5"
+                                                                                            d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z"
+                                                                                            fill="currentColor"></path>
+                                                                                    </svg>
+                                                                                </span>
+                                                                            </a>
                                                                         </div>
-                                                                        <div class="fs-6 mb-2">
+                                                                        <div class="fs-6 d-flex justify-content-between border-bottom mb-2">
                                                                             <span class="text-gray-400">
                                                                                 Variant Name:
                                                                             </span>
                                                                             <span class="text-gray-500 fw-bold">
-                                                                                Blue
+                                                                                {{record.variantName}}
                                                                             </span>
                                                                         </div>
-                                                                        <div class="fs-6 mb-2">
+                                                                        <div class="fs-6 d-flex justify-content-between border-bottom mb-2">
                                                                             <span class="text-gray-400">
                                                                                 Product Price:
                                                                             </span>
-                                                                            <span class="text-gray-500 fw-bold">
-                                                                                $10
+                                                                            <span *ngIf="!product.salePrice"
+                                                                                class="text-gray-500 fw-bold">
+                                                                                ${{product.regularPrice}}
+                                                                            </span>
+                                                                            <span *ngIf="product.salePrice"
+                                                                                class="text-gray-500 fw-bold">
+                                                                                ${{product.salePrice}}
                                                                             </span>
                                                                         </div>
-                                                                        <div class="fs-6 mb-2">
+                                                                        <div class="fs-6 d-flex justify-content-between border-bottom mb-2">
                                                                             <span class="text-gray-400">
-                                                                                Add ons Price:
+                                                                                Add ons Price
+                                                                                <i (click)="onEditVariantPrice(record.id,record.price)"
+                                                                                    class="fas fa-edit icon_edit_single"></i>
                                                                             </span>
                                                                             <span class="text-gray-500 fw-bold">
-                                                                                $1
+                                                                                <span *ngIf="variantId!=record.id"
+                                                                                    (click)="onEditVariantPrice(record.id,record.price)"
+                                                                                    class="cell">${{record.price}}</span>
+                                                                                <input name="variantPrice"
+                                                                                    id="variantPrice"
+                                                                                    *ngIf="variantPrice && variantId===record.id"
+                                                                                    class="cellInput_v_p"
+                                                                                    [(ngModel)]="editablePrice"
+                                                                                    (focusout)="onFocusOutVariantPrice(editablePrice,record.id)"
+                                                                                    appAutofocus type="text"
+                                                                                    (keydown.enter)="$event.target.blur()">
                                                                             </span>
                                                                         </div>
-                                                                        <div class="fs-6 mb-2">
+                                                                        <div class="fs-6 d-flex justify-content-between border-bottom mb-2 pb-2">
                                                                             <span class="text-gray-400">
                                                                                 Total Price:
                                                                             </span>
                                                                             <span class="text-primary fw-bold">
-                                                                                $11
-                                                                            </span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-xl-4 mb-6">
-                                                                    <div
-                                                                        class="bg-white shadow-sm rounded border-gray-300 border border-dashed p-6 shadow">
-                                                                        <div class="variant_photo mb-3 m-0">
-                                                                            <img src="assets/common/images/p1.png"
-                                                                                alt="">
-                                                                        </div>
-                                                                        <div class="fs-6 mb-2">
-                                                                            <span class="text-gray-400">
-                                                                                Variant Name:
-                                                                            </span>
-                                                                            <span class="text-gray-500 fw-bold">
-                                                                                Blue
-                                                                            </span>
-                                                                        </div>
-                                                                        <div class="fs-6 mb-2">
-                                                                            <span class="text-gray-400">
-                                                                                Product Price:
-                                                                            </span>
-                                                                            <span class="text-gray-500 fw-bold">
-                                                                                $10
-                                                                            </span>
-                                                                        </div>
-                                                                        <div class="fs-6 mb-2">
-                                                                            <span class="text-gray-400">
-                                                                                Add ons Price:
-                                                                            </span>
-                                                                            <span class="text-gray-500 fw-bold">
-                                                                                $1
-                                                                            </span>
-                                                                        </div>
-                                                                        <div class="fs-6 mb-2">
-                                                                            <span class="text-gray-400">
-                                                                                Total Price:
-                                                                            </span>
-                                                                            <span class="text-primary fw-bold">
-                                                                                $11
-                                                                            </span>
+                                                                                <span *ngIf="!product.salePrice">
+                                                                                    ${{product.regularPrice + record.price}}
+                                                                                </span>
+                                                                                <span *ngIf="product.salePrice">
+                                                                                    ${{product.salePrice + record.price}}
+                                                                                </span>
+                                                                            </span> 
                                                                         </div>
                                                                     </div>
                                                                 </div>

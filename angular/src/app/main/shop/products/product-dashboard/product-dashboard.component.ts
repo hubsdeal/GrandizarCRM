@@ -4,7 +4,7 @@ import { DomSanitizer, Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { ChatGptResponseModalComponent } from '@app/shared/chat-gpt-response-modal/chat-gpt-response-modal.component';
 import { AppComponentBase } from '@shared/common/app-component-base';
-import { CreateOrEditProductDto, CreateOrEditProductMediaDto, GetProductAccountTeamForViewDto, GetProductMediaForViewDto, GetStoreMediaForViewDto, ProductAccountTeamsServiceProxy, ProductDashboardStatisticsForViewDto, ProductMediasServiceProxy, ProductsServiceProxy, ProductStoreLookupTableDto, ProductTeamsServiceProxy } from '@shared/service-proxies/service-proxies';
+import { CreateOrEditProductByVariantDto, CreateOrEditProductDto, CreateOrEditProductMediaDto, GetProductAccountTeamForViewDto, GetProductMediaForViewDto, GetStoreMediaForViewDto, OrderProductVariantCategory, ProductAccountTeamsServiceProxy, ProductByVariantsServiceProxy, ProductCategoryVariantMapsServiceProxy, ProductDashboardStatisticsForViewDto, ProductMediasServiceProxy, ProductsServiceProxy, ProductStoreLookupTableDto, ProductTeamsServiceProxy, PublicPagesCommonServiceProxy } from '@shared/service-proxies/service-proxies';
 import { TokenService } from 'abp-ng2-module';
 import { FileUploader, FileUploaderOptions } from 'ng2-file-upload';
 import { SelectItem } from 'primeng/api';
@@ -107,7 +107,18 @@ export class ProductDashboardComponent extends AppComponentBase {
 
   @Output() makePrimaryClick: EventEmitter<any> = new EventEmitter<any>();
 
-  
+  //variant
+  productVariant: CreateOrEditProductByVariantDto = new CreateOrEditProductByVariantDto();
+  allVariantCategoryOptions: any[] = [];
+  allVariantOptions: any[] = [];
+  variantPrice = false;
+  variantId: number;
+  allVariants: any[] = [];
+  allAddedVariants: any[] = [];
+  productVariants: OrderProductVariantCategory[] = [];
+
+  editablePrice: number;
+
   constructor(
     injector: Injector,
     private route: ActivatedRoute,
@@ -117,7 +128,10 @@ export class ProductDashboardComponent extends AppComponentBase {
     private _productMediasServiceProxy: ProductMediasServiceProxy,
     private _sanitizer: DomSanitizer,
     private titleService: Title,
-    private _productAccountTeamsServiceProxy: ProductAccountTeamsServiceProxy
+    private _productAccountTeamsServiceProxy: ProductAccountTeamsServiceProxy,
+    private _productCategoryAndVariantCategoryMapsServiceProxy: ProductCategoryVariantMapsServiceProxy,
+    private _productVariantsServiceProxy: ProductByVariantsServiceProxy,
+    private _publicPagesCommonServiceProxy : PublicPagesCommonServiceProxy
   ) {
     super(injector);
     this.productPublishedOptions = [{ label: 'Draft', value: false }, { label: 'Published', value: true }];
@@ -133,7 +147,7 @@ export class ProductDashboardComponent extends AppComponentBase {
     this.getStatisticsData();
   }
   ngAfterViewInit() {
-
+    this.getAllAddedVariants();
   }
 
   getProductTeams(productId: number) {
@@ -170,6 +184,7 @@ export class ProductDashboardComponent extends AppComponentBase {
       }
       console.log(this.product)
       this.getProductPhotos();
+      this.getAllVariantsByCategory(result.product.id, result.product.productCategoryId);
     });
 
 
@@ -195,6 +210,9 @@ export class ProductDashboardComponent extends AppComponentBase {
     });
     this._productsServiceProxy.getAllRatingLikeForLookupTable('', '', 0, 10000).subscribe(result => {
       this.ratingLikeOptions = result.items;
+    });
+    this._productVariantsServiceProxy.getAllProductVariantCategoryForLookupTable('', '', 0, 10000).subscribe(result => {
+      this.allVariantCategoryOptions = result.items;
     });
   }
 
@@ -458,4 +476,83 @@ export class ProductDashboardComponent extends AppComponentBase {
     }
 
   }
+
+  onVariantCategorySelect(event: any) {
+    this._productVariantsServiceProxy.getAllVariantTypeForTableDropdown(event).subscribe(result => {
+      this.allVariantOptions = result;
+    })
+  }
+
+  OnVariantImageClick(item: any) {
+    this.productVariant.mediaLibraryId = item.productMedia.mediaLibraryId;
+  }
+
+  saveCustomVariant() {
+    this.productVariant.productId = this.productId;
+    this._productVariantsServiceProxy.createOrEdit(this.productVariant).subscribe(result => {
+      this.notify.info('Saved Successfully');
+      this.productVariant = new CreateOrEditProductByVariantDto();
+      this.getAllAddedVariants();
+    })
+  }
+  onEditVariantPrice(id: number, price: number) {
+    this.variantId = id;
+    this.editablePrice = price;
+    this.variantPrice = true;
+  }
+  onFocusOutVariantPrice(variantPrice: any, id: number) {
+    if (variantPrice != null) {
+      this._productVariantsServiceProxy.getProductByVariantForEdit(id).subscribe(result => {
+        var product = result.productByVariant;
+        product.price = variantPrice;
+        this._productVariantsServiceProxy.createOrEdit(product).subscribe(r => {
+          this.getProductDetails(this.productId);
+          this.variantPrice = false;
+          this.variantId = null;
+          this.editablePrice = null;
+          this.notify.info(this.l('SavedSuccessfully'));
+        });
+      });
+    }
+  }
+  onDeleteProductByVariant(id: number) {
+    this._productVariantsServiceProxy.delete(id).subscribe(r => {
+      this.notify.success(this.l('DeletedSuccessfully'));
+      this.getAllAddedVariants();
+    });
+  }
+  getAllVariantsByCategory(productId: number, productCategoryId?: number) {
+    this._productCategoryAndVariantCategoryMapsServiceProxy.getAllVariantCategoriesByProductCategory(productCategoryId != null ? productCategoryId : undefined, productId).subscribe(result => {
+      this.allVariants = result;
+    });
+  }
+
+  onVariantTypeSelect(id: number, categoryId: number, isSelected: boolean) {
+    if (isSelected) {
+      this._productVariantsServiceProxy.deleteByProductId(this.productId, id).subscribe(result => {
+        this.getProductDetails(this.productId);
+      });
+    } else {
+      let obj = new CreateOrEditProductByVariantDto();
+      obj.productVariantId = id;
+      obj.productVariantCategoryId = categoryId;
+      obj.productId = this.productId;
+      this._productVariantsServiceProxy.createOrEdit(obj).subscribe(result => {
+        this.getProductDetails(this.productId);
+      });
+    }
+
+  }
+
+  getAllAddedVariants() {
+
+    this._publicPagesCommonServiceProxy.getOrderProductVariants(this.productId).subscribe(r => {
+      this.productVariants = r.orderProductVariantCategories;
+    });
+
+    this._productVariantsServiceProxy.getAddedVariantTypeByProduct(this.productId).subscribe(result => {
+      this.allAddedVariants = result;
+    });
+  }
+
 }

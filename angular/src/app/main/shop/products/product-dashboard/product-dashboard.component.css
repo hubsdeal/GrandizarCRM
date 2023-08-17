@@ -21,8 +21,47 @@
     width: 100%;
     height: 100%;
     object-fit: contain;
+    cursor: pointer;
 }
 .st_name {
     margin-right: 2px;
     margin-left: 2px;
+}
+
+.variant_select {
+    border: 1px solid #5867dd !important;
+}
+
+.cell {
+    border: 2px solid transparent;
+    padding: 0px 0px 0px 0px;
+    width: 100%;
+    height: 100%;
+    &:hover {
+        cursor: pointer;
+        border: 2px dashed #c8c8c8;
+        padding: 10px 30px 10px 30px;
+    }
+}
+
+.cellInput {
+    border: 1px solid #96969645;
+    padding: 1px 6px;
+    width: 235px;
+}
+
+.cellInput_v_p {
+    border: 1px solid #96969645;
+    padding: 1px 6px;
+    width: 100%;
+}
+
+.icon_edit_single {
+    margin-bottom: 14px;
+    font-size: 15px;
+    color: #767d96;
+}
+
+.icon_edit_single:hover {
+    color: #5d78ff;
 }
