@@ -1492,3 +1492,10 @@ bs-days-calendar-view {
 .p-multiselect {
     display: flex !important;
 }
+
+.img_sm{
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+    padding: 4px;
+    object-fit: contain;
+}

@@ -17,9 +17,10 @@ import { filter as _filter } from 'lodash-es';
 import { DateTime } from 'luxon';
 
 import { DateTimeService } from '@app/shared/common/timing/date-time.service';
+import { OneToOneConnectModalComponent } from '@app/shared/one-to-one-connect-modal/one-to-one-connect-modal.component';
 
 @Component({
-    selector: 'app-contacts',
+    selector: 'app-contacts', 
     templateUrl: './contacts.component.html',
     encapsulation: ViewEncapsulation.None,
     animations: [appModuleAnimation()],
@@ -62,6 +63,8 @@ export class ContactsComponent extends AppComponentBase {
     countryNameFilter = '';
     stateNameFilter = '';
     membershipTypeNameFilter = '';
+    @ViewChild('oneToOneConnectModal', { static: true }) oneToOneConnectModal: OneToOneConnectModalComponent
+    ;
 
     constructor(
         injector: Injector,
@@ -74,7 +77,10 @@ export class ContactsComponent extends AppComponentBase {
     ) {
         super(injector);
     }
-
+    onConnectClick(id: number) {
+        this.oneToOneConnectModal.storeId = id;
+        this.oneToOneConnectModal.show();
+    }
     getContacts(event?: LazyLoadEvent) {
         if (this.primengTableHelper.shouldResetPaging(event)) {
             this.paginator.changePage(0);

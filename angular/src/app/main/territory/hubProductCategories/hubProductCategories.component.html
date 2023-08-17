@@ -164,7 +164,13 @@
                                     </td> -->
                                     <td style="width: 250px">
                                         <span class="p-column-title">{{ l('Name') }}</span>
-                                        {{ record.productCategoryName }}
+                                        <div class="d-flex align-items-center">
+                                            <div class="nav-icon me-4">
+                                                <img src="{{record.picture != null? record.picture:'/assets/common/images/sampleProfilePics/noimg.png'}}"
+                                                    class="w-50px h-50px img_sm" alt="">
+                                            </div>
+                                            <p class="mb-0">{{ record.productCategoryName }}</p>
+                                        </div>
                                     </td>
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('Published') }}</span>

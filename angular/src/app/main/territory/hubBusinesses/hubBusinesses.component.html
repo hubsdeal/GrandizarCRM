@@ -162,11 +162,14 @@
                                     <th style="width: 100px; text-align: center;">
                                         {{l('#Job')}}
                                     </th> -->
-                                    <th class="text-center" style="width: 160px">
+                                    <!-- <th class="text-center" style="width: 160px">
                                         {{l('Sales Status')}}
-                                    </th>
+                                    </th> -->
                                     <th class="text-center" style="width: 150px">
                                         {{l('Verified')}}
+                                    </th>
+                                    <th style="width: 150px; text-align: center;">
+                                        {{l('Social Profile')}}
                                     </th>
                                     <!-- <th style="width: 150px" pSortableColumn="hubFk.name">
                                         {{ l('Name') }}
@@ -206,24 +209,26 @@
                                         <span class="p-column-title">{{ l('Name') }}</span>
                                         <div class="d-flex align-items-center">
                                             <div class="square_logo_box shadow-sm">
-                                                <!-- <img src="/assets/common/images/sampleProfilePics/noimg.png"
-                                                    class="mw-100" alt=""> -->
-                                                <span>{{ record.businessName | nameSplit}}</span>
+                                                <img *ngIf="record.picture" src="{{record.picture}}"
+                                                    class="mw-100" alt="">
+                                                <span *ngIf="!record.picture">{{ record.businessName | nameSplit}}</span>
                                             </div>
                                             <div class="d-flex flex-wrap flex-grow-1 mt-n2 mt-lg-n1">
                                                 <div class="d-flex flex-column flex-grow-1 my-lg-0 my-2 pe-3">
                                                     <a href="javascript:;" title="{{ record.businessName }}"
-                                                        [routerLink]="['/app/main/crm/businesses/dashboard',record.id]"
+                                                        [routerLink]="['/app/main/crm/businesses/dashboard',record.hubBusiness.businessId]"
                                                         class="fs-5 text-gray-800 text-hover-primary fw-bold">
                                                         {{ record.businessName }}
-                                                        <i class="fas fa-check-circle ml-1 mr-0 text-success" *ngIf="record.verified"
-                                                            title="Verified"></i>
+                                                        <i class="fas fa-check-circle ml-1 mr-0 text-success"
+                                                            *ngIf="record.verified" title="Verified"></i>
                                                     </a>
-                                                    <span *ngIf="record.tradeName" class="text-gray-400 fw-semibold fs-7 my-0">
+                                                    <span *ngIf="record.tradeName"
+                                                        class="text-gray-400 fw-semibold fs-7 my-0">
                                                         <span class="text-primary">Trade Name: </span>
                                                         {{record.tradeName}}
                                                     </span>
-                                                    <span class="text-gray-400 fw-semibold fs-7 my-1" *ngIf="record.fullAddress">
+                                                    <span class="text-gray-400 fw-semibold fs-7 my-1"
+                                                        *ngIf="record.fullAddress">
                                                         <i class="fas fa-map-marked-alt mr-1"></i>
                                                         <span>
                                                             {{record.fullAddress}}
@@ -262,7 +267,7 @@
                                         <span class="p-column-title">#Jobs</span>
                                         10
                                     </td> -->
-                                    <td class="text-center" style="width:160px">
+                                    <!-- <td class="text-center" style="width:160px">
                                         <span class="p-column-title">#Status</span>
                                         <a href="javascript:;">
                                             <div class="badge badge-primary" title="">
@@ -271,6 +276,22 @@
                                                 </div>
                                             </div>
                                         </a>
+                                    </td> -->
+                                    
+                                    <td style="width:150px; text-align: center;">
+                                        <span class="p-column-title"> {{l('Social')}}</span>
+                                        <span *ngIf="record.facebookAddress" title="{{record.facebookAddress}}">
+                                            <a class="text-primary me-2 fa-1x" href="{{record.facebookAddress}}"
+                                                target="_blank"><i class="fab fa-facebook-f"></i></a>
+                                        </span>
+                                        <span *ngIf="record.linkedInAddress" title="{{record.linkedInAddress}}">
+                                            <a class="text-primary fa-1x" href="{{record.linkedInAddress}}"
+                                                target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                                        </span>
+                                        <span *ngIf="record.twitterAddress" title="{{record.twitterAddress}}">
+                                            <a class="text-primary fa-1x" href="{{record.twitterAddress}}"
+                                                target="_blank"><i class="fab fa-twitter-square"></i></a>
+                                        </span>
                                     </td>
                                     <td class="text-center" style="width:150px">
                                         <span class="p-column-title"> {{l('Verified')}}</span>
