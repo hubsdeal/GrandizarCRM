@@ -1,7 +1,7 @@
 ﻿import { AppConsts } from '@shared/AppConsts';
 import { Component, Injector, ViewEncapsulation, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TaskEventsServiceProxy, TaskEventDto } from '@shared/service-proxies/service-proxies';
+import { TaskEventsServiceProxy, TaskEventDto, TaskEventTaskStatusLookupTableDto, TaskTeamEmployeeLookupTableDto, TaskTeamsServiceProxy } from '@shared/service-proxies/service-proxies';
 import { NotifyService } from 'abp-ng2-module';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { TokenAuthServiceProxy } from '@shared/service-proxies/service-proxies';
@@ -49,8 +49,9 @@ export class TaskEventsComponent extends AppComponentBase {
     hourAndMinutesFilter = '';
     taskStatusNameFilter = '';
 
-    selectedTeam:any;
-    allTeams:any[]
+    employeeList: TaskTeamEmployeeLookupTableDto[] = [];
+    selectedEmployees: any;
+    selectedEmployeesId:number
     //=[{id:1,displayName:"Team 1"},{id:2,displayName:"Team 2"},{id:3,displayName:"Team 3"}]
 
     selectedTag:any;
@@ -58,7 +59,7 @@ export class TaskEventsComponent extends AppComponentBase {
     //=[{id:1,displayName:"Tag 1"},{id:2,displayName:"Tag 2"},{id:3,displayName:"Tag 3"}]
 
     value: number = 50;
-
+    allTaskStatuss: TaskEventTaskStatusLookupTableDto[];
     selectedAll: boolean = false;
     constructor(
         injector: Injector,
@@ -67,12 +68,21 @@ export class TaskEventsComponent extends AppComponentBase {
         private _tokenAuth: TokenAuthServiceProxy,
         private _activatedRoute: ActivatedRoute,
         private _fileDownloadService: FileDownloadService,
-        private _dateTimeService: DateTimeService
+        private _dateTimeService: DateTimeService,
+        private _taskTeamsServiceProxy: TaskTeamsServiceProxy,
     ) {
         super(injector);
+        this._taskEventsServiceProxy.getAllTaskStatusForTableDropdown().subscribe((result) => {
+            this.allTaskStatuss = result;
+        });
+        this._taskTeamsServiceProxy.getAllEmployeeForLookupTable('','',0,1000).subscribe(result => {
+            this.employeeList = result.items;
+        });
+        
     }
 
     getTaskEvents(event?: LazyLoadEvent) {
+       
         if (this.primengTableHelper.shouldResetPaging(event)) {
             this.paginator.changePage(0);
             if (this.primengTableHelper.records && this.primengTableHelper.records.length > 0) {
@@ -108,6 +118,7 @@ export class TaskEventsComponent extends AppComponentBase {
                 this.estimatedTimeFilter,
                 this.hourAndMinutesFilter,
                 this.taskStatusNameFilter,
+                this.selectedEmployeesId,
                 this.primengTableHelper.getSorting(this.dataTable),
                 this.primengTableHelper.getSkipCount(this.paginator, event),
                 this.primengTableHelper.getMaxResultCount(this.paginator, event)
@@ -202,5 +213,12 @@ export class TaskEventsComponent extends AppComponentBase {
         this.selectedAll = this.primengTableHelper.records.every(function (item: any) {
             return item.selected == true;
         })
+    }
+    onEmployeeSelect(event: any) {
+        if (event) {
+            this.selectedEmployeesId = event.value.id;
+            this.getTaskEvents();
+        }
+
     }
 }
