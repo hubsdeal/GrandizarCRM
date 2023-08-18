@@ -21,6 +21,7 @@ import { filter as _filter } from 'lodash-es';
 import { DateTime } from 'luxon';
 
 import { DateTimeService } from '@app/shared/common/timing/date-time.service';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
     templateUrl: './storeMasterTagSettings.component.html',
@@ -51,6 +52,9 @@ export class StoreMasterTagSettingsComponent extends AppComponentBase {
 
     answerType = AnswerType;
 
+    selectedStoreTagSettingCategory: any;
+    storeTagSettingCategoryOptions: any = []
+
     constructor(
         injector: Injector,
         private _storeMasterTagSettingsServiceProxy: StoreMasterTagSettingsServiceProxy,
@@ -61,6 +65,9 @@ export class StoreMasterTagSettingsComponent extends AppComponentBase {
         private _dateTimeService: DateTimeService
     ) {
         super(injector);
+        this._storeMasterTagSettingsServiceProxy.getAllStoreTagSettingCategoryForLookupTable('', '', 0, 1000).subscribe(result => {
+            this.storeTagSettingCategoryOptions = result.items;
+        });
     }
 
     getStoreMasterTagSettings(event?: LazyLoadEvent) {
@@ -103,10 +110,16 @@ export class StoreMasterTagSettingsComponent extends AppComponentBase {
         this.paginator.changePage(this.paginator.getPage());
     }
 
-    createStoreMasterTagSetting(): void {
+    createStoreMasterTagSettingStoreTags(): void {
+        this.createOrEditStoreMasterTagSettingModal.isStoreTag=true;
         this.createOrEditStoreMasterTagSettingModal.show();
     }
 
+    createStoreMasterTagSettingStoreTagsQuestions(): void {
+        this.createOrEditStoreMasterTagSettingModal.isStoreTagQuestion=true;
+        this.createOrEditStoreMasterTagSettingModal.show();
+    }
+    
     deleteStoreMasterTagSetting(storeMasterTagSetting: StoreMasterTagSettingDto): void {
         this.message.confirm('', this.l('AreYouSure'), (isConfirmed) => {
             if (isConfirmed) {
@@ -153,4 +166,16 @@ export class StoreMasterTagSettingsComponent extends AppComponentBase {
 
         this.getStoreMasterTagSettings();
     }
+
+    drop(event: CdkDragDrop<string[]>) {
+        // console.log(this.allStoreTags, event.previousIndex, event.currentIndex);
+        moveItemInArray(this.primengTableHelper.records, event.previousIndex, event.currentIndex);
+    }
+
+    onStoreTagSettingCategoryClick(event: any) {
+        if (event.value != null) {
+            this.createOrEditStoreMasterTagSettingModal.storeMasterTagSetting.storeTagSettingCategoryId = event.value.id;
+        }
+    }
+
 }
