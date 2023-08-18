@@ -29,6 +29,8 @@ export class CreateOrEditProductCrossSellProductModalComponent extends AppCompon
 
     productName = '';
 
+    productId:number;
+
     constructor(
         injector: Injector,
         private _productCrossSellProductsServiceProxy: ProductCrossSellProductsServiceProxy,
@@ -50,7 +52,7 @@ export class CreateOrEditProductCrossSellProductModalComponent extends AppCompon
                 .getProductCrossSellProductForEdit(productCrossSellProductId)
                 .subscribe((result) => {
                     this.productCrossSellProduct = result.productCrossSellProduct;
-
+                    this.productId = result.productCrossSellProduct.primaryProductId;
                     this.productName = result.productName;
 
                     this.active = true;
@@ -61,7 +63,7 @@ export class CreateOrEditProductCrossSellProductModalComponent extends AppCompon
 
     save(): void {
         this.saving = true;
-
+        this.productCrossSellProduct.primaryProductId  = this.productId;
         this._productCrossSellProductsServiceProxy
             .createOrEdit(this.productCrossSellProduct)
             .pipe(
@@ -77,18 +79,18 @@ export class CreateOrEditProductCrossSellProductModalComponent extends AppCompon
     }
 
     openSelectProductModal() {
-        this.productCrossSellProductProductLookupTableModal.id = this.productCrossSellProduct.primaryProductId;
+        this.productCrossSellProductProductLookupTableModal.id = this.productCrossSellProduct.crossProductId;
         this.productCrossSellProductProductLookupTableModal.displayName = this.productName;
         this.productCrossSellProductProductLookupTableModal.show();
     }
 
     setPrimaryProductIdNull() {
-        this.productCrossSellProduct.primaryProductId = null;
+        this.productCrossSellProduct.crossProductId = null;
         this.productName = '';
     }
 
     getNewPrimaryProductId() {
-        this.productCrossSellProduct.primaryProductId = this.productCrossSellProductProductLookupTableModal.id;
+        this.productCrossSellProduct.crossProductId = this.productCrossSellProductProductLookupTableModal.id;
         this.productName = this.productCrossSellProductProductLookupTableModal.displayName;
     }
 

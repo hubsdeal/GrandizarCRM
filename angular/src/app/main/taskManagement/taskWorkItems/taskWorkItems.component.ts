@@ -1,5 +1,5 @@
 ﻿import { AppConsts } from '@shared/AppConsts';
-import { Component, Injector, ViewEncapsulation, ViewChild } from '@angular/core';
+import { Component, Injector, ViewEncapsulation, ViewChild, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TaskWorkItemsServiceProxy, TaskWorkItemDto } from '@shared/service-proxies/service-proxies';
 import { NotifyService } from 'abp-ng2-module';
@@ -19,11 +19,12 @@ import { DateTime } from 'luxon';
 import { DateTimeService } from '@app/shared/common/timing/date-time.service';
 
 @Component({
+    selector: 'app-taskWorkItems',
     templateUrl: './taskWorkItems.component.html',
     encapsulation: ViewEncapsulation.None,
     animations: [appModuleAnimation()],
 })
-export class TaskWorkItemsComponent extends AppComponentBase {
+export class TaskWorkItemsComponent extends AppComponentBase implements OnInit{
     @ViewChild('createOrEditTaskWorkItemModal', { static: true })
     createOrEditTaskWorkItemModal: CreateOrEditTaskWorkItemModalComponent;
     @ViewChild('viewTaskWorkItemModal', { static: true }) viewTaskWorkItemModal: ViewTaskWorkItemModalComponent;
@@ -49,7 +50,17 @@ export class TaskWorkItemsComponent extends AppComponentBase {
     minCompletionPercentageFilterEmpty: number;
     taskEventNameFilter = '';
     employeeNameFilter = '';
+    
+    @Input() taskEventId: number;
 
+
+    @Output() totalCount: EventEmitter<any> = new EventEmitter<any>();
+  
+    loggedInEmployeeId: number;
+  
+    @Output() isReload: EventEmitter<boolean> = new EventEmitter<boolean>();
+    workItems:any;
+    completionPercentageTitle:string;
     constructor(
         injector: Injector,
         private _taskWorkItemsServiceProxy: TaskWorkItemsServiceProxy,
@@ -60,21 +71,22 @@ export class TaskWorkItemsComponent extends AppComponentBase {
         private _dateTimeService: DateTimeService
     ) {
         super(injector);
+       // this.getTaskWorkItems();
     }
+    ngOnInit(): void {
+       this.getTaskWorkItems();
+      }
+    getTaskWorkItems() {
+        // if (this.primengTableHelper.shouldResetPaging(event)) {
+        //   this.paginator.changePage(0);
+        //   return;
+        // }
+    
+        // this.primengTableHelper.showLoadingIndicator();
 
-    getTaskWorkItems(event?: LazyLoadEvent) {
-        if (this.primengTableHelper.shouldResetPaging(event)) {
-            this.paginator.changePage(0);
-            if (this.primengTableHelper.records && this.primengTableHelper.records.length > 0) {
-                return;
-            }
-        }
-
-        this.primengTableHelper.showLoadingIndicator();
-
-        this._taskWorkItemsServiceProxy
-            .getAll(
-                this.filterText,
+        this._taskWorkItemsServiceProxy.getAllByTaskEventId(
+          this.taskEventId,
+          this.filterText,
                 this.nameFilter,
                 this.estimatedHoursFilter,
                 this.actualHoursFilter,
@@ -101,22 +113,31 @@ export class TaskWorkItemsComponent extends AppComponentBase {
                     : this.minCompletionPercentageFilter,
                 this.taskEventNameFilter,
                 this.employeeNameFilter,
-                this.primengTableHelper.getSorting(this.dataTable),
-                this.primengTableHelper.getSkipCount(this.paginator, event),
-                this.primengTableHelper.getMaxResultCount(this.paginator, event)
-            )
-            .subscribe((result) => {
-                this.primengTableHelper.totalRecordsCount = result.totalCount;
-                this.primengTableHelper.records = result.items;
-                this.primengTableHelper.hideLoadingIndicator();
-            });
-    }
+                '',
+                0,
+                50
+                // this.primengTableHelper.getSorting(this.dataTable),
+                // this.primengTableHelper.getSkipCount(this.paginator, event),
+                // this.primengTableHelper.getMaxResultCount(this.paginator, event)
+        ).subscribe(result => {
+        //   this.primengTableHelper.totalRecordsCount = result.totalCount;
+        //   this.primengTableHelper.records = result.items;
+        //   this.totalCount.emit(this.primengTableHelper.totalRecordsCount);
+          this.isReload.emit(true);
+          //this.primengTableHelper.hideLoadingIndicator();
+          this.workItems = result.items
+         
+        });
+      }
+ 
 
     reloadPage(): void {
         this.paginator.changePage(this.paginator.getPage());
     }
 
+
     createTaskWorkItem(): void {
+        this.createOrEditTaskWorkItemModal.taskEventId = this.taskEventId;
         this.createOrEditTaskWorkItemModal.show();
     }
 
@@ -185,5 +206,8 @@ export class TaskWorkItemsComponent extends AppComponentBase {
         this.employeeNameFilter = '';
 
         this.getTaskWorkItems();
+    }
+    getCompletionPercentageTitle(completionPercentage){
+        return "This item"+ completionPercentage +"% completed";
     }
 }

@@ -47,6 +47,18 @@ export class AppNavigationService {
                     new AppMenuItem('Abandoned Cart', 'Pages.Orders', 'fas fa-shopping-cart', '/app/main/orderManagement/abandonedCart'),
                     new AppMenuItem('Wish List', 'Pages.WishLists', 'fas fa-heart', '/app/main/shop/wishLists'),
                     new AppMenuItem('Shopping Cart', 'Pages.ShoppingCarts', 'fas fa-shopping-cart', '/app/main/shop/shoppingCarts'),
+                    new AppMenuItem('Sales Lead', 'Pages.Leads', 'flaticon-more', '/app/main/salesLeadManagement/leads'),
+                ]
+            ),
+            new AppMenuItem(
+                'Delivery Management',
+                '',
+                'fas fa-shopping-cart',
+                '',
+                [],
+                [
+                    new AppMenuItem('Delivery Team', 'Pages.Employees', 'fas fa-users', '/app/main/crm/employees'),
+                    new AppMenuItem('Order & Delivery Tracking', 'Pages.Employees', 'fas fa-users', '/app/main/crm/employees'),
                 ]
             ),
             new AppMenuItem(
@@ -98,9 +110,10 @@ export class AppNavigationService {
                 [
                     new AppMenuItem('Master Job List', 'Pages.Jobs', 'fas fa-briefcase', '/app/main/jobManagement/jobs'),
                     new AppMenuItem('My Job List', 'Pages.Jobs', 'fas fa-briefcase', '/app/main/jobManagement/jobs'),
+                    new AppMenuItem('Applicant List', 'Pages.Jobs', 'fas fa-briefcase', '/app/main/jobManagement/ApplicantsList'),
                 ]
             ),
-
+/*
             new AppMenuItem(
                 'Applicant & Gigs',
                 '',
@@ -110,7 +123,7 @@ export class AppNavigationService {
                 [
                     new AppMenuItem('Applicants', '', 'fas fa-user-tie', '/app/main/jobManagement/applicants'),
                 ]
-            ),
+            ),*/
 
             new AppMenuItem(
                 'Contact Management',
@@ -471,7 +484,7 @@ export class AppNavigationService {
             // new AppMenuItem('TaskWorkItems', 'Pages.TaskWorkItems', 'flaticon-more', '/app/main/taskManagement/taskWorkItems'),
 
 
-            
+
             new AppMenuItem(
                 'Administration',
                 '',

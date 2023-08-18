@@ -45,7 +45,8 @@ export class MyTaskEventsComponent extends AppComponentBase {
   estimatedTimeFilter = '';
   hourAndMinutesFilter = '';
   taskStatusNameFilter = '';
-
+  selectedEmployeesId:number;
+  
   selectedTeam:any;
   allTeams:any[]=[{id:1,displayName:"Team 1"},{id:2,displayName:"Team 2"},{id:3,displayName:"Team 3"}]
 
@@ -103,13 +104,14 @@ export class MyTaskEventsComponent extends AppComponentBase {
               this.estimatedTimeFilter,
               this.hourAndMinutesFilter,
               this.taskStatusNameFilter,
+              this.selectedEmployeesId,
               this.primengTableHelper.getSorting(this.dataTable),
               this.primengTableHelper.getSkipCount(this.paginator, event),
               this.primengTableHelper.getMaxResultCount(this.paginator, event)
           )
           .subscribe((result) => {
               this.primengTableHelper.totalRecordsCount = result.totalCount;
-              this.primengTableHelper.records = result.items;
+              this.primengTableHelper.records = result.taskEvents;
               this.primengTableHelper.hideLoadingIndicator();
           });
   }

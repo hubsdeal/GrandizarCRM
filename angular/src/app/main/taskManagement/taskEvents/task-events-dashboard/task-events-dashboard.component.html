@@ -34,21 +34,21 @@
                             <div class="w-100">
                                 <div class="d-flex justify-content-between align-items-start flex-wrap mb-2">
                                     <div class="d-flex flex-column">
-                                        <div class="d-flex align-items-center mb-3">
+                                        <!-- <div class="d-flex align-items-center mb-3">
                                             <a href="javascript:;"
                                                 class="text-gray-800 text-hover-primary fs-2 fw-bold me-3">
                                                 Job Data - Indeed USA
                                             </a>
-                                        </div>
+                                        </div> -->
                                         <div
                                             class="d-flex flex-wrap fw-semibold mb-1 align-items-center fs-6 text-gray-500">
                                             <i class="fas fa-user-gear me-2 ms-1"></i>
-                                            Created By: Faisal Alam
+                                            Created By: {{taskEvent.createdBy}}
                                         </div>
                                         <div
                                             class="d-flex flex-wrap fw-semibold mb-1 align-items-center fs-6 text-gray-500">
                                             <i class="fas fa-calendar me-2"></i>
-                                            Date: Jan 31, 2023
+                                            Date: {{taskEvent.creationTime | luxonFormat : 'dd-MM-yyyy'}}
                                         </div>
                                         <div class="d-flex flex-column justify-content-end pe-0">
                                             <!--begin::Title-->
@@ -58,26 +58,15 @@
                                             <!--end::Title-->
                                             <!--begin::Users group-->
                                             <div class="symbol-group symbol-hover flex-nowrap">
-                                                <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
+                                                <div *ngFor="let team of taskEvent.team"
+                                                    class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
                                                     data-bs-original-title="Alan Warden" data-kt-initialized="1">
-                                                    <span
-                                                        class="symbol-label bg-warning text-inverse-warning fw-bold">A</span>
+
+                                                    <span *ngIf="!team.picture" title="{{team.employeeName}}"
+                                                        class="symbol-label bg-warning text-inverse-warning fw-bold">{{team.employeeName
+                                                        | nameSplit}}</span>
+                                                    <img *ngIf="team.picture" alt="Pic" src="{{team.picture}}">
                                                 </div>
-                                                <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
-                                                    data-bs-original-title="Susan Redwood" data-kt-initialized="1">
-                                                    <span
-                                                        class="symbol-label bg-primary text-inverse-primary fw-bold">S</span>
-                                                </div>
-                                                <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
-                                                    data-bs-original-title="Perry Matthew" data-kt-initialized="1">
-                                                    <span
-                                                        class="symbol-label bg-danger text-inverse-danger fw-bold">P</span>
-                                                </div>
-                                                <a href="#" class="symbol symbol-35px symbol-circle"
-                                                    data-bs-toggle="modal" data-bs-target="#kt_modal_view_users">
-                                                    <span
-                                                        class="symbol-label bg-dark text-gray-300 fs-8 fw-bold">+42</span>
-                                                </a>
                                             </div>
                                             <!--end::Users group-->
                                         </div>
@@ -91,10 +80,12 @@
                                 <i class="fas fa-edit fs-5 me-2"></i> Edit
                             </a>
                             <a href="javascript:;" class="btn btn-sm btn-success">
-                                Completed</a>
-                            <a href="javascript:;" class="btn btn-sm btn-warning">
-                                Low
-                            </a>
+                                {{taskEvent.taskStatusName}}</a>
+                            <a href="javascript:;" *ngIf="taskEvent.taskEvent.priority" class="btn btn-sm btn-danger">
+                                High</a>
+                            <a href="javascript:;" *ngIf="!taskEvent.taskEvent.priority" class="btn btn-sm btn-warning">
+                                Low</a>
+
                             <a href="javascript:;" class="btn btn-sm btn-secondary"><i
                                     class="fas fa-plus-circle fs-5 me-2"></i>
                                 Tags
@@ -117,9 +108,11 @@
                             <div id="kt_accordion_1_body_1" class="accordion-collapse collapse show"
                                 aria-labelledby="kt_accordion_1_header_1" data-bs-parent="#kt_accordion_1">
                                 <div class="card-body pt-10">
-                                    <p-editor id="description" name="description" ngDefaultControl
+                                    <!-- <p-editor id="description" name="description" ngDefaultControl
                                         [style]="{ height: '400px' }"
-                                        placeholder="'Description goes here...'"></p-editor>
+                                        placeholder="'Description goes here...'"></p-editor> -->
+                                        <p-editor id="description" name="description" [(ngModel)]="taskEvent.taskEvent.description"
+                            ngDefaultControl [style]="{ height: '400px' }" placeholder="'Type here...'"></p-editor>
                                 </div>
                             </div>
                         </div>
@@ -128,7 +121,8 @@
                     <div class="card mb-6">
                         <div class="card-body pt-10">
                             <div class="d-flex">
-                                <h3 class="me-3 text-primary">Reference:</h3> <h3>Add Task Reference</h3>
+                                <h3 class="me-3 text-primary">Reference:</h3>
+                                <h3>Add Task Reference</h3>
                             </div>
                         </div>
                     </div>
@@ -171,885 +165,7 @@
                             <div class="tab-content" id="myTabContent">
                                 <!--begin:::Tab pane-->
                                 <div class="tab-pane fade active show" id="task_work_tasks" role="tabpanel">
-                                    <div class="d-flex flex-wrap flex-stack mb-6">
-                                        <!--begin::Heading-->
-                                        <h3 class="fw-bold my-2">Work Items
-                                            <span class="fs-6 text-gray-400 fw-semibold ms-1">Active</span>
-                                        </h3>
-                                        <!--end::Heading-->
-                                        <!--begin::Actions-->
-                                        <div class="d-flex flex-wrap my-2">
-                                            <div class="me-4">
-                                                <!--begin::Select-->
-                                                <select name="status" data-control="select2" data-hide-search="true"
-                                                    class="form-select form-select-sm bg-body border-body w-125px select2-hidden-accessible"
-                                                    data-select2-id="select2-data-10-srjs" tabindex="-1"
-                                                    aria-hidden="true" data-kt-initialized="1">
-                                                    <option value="Active" selected="selected"
-                                                        data-select2-id="select2-data-12-o08n">Active</option>
-                                                    <option value="Approved">In Progress</option>
-                                                    <option value="Declined">To Do</option>
-                                                    <option value="In Progress">Completed</option>
-                                                </select><span
-                                                    class="select2 select2-container select2-container--bootstrap5"
-                                                    dir="ltr" data-select2-id="select2-data-11-wus3"
-                                                    style="width: 100%;"><span class="selection"><span
-                                                            class="select2-selection select2-selection--single form-select form-select-sm bg-body border-body w-125px"
-                                                            role="combobox" aria-haspopup="true" aria-expanded="false"
-                                                            tabindex="0" aria-disabled="false"
-                                                            aria-labelledby="select2-status-ga-container"
-                                                            aria-controls="select2-status-ga-container"><span
-                                                                class="select2-selection__rendered"
-                                                                id="select2-status-ga-container" role="textbox"
-                                                                aria-readonly="true" title="Active">Active</span><span
-                                                                class="select2-selection__arrow" role="presentation"><b
-                                                                    role="presentation"></b></span></span></span><span
-                                                        class="dropdown-wrapper" aria-hidden="true"></span></span>
-                                                <!--end::Select-->
-                                            </div>
-                                            <a href="javascript:;" class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                                                data-bs-target="#kt_modal_create_project">New Work Items</a>
-                                        </div>
-                                        <!--end::Actions-->
-                                    </div>
-                                    <div class="row g-6 g-xl-9">
-                                        <!--begin::Col-->
-                                        <div class="col-md-6 col-xl-4">
-                                            <!--begin::Card-->
-                                            <a href="../../demo1/dist/apps/projects/project.html"
-                                                class="card shadow-sm border-hover-primary">
-                                                <!--begin::Card header-->
-                                                <div class="card-header border-0 pt-9">
-                                                    <!--begin::Card Title-->
-                                                    <div class="card-title m-0">
-                                                        <!--begin::Avatar-->
-                                                        <div class="symbol symbol-50px w-50px bg-light">
-                                                            <img src="assets/media/svg/brand-logos/plurk.svg"
-                                                                alt="image" class="p-3">
-                                                        </div>
-                                                        <!--end::Avatar-->
-                                                    </div>
-                                                    <!--end::Car Title-->
-                                                    <!--begin::Card toolbar-->
-                                                    <div class="card-toolbar">
-                                                        <span
-                                                            class="badge badge-light-primary fw-bold me-auto px-4 py-3">In
-                                                            Progress</span>
-                                                    </div>
-                                                    <!--end::Card toolbar-->
-                                                </div>
-                                                <!--end:: Card header-->
-                                                <!--begin:: Card body-->
-                                                <div class="card-body p-9">
-                                                    <!--begin::Name-->
-                                                    <div class="fs-3 fw-bold text-dark">Fitnes App</div>
-                                                    <!--end::Name-->
-                                                    <!--begin::Description-->
-                                                    <p class="text-gray-400 fw-semibold fs-5 mt-1 mb-7">CRM App
-                                                        application to HR efficiency</p>
-                                                    <!--end::Description-->
-                                                    <!--begin::Info-->
-                                                    <div class="d-flex flex-wrap mb-5">
-                                                        <!--begin::Due-->
-                                                        <div
-                                                            class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-7 mb-3">
-                                                            <div class="fs-6 text-gray-800 fw-bold">Oct 25, 2023</div>
-                                                            <div class="fw-semibold text-gray-400">Due Date</div>
-                                                        </div>
-                                                        <!--end::Due-->
-                                                        <!--begin::Budget-->
-                                                        <div
-                                                            class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 mb-3">
-                                                            <div class="fs-6 text-gray-800 fw-bold">$284,900.00</div>
-                                                            <div class="fw-semibold text-gray-400">Budget</div>
-                                                        </div>
-                                                        <!--end::Budget-->
-                                                    </div>
-                                                    <!--end::Info-->
-                                                    <!--begin::Progress-->
-                                                    <div class="h-4px w-100 bg-light mb-5" data-bs-toggle="tooltip"
-                                                        aria-label="This project 50% completed"
-                                                        data-bs-original-title="This project 50% completed"
-                                                        data-kt-initialized="1">
-                                                        <div class="bg-primary rounded h-4px" role="progressbar"
-                                                            style="width: 50%" aria-valuenow="50" aria-valuemin="0"
-                                                            aria-valuemax="100"></div>
-                                                    </div>
-                                                    <!--end::Progress-->
-                                                    <!--begin::Users-->
-                                                    <div class="symbol-group symbol-hover">
-                                                        <!--begin::User-->
-                                                        <div class="symbol symbol-35px symbol-circle"
-                                                            data-bs-toggle="tooltip" aria-label="Emma Smith"
-                                                            data-bs-original-title="Emma Smith" data-kt-initialized="1">
-                                                            <img alt="Pic" src="assets/media/avatars/300-6.jpg">
-                                                        </div>
-                                                        <!--begin::User-->
-                                                        <!--begin::User-->
-                                                        <div class="symbol symbol-35px symbol-circle"
-                                                            data-bs-toggle="tooltip" aria-label="Rudy Stone"
-                                                            data-bs-original-title="Rudy Stone" data-kt-initialized="1">
-                                                            <img alt="Pic" src="assets/media/avatars/300-1.jpg">
-                                                        </div>
-                                                        <!--begin::User-->
-                                                        <!--begin::User-->
-                                                        <div class="symbol symbol-35px symbol-circle"
-                                                            data-bs-toggle="tooltip"
-                                                            data-bs-original-title="Susan Redwood"
-                                                            data-kt-initialized="1">
-                                                            <span
-                                                                class="symbol-label bg-primary text-inverse-primary fw-bold">S</span>
-                                                        </div>
-                                                        <!--begin::User-->
-                                                    </div>
-                                                    <!--end::Users-->
-                                                </div>
-                                                <!--end:: Card body-->
-                                            </a>
-                                            <!--end::Card-->
-                                        </div>
-                                        <!--end::Col-->
-                                        <!--begin::Col-->
-                                        <div class="col-md-6 col-xl-4">
-                                            <!--begin::Card-->
-                                            <a href="../../demo1/dist/apps/projects/project.html"
-                                                class="card shadow-sm border-hover-primary">
-                                                <!--begin::Card header-->
-                                                <div class="card-header border-0 pt-9">
-                                                    <!--begin::Card Title-->
-                                                    <div class="card-title m-0">
-                                                        <!--begin::Avatar-->
-                                                        <div class="symbol symbol-50px w-50px bg-light">
-                                                            <img src="assets/media/svg/brand-logos/disqus.svg"
-                                                                alt="image" class="p-3">
-                                                        </div>
-                                                        <!--end::Avatar-->
-                                                    </div>
-                                                    <!--end::Car Title-->
-                                                    <!--begin::Card toolbar-->
-                                                    <div class="card-toolbar">
-                                                        <span
-                                                            class="badge badge-light fw-bold me-auto px-4 py-3">Pending</span>
-                                                    </div>
-                                                    <!--end::Card toolbar-->
-                                                </div>
-                                                <!--end:: Card header-->
-                                                <!--begin:: Card body-->
-                                                <div class="card-body p-9">
-                                                    <!--begin::Name-->
-                                                    <div class="fs-3 fw-bold text-dark">Leaf CRM</div>
-                                                    <!--end::Name-->
-                                                    <!--begin::Description-->
-                                                    <p class="text-gray-400 fw-semibold fs-5 mt-1 mb-7">CRM App
-                                                        application to HR efficiency</p>
-                                                    <!--end::Description-->
-                                                    <!--begin::Info-->
-                                                    <div class="d-flex flex-wrap mb-5">
-                                                        <!--begin::Due-->
-                                                        <div
-                                                            class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-7 mb-3">
-                                                            <div class="fs-6 text-gray-800 fw-bold">May 10, 2021</div>
-                                                            <div class="fw-semibold text-gray-400">Due Date</div>
-                                                        </div>
-                                                        <!--end::Due-->
-                                                        <!--begin::Budget-->
-                                                        <div
-                                                            class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 mb-3">
-                                                            <div class="fs-6 text-gray-800 fw-bold">$36,400.00</div>
-                                                            <div class="fw-semibold text-gray-400">Budget</div>
-                                                        </div>
-                                                        <!--end::Budget-->
-                                                    </div>
-                                                    <!--end::Info-->
-                                                    <!--begin::Progress-->
-                                                    <div class="h-4px w-100 bg-light mb-5" data-bs-toggle="tooltip"
-                                                        aria-label="This project 30% completed"
-                                                        data-bs-original-title="This project 30% completed"
-                                                        data-kt-initialized="1">
-                                                        <div class="bg-info rounded h-4px" role="progressbar"
-                                                            style="width: 30%" aria-valuenow="30" aria-valuemin="0"
-                                                            aria-valuemax="100"></div>
-                                                    </div>
-                                                    <!--end::Progress-->
-                                                    <!--begin::Users-->
-                                                    <div class="symbol-group symbol-hover">
-                                                        <!--begin::User-->
-                                                        <div class="symbol symbol-35px symbol-circle"
-                                                            data-bs-toggle="tooltip"
-                                                            data-bs-original-title="Alan Warden"
-                                                            data-kt-initialized="1">
-                                                            <span
-                                                                class="symbol-label bg-warning text-inverse-warning fw-bold">A</span>
-                                                        </div>
-                                                        <!--begin::User-->
-                                                        <!--begin::User-->
-                                                        <div class="symbol symbol-35px symbol-circle"
-                                                            data-bs-toggle="tooltip" aria-label="Brian Cox"
-                                                            data-bs-original-title="Brian Cox" data-kt-initialized="1">
-                                                            <img alt="Pic" src="assets/media/avatars/300-5.jpg">
-                                                        </div>
-                                                        <!--begin::User-->
-                                                    </div>
-                                                    <!--end::Users-->
-                                                </div>
-                                                <!--end:: Card body-->
-                                            </a>
-                                            <!--end::Card-->
-                                        </div>
-                                        <!--end::Col-->
-                                        <!--begin::Col-->
-                                        <div class="col-md-6 col-xl-4">
-                                            <!--begin::Card-->
-                                            <a href="../../demo1/dist/apps/projects/project.html"
-                                                class="card shadow-sm border-hover-primary">
-                                                <!--begin::Card header-->
-                                                <div class="card-header border-0 pt-9">
-                                                    <!--begin::Card Title-->
-                                                    <div class="card-title m-0">
-                                                        <!--begin::Avatar-->
-                                                        <div class="symbol symbol-50px w-50px bg-light">
-                                                            <img src="assets/media/svg/brand-logos/figma-1.svg"
-                                                                alt="image" class="p-3">
-                                                        </div>
-                                                        <!--end::Avatar-->
-                                                    </div>
-                                                    <!--end::Car Title-->
-                                                    <!--begin::Card toolbar-->
-                                                    <div class="card-toolbar">
-                                                        <span
-                                                            class="badge badge-light-success fw-bold me-auto px-4 py-3">Completed</span>
-                                                    </div>
-                                                    <!--end::Card toolbar-->
-                                                </div>
-                                                <!--end:: Card header-->
-                                                <!--begin:: Card body-->
-                                                <div class="card-body p-9">
-                                                    <!--begin::Name-->
-                                                    <div class="fs-3 fw-bold text-dark">Atica Banking</div>
-                                                    <!--end::Name-->
-                                                    <!--begin::Description-->
-                                                    <p class="text-gray-400 fw-semibold fs-5 mt-1 mb-7">CRM App
-                                                        application to HR efficiency</p>
-                                                    <!--end::Description-->
-                                                    <!--begin::Info-->
-                                                    <div class="d-flex flex-wrap mb-5">
-                                                        <!--begin::Due-->
-                                                        <div
-                                                            class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-7 mb-3">
-                                                            <div class="fs-6 text-gray-800 fw-bold">Mar 14, 2021</div>
-                                                            <div class="fw-semibold text-gray-400">Due Date</div>
-                                                        </div>
-                                                        <!--end::Due-->
-                                                        <!--begin::Budget-->
-                                                        <div
-                                                            class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 mb-3">
-                                                            <div class="fs-6 text-gray-800 fw-bold">$605,100.00</div>
-                                                            <div class="fw-semibold text-gray-400">Budget</div>
-                                                        </div>
-                                                        <!--end::Budget-->
-                                                    </div>
-                                                    <!--end::Info-->
-                                                    <!--begin::Progress-->
-                                                    <div class="h-4px w-100 bg-light mb-5" data-bs-toggle="tooltip"
-                                                        aria-label="This project 100% completed"
-                                                        data-bs-original-title="This project 100% completed"
-                                                        data-kt-initialized="1">
-                                                        <div class="bg-success rounded h-4px" role="progressbar"
-                                                            style="width: 100%" aria-valuenow="100" aria-valuemin="0"
-                                                            aria-valuemax="100"></div>
-                                                    </div>
-                                                    <!--end::Progress-->
-                                                    <!--begin::Users-->
-                                                    <div class="symbol-group symbol-hover">
-                                                        <!--begin::User-->
-                                                        <div class="symbol symbol-35px symbol-circle"
-                                                            data-bs-toggle="tooltip" aria-label="Mad Macy"
-                                                            data-bs-original-title="Mad Macy" data-kt-initialized="1">
-                                                            <img alt="Pic" src="assets/media/avatars/300-2.jpg">
-                                                        </div>
-                                                        <!--begin::User-->
-                                                        <!--begin::User-->
-                                                        <div class="symbol symbol-35px symbol-circle"
-                                                            data-bs-toggle="tooltip" aria-label="Cris Willson"
-                                                            data-bs-original-title="Cris Willson"
-                                                            data-kt-initialized="1">
-                                                            <img alt="Pic" src="assets/media/avatars/300-9.jpg">
-                                                        </div>
-                                                        <!--begin::User-->
-                                                        <!--begin::User-->
-                                                        <div class="symbol symbol-35px symbol-circle"
-                                                            data-bs-toggle="tooltip"
-                                                            data-bs-original-title="Mike Garcie"
-                                                            data-kt-initialized="1">
-                                                            <span
-                                                                class="symbol-label bg-info text-inverse-info fw-bold">M</span>
-                                                        </div>
-                                                        <!--begin::User-->
-                                                    </div>
-                                                    <!--end::Users-->
-                                                </div>
-                                                <!--end:: Card body-->
-                                            </a>
-                                            <!--end::Card-->
-                                        </div>
-                                        <!--end::Col-->
-                                        <!--begin::Col-->
-                                        <div class="col-md-6 col-xl-4">
-                                            <!--begin::Card-->
-                                            <a href="../../demo1/dist/apps/projects/project.html"
-                                                class="card shadow-sm border-hover-primary">
-                                                <!--begin::Card header-->
-                                                <div class="card-header border-0 pt-9">
-                                                    <!--begin::Card Title-->
-                                                    <div class="card-title m-0">
-                                                        <!--begin::Avatar-->
-                                                        <div class="symbol symbol-50px w-50px bg-light">
-                                                            <img src="assets/media/svg/brand-logos/sentry-3.svg"
-                                                                alt="image" class="p-3">
-                                                        </div>
-                                                        <!--end::Avatar-->
-                                                    </div>
-                                                    <!--end::Car Title-->
-                                                    <!--begin::Card toolbar-->
-                                                    <div class="card-toolbar">
-                                                        <span
-                                                            class="badge badge-light fw-bold me-auto px-4 py-3">Pending</span>
-                                                    </div>
-                                                    <!--end::Card toolbar-->
-                                                </div>
-                                                <!--end:: Card header-->
-                                                <!--begin:: Card body-->
-                                                <div class="card-body p-9">
-                                                    <!--begin::Name-->
-                                                    <div class="fs-3 fw-bold text-dark">Finance Dispatch</div>
-                                                    <!--end::Name-->
-                                                    <!--begin::Description-->
-                                                    <p class="text-gray-400 fw-semibold fs-5 mt-1 mb-7">CRM App
-                                                        application to HR efficiency</p>
-                                                    <!--end::Description-->
-                                                    <!--begin::Info-->
-                                                    <div class="d-flex flex-wrap mb-5">
-                                                        <!--begin::Due-->
-                                                        <div
-                                                            class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-7 mb-3">
-                                                            <div class="fs-6 text-gray-800 fw-bold">Sep 22, 2023</div>
-                                                            <div class="fw-semibold text-gray-400">Due Date</div>
-                                                        </div>
-                                                        <!--end::Due-->
-                                                        <!--begin::Budget-->
-                                                        <div
-                                                            class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 mb-3">
-                                                            <div class="fs-6 text-gray-800 fw-bold">$284,900.00</div>
-                                                            <div class="fw-semibold text-gray-400">Budget</div>
-                                                        </div>
-                                                        <!--end::Budget-->
-                                                    </div>
-                                                    <!--end::Info-->
-                                                    <!--begin::Progress-->
-                                                    <div class="h-4px w-100 bg-light mb-5" data-bs-toggle="tooltip"
-                                                        aria-label="This project 60% completed"
-                                                        data-bs-original-title="This project 60% completed"
-                                                        data-kt-initialized="1">
-                                                        <div class="bg-info rounded h-4px" role="progressbar"
-                                                            style="width: 60%" aria-valuenow="60" aria-valuemin="0"
-                                                            aria-valuemax="100"></div>
-                                                    </div>
-                                                    <!--end::Progress-->
-                                                    <!--begin::Users-->
-                                                    <div class="symbol-group symbol-hover">
-                                                        <!--begin::User-->
-                                                        <div class="symbol symbol-35px symbol-circle"
-                                                            data-bs-toggle="tooltip"
-                                                            data-bs-original-title="Nich Warden"
-                                                            data-kt-initialized="1">
-                                                            <span
-                                                                class="symbol-label bg-warning text-inverse-warning fw-bold">N</span>
-                                                        </div>
-                                                        <!--begin::User-->
-                                                        <!--begin::User-->
-                                                        <div class="symbol symbol-35px symbol-circle"
-                                                            data-bs-toggle="tooltip" data-bs-original-title="Rob Otto"
-                                                            data-kt-initialized="1">
-                                                            <span
-                                                                class="symbol-label bg-success text-inverse-success fw-bold">R</span>
-                                                        </div>
-                                                        <!--begin::User-->
-                                                    </div>
-                                                    <!--end::Users-->
-                                                </div>
-                                                <!--end:: Card body-->
-                                            </a>
-                                            <!--end::Card-->
-                                        </div>
-                                        <!--end::Col-->
-                                        <!--begin::Col-->
-                                        <div class="col-md-6 col-xl-4">
-                                            <!--begin::Card-->
-                                            <a href="../../demo1/dist/apps/projects/project.html"
-                                                class="card shadow-sm border-hover-primary">
-                                                <!--begin::Card header-->
-                                                <div class="card-header border-0 pt-9">
-                                                    <!--begin::Card Title-->
-                                                    <div class="card-title m-0">
-                                                        <!--begin::Avatar-->
-                                                        <div class="symbol symbol-50px w-50px bg-light">
-                                                            <img src="assets/media/svg/brand-logos/xing-icon.svg"
-                                                                alt="image" class="p-3">
-                                                        </div>
-                                                        <!--end::Avatar-->
-                                                    </div>
-                                                    <!--end::Car Title-->
-                                                    <!--begin::Card toolbar-->
-                                                    <div class="card-toolbar">
-                                                        <span
-                                                            class="badge badge-light-primary fw-bold me-auto px-4 py-3">In
-                                                            Progress</span>
-                                                    </div>
-                                                    <!--end::Card toolbar-->
-                                                </div>
-                                                <!--end:: Card header-->
-                                                <!--begin:: Card body-->
-                                                <div class="card-body p-9">
-                                                    <!--begin::Name-->
-                                                    <div class="fs-3 fw-bold text-dark">9 Degree</div>
-                                                    <!--end::Name-->
-                                                    <!--begin::Description-->
-                                                    <p class="text-gray-400 fw-semibold fs-5 mt-1 mb-7">CRM App
-                                                        application to HR efficiency</p>
-                                                    <!--end::Description-->
-                                                    <!--begin::Info-->
-                                                    <div class="d-flex flex-wrap mb-5">
-                                                        <!--begin::Due-->
-                                                        <div
-                                                            class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-7 mb-3">
-                                                            <div class="fs-6 text-gray-800 fw-bold">Sep 22, 2023</div>
-                                                            <div class="fw-semibold text-gray-400">Due Date</div>
-                                                        </div>
-                                                        <!--end::Due-->
-                                                        <!--begin::Budget-->
-                                                        <div
-                                                            class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 mb-3">
-                                                            <div class="fs-6 text-gray-800 fw-bold">$284,900.00</div>
-                                                            <div class="fw-semibold text-gray-400">Budget</div>
-                                                        </div>
-                                                        <!--end::Budget-->
-                                                    </div>
-                                                    <!--end::Info-->
-                                                    <!--begin::Progress-->
-                                                    <div class="h-4px w-100 bg-light mb-5" data-bs-toggle="tooltip"
-                                                        aria-label="This project 40% completed"
-                                                        data-bs-original-title="This project 40% completed"
-                                                        data-kt-initialized="1">
-                                                        <div class="bg-primary rounded h-4px" role="progressbar"
-                                                            style="width: 40%" aria-valuenow="40" aria-valuemin="0"
-                                                            aria-valuemax="100"></div>
-                                                    </div>
-                                                    <!--end::Progress-->
-                                                    <!--begin::Users-->
-                                                    <div class="symbol-group symbol-hover">
-                                                        <!--begin::User-->
-                                                        <div class="symbol symbol-35px symbol-circle"
-                                                            data-bs-toggle="tooltip" aria-label="Francis Mitcham"
-                                                            data-bs-original-title="Francis Mitcham"
-                                                            data-kt-initialized="1">
-                                                            <img alt="Pic" src="assets/media/avatars/300-20.jpg">
-                                                        </div>
-                                                        <!--begin::User-->
-                                                        <!--begin::User-->
-                                                        <div class="symbol symbol-35px symbol-circle"
-                                                            data-bs-toggle="tooltip" aria-label="Michelle Swanston"
-                                                            data-bs-original-title="Michelle Swanston"
-                                                            data-kt-initialized="1">
-                                                            <img alt="Pic" src="assets/media/avatars/300-7.jpg">
-                                                        </div>
-                                                        <!--begin::User-->
-                                                        <!--begin::User-->
-                                                        <div class="symbol symbol-35px symbol-circle"
-                                                            data-bs-toggle="tooltip"
-                                                            data-bs-original-title="Susan Redwood"
-                                                            data-kt-initialized="1">
-                                                            <span
-                                                                class="symbol-label bg-primary text-inverse-primary fw-bold">S</span>
-                                                        </div>
-                                                        <!--begin::User-->
-                                                    </div>
-                                                    <!--end::Users-->
-                                                </div>
-                                                <!--end:: Card body-->
-                                            </a>
-                                            <!--end::Card-->
-                                        </div>
-                                        <!--end::Col-->
-                                        <!--begin::Col-->
-                                        <div class="col-md-6 col-xl-4">
-                                            <!--begin::Card-->
-                                            <a href="../../demo1/dist/apps/projects/project.html"
-                                                class="card shadow-sm border-hover-primary">
-                                                <!--begin::Card header-->
-                                                <div class="card-header border-0 pt-9">
-                                                    <!--begin::Card Title-->
-                                                    <div class="card-title m-0">
-                                                        <!--begin::Avatar-->
-                                                        <div class="symbol symbol-50px w-50px bg-light">
-                                                            <img src="assets/media/svg/brand-logos/tvit.svg" alt="image"
-                                                                class="p-3">
-                                                        </div>
-                                                        <!--end::Avatar-->
-                                                    </div>
-                                                    <!--end::Car Title-->
-                                                    <!--begin::Card toolbar-->
-                                                    <div class="card-toolbar">
-                                                        <span
-                                                            class="badge badge-light-primary fw-bold me-auto px-4 py-3">In
-                                                            Progress</span>
-                                                    </div>
-                                                    <!--end::Card toolbar-->
-                                                </div>
-                                                <!--end:: Card header-->
-                                                <!--begin:: Card body-->
-                                                <div class="card-body p-9">
-                                                    <!--begin::Name-->
-                                                    <div class="fs-3 fw-bold text-dark">GoPro App</div>
-                                                    <!--end::Name-->
-                                                    <!--begin::Description-->
-                                                    <p class="text-gray-400 fw-semibold fs-5 mt-1 mb-7">CRM App
-                                                        application to HR efficiency</p>
-                                                    <!--end::Description-->
-                                                    <!--begin::Info-->
-                                                    <div class="d-flex flex-wrap mb-5">
-                                                        <!--begin::Due-->
-                                                        <div
-                                                            class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-7 mb-3">
-                                                            <div class="fs-6 text-gray-800 fw-bold">Jun 24, 2023</div>
-                                                            <div class="fw-semibold text-gray-400">Due Date</div>
-                                                        </div>
-                                                        <!--end::Due-->
-                                                        <!--begin::Budget-->
-                                                        <div
-                                                            class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 mb-3">
-                                                            <div class="fs-6 text-gray-800 fw-bold">$284,900.00</div>
-                                                            <div class="fw-semibold text-gray-400">Budget</div>
-                                                        </div>
-                                                        <!--end::Budget-->
-                                                    </div>
-                                                    <!--end::Info-->
-                                                    <!--begin::Progress-->
-                                                    <div class="h-4px w-100 bg-light mb-5" data-bs-toggle="tooltip"
-                                                        aria-label="This project 70% completed"
-                                                        data-bs-original-title="This project 70% completed"
-                                                        data-kt-initialized="1">
-                                                        <div class="bg-primary rounded h-4px" role="progressbar"
-                                                            style="width: 70%" aria-valuenow="70" aria-valuemin="0"
-                                                            aria-valuemax="100"></div>
-                                                    </div>
-                                                    <!--end::Progress-->
-                                                    <!--begin::Users-->
-                                                    <div class="symbol-group symbol-hover">
-                                                        <!--begin::User-->
-                                                        <div class="symbol symbol-35px symbol-circle"
-                                                            data-bs-toggle="tooltip" aria-label="Melody Macy"
-                                                            data-bs-original-title="Melody Macy"
-                                                            data-kt-initialized="1">
-                                                            <img alt="Pic" src="assets/media/avatars/300-2.jpg">
-                                                        </div>
-                                                        <!--begin::User-->
-                                                        <!--begin::User-->
-                                                        <div class="symbol symbol-35px symbol-circle"
-                                                            data-bs-toggle="tooltip"
-                                                            data-bs-original-title="Robin Watterman"
-                                                            data-kt-initialized="1">
-                                                            <span
-                                                                class="symbol-label bg-success text-inverse-success fw-bold">R</span>
-                                                        </div>
-                                                        <!--begin::User-->
-                                                    </div>
-                                                    <!--end::Users-->
-                                                </div>
-                                                <!--end:: Card body-->
-                                            </a>
-                                            <!--end::Card-->
-                                        </div>
-                                        <!--end::Col-->
-                                        <!--begin::Col-->
-                                        <div class="col-md-6 col-xl-4">
-                                            <!--begin::Card-->
-                                            <a href="../../demo1/dist/apps/projects/project.html"
-                                                class="card shadow-sm border-hover-primary">
-                                                <!--begin::Card header-->
-                                                <div class="card-header border-0 pt-9">
-                                                    <!--begin::Card Title-->
-                                                    <div class="card-title m-0">
-                                                        <!--begin::Avatar-->
-                                                        <div class="symbol symbol-50px w-50px bg-light">
-                                                            <img src="assets/media/svg/brand-logos/aven.svg" alt="image"
-                                                                class="p-3">
-                                                        </div>
-                                                        <!--end::Avatar-->
-                                                    </div>
-                                                    <!--end::Car Title-->
-                                                    <!--begin::Card toolbar-->
-                                                    <div class="card-toolbar">
-                                                        <span
-                                                            class="badge badge-light-primary fw-bold me-auto px-4 py-3">In
-                                                            Progress</span>
-                                                    </div>
-                                                    <!--end::Card toolbar-->
-                                                </div>
-                                                <!--end:: Card header-->
-                                                <!--begin:: Card body-->
-                                                <div class="card-body p-9">
-                                                    <!--begin::Name-->
-                                                    <div class="fs-3 fw-bold text-dark">Buldozer CRM</div>
-                                                    <!--end::Name-->
-                                                    <!--begin::Description-->
-                                                    <p class="text-gray-400 fw-semibold fs-5 mt-1 mb-7">CRM App
-                                                        application to HR efficiency</p>
-                                                    <!--end::Description-->
-                                                    <!--begin::Info-->
-                                                    <div class="d-flex flex-wrap mb-5">
-                                                        <!--begin::Due-->
-                                                        <div
-                                                            class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-7 mb-3">
-                                                            <div class="fs-6 text-gray-800 fw-bold">Nov 10, 2023</div>
-                                                            <div class="fw-semibold text-gray-400">Due Date</div>
-                                                        </div>
-                                                        <!--end::Due-->
-                                                        <!--begin::Budget-->
-                                                        <div
-                                                            class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 mb-3">
-                                                            <div class="fs-6 text-gray-800 fw-bold">$284,900.00</div>
-                                                            <div class="fw-semibold text-gray-400">Budget</div>
-                                                        </div>
-                                                        <!--end::Budget-->
-                                                    </div>
-                                                    <!--end::Info-->
-                                                    <!--begin::Progress-->
-                                                    <div class="h-4px w-100 bg-light mb-5" data-bs-toggle="tooltip"
-                                                        aria-label="This project 70% completed"
-                                                        data-bs-original-title="This project 70% completed"
-                                                        data-kt-initialized="1">
-                                                        <div class="bg-primary rounded h-4px" role="progressbar"
-                                                            style="width: 70%" aria-valuenow="70" aria-valuemin="0"
-                                                            aria-valuemax="100"></div>
-                                                    </div>
-                                                    <!--end::Progress-->
-                                                    <!--begin::Users-->
-                                                    <div class="symbol-group symbol-hover">
-                                                        <!--begin::User-->
-                                                        <div class="symbol symbol-35px symbol-circle"
-                                                            data-bs-toggle="tooltip" aria-label="Melody Macy"
-                                                            data-bs-original-title="Melody Macy"
-                                                            data-kt-initialized="1">
-                                                            <img alt="Pic" src="assets/media/avatars/300-2.jpg">
-                                                        </div>
-                                                        <!--begin::User-->
-                                                        <!--begin::User-->
-                                                        <div class="symbol symbol-35px symbol-circle"
-                                                            data-bs-toggle="tooltip" aria-label="John Mixin"
-                                                            data-bs-original-title="John Mixin" data-kt-initialized="1">
-                                                            <img alt="Pic" src="assets/media/avatars/300-14.jpg">
-                                                        </div>
-                                                        <!--begin::User-->
-                                                        <!--begin::User-->
-                                                        <div class="symbol symbol-35px symbol-circle"
-                                                            data-bs-toggle="tooltip" data-bs-original-title="Emma Smith"
-                                                            data-kt-initialized="1">
-                                                            <span
-                                                                class="symbol-label bg-primary text-inverse-primary fw-bold">S</span>
-                                                        </div>
-                                                        <!--begin::User-->
-                                                    </div>
-                                                    <!--end::Users-->
-                                                </div>
-                                                <!--end:: Card body-->
-                                            </a>
-                                            <!--end::Card-->
-                                        </div>
-                                        <!--end::Col-->
-                                        <!--begin::Col-->
-                                        <div class="col-md-6 col-xl-4">
-                                            <!--begin::Card-->
-                                            <a href="../../demo1/dist/apps/projects/project.html"
-                                                class="card shadow-sm border-hover-primary">
-                                                <!--begin::Card header-->
-                                                <div class="card-header border-0 pt-9">
-                                                    <!--begin::Card Title-->
-                                                    <div class="card-title m-0">
-                                                        <!--begin::Avatar-->
-                                                        <div class="symbol symbol-50px w-50px bg-light">
-                                                            <img src="assets/media/svg/brand-logos/treva.svg"
-                                                                alt="image" class="p-3">
-                                                        </div>
-                                                        <!--end::Avatar-->
-                                                    </div>
-                                                    <!--end::Car Title-->
-                                                    <!--begin::Card toolbar-->
-                                                    <div class="card-toolbar">
-                                                        <span
-                                                            class="badge badge-light-danger fw-bold me-auto px-4 py-3">Overdue</span>
-                                                    </div>
-                                                    <!--end::Card toolbar-->
-                                                </div>
-                                                <!--end:: Card header-->
-                                                <!--begin:: Card body-->
-                                                <div class="card-body p-9">
-                                                    <!--begin::Name-->
-                                                    <div class="fs-3 fw-bold text-dark">Aviasales App</div>
-                                                    <!--end::Name-->
-                                                    <!--begin::Description-->
-                                                    <p class="text-gray-400 fw-semibold fs-5 mt-1 mb-7">CRM App
-                                                        application to HR efficiency</p>
-                                                    <!--end::Description-->
-                                                    <!--begin::Info-->
-                                                    <div class="d-flex flex-wrap mb-5">
-                                                        <!--begin::Due-->
-                                                        <div
-                                                            class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-7 mb-3">
-                                                            <div class="fs-6 text-gray-800 fw-bold">Feb 21, 2023</div>
-                                                            <div class="fw-semibold text-gray-400">Due Date</div>
-                                                        </div>
-                                                        <!--end::Due-->
-                                                        <!--begin::Budget-->
-                                                        <div
-                                                            class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 mb-3">
-                                                            <div class="fs-6 text-gray-800 fw-bold">$284,900.00</div>
-                                                            <div class="fw-semibold text-gray-400">Budget</div>
-                                                        </div>
-                                                        <!--end::Budget-->
-                                                    </div>
-                                                    <!--end::Info-->
-                                                    <!--begin::Progress-->
-                                                    <div class="h-4px w-100 bg-light mb-5" data-bs-toggle="tooltip"
-                                                        aria-label="This project 10% completed"
-                                                        data-bs-original-title="This project 10% completed"
-                                                        data-kt-initialized="1">
-                                                        <div class="bg-danger rounded h-4px" role="progressbar"
-                                                            style="width: 10%" aria-valuenow="10" aria-valuemin="0"
-                                                            aria-valuemax="100"></div>
-                                                    </div>
-                                                    <!--end::Progress-->
-                                                    <!--begin::Users-->
-                                                    <div class="symbol-group symbol-hover">
-                                                        <!--begin::User-->
-                                                        <div class="symbol symbol-35px symbol-circle"
-                                                            data-bs-toggle="tooltip"
-                                                            data-bs-original-title="Alan Warden"
-                                                            data-kt-initialized="1">
-                                                            <span
-                                                                class="symbol-label bg-warning text-inverse-warning fw-bold">A</span>
-                                                        </div>
-                                                        <!--begin::User-->
-                                                        <!--begin::User-->
-                                                        <div class="symbol symbol-35px symbol-circle"
-                                                            data-bs-toggle="tooltip" aria-label="Brian Cox"
-                                                            data-bs-original-title="Brian Cox" data-kt-initialized="1">
-                                                            <img alt="Pic" src="assets/media/avatars/300-5.jpg">
-                                                        </div>
-                                                        <!--begin::User-->
-                                                    </div>
-                                                    <!--end::Users-->
-                                                </div>
-                                                <!--end:: Card body-->
-                                            </a>
-                                            <!--end::Card-->
-                                        </div>
-                                        <!--end::Col-->
-                                        <!--begin::Col-->
-                                        <div class="col-md-6 col-xl-4">
-                                            <!--begin::Card-->
-                                            <a href="../../demo1/dist/apps/projects/project.html"
-                                                class="card shadow-sm border-hover-primary">
-                                                <!--begin::Card header-->
-                                                <div class="card-header border-0 pt-9">
-                                                    <!--begin::Card Title-->
-                                                    <div class="card-title m-0">
-                                                        <!--begin::Avatar-->
-                                                        <div class="symbol symbol-50px w-50px bg-light">
-                                                            <img src="assets/media/svg/brand-logos/kanba.svg"
-                                                                alt="image" class="p-3">
-                                                        </div>
-                                                        <!--end::Avatar-->
-                                                    </div>
-                                                    <!--end::Car Title-->
-                                                    <!--begin::Card toolbar-->
-                                                    <div class="card-toolbar">
-                                                        <span
-                                                            class="badge badge-light-success fw-bold me-auto px-4 py-3">Completed</span>
-                                                    </div>
-                                                    <!--end::Card toolbar-->
-                                                </div>
-                                                <!--end:: Card header-->
-                                                <!--begin:: Card body-->
-                                                <div class="card-body p-9">
-                                                    <!--begin::Name-->
-                                                    <div class="fs-3 fw-bold text-dark">Oppo CRM</div>
-                                                    <!--end::Name-->
-                                                    <!--begin::Description-->
-                                                    <p class="text-gray-400 fw-semibold fs-5 mt-1 mb-7">CRM App
-                                                        application to HR efficiency</p>
-                                                    <!--end::Description-->
-                                                    <!--begin::Info-->
-                                                    <div class="d-flex flex-wrap mb-5">
-                                                        <!--begin::Due-->
-                                                        <div
-                                                            class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-7 mb-3">
-                                                            <div class="fs-6 text-gray-800 fw-bold">Mar 10, 2023</div>
-                                                            <div class="fw-semibold text-gray-400">Due Date</div>
-                                                        </div>
-                                                        <!--end::Due-->
-                                                        <!--begin::Budget-->
-                                                        <div
-                                                            class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 mb-3">
-                                                            <div class="fs-6 text-gray-800 fw-bold">$284,900.00</div>
-                                                            <div class="fw-semibold text-gray-400">Budget</div>
-                                                        </div>
-                                                        <!--end::Budget-->
-                                                    </div>
-                                                    <!--end::Info-->
-                                                    <!--begin::Progress-->
-                                                    <div class="h-4px w-100 bg-light mb-5" data-bs-toggle="tooltip"
-                                                        aria-label="This project 100% completed"
-                                                        data-bs-original-title="This project 100% completed"
-                                                        data-kt-initialized="1">
-                                                        <div class="bg-success rounded h-4px" role="progressbar"
-                                                            style="width: 100%" aria-valuenow="100" aria-valuemin="0"
-                                                            aria-valuemax="100"></div>
-                                                    </div>
-                                                    <!--end::Progress-->
-                                                    <!--begin::Users-->
-                                                    <div class="symbol-group symbol-hover">
-                                                        <!--begin::User-->
-                                                        <div class="symbol symbol-35px symbol-circle"
-                                                            data-bs-toggle="tooltip" aria-label="Nick Macy"
-                                                            data-bs-original-title="Nick Macy" data-kt-initialized="1">
-                                                            <img alt="Pic" src="assets/media/avatars/300-2.jpg">
-                                                        </div>
-                                                        <!--begin::User-->
-                                                        <!--begin::User-->
-                                                        <div class="symbol symbol-35px symbol-circle"
-                                                            data-bs-toggle="tooltip" aria-label="Sean Paul"
-                                                            data-bs-original-title="Sean Paul" data-kt-initialized="1">
-                                                            <img alt="Pic" src="assets/media/avatars/300-9.jpg">
-                                                        </div>
-                                                        <!--begin::User-->
-                                                        <!--begin::User-->
-                                                        <div class="symbol symbol-35px symbol-circle"
-                                                            data-bs-toggle="tooltip"
-                                                            data-bs-original-title="Mike Collin"
-                                                            data-kt-initialized="1">
-                                                            <span
-                                                                class="symbol-label bg-info text-inverse-info fw-bold">M</span>
-                                                        </div>
-                                                        <!--begin::User-->
-                                                    </div>
-                                                    <!--end::Users-->
-                                                </div>
-                                                <!--end:: Card body-->
-                                            </a>
-                                            <!--end::Card-->
-                                        </div>
-                                        <!--end::Col-->
-                                    </div>
+                                    <app-taskWorkItems *ngIf="taskEventId" [taskEventId]="taskEventId"></app-taskWorkItems>
                                 </div>
                                 <!--end:::Tab pane-->
 
@@ -1154,7 +270,8 @@
                                                 <div class="d-flex align-items-center flex-grow-1">
                                                     <!--begin::Avatar-->
                                                     <div class="symbol symbol-45px me-5">
-                                                        <img src="assets/common/images/default-profile-picture.png" alt="User">
+                                                        <img src="assets/common/images/default-profile-picture.png"
+                                                            alt="User">
                                                     </div>
                                                     <!--end::Avatar-->
                                                     <!--begin::Info-->
@@ -1242,9 +359,14 @@
                                                         <span class="symbol-label bg-light-success">
                                                             <!--begin::Svg Icon | path: icons/duotune/abstract/abs027.svg-->
                                                             <span class="svg-icon svg-icon-2x svg-icon-success">
-                                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                    <path opacity="0.3" d="M21.25 18.525L13.05 21.825C12.35 22.125 11.65 22.125 10.95 21.825L2.75 18.525C1.75 18.125 1.75 16.725 2.75 16.325L4.04999 15.825L10.25 18.325C10.85 18.525 11.45 18.625 12.05 18.625C12.65 18.625 13.25 18.525 13.85 18.325L20.05 15.825L21.35 16.325C22.35 16.725 22.35 18.125 21.25 18.525ZM13.05 16.425L21.25 13.125C22.25 12.725 22.25 11.325 21.25 10.925L13.05 7.62502C12.35 7.32502 11.65 7.32502 10.95 7.62502L2.75 10.925C1.75 11.325 1.75 12.725 2.75 13.125L10.95 16.425C11.65 16.725 12.45 16.725 13.05 16.425Z" fill="currentColor"></path>
-                                                                    <path d="M11.05 11.025L2.84998 7.725C1.84998 7.325 1.84998 5.925 2.84998 5.525L11.05 2.225C11.75 1.925 12.45 1.925 13.15 2.225L21.35 5.525C22.35 5.925 22.35 7.325 21.35 7.725L13.05 11.025C12.45 11.325 11.65 11.325 11.05 11.025Z" fill="currentColor"></path>
+                                                                <svg width="24" height="24" viewBox="0 0 24 24"
+                                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path opacity="0.3"
+                                                                        d="M21.25 18.525L13.05 21.825C12.35 22.125 11.65 22.125 10.95 21.825L2.75 18.525C1.75 18.125 1.75 16.725 2.75 16.325L4.04999 15.825L10.25 18.325C10.85 18.525 11.45 18.625 12.05 18.625C12.65 18.625 13.25 18.525 13.85 18.325L20.05 15.825L21.35 16.325C22.35 16.725 22.35 18.125 21.25 18.525ZM13.05 16.425L21.25 13.125C22.25 12.725 22.25 11.325 21.25 10.925L13.05 7.62502C12.35 7.32502 11.65 7.32502 10.95 7.62502L2.75 10.925C1.75 11.325 1.75 12.725 2.75 13.125L10.95 16.425C11.65 16.725 12.45 16.725 13.05 16.425Z"
+                                                                        fill="currentColor"></path>
+                                                                    <path
+                                                                        d="M11.05 11.025L2.84998 7.725C1.84998 7.325 1.84998 5.925 2.84998 5.525L11.05 2.225C11.75 1.925 12.45 1.925 13.15 2.225L21.35 5.525C22.35 5.925 22.35 7.325 21.35 7.725L13.05 11.025C12.45 11.325 11.65 11.325 11.05 11.025Z"
+                                                                        fill="currentColor"></path>
                                                                 </svg>
                                                             </span>
                                                             <!--end::Svg Icon-->
@@ -1253,7 +375,9 @@
                                                     <!--end::Symbol-->
                                                     <!--begin::Text-->
                                                     <div class="d-flex flex-column">
-                                                        <a href="#" class="text-dark text-hover-primary fs-6 fw-bold">Api Document</a>
+                                                        <a href="#"
+                                                            class="text-dark text-hover-primary fs-6 fw-bold">Api
+                                                            Document</a>
                                                         <span class="text-muted fw-bold">PDF</span>
                                                     </div>
                                                     <!--end::Text-->
@@ -1268,9 +392,14 @@
                                                         <span class="symbol-label bg-light-success">
                                                             <!--begin::Svg Icon | path: icons/duotune/abstract/abs027.svg-->
                                                             <span class="svg-icon svg-icon-2x svg-icon-success">
-                                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                    <path opacity="0.3" d="M21.25 18.525L13.05 21.825C12.35 22.125 11.65 22.125 10.95 21.825L2.75 18.525C1.75 18.125 1.75 16.725 2.75 16.325L4.04999 15.825L10.25 18.325C10.85 18.525 11.45 18.625 12.05 18.625C12.65 18.625 13.25 18.525 13.85 18.325L20.05 15.825L21.35 16.325C22.35 16.725 22.35 18.125 21.25 18.525ZM13.05 16.425L21.25 13.125C22.25 12.725 22.25 11.325 21.25 10.925L13.05 7.62502C12.35 7.32502 11.65 7.32502 10.95 7.62502L2.75 10.925C1.75 11.325 1.75 12.725 2.75 13.125L10.95 16.425C11.65 16.725 12.45 16.725 13.05 16.425Z" fill="currentColor"></path>
-                                                                    <path d="M11.05 11.025L2.84998 7.725C1.84998 7.325 1.84998 5.925 2.84998 5.525L11.05 2.225C11.75 1.925 12.45 1.925 13.15 2.225L21.35 5.525C22.35 5.925 22.35 7.325 21.35 7.725L13.05 11.025C12.45 11.325 11.65 11.325 11.05 11.025Z" fill="currentColor"></path>
+                                                                <svg width="24" height="24" viewBox="0 0 24 24"
+                                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path opacity="0.3"
+                                                                        d="M21.25 18.525L13.05 21.825C12.35 22.125 11.65 22.125 10.95 21.825L2.75 18.525C1.75 18.125 1.75 16.725 2.75 16.325L4.04999 15.825L10.25 18.325C10.85 18.525 11.45 18.625 12.05 18.625C12.65 18.625 13.25 18.525 13.85 18.325L20.05 15.825L21.35 16.325C22.35 16.725 22.35 18.125 21.25 18.525ZM13.05 16.425L21.25 13.125C22.25 12.725 22.25 11.325 21.25 10.925L13.05 7.62502C12.35 7.32502 11.65 7.32502 10.95 7.62502L2.75 10.925C1.75 11.325 1.75 12.725 2.75 13.125L10.95 16.425C11.65 16.725 12.45 16.725 13.05 16.425Z"
+                                                                        fill="currentColor"></path>
+                                                                    <path
+                                                                        d="M11.05 11.025L2.84998 7.725C1.84998 7.325 1.84998 5.925 2.84998 5.525L11.05 2.225C11.75 1.925 12.45 1.925 13.15 2.225L21.35 5.525C22.35 5.925 22.35 7.325 21.35 7.725L13.05 11.025C12.45 11.325 11.65 11.325 11.05 11.025Z"
+                                                                        fill="currentColor"></path>
                                                                 </svg>
                                                             </span>
                                                             <!--end::Svg Icon-->
@@ -1279,7 +408,9 @@
                                                     <!--end::Symbol-->
                                                     <!--begin::Text-->
                                                     <div class="d-flex flex-column">
-                                                        <a href="#" class="text-dark text-hover-primary fs-6 fw-bold">Api Document</a>
+                                                        <a href="#"
+                                                            class="text-dark text-hover-primary fs-6 fw-bold">Api
+                                                            Document</a>
                                                         <span class="text-muted fw-bold">PDF</span>
                                                     </div>
                                                     <!--end::Text-->
@@ -1294,9 +425,14 @@
                                                         <span class="symbol-label bg-light-success">
                                                             <!--begin::Svg Icon | path: icons/duotune/abstract/abs027.svg-->
                                                             <span class="svg-icon svg-icon-2x svg-icon-success">
-                                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                    <path opacity="0.3" d="M21.25 18.525L13.05 21.825C12.35 22.125 11.65 22.125 10.95 21.825L2.75 18.525C1.75 18.125 1.75 16.725 2.75 16.325L4.04999 15.825L10.25 18.325C10.85 18.525 11.45 18.625 12.05 18.625C12.65 18.625 13.25 18.525 13.85 18.325L20.05 15.825L21.35 16.325C22.35 16.725 22.35 18.125 21.25 18.525ZM13.05 16.425L21.25 13.125C22.25 12.725 22.25 11.325 21.25 10.925L13.05 7.62502C12.35 7.32502 11.65 7.32502 10.95 7.62502L2.75 10.925C1.75 11.325 1.75 12.725 2.75 13.125L10.95 16.425C11.65 16.725 12.45 16.725 13.05 16.425Z" fill="currentColor"></path>
-                                                                    <path d="M11.05 11.025L2.84998 7.725C1.84998 7.325 1.84998 5.925 2.84998 5.525L11.05 2.225C11.75 1.925 12.45 1.925 13.15 2.225L21.35 5.525C22.35 5.925 22.35 7.325 21.35 7.725L13.05 11.025C12.45 11.325 11.65 11.325 11.05 11.025Z" fill="currentColor"></path>
+                                                                <svg width="24" height="24" viewBox="0 0 24 24"
+                                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path opacity="0.3"
+                                                                        d="M21.25 18.525L13.05 21.825C12.35 22.125 11.65 22.125 10.95 21.825L2.75 18.525C1.75 18.125 1.75 16.725 2.75 16.325L4.04999 15.825L10.25 18.325C10.85 18.525 11.45 18.625 12.05 18.625C12.65 18.625 13.25 18.525 13.85 18.325L20.05 15.825L21.35 16.325C22.35 16.725 22.35 18.125 21.25 18.525ZM13.05 16.425L21.25 13.125C22.25 12.725 22.25 11.325 21.25 10.925L13.05 7.62502C12.35 7.32502 11.65 7.32502 10.95 7.62502L2.75 10.925C1.75 11.325 1.75 12.725 2.75 13.125L10.95 16.425C11.65 16.725 12.45 16.725 13.05 16.425Z"
+                                                                        fill="currentColor"></path>
+                                                                    <path
+                                                                        d="M11.05 11.025L2.84998 7.725C1.84998 7.325 1.84998 5.925 2.84998 5.525L11.05 2.225C11.75 1.925 12.45 1.925 13.15 2.225L21.35 5.525C22.35 5.925 22.35 7.325 21.35 7.725L13.05 11.025C12.45 11.325 11.65 11.325 11.05 11.025Z"
+                                                                        fill="currentColor"></path>
                                                                 </svg>
                                                             </span>
                                                             <!--end::Svg Icon-->
@@ -1305,7 +441,9 @@
                                                     <!--end::Symbol-->
                                                     <!--begin::Text-->
                                                     <div class="d-flex flex-column">
-                                                        <a href="#" class="text-dark text-hover-primary fs-6 fw-bold">Api Document</a>
+                                                        <a href="#"
+                                                            class="text-dark text-hover-primary fs-6 fw-bold">Api
+                                                            Document</a>
                                                         <span class="text-muted fw-bold">PDF</span>
                                                     </div>
                                                     <!--end::Text-->
@@ -1320,9 +458,14 @@
                                                         <span class="symbol-label bg-light-success">
                                                             <!--begin::Svg Icon | path: icons/duotune/abstract/abs027.svg-->
                                                             <span class="svg-icon svg-icon-2x svg-icon-success">
-                                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                    <path opacity="0.3" d="M21.25 18.525L13.05 21.825C12.35 22.125 11.65 22.125 10.95 21.825L2.75 18.525C1.75 18.125 1.75 16.725 2.75 16.325L4.04999 15.825L10.25 18.325C10.85 18.525 11.45 18.625 12.05 18.625C12.65 18.625 13.25 18.525 13.85 18.325L20.05 15.825L21.35 16.325C22.35 16.725 22.35 18.125 21.25 18.525ZM13.05 16.425L21.25 13.125C22.25 12.725 22.25 11.325 21.25 10.925L13.05 7.62502C12.35 7.32502 11.65 7.32502 10.95 7.62502L2.75 10.925C1.75 11.325 1.75 12.725 2.75 13.125L10.95 16.425C11.65 16.725 12.45 16.725 13.05 16.425Z" fill="currentColor"></path>
-                                                                    <path d="M11.05 11.025L2.84998 7.725C1.84998 7.325 1.84998 5.925 2.84998 5.525L11.05 2.225C11.75 1.925 12.45 1.925 13.15 2.225L21.35 5.525C22.35 5.925 22.35 7.325 21.35 7.725L13.05 11.025C12.45 11.325 11.65 11.325 11.05 11.025Z" fill="currentColor"></path>
+                                                                <svg width="24" height="24" viewBox="0 0 24 24"
+                                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path opacity="0.3"
+                                                                        d="M21.25 18.525L13.05 21.825C12.35 22.125 11.65 22.125 10.95 21.825L2.75 18.525C1.75 18.125 1.75 16.725 2.75 16.325L4.04999 15.825L10.25 18.325C10.85 18.525 11.45 18.625 12.05 18.625C12.65 18.625 13.25 18.525 13.85 18.325L20.05 15.825L21.35 16.325C22.35 16.725 22.35 18.125 21.25 18.525ZM13.05 16.425L21.25 13.125C22.25 12.725 22.25 11.325 21.25 10.925L13.05 7.62502C12.35 7.32502 11.65 7.32502 10.95 7.62502L2.75 10.925C1.75 11.325 1.75 12.725 2.75 13.125L10.95 16.425C11.65 16.725 12.45 16.725 13.05 16.425Z"
+                                                                        fill="currentColor"></path>
+                                                                    <path
+                                                                        d="M11.05 11.025L2.84998 7.725C1.84998 7.325 1.84998 5.925 2.84998 5.525L11.05 2.225C11.75 1.925 12.45 1.925 13.15 2.225L21.35 5.525C22.35 5.925 22.35 7.325 21.35 7.725L13.05 11.025C12.45 11.325 11.65 11.325 11.05 11.025Z"
+                                                                        fill="currentColor"></path>
                                                                 </svg>
                                                             </span>
                                                             <!--end::Svg Icon-->
@@ -1331,7 +474,9 @@
                                                     <!--end::Symbol-->
                                                     <!--begin::Text-->
                                                     <div class="d-flex flex-column">
-                                                        <a href="#" class="text-dark text-hover-primary fs-6 fw-bold">Api Document</a>
+                                                        <a href="#"
+                                                            class="text-dark text-hover-primary fs-6 fw-bold">Api
+                                                            Document</a>
                                                         <span class="text-muted fw-bold">PDF</span>
                                                     </div>
                                                     <!--end::Text-->
@@ -1346,9 +491,14 @@
                                                         <span class="symbol-label bg-light-success">
                                                             <!--begin::Svg Icon | path: icons/duotune/abstract/abs027.svg-->
                                                             <span class="svg-icon svg-icon-2x svg-icon-success">
-                                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                    <path opacity="0.3" d="M21.25 18.525L13.05 21.825C12.35 22.125 11.65 22.125 10.95 21.825L2.75 18.525C1.75 18.125 1.75 16.725 2.75 16.325L4.04999 15.825L10.25 18.325C10.85 18.525 11.45 18.625 12.05 18.625C12.65 18.625 13.25 18.525 13.85 18.325L20.05 15.825L21.35 16.325C22.35 16.725 22.35 18.125 21.25 18.525ZM13.05 16.425L21.25 13.125C22.25 12.725 22.25 11.325 21.25 10.925L13.05 7.62502C12.35 7.32502 11.65 7.32502 10.95 7.62502L2.75 10.925C1.75 11.325 1.75 12.725 2.75 13.125L10.95 16.425C11.65 16.725 12.45 16.725 13.05 16.425Z" fill="currentColor"></path>
-                                                                    <path d="M11.05 11.025L2.84998 7.725C1.84998 7.325 1.84998 5.925 2.84998 5.525L11.05 2.225C11.75 1.925 12.45 1.925 13.15 2.225L21.35 5.525C22.35 5.925 22.35 7.325 21.35 7.725L13.05 11.025C12.45 11.325 11.65 11.325 11.05 11.025Z" fill="currentColor"></path>
+                                                                <svg width="24" height="24" viewBox="0 0 24 24"
+                                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path opacity="0.3"
+                                                                        d="M21.25 18.525L13.05 21.825C12.35 22.125 11.65 22.125 10.95 21.825L2.75 18.525C1.75 18.125 1.75 16.725 2.75 16.325L4.04999 15.825L10.25 18.325C10.85 18.525 11.45 18.625 12.05 18.625C12.65 18.625 13.25 18.525 13.85 18.325L20.05 15.825L21.35 16.325C22.35 16.725 22.35 18.125 21.25 18.525ZM13.05 16.425L21.25 13.125C22.25 12.725 22.25 11.325 21.25 10.925L13.05 7.62502C12.35 7.32502 11.65 7.32502 10.95 7.62502L2.75 10.925C1.75 11.325 1.75 12.725 2.75 13.125L10.95 16.425C11.65 16.725 12.45 16.725 13.05 16.425Z"
+                                                                        fill="currentColor"></path>
+                                                                    <path
+                                                                        d="M11.05 11.025L2.84998 7.725C1.84998 7.325 1.84998 5.925 2.84998 5.525L11.05 2.225C11.75 1.925 12.45 1.925 13.15 2.225L21.35 5.525C22.35 5.925 22.35 7.325 21.35 7.725L13.05 11.025C12.45 11.325 11.65 11.325 11.05 11.025Z"
+                                                                        fill="currentColor"></path>
                                                                 </svg>
                                                             </span>
                                                             <!--end::Svg Icon-->
@@ -1357,7 +507,9 @@
                                                     <!--end::Symbol-->
                                                     <!--begin::Text-->
                                                     <div class="d-flex flex-column">
-                                                        <a href="#" class="text-dark text-hover-primary fs-6 fw-bold">Api Document</a>
+                                                        <a href="#"
+                                                            class="text-dark text-hover-primary fs-6 fw-bold">Api
+                                                            Document</a>
                                                         <span class="text-muted fw-bold">PDF</span>
                                                     </div>
                                                     <!--end::Text-->
@@ -1372,9 +524,14 @@
                                                         <span class="symbol-label bg-light-success">
                                                             <!--begin::Svg Icon | path: icons/duotune/abstract/abs027.svg-->
                                                             <span class="svg-icon svg-icon-2x svg-icon-success">
-                                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                    <path opacity="0.3" d="M21.25 18.525L13.05 21.825C12.35 22.125 11.65 22.125 10.95 21.825L2.75 18.525C1.75 18.125 1.75 16.725 2.75 16.325L4.04999 15.825L10.25 18.325C10.85 18.525 11.45 18.625 12.05 18.625C12.65 18.625 13.25 18.525 13.85 18.325L20.05 15.825L21.35 16.325C22.35 16.725 22.35 18.125 21.25 18.525ZM13.05 16.425L21.25 13.125C22.25 12.725 22.25 11.325 21.25 10.925L13.05 7.62502C12.35 7.32502 11.65 7.32502 10.95 7.62502L2.75 10.925C1.75 11.325 1.75 12.725 2.75 13.125L10.95 16.425C11.65 16.725 12.45 16.725 13.05 16.425Z" fill="currentColor"></path>
-                                                                    <path d="M11.05 11.025L2.84998 7.725C1.84998 7.325 1.84998 5.925 2.84998 5.525L11.05 2.225C11.75 1.925 12.45 1.925 13.15 2.225L21.35 5.525C22.35 5.925 22.35 7.325 21.35 7.725L13.05 11.025C12.45 11.325 11.65 11.325 11.05 11.025Z" fill="currentColor"></path>
+                                                                <svg width="24" height="24" viewBox="0 0 24 24"
+                                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path opacity="0.3"
+                                                                        d="M21.25 18.525L13.05 21.825C12.35 22.125 11.65 22.125 10.95 21.825L2.75 18.525C1.75 18.125 1.75 16.725 2.75 16.325L4.04999 15.825L10.25 18.325C10.85 18.525 11.45 18.625 12.05 18.625C12.65 18.625 13.25 18.525 13.85 18.325L20.05 15.825L21.35 16.325C22.35 16.725 22.35 18.125 21.25 18.525ZM13.05 16.425L21.25 13.125C22.25 12.725 22.25 11.325 21.25 10.925L13.05 7.62502C12.35 7.32502 11.65 7.32502 10.95 7.62502L2.75 10.925C1.75 11.325 1.75 12.725 2.75 13.125L10.95 16.425C11.65 16.725 12.45 16.725 13.05 16.425Z"
+                                                                        fill="currentColor"></path>
+                                                                    <path
+                                                                        d="M11.05 11.025L2.84998 7.725C1.84998 7.325 1.84998 5.925 2.84998 5.525L11.05 2.225C11.75 1.925 12.45 1.925 13.15 2.225L21.35 5.525C22.35 5.925 22.35 7.325 21.35 7.725L13.05 11.025C12.45 11.325 11.65 11.325 11.05 11.025Z"
+                                                                        fill="currentColor"></path>
                                                                 </svg>
                                                             </span>
                                                             <!--end::Svg Icon-->
@@ -1383,7 +540,9 @@
                                                     <!--end::Symbol-->
                                                     <!--begin::Text-->
                                                     <div class="d-flex flex-column">
-                                                        <a href="#" class="text-dark text-hover-primary fs-6 fw-bold">Api Document</a>
+                                                        <a href="#"
+                                                            class="text-dark text-hover-primary fs-6 fw-bold">Api
+                                                            Document</a>
                                                         <span class="text-muted fw-bold">PDF</span>
                                                     </div>
                                                     <!--end::Text-->
@@ -1398,9 +557,14 @@
                                                         <span class="symbol-label bg-light-success">
                                                             <!--begin::Svg Icon | path: icons/duotune/abstract/abs027.svg-->
                                                             <span class="svg-icon svg-icon-2x svg-icon-success">
-                                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                    <path opacity="0.3" d="M21.25 18.525L13.05 21.825C12.35 22.125 11.65 22.125 10.95 21.825L2.75 18.525C1.75 18.125 1.75 16.725 2.75 16.325L4.04999 15.825L10.25 18.325C10.85 18.525 11.45 18.625 12.05 18.625C12.65 18.625 13.25 18.525 13.85 18.325L20.05 15.825L21.35 16.325C22.35 16.725 22.35 18.125 21.25 18.525ZM13.05 16.425L21.25 13.125C22.25 12.725 22.25 11.325 21.25 10.925L13.05 7.62502C12.35 7.32502 11.65 7.32502 10.95 7.62502L2.75 10.925C1.75 11.325 1.75 12.725 2.75 13.125L10.95 16.425C11.65 16.725 12.45 16.725 13.05 16.425Z" fill="currentColor"></path>
-                                                                    <path d="M11.05 11.025L2.84998 7.725C1.84998 7.325 1.84998 5.925 2.84998 5.525L11.05 2.225C11.75 1.925 12.45 1.925 13.15 2.225L21.35 5.525C22.35 5.925 22.35 7.325 21.35 7.725L13.05 11.025C12.45 11.325 11.65 11.325 11.05 11.025Z" fill="currentColor"></path>
+                                                                <svg width="24" height="24" viewBox="0 0 24 24"
+                                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path opacity="0.3"
+                                                                        d="M21.25 18.525L13.05 21.825C12.35 22.125 11.65 22.125 10.95 21.825L2.75 18.525C1.75 18.125 1.75 16.725 2.75 16.325L4.04999 15.825L10.25 18.325C10.85 18.525 11.45 18.625 12.05 18.625C12.65 18.625 13.25 18.525 13.85 18.325L20.05 15.825L21.35 16.325C22.35 16.725 22.35 18.125 21.25 18.525ZM13.05 16.425L21.25 13.125C22.25 12.725 22.25 11.325 21.25 10.925L13.05 7.62502C12.35 7.32502 11.65 7.32502 10.95 7.62502L2.75 10.925C1.75 11.325 1.75 12.725 2.75 13.125L10.95 16.425C11.65 16.725 12.45 16.725 13.05 16.425Z"
+                                                                        fill="currentColor"></path>
+                                                                    <path
+                                                                        d="M11.05 11.025L2.84998 7.725C1.84998 7.325 1.84998 5.925 2.84998 5.525L11.05 2.225C11.75 1.925 12.45 1.925 13.15 2.225L21.35 5.525C22.35 5.925 22.35 7.325 21.35 7.725L13.05 11.025C12.45 11.325 11.65 11.325 11.05 11.025Z"
+                                                                        fill="currentColor"></path>
                                                                 </svg>
                                                             </span>
                                                             <!--end::Svg Icon-->
@@ -1409,7 +573,9 @@
                                                     <!--end::Symbol-->
                                                     <!--begin::Text-->
                                                     <div class="d-flex flex-column">
-                                                        <a href="#" class="text-dark text-hover-primary fs-6 fw-bold">Api Document</a>
+                                                        <a href="#"
+                                                            class="text-dark text-hover-primary fs-6 fw-bold">Api
+                                                            Document</a>
                                                         <span class="text-muted fw-bold">PDF</span>
                                                     </div>
                                                     <!--end::Text-->

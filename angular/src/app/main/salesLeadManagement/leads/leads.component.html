@@ -1,14 +1,14 @@
 ﻿<div [@routerTransition]>
     <sub-header [title]="'Leads' | localize" [description]="'LeadsHeaderInfo' | localize">
         <div role="actions">
-            <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1">
+            <!-- <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1">
                 <i class="fa fa-file-excel"></i>
                 {{ l('ExportToExcel') }}
-            </button>
+            </button> -->
 
             <button *ngIf="isGranted('Pages.Leads.Create')" (click)="createLead()" class="btn btn-primary blue">
                 <i class="fa fa-plus"></i>
-                {{ l('CreateNewLead') }}
+                {{ l('Lead') }}
             </button>
         </div>
     </sub-header>
@@ -22,15 +22,9 @@
                             <div class="col-xl-12">
                                 <div class="my-3">
                                     <div class="input-group mb-3">
-                                        <input
-                                            [(ngModel)]="filterText"
-                                            (ngModelChange)="getLeads()"
-                                            name="filterText"
-                                            autoFocus
-                                            type="text"
-                                            class="form-control"
-                                            [placeholder]="l('SearchWithThreeDot')"
-                                        />
+                                        <input [(ngModel)]="filterText" (ngModelChange)="getLeads()" name="filterText"
+                                            autoFocus type="text" class="form-control"
+                                            [placeholder]="l('SearchWithThreeDot')" />
                                         <button class="btn btn-primary" type="submit" (click)="getLeads()">
                                             <i class="flaticon-search-1"></i>
                                         </button>
@@ -44,105 +38,57 @@
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="TitleFilter">{{ l('Title') }}</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="TitleFilter"
-                                        name="titleFilter"
-                                        [(ngModel)]="titleFilter"
-                                        (ngModelChange)="getLeads()"
-                                    />
+                                    <input type="text" class="form-control" id="TitleFilter" name="titleFilter"
+                                        [(ngModel)]="titleFilter" (ngModelChange)="getLeads()" />
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="FirstNameFilter">{{ l('FirstName') }}</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="FirstNameFilter"
-                                        name="firstNameFilter"
-                                        [(ngModel)]="firstNameFilter"
-                                        (ngModelChange)="getLeads()"
-                                    />
+                                    <input type="text" class="form-control" id="FirstNameFilter" name="firstNameFilter"
+                                        [(ngModel)]="firstNameFilter" (ngModelChange)="getLeads()" />
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="LastNameFilter">{{ l('LastName') }}</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="LastNameFilter"
-                                        name="lastNameFilter"
-                                        [(ngModel)]="lastNameFilter"
-                                        (ngModelChange)="getLeads()"
-                                    />
+                                    <input type="text" class="form-control" id="LastNameFilter" name="lastNameFilter"
+                                        [(ngModel)]="lastNameFilter" (ngModelChange)="getLeads()" />
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="EmailFilter">{{ l('Email') }}</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="EmailFilter"
-                                        name="emailFilter"
-                                        [(ngModel)]="emailFilter"
-                                        (ngModelChange)="getLeads()"
-                                    />
+                                    <input type="text" class="form-control" id="EmailFilter" name="emailFilter"
+                                        [(ngModel)]="emailFilter" (ngModelChange)="getLeads()" />
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="PhoneFilter">{{ l('Phone') }}</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="PhoneFilter"
-                                        name="phoneFilter"
-                                        [(ngModel)]="phoneFilter"
-                                        (ngModelChange)="getLeads()"
-                                    />
+                                    <input type="text" class="form-control" id="PhoneFilter" name="phoneFilter"
+                                        [(ngModel)]="phoneFilter" (ngModelChange)="getLeads()" />
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="CompanyFilter">{{ l('Company') }}</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="CompanyFilter"
-                                        name="companyFilter"
-                                        [(ngModel)]="companyFilter"
-                                        (ngModelChange)="getLeads()"
-                                    />
+                                    <input type="text" class="form-control" id="CompanyFilter" name="companyFilter"
+                                        [(ngModel)]="companyFilter" (ngModelChange)="getLeads()" />
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="JobTitleFilter">{{ l('JobTitle') }}</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="JobTitleFilter"
-                                        name="jobTitleFilter"
-                                        [(ngModel)]="jobTitleFilter"
-                                        (ngModelChange)="getLeads()"
-                                    />
+                                    <input type="text" class="form-control" id="JobTitleFilter" name="jobTitleFilter"
+                                        [(ngModel)]="jobTitleFilter" (ngModelChange)="getLeads()" />
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="IndustryFilter">{{ l('Industry') }}</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="IndustryFilter"
-                                        name="industryFilter"
-                                        [(ngModel)]="industryFilter"
-                                        (ngModelChange)="getLeads()"
-                                    />
+                                    <input type="text" class="form-control" id="IndustryFilter" name="industryFilter"
+                                        [(ngModel)]="industryFilter" (ngModelChange)="getLeads()" />
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -151,23 +97,12 @@
                                         {{ l('MinMax') }} {{ l('LeadScore') }}
                                     </label>
                                     <div class="input-group">
-                                        <input
-                                            type="number"
-                                            class="form-control"
-                                            id="MinLeadScoreFilter"
-                                            [(ngModel)]="minLeadScoreFilter"
-                                            placeholder="{{ l('MinValue') }}"
-                                            name="minLeadScoreFilter"
-                                            (ngModelChange)="getLeads()"
-                                        />
-                                        <input
-                                            type="number"
-                                            class="form-control"
-                                            [(ngModel)]="maxLeadScoreFilter"
-                                            placeholder="{{ l('MaxValue') }}"
-                                            name="maxLeadScoreFilter"
-                                            (ngModelChange)="getLeads()"
-                                        />
+                                        <input type="number" class="form-control" id="MinLeadScoreFilter"
+                                            [(ngModel)]="minLeadScoreFilter" placeholder="{{ l('MinValue') }}"
+                                            name="minLeadScoreFilter" (ngModelChange)="getLeads()" />
+                                        <input type="number" class="form-control" [(ngModel)]="maxLeadScoreFilter"
+                                            placeholder="{{ l('MaxValue') }}" name="maxLeadScoreFilter"
+                                            (ngModelChange)="getLeads()" />
                                     </div>
                                 </div>
                             </div>
@@ -177,23 +112,12 @@
                                         {{ l('MinMax') }} {{ l('ExpectedSalesAmount') }}
                                     </label>
                                     <div class="input-group">
-                                        <input
-                                            type="number"
-                                            class="form-control"
-                                            id="MinExpectedSalesAmountFilter"
-                                            [(ngModel)]="minExpectedSalesAmountFilter"
-                                            placeholder="{{ l('MinValue') }}"
-                                            name="minExpectedSalesAmountFilter"
-                                            (ngModelChange)="getLeads()"
-                                        />
-                                        <input
-                                            type="number"
-                                            class="form-control"
-                                            [(ngModel)]="maxExpectedSalesAmountFilter"
-                                            placeholder="{{ l('MaxValue') }}"
-                                            name="maxExpectedSalesAmountFilter"
-                                            (ngModelChange)="getLeads()"
-                                        />
+                                        <input type="number" class="form-control" id="MinExpectedSalesAmountFilter"
+                                            [(ngModel)]="minExpectedSalesAmountFilter" placeholder="{{ l('MinValue') }}"
+                                            name="minExpectedSalesAmountFilter" (ngModelChange)="getLeads()" />
+                                        <input type="number" class="form-control"
+                                            [(ngModel)]="maxExpectedSalesAmountFilter" placeholder="{{ l('MaxValue') }}"
+                                            name="maxExpectedSalesAmountFilter" (ngModelChange)="getLeads()" />
                                     </div>
                                 </div>
                             </div>
@@ -203,27 +127,15 @@
                                         {{ l('CreatedDateRange') }}
                                     </label>
                                     <div class="input-group">
-                                        <input
-                                            class="form-control m-input"
-                                            id="MinCreatedDateFilter"
-                                            name="MinCreatedDateFilter"
-                                            type="datetime"
-                                            bsDatepicker
-                                            placeholder="{{ l('MinValue') }}"
-                                            [(ngModel)]="minCreatedDateFilter"
-                                            (ngModelChange)="getLeads()"
-                                        />
+                                        <input class="form-control m-input" id="MinCreatedDateFilter"
+                                            name="MinCreatedDateFilter" type="datetime" bsDatepicker
+                                            placeholder="{{ l('MinValue') }}" [(ngModel)]="minCreatedDateFilter"
+                                            (ngModelChange)="getLeads()" />
                                         <span style="line-height: 40px; padding: 0 15px 0 15px">&mdash;</span>
-                                        <input
-                                            class="form-control m-input"
-                                            id="MaxCreatedDateFilter"
-                                            name="MaxCreatedDateFilter"
-                                            type="datetime"
-                                            bsDatepicker
-                                            placeholder="{{ l('MaxValue') }}"
-                                            [(ngModel)]="maxCreatedDateFilter"
-                                            (ngModelChange)="getLeads()"
-                                        />
+                                        <input class="form-control m-input" id="MaxCreatedDateFilter"
+                                            name="MaxCreatedDateFilter" type="datetime" bsDatepicker
+                                            placeholder="{{ l('MaxValue') }}" [(ngModel)]="maxCreatedDateFilter"
+                                            (ngModelChange)="getLeads()" />
                                     </div>
                                 </div>
                             </div>
@@ -233,27 +145,15 @@
                                         {{ l('ExpectedClosingDateRange') }}
                                     </label>
                                     <div class="input-group">
-                                        <input
-                                            class="form-control m-input"
-                                            id="MinExpectedClosingDateFilter"
-                                            name="MinExpectedClosingDateFilter"
-                                            type="datetime"
-                                            bsDatepicker
-                                            placeholder="{{ l('MinValue') }}"
-                                            [(ngModel)]="minExpectedClosingDateFilter"
-                                            (ngModelChange)="getLeads()"
-                                        />
+                                        <input class="form-control m-input" id="MinExpectedClosingDateFilter"
+                                            name="MinExpectedClosingDateFilter" type="datetime" bsDatepicker
+                                            placeholder="{{ l('MinValue') }}" [(ngModel)]="minExpectedClosingDateFilter"
+                                            (ngModelChange)="getLeads()" />
                                         <span style="line-height: 40px; padding: 0 15px 0 15px">&mdash;</span>
-                                        <input
-                                            class="form-control m-input"
-                                            id="MaxExpectedClosingDateFilter"
-                                            name="MaxExpectedClosingDateFilter"
-                                            type="datetime"
-                                            bsDatepicker
-                                            placeholder="{{ l('MaxValue') }}"
-                                            [(ngModel)]="maxExpectedClosingDateFilter"
-                                            (ngModelChange)="getLeads()"
-                                        />
+                                        <input class="form-control m-input" id="MaxExpectedClosingDateFilter"
+                                            name="MaxExpectedClosingDateFilter" type="datetime" bsDatepicker
+                                            placeholder="{{ l('MaxValue') }}" [(ngModel)]="maxExpectedClosingDateFilter"
+                                            (ngModelChange)="getLeads()" />
                                     </div>
                                 </div>
                             </div>
@@ -263,13 +163,8 @@
                                     <label class="form-label" for="ContactFullNameFilter">
                                         ({{ l('Contact') }}) {{ l('FullName') }}
                                     </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="ContactFullNameFilter"
-                                        name="contactFullNameFilter"
-                                        [(ngModel)]="contactFullNameFilter"
-                                    />
+                                    <input type="text" class="form-control" id="ContactFullNameFilter"
+                                        name="contactFullNameFilter" [(ngModel)]="contactFullNameFilter" />
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -277,13 +172,8 @@
                                     <label class="form-label" for="BusinessNameFilter">
                                         ({{ l('Business') }}) {{ l('Name') }}
                                     </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="BusinessNameFilter"
-                                        name="businessNameFilter"
-                                        [(ngModel)]="businessNameFilter"
-                                    />
+                                    <input type="text" class="form-control" id="BusinessNameFilter"
+                                        name="businessNameFilter" [(ngModel)]="businessNameFilter" />
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -291,13 +181,8 @@
                                     <label class="form-label" for="ProductNameFilter">
                                         ({{ l('Product') }}) {{ l('Name') }}
                                     </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="ProductNameFilter"
-                                        name="productNameFilter"
-                                        [(ngModel)]="productNameFilter"
-                                    />
+                                    <input type="text" class="form-control" id="ProductNameFilter"
+                                        name="productNameFilter" [(ngModel)]="productNameFilter" />
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -305,13 +190,8 @@
                                     <label class="form-label" for="ProductCategoryNameFilter">
                                         ({{ l('ProductCategory') }}) {{ l('Name') }}
                                     </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="ProductCategoryNameFilter"
-                                        name="productCategoryNameFilter"
-                                        [(ngModel)]="productCategoryNameFilter"
-                                    />
+                                    <input type="text" class="form-control" id="ProductCategoryNameFilter"
+                                        name="productCategoryNameFilter" [(ngModel)]="productCategoryNameFilter" />
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -319,13 +199,8 @@
                                     <label class="form-label" for="StoreNameFilter">
                                         ({{ l('Store') }}) {{ l('Name') }}
                                     </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="StoreNameFilter"
-                                        name="storeNameFilter"
-                                        [(ngModel)]="storeNameFilter"
-                                    />
+                                    <input type="text" class="form-control" id="StoreNameFilter" name="storeNameFilter"
+                                        [(ngModel)]="storeNameFilter" />
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -333,13 +208,8 @@
                                     <label class="form-label" for="EmployeeNameFilter">
                                         ({{ l('Employee') }}) {{ l('Name') }}
                                     </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="EmployeeNameFilter"
-                                        name="employeeNameFilter"
-                                        [(ngModel)]="employeeNameFilter"
-                                    />
+                                    <input type="text" class="form-control" id="EmployeeNameFilter"
+                                        name="employeeNameFilter" [(ngModel)]="employeeNameFilter" />
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -347,13 +217,8 @@
                                     <label class="form-label" for="LeadSourceNameFilter">
                                         ({{ l('LeadSource') }}) {{ l('Name') }}
                                     </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="LeadSourceNameFilter"
-                                        name="leadSourceNameFilter"
-                                        [(ngModel)]="leadSourceNameFilter"
-                                    />
+                                    <input type="text" class="form-control" id="LeadSourceNameFilter"
+                                        name="leadSourceNameFilter" [(ngModel)]="leadSourceNameFilter" />
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -361,13 +226,8 @@
                                     <label class="form-label" for="LeadPipelineStageNameFilter">
                                         ({{ l('LeadPipelineStage') }}) {{ l('Name') }}
                                     </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="LeadPipelineStageNameFilter"
-                                        name="leadPipelineStageNameFilter"
-                                        [(ngModel)]="leadPipelineStageNameFilter"
-                                    />
+                                    <input type="text" class="form-control" id="LeadPipelineStageNameFilter"
+                                        name="leadPipelineStageNameFilter" [(ngModel)]="leadPipelineStageNameFilter" />
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -375,40 +235,26 @@
                                     <label class="form-label" for="HubNameFilter">
                                         ({{ l('Hub') }}) {{ l('Name') }}
                                     </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="HubNameFilter"
-                                        name="hubNameFilter"
-                                        [(ngModel)]="hubNameFilter"
-                                    />
+                                    <input type="text" class="form-control" id="HubNameFilter" name="hubNameFilter"
+                                        [(ngModel)]="hubNameFilter" />
                                 </div>
                             </div>
                             <div class="col-md-12 mt-5">
-                                <button
-                                    (click)="resetFilters()"
-                                    class="btn btn-secondary btn-sm"
-                                    id="btn-reset-filters"
-                                >
+                                <button (click)="resetFilters()" class="btn btn-secondary btn-sm"
+                                    id="btn-reset-filters">
                                     Reset
                                 </button>
                             </div>
                         </div>
                         <div class="row my-4">
                             <div class="col-sm-12">
-                                <span
-                                    class="clickable-item text-muted"
-                                    *ngIf="!advancedFiltersAreShown"
-                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown"
-                                >
+                                <span class="clickable-item text-muted" *ngIf="!advancedFiltersAreShown"
+                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown">
                                     <i class="fa fa-angle-down"></i>
                                     {{ l('ShowAdvancedFilters') }}
                                 </span>
-                                <span
-                                    class="clickable-item text-muted"
-                                    *ngIf="advancedFiltersAreShown"
-                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown"
-                                >
+                                <span class="clickable-item text-muted" *ngIf="advancedFiltersAreShown"
+                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown">
                                     <i class="fa fa-angle-up"></i>
                                     {{ l('HideAdvancedFilters') }}
                                 </span>
@@ -420,26 +266,12 @@
                 <div class="row align-items-center">
                     <!--<Primeng-Datatable-Start>-->
                     <div class="primeng-datatable-container col-12" [busyIf]="primengTableHelper.isLoading">
-                        <p-table
-                            #dataTable
-                            (onLazyLoad)="getLeads($event)"
-                            [value]="primengTableHelper.records"
-                            rows="{{ primengTableHelper.defaultRecordsCountPerPage }}"
-                            [paginator]="false"
-                            [lazy]="true"
-                            [scrollable]="true"
-                            ScrollWidth="100%"
-                            [responsive]="primengTableHelper.isResponsive"
-                            [resizableColumns]="primengTableHelper.resizableColumns"
-                        >
+                        <p-table #dataTable (onLazyLoad)="getLeads($event)" [value]="primengTableHelper.records"
+                            rows="{{ primengTableHelper.defaultRecordsCountPerPage }}" [paginator]="false" [lazy]="true"
+                            [scrollable]="true" ScrollWidth="100%" [responsive]="primengTableHelper.isResponsive"
+                            [resizableColumns]="primengTableHelper.resizableColumns">
                             <ng-template pTemplate="header">
                                 <tr>
-                                    <th
-                                        style="width: 130px"
-                                        [hidden]="!isGrantedAny('Pages.Leads.Edit', 'Pages.Leads.Delete')"
-                                    >
-                                        {{ l('Actions') }}
-                                    </th>
                                     <th style="width: 150px" pSortableColumn="contactFk.fullName">
                                         {{ l('FullName') }}
                                         <p-sortIcon field="contactFullName"></p-sortIcon>
@@ -524,53 +356,15 @@
                                         {{ l('ExpectedClosingDate') }}
                                         <p-sortIcon field="lead.expectedClosingDate"></p-sortIcon>
                                     </th>
+                                    <th style="width: 130px"
+                                        [hidden]="!isGrantedAny('Pages.Leads.Edit', 'Pages.Leads.Delete')">
+                                        {{ l('Actions') }}
+                                    </th>
                                 </tr>
                             </ng-template>
                             <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
                                 <tr>
-                                    <td
-                                        style="width: 130px"
-                                        [hidden]="!isGrantedAny('Pages.Leads.Edit', 'Pages.Leads.Delete')"
-                                    >
-                                        <div class="btn-group dropdown" dropdown container="body">
-                                            <button class="dropdown-toggle btn btn-sm btn-primary" dropdownToggle>
-                                                <i class="fa fa-cog"></i>
-                                                <span class="caret"></span>
-                                                {{ l('Actions') }}
-                                            </button>
-                                            <ul class="dropdown-menu" *dropdownMenu>
-                                                <li>
-                                                    <a
-                                                        href="javascript:;"
-                                                        class="dropdown-item"
-                                                        (click)="viewLeadModal.show(record)"
-                                                    >
-                                                        {{ l('View') }}
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a
-                                                        href="javascript:;"
-                                                        *ngIf="permission.isGranted('Pages.Leads.Edit')"
-                                                        class="dropdown-item"
-                                                        (click)="createOrEditLeadModal.show(record.lead.id)"
-                                                    >
-                                                        {{ l('Edit') }}
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a
-                                                        class="dropdown-item"
-                                                        href="javascript:;"
-                                                        *ngIf="permission.isGranted('Pages.Leads.Delete')"
-                                                        (click)="deleteLead(record.lead)"
-                                                    >
-                                                        {{ l('Delete') }}
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </td>
+                                    
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('FullName') }}</span>
                                         {{ record.contactFullName }}
@@ -661,6 +455,38 @@
                                         </span>
                                         <span *ngIf="!record.lead.expectedClosingDate">-</span>
                                     </td>
+                                    <td style="width: 130px"
+                                        [hidden]="!isGrantedAny('Pages.Leads.Edit', 'Pages.Leads.Delete')">
+                                        <div class="btn-group dropdown" dropdown container="body">
+                                            <button class="dropdown-toggle btn btn-sm btn-primary" dropdownToggle>
+                                                <i class="fa fa-cog"></i>
+                                                <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu" *dropdownMenu>
+                                                <!-- <li>
+                                                    <a href="javascript:;" class="dropdown-item"
+                                                        (click)="viewLeadModal.show(record)">
+                                                        {{ l('View') }}
+                                                    </a>
+                                                </li> -->
+                                                <li>
+                                                    <a href="javascript:;"
+                                                        *ngIf="permission.isGranted('Pages.Leads.Edit')"
+                                                        class="dropdown-item"
+                                                        (click)="createOrEditLeadModal.show(record.lead.id)">
+                                                        {{ l('Edit') }}
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="javascript:;"
+                                                        *ngIf="permission.isGranted('Pages.Leads.Delete')"
+                                                        (click)="deleteLead(record.lead)">
+                                                        {{ l('Delete') }}
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
                                 </tr>
                             </ng-template>
                         </p-table>
@@ -668,17 +494,12 @@
                             {{ l('NoData') }}
                         </div>
                         <div class="primeng-paging-container">
-                            <p-paginator
-                                [rows]="primengTableHelper.defaultRecordsCountPerPage"
-                                #paginator
-                                (onPageChange)="getLeads($event)"
-                                [totalRecords]="primengTableHelper.totalRecordsCount"
+                            <p-paginator [rows]="primengTableHelper.defaultRecordsCountPerPage" #paginator
+                                (onPageChange)="getLeads($event)" [totalRecords]="primengTableHelper.totalRecordsCount"
                                 [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
-                                [showCurrentPageReport]="true"
-                                [currentPageReportTemplate]="
+                                [showCurrentPageReport]="true" [currentPageReportTemplate]="
                                     'TotalRecordsCount' | localize : primengTableHelper.totalRecordsCount
-                                "
-                            ></p-paginator>
+                                "></p-paginator>
                         </div>
                     </div>
                     <!--<Primeng-Datatable-End>-->

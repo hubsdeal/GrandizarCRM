@@ -1,5 +1,5 @@
 ﻿<div [@routerTransition]>
-    <div class="w-100 d-flex mb-6 ps-9 pe-9 mt-6 justify-content-between align-items-center">
+    <div class="w-100 d-flex mb-6 mt-6 justify-content-between align-items-center">
         <div class="d-flex">
             <h1 class="fs-3 fw-bold  my-0 page-heading text-dark">
                 Products
@@ -14,10 +14,11 @@
     <div class="w-100">
         <div class="mb-5 row">
             <div class="col-xl-1" *ngFor="let item of allCategories">
-                <a class="nav-link nav-link-border-solid btn btn-outline btn-flex btn-active-color-primary flex-column flex-stack p-4 w-100 page-bg show" title="{{item.productCategoryName}}"
-                    href="javascript:;">
+                <a class="nav-link nav-link-border-solid btn btn-outline btn-flex btn-active-color-primary flex-column flex-stack p-4 w-100 page-bg show"
+                    title="{{item.productCategoryName}}" href="javascript:;">
                     <div class="nav-icon mb-3">
-                        <img src="/assets/common/images/sampleProfilePics/noimg.png" class="w-50px" alt="">
+                        <img src="{{item.picture != null? item.picture:'/assets/common/images/sampleProfilePics/noimg.png'}}"
+                            class="w-50px" alt="">
                     </div>
                     <div>
                         <span style="width: 73px;"

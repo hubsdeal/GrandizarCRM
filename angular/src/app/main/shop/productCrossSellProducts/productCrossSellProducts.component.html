@@ -1,5 +1,5 @@
-﻿<div [@routerTransition]>
-    <sub-header
+﻿<div>
+    <!-- <sub-header
         [title]="'ProductCrossSellProducts' | localize"
         [description]="'ProductCrossSellProductsHeaderInfo' | localize"
     >
@@ -18,31 +18,32 @@
                 {{ l('CreateNewProductCrossSellProduct') }}
             </button>
         </div>
-    </sub-header>
+    </sub-header> -->
+    <div class="w-100 d-flex mb-6 ps-9 pe-9 mt-6 justify-content-between align-items-center ng-tns-c282-7">
+        <div class="d-flex">
+            <h1 class="fs-3 fw-bold  my-0 page-heading text-dark">
+                Cross Sell Products
+            </h1>
+        </div>
+        <button *ngIf="isGranted('Pages.ProductCrossSellProducts.Create')" (click)="createProductCrossSellProduct()"
+            class="btn btn-primary blue">
+            <i class="fa fa-plus"></i>
+            Cross Sell Products
+        </button>
+    </div>
 
     <div [class]="containerClass">
-        <div class="card card-custom gutter-b">
-            <div class="card-body">
-                <form class="form" autocomplete="off">
+        <!-- <form class="form" autocomplete="off">
                     <div>
                         <div class="row align-items-center">
                             <div class="col-xl-12">
                                 <div class="my-3">
                                     <div class="input-group mb-3">
-                                        <input
-                                            [(ngModel)]="filterText"
-                                            (ngModelChange)="getProductCrossSellProducts()"
-                                            name="filterText"
-                                            autoFocus
-                                            type="text"
-                                            class="form-control"
-                                            [placeholder]="l('SearchWithThreeDot')"
-                                        />
-                                        <button
-                                            class="btn btn-primary"
-                                            type="submit"
-                                            (click)="getProductCrossSellProducts()"
-                                        >
+                                        <input [(ngModel)]="filterText" (ngModelChange)="getProductCrossSellProducts()"
+                                            name="filterText" autoFocus type="text" class="form-control"
+                                            [placeholder]="l('SearchWithThreeDot')" />
+                                        <button class="btn btn-primary" type="submit"
+                                            (click)="getProductCrossSellProducts()">
                                             <i class="flaticon-search-1"></i>
                                         </button>
                                     </div>
@@ -58,23 +59,13 @@
                                         {{ l('MinMax') }} {{ l('CrossProductId') }}
                                     </label>
                                     <div class="input-group">
-                                        <input
-                                            type="number"
-                                            class="form-control"
-                                            id="MinCrossProductIdFilter"
-                                            [(ngModel)]="minCrossProductIdFilter"
-                                            placeholder="{{ l('MinValue') }}"
+                                        <input type="number" class="form-control" id="MinCrossProductIdFilter"
+                                            [(ngModel)]="minCrossProductIdFilter" placeholder="{{ l('MinValue') }}"
                                             name="minCrossProductIdFilter"
-                                            (ngModelChange)="getProductCrossSellProducts()"
-                                        />
-                                        <input
-                                            type="number"
-                                            class="form-control"
-                                            [(ngModel)]="maxCrossProductIdFilter"
-                                            placeholder="{{ l('MaxValue') }}"
-                                            name="maxCrossProductIdFilter"
-                                            (ngModelChange)="getProductCrossSellProducts()"
-                                        />
+                                            (ngModelChange)="getProductCrossSellProducts()" />
+                                        <input type="number" class="form-control" [(ngModel)]="maxCrossProductIdFilter"
+                                            placeholder="{{ l('MaxValue') }}" name="maxCrossProductIdFilter"
+                                            (ngModelChange)="getProductCrossSellProducts()" />
                                     </div>
                                 </div>
                             </div>
@@ -84,23 +75,13 @@
                                         {{ l('MinMax') }} {{ l('CrossSellScore') }}
                                     </label>
                                     <div class="input-group">
-                                        <input
-                                            type="number"
-                                            class="form-control"
-                                            id="MinCrossSellScoreFilter"
-                                            [(ngModel)]="minCrossSellScoreFilter"
-                                            placeholder="{{ l('MinValue') }}"
+                                        <input type="number" class="form-control" id="MinCrossSellScoreFilter"
+                                            [(ngModel)]="minCrossSellScoreFilter" placeholder="{{ l('MinValue') }}"
                                             name="minCrossSellScoreFilter"
-                                            (ngModelChange)="getProductCrossSellProducts()"
-                                        />
-                                        <input
-                                            type="number"
-                                            class="form-control"
-                                            [(ngModel)]="maxCrossSellScoreFilter"
-                                            placeholder="{{ l('MaxValue') }}"
-                                            name="maxCrossSellScoreFilter"
-                                            (ngModelChange)="getProductCrossSellProducts()"
-                                        />
+                                            (ngModelChange)="getProductCrossSellProducts()" />
+                                        <input type="number" class="form-control" [(ngModel)]="maxCrossSellScoreFilter"
+                                            placeholder="{{ l('MaxValue') }}" name="maxCrossSellScoreFilter"
+                                            (ngModelChange)="getProductCrossSellProducts()" />
                                     </div>
                                 </div>
                             </div>
@@ -110,40 +91,26 @@
                                     <label class="form-label" for="ProductNameFilter">
                                         ({{ l('Product') }}) {{ l('Name') }}
                                     </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="ProductNameFilter"
-                                        name="productNameFilter"
-                                        [(ngModel)]="productNameFilter"
-                                    />
+                                    <input type="text" class="form-control" id="ProductNameFilter"
+                                        name="productNameFilter" [(ngModel)]="productNameFilter" />
                                 </div>
                             </div>
                             <div class="col-md-12 mt-5">
-                                <button
-                                    (click)="resetFilters()"
-                                    class="btn btn-secondary btn-sm"
-                                    id="btn-reset-filters"
-                                >
+                                <button (click)="resetFilters()" class="btn btn-secondary btn-sm"
+                                    id="btn-reset-filters">
                                     Reset
                                 </button>
                             </div>
                         </div>
                         <div class="row my-4">
                             <div class="col-sm-12">
-                                <span
-                                    class="clickable-item text-muted"
-                                    *ngIf="!advancedFiltersAreShown"
-                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown"
-                                >
+                                <span class="clickable-item text-muted" *ngIf="!advancedFiltersAreShown"
+                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown">
                                     <i class="fa fa-angle-down"></i>
                                     {{ l('ShowAdvancedFilters') }}
                                 </span>
-                                <span
-                                    class="clickable-item text-muted"
-                                    *ngIf="advancedFiltersAreShown"
-                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown"
-                                >
+                                <span class="clickable-item text-muted" *ngIf="advancedFiltersAreShown"
+                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown">
                                     <i class="fa fa-angle-up"></i>
                                     {{ l('HideAdvancedFilters') }}
                                 </span>
@@ -153,31 +120,20 @@
                 </form>
 
                 <div class="row align-items-center">
-                    <!--<Primeng-Datatable-Start>-->
                     <div class="primeng-datatable-container col-12" [busyIf]="primengTableHelper.isLoading">
-                        <p-table
-                            #dataTable
-                            (onLazyLoad)="getProductCrossSellProducts($event)"
+                        <p-table #dataTable (onLazyLoad)="getProductCrossSellProducts($event)"
                             [value]="primengTableHelper.records"
-                            rows="{{ primengTableHelper.defaultRecordsCountPerPage }}"
-                            [paginator]="false"
-                            [lazy]="true"
-                            [scrollable]="true"
-                            ScrollWidth="100%"
-                            [responsive]="primengTableHelper.isResponsive"
-                            [resizableColumns]="primengTableHelper.resizableColumns"
-                        >
+                            rows="{{ primengTableHelper.defaultRecordsCountPerPage }}" [paginator]="false" [lazy]="true"
+                            [scrollable]="true" ScrollWidth="100%" [responsive]="primengTableHelper.isResponsive"
+                            [resizableColumns]="primengTableHelper.resizableColumns">
                             <ng-template pTemplate="header">
                                 <tr>
-                                    <th
-                                        style="width: 130px"
-                                        [hidden]="
+                                    <th style="width: 130px" [hidden]="
                                             !isGrantedAny(
                                                 'Pages.ProductCrossSellProducts.Edit',
                                                 'Pages.ProductCrossSellProducts.Delete'
                                             )
-                                        "
-                                    >
+                                        ">
                                         {{ l('Actions') }}
                                     </th>
                                     <th style="width: 150px" pSortableColumn="primaryProductFk.name">
@@ -196,15 +152,12 @@
                             </ng-template>
                             <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
                                 <tr>
-                                    <td
-                                        style="width: 130px"
-                                        [hidden]="
+                                    <td style="width: 130px" [hidden]="
                                             !isGrantedAny(
                                                 'Pages.ProductCrossSellProducts.Edit',
                                                 'Pages.ProductCrossSellProducts.Delete'
                                             )
-                                        "
-                                    >
+                                        ">
                                         <div class="btn-group dropdown" dropdown container="body">
                                             <button class="dropdown-toggle btn btn-sm btn-primary" dropdownToggle>
                                                 <i class="fa fa-cog"></i>
@@ -213,45 +166,32 @@
                                             </button>
                                             <ul class="dropdown-menu" *dropdownMenu>
                                                 <li>
-                                                    <a
-                                                        href="javascript:;"
-                                                        class="dropdown-item"
-                                                        (click)="viewProductCrossSellProductModal.show(record)"
-                                                    >
+                                                    <a href="javascript:;" class="dropdown-item"
+                                                        (click)="viewProductCrossSellProductModal.show(record)">
                                                         {{ l('View') }}
                                                     </a>
                                                 </li>
                                                 <li>
-                                                    <a
-                                                        href="javascript:;"
-                                                        *ngIf="
+                                                    <a href="javascript:;" *ngIf="
                                                             permission.isGranted('Pages.ProductCrossSellProducts.Edit')
-                                                        "
-                                                        class="dropdown-item"
-                                                        (click)="
+                                                        " class="dropdown-item" (click)="
                                                             createOrEditProductCrossSellProductModal.show(
                                                                 record.productCrossSellProduct.id
                                                             )
-                                                        "
-                                                    >
+                                                        ">
                                                         {{ l('Edit') }}
                                                     </a>
                                                 </li>
                                                 <li>
-                                                    <a
-                                                        class="dropdown-item"
-                                                        href="javascript:;"
-                                                        *ngIf="
+                                                    <a class="dropdown-item" href="javascript:;" *ngIf="
                                                             permission.isGranted(
                                                                 'Pages.ProductCrossSellProducts.Delete'
                                                             )
-                                                        "
-                                                        (click)="
+                                                        " (click)="
                                                             deleteProductCrossSellProduct(
                                                                 record.productCrossSellProduct
                                                             )
-                                                        "
-                                                    >
+                                                        ">
                                                         {{ l('Delete') }}
                                                     </a>
                                                 </li>
@@ -277,27 +217,325 @@
                             {{ l('NoData') }}
                         </div>
                         <div class="primeng-paging-container">
-                            <p-paginator
-                                [rows]="primengTableHelper.defaultRecordsCountPerPage"
-                                #paginator
+                            <p-paginator [rows]="primengTableHelper.defaultRecordsCountPerPage" #paginator
                                 (onPageChange)="getProductCrossSellProducts($event)"
                                 [totalRecords]="primengTableHelper.totalRecordsCount"
                                 [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
-                                [showCurrentPageReport]="true"
-                                [currentPageReportTemplate]="
+                                [showCurrentPageReport]="true" [currentPageReportTemplate]="
                                     'TotalRecordsCount' | localize : primengTableHelper.totalRecordsCount
-                                "
-                            ></p-paginator>
+                                "></p-paginator>
                         </div>
                     </div>
-                    <!--<Primeng-Datatable-End>-->
+                </div> -->
+        <div class="row">
+            <div class="col-xl-12" >
+                <swiper class="swiper-container" [slidesPerView]="5" [spaceBetween]="20"
+                    (swiper)="setControlledSwiper($event)" [navigation]="{ prevEl: prevEl, nextEl: nextEl }"
+                    [breakpoints]="breakpoints">
+                    <ng-template swiperSlide *ngFor="let productView of crossSellProducts">
+                        <div class="product_slide_box">
+                            <div class="product-grid">
+                                <div class="product-image">
+                                    <a href="javascript:;" class="image">
+                                        <img class="pic-1"
+                                            [src]="productView.picture ? productView.picture : '/assets/common/images/p1.png'">
+                                        <img class="pic-2"
+                                            [src]="productView.picture ? productView.picture : '/assets/common/images/p1.png'">
+                                    </a>
+                                </div>
+                                <div class="product-content">
+                                    <ul class="rating justify-content-center">
+                                        <li *ngFor="let star of [1, 2, 3, 4, 5]" class="fas fa-star"
+                                            [ngClass]="{'star_active': star <= productView.numberOfRatings, 'star_not_active': star > productView.numberOfRatings}">
+                                        </li>
+
+                                    </ul>
+                                    <h3 class="title"><a href="javascript:;"> {{productView.product?.name}}</a></h3>
+                                    <div class="price"
+                                        *ngIf="productView.product?.regularPrice && productView.product?.salePrice">
+                                        <span>${{productView.product?.regularPrice | number : '1.2-2'}}</span>
+                                        ${{productView.product?.salePrice | number : '1.2-2'}}
+                                    </div>
+                                    <div class="price" *ngIf="!productView.product?.salePrice">
+                                        ${{productView.product?.regularPrice | number : '1.2-2'}}
+                                    </div>
+                                    <div class="product-button-group">
+                                        <a (click)="onDeleteCrossSellProduct(productId, productView.product?.id)"  class="product-like-icon" href="javascript:;"><i class="fa fa-trash-alt"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </swiper>
+                <div class="w-100 swiper_navigation d-flex justify-content-between">
+                    <button type="button" #nextEl class="swiper-navigation-next">&gt;</button>
+                    <button type="button" #prevEl class="swiper-navigation-prev">&lt;</button>
                 </div>
+                <!-- <swiper class="swiper-container" [slidesPerView]="5" [spaceBetween]="20" (swiper)="setControlledSwiper($event)"
+                    [navigation]="{ prevEl: prevEl, nextEl: nextEl }" [breakpoints]="breakpoints">
+                    <ng-template swiperSlide>
+                        <div class="product_slide_box">
+                            <div class="product-grid">
+                                <div class="product-image">
+                                    <a href="javascript:;" class="image">
+                                        <img class="pic-1"
+                                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeXksRZ_YhDHCU9fo2fhkMWm-X6YgMgJKAsg&usqp=CAU">
+                                        <img class="pic-2"
+                                            src="https://www.columbusmonthly.com/gcdn/authoring/2012/08/02/NCOA/ghows-OH-8c116922-0922-4c22-b245-e572647a1547-f2fc7902.jpeg?width=1200&disable=upscale&format=pjpg&auto=webp">
+                                    </a>
+                                    <span class="product-sale-label">hot</span>
+                                    <span class="product-discount-label">-33%</span>
+                                </div>
+                                <div class="product-content">
+                                    <ul class="rating">
+                                        <li class="fas fa-star"></li>
+                                        <li class="fas fa-star"></li>
+                                        <li class="fas fa-star"></li>
+                                        <li class="fas fa-star"></li>
+                                        <li class="fas fa-star disable"></li>
+                                    </ul>
+                                    <h3 class="title"><a href="javascript:;">Fast Food Combo</a></h3>
+                                    <div class="price"><span>$30.00</span> $20.00</div>
+                                    <div class="product-button-group">
+                                        <a class="product-like-icon" href="javascript:;"><i
+                                                class="fas fa-heart"></i></a>
+                                        <a class="add-to-cart" href="javascript:;"><i
+                                                class="fa fa-shopping-bag"></i>CART</a>
+                                        <a class="product-compare-icon" href="javascript:;"><i
+                                                class="fas fa-random"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                    <ng-template swiperSlide>
+                        <div class="product_slide_box">
+                            <div class="product-grid">
+                                <div class="product-image">
+                                    <a href="javascript:;" class="image">
+                                        <img class="pic-1"
+                                            src="https://happietrio.com/wp-content/uploads/2019/04/ChickenTikkaBiryani-681x1024.jpg">
+                                        <img class="pic-2"
+                                            src="https://www.simplyrecipes.com/thmb/TrcanS_VyacUzoYDWBqUcur529U=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/__opt__aboutcom__coeus__resources__content_migration__simply_recipes__uploads__2019__01__Chicken-Biryani-LEAD-VERTICAL-66c2393ee5c94314aee2d619b52fa3fa.jpg">
+                                    </a>
+                                    <span class="product-sale-label">hot</span>
+                                    <span class="product-discount-label">-33%</span>
+                                </div>
+                                <div class="product-content">
+                                    <ul class="rating">
+                                        <li class="fas fa-star"></li>
+                                        <li class="fas fa-star"></li>
+                                        <li class="fas fa-star"></li>
+                                        <li class="fas fa-star"></li>
+                                        <li class="fas fa-star disable"></li>
+                                    </ul>
+                                    <h3 class="title"><a href="javascript:;">Biriyani</a></h3>
+                                    <div class="price"><span>$30.00</span> $20.00</div>
+                                    <div class="product-button-group">
+                                        <a class="product-like-icon" href="javascript:;"><i
+                                                class="fas fa-heart"></i></a>
+                                        <a class="add-to-cart" href="javascript:;"><i
+                                                class="fa fa-shopping-bag"></i>CART</a>
+                                        <a class="product-compare-icon" href="javascript:;"><i
+                                                class="fas fa-random"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+
+                    <ng-template swiperSlide>
+                        <div class="product_slide_box">
+                            <div class="product-grid">
+                                <div class="product-image">
+                                    <a href="javascript:;" class="image">
+                                        <img class="pic-1"
+                                            src="https://www.foodandwine.com/thmb/JMrJBrYh3fxDRgkV24_8dZH_zpQ=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/FAW-recipes-crispy-buttermilk-fried-chicken-hero-04-3a32f9a4a1984ecab79fb28e93d4bc00.jpg">
+                                        <img class="pic-2"
+                                            src="https://thestayathomechef.com/wp-content/uploads/2016/06/Fried-Chicken-4-1.jpg">
+                                    </a>
+                                    <span class="product-sale-label">hot</span>
+                                    <span class="product-discount-label">-33%</span>
+                                </div>
+                                <div class="product-content">
+                                    <ul class="rating">
+                                        <li class="fas fa-star"></li>
+                                        <li class="fas fa-star"></li>
+                                        <li class="fas fa-star"></li>
+                                        <li class="fas fa-star"></li>
+                                        <li class="fas fa-star disable"></li>
+                                    </ul>
+                                    <h3 class="title"><a href="javascript:;">Fried Chicken</a></h3>
+                                    <div class="price"><span>$30.00</span> $20.00</div>
+                                    <div class="product-button-group">
+                                        <a class="product-like-icon" href="javascript:;"><i
+                                                class="fas fa-heart"></i></a>
+                                        <a class="add-to-cart" href="javascript:;"><i
+                                                class="fa fa-shopping-bag"></i>CART</a>
+                                        <a class="product-compare-icon" href="javascript:;"><i
+                                                class="fas fa-random"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+
+                    <ng-template swiperSlide>
+                        <div class="product_slide_box">
+                            <div class="product-grid">
+                                <div class="product-image">
+                                    <a href="javascript:;" class="image">
+                                        <img class="pic-1"
+                                            src="https://www.thecookierookie.com/wp-content/uploads/2023/04/featured-stovetop-burgers-recipe.jpg">
+                                        <img class="pic-2"
+                                            src="https://www.recipetineats.com/wp-content/uploads/2019/08/Avocado-Chicken-Burgers_9.jpg">
+                                    </a>
+                                    <span class="product-sale-label">hot</span>
+                                    <span class="product-discount-label">-33%</span>
+                                </div>
+                                <div class="product-content">
+                                    <ul class="rating">
+                                        <li class="fas fa-star"></li>
+                                        <li class="fas fa-star"></li>
+                                        <li class="fas fa-star"></li>
+                                        <li class="fas fa-star"></li>
+                                        <li class="fas fa-star disable"></li>
+                                    </ul>
+                                    <h3 class="title"><a href="javascript:;">Naga Burger</a></h3>
+                                    <div class="price"><span>$30.00</span> $20.00</div>
+                                    <div class="product-button-group">
+                                        <a class="product-like-icon" href="javascript:;"><i
+                                                class="fas fa-heart"></i></a>
+                                        <a class="add-to-cart" href="javascript:;"><i
+                                                class="fa fa-shopping-bag"></i>CART</a>
+                                        <a class="product-compare-icon" href="javascript:;"><i
+                                                class="fas fa-random"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+
+                    <ng-template swiperSlide>
+                        <div class="product_slide_box">
+                            <div class="product-grid">
+                                <div class="product-image">
+                                    <a href="javascript:;" class="image">
+                                        <img class="pic-1"
+                                            src="https://www.sbs.com.au/food/sites/sbs.com.au.food/files/2022-04-29-tcu-s3-rx011-aussie-italian-adam-liaw-classic-margherita-pizza-l_50.jpg">
+                                        <img class="pic-2"
+                                            src="https://cdn.britannica.com/93/234293-050-08CDFA33/Chicago-style-pizza.jpg">
+                                    </a>
+                                    <span class="product-sale-label">hot</span>
+                                    <span class="product-discount-label">-33%</span>
+                                </div>
+                                <div class="product-content">
+                                    <ul class="rating">
+                                        <li class="fas fa-star"></li>
+                                        <li class="fas fa-star"></li>
+                                        <li class="fas fa-star"></li>
+                                        <li class="fas fa-star"></li>
+                                        <li class="fas fa-star disable"></li>
+                                    </ul>
+                                    <h3 class="title"><a href="javascript:;"> Special Pizza</a></h3>
+                                    <div class="price"><span>$30.00</span> $20.00</div>
+                                    <div class="product-button-group">
+                                        <a class="product-like-icon" href="javascript:;"><i
+                                                class="fas fa-heart"></i></a>
+                                        <a class="add-to-cart" href="javascript:;"><i
+                                                class="fa fa-shopping-bag"></i>CART</a>
+                                        <a class="product-compare-icon" href="javascript:;"><i
+                                                class="fas fa-random"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+
+                    <ng-template swiperSlide>
+                        <div class="product_slide_box">
+                            <div class="product-grid">
+                                <div class="product-image">
+                                    <a href="javascript:;" class="image">
+                                        <img class="pic-1"
+                                            src="https://www.sbs.com.au/food/sites/sbs.com.au.food/files/2022-04-29-tcu-s3-rx011-aussie-italian-adam-liaw-classic-margherita-pizza-l_50.jpg">
+                                        <img class="pic-2"
+                                            src="https://cdn.britannica.com/93/234293-050-08CDFA33/Chicago-style-pizza.jpg">
+                                    </a>
+                                    <span class="product-sale-label">hot</span>
+                                    <span class="product-discount-label">-33%</span>
+                                </div>
+                                <div class="product-content">
+                                    <ul class="rating">
+                                        <li class="fas fa-star"></li>
+                                        <li class="fas fa-star"></li>
+                                        <li class="fas fa-star"></li>
+                                        <li class="fas fa-star"></li>
+                                        <li class="fas fa-star disable"></li>
+                                    </ul>
+                                    <h3 class="title"><a href="javascript:;"> Special Pizza</a></h3>
+                                    <div class="price"><span>$30.00</span> $20.00</div>
+                                    <div class="product-button-group">
+                                        <a class="product-like-icon" href="javascript:;"><i
+                                                class="fas fa-heart"></i></a>
+                                        <a class="add-to-cart" href="javascript:;"><i
+                                                class="fa fa-shopping-bag"></i>CART</a>
+                                        <a class="product-compare-icon" href="javascript:;"><i
+                                                class="fas fa-random"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+
+                    <ng-template swiperSlide>
+                        <div class="product_slide_box">
+                            <div class="product-grid">
+                                <div class="product-image">
+                                    <a href="javascript:;" class="image">
+                                        <img class="pic-1"
+                                            src="https://www.thecookierookie.com/wp-content/uploads/2023/04/featured-stovetop-burgers-recipe.jpg">
+                                        <img class="pic-2"
+                                            src="https://www.recipetineats.com/wp-content/uploads/2019/08/Avocado-Chicken-Burgers_9.jpg">
+                                    </a>
+                                    <span class="product-sale-label">hot</span>
+                                    <span class="product-discount-label">-33%</span>
+                                </div>
+                                <div class="product-content">
+                                    <ul class="rating">
+                                        <li class="fas fa-star"></li>
+                                        <li class="fas fa-star"></li>
+                                        <li class="fas fa-star"></li>
+                                        <li class="fas fa-star"></li>
+                                        <li class="fas fa-star disable"></li>
+                                    </ul>
+                                    <h3 class="title"><a href="javascript:;">Naga Burger</a></h3>
+                                    <div class="price"><span>$30.00</span> $20.00</div>
+                                    <div class="product-button-group">
+                                        <a class="product-like-icon" href="javascript:;"><i
+                                                class="fas fa-heart"></i></a>
+                                        <a class="add-to-cart" href="javascript:;"><i
+                                                class="fa fa-shopping-bag"></i>CART</a>
+                                        <a class="product-compare-icon" href="javascript:;"><i
+                                                class="fas fa-random"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </swiper>
+                <div class="w-100 swiper_navigation d-flex justify-content-between">
+                    <button type="button" #nextEl class="swiper-navigation-next">&gt;</button>
+                    <button type="button" #prevEl class="swiper-navigation-prev">&lt;</button>
+                </div> -->
+            </div>
+            <div class="col-xl-12" *ngIf="crossSellProducts.length<1">
+                <h4>No Items</h4>
             </div>
         </div>
     </div>
-    <createOrEditProductCrossSellProductModal
-        #createOrEditProductCrossSellProductModal
-        (modalSave)="getProductCrossSellProducts()"
-    ></createOrEditProductCrossSellProductModal>
+    <createOrEditProductCrossSellProductModal #createOrEditProductCrossSellProductModal
+        (modalSave)="getAllCrossSellProduct()"></createOrEditProductCrossSellProductModal>
     <viewProductCrossSellProductModal #viewProductCrossSellProductModal></viewProductCrossSellProductModal>
 </div>
