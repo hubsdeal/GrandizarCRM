@@ -3,9 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {
     ApplicantListComponent
 } from "@app/main/jobManagement/applicantList/applicationListComponent/applicantList.component";
-import {
-    ApplicantDashboardComponent
-} from "@app/main/jobManagement/applicantList/applicantDashboardComponent/applicantDashboard.component";
+
 
 const routes: Routes = [
     {
@@ -13,10 +11,10 @@ const routes: Routes = [
         component: ApplicantListComponent,
         pathMatch: 'full',
     },
-    {
-        path: 'dashboard/:contactApplicantId',
-        component: ApplicantDashboardComponent
-    },
+    // {
+    //     path: 'dashboard/:contactApplicantId',
+    //     component: ApplicantDashboardComponent
+    // },
 ];
 
 @NgModule({
