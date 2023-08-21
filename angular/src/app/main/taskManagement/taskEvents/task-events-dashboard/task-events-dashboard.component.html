@@ -111,8 +111,9 @@
                                     <!-- <p-editor id="description" name="description" ngDefaultControl
                                         [style]="{ height: '400px' }"
                                         placeholder="'Description goes here...'"></p-editor> -->
-                                        <p-editor id="description" name="description" [(ngModel)]="taskEvent.taskEvent.description"
-                            ngDefaultControl [style]="{ height: '400px' }" placeholder="'Type here...'"></p-editor>
+                                    <p-editor id="description" name="description"
+                                        [(ngModel)]="taskEvent.taskEvent.description" ngDefaultControl
+                                        [style]="{ height: '400px' }" placeholder="'Type here...'"></p-editor>
                                 </div>
                             </div>
                         </div>
@@ -165,7 +166,8 @@
                             <div class="tab-content" id="myTabContent">
                                 <!--begin:::Tab pane-->
                                 <div class="tab-pane fade active show" id="task_work_tasks" role="tabpanel">
-                                    <app-taskWorkItems *ngIf="taskEventId" [taskEventId]="taskEventId"></app-taskWorkItems>
+                                    <app-taskWorkItems *ngIf="taskEventId"
+                                        [taskEventId]="taskEventId"></app-taskWorkItems>
                                 </div>
                                 <!--end:::Tab pane-->
 
@@ -351,23 +353,86 @@
                                 <!--begin:::Tab pane-->
                                 <div class="tab-pane fade" id="task_documents" role="tabpanel">
                                     <div class="row">
-                                        <div class="col-xl-3">
+                                        <div class="col-xl-12 mb-5">
+                                            <form action="">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="me-4">
+                                                        <div class="new_media_file">
+                                                            <div class="kt-avatar kt-avatar--outline my-3"
+                                                                id="kt_contacts_edit_avatar">
+                                                                <label class="kt-avatar__upload"
+                                                                    data-toggle="kt-tooltip" title=""
+                                                                    data-original-title="Change avatar">
+                                                                    <i class="fas fa-plus-circle"></i> Upload Now
+                                                                    <!-- <input type="file" ng2FileSelect name="customFile"
+                                                                        id="customFile" accept=".png, .jpg, .jpeg,.pdf"> -->
+                                                                    <input type="file" ng2FileSelect
+                                                                        [uploader]="uploader"
+                                                                        (change)="fileChangeEvent($event)"
+                                                                        class="custom-file-input" id="customFile"
+                                                                        required>
+                                                                </label>
+                                                                <span class="kt-avatar__cancel" data-toggle="kt-tooltip"
+                                                                    title="" data-original-title="Cancel avatar">
+                                                                    <i class="fa fa-times">{{fileName}}</i>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="me-4">
+                                                        <div>
+                                                            <select name="docType" class="form-select" required>
+                                                                <option value="">{{ l('Select Document Type') }}
+                                                                </option>
+                                                                <option *ngFor="let item of docTypes"
+                                                                    value="{{ item.documentType.id }}">
+                                                                    {{ item.documentType.name }}
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-flex align-items-center">
+                                                        <button type="button" class="btn btn-primary"
+                                                            (click)="addDocument()">Add</button>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <span>{{fileName}}</span>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="col-xl-3 taskDoc" *ngFor="let record of taskDocuments">
                                             <div class="p-4 shadow-sm border mb-6">
                                                 <div class="d-flex align-items-center mb-0">
                                                     <!--begin::Symbol-->
                                                     <div class="symbol symbol-50px me-5">
-                                                        <span class="symbol-label bg-light-success">
+                                                        <span class="symbol-label image">
                                                             <!--begin::Svg Icon | path: icons/duotune/abstract/abs027.svg-->
                                                             <span class="svg-icon svg-icon-2x svg-icon-success">
-                                                                <svg width="24" height="24" viewBox="0 0 24 24"
-                                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                    <path opacity="0.3"
-                                                                        d="M21.25 18.525L13.05 21.825C12.35 22.125 11.65 22.125 10.95 21.825L2.75 18.525C1.75 18.125 1.75 16.725 2.75 16.325L4.04999 15.825L10.25 18.325C10.85 18.525 11.45 18.625 12.05 18.625C12.65 18.625 13.25 18.525 13.85 18.325L20.05 15.825L21.35 16.325C22.35 16.725 22.35 18.125 21.25 18.525ZM13.05 16.425L21.25 13.125C22.25 12.725 22.25 11.325 21.25 10.925L13.05 7.62502C12.35 7.32502 11.65 7.32502 10.95 7.62502L2.75 10.925C1.75 11.325 1.75 12.725 2.75 13.125L10.95 16.425C11.65 16.725 12.45 16.725 13.05 16.425Z"
-                                                                        fill="currentColor"></path>
-                                                                    <path
-                                                                        d="M11.05 11.025L2.84998 7.725C1.84998 7.325 1.84998 5.925 2.84998 5.525L11.05 2.225C11.75 1.925 12.45 1.925 13.15 2.225L21.35 5.525C22.35 5.925 22.35 7.325 21.35 7.725L13.05 11.025C12.45 11.325 11.65 11.325 11.05 11.025Z"
-                                                                        fill="currentColor"></path>
-                                                                </svg>
+                                                                <img *ngIf="getFileExtension(record.taskDocument.documentTitle)==='pdf'"
+                                                                    src="assets/common/images/fileTypes/pdf.svg" alt="pdf">
+                                                                <img *ngIf="getFileExtension(record.taskDocument.documentTitle)==='doc'"
+                                                                    src="assets/common/images/fileTypes/doc.svg" alt="doc">
+                                                                <img *ngIf="getFileExtension(record.taskDocument.documentTitle)==='docx'"
+                                                                    src="assets/common/images/fileTypes/doc.svg" alt="docx">
+                                                                <img *ngIf="getFileExtension(record.taskDocument.documentTitle)==='jpg'"
+                                                                    src="{{record.documentUrl}}" alt="Jpg">
+                                                                <img *ngIf="getFileExtension(record.taskDocument.documentTitle)==='png'"
+                                                                    src="{{record.documentUrl}}" alt="png">
+                                                                <img *ngIf="getFileExtension(record.taskDocument.documentTitle)==='jpeg'"
+                                                                    src="{{record.documentUrl}}" alt="jpeg">
+                                                                <img *ngIf="getFileExtension(record.taskDocument.documentTitle)==='zip'"
+                                                                    src="assets/common/images/fileTypes/zip.svg" alt="zip">
+                                                                <img *ngIf="getFileExtension(record.taskDocument.documentTitle)==='css'"
+                                                                    src="assets/common/images/fileTypes/css.svg" alt="css">
+                                                                <img *ngIf="getFileExtension(record.taskDocument.documentTitle)==='csz'"
+                                                                    src="assets/common/images/fileTypes/doc.csv" alt="docx">
+                                                                <img *ngIf="getFileExtension(record.taskDocument.documentTitle)==='txt'"
+                                                                    src="assets/common/images/fileTypes/doc.svg" alt="txt">
+                                                                <img *ngIf="getFileExtension(record.taskDocument.documentTitle)==='pptx'"
+                                                                    src="assets/common/images/fileTypes/ppt.png" alt="pptx">
+                                                                <img *ngIf="getFileExtension(record.taskDocument.documentTitle)==='ppt'"
+                                                                    src="assets/common/images/fileTypes/ppt.png" alt="ppt">
                                                             </span>
                                                             <!--end::Svg Icon-->
                                                         </span>
@@ -375,213 +440,15 @@
                                                     <!--end::Symbol-->
                                                     <!--begin::Text-->
                                                     <div class="d-flex flex-column">
-                                                        <a href="#"
-                                                            class="text-dark text-hover-primary fs-6 fw-bold">Api
-                                                            Document</a>
-                                                        <span class="text-muted fw-bold">PDF</span>
+                                                        <a [href]="record.documentUrl" target="_blank" [download]="record.taskDocument.documentTitle" 
+                                                            class="text-dark text-hover-primary fs-6 fw-bold text-truncate">{{record.taskDocument.documentTitle | truncate:20}} <span><i class="flaticon2-download"></i></span></a>
+                                                        <span class="text-muted fw-bold">{{getFileExtension(record.taskDocument.documentTitle)}}</span>
                                                     </div>
                                                     <!--end::Text-->
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-xl-3">
-                                            <div class="p-4 shadow-sm border mb-6">
-                                                <div class="d-flex align-items-center mb-0">
-                                                    <!--begin::Symbol-->
-                                                    <div class="symbol symbol-50px me-5">
-                                                        <span class="symbol-label bg-light-success">
-                                                            <!--begin::Svg Icon | path: icons/duotune/abstract/abs027.svg-->
-                                                            <span class="svg-icon svg-icon-2x svg-icon-success">
-                                                                <svg width="24" height="24" viewBox="0 0 24 24"
-                                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                    <path opacity="0.3"
-                                                                        d="M21.25 18.525L13.05 21.825C12.35 22.125 11.65 22.125 10.95 21.825L2.75 18.525C1.75 18.125 1.75 16.725 2.75 16.325L4.04999 15.825L10.25 18.325C10.85 18.525 11.45 18.625 12.05 18.625C12.65 18.625 13.25 18.525 13.85 18.325L20.05 15.825L21.35 16.325C22.35 16.725 22.35 18.125 21.25 18.525ZM13.05 16.425L21.25 13.125C22.25 12.725 22.25 11.325 21.25 10.925L13.05 7.62502C12.35 7.32502 11.65 7.32502 10.95 7.62502L2.75 10.925C1.75 11.325 1.75 12.725 2.75 13.125L10.95 16.425C11.65 16.725 12.45 16.725 13.05 16.425Z"
-                                                                        fill="currentColor"></path>
-                                                                    <path
-                                                                        d="M11.05 11.025L2.84998 7.725C1.84998 7.325 1.84998 5.925 2.84998 5.525L11.05 2.225C11.75 1.925 12.45 1.925 13.15 2.225L21.35 5.525C22.35 5.925 22.35 7.325 21.35 7.725L13.05 11.025C12.45 11.325 11.65 11.325 11.05 11.025Z"
-                                                                        fill="currentColor"></path>
-                                                                </svg>
-                                                            </span>
-                                                            <!--end::Svg Icon-->
-                                                        </span>
-                                                    </div>
-                                                    <!--end::Symbol-->
-                                                    <!--begin::Text-->
-                                                    <div class="d-flex flex-column">
-                                                        <a href="#"
-                                                            class="text-dark text-hover-primary fs-6 fw-bold">Api
-                                                            Document</a>
-                                                        <span class="text-muted fw-bold">PDF</span>
-                                                    </div>
-                                                    <!--end::Text-->
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-3">
-                                            <div class="p-4 shadow-sm border mb-6">
-                                                <div class="d-flex align-items-center mb-0">
-                                                    <!--begin::Symbol-->
-                                                    <div class="symbol symbol-50px me-5">
-                                                        <span class="symbol-label bg-light-success">
-                                                            <!--begin::Svg Icon | path: icons/duotune/abstract/abs027.svg-->
-                                                            <span class="svg-icon svg-icon-2x svg-icon-success">
-                                                                <svg width="24" height="24" viewBox="0 0 24 24"
-                                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                    <path opacity="0.3"
-                                                                        d="M21.25 18.525L13.05 21.825C12.35 22.125 11.65 22.125 10.95 21.825L2.75 18.525C1.75 18.125 1.75 16.725 2.75 16.325L4.04999 15.825L10.25 18.325C10.85 18.525 11.45 18.625 12.05 18.625C12.65 18.625 13.25 18.525 13.85 18.325L20.05 15.825L21.35 16.325C22.35 16.725 22.35 18.125 21.25 18.525ZM13.05 16.425L21.25 13.125C22.25 12.725 22.25 11.325 21.25 10.925L13.05 7.62502C12.35 7.32502 11.65 7.32502 10.95 7.62502L2.75 10.925C1.75 11.325 1.75 12.725 2.75 13.125L10.95 16.425C11.65 16.725 12.45 16.725 13.05 16.425Z"
-                                                                        fill="currentColor"></path>
-                                                                    <path
-                                                                        d="M11.05 11.025L2.84998 7.725C1.84998 7.325 1.84998 5.925 2.84998 5.525L11.05 2.225C11.75 1.925 12.45 1.925 13.15 2.225L21.35 5.525C22.35 5.925 22.35 7.325 21.35 7.725L13.05 11.025C12.45 11.325 11.65 11.325 11.05 11.025Z"
-                                                                        fill="currentColor"></path>
-                                                                </svg>
-                                                            </span>
-                                                            <!--end::Svg Icon-->
-                                                        </span>
-                                                    </div>
-                                                    <!--end::Symbol-->
-                                                    <!--begin::Text-->
-                                                    <div class="d-flex flex-column">
-                                                        <a href="#"
-                                                            class="text-dark text-hover-primary fs-6 fw-bold">Api
-                                                            Document</a>
-                                                        <span class="text-muted fw-bold">PDF</span>
-                                                    </div>
-                                                    <!--end::Text-->
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-3">
-                                            <div class="p-4 shadow-sm border mb-6">
-                                                <div class="d-flex align-items-center mb-0">
-                                                    <!--begin::Symbol-->
-                                                    <div class="symbol symbol-50px me-5">
-                                                        <span class="symbol-label bg-light-success">
-                                                            <!--begin::Svg Icon | path: icons/duotune/abstract/abs027.svg-->
-                                                            <span class="svg-icon svg-icon-2x svg-icon-success">
-                                                                <svg width="24" height="24" viewBox="0 0 24 24"
-                                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                    <path opacity="0.3"
-                                                                        d="M21.25 18.525L13.05 21.825C12.35 22.125 11.65 22.125 10.95 21.825L2.75 18.525C1.75 18.125 1.75 16.725 2.75 16.325L4.04999 15.825L10.25 18.325C10.85 18.525 11.45 18.625 12.05 18.625C12.65 18.625 13.25 18.525 13.85 18.325L20.05 15.825L21.35 16.325C22.35 16.725 22.35 18.125 21.25 18.525ZM13.05 16.425L21.25 13.125C22.25 12.725 22.25 11.325 21.25 10.925L13.05 7.62502C12.35 7.32502 11.65 7.32502 10.95 7.62502L2.75 10.925C1.75 11.325 1.75 12.725 2.75 13.125L10.95 16.425C11.65 16.725 12.45 16.725 13.05 16.425Z"
-                                                                        fill="currentColor"></path>
-                                                                    <path
-                                                                        d="M11.05 11.025L2.84998 7.725C1.84998 7.325 1.84998 5.925 2.84998 5.525L11.05 2.225C11.75 1.925 12.45 1.925 13.15 2.225L21.35 5.525C22.35 5.925 22.35 7.325 21.35 7.725L13.05 11.025C12.45 11.325 11.65 11.325 11.05 11.025Z"
-                                                                        fill="currentColor"></path>
-                                                                </svg>
-                                                            </span>
-                                                            <!--end::Svg Icon-->
-                                                        </span>
-                                                    </div>
-                                                    <!--end::Symbol-->
-                                                    <!--begin::Text-->
-                                                    <div class="d-flex flex-column">
-                                                        <a href="#"
-                                                            class="text-dark text-hover-primary fs-6 fw-bold">Api
-                                                            Document</a>
-                                                        <span class="text-muted fw-bold">PDF</span>
-                                                    </div>
-                                                    <!--end::Text-->
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-3">
-                                            <div class="p-4 shadow-sm border mb-6">
-                                                <div class="d-flex align-items-center mb-0">
-                                                    <!--begin::Symbol-->
-                                                    <div class="symbol symbol-50px me-5">
-                                                        <span class="symbol-label bg-light-success">
-                                                            <!--begin::Svg Icon | path: icons/duotune/abstract/abs027.svg-->
-                                                            <span class="svg-icon svg-icon-2x svg-icon-success">
-                                                                <svg width="24" height="24" viewBox="0 0 24 24"
-                                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                    <path opacity="0.3"
-                                                                        d="M21.25 18.525L13.05 21.825C12.35 22.125 11.65 22.125 10.95 21.825L2.75 18.525C1.75 18.125 1.75 16.725 2.75 16.325L4.04999 15.825L10.25 18.325C10.85 18.525 11.45 18.625 12.05 18.625C12.65 18.625 13.25 18.525 13.85 18.325L20.05 15.825L21.35 16.325C22.35 16.725 22.35 18.125 21.25 18.525ZM13.05 16.425L21.25 13.125C22.25 12.725 22.25 11.325 21.25 10.925L13.05 7.62502C12.35 7.32502 11.65 7.32502 10.95 7.62502L2.75 10.925C1.75 11.325 1.75 12.725 2.75 13.125L10.95 16.425C11.65 16.725 12.45 16.725 13.05 16.425Z"
-                                                                        fill="currentColor"></path>
-                                                                    <path
-                                                                        d="M11.05 11.025L2.84998 7.725C1.84998 7.325 1.84998 5.925 2.84998 5.525L11.05 2.225C11.75 1.925 12.45 1.925 13.15 2.225L21.35 5.525C22.35 5.925 22.35 7.325 21.35 7.725L13.05 11.025C12.45 11.325 11.65 11.325 11.05 11.025Z"
-                                                                        fill="currentColor"></path>
-                                                                </svg>
-                                                            </span>
-                                                            <!--end::Svg Icon-->
-                                                        </span>
-                                                    </div>
-                                                    <!--end::Symbol-->
-                                                    <!--begin::Text-->
-                                                    <div class="d-flex flex-column">
-                                                        <a href="#"
-                                                            class="text-dark text-hover-primary fs-6 fw-bold">Api
-                                                            Document</a>
-                                                        <span class="text-muted fw-bold">PDF</span>
-                                                    </div>
-                                                    <!--end::Text-->
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-3">
-                                            <div class="p-4 shadow-sm border mb-6">
-                                                <div class="d-flex align-items-center mb-0">
-                                                    <!--begin::Symbol-->
-                                                    <div class="symbol symbol-50px me-5">
-                                                        <span class="symbol-label bg-light-success">
-                                                            <!--begin::Svg Icon | path: icons/duotune/abstract/abs027.svg-->
-                                                            <span class="svg-icon svg-icon-2x svg-icon-success">
-                                                                <svg width="24" height="24" viewBox="0 0 24 24"
-                                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                    <path opacity="0.3"
-                                                                        d="M21.25 18.525L13.05 21.825C12.35 22.125 11.65 22.125 10.95 21.825L2.75 18.525C1.75 18.125 1.75 16.725 2.75 16.325L4.04999 15.825L10.25 18.325C10.85 18.525 11.45 18.625 12.05 18.625C12.65 18.625 13.25 18.525 13.85 18.325L20.05 15.825L21.35 16.325C22.35 16.725 22.35 18.125 21.25 18.525ZM13.05 16.425L21.25 13.125C22.25 12.725 22.25 11.325 21.25 10.925L13.05 7.62502C12.35 7.32502 11.65 7.32502 10.95 7.62502L2.75 10.925C1.75 11.325 1.75 12.725 2.75 13.125L10.95 16.425C11.65 16.725 12.45 16.725 13.05 16.425Z"
-                                                                        fill="currentColor"></path>
-                                                                    <path
-                                                                        d="M11.05 11.025L2.84998 7.725C1.84998 7.325 1.84998 5.925 2.84998 5.525L11.05 2.225C11.75 1.925 12.45 1.925 13.15 2.225L21.35 5.525C22.35 5.925 22.35 7.325 21.35 7.725L13.05 11.025C12.45 11.325 11.65 11.325 11.05 11.025Z"
-                                                                        fill="currentColor"></path>
-                                                                </svg>
-                                                            </span>
-                                                            <!--end::Svg Icon-->
-                                                        </span>
-                                                    </div>
-                                                    <!--end::Symbol-->
-                                                    <!--begin::Text-->
-                                                    <div class="d-flex flex-column">
-                                                        <a href="#"
-                                                            class="text-dark text-hover-primary fs-6 fw-bold">Api
-                                                            Document</a>
-                                                        <span class="text-muted fw-bold">PDF</span>
-                                                    </div>
-                                                    <!--end::Text-->
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-3">
-                                            <div class="p-4 shadow-sm border mb-6">
-                                                <div class="d-flex align-items-center mb-0">
-                                                    <!--begin::Symbol-->
-                                                    <div class="symbol symbol-50px me-5">
-                                                        <span class="symbol-label bg-light-success">
-                                                            <!--begin::Svg Icon | path: icons/duotune/abstract/abs027.svg-->
-                                                            <span class="svg-icon svg-icon-2x svg-icon-success">
-                                                                <svg width="24" height="24" viewBox="0 0 24 24"
-                                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                    <path opacity="0.3"
-                                                                        d="M21.25 18.525L13.05 21.825C12.35 22.125 11.65 22.125 10.95 21.825L2.75 18.525C1.75 18.125 1.75 16.725 2.75 16.325L4.04999 15.825L10.25 18.325C10.85 18.525 11.45 18.625 12.05 18.625C12.65 18.625 13.25 18.525 13.85 18.325L20.05 15.825L21.35 16.325C22.35 16.725 22.35 18.125 21.25 18.525ZM13.05 16.425L21.25 13.125C22.25 12.725 22.25 11.325 21.25 10.925L13.05 7.62502C12.35 7.32502 11.65 7.32502 10.95 7.62502L2.75 10.925C1.75 11.325 1.75 12.725 2.75 13.125L10.95 16.425C11.65 16.725 12.45 16.725 13.05 16.425Z"
-                                                                        fill="currentColor"></path>
-                                                                    <path
-                                                                        d="M11.05 11.025L2.84998 7.725C1.84998 7.325 1.84998 5.925 2.84998 5.525L11.05 2.225C11.75 1.925 12.45 1.925 13.15 2.225L21.35 5.525C22.35 5.925 22.35 7.325 21.35 7.725L13.05 11.025C12.45 11.325 11.65 11.325 11.05 11.025Z"
-                                                                        fill="currentColor"></path>
-                                                                </svg>
-                                                            </span>
-                                                            <!--end::Svg Icon-->
-                                                        </span>
-                                                    </div>
-                                                    <!--end::Symbol-->
-                                                    <!--begin::Text-->
-                                                    <div class="d-flex flex-column">
-                                                        <a href="#"
-                                                            class="text-dark text-hover-primary fs-6 fw-bold">Api
-                                                            Document</a>
-                                                        <span class="text-muted fw-bold">PDF</span>
-                                                    </div>
-                                                    <!--end::Text-->
-                                                </div>
-                                            </div>
-                                        </div>
+
                                     </div>
                                 </div>
                                 <!--end:::Tab pane-->
