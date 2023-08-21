@@ -179,7 +179,7 @@ export class MyHubListComponent extends AppComponentBase {
         // this.primengTableHelper.getSorting(this.dataTable),
         // this.primengTableHelper.getSkipCount(this.paginator, event),
         // this.primengTableHelper.getMaxResultCount(this.paginator, event)
-        this.employeeId,
+        //this.employeeId,
         '',
         this.skipCount,
         this.maxResultCount
