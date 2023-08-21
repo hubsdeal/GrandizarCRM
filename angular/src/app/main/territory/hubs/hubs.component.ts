@@ -91,7 +91,7 @@ export class HubsComponent extends AppComponentBase {
 
     skipCount: number;
     maxResultCount: number = 10;
-
+    employeeId:number;
     constructor(
         injector: Injector,
         private _hubsServiceProxy: HubsServiceProxy,
@@ -177,6 +177,7 @@ export class HubsComponent extends AppComponentBase {
                 // this.primengTableHelper.getSorting(this.dataTable),
                 // this.primengTableHelper.getSkipCount(this.paginator, event),
                 // this.primengTableHelper.getMaxResultCount(this.paginator, event)
+                this.employeeId,
                 '',
                 this.skipCount,
                 this.maxResultCount
