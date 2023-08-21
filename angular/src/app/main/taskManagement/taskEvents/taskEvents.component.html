@@ -99,10 +99,34 @@
                             <div class="col-md-3">
                                 <div class="my-3 p_filter">
                                     <label class="form-label" for="team">{{ l('Team') }}</label>
-                                    <p-dropdown [options]="employeeList" [filter]="true" [virtualScroll]="true"
+                                    <p-dropdown [style]="{ width: '100%' }" [options]="employeeList" [(ngModel)]="selectedEmployees" optionLabel="displayName" [filter]="true" filterBy="displayName" [showClear]="true" placeholder="Select a employee" (onChange)="onEmployeeSelect($event)">
+                                        <ng-template pTemplate="selectedItem">
+                                            
+                                            <div class="flex align-items-center gap-2" *ngIf="selectedEmployees">
+                                                <!-- <div class="symbol symbol-35px symbol-circle">
+                                                    <span *ngIf ="!selectedEmployees.picture" title="{{selectedEmployees.displayName}}"
+                                                    class="symbol-label bg-warning text-inverse-warning fw-bold">{{selectedEmployees.displayName | nameSplit}}</span>
+                                                    <img *ngIf ="selectedEmployees.picture" alt="Pic" src="{{selectedEmployees.picture}}">
+                                                </div> -->
+                                                <div>{{ selectedEmployees.displayName }}</div>
+                                            </div>
+                                        </ng-template>
+                                        <ng-template let-employee pTemplate="item">
+                                            <div class="flex align-items-center gap-2">
+                                                <!-- <div class="symbol symbol-35px symbol-circle">
+                                                    <span *ngIf ="!employee.picture" title="{{employee.displayName}}"
+                                                class="symbol-label bg-warning text-inverse-warning fw-bold">{{employee.displayName | nameSplit}}</span>
+                                                <img *ngIf ="employee.picture" alt="Pic" src="{{employee.picture}}">
+                                                </div> -->
+                                                <div>{{ employee.displayName }}</div>
+                                            </div>
+                                        </ng-template>
+                                       
+                                    </p-dropdown>
+                                    <!-- <p-dropdown  [filter]="true" [virtualScroll]="true"
                                         placeholder="Select Team" [itemSize]="30" name="employee"
                                         optionLabel="displayName" optionId="id" [(ngModel)]="selectedEmployees"
-                                        filterBy="displayName" [style]="{ width: '100%' }" (onChange)="onEmployeeSelect($event)"></p-dropdown> 
+                                        filterBy="displayName" [style]="{ width: '100%' }" (onChange)="onEmployeeSelect($event)"></p-dropdown>  -->
                                         <!-- <p-multiSelect name="employee" id="employee" [options]="employeeList"
                                     [(ngModel)]="selectedEmployees" optionLabel="displayName" [virtualScroll]="true"
                                     [filter]="true" [itemSize]="34" [maxSelectedLabels]="2"  placeholder="Select Team"
@@ -383,7 +407,7 @@
                                     <td style="width: 180px; text-align: center;">
                                         <div>
                                             <input type="text" pInputText [(ngModel)]="record.taskEvent.completionPercentage" class="w-full"/>
-                                            <p-slider [(ngModel)]="record.taskEvent.completionPercentage" disabled class="w-full"></p-slider>
+                                            <p-slider [(ngModel)]="record.taskEvent.completionPercentage"  class="w-full"></p-slider>
                                         </div>
                                     </td>
                                     <td style="width: 150px">
