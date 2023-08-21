@@ -15,7 +15,7 @@
                     <div>
 
 
-                      <!--  <div class="row align-items-center">
+                        <!--  <div class="row align-items-center">
                             <div class="col-xl-12">
                                 <div class="my-3">
                                     <div class="input-group mb-3">
@@ -37,28 +37,28 @@
                                 <div class="my-3">
                                     <label class="form-label" for="FullNameFilter">{{ l('Resume keywords') }}</label>
                                     <input type="text" class="form-control" id="FullNameFilter" name="fullNameFilter"
-                                           [(ngModel)]="filterText" (ngModelChange)="getContacts()" />
+                                           [(ngModel)]="filterText" (ngModelChange)="getContacts()"/>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="FirstNameFilter">{{ l('Job Title') }}</label>
                                     <input type="text" class="form-control" id="FirstNameFilter" name="firstNameFilter"
-                                           [(ngModel)]="filterText" (ngModelChange)="getContacts()" />
+                                           [(ngModel)]="filterText" (ngModelChange)="getContacts()"/>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="LastNameFilter">{{ l('First Name') }}</label>
                                     <input type="text" class="form-control" id="LastNameFilter" name="lastNameFilter"
-                                           [(ngModel)]="filterText" (ngModelChange)="getContacts()" />
+                                           [(ngModel)]="filterText" (ngModelChange)="getContacts()"/>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="LastNameFilter">{{ l('Last Name') }}</label>
                                     <input type="text" class="form-control" id="LastNameFilter" name="lastNameFilter"
-                                           [(ngModel)]="filterText" (ngModelChange)="getContacts()" />
+                                           [(ngModel)]="filterText" (ngModelChange)="getContacts()"/>
                                 </div>
                             </div>
 
@@ -86,7 +86,8 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="my-3">
-                                    <label class="form-label" for="VerifiedFilterSelect">{{ l('Job Seeking Status') }}</label>
+                                    <label class="form-label" for="VerifiedFilterSelect">{{ l('Job Seeking Status')
+                                        }}</label>
                                     <select class="form-select" name="VerifiedFilter" id="VerifiedFilterSelect"
                                             [(ngModel)]="filterText" (ngModelChange)="getContacts()">
                                         <option value="-1">{{ l('All') }}</option>
@@ -98,7 +99,7 @@
 
                         </div>
 
-<hr>
+                        <hr>
                         <div class="row" [hidden]="!advancedFiltersAreShown">
                             <div class="col-md-12"></div>
 
@@ -116,15 +117,17 @@
 
                             <div class="col-md-3">
                                 <div class="my-3">
-                                    <label class="form-label" for="FullNameFilter">{{ l('Contact Master Tags') }}</label>
+                                    <label class="form-label" for="FullNameFilter">{{ l('Contact Master Tags')
+                                        }}</label>
                                     <input type="text" class="form-control" id="FullNameFilter" name="fullNameFilter"
-                                           [(ngModel)]="filterText" (ngModelChange)="getContacts()" />
+                                           [(ngModel)]="filterText" (ngModelChange)="getContacts()"/>
                                 </div>
                             </div>
 
                             <div class="col-md-3">
                                 <div class="my-3">
-                                    <label class="form-label" for="VerifiedFilterSelect">{{ l('Certificate or License') }}</label>
+                                    <label class="form-label" for="VerifiedFilterSelect">{{ l('Certificate or License')
+                                        }}</label>
                                     <select class="form-select" name="VerifiedFilter" id="VerifiedFilterSelect"
                                             [(ngModel)]="filterText" (ngModelChange)="getContacts()">
                                         <option value="-1">{{ l('All') }}</option>
@@ -161,7 +164,8 @@
 
                             <div class="col-md-3">
                                 <div class="my-3">
-                                    <label class="form-label" for="VerifiedFilterSelect">{{ l('School Or University Name') }}</label>
+                                    <label class="form-label" for="VerifiedFilterSelect">{{ l('School Or University
+                                        Name') }}</label>
                                     <select class="form-select" name="VerifiedFilter" id="VerifiedFilterSelect"
                                             [(ngModel)]="filterText" (ngModelChange)="getContacts()">
                                         <option value="-1">{{ l('All') }}</option>
@@ -173,7 +177,8 @@
 
                             <div class="col-md-3">
                                 <div class="my-3">
-                                    <label class="form-label" for="VerifiedFilterSelect">{{ l('Work Authorization') }}</label>
+                                    <label class="form-label" for="VerifiedFilterSelect">{{ l('Work Authorization')
+                                        }}</label>
                                     <select class="form-select" name="VerifiedFilter" id="VerifiedFilterSelect"
                                             [(ngModel)]="filterText" (ngModelChange)="getContacts()">
                                         <option value="-1">{{ l('All') }}</option>
@@ -197,7 +202,8 @@
 
                             <div class="col-md-3">
                                 <div class="my-3">
-                                    <label class="form-label" for="VerifiedFilterSelect">{{ l('Seniority Level') }}</label>
+                                    <label class="form-label" for="VerifiedFilterSelect">{{ l('Seniority Level')
+                                        }}</label>
                                     <select class="form-select" name="VerifiedFilter" id="VerifiedFilterSelect"
                                             [(ngModel)]="filterText" (ngModelChange)="getContacts()">
                                         <option value="-1">{{ l('All') }}</option>
@@ -209,7 +215,8 @@
 
                             <div class="col-md-3">
                                 <div class="my-3">
-                                    <label class="form-label" for="VerifiedFilterSelect">{{ l('Employment Type') }}</label>
+                                    <label class="form-label" for="VerifiedFilterSelect">{{ l('Employment Type')
+                                        }}</label>
                                     <select class="form-select" name="VerifiedFilter" id="VerifiedFilterSelect"
                                             [(ngModel)]="filterText" (ngModelChange)="getContacts()">
                                         <option value="-1">{{ l('All') }}</option>
@@ -233,7 +240,8 @@
 
                             <div class="col-md-3">
                                 <div class="my-3">
-                                    <label class="form-label" for="VerifiedFilterSelect">{{ l('Contact DataSource') }}</label>
+                                    <label class="form-label" for="VerifiedFilterSelect">{{ l('Contact DataSource')
+                                        }}</label>
                                     <select class="form-select" name="VerifiedFilter" id="VerifiedFilterSelect"
                                             [(ngModel)]="filterText" (ngModelChange)="getContacts()">
                                         <option value="-1">{{ l('All') }}</option>
@@ -257,7 +265,8 @@
 
                             <div class="col-md-3">
                                 <div class="my-3">
-                                    <label class="form-label" for="VerifiedFilterSelect">{{ l('LinkedIn Profile') }}</label>
+                                    <label class="form-label" for="VerifiedFilterSelect">{{ l('LinkedIn Profile')
+                                        }}</label>
                                     <select class="form-select" name="VerifiedFilter" id="VerifiedFilterSelect"
                                             [(ngModel)]="filterText" (ngModelChange)="getContacts()">
                                         <option value="-1">{{ l('All') }}</option>
@@ -293,7 +302,8 @@
 
                             <div class="col-md-3">
                                 <div class="my-3">
-                                    <label class="form-label" for="VerifiedFilterSelect">{{ l('Secreened Profile') }}</label>
+                                    <label class="form-label" for="VerifiedFilterSelect">{{ l('Secreened Profile')
+                                        }}</label>
                                     <select class="form-select" name="VerifiedFilter" id="VerifiedFilterSelect"
                                             [(ngModel)]="filterText" (ngModelChange)="getContacts()">
                                         <option value="-1">{{ l('All') }}</option>
@@ -332,424 +342,243 @@
                     </div>
                 </form>
 
-             <!--   <div class="row align-items-center">
-                    &lt;!&ndash;<Primeng-Datatable-Start>&ndash;&gt;
-                    <div class="primeng-datatable-container col-12" [busyIf]="primengTableHelper.isLoading">
-                        <p-table #dataTable (onLazyLoad)="getContacts($event)" [value]="primengTableHelper.records"
-                                 rows="{{ primengTableHelper.defaultRecordsCountPerPage }}" [paginator]="false" [lazy]="true"
-                                 [scrollable]="true" ScrollWidth="100%" [responsive]="primengTableHelper.isResponsive"
-                                 [resizableColumns]="primengTableHelper.resizableColumns">
-                            <ng-template pTemplate="header">
-                                <tr>
-                                    <th style="width:30px; text-align: center;">
-                                        <label
-                                            class="form-check form-check-custom form-check-inline form-check-solid is-invalid">
-                                            <input class="form-check-input" type="checkbox" value="1">
-                                            <span class="fw-semibold ps-2 fs-6">
-                                            </span>
-                                        </label>
-                                    </th>
-                                    <th style="width: 200px">
-                                        {{l('Name')}}
-                                    </th>
-                                    <th style="width: 220px">
-                                        {{l('Address')}}
-                                    </th>
-                                    <th style="width: 180px">
-                                        {{l('Mobile')}}
-                                    </th>
-                                    <th style="width: 180px">
-                                        {{l('Email')}}
-                                    </th>
-                                    <th style="width: 75px; text-align: center;">
-                                        {{l('Connect')}}
-                                    </th>
 
-                                    <th style="width: 150px; text-align: center;">
-                                        {{l('Social Profile')}}
-                                    </th>
-                                    <th style="width: 65px">
-                                        {{l('Wallet')}}
-                                    </th>
-
-                                    <th style="width: 150px; text-align: center;">
-                                        {{l('Orders')}}
-                                    </th>
-                                    <th style="width: 150px; text-align: center;">
-                                        {{l('Membership')}}
-                                    </th>
-
-                                    &lt;!&ndash; <th style="width: 150px" pSortableColumn="referredByUserFk.name">
-                                        {{ l('Name') }}
-                                        <p-sortIcon field="userName"></p-sortIcon>
-                                    </th>
-                                    <th style="width: 150px" pSortableColumn="countryFk.name">
-                                        {{ l('Name') }}
-                                        <p-sortIcon field="countryName"></p-sortIcon>
-                                    </th>
-                                    <th style="width: 150px" pSortableColumn="stateFk.name">
-                                        {{ l('Name') }}
-                                        <p-sortIcon field="stateName"></p-sortIcon>
-                                    </th>
-                                    <th style="width: 150px" pSortableColumn="membershipTypeFk.name">
-                                        {{ l('Name') }}
-                                        <p-sortIcon field="membershipTypeName"></p-sortIcon>
-                                    </th>
-                                    <th style="width: 150px" pSortableColumn="fullName">
-                                        {{ l('FullName') }}
-                                        <p-sortIcon field="contact.fullName"></p-sortIcon>
-                                    </th>
-                                    <th style="width: 150px" pSortableColumn="firstName">
-                                        {{ l('FirstName') }}
-                                        <p-sortIcon field="contact.firstName"></p-sortIcon>
-                                    </th>
-                                    <th style="width: 150px" pSortableColumn="lastName">
-                                        {{ l('LastName') }}
-                                        <p-sortIcon field="contact.lastName"></p-sortIcon>
-                                    </th>
-                                    <th style="width: 150px" pSortableColumn="fullAddress">
-                                        {{ l('FullAddress') }}
-                                        <p-sortIcon field="contact.fullAddress"></p-sortIcon>
-                                    </th>
-                                    <th style="width: 150px" pSortableColumn="address">
-                                        {{ l('Address') }}
-                                        <p-sortIcon field="contact.address"></p-sortIcon>
-                                    </th>
-                                    <th style="width: 150px" pSortableColumn="zipCode">
-                                        {{ l('ZipCode') }}
-                                        <p-sortIcon field="contact.zipCode"></p-sortIcon>
-                                    </th>
-                                    <th style="width: 150px" pSortableColumn="city">
-                                        {{ l('City') }}
-                                        <p-sortIcon field="contact.city"></p-sortIcon>
-                                    </th>
-                                    <th style="width: 150px" pSortableColumn="dateOfBirth">
-                                        {{ l('DateOfBirth') }}
-                                        <p-sortIcon field="contact.dateOfBirth"></p-sortIcon>
-                                    </th>
-                                    <th style="width: 150px" pSortableColumn="mobile">
-                                        {{ l('Mobile') }}
-                                        <p-sortIcon field="contact.mobile"></p-sortIcon>
-                                    </th>
-                                    <th style="width: 150px" pSortableColumn="officePhone">
-                                        {{ l('OfficePhone') }}
-                                        <p-sortIcon field="contact.officePhone"></p-sortIcon>
-                                    </th>
-                                    <th style="width: 150px" pSortableColumn="countryCode">
-                                        {{ l('CountryCode') }}
-                                        <p-sortIcon field="contact.countryCode"></p-sortIcon>
-                                    </th>
-                                    <th style="width: 150px" pSortableColumn="personalEmail">
-                                        {{ l('PersonalEmail') }}
-                                        <p-sortIcon field="contact.personalEmail"></p-sortIcon>
-                                    </th>
-                                    <th style="width: 150px" pSortableColumn="businessEmail">
-                                        {{ l('BusinessEmail') }}
-                                        <p-sortIcon field="contact.businessEmail"></p-sortIcon>
-                                    </th>
-                                    <th style="width: 150px" pSortableColumn="jobTitle">
-                                        {{ l('JobTitle') }}
-                                        <p-sortIcon field="contact.jobTitle"></p-sortIcon>
-                                    </th>
-                                    <th style="width: 150px" pSortableColumn="companyName">
-                                        {{ l('CompanyName') }}
-                                        <p-sortIcon field="contact.companyName"></p-sortIcon>
-                                    </th>
-                                    <th style="width: 150px" pSortableColumn="aiDataTag">
-                                        {{ l('AiDataTag') }}
-                                        <p-sortIcon field="contact.aiDataTag"></p-sortIcon>
-                                    </th>
-                                    <th style="width: 150px" pSortableColumn="facebook">
-                                        {{ l('Facebook') }}
-                                        <p-sortIcon field="contact.facebook"></p-sortIcon>
-                                    </th>
-                                    <th style="width: 150px" pSortableColumn="linkedIn">
-                                        {{ l('LinkedIn') }}
-                                        <p-sortIcon field="contact.linkedIn"></p-sortIcon>
-                                    </th>
-                                    <th style="width: 150px" pSortableColumn="referred">
-                                        {{ l('Referred') }}
-                                        <p-sortIcon field="contact.referred"></p-sortIcon>
-                                    </th>
-                                    <th style="width: 150px" pSortableColumn="verified">
-                                        {{ l('Verified') }}
-                                        <p-sortIcon field="contact.verified"></p-sortIcon>
-                                    </th>
-                                    <th style="width: 150px" pSortableColumn="score">
-                                        {{ l('Score') }}
-                                        <p-sortIcon field="contact.score"></p-sortIcon>
-                                    </th> &ndash;&gt;
-                                    <th style="width: 130px"
-                                        [hidden]="!isGrantedAny('Pages.Contacts.Edit', 'Pages.Contacts.Delete')">
-                                        {{ l('Actions') }}
-                                    </th>
-                                </tr>
-                            </ng-template>
-                            <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
-                                <tr>
-                                    <td style="width: 30px;">
-                                        <label
-                                            class="form-check form-check-custom form-check-inline form-check-solid is-invalid">
-                                            <input class="form-check-input" type="checkbox" value="1">
-                                            <span class="fw-semibold ps-2 fs-6">
-                                            </span>
-                                        </label>
-                                    </td>
-                                    <td style="width:200px">
-                                        <span class="p-column-title"> {{l('Name')}}</span>
-                                        <div style="width: 200px;" class="text-truncate" title="{{ record.contact.fullName }}">
-                                            <a class="table_title text-primary" href="javascript:;" [routerLink]="['/app/main/crm/contacts/dashboard',record.contact.id]">
-                                                {{ record.contact.fullName }}
-                                                <i class="ml-2 fas fa-check-circle text-success"></i>
-                                            </a>
-                                        </div>
-                                        <div style="width: 200px;" class="text-truncate" title="{{ record.contact.jobTitle }}">
-                                            <small>
-                                                {{ record.contact.jobTitle }}
-                                            </small>
-                                        </div>
-                                        <div style="width: 200px;" class="text-truncate" title="{{record.contact.companyName}}">
-                                            <small>
-                                                {{record.contact.companyName}}
-                                            </small>
-                                        </div>
-                                    </td>
-                                    <td style="width:220px" title="{{record.contact.fullAddress}}">
-                                        <span class="p-column-title"> {{l('FullAddress')}}</span>
-                                        <div style="width: 220px;" class="text-truncate">
-                                            <span>
-                                                {{record.contact.fullAddress}}
-                                            </span>
-                                        </div>
-                                    </td>
-                                    <td style="width:180px">
-                                        <span class="p-column-title"> {{l('Mobile')}}</span>
-                                        <div *ngIf="record.contact.mobile" title="Mobile: {{record.contact.mobile}}">
-                                            <span *ngIf="record.contact.mobile"
-                                                  style="cursor: pointer;">
-                                               <i class="fas fa-mobile-alt text-primary mr-2"></i> {{record.contact.mobile}}
-                                            </span>
-                                            <span *ngIf="!record.contact.mobile" style="cursor: pointer;">
-                                                -
-                                            </span>
-                                        </div>
-                                        <div style="cursor: pointer;" *ngIf="record.contact.officePhone" title="Office Phone: {{record.contact.officePhone}}">
-                                            <i class="fas fa-phone-alt me-1 text-primary"></i>
-                                            <span>{{record.contact.officePhone}}</span>
-                                        </div>
-                                    </td>
-
-                                    <td style="width:180px">
-                                        <span class="p-column-title"> {{l('Email')}}</span>
-                                        <div *ngIf="record.contact.personalEmail" style="width: 180px;" class="text-truncate" title="Personal Email: {{record.contact.personalEmail}}">
-                                            <span style="cursor: pointer;">
-                                               <i class="fas fa-envelope text-primary"></i> {{record.contact.personalEmail}}
-                                            </span>
-                                        </div>
-
-                                        <div *ngIf="record.contact.businessEmail" style="width: 180px;" class="text-truncate" title="Business Email: {{record.contact.businessEmail}}">
-                                            <span style="cursor: pointer;">
-                                               <i class="fas fa-envelope-open text-primary"></i> {{record.contact.businessEmail}}
-                                            </span>
-                                        </div>
-                                    </td>
-                                    <td style="width:75px; text-align: center;">
-                                        <span class="p-column-title">{{ l('Connect') }}</span>
-                                        <a href="javascript:;">
-                                            <i class="fas fa-comments"></i></a>
-                                    </td>
-                                    <td style="width:150px; text-align: center;">
-                                        <span class="p-column-title"> {{l('Social')}}</span>
-                                        <span *ngIf="record.contact.facebook" title="{{record.contact.facebook}}">
-                                            <a class="text-primary me-2 fa-1x" href="{{record.contact.facebook}}"
-                                               target="_blank"><i class="fab fa-facebook-f"></i></a>
-                                        </span>
-                                        <span *ngIf="record.contact.linkedIn" title="{{record.contact.linkedIn}}">
-                                            <a class="text-primary fa-1x" href="{{record.contact.linkedIn}}"
-                                               target="_blank"><i class="fab fa-linkedin-in"></i></a>
-                                        </span>
-                                    </td>
-                                    <td style="width:65px">
-                                        <span class="p-column-title"> {{l('Wallet')}}</span>
-                                        $10
-                                    </td>
-                                    <td style="width:150px; text-align: center;">
-                                        <span class="p-column-title"> {{l('Orders')}}</span>
-                                        10
-                                    </td>
-
-                                    <td style="width:150px; text-align: center;">
-                                        <span class="p-column-title"> {{l('MembershipType')}}</span>
-                                        <span class="badge badge-success">{{ record.membershipTypeName }}</span>
-                                    </td>
+                 <div class="row align-items-center">
+                     <!--<Primeng-Datatable-Start>-->
+                     <div class="primeng-datatable-container col-12" [busyIf]="primengTableHelper.isLoading">
+                         <p-table #dataTable (onLazyLoad)="getContacts($event)" [value]="primengTableHelper.records"
+                             rows="{{ primengTableHelper.defaultRecordsCountPerPage }}" [paginator]="false" [lazy]="true"
+                             [scrollable]="true" ScrollWidth="100%" [responsive]="primengTableHelper.isResponsive"
+                             [resizableColumns]="primengTableHelper.resizableColumns">
+                             <!--<ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
+                                 <div class="w-100">
+                                     {{record.contact.fullName}}
+                                 </div>
+                             </ng-template>-->
+                             <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
 
 
-                                    &lt;!&ndash; <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('Name') }}</span>
-                                        {{ record.userName }}
-                                    </td>
-                                    <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('Name') }}</span>
-                                        {{ record.countryName }}
-                                    </td>
-                                    <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('Name') }}</span>
-                                        {{ record.stateName }}
-                                    </td>
-                                    <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('Name') }}</span>
-                                        {{ record.membershipTypeName }}
-                                    </td>
-                                    <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('FullName') }}</span>
-                                        {{ record.contact.fullName }}
-                                    </td>
-                                    <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('FirstName') }}</span>
-                                        {{ record.contact.firstName }}
-                                    </td>
-                                    <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('LastName') }}</span>
-                                        {{ record.contact.lastName }}
-                                    </td>
-                                    <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('FullAddress') }}</span>
-                                        {{ record.contact.fullAddress }}
-                                    </td>
-                                    <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('Address') }}</span>
-                                        {{ record.contact.address }}
-                                    </td>
-                                    <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('ZipCode') }}</span>
-                                        {{ record.contact.zipCode }}
-                                    </td>
-                                    <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('City') }}</span>
-                                        {{ record.contact.city }}
-                                    </td>
-                                    <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('DateOfBirth') }}</span>
-                                        <span *ngIf="record.contact.dateOfBirth">
-                                            {{ record.contact.dateOfBirth | luxonFormat : 'F' }}
-                                        </span>
-                                        <span *ngIf="!record.contact.dateOfBirth">-</span>
-                                    </td>
-                                    <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('Mobile') }}</span>
-                                        {{ record.contact.mobile }}
-                                    </td>
-                                    <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('OfficePhone') }}</span>
-                                        {{ record.contact.officePhone }}
-                                    </td>
-                                    <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('CountryCode') }}</span>
-                                        {{ record.contact.countryCode }}
-                                    </td>
-                                    <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('PersonalEmail') }}</span>
-                                        {{ record.contact.personalEmail }}
-                                    </td>
-                                    <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('BusinessEmail') }}</span>
-                                        {{ record.contact.businessEmail }}
-                                    </td>
-                                    <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('JobTitle') }}</span>
-                                        {{ record.contact.jobTitle }}
-                                    </td>
-                                    <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('CompanyName') }}</span>
-                                        {{ record.contact.companyName }}
-                                    </td>
-                                    <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('AiDataTag') }}</span>
-                                        {{ record.contact.aiDataTag }}
-                                    </td>
-                                    <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('Facebook') }}</span>
-                                        {{ record.contact.facebook }}
-                                    </td>
-                                    <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('LinkedIn') }}</span>
-                                        {{ record.contact.linkedIn }}
-                                    </td>
-                                    <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('Referred') }}</span>
-                                        <div *ngIf="record.contact.referred" class="text-center">
-                                            <i class="fa fa-check-circle text-success" title="True"></i>
-                                        </div>
-                                        <div *ngIf="!record.contact.referred" class="text-center">
-                                            <i class="fa fa-times-circle" title="False"></i>
-                                        </div>
-                                    </td>
-                                    <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('Verified') }}</span>
-                                        <div *ngIf="record.contact.verified" class="text-center">
-                                            <i class="fa fa-check-circle text-success" title="True"></i>
-                                        </div>
-                                        <div *ngIf="!record.contact.verified" class="text-center">
-                                            <i class="fa fa-times-circle" title="False"></i>
-                                        </div>
-                                    </td>
-                                    <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('Score') }}</span>
-                                        {{ record.contact.score }}
-                                    </td> &ndash;&gt;
-                                    <td style="width: 130px"
-                                        [hidden]="!isGrantedAny('Pages.Contacts.Edit', 'Pages.Contacts.Delete')">
-                                        <div class="btn-group dropdown" dropdown container="body">
-                                            <button class="dropdown-toggle btn btn-sm btn-primary" dropdownToggle>
-                                                <i class="fa fa-cog"></i>
-                                                <span class="caret"></span>
-                                            </button>
-                                            <ul class="dropdown-menu" *dropdownMenu>
-                                                <li>
-                                                    <a href="javascript:;" class="dropdown-item"
-                                                       (click)="viewContactModal.show(record)">
-                                                        {{ l('View') }}
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="javascript:;"
-                                                       *ngIf="permission.isGranted('Pages.Contacts.Edit')"
-                                                       class="dropdown-item"
-                                                       (click)="createOrEditContactModal.show(record.contact.id)">
-                                                        {{ l('Edit') }}
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a class="dropdown-item" href="javascript:;"
-                                                       *ngIf="permission.isGranted('Pages.Contacts.Delete')"
-                                                       (click)="deleteContact(record.contact)">
-                                                        {{ l('Delete') }}
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </ng-template>
-                        </p-table>
-                        <div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
-                            {{ l('NoData') }}
-                        </div>
-                        <div class="primeng-paging-container">
-                            <p-paginator [rows]="primengTableHelper.defaultRecordsCountPerPage" #paginator
-                                         (onPageChange)="getContacts($event)"
-                                         [totalRecords]="primengTableHelper.totalRecordsCount"
-                                         [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
-                                         [showCurrentPageReport]="true" [currentPageReportTemplate]="
-                                    'TotalRecordsCount' | localize : primengTableHelper.totalRecordsCount
-                                "></p-paginator>
-                        </div>
-                    </div>
-                    &lt;!&ndash;<Primeng-Datatable-End>&ndash;&gt;
-                </div>-->
+                                 <div class="card shadow">
+                                     <div class="card-body">
+                                         <div class="w-100 d-flex align-items-center">
+                                             <div class="me-3">
+                                                 <div class="form-check">
+                                                     <input class="form-check-input" type="checkbox" value=""
+                                                            id="flexCheckDefault"/>
+                                                 </div>
+                                             </div>
+                                             <div class="me-5">
+                                                 <div class="symbol symbol-70px symbol-circle">
+                                                     <div class="symbol-label"
+                                                          style="background-image:url(assets/media/avatars/300-6.jpg)"></div>
+                                                 </div>
+                                             </div>
+                                             <div class="ms-3">
+                                                 <div>
+                                                     <a   [routerLink]="['/app/main/jobManagement/ApplicantsList/dashboard/196687']"><h1>Toriqul Islam Dipro </h1></a>
+                                                     <h4>Computer Engineer</h4>
+                                                     <h6>Active </h6>
+                                                 </div>
+                                             </div>
+                                         </div>
+                                         <div class="w-100">
+
+                                             <!--             <div *ngIf="record.educations?.length>0" class="row mb-3 pl-4 ml-3">
+                                                              <p class="others_applicant_info">
+                                                                  Education
+                                                              </p>
+                                                              <div class="applicant_others_exp">
+                                                                  <p *ngFor="let edu of record.educations"> {{edu.name}} -
+                                                                      {{edu.instituteName}}
+                                                                      <small>
+                                                                          {{edu.startDate | date:'LLL yyyy'}} - {{edu.endDate |
+                                                                          date:'LLL yyyy'}}
+                                                                          <span style=" font-weight: bold;"
+                                                                                class="u400">({{calculateYearAndMonthDiff(false,edu.startDate,edu.endDate)}})</span>
+                                                                          <i *ngIf="edu.verified"
+                                                                             class="fas fa-check-circle ml-1"></i>
+                                                                      </small>
+                                                                  </p>
+                                                              </div>
+                                                          </div>-->
+
+                                             <div class="row d-flex align-items-center mb-3 pl-4 ml-3">
+                                                 <div>
+                                                     <p class="others_applicant_info">
+                                                         Experience
+                                                     </p>
+                                                 </div>
+                                                 <div class="applicant_others_exp">
+                                                     <p>Plumber - Ny Plumbing Feb 2023 - Feb 2023 (0 Years 0 Months)</p>
+                                                 </div>
+                                             </div>
+                                             <div class="row mb-3 pl-4 ml-3">
+                                                 <p class="others_applicant_info">
+                                                     Education
+                                                 </p>
+                                                 <div class="applicant_others_exp">
+                                                     <p>
+                                                         Bsc in Civil - NY University Feb 2018 - Feb 2023 (5 Years 0 Months)</p>
+                                                 </div>
+                                             </div>
+                                             <div class="row mb-3 pl-4 ml-3">
+                                                 <p class="others_applicant_info">
+                                                     Key Skills
+                                                 </p>
+                                                 <div class="applicant_others_exp">
+                                                     <p>
+                                                         3D Modeling, Accounting, Administrative Assistant, Biochemistry, Client Services
+                                                     </p>
+                                                 </div>
+                                             </div>
+                                             <div class="row pl-4 ml-3">
+                                                 <p class="others_applicant_info">
+                                                     Updates
+                                                 </p>
+                                                 <div class="applicant_others_exp">
+                                                     <p>
+                                                         Feb 27, 2023, 174 days ago
+                                                     </p>
+                                                 </div>
+                                             </div>
+                                         </div>
+
+                                     </div>
+
+                                     <div class="mt-3 row cust_bottom cust_bottom">
+                                         <div class="pl-0 d-flex">
+                                             <a href="javascript:;">
+                                                 <div class="shadow-sm block_section">
+                                                     <i class="fas fa-check-circle kt-font-success"></i> Now
+                                                     Online
+                                                 </div>
+                                             </a>
+                                             <a href="javascript:;">
+                                                 <div class="shadow-sm block_section">
+                                                     <i class="fas fa-comments"></i> Connect
+                                                 </div>
+                                             </a>
+                                             <a href="javascript:;">
+                                                 <div class="shadow-sm block_section">
+                                                     <i class="fas fa-briefcase"></i> Full Time Jobs
+                                                 </div>
+                                             </a>
+                                             <a href="javascript:;">
+                                                 <div class="shadow-sm block_section">
+                                                     <i class="fas fa-map-marker-alt"></i> Local Gig Work (2)
+                                                 </div>
+                                             </a>
+                                             <a href="javascript:;">
+                                                 <div class="shadow-sm block_section">
+                                                     <i class="fas fa-globe-europe"></i> Remote Jobs (2)
+                                                 </div>
+                                             </a>
+                                             <a href="javascript:;">
+                                                 <div class="shadow-sm block_section">
+                                                     <i class="fas fa-briefcase"></i> Jobs
+                                                     ({{5}})
+                                                 </div>
+                                             </a>
+
+                                             <a href="javascript:;">
+                                                 <div class="shadow-sm block_section">
+                                                     <i class="fas fa-podcast"></i> Interviews
+                                                     ({{3}})
+                                                 </div>
+                                             </a>
+                                             <a href="javascript:;">
+                                                 <div class="shadow-sm block_section">
+                                                     <i class="fas fa-medal"></i> Offers
+                                                     ({{7}})
+                                                 </div>
+                                             </a>
+                                             <!-- <a href="javascript:;">
+                                                 <div class="shadow-sm block_section">
+                                                     <i class="fas fa-user-check"></i> Active
+                                                     ({{record.numberOfActive}})
+                                                 </div>
+                                             </a>
+
+                                             <a href="javascript:;">
+                                                 <div class="shadow-sm block_section">
+                                                     <i class="fas fa-check-circle"></i> Completed
+                                                     ({{record.numberOfCompleted}})
+                                                 </div>
+                                             </a> -->
+                                             <a  target="_blank" class="mr-2 social_icon"
+                                                 href="">
+                                                        <span class="icon_snd">
+                                                            <i class="flaticon-facebook-logo-button"></i>
+                                                        </span>
+                                             </a>
+                                             <a  target="_blank" class="mr-2 social_icon"
+                                                 href="">
+                                                        <span class="icon_snd">
+                                                            <i class="flaticon-linkedin"></i>
+                                                        </span>
+                                             </a>
+                                             <a  href="javascript:;">
+                                                 <!--          <div class="d-flex manager_hr">
+
+                                                                                       <span *ngIf="item.employeePicture"
+                                                                                             title="{{item.employeeName}}"
+                                                                                             class="kt-media kt-media&#45;&#45;sm kt-margin-r-5 ">
+                                                                                           <img src="{{item.employeePicture}}" alt="image">
+                                                                                       </span>
+                                                                                       <span *ngIf="!item.employeePicture"
+                                                                                             title="{{item.employeeName}}"
+                                                                                             class="kt-media kt-media&#45;&#45;sm kt-media&#45;&#45;circle kt-media&#45;&#45;brand kt-margin-r-5">
+                                                                                           <span>{{contactApplicantNameSplit(item.employeeName)}}</span>
+                                                                                       </span>
+
+                                                           </div>-->
+                                             </a>
+                                             <div class="text-right pr-0">
+                                                 <div class="dropdown dropdown-inline text-right">
+                                                     <button type="button"
+                                                             class="btn btn-light btn-elevate-hover btn-icon btn-sm btn-icon-md btn-circle"
+                                                             data-toggle="dropdown" aria-haspopup="true"
+                                                             aria-expanded="false">
+                                                         <i class="flaticon-more-1"></i>
+                                                     </button>
+                                                     <div class="dropdown-menu dropdown-menu-right">
+                                                         <a class="dropdown-item"
+                                                            *ngIf="permission.isGranted('Pages.ContactApplicants.Edit')"><i
+                                                             class="fas fa-edit"></i> Edit
+                                                         </a>
+                                                         <a class="dropdown-item"
+                                                            *ngIf="permission.isGranted('Pages.ContactApplicants.Delete')"><i
+                                                             class="fas fa-trash"></i> Delete
+                                                         </a>
+                                                     </div>
+                                                 </div>
+                                             </div>
+                                         </div>
+                                     </div>
+
+                                 </div>
+
+
+
+                             </ng-template>
+                         </p-table>
+                         <div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
+                             {{ l('NoData') }}
+                         </div>
+                         <div class="primeng-paging-container">
+                             <p-paginator [rows]="primengTableHelper.defaultRecordsCountPerPage" #paginator
+                                 (onPageChange)="getContacts($event)"
+                                 [totalRecords]="primengTableHelper.totalRecordsCount"
+                                 [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
+                                 [showCurrentPageReport]="true" [currentPageReportTemplate]="
+                                     'TotalRecordsCount' | localize : primengTableHelper.totalRecordsCount
+                                 "></p-paginator>
+                         </div>
+                     </div>
+                     <!--<Primeng-Datatable-End>-->
+                 </div>
+
             </div>
         </div>
     </div>
-<!--    <createOrEditContactModal #createOrEditContactModal (modalSave)="getContacts()"></createOrEditContactModal>-->
-<!--    <viewContactModal #viewContactModal></viewContactModal>-->
 </div>

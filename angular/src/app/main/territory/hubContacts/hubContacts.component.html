@@ -177,21 +177,17 @@
                                         <div style="width: 200px;" class="text-truncate"
                                             title="{{ record.contactName }}">
                                             <a class="table_title text-primary" href="javascript:;"
-                                                [routerLink]="['/app/main/crm/contacts/dashboard',record.id]">
+                                                [routerLink]="['/app/main/crm/contacts/dashboard',record.hubContact.contactId]">
                                                 {{ record.contactName }}
                                                 <i class="ml-2 fas fa-check-circle text-success"></i>
                                             </a>
                                         </div>
-                                        <div *ngIf="record.jobTitle" style="width: 200px;" class="text-truncate" title="Job TItle">
+                                        <div *ngIf="record.jobTitle" style="width: 200px;" class="text-truncate"
+                                            title="Job TItle">
                                             <small>
                                                 {{record.jobTitle}}
                                             </small>
                                         </div>
-                                        <!-- <div *ngIf="record." style="width: 200px;" class="text-truncate" title="Company Name">
-                                            <small>
-                                                Jobaar Technology LTD
-                                            </small>
-                                        </div> -->
                                     </td>
                                     <td style="width:220px" title="Address">
                                         <span class="p-column-title"> {{l('FullAddress')}}</span>
@@ -211,7 +207,8 @@
                                                 -
                                             </span> -->
                                         </div>
-                                        <div *ngIf="record.officePhone" style="cursor: pointer;" title="Office Phone: {{record.officePhone}}">
+                                        <div *ngIf="record.officePhone" style="cursor: pointer;"
+                                            title="Office Phone: {{record.officePhone}}">
                                             <i class="fas fa-phone-alt me-1 text-primary"></i>
                                             <span>{{record.officePhone}}</span>
                                         </div>
@@ -229,20 +226,22 @@
                                         <div style="width: 220px;" class="text-truncate" *ngIf="record.businessEmail"
                                             title="Business Email: {{record.businessEmail}}">
                                             <span style="cursor: pointer;">
-                                                <i class="fas fa-envelope-open text-primary"></i> {{record.businessEmail}}
+                                                <i class="fas fa-envelope-open text-primary"></i>
+                                                {{record.businessEmail}}
                                             </span>
                                         </div>
                                     </td>
                                     <td style="width:75px; text-align: center;">
                                         <span class="p-column-title">{{ l('Connect') }}</span>
-                                        <a href="javascript:;">
-                                            <i class="fas fa-comments"></i></a>
+                                        <a href="javascript:;" (click)="onConnectClick(record.hubContact.id)">
+                                            <i class="fas fa-comments text-primary fs-3"></i>
+                                        </a>
                                     </td>
                                     <td style="width:150px; text-align: center;">
                                         <span class="p-column-title"> {{l('Social')}}</span>
                                         <span *ngIf="record.facebook">
-                                            <a class="text-primary me-2 fa-1x" href="{{record.facebook}}" target="_blank"><i
-                                                    class="fab fa-facebook-f"></i></a>
+                                            <a class="text-primary me-2 fa-1x" href="{{record.facebook}}"
+                                                target="_blank"><i class="fab fa-facebook-f"></i></a>
                                         </span>
                                         <span *ngIf="record.linkedIn">
                                             <a class="text-primary fa-1x" href="{{record.linkedIn}}" target="_blank"><i
@@ -332,4 +331,5 @@
     <createOrEditHubContactModal #createOrEditHubContactModal (modalSave)="getHubContacts()">
     </createOrEditHubContactModal>
     <viewHubContactModal #viewHubContactModal></viewHubContactModal>
+    <oneToOneConnectModal #oneToOneConnectModal></oneToOneConnectModal>
 </div>

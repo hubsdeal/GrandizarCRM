@@ -17,6 +17,7 @@ import { filter as _filter } from 'lodash-es';
 import { DateTime } from 'luxon';
 
 import { DateTimeService } from '@app/shared/common/timing/date-time.service';
+import { OneToOneConnectModalComponent } from '@app/shared/one-to-one-connect-modal/one-to-one-connect-modal.component';
 
 @Component({
     selector: 'app-hubStores',
@@ -46,6 +47,8 @@ export class HubStoresComponent extends AppComponentBase {
     selectedInput: number[] = [];
     @Input() hubId:number;
 
+    hubAddress: string;
+    @ViewChild('oneToOneConnectModal', { static: true }) oneToOneConnectModal: OneToOneConnectModalComponent;
     constructor(
         injector: Injector,
         private _hubStoresServiceProxy: HubStoresServiceProxy,
@@ -159,5 +162,9 @@ export class HubStoresComponent extends AppComponentBase {
         this.storeNameFilter = '';
 
         this.getHubStores();
+    }
+    onConnectClick(id: number) {
+        this.oneToOneConnectModal.storeId = id;
+        this.oneToOneConnectModal.show();
     }
 }

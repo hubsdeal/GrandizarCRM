@@ -1,10 +1,10 @@
 ﻿<div [@routerTransition]>
-    <sub-header [title]="'Store Data - Tags and Questions Answer Settings' | localize" [description]="">
+    <!-- <sub-header [title]="'Store Data - Tags and Questions Answer Settings' | localize" [description]="">
         <div role="actions">
-            <!-- <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1">
+            <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1">
                 <i class="fa fa-file-excel"></i>
                 {{ l('ExportToExcel') }}
-            </button> -->
+            </button>
 
             <button *ngIf="isGranted('Pages.StoreMasterTagSettings.Create')" (click)="createStoreMasterTagSetting()"
                 class="btn btn-primary blue">
@@ -12,7 +12,37 @@
                 {{ l('Tags and Questions Answer Settings') }}
             </button>
         </div>
-    </sub-header>
+    </sub-header> -->
+
+    <div class="w-100 d-flex mb-6 ps-9 pe-9 mt-6 justify-content-between align-items-center ng-tns-c282-7">
+        <div class="d-flex align-items-center">
+            <h1 class="fs-3 fw-bold  my-0 page-heading text-dark me-6">
+                Settings for Store Tag & Question 
+            </h1>
+            <div class="p_filter me-6">
+                <p-dropdown [options]="storeTagSettingCategoryOptions" [filter]="true"
+                    [virtualScroll]="true" (onChange)="onStoreTagSettingCategoryClick($event)"
+                    placeholder="Select Store Category" [itemSize]="30" name="displayName"
+                    optionLabel="displayName" optionId="id" [(ngModel)]="selectedStoreTagSettingCategory"
+                    filterBy="displayName" required [style]="{ width: '100%' }"></p-dropdown>
+            </div>
+            <button class="btn btn-primary btn-sm">
+                Tags <span class="badge badge-circle badge-success ms-2">5</span>
+            </button>
+        </div>
+        <div>
+            <button *ngIf="isGranted('Pages.ProductNotes.Create')" (click)="createStoreMasterTagSettingStoreTags()"
+                class="btn btn-primary blue me-3">
+                <i class="fa fa-plus"></i>
+                Add Tags
+            </button>
+            <button *ngIf="isGranted('Pages.ProductNotes.Create')"
+                (click)="createStoreMasterTagSettingStoreTagsQuestions()" class="btn btn-primary blue">
+                <i class="fa fa-plus"></i>
+                Add Question
+            </button>
+        </div>
+    </div>
 
     <div [class]="containerClass">
         <div class="card card-custom gutter-b">
@@ -145,49 +175,79 @@
                 <div class="row align-items-center">
                     <!--<Primeng-Datatable-Start>-->
                     <div class="primeng-datatable-container col-12" [busyIf]="primengTableHelper.isLoading">
-                        <p-table #dataTable (onLazyLoad)="getStoreMasterTagSettings($event)"
+                        <p-table #dataTable (onLazyLoad)="getStoreMasterTagSettings($event)" cdkDropList
+                            class="example-list" (cdkDropListDropped)="drop($event)"
                             [value]="primengTableHelper.records"
                             rows="{{ primengTableHelper.defaultRecordsCountPerPage }}" [paginator]="false" [lazy]="true"
                             [scrollable]="true" ScrollWidth="100%" [responsive]="primengTableHelper.isResponsive"
                             [resizableColumns]="primengTableHelper.resizableColumns">
-                            <ng-template pTemplate="header">
-                                <tr>
-
-                                    <th style="width: 200px">
-                                        {{ l('Store Business Type ') }}
-                                    </th>
-                                    <th style="width: 150px">
-                                        {{ l('Tag Category') }}
-                                    </th>
-                                    <th style="width: 150px">
-                                        {{ l('Custom Title') }}
-                                    </th>
-                                    <th style="width: 150px">
-                                        {{ l('Tag Questions') }}
-                                    </th>
-                                    
-                                    <!-- <th style="width: 150px" pSortableColumn="displaySequence">
-                                        {{ l('DisplaySequence') }}
-                                        <p-sortIcon field="storeMasterTagSetting.displaySequence"></p-sortIcon>
-                                    </th> -->
-                                    <th style="width: 150px">
-                                        {{ l('Answer Type') }}
-                                    </th>
-                                    <th style="width: 150px">
-                                        {{ l('Display Public') }}
-                                    </th>
-                                    <th style="width: 130px" [hidden]="
-                                            !isGrantedAny(
-                                                'Pages.StoreMasterTagSettings.Edit',
-                                                'Pages.StoreMasterTagSettings.Delete'
-                                            )">
-                                        {{ l('Actions') }}
-                                    </th>
-                                </tr>
-                            </ng-template>
                             <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
-                                <tr>
-                                    
+                                <div class="card drag_drop_card mb-6">
+                                    <div class="card-body p-0">
+                                        <div cdkDrag
+                                            class="example-box notice align-items-start d-flex bg-light-primary rounded border-primary border border-dashed p-6">
+                                            <span class="svg-icon svg-icon-2tx svg-icon-primary me-4">
+                                                <svg width="24" height="25" viewBox="0 0 24 25" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path opacity="0.3"
+                                                        d="M8.9 21L7.19999 22.6999C6.79999 23.0999 6.2 23.0999 5.8 22.6999L4.1 21H8.9ZM4 16.0999L2.3 17.8C1.9 18.2 1.9 18.7999 2.3 19.1999L4 20.9V16.0999ZM19.3 9.1999L15.8 5.6999C15.4 5.2999 14.8 5.2999 14.4 5.6999L9 11.0999V21L19.3 10.6999C19.7 10.2999 19.7 9.5999 19.3 9.1999Z"
+                                                        fill="currentColor" />
+                                                    <path
+                                                        d="M21 15V20C21 20.6 20.6 21 20 21H11.8L18.8 14H20C20.6 14 21 14.4 21 15ZM10 21V4C10 3.4 9.6 3 9 3H4C3.4 3 3 3.4 3 4V21C3 21.6 3.4 22 4 22H9C9.6 22 10 21.6 10 21ZM7.5 18.5C7.5 19.1 7.1 19.5 6.5 19.5C5.9 19.5 5.5 19.1 5.5 18.5C5.5 17.9 5.9 17.5 6.5 17.5C7.1 17.5 7.5 17.9 7.5 18.5Z"
+                                                        fill="currentColor" />
+                                                </svg>
+                                            </span>
+                                            <div class="d-flex flex-stack flex-grow-1">
+                                                <div class="fw-semibold tag_block_custom">
+                                                    <h4
+                                                        class="text-gray-600 fw-bold d-flex justify-content-between align-items-center">
+                                                        {{record.masterTagCategoryName}}
+                                                        <span class="d-flex align-items-center">
+                                                            <span class="me-4 cursor-move">
+                                                                <i class="fa-solid fa-bars fs-1 me-4 text-primary"></i>
+                                                            </span>
+                                                            <span
+                                                                class="badge badge-primary badge-square badge-lg">4</span>
+                                                        </span>
+                                                    </h4>
+                                                    <div class="fs-6">
+                                                        <div style="display: inline-block;" class="row w-100 pl-2">
+                                                            <span>
+                                                                <button type="button"
+                                                                    class="btn btn-outline-brand btn-sm active">
+                                                                    <!-- <p-progressSpinner
+                                                                        *ngIf="loader_anim_show && (tags.id==loaderSelectedMasterTagId)"
+                                                                        [style]="{width: '19px', height: '19px', position:'absolute'}"
+                                                                        styleClass="custom-spinner" strokeWidth="8"
+                                                                        fill="#EEEEEE" animationDuration=".5s">
+                                                                    </p-progressSpinner> -->
+                                                                    <!-- <i class="fas fa-plus mr-2"></i> -->
+                                                                    <i class="fas fa-check-circle mr-2"></i>
+                                                                    Chinese
+                                                                </button>
+                                                            </span>
+                                                            <span>
+                                                                <button type="button"
+                                                                    class="btn btn-outline-brand btn-sm active">
+                                                                    <!-- <p-progressSpinner
+                                                                        *ngIf="loader_anim_show && (tags.id==loaderSelectedMasterTagId)"
+                                                                        [style]="{width: '19px', height: '19px', position:'absolute'}"
+                                                                        styleClass="custom-spinner" strokeWidth="8"
+                                                                        fill="#EEEEEE" animationDuration=".5s">
+                                                                    </p-progressSpinner> -->
+                                                                    <!-- <i class="fas fa-plus mr-2"></i> -->
+                                                                    <i class="fas fa-check-circle mr-2"></i>
+                                                                    Chinese
+                                                                </button>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <tr>
                                     <td style="width: 200px">
                                         <span class="p-column-title">{{ l('Name') }}</span>
                                         {{ record.storeTagSettingCategoryName }}
@@ -204,11 +264,6 @@
                                         <span class="p-column-title">{{ l('CustomTagChatQuestion') }}</span>
                                         {{ record.storeMasterTagSetting.customTagChatQuestion }}
                                     </td>
-                                    
-                                    <!-- <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('DisplaySequence') }}</span>
-                                        {{ record.storeMasterTagSetting.displaySequence }}
-                                    </td> -->
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('AnswerTypeId') }}</span>
                                         {{ l(answerType[record.storeMasterTagSetting.answerTypeId]) }}
@@ -233,12 +288,6 @@
                                                 <span class="caret"></span>
                                             </button>
                                             <ul class="dropdown-menu" *dropdownMenu>
-                                                <!-- <li>
-                                                    <a href="javascript:;" class="dropdown-item"
-                                                        (click)="viewStoreMasterTagSettingModal.show(record)">
-                                                        {{ l('View') }}
-                                                    </a>
-                                                </li> -->
                                                 <li>
                                                     <a href="javascript:;" *ngIf="
                                                             permission.isGranted('Pages.StoreMasterTagSettings.Edit')
@@ -262,7 +311,7 @@
                                             </ul>
                                         </div>
                                     </td>
-                                </tr>
+                                </tr> -->
                             </ng-template>
                         </p-table>
                         <div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">

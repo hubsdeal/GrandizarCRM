@@ -42,6 +42,9 @@ export class CreateOrEditStoreMasterTagSettingModalComponent extends AppComponen
     masterTagCategoryOptions: any = []
     answerTypeOptions: { value: any, label: string }[] = [];
 
+    isStoreTag: boolean = false;
+    isStoreTagQuestion: boolean = false;
+
     constructor(
         injector: Injector,
         private _storeMasterTagSettingsServiceProxy: StoreMasterTagSettingsServiceProxy,
@@ -111,7 +114,7 @@ export class CreateOrEditStoreMasterTagSettingModalComponent extends AppComponen
         if (event.value != null) {
             this.storeMasterTagSetting.masterTagCategoryId = event.value.id;
             this.storeMasterTagSetting.customTagTitle = event.value.displayName;
-            this.storeMasterTagSetting.customTagChatQuestion = 'What is'+ ' ' + event.value.displayName + '?';
+            this.storeMasterTagSetting.customTagChatQuestion = 'What is' + ' ' + event.value.displayName + '?';
         }
     }
     openSelectStoreTagSettingCategoryModal() {
@@ -148,6 +151,8 @@ export class CreateOrEditStoreMasterTagSettingModalComponent extends AppComponen
     }
 
     close(): void {
+        this.isStoreTag = false;
+        this.isStoreTagQuestion = false;
         this.active = false;
         this.modal.hide();
     }

@@ -491,8 +491,9 @@
                                     </td>
                                     <td style="width:75px; text-align: center;">
                                         <span class="p-column-title">{{ l('Connect') }}</span>
-                                        <a href="javascript:;">
-                                            <i class="fas fa-comments"></i></a>
+                                        <a href="javascript:;" (click)="onConnectClick(record.contact.id)">
+                                            <i class="fas fa-comments text-primary fs-3"></i>
+                                        </a>
                                     </td>
                                     <td style="width:150px; text-align: center;">
                                         <span class="p-column-title"> {{l('Social')}}</span>
@@ -688,4 +689,5 @@
     </div>
     <createOrEditContactModal #createOrEditContactModal (modalSave)="getContacts()"></createOrEditContactModal>
     <viewContactModal #viewContactModal></viewContactModal>
+    <oneToOneConnectModal #oneToOneConnectModal></oneToOneConnectModal>
 </div>

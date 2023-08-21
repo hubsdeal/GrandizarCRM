@@ -1,0 +1,285 @@
+﻿<div class="row custom_row_padding">
+    <div class="kt-portlet mt-4">
+        <div class="kt-portlet__head">
+            <div class="kt-portlet__head-label">
+                                            <span class="kt-portlet__head-icon">
+                                                <i class="fas fa-clipboard-list"></i>
+                                            </span>
+                <h3 class="kt-portlet__head-title">
+                    Resume Builder
+                </h3>
+            </div>
+            <div class="kt-portlet__head-toolbar">
+                <div class="kt-portlet__head-actions">
+                    <a href="javascript:;"
+
+                       class="btn btn-default btn-pill btn-sm btn-icon btn-icon-md">
+                        <i class="flaticon2-down"></i>
+                    </a>
+                    <a  href="javascript:;"
+
+                       class="btn btn-default btn-pill btn-sm btn-icon btn-icon-md">
+                        <i class="flaticon2-up"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div  style="padding-left:4rem"
+             class="kt-portlet__body pb-0">
+            <div class="w-100">
+                <form class="kt-form" id="kt_user_add_form" novalidate="novalidate"
+                      #contactApplicantForm="ngForm">
+                    <!--begin: Form Wizard Step 1-->
+                    <div class="kt-wizard-v4__content" data-ktwizard-type="step-content"
+                         data-ktwizard-state="current">
+                        <div class="kt-section kt-section--first mb-0">
+                            <div class="kt-wizard-v4__form">
+                                <div class="row">
+                                    <div class="col-xl-7">
+                                        <div class="kt-section__body">
+                                            <div class="form-group mb-2 row">
+                                                <label
+                                                    class="col-xl-12 col-lg-12 col-form-label">Photo</label>
+                                                <div class="col-xl-12 col-lg-12 ">
+                                                    <div class="kt-avatar kt-avatar--outline"
+                                                         id="kt_user_add_avatar">
+                                                        <div class="kt-avatar__holder"
+                                                             style="background-image:">
+                                                            <img class="avatar_new_up_brand"
+                                                                 [src]="imageSrc"
+                                                                 *ngIf="imageSrc"
+                                                                 alt="image">
+                                                        </div>
+                                                        <label class="kt-avatar__upload"
+                                                               data-toggle="kt-tooltip"
+                                                               title=""
+                                                               data-original-title="Change avatar">
+                                                            <i
+                                                                class="fas fa-pencil-alt"></i>
+                                                            <input type="file"
+                                                                   name="kt_user_add_user_avatar"
+                                                                   ng2FileSelect>
+                                                        </label>
+                                                        <span class="kt-avatar__cancel"
+                                                              data-toggle="kt-tooltip"
+                                                              title=""
+                                                              data-original-title="Cancel avatar">
+                                                                                        <i
+                                                                                            class="fas fa-pencil-alt"></i>
+                                                                                    </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group mb-2 row">
+                                                <div class="col-xl-6 col-lg-6">
+                                                    <label class="col-form-label">First
+                                                        Name*</label>
+                                                    <input type="text"
+                                                           id="ContactApplicant_FirstName"
+                                                           class="form-control"
+
+                                                           name="FirstName" minlength="1"
+                                                           maxlength="512" required />
+                                                </div>
+                                                <div class="col-xl-6 col-lg-6">
+                                                    <label class="col-form-label">Last
+                                                        Name*</label>
+                                                    <input type="text"
+                                                           id="ContactApplicant_LastName"
+                                                           class="form-control"
+
+                                                           name="LastName" minlength="1"
+                                                           maxlength="512" />
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group mb-2 row">
+                                                <div class="col-xl-6 col-lg-6">
+                                                    <label class="col-form-label">Job
+                                                        Title</label>
+                                                    <input type="text"
+                                                           id="ContactApplicant_JobTitle"
+                                                           class="form-control"
+
+                                                           name="JobTitle" minlength="1"
+                                                           maxlength="256" />
+                                                </div>
+                                                <div class="col-xl-6 col-lg-6">
+                                                    <label class="col-form-label">Employer
+                                                        Name</label>
+                                                    <input type="text"
+                                                           id="ContactApplicant_CompanyName"
+                                                           class="form-control"
+
+                                                           maxlength="512" />
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group mb-2 row">
+                                                <div class="col-xl-6 col-lg-6">
+                                                    <label class="col-form-label">
+                                                        Date of Birth
+                                                    </label>
+                                                    <input class="form-control m-input"
+                                                           type="datetime" bsDatepicker
+                                                           datePickerMomentModifier
+                                                           id="ContactApplicant_DateOfBirth"
+                                                           name="ContactApplicant_DateOfBirth">
+                                                </div>
+                                                <div class="col-xl-6 col-lg-6">
+                                                    <label class="col-form-label">
+                                                        Tax/SSN
+                                                    </label>
+                                                    <input type="text"
+                                                           id="ContactApplicant_TaxOrSsn"
+                                                           class="form-control"
+                                                           name="TaxOrSsn" minlength="1"
+                                                           maxlength="128" />
+                                                </div>
+                                            </div>
+
+                                            <!-- <div class="form-group mb-2 row">
+                                                <div class="col-xl-6 col-lg-6">
+                                                    <label class="col-form-label">
+                                                        Years of Experience
+                                                    </label>
+                                                    <input type="text"
+                                                        id="ContactApplicant_YearsOfExperience"
+                                                        class="form-control"
+                                                        [(ngModel)]="contactApplicant.yearsOfExperience"
+                                                        name="YearsOfExperience"
+                                                        minlength="1" maxlength="128" />
+                                                </div>
+                                            </div> -->
+
+                                            <div class="form-group mb-2 row">
+                                                <div class="col-xl-12 mt-4 new_media_file">
+                                                    <label class="col-form-label">
+                                                        Upload Resume
+                                                        <small style="margin-top: 1px;"
+                                                               class="ml-1">
+                                                            (PDF, Doc and Docx Only. Max 5
+                                                            MB)
+                                                        </small>
+                                                    </label>
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="mr-2">
+                                                            <p-fileUpload auto="true"
+                                                                          id="resumeUpload"
+                                                                          name="resumeUpload[]"
+
+                                                                          chooseLabel="Select File">
+                                                            </p-fileUpload>
+                                                        </div>
+                                                        <div
+                                                            class="mt-2 kt-font-brand">
+
+                                                        </div>
+
+
+                                                    </div>
+                                                </div>
+
+                                                <label
+                                                    class="col-xl-12 col-lg-12 col-form-label">Copy
+                                                    Paste Resume</label>
+                                                <div class="col-xl-12 col-lg-12 ">
+                                                    <p-editor id="descriptions"
+                                                              name="descriptions"
+                                                              [style]="{'height':'300px'}"
+                                                    >
+                                                    </p-editor>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group mt-4 mb-4">
+                                                <label>URL*</label>
+                                                <div class="d-flex">
+                                                    <input type="text" class="form-control"
+                                                           name="url" id="url"
+                                                           aria-describedby="emailHelp"
+                                                           placeholder="Enter URL">
+                                                    <a href="javascript:;"
+                                                       class="custom_check_link_edit">
+                                                        <i class="fas fa-search"></i>
+                                                        Availability
+                                                    </a>
+                                                </div>
+                                                <div class="mt-2">
+                                                                                <span class="form-text text-brand">*URL
+                                                                                    is available</span>
+                                                    <span class="form-text text-danger">*URL is
+                                                                                    not
+                                                                                    available</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="row ml-0">
+                                                <div class="form-group mb-2 mr-4">
+                                                    <p-selectButton
+                                                        name="ContactApplicant_RemoteWorkOnly"
+                                                        id="ContactApplicant_RemoteWorkOnly">
+                                                    </p-selectButton>
+                                                    <!-- <label
+                                                        for="ContactApplicant_RemoteWorkOnly"
+                                                        class="kt-checkbox">
+                                                        <input
+                                                            id="ContactApplicant_RemoteWorkOnly"
+                                                            type="checkbox"
+                                                            name="RemoteWorkOnly"
+                                                            [(ngModel)]="contactApplicant.remoteWorkOnly">
+                                                        {{l("Remote Work Only")}}
+                                                        <span></span>
+                                                    </label> -->
+                                                </div>
+                                                <div class="form-group mb-2 ml-3">
+                                                    <p-selectButton
+                                                        name="contactApplicantverified"
+                                                        id="contactApplicantverified">
+                                                    </p-selectButton>
+                                                    <!-- <label for="contactApplicantverified"
+                                                        class="kt-checkbox">
+                                                        <input id="contactApplicantverified"
+                                                            type="checkbox"
+                                                            name="contactApplicantverified"
+                                                            [(ngModel)]="contactApplicant.verified">
+                                                        {{l("Verified")}}
+                                                        <span></span>
+                                                    </label> -->
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group mb-2 row">
+                                                <label
+                                                    class="col-xl-12 col-lg-12 col-form-label">
+                                                    Internal Notes
+                                                </label>
+                                                <div class="col-xl-12 col-lg-12 ">
+                                                                                <textarea
+                                                                                    id="ContactApplicant_InternalNotes"
+                                                                                    class="form-control"
+                                                                                    name="InternalNotes" cols="30"
+                                                                                    rows="10"></textarea>
+                                                </div>
+                                            </div>
+
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="kt-form__actions mb-4 mt-4">
+                        <button type="button" class="btn btn-brand"
+                                [disabled]="!contactApplicantForm.form.valid">
+                            <i class="fa fa-save"></i>
+                            Save
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

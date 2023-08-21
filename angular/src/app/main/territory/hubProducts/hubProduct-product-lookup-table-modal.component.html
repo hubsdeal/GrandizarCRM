@@ -1,13 +1,5 @@
-﻿<div
-    bsModal
-    #createOrEditModal="bs-modal"
-    class="modal fade"
-    tabindex="-1"
-    role="dialog"
-    aria-labelledby="createOrEditModal"
-    aria-hidden="true"
-    [config]="{ backdrop: 'static' }"
->
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{ backdrop: 'static' }">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -15,13 +7,8 @@
                     <span>{{ l('PickProduct') }}</span>
                 </h4>
 
-                <button
-                    type="button"
-                    class="btn-close"
-                    (click)="close()"
-                    aria-label="Close"
-                    [disabled]="saving"
-                ></button>
+                <button type="button" class="btn-close" (click)="close()" aria-label="Close"
+                    [disabled]="saving"></button>
             </div>
             <div class="card card-custom gutter-b">
                 <div class="card-body">
@@ -31,14 +18,9 @@
                                 <div class="col-xl-12">
                                     <div class="my-3">
                                         <div class="input-group">
-                                            <input
-                                                [(ngModel)]="filterText"
-                                                name="filterText"
-                                                autoFocus
-                                                class="form-control m-input"
-                                                [placeholder]="l('SearchWithThreeDot')"
-                                                type="text"
-                                            />
+                                            <input [(ngModel)]="filterText" name="filterText" autoFocus
+                                                class="form-control m-input" [placeholder]="l('SearchWithThreeDot')"
+                                                type="text" />
                                             <button (click)="getAll()" class="btn btn-primary" type="submit">
                                                 <i class="flaticon-search-1"></i>
                                             </button>
@@ -51,43 +33,40 @@
 
                     <div class="row align-items-center">
                         <div class="primeng-datatable-container" [busyIf]="primengTableHelper.isLoading">
-                            <p-table
-                                #dataTable
-                                (onLazyLoad)="getAll($event)"
-                                [value]="primengTableHelper.records"
-                                rows="5"
-                                [paginator]="false"
-                                [lazy]="true"
-                                [scrollable]="true"
-                                ScrollWidth="100%"
+                            <p-table #dataTable (onLazyLoad)="getAll($event)" [value]="primengTableHelper.records"
+                                rows="5" [paginator]="false" [lazy]="true" [scrollable]="true" ScrollWidth="100%"
                                 [responsive]="primengTableHelper.isResponsive"
-                                [resizableColumns]="primengTableHelper.resizableColumns"
-                            >
+                                [resizableColumns]="primengTableHelper.resizableColumns">
                                 <ng-template pTemplate="header">
                                     <tr>
-                                        <th style="width: 130px">{{ l('Actions') }}</th>
-                                        <th style="width: 150px" pSortableColumn="displayName">
+                                        
+                                        <th style="width: 250px" pSortableColumn="displayName">
                                             {{ l('Name') }}
                                             <p-sortIcon field="displayName"></p-sortIcon>
                                         </th>
+                                        <th style="width: 100px">{{ l('Actions') }}</th>
                                     </tr>
                                 </ng-template>
                                 <ng-template pTemplate="body" let-record="$implicit">
                                     <tr>
-                                        <td style="width: 130px">
+                                        
+                                        <td style="width: 250px">
+                                            <span class="p-column-title">{{ l('Name') }}</span>
+                                            <div class="d-flex align-items-center">
+                                                <div class="nav-icon me-4">
+                                                    <img src="{{record.picture != null? record.picture:'/assets/common/images/sampleProfilePics/noimg.png'}}"
+                                                        class="w-50px h-50px img_sm" alt="">
+                                                </div>
+                                                <p class="mb-0">{{ record.displayName }}</p>
+                                            </div>
+                                        </td>
+                                        <td style="width: 100px">
                                             <div class="btn-group dropdown" normalizePosition>
-                                                <button
-                                                    class="btn btn-sm btn-primary"
-                                                    type="button"
-                                                    (click)="setAndSave(record)"
-                                                >
+                                                <button class="btn btn-sm btn-primary" type="button"
+                                                    (click)="setAndSave(record)">
                                                     {{ l('Select') }}
                                                 </button>
                                             </div>
-                                        </td>
-                                        <td style="width: 150px">
-                                            <span class="p-column-title">{{ l('Name') }}</span>
-                                            {{ record.displayName }}
                                         </td>
                                     </tr>
                                 </ng-template>
@@ -96,18 +75,13 @@
                                 {{ l('NoData') }}
                             </div>
                             <div class="primeng-paging-container">
-                                <p-paginator
-                                    rows="{{ primengTableHelper.defaultRecordsCountPerPage }}"
-                                    #paginator
-                                    styleClass="product-lookup-table-paginator"
-                                    (onPageChange)="getAll($event)"
+                                <p-paginator rows="{{ primengTableHelper.defaultRecordsCountPerPage }}" #paginator
+                                    styleClass="product-lookup-table-paginator" (onPageChange)="getAll($event)"
                                     [totalRecords]="primengTableHelper.totalRecordsCount"
                                     [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
-                                    [showCurrentPageReport]="true"
-                                    [currentPageReportTemplate]="
+                                    [showCurrentPageReport]="true" [currentPageReportTemplate]="
                                         'TotalRecordsCount' | localize : primengTableHelper.totalRecordsCount
-                                    "
-                                ></p-paginator>
+                                    "></p-paginator>
                             </div>
                         </div>
                     </div>
