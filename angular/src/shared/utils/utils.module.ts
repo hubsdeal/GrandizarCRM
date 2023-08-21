@@ -26,6 +26,7 @@ import { DateRangePickerLuxonModifierDirective } from './date-time/date-range-pi
 import { GuidGeneratorService } from './guid-generator.service';
 import { NameSplitPipe } from './nameSplit.pipe';
 import { Safe } from './safe.pipe';
+import { TruncatePipe } from './truncate.pipe';
 
 @NgModule({
     imports: [CommonModule],
@@ -57,7 +58,8 @@ import { Safe } from './safe.pipe';
         DateRangePickerLuxonModifierDirective,
         PermissionAllPipe,
         NameSplitPipe,
-        Safe
+        Safe,
+        TruncatePipe
     ],
     exports: [
         EqualValidator,
@@ -78,7 +80,8 @@ import { Safe } from './safe.pipe';
         DateRangePickerLuxonModifierDirective,
         PermissionAllPipe,
         NameSplitPipe,
-        Safe
+        Safe,
+        TruncatePipe
     ],
 })
 export class UtilsModule { }
