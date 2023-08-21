@@ -138,7 +138,6 @@ export class MyHubListComponent extends AppComponentBase {
         this.stateIdFilter,
         this.hubTypeIdFilter,
         this.zipCodeFilter,
-        this.employeeId,
         // this.filterText,
         // this.nameFilter,
         // this.descriptionFilter,

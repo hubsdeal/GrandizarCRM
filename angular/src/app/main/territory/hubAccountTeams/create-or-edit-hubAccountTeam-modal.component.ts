@@ -34,6 +34,7 @@ export class CreateOrEditHubAccountTeamModalComponent extends AppComponentBase i
     employeeName = '';
     userName = '';
 
+    hubId:number;
     constructor(
         injector: Injector,
         private _hubAccountTeamsServiceProxy: HubAccountTeamsServiceProxy,
@@ -57,7 +58,7 @@ export class CreateOrEditHubAccountTeamModalComponent extends AppComponentBase i
         } else {
             this._hubAccountTeamsServiceProxy.getHubAccountTeamForEdit(hubAccountTeamId).subscribe((result) => {
                 this.hubAccountTeam = result.hubAccountTeam;
-
+                this.hubId = result.hubAccountTeam.hubId;
                 this.hubName = result.hubName;
                 this.employeeName = result.employeeName;
                 this.userName = result.userName;
@@ -70,7 +71,7 @@ export class CreateOrEditHubAccountTeamModalComponent extends AppComponentBase i
 
     save(): void {
         this.saving = true;
-
+        this.hubAccountTeam.hubId = this.hubId;
         this._hubAccountTeamsServiceProxy
             .createOrEdit(this.hubAccountTeam)
             .pipe(

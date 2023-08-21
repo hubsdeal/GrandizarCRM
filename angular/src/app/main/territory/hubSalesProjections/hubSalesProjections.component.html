@@ -1,5 +1,5 @@
 ﻿<div [@routerTransition]>
-    <sub-header [title]="'Hub Sales Projections' | localize" [description]="'HubSalesProjectionsHeaderInfo' | localize">
+    <sub-header [title]="'Hub Sales Projections' | localize" [description]="">
         <div role="actions">
             <!-- <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1">
                 <i class="fa fa-file-excel"></i>
@@ -37,7 +37,7 @@
                         <div class="row" [hidden]="!advancedFiltersAreShown">
                             <div class="col-md-12"></div>
 
-                            <div class="col-md-3">
+                            <!-- <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="MinDurationTypeIdFilter">
                                         {{ l('MinMax') }} {{ l('DurationTypeId') }}
@@ -51,7 +51,7 @@
                                             (ngModelChange)="getHubSalesProjections()" />
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="MinStartDateFilter">{{ l('StartDateRange') }}</label>
@@ -87,7 +87,7 @@
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="MinExpectedSalesAmountFilter">
-                                        {{ l('MinMax') }} {{ l('ExpectedSalesAmount') }}
+                                        Expected Sales Amount
                                     </label>
                                     <div class="input-group">
                                         <input type="number" class="form-control" id="MinExpectedSalesAmountFilter"
@@ -104,7 +104,7 @@
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="MinActualSalesAmountFilter">
-                                        {{ l('MinMax') }} {{ l('ActualSalesAmount') }}
+                                        Actual Sales Amount
                                     </label>
                                     <div class="input-group">
                                         <input type="number" class="form-control" id="MinActualSalesAmountFilter"
@@ -119,7 +119,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
+                            <!-- <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="HubNameFilter">
                                         ({{ l('Hub') }}) {{ l('Name') }}
@@ -127,11 +127,11 @@
                                     <input type="text" class="form-control" id="HubNameFilter" name="hubNameFilter"
                                         [(ngModel)]="hubNameFilter" />
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="ProductCategoryNameFilter">
-                                        ({{ l('ProductCategory') }}) {{ l('Name') }}
+                                        Product Category
                                     </label>
                                     <input type="text" class="form-control" id="ProductCategoryNameFilter"
                                         name="productCategoryNameFilter" [(ngModel)]="productCategoryNameFilter" />
@@ -140,13 +140,13 @@
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="StoreNameFilter">
-                                        ({{ l('Store') }}) {{ l('Name') }}
+                                        Store
                                     </label>
                                     <input type="text" class="form-control" id="StoreNameFilter" name="storeNameFilter"
                                         [(ngModel)]="storeNameFilter" />
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <!-- <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="CurrencyNameFilter">
                                         ({{ l('Currency') }}) {{ l('Name') }}
@@ -154,7 +154,7 @@
                                     <input type="text" class="form-control" id="CurrencyNameFilter"
                                         name="currencyNameFilter" [(ngModel)]="currencyNameFilter" />
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="col-md-12 mt-5">
                                 <button (click)="resetFilters()" class="btn btn-secondary btn-sm"
                                     id="btn-reset-filters">
@@ -190,7 +190,7 @@
                             <ng-template pTemplate="header">
                                 <tr>
 
-                                    <th style="width: 150px" pSortableColumn="hubFk.name">
+                                    <!-- <th style="width: 150px" pSortableColumn="hubFk.name">
                                         {{ l('Name') }}
                                         <p-sortIcon field="hubName"></p-sortIcon>
                                     </th>
@@ -225,6 +225,25 @@
                                     <th style="width: 150px" pSortableColumn="actualSalesAmount">
                                         {{ l('ActualSalesAmount') }}
                                         <p-sortIcon field="hubSalesProjection.actualSalesAmount"></p-sortIcon>
+                                    </th> -->
+                                    <th style="width: 150px">
+                                        {{l('Product Category')}}
+                                    </th>
+                                    <th style="width: 150px">
+                                        {{l('Store')}}
+                                    </th>
+                                    <th style="width: 150px">
+                                        {{l('Currency')}}
+                                    </th>
+                                    <th style="width: 150px">
+                                        {{l('StartDate')}}
+                                    </th>
+                                    <th style="width: 150px">
+                                        {{l('EndDate')}}
+                                    </th>
+                                    <th style="width: 150px">
+                                        {{l('Weekly Sales')}}
+
                                     </th>
                                     <th style="width: 130px" [hidden]="
                                     !isGrantedAny(
@@ -238,8 +257,34 @@
                             </ng-template>
                             <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
                                 <tr>
-                                    
-                                    <td style="width: 150px">
+
+                                    <td style="width:150px">
+                                        <span class="ui-column-title"> {{l('Name')}}</span> {{record.productCategoryName}}
+                                    </td>
+                                    <td style="width:150px">
+                                        <span class="ui-column-title"> {{l('Name')}}</span> {{record.storeName}}
+                                    </td>
+                                    <td style="width:150px">
+                                        <span class="ui-column-title"> {{l('Name')}}</span> {{record.currencyName}}
+                                    </td>
+                                    <td style="width:150px">
+                                        <span class="ui-column-title"> {{l('StartDate')}}</span>
+                                        <span *ngIf="record.hubSalesProjection.startDate">
+                                            {{record.hubSalesProjection.startDate | luxonFormat : 'dd-MM-yyyy'}}
+                                        </span>
+                                        <span *ngIf="!record.hubSalesProjection.startDate">-</span>
+                                    </td>
+                                    <td style="width:150px">
+                                        <span class="ui-column-title"> {{l('EndDate')}}</span>
+                                        <span *ngIf="record.hubSalesProjection.endDate">
+                                            {{record.hubSalesProjection.endDate | luxonFormat : 'dd-MM-yyyy'}}
+                                        </span>
+                                        <span *ngIf="!record.hubSalesProjection.endDate">-</span>
+                                    </td>
+                                    <td style="width:150px">
+                                        <span class="ui-column-title"> {{l('ExpectedWeeklySalesAmount')}}</span> {{record.hubSalesProjection.expectedSalesAmount*7}}
+                                    </td>
+                                    <!-- <td style="width: 150px">
                                         <span class="p-column-title">{{ l('Name') }}</span>
                                         {{ record.hubName }}
                                     </td>
@@ -280,7 +325,7 @@
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('ActualSalesAmount') }}</span>
                                         {{ record.hubSalesProjection.actualSalesAmount }}
-                                    </td>
+                                    </td> -->
                                     <td style="width: 130px" [hidden]="
                                             !isGrantedAny(
                                                 'Pages.HubSalesProjections.Edit',
@@ -291,15 +336,14 @@
                                             <button class="dropdown-toggle btn btn-sm btn-primary" dropdownToggle>
                                                 <i class="fa fa-cog"></i>
                                                 <span class="caret"></span>
-                                                {{ l('Actions') }}
                                             </button>
                                             <ul class="dropdown-menu" *dropdownMenu>
-                                                <li>
+                                                <!-- <li>
                                                     <a href="javascript:;" class="dropdown-item"
                                                         (click)="viewHubSalesProjectionModal.show(record)">
                                                         {{ l('View') }}
                                                     </a>
-                                                </li>
+                                                </li> -->
                                                 <li>
                                                     <a href="javascript:;"
                                                         *ngIf="permission.isGranted('Pages.HubSalesProjections.Edit')"

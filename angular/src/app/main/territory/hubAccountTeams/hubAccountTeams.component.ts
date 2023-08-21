@@ -1,5 +1,5 @@
 ﻿import { AppConsts } from '@shared/AppConsts';
-import { Component, Injector, ViewEncapsulation, ViewChild } from '@angular/core';
+import { Component, Injector, ViewEncapsulation, ViewChild, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HubAccountTeamsServiceProxy, HubAccountTeamDto } from '@shared/service-proxies/service-proxies';
 import { NotifyService } from 'abp-ng2-module';
@@ -24,7 +24,7 @@ import { DateTimeService } from '@app/shared/common/timing/date-time.service';
     encapsulation: ViewEncapsulation.None,
     animations: [appModuleAnimation()],
 })
-export class HubAccountTeamsComponent extends AppComponentBase {
+export class HubAccountTeamsComponent extends AppComponentBase implements OnInit{
     @ViewChild('createOrEditHubAccountTeamModal', { static: true })
     createOrEditHubAccountTeamModal: CreateOrEditHubAccountTeamModalComponent;
     @ViewChild('viewHubAccountTeamModal', { static: true }) viewHubAccountTeamModal: ViewHubAccountTeamModalComponent;
@@ -43,6 +43,7 @@ export class HubAccountTeamsComponent extends AppComponentBase {
     employeeNameFilter = '';
     userNameFilter = '';
 
+    @Input() hubId:number;
     constructor(
         injector: Injector,
         private _hubAccountTeamsServiceProxy: HubAccountTeamsServiceProxy,
@@ -55,51 +56,65 @@ export class HubAccountTeamsComponent extends AppComponentBase {
         super(injector);
     }
 
+    ngOnInit(): void{
+        this.getHubAccountTeams();
+    }
+
+
     getHubAccountTeams(event?: LazyLoadEvent) {
-        if (this.primengTableHelper.shouldResetPaging(event)) {
-            this.paginator.changePage(0);
-            if (this.primengTableHelper.records && this.primengTableHelper.records.length > 0) {
-                return;
-            }
-        }
+        // if (this.primengTableHelper.shouldResetPaging(event)) {
+        //     this.paginator.changePage(0);
+        //     if (this.primengTableHelper.records && this.primengTableHelper.records.length > 0) {
+        //         return;
+        //     }
+        // }
 
         this.primengTableHelper.showLoadingIndicator();
 
-        this._hubAccountTeamsServiceProxy
-            .getAll(
-                this.filterText,
-                this.primaryManagerFilter,
-                this.maxStartDateFilter === undefined
-                    ? this.maxStartDateFilter
-                    : this._dateTimeService.getEndOfDayForDate(this.maxStartDateFilter),
-                this.minStartDateFilter === undefined
-                    ? this.minStartDateFilter
-                    : this._dateTimeService.getStartOfDayForDate(this.minStartDateFilter),
-                this.maxEndDateFilter === undefined
-                    ? this.maxEndDateFilter
-                    : this._dateTimeService.getEndOfDayForDate(this.maxEndDateFilter),
-                this.minEndDateFilter === undefined
-                    ? this.minEndDateFilter
-                    : this._dateTimeService.getStartOfDayForDate(this.minEndDateFilter),
-                this.hubNameFilter,
-                this.employeeNameFilter,
-                this.userNameFilter,
-                this.primengTableHelper.getSorting(this.dataTable),
-                this.primengTableHelper.getSkipCount(this.paginator, event),
-                this.primengTableHelper.getMaxResultCount(this.paginator, event)
-            )
-            .subscribe((result) => {
-                this.primengTableHelper.totalRecordsCount = result.totalCount;
-                this.primengTableHelper.records = result.items;
-                this.primengTableHelper.hideLoadingIndicator();
-            });
+        // this._hubAccountTeamsServiceProxy
+        //     .getAll(
+        //         this.filterText,
+        //         this.primaryManagerFilter,
+        //         this.maxStartDateFilter === undefined
+        //             ? this.maxStartDateFilter
+        //             : this._dateTimeService.getEndOfDayForDate(this.maxStartDateFilter),
+        //         this.minStartDateFilter === undefined
+        //             ? this.minStartDateFilter
+        //             : this._dateTimeService.getStartOfDayForDate(this.minStartDateFilter),
+        //         this.maxEndDateFilter === undefined
+        //             ? this.maxEndDateFilter
+        //             : this._dateTimeService.getEndOfDayForDate(this.maxEndDateFilter),
+        //         this.minEndDateFilter === undefined
+        //             ? this.minEndDateFilter
+        //             : this._dateTimeService.getStartOfDayForDate(this.minEndDateFilter),
+        //         this.hubNameFilter,
+        //         this.employeeNameFilter,
+        //         this.userNameFilter,
+        //         this.primengTableHelper.getSorting(this.dataTable),
+        //         this.primengTableHelper.getSkipCount(this.paginator, event),
+        //         this.primengTableHelper.getMaxResultCount(this.paginator, event)
+        //     )
+        //     .subscribe((result) => {
+        //         this.primengTableHelper.totalRecordsCount = result.totalCount;
+        //         this.primengTableHelper.records = result.items;
+        //         this.primengTableHelper.hideLoadingIndicator();
+        //     });
+        this._hubAccountTeamsServiceProxy.getAllByHubId(
+            this.hubId
+        ).subscribe(result => {
+            this.primengTableHelper.totalRecordsCount = result.totalCount;
+            this.primengTableHelper.records = result.items;
+            this.primengTableHelper.hideLoadingIndicator();
+        });
     }
 
     reloadPage(): void {
-        this.paginator.changePage(this.paginator.getPage());
+        // this.paginator.changePage(this.paginator.getPage());
+        this.getHubAccountTeams();
     }
 
     createHubAccountTeam(): void {
+        this.createOrEditHubAccountTeamModal.hubId = this.hubId;
         this.createOrEditHubAccountTeamModal.show();
     }
 

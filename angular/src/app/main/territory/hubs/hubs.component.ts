@@ -135,7 +135,6 @@ export class HubsComponent extends AppComponentBase {
                 this.stateIdFilter,
                 this.hubTypeIdFilter,
                 this.zipCodeFilter,
-                //undefined,
                 // this.filterText,
                 // this.nameFilter,
                 // this.descriptionFilter,
