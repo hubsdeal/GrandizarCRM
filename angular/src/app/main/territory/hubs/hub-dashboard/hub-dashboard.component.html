@@ -770,7 +770,7 @@
                         </div>
                     </div>
                     <div class="tab-pane fade" id="sales_projection" role="tabpanel">
-                        <app-hubSalesProjections></app-hubSalesProjections>
+                        <app-hubSalesProjections *ngIf="hubId" [hubId]="hubId"></app-hubSalesProjections>
                     </div>
 
                     <div class="tab-pane fade" id="acc_teams" role="tabpanel">
