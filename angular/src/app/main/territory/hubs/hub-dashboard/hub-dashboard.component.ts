@@ -70,7 +70,7 @@ export class HubDashboardComponent extends AppComponentBase implements OnInit, A
     private _countyServiceProxy: CountiesServiceProxy,
     private _hubWidgetMapsServiceProxy: HubWidgetMapsServiceProxy,
     private geocodingService: GeocodingService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
   ) {
     super(injector);
   }

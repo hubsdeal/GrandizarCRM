@@ -1493,9 +1493,47 @@ bs-days-calendar-view {
     display: flex !important;
 }
 
-.img_sm{
+.img_sm {
     border: 1px solid #d9d9d9;
     border-radius: 4px;
     padding: 4px;
+    object-fit: contain;
+}
+
+.hover_delete_button_p {
+    .hover_delete_button {
+        width: 100%;
+        text-align: end;
+        transition: all 0.4s;
+        display: none;
+        i{
+            position: absolute;
+            margin-left: -15px;
+            margin-top: -9px;
+            background: white;
+            padding: 10px;
+            border-radius: 50%;
+            height: 29px;
+            line-height: 7px;
+        }
+    }
+}
+.hover_delete_button_p:hover{
+    .hover_delete_button{
+        display: block !important;
+        transition: all 0.5s;
+    }
+}
+
+.img_doc_block{
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.img_doc_block img{
+    width: 100%;
+    height: 100%;
     object-fit: contain;
 }

@@ -43,12 +43,12 @@
                                         <div
                                             class="d-flex flex-wrap fw-semibold mb-1 align-items-center fs-6 text-gray-500">
                                             <i class="fas fa-user-gear me-2 ms-1"></i>
-                                            Created By: {{taskEvent.createdBy}}
+                                            Created By: {{taskEvent?.createdBy}}
                                         </div>
                                         <div
                                             class="d-flex flex-wrap fw-semibold mb-1 align-items-center fs-6 text-gray-500">
                                             <i class="fas fa-calendar me-2"></i>
-                                            Date: {{taskEvent.creationTime | luxonFormat : 'dd-MM-yyyy'}}
+                                            Date: {{taskEvent?.creationTime | luxonFormat : 'dd-MM-yyyy'}}
                                         </div>
                                         <div class="d-flex flex-column justify-content-end pe-0">
                                             <!--begin::Title-->
@@ -79,8 +79,8 @@
                             <a href="javascript:;" class="btn btn-sm btn-light-primary">
                                 <i class="fas fa-edit fs-5 me-2"></i> Edit
                             </a>
-                            <a href="javascript:;" class="btn btn-sm btn-success">
-                                {{taskEvent.taskStatusName}}</a>
+                            <a *ngIf="taskEvent.taskStatusName" href="javascript:;" class="btn btn-sm btn-success">
+                                {{taskEvent?.taskStatusName}}</a>
                             <a href="javascript:;" *ngIf="taskEvent.taskEvent.priority" class="btn btn-sm btn-danger">
                                 High</a>
                             <a href="javascript:;" *ngIf="!taskEvent.taskEvent.priority" class="btn btn-sm btn-warning">
@@ -401,48 +401,51 @@
                                                 </div>
                                             </form>
                                         </div>
-                                        <div class="col-xl-3 taskDoc" *ngFor="let record of taskDocuments">
+                                        <div class="col-xl-3 taskDoc hover_delete_button_p"
+                                            *ngFor="let record of taskDocuments">
+                                            <a href="javascript:;" class="hover_delete_button"
+                                                (click)="deleteTaskDocuments(record.taskDocument.id)">
+                                                <i class="fas fa-trash-alt shadow-sm text-primary"></i>
+                                            </a>
                                             <div class="p-4 shadow-sm border mb-6">
                                                 <div class="d-flex align-items-center mb-0">
                                                     <!--begin::Symbol-->
-                                                    <div class="symbol symbol-50px me-5">
-                                                        <span class="symbol-label image">
-                                                            <!--begin::Svg Icon | path: icons/duotune/abstract/abs027.svg-->
-                                                            <span class="svg-icon svg-icon-2x svg-icon-success">
-                                                                <img *ngIf="getFileExtension(record.taskDocument.documentTitle)==='pdf'"
-                                                                    src="assets/common/images/fileTypes/pdf.svg" alt="pdf">
-                                                                <img *ngIf="getFileExtension(record.taskDocument.documentTitle)==='doc'"
-                                                                    src="assets/common/images/fileTypes/doc.svg" alt="doc">
-                                                                <img *ngIf="getFileExtension(record.taskDocument.documentTitle)==='docx'"
-                                                                    src="assets/common/images/fileTypes/doc.svg" alt="docx">
-                                                                <img *ngIf="getFileExtension(record.taskDocument.documentTitle)==='jpg'"
-                                                                    src="{{record.documentUrl}}" alt="Jpg">
-                                                                <img *ngIf="getFileExtension(record.taskDocument.documentTitle)==='png'"
-                                                                    src="{{record.documentUrl}}" alt="png">
-                                                                <img *ngIf="getFileExtension(record.taskDocument.documentTitle)==='jpeg'"
-                                                                    src="{{record.documentUrl}}" alt="jpeg">
-                                                                <img *ngIf="getFileExtension(record.taskDocument.documentTitle)==='zip'"
-                                                                    src="assets/common/images/fileTypes/zip.svg" alt="zip">
-                                                                <img *ngIf="getFileExtension(record.taskDocument.documentTitle)==='css'"
-                                                                    src="assets/common/images/fileTypes/css.svg" alt="css">
-                                                                <img *ngIf="getFileExtension(record.taskDocument.documentTitle)==='csz'"
-                                                                    src="assets/common/images/fileTypes/doc.csv" alt="docx">
-                                                                <img *ngIf="getFileExtension(record.taskDocument.documentTitle)==='txt'"
-                                                                    src="assets/common/images/fileTypes/doc.svg" alt="txt">
-                                                                <img *ngIf="getFileExtension(record.taskDocument.documentTitle)==='pptx'"
-                                                                    src="assets/common/images/fileTypes/ppt.png" alt="pptx">
-                                                                <img *ngIf="getFileExtension(record.taskDocument.documentTitle)==='ppt'"
-                                                                    src="assets/common/images/fileTypes/ppt.png" alt="ppt">
-                                                            </span>
-                                                            <!--end::Svg Icon-->
-                                                        </span>
+                                                    <div class="img_doc_block me-3">
+                                                        <img *ngIf="getFileExtension(record.taskDocument.documentTitle)==='pdf'"
+                                                            src="assets/common/images/fileTypes/pdf.svg" alt="pdf">
+                                                        <img *ngIf="getFileExtension(record.taskDocument.documentTitle)==='doc'"
+                                                            src="assets/common/images/fileTypes/doc.svg" alt="doc">
+                                                        <img *ngIf="getFileExtension(record.taskDocument.documentTitle)==='docx'"
+                                                            src="assets/common/images/fileTypes/doc.svg" alt="docx">
+                                                        <img *ngIf="getFileExtension(record.taskDocument.documentTitle)==='jpg'"
+                                                            src="{{record.documentUrl}}" alt="Jpg">
+                                                        <img *ngIf="getFileExtension(record.taskDocument.documentTitle)==='png'"
+                                                            src="{{record.documentUrl}}" alt="png">
+                                                        <img *ngIf="getFileExtension(record.taskDocument.documentTitle)==='jpeg'"
+                                                            src="{{record.documentUrl}}" alt="jpeg">
+                                                        <img *ngIf="getFileExtension(record.taskDocument.documentTitle)==='zip'"
+                                                            src="assets/common/images/fileTypes/zip.svg" alt="zip">
+                                                        <img *ngIf="getFileExtension(record.taskDocument.documentTitle)==='css'"
+                                                            src="assets/common/images/fileTypes/css.svg" alt="css">
+                                                        <img *ngIf="getFileExtension(record.taskDocument.documentTitle)==='csz'"
+                                                            src="assets/common/images/fileTypes/doc.csv" alt="docx">
+                                                        <img *ngIf="getFileExtension(record.taskDocument.documentTitle)==='txt'"
+                                                            src="assets/common/images/fileTypes/doc.svg" alt="txt">
+                                                        <img *ngIf="getFileExtension(record.taskDocument.documentTitle)==='pptx'"
+                                                            src="assets/common/images/fileTypes/ppt.png" alt="pptx">
+                                                        <img *ngIf="getFileExtension(record.taskDocument.documentTitle)==='ppt'"
+                                                            src="assets/common/images/fileTypes/ppt.png" alt="ppt">
                                                     </div>
                                                     <!--end::Symbol-->
                                                     <!--begin::Text-->
                                                     <div class="d-flex flex-column">
-                                                        <a [href]="record.documentUrl" target="_blank" [download]="record.taskDocument.documentTitle" 
-                                                            class="text-dark text-hover-primary fs-6 fw-bold text-truncate">{{record.taskDocument.documentTitle | truncate:20}} <span><i class="flaticon2-download"></i></span></a>
-                                                        <span class="text-muted fw-bold">{{getFileExtension(record.taskDocument.documentTitle)}}</span>
+                                                        <a [href]="record.documentUrl" target="_blank"
+                                                            [download]="record.taskDocument.documentTitle"
+                                                            class="text-dark text-hover-primary fs-6 fw-bold text-truncate">{{record.taskDocument.documentTitle
+                                                            | truncate:20}} <span><i
+                                                                    class="flaticon2-download"></i></span></a>
+                                                        <span
+                                                            class="text-muted fw-bold">{{getFileExtension(record.taskDocument.documentTitle)}}</span>
                                                     </div>
                                                     <!--end::Text-->
                                                 </div>

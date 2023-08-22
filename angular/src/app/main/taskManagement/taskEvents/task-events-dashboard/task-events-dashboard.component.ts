@@ -116,9 +116,9 @@ export class TaskEventsDashboardComponent extends AppComponentBase implements On
     this._taskDocumentsServiceProxy.createOrEdit(this.taskDocument)
       .pipe(finalize(() => { }))
       .subscribe(() => {
-        //this.getTaskDocuments();
         this.taskDocument = new CreateOrEditTaskDocumentDto();
         this.notify.info(this.l('SavedSuccessfully'));
+        this.getTaskDocuments();
       });
   }
   addDocument() {
@@ -167,5 +167,10 @@ export class TaskEventsDashboardComponent extends AppComponentBase implements On
   getFileExtension(filename) {
     return filename.split('.').pop();
 }
-
+deleteTaskDocuments(id:number){
+  this._taskDocumentsServiceProxy.delete(id).subscribe(result => {
+    this.getTaskDocuments();
+    this.notify.info(this.l('DeletedSuccessfully'));
+  });
+}
 }

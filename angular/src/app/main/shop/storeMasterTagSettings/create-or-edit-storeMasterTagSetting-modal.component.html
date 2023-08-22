@@ -35,73 +35,7 @@
                                 [itemSize]="30" name="displayName" optionLabel="displayName" optionId="id"
                                 [(ngModel)]="selectedTagCategory" filterBy="displayName"
                                 [style]="{ width: '100%' }"></p-dropdown>
-
-                                <!-- <p-dropdown [options]="masterTagCategoryOptions" [filter]="true" [virtualScroll]="true"
-                                placeholder="Select Tag Category" [itemSize]="30" name="displayName"
-                                (onChange)="onMasterTagCategoryClick($event)" name="storeTagCategoryName"
-                                optionLabel="displayName" optionValue="id" optionId="storeTagCategoryId"
-                                [(ngModel)]="storeMasterTagSetting.masterTagCategoryId" filterBy="displayName"
-                                [style]="{ width: '100%' }"></p-dropdown> -->
                         </div>
-
-                        <div class="my-5">
-                            <div class="d-flex flex-stack flex-grow-1">
-                                <div class="fw-semibold tag_block_custom">
-                                    <div class="fs-6">
-                                        <div style="display: inline-block;" class="row w-100 pl-2">
-                                            <span>
-                                                <button type="button" class="btn btn-outline-brand btn-sm me-3">
-                                                    <!-- <p-progressSpinner
-                                                        *ngIf="loader_anim_show && (tags.id==loaderSelectedMasterTagId)"
-                                                        [style]="{width: '19px', height: '19px', position:'absolute'}"
-                                                        styleClass="custom-spinner" strokeWidth="8" fill="#EEEEEE"
-                                                        animationDuration=".5s">
-                                                    </p-progressSpinner> -->
-                                                    <i class="fas fa-plus mr-2"></i>
-                                                    <!-- <i *ngIf="tags.isSelected" class="fas fa-check-circle mr-2"></i> -->
-                                                    English
-                                                </button>
-
-                                                <button type="button" class="btn btn-outline-brand active btn-sm me-3">
-                                                    <!-- <p-progressSpinner
-                                                        *ngIf="loader_anim_show && (tags.id==loaderSelectedMasterTagId)"
-                                                        [style]="{width: '19px', height: '19px', position:'absolute'}"
-                                                        styleClass="custom-spinner" strokeWidth="8" fill="#EEEEEE"
-                                                        animationDuration=".5s">
-                                                    </p-progressSpinner> -->
-                                                    <!-- <i  class="fas fa-plus mr-2"></i> -->
-                                                    <i class="fas fa-check-circle mr-2"></i>
-                                                    Bangla
-                                                </button>
-                                                <button type="button" class="btn btn-outline-brand btn-sm me-3">
-                                                    <!-- <p-progressSpinner
-                                                        *ngIf="loader_anim_show && (tags.id==loaderSelectedMasterTagId)"
-                                                        [style]="{width: '19px', height: '19px', position:'absolute'}"
-                                                        styleClass="custom-spinner" strokeWidth="8" fill="#EEEEEE"
-                                                        animationDuration=".5s">
-                                                    </p-progressSpinner> -->
-                                                    <i class="fas fa-plus mr-2"></i>
-                                                    <!-- <i *ngIf="tags.isSelected" class="fas fa-check-circle mr-2"></i> -->
-                                                    Hindi
-                                                </button>
-                                                <button type="button" class="btn btn-outline-brand btn-sm me-3">
-                                                    <!-- <p-progressSpinner
-                                                        *ngIf="loader_anim_show && (tags.id==loaderSelectedMasterTagId)"
-                                                        [style]="{width: '19px', height: '19px', position:'absolute'}"
-                                                        styleClass="custom-spinner" strokeWidth="8" fill="#EEEEEE"
-                                                        animationDuration=".5s">
-                                                    </p-progressSpinner> -->
-                                                    <i class="fas fa-plus mr-2"></i>
-                                                    <!-- <i *ngIf="tags.isSelected" class="fas fa-check-circle mr-2"></i> -->
-                                                    French
-                                                </button>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
                         <div class="my-5">
                             <label class="form-label required" for="StoreMasterTagSetting_CustomTagTitle">
                                 Title - (Customize if needed)

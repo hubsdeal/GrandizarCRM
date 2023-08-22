@@ -132,7 +132,8 @@ export class TaskWorkItemsComponent extends AppComponentBase implements OnInit{
  
 
     reloadPage(): void {
-        this.paginator.changePage(this.paginator.getPage());
+        // this.paginator.changePage(this.paginator.getPage());
+        this.getTaskWorkItems();
     }
 
 
@@ -141,10 +142,10 @@ export class TaskWorkItemsComponent extends AppComponentBase implements OnInit{
         this.createOrEditTaskWorkItemModal.show();
     }
 
-    deleteTaskWorkItem(taskWorkItem: TaskWorkItemDto): void {
+    deleteTaskWorkItem(id:number): void {
         this.message.confirm('', this.l('AreYouSure'), (isConfirmed) => {
             if (isConfirmed) {
-                this._taskWorkItemsServiceProxy.delete(taskWorkItem.id).subscribe(() => {
+                this._taskWorkItemsServiceProxy.delete(id).subscribe(() => {
                     this.reloadPage();
                     this.notify.success(this.l('SuccessfullyDeleted'));
                 });

@@ -37,16 +37,50 @@
                         <!--begin::Card Title-->
                         <div class="card-title m-0">
                             <!--begin::Avatar-->
-                            <div class="symbol symbol-50px w-50px bg-light">
-                                <img src="assets/media/svg/brand-logos/kanba.svg" alt="image" class="p-3">
+                            <div class="d-flex align-items-center">
+                                <div class="symbol-group symbol-hover">
+                                    <div data-bs-toggle="tooltip" aria-label="workItem?.employeeName"
+                                        data-bs-original-title="workItem?.employeeName" data-kt-initialized="1"
+                                        class="symbol symbol-50px w-50px bg-light">
+                                        <img alt="Pic" *ngIf="workItem?.picture" alt="Pic" src="{{workItem?.picture}}">
+                                        <span *ngIf="!workItem?.picture" title="{{workItem?.employeeName}}"
+                                            class="symbol-label bg-warning text-inverse-warning fw-bold">{{workItem?.employeeName
+                                            | nameSplit}}</span>
+                                    </div>
+                                </div>
+                                <span class="ms-2">{{workItem?.employeeName}}</span>
                             </div>
                             <!--end::Avatar-->
                         </div>
                         <!--end::Car Title-->
                         <!--begin::Card toolbar-->
-                        <div class="card-toolbar">
-                            <span *ngIf="!workItem.taskWorkItem.openOrClosed" class="badge badge-light-primary fw-bold me-auto px-4 py-3">Open</span>
-                            <span *ngIf="workItem.taskWorkItem.openOrClosed" class="badge badge-light-success fw-bold me-auto px-4 py-3 ng-tns-c382-7">Closed</span>
+                        <div class="card-toolbar" style="position: absolute; top: 0; right: 7px;">
+                            <span *ngIf="!workItem.taskWorkItem.openOrClosed"
+                                class="badge badge-light-primary fw-bold me-auto px-4 py-3">Open</span>
+                            <span *ngIf="workItem.taskWorkItem.openOrClosed"
+                                class="badge badge-light-success fw-bold me-auto px-4 py-3 ng-tns-c382-7">Closed</span>
+                            <div class="btn-group dropdown ms-3" dropdown container="body">
+                                <button class="dropdown-toggle btn btn-sm btn-light-primary" dropdownToggle>
+                                    <i class="fa fa-cog"></i>
+                                </button>
+                                <ul class="dropdown-menu" *dropdownMenu>
+                                    <li>
+                                        <a href="javascript:;" *ngIf="permission.isGranted('Pages.TaskWorkItems.Edit')"
+                                            class="dropdown-item" (click)="
+                                                createOrEditTaskWorkItemModal.show(workItem.taskWorkItem.id)
+                                            ">
+                                            {{ l('Edit') }}
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="javascript:;"
+                                            *ngIf="permission.isGranted('Pages.TaskWorkItems.Delete')"
+                                            (click)="deleteTaskWorkItem(workItem.taskWorkItem.id)">
+                                            {{ l('Delete') }}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                         <!--end::Card toolbar-->
                     </div>
@@ -64,32 +98,41 @@
                         <div class="d-flex flex-wrap mb-5">
                             <!--begin::Due-->
                             <div class="border border-gray-300 border-dashed rounded  py-3 px-4 me-3 mb-3 w-60">
-                                <div class="fs-6 text-gray-800 fw-bold" *ngIf="workItem.taskWorkItem.startDate">{{workItem.taskWorkItem.startDate | luxonFormat : 'dd-MM-yyyy'}}
-                                    <span *ngIf="workItem.taskWorkItem.startTime && workItem.taskWorkItem.startDate">(</span>
-                                    <span *ngIf="workItem.taskWorkItem.startTime">{{workItem.taskWorkItem.startTime}}</span>
-                                    <span *ngIf="workItem.taskWorkItem.startTime && workItem.taskWorkItem.startDate">)</span>
+                                <div class="fs-6 text-gray-800 fw-bold" *ngIf="workItem.taskWorkItem.startDate">
+                                    {{workItem.taskWorkItem.startDate | luxonFormat : 'dd-MM-yyyy'}}
+                                    <span
+                                        *ngIf="workItem.taskWorkItem.startTime && workItem.taskWorkItem.startDate">(</span>
+                                    <span
+                                        *ngIf="workItem.taskWorkItem.startTime">{{workItem.taskWorkItem.startTime}}</span>
+                                    <span
+                                        *ngIf="workItem.taskWorkItem.startTime && workItem.taskWorkItem.startDate">)</span>
                                 </div>
                                 <div class="fw-semibold text-gray-400">Start Date</div>
                             </div>
                             <div class="border border-gray-300 border-dashed rounded  py-3 px-4 mb-3 w-30">
-                                <div class="fs-6 text-gray-800 fw-bold" *ngIf="workItem.taskWorkItem.endDate">{{workItem.taskWorkItem.estimatedHours}} Hr.
+                                <div class="fs-6 text-gray-800 fw-bold" *ngIf="workItem.taskWorkItem.endDate">
+                                    {{workItem.taskWorkItem.estimatedHours}} Hr.
                                 </div>
                                 <div class="fw-semibold text-gray-400">Est. Time</div>
                             </div>
-                            
+
                         </div>
                         <div class="d-flex flex-wrap mb-5">
                             <!--begin::Due-->
                             <div class="border border-gray-300 border-dashed rounded  py-3 px-4 me-3 mb-3 w-60">
-                                <div class="fs-6 text-gray-800 fw-bold" *ngIf="workItem.taskWorkItem.endDate">{{workItem.taskWorkItem.endDate | luxonFormat : 'dd-MM-yyyy'}}
-                                    <span *ngIf="workItem.taskWorkItem.endTime && workItem.taskWorkItem.endDate">(</span>
+                                <div class="fs-6 text-gray-800 fw-bold" *ngIf="workItem.taskWorkItem.endDate">
+                                    {{workItem.taskWorkItem.endDate | luxonFormat : 'dd-MM-yyyy'}}
+                                    <span
+                                        *ngIf="workItem.taskWorkItem.endTime && workItem.taskWorkItem.endDate">(</span>
                                     <span *ngIf="workItem.taskWorkItem.endTime">{{workItem.taskWorkItem.endTime}}</span>
-                                    <span *ngIf="workItem.taskWorkItem.endTime && workItem.taskWorkItem.endDate">)</span>
+                                    <span
+                                        *ngIf="workItem.taskWorkItem.endTime && workItem.taskWorkItem.endDate">)</span>
                                 </div>
                                 <div class="fw-semibold text-gray-400">End Date</div>
                             </div>
                             <div class="border border-gray-300 border-dashed rounded  py-3 px-4 mb-3 w-30">
-                                <div class="fs-6 text-gray-800 fw-bold" *ngIf="workItem.taskWorkItem.endDate">{{workItem.taskWorkItem.actualHours}} Hr.
+                                <div class="fs-6 text-gray-800 fw-bold" *ngIf="workItem.taskWorkItem.endDate">
+                                    {{workItem.taskWorkItem.actualHours}} Hr.
                                 </div>
                                 <div class="fw-semibold text-gray-400">Actual Time</div>
                             </div>
@@ -104,32 +147,10 @@
 
                         <!--end::Info-->
                         <!--begin::Progress-->
-                        <div class="h-4px w-100 bg-light mb-5" data-bs-toggle="tooltip"
-                            aria-label="getCompletionPercentageTitle(workItem?.taskWorkItem?.completionPercentage)" data-bs-original-title="getCompletionPercentageTitle(workItem?.taskWorkItem?.completionPercentage)"
-                            data-kt-initialized="1">
-                            <div class="bg-primary rounded h-4px" role="progressbar"  [style.width.%]="workItem?.taskWorkItem?.completionPercentage"
-                                aria-valuenow="workItem?.taskWorkItem?.completionPercentage" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div>
+                            <p-slider [(ngModel)]="workItem.taskWorkItem.completionPercentage"></p-slider>
                         </div>
                         <!--end::Progress-->
-                        <!--begin::Users-->
-                        <div class="symbol-group symbol-hover">
-                            <!--begin::User-->
-                            <div data-bs-toggle="tooltip" aria-label="workItem?.employeeName" data-bs-original-title="workItem?.employeeName" data-kt-initialized="1" class="symbol symbol-35px symbol-circle ng-tns-c382-7">
-                                <img alt="Pic" *ngIf ="workItem?.picture" alt="Pic" src="{{workItem?.picture}}">
-                                <span *ngIf ="!workItem?.picture" title="{{workItem?.employeeName}}"
-                                class="symbol-label bg-warning text-inverse-warning fw-bold">{{workItem?.employeeName | nameSplit}}</span>
-                            </div>
-                       
-                            <!--begin::User-->
-                            <!-- <div *ngFor="let team of record.team" class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
-                            data-bs-original-title="Alan Warden" data-kt-initialized="1">
-                            
-                            <span *ngIf ="!team.picture" title="{{team.employeeName}}"
-                                class="symbol-label bg-warning text-inverse-warning fw-bold">{{team.employeeName | nameSplit}}</span>
-                                <img *ngIf ="team.picture" alt="Pic" src="{{team.picture}}">
-                        </div> -->
-                        </div>
-                        <!--end::Users-->
                     </div>
                     <!--end:: Card body-->
                 </a>
@@ -475,7 +496,7 @@
         </div> -->
 
     </div>
-    <createOrEditTaskWorkItemModal #createOrEditTaskWorkItemModal  (modalSave)="getTaskWorkItems()">
+    <createOrEditTaskWorkItemModal #createOrEditTaskWorkItemModal (modalSave)="getTaskWorkItems()">
     </createOrEditTaskWorkItemModal>
     <viewTaskWorkItemModal #viewTaskWorkItemModal></viewTaskWorkItemModal>
 </div>
