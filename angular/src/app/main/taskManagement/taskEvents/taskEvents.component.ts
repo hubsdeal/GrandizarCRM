@@ -51,11 +51,11 @@ export class TaskEventsComponent extends AppComponentBase {
 
     employeeList: TaskTeamEmployeeLookupTableDto[] = [];
     selectedEmployees: any;
-    selectedEmployeesId:number
+    selectedEmployeesId: number
     //=[{id:1,displayName:"Team 1"},{id:2,displayName:"Team 2"},{id:3,displayName:"Team 3"}]
 
-    selectedTag:any;
-    allTags:any[]
+    selectedTag: any;
+    allTags: any[]
     //=[{id:1,displayName:"Tag 1"},{id:2,displayName:"Tag 2"},{id:3,displayName:"Tag 3"}]
 
     value: number = 50;
@@ -75,14 +75,14 @@ export class TaskEventsComponent extends AppComponentBase {
         this._taskEventsServiceProxy.getAllTaskStatusForTableDropdown().subscribe((result) => {
             this.allTaskStatuss = result;
         });
-        this._taskTeamsServiceProxy.getAllEmployeeForLookupTable('','',0,1000).subscribe(result => {
+        this._taskTeamsServiceProxy.getAllEmployeeForLookupTable('', '', 0, 1000).subscribe(result => {
             this.employeeList = result.items;
         });
-        
+
     }
 
     getTaskEvents(event?: LazyLoadEvent) {
-       
+
         if (this.primengTableHelper.shouldResetPaging(event)) {
             this.paginator.changePage(0);
             if (this.primengTableHelper.records && this.primengTableHelper.records.length > 0) {
@@ -199,7 +199,7 @@ export class TaskEventsComponent extends AppComponentBase {
         this.estimatedTimeFilter = '';
         this.hourAndMinutesFilter = '';
         this.taskStatusNameFilter = '';
-
+        this.selectedEmployeesId = -1;
         this.getTaskEvents();
     }
 
@@ -215,10 +215,16 @@ export class TaskEventsComponent extends AppComponentBase {
         })
     }
     onEmployeeSelect(event: any) {
-        if (event) {
+
+        this.selectedEmployees = event.value;
+        if (event.value) {
             this.selectedEmployeesId = event.value.id;
-            this.getTaskEvents();
         }
+        else {
+            this.selectedEmployeesId = 0;
+        }
+
+        this.getTaskEvents();
 
     }
 }
