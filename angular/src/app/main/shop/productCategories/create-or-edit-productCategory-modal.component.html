@@ -65,12 +65,17 @@
                         <validation-messages [formCtrl]="ProductCategory_Name"></validation-messages>
                     </div>
 
-                    <!-- <div class="my-5">
+                   <!-- <div class="my-5">
                         <label class="form-label" for="ProductCategory_Description">{{ l('Description') }}</label>
                         <input type="text" #ProductCategory_Description="ngModel" id="ProductCategory_Description"
                             class="form-control" [(ngModel)]="productCategory.description" name="Description" />
                         <validation-messages [formCtrl]="ProductCategory_Description"></validation-messages>
-                    </div> -->
+                    </div>  -->
+                    <div class="my-5">
+                        <label class="form-label" for="ProductCategory_Description">{{ l('Description') }}</label>
+                        <p-editor id="ProductCategory_Description" name="description" [(ngModel)]="productCategory.description"
+                            ngDefaultControl [style]="{ height: '300px' }" placeholder="'Type here...'"></p-editor>
+                    </div>
 
                     <div class="my-5">
                         <label class="form-check form-check-custom form-check-solid">
@@ -108,7 +113,7 @@
                         <validation-messages [formCtrl]="ProductCategory_Url"></validation-messages>
                     </div>
 
-                    <!-- <div class="my-5">
+                    <div class="my-5">
                         <label class="form-label" for="ProductCategory_MetaTitle">{{ l('MetaTitle') }}</label>
                         <input type="text" #ProductCategory_MetaTitle="ngModel" id="ProductCategory_MetaTitle"
                             class="form-control" [(ngModel)]="productCategory.metaTitle" name="MetaTitle" minlength="1"
@@ -122,7 +127,7 @@
                             class="form-control" [(ngModel)]="productCategory.metaKeywords" name="MetaKeywords"
                             minlength="1" maxlength="512" />
                         <validation-messages [formCtrl]="ProductCategory_MetaKeywords"></validation-messages>
-                    </div> -->
+                    </div> 
 
                     <div class="my-5">
                         <label class="form-label" for="ProductCategory_DisplaySequence">
@@ -132,6 +137,14 @@
                             id="ProductCategory_DisplaySequence" class="form-control"
                             [(ngModel)]="productCategory.displaySequence" name="DisplaySequence" />
                         <validation-messages [formCtrl]="ProductCategory_DisplaySequence"></validation-messages>
+                    </div>
+                    <div class="my-5">
+                        <label class="mb-2" for="employee">{{l("Teams")}}</label>
+                        <p-multiSelect name="employee" id="employee" [options]="employeeList"
+                            [(ngModel)]="selectedEmployees" optionLabel="displayName" [virtualScroll]="true"
+                            [filter]="true" [itemSize]="34" [maxSelectedLabels]="2"
+                            class="multiselect-custom-virtual-scroll" (onChange)="onEmployeeSelect($event)">
+                        </p-multiSelect>
                     </div>
                     <div class="my-5">
                         <label class="form-check form-check-custom form-check-solid">
