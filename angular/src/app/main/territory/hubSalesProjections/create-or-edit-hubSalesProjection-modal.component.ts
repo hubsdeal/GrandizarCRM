@@ -41,6 +41,8 @@ export class CreateOrEditHubSalesProjectionModalComponent extends AppComponentBa
     storeName = '';
     currencyName = '';
 
+    hubId:number;
+
     constructor(
         injector: Injector,
         private _hubSalesProjectionsServiceProxy: HubSalesProjectionsServiceProxy,
@@ -67,7 +69,7 @@ export class CreateOrEditHubSalesProjectionModalComponent extends AppComponentBa
                 .getHubSalesProjectionForEdit(hubSalesProjectionId)
                 .subscribe((result) => {
                     this.hubSalesProjection = result.hubSalesProjection;
-
+                    this.hubId = result.hubSalesProjection.hubId;
                     this.hubName = result.hubName;
                     this.productCategoryName = result.productCategoryName;
                     this.storeName = result.storeName;
@@ -81,7 +83,7 @@ export class CreateOrEditHubSalesProjectionModalComponent extends AppComponentBa
 
     save(): void {
         this.saving = true;
-
+        this.hubSalesProjection.hubId=this.hubId;
         this._hubSalesProjectionsServiceProxy
             .createOrEdit(this.hubSalesProjection)
             .pipe(

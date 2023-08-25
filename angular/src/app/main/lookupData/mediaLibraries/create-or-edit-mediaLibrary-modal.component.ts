@@ -1,7 +1,7 @@
 ﻿import { Component, ViewChild, Injector, Output, EventEmitter, OnInit, ElementRef } from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs/operators';
-import { MediaLibrariesServiceProxy, CreateOrEditMediaLibraryDto, MediaLibraryMasterTagLookupTableDto } from '@shared/service-proxies/service-proxies';
+import { MediaLibrariesServiceProxy, CreateOrEditMediaLibraryDto, MediaLibraryMasterTagLookupTableDto, ProductMediasServiceProxy, MediaLibraryFromSpDto, BulkProductMediaAddInput } from '@shared/service-proxies/service-proxies';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { DateTime } from 'luxon';
 
@@ -11,6 +11,8 @@ import { MediaLibraryMasterTagLookupTableModalComponent } from './mediaLibrary-m
 import { FileItem, FileUploader, FileUploaderOptions } from 'ng2-file-upload';
 import { AppConsts } from '@shared/AppConsts';
 import { IAjaxResponse, TokenService } from 'abp-ng2-module';
+import { ProductMediaMediaLibraryLookupTableModalComponent } from '@app/main/shop/productMedias/productMedia-mediaLibrary-lookup-table-modal.component';
+import { AppSessionService } from '@shared/common/session/app-session.service';
 
 @Component({
     selector: 'createOrEditMediaLibraryModal',
@@ -22,9 +24,10 @@ export class CreateOrEditMediaLibraryModalComponent extends AppComponentBase imp
     mediaLibraryMasterTagCategoryLookupTableModal: MediaLibraryMasterTagCategoryLookupTableModalComponent;
     @ViewChild('mediaLibraryMasterTagLookupTableModal', { static: true })
     mediaLibraryMasterTagLookupTableModal: MediaLibraryMasterTagLookupTableModalComponent;
+    @ViewChild('productMediaMediaLibraryLookupTableModal', { static: true }) productMediaMediaLibraryLookupTableModal: ProductMediaMediaLibraryLookupTableModalComponent;
 
     @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
-
+    @Output() saveProductMedia: EventEmitter<number> = new EventEmitter<number>();
     active = false;
     saving = false;
 
@@ -44,20 +47,40 @@ export class CreateOrEditMediaLibraryModalComponent extends AppComponentBase imp
     imageSrc: any = '';
     imageSize: any;
     imageExtension: any;
+    isChangeProductPicture: boolean = false;
+
+    isChangeProductVideo: boolean = false;
+    productId: number;
+    isFromMediaLibraryList: boolean = false;
+
+
+    allSelectedMedias: MediaLibraryFromSpDto[] = [];
+
+    //allSelectedMedias: MediaLibraryFromSpDto[] = [];
 
     constructor(
         injector: Injector,
         private _mediaLibrariesServiceProxy: MediaLibrariesServiceProxy,
+        private _appSessionService: AppSessionService,
+        private _productMediasServiceProxy: ProductMediasServiceProxy,
         private _dateTimeService: DateTimeService,
         private _tokenService: TokenService
     ) {
         super(injector);
     }
 
+    ngOnInit() {
+        this.temporaryPictureUrl = '';
+        this.initFileUploader();
+    }
     show(mediaLibraryId?: number): void {
+        this.mediaName = '';
+        this.mediaPicture = null;
+        this.mediaId = null;
         if (!mediaLibraryId) {
             this.mediaLibrary = new CreateOrEditMediaLibraryDto();
             this.mediaLibrary.id = mediaLibraryId;
+            this.mediaLibrary.masterTagId = 1;
             this.masterTagCategoryName = '';
             this.masterTagName = '';
 
@@ -69,7 +92,7 @@ export class CreateOrEditMediaLibraryModalComponent extends AppComponentBase imp
 
                 this.masterTagCategoryName = result.masterTagCategoryName;
                 this.masterTagName = result.masterTagName;
-
+                this.imageSrc = result.picture;
                 this.active = true;
                 this.modal.show();
             });
@@ -95,6 +118,53 @@ export class CreateOrEditMediaLibraryModalComponent extends AppComponentBase imp
     //             this.modalSave.emit(null);
     //         });
     // }
+    saveMedia(fileToken?: string): void {
+        if (this.allSelectedMedias.length > 0) {
+            var input = new BulkProductMediaAddInput();
+            input.medias = this.allSelectedMedias;
+            input.productId = this.productId;
+            this._productMediasServiceProxy.bulkMediaAssign(input)
+                .pipe(finalize(() => { this.saving = false; }))
+                .subscribe(() => {
+                    this.notify.info(this.l('SavedSuccessfully'));
+                    this.close();
+                    this.modalSave.emit(null);
+                });
+        } else {
+            this.mediaLibrary.fileToken = fileToken;
+            if (this.isChangeProductPicture) {
+                this.mediaLibrary.masterTagId = 1;
+            }
+
+            if (this.isChangeProductVideo) {
+                this.mediaLibrary.masterTagId = 2;
+            }
+            this.mediaLibrary.name = 'grandizar-' + this.mediaLibrary.name;
+
+            if (this.mediaId != null) {
+                this.saving = false;
+                this.close();
+                this.saveProductMedia.emit(this.mediaId);
+                this.modalSave.emit(null);
+            } else {
+                this._mediaLibrariesServiceProxy.createOrEdit(this.mediaLibrary)
+                    .pipe(finalize(() => { this.saving = false; }))
+                    .subscribe((result) => {
+                        this.notify.info(this.l('SavedSuccessfully'));
+                        this.close();
+                        this.saveProductMedia.emit(result);
+                        this.modalSave.emit(null);
+                    });
+            }
+        }
+
+    }
+    getNewMediaLibraryId(event: any) {
+        if (event) {
+            this.allSelectedMedias = event;
+        }
+    }
+
     save() {
         if (this.uploader.queue != null && this.uploader.queue.length > 0) {
             this.uploader.uploadAll();
@@ -102,22 +172,22 @@ export class CreateOrEditMediaLibraryModalComponent extends AppComponentBase imp
             this.saveMedia();
         }
     }
-    saveMedia(fileToken?: string): void {
-        this.saving = true;
-        this.mediaLibrary.fileToken = fileToken;
-        this.mediaLibrary.name = 'hubsdeal-' + this.mediaLibrary.name;
+    // saveMedia(fileToken?: string): void {
+    //     this.saving = true;
+    //     this.mediaLibrary.fileToken = fileToken;
+    //     this.mediaLibrary.name = 'hubsdeal-' + this.mediaLibrary.name;
 
-        this._mediaLibrariesServiceProxy.createOrEdit(this.mediaLibrary)
-            .pipe(
-                finalize(() => { 
-                    this.saving = false; 
-                }))
-            .subscribe((result) => {
-                this.notify.info(this.l('SavedSuccessfully'));
-                this.close();
-                this.modalSave.emit(null);
-            });
-    }
+    //     this._mediaLibrariesServiceProxy.createOrEdit(this.mediaLibrary)
+    //         .pipe(
+    //             finalize(() => { 
+    //                 this.saving = false; 
+    //             }))
+    //         .subscribe((result) => {
+    //             this.notify.info(this.l('SavedSuccessfully'));
+    //             this.close();
+    //             this.modalSave.emit(null);
+    //         });
+    // }
 
     fileChangeEvent(event: any) {
         this.mediaLibrary.name = event.target.files[0].name
@@ -171,6 +241,13 @@ export class CreateOrEditMediaLibraryModalComponent extends AppComponentBase imp
         return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
     }
 
+    close(): void {
+        this.active = false;
+        this.allSelectedMedias = [];
+        this.mediaLibrary.fileToken = null;
+        this.imageSrc = null;
+        this.modal.hide();
+    }
     openSelectMasterTagCategoryModal() {
         this.mediaLibraryMasterTagCategoryLookupTableModal.id = this.mediaLibrary.masterTagCategoryId;
         this.mediaLibraryMasterTagCategoryLookupTableModal.displayName = this.masterTagCategoryName;
@@ -200,12 +277,34 @@ export class CreateOrEditMediaLibraryModalComponent extends AppComponentBase imp
         this.masterTagName = this.mediaLibraryMasterTagLookupTableModal.displayName;
     }
 
-    close(): void {
-        this.active = false;
-        this.modal.hide();
+    openSelectMediaLibraryModal() {
+        this.productMediaMediaLibraryLookupTableModal.employeeUserId = undefined;
+        this.productMediaMediaLibraryLookupTableModal.show();
+    }
+    openSelectMyMediaLibraryModal() {
+        console.log(this._appSessionService.userId);
+        this.productMediaMediaLibraryLookupTableModal.employeeUserId = this._appSessionService.userId;
+        this.productMediaMediaLibraryLookupTableModal.show();
     }
 
-    ngOnInit(): void {
-        this.initFileUploader();
+    setMediaLibraryIdNull() {
+        this.mediaName = '';
+        this.mediaPicture = null;
+        this.mediaId = null;
+
     }
+
+    getNewMedia() {
+        this.mediaName = this.productMediaMediaLibraryLookupTableModal.displayName;
+        this.mediaPicture = this.productMediaMediaLibraryLookupTableModal.picture;
+        this.mediaId = this.productMediaMediaLibraryLookupTableModal.id;
+
+    }
+
+
+    // ngOnInit(): void {
+    //     this.initFileUploader();
+    // }
+
+
 }

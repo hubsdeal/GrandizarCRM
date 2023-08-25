@@ -20,13 +20,13 @@
             </h1>
         </div>
         <button *ngIf="isGranted('Pages.HubZipCodeMaps.Create')" (click)="createHubZipCodeMap()"
-        class="btn btn-primary blue">
+            class="btn btn-primary blue">
             <i class="fa fa-plus"></i>
             {{ l('Hub Zip Code') }}
         </button>
     </div>
 
-    <div [class]="containerClass">
+    <div>
         <div class="card card-custom gutter-b">
             <div class="card-body">
                 <form class="form" autocomplete="off">
@@ -50,44 +50,25 @@
 
                             <div class="col-md-3">
                                 <div class="my-3">
-                                    <label class="form-label" for="CityNameFilter">{{ l('CityName') }}</label>
+                                    <label class="form-label" for="CityNameFilter">{{ l('City Name') }}</label>
                                     <input type="text" class="form-control" id="CityNameFilter" name="cityNameFilter"
                                         [(ngModel)]="cityNameFilter" (ngModelChange)="getHubZipCodeMaps()" />
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="my-3">
-                                    <label class="form-label" for="ZipCodeFilter">{{ l('ZipCode') }}</label>
+                                    <label class="form-label" for="ZipCodeFilter">{{ l('Zip Code') }}</label>
                                     <input type="text" class="form-control" id="ZipCodeFilter" name="zipCodeFilter"
                                         [(ngModel)]="zipCodeFilter" (ngModelChange)="getHubZipCodeMaps()" />
-                                </div>
-                            </div>
-
-                            <div class="col-md-3">
-                                <div class="my-3">
-                                    <label class="form-label" for="HubNameFilter">
-                                        ({{ l('Hub') }}) {{ l('Name') }}
-                                    </label>
-                                    <input type="text" class="form-control" id="HubNameFilter" name="hubNameFilter"
-                                        [(ngModel)]="hubNameFilter" />
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="CityNameFilter">
-                                        ({{ l('City') }}) {{ l('Name') }}
+                                        City
                                     </label>
                                     <input type="text" class="form-control" id="CityNameFilter" name="cityNameFilter"
                                         [(ngModel)]="cityNameFilter" />
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="my-3">
-                                    <label class="form-label" for="ZipCodeNameFilter">
-                                        ({{ l('ZipCode') }}) {{ l('Name') }}
-                                    </label>
-                                    <input type="text" class="form-control" id="ZipCodeNameFilter"
-                                        name="zipCodeNameFilter" [(ngModel)]="zipCodeNameFilter" />
                                 </div>
                             </div>
                             <div class="col-md-12 mt-5">
@@ -124,12 +105,20 @@
                             [resizableColumns]="primengTableHelper.resizableColumns">
                             <ng-template pTemplate="header">
                                 <tr>
-                                    <th style="width: 130px" [hidden]="
-                                            !isGrantedAny('Pages.HubZipCodeMaps.Edit', 'Pages.HubZipCodeMaps.Delete')
-                                        ">
-                                        {{ l('Actions') }}
+                                    <th style="width: 150px">
+                                        {{l('Zip Code')}}
                                     </th>
-                                    <th style="width: 150px" pSortableColumn="hubFk.name">
+                                    <th style="width: 150px">
+                                        {{l('City')}}
+                                    </th>
+                                    <!-- <th style="width: 150px">
+                                        {{l('County')}}
+                                    </th>
+                                    <th style="width: 150px">
+                                        {{l('State')}}
+                                    </th> -->
+
+                                    <!-- <th style="width: 150px" pSortableColumn="hubFk.name">
                                         {{ l('Name') }}
                                         <p-sortIcon field="hubName"></p-sortIcon>
                                     </th>
@@ -148,19 +137,56 @@
                                     <th style="width: 150px" pSortableColumn="zipCode">
                                         {{ l('ZipCode') }}
                                         <p-sortIcon field="hubZipCodeMap.zipCode"></p-sortIcon>
+                                    </th> -->
+                                    <th style="width: 130px" [hidden]="
+                                            !isGrantedAny('Pages.HubZipCodeMaps.Edit', 'Pages.HubZipCodeMaps.Delete')
+                                        ">
+                                        {{ l('Actions') }}
                                     </th>
                                 </tr>
                             </ng-template>
                             <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
                                 <tr>
+
+                                    <!-- <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Name') }}</span>
+                                        {{ record.hubName }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Name') }}</span>
+                                        {{ record.cityName }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Name') }}</span>
+                                        {{ record.zipCodeName }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('CityName') }}</span>
+                                        {{ record.hubZipCodeMap.cityName }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('ZipCode') }}</span>
+                                        {{ record.hubZipCodeMap.zipCode }}
+                                    </td> -->
+                                    <td style="width:150px">
+                                        <span class="ui-column-title"> {{l('Name')}}</span> {{record.zipCodeName}}
+                                    </td>
+                                    <td style="width:150px">
+                                        <span class="ui-column-title"> {{l('Name')}}</span> {{record.cityName}}
+                                    </td>
+                                    <!-- <td style="width:150px">
+                                        <span class="ui-column-title"> {{l('Name')}}</span> {{record.countyName}}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span>{{record.stateName}}</span>
+                                        <span *ngIf="record.stateTicker" class="ml-2">({{record.stateTicker}})</span>
+                                    </td> -->
                                     <td style="width: 130px" [hidden]="
                                             !isGrantedAny('Pages.HubZipCodeMaps.Edit', 'Pages.HubZipCodeMaps.Delete')
                                         ">
-                                        <div class="btn-group dropdown" dropdown container="body">
+                                        <!-- <div class="btn-group dropdown" dropdown container="body">
                                             <button class="dropdown-toggle btn btn-sm btn-primary" dropdownToggle>
                                                 <i class="fa fa-cog"></i>
-                                                <span class="caret"></span>
-                                                {{ l('Actions') }}
                                             </button>
                                             <ul class="dropdown-menu" *dropdownMenu>
                                                 <li>
@@ -186,27 +212,12 @@
                                                     </a>
                                                 </li>
                                             </ul>
-                                        </div>
-                                    </td>
-                                    <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('Name') }}</span>
-                                        {{ record.hubName }}
-                                    </td>
-                                    <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('Name') }}</span>
-                                        {{ record.cityName }}
-                                    </td>
-                                    <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('Name') }}</span>
-                                        {{ record.zipCodeName }}
-                                    </td>
-                                    <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('CityName') }}</span>
-                                        {{ record.hubZipCodeMap.cityName }}
-                                    </td>
-                                    <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('ZipCode') }}</span>
-                                        {{ record.hubZipCodeMap.zipCode }}
+                                        </div> -->
+                                        <a href="javascript:;"
+                                            *ngIf="permission.isGranted('Pages.HubZipCodeMaps.Delete')"
+                                            (click)="deleteHubZipCodeMap(record.hubZipCodeMap)"
+                                            class="btn btn-icon btn-danger"><i
+                                                class="fas fa-trash-alt fs-2 me-2"></i></a>
                                     </td>
                                 </tr>
                             </ng-template>

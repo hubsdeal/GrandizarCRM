@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { DateTimeService } from '@app/shared/common/timing/date-time.service';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
 import { AppComponentBase } from '@shared/common/app-component-base';
-import { StoreCountryLookupTableDto, StoreStateLookupTableDto, StoresServiceProxy, TokenAuthServiceProxy, StoreDto } from '@shared/service-proxies/service-proxies';
+import { StoreCountryLookupTableDto, StoreStateLookupTableDto, StoresServiceProxy, TokenAuthServiceProxy, StoreDto, SessionServiceProxy } from '@shared/service-proxies/service-proxies';
 import { FileDownloadService } from '@shared/utils/file-download.service';
 import { NotifyService } from 'abp-ng2-module';
 import { LazyLoadEvent } from 'primeng/api';
@@ -11,6 +11,7 @@ import { Paginator } from 'primeng/paginator';
 import { Table } from 'primeng/table';
 import { CreateOrEditStoreModalComponent } from '../create-or-edit-store-modal.component';
 import { ViewStoreModalComponent } from '../view-store-modal.component';
+import { AppSessionService } from '@shared/common/session/app-session.service';
 
 @Component({
   selector: 'app-my-stores',
@@ -107,9 +108,11 @@ export class MyStoresComponent extends AppComponentBase {
       private _tokenAuth: TokenAuthServiceProxy,
       private _activatedRoute: ActivatedRoute,
       private _fileDownloadService: FileDownloadService,
-      private _dateTimeService: DateTimeService
+      private _dateTimeService: DateTimeService,
+      private _sessionsService: AppSessionService
   ) {
       super(injector);
+      this.employeeIdFilter = this._sessionsService.userId;
       this._storesServiceProxy.getAllCountryForTableDropdown().subscribe((result) => {
           this.allCountrys = result;
       });

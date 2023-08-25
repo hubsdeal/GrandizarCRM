@@ -1,4 +1,4 @@
-﻿import { Component, ViewChild, Injector, Output, EventEmitter, OnInit, ElementRef } from '@angular/core';
+﻿import { Component, ViewChild, Injector, Output, EventEmitter, OnInit, ElementRef, Input } from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs/operators';
 import { TaskWorkItemsServiceProxy, CreateOrEditTaskWorkItemDto } from '@shared/service-proxies/service-proxies';
@@ -24,7 +24,7 @@ export class CreateOrEditTaskWorkItemModalComponent extends AppComponentBase imp
 
     active = false;
     saving = false;
-
+    taskEventId: number;
     taskWorkItem: CreateOrEditTaskWorkItemDto = new CreateOrEditTaskWorkItemDto();
 
     taskEventName = '';
@@ -37,34 +37,39 @@ export class CreateOrEditTaskWorkItemModalComponent extends AppComponentBase imp
     ) {
         super(injector);
     }
-
     show(taskWorkItemId?: number): void {
         if (!taskWorkItemId) {
             this.taskWorkItem = new CreateOrEditTaskWorkItemDto();
             this.taskWorkItem.id = taskWorkItemId;
-            this.taskWorkItem.startDate = this._dateTimeService.getStartOfDay();
-            this.taskWorkItem.endDate = this._dateTimeService.getStartOfDay();
             this.taskEventName = '';
             this.employeeName = '';
-
+            this.taskWorkItem.startDate = this._dateTimeService.getStartOfDay();
+            this.taskWorkItem.endDate = this._dateTimeService.getStartOfDay();
+            //this.status = 'incomplete';
             this.active = true;
             this.modal.show();
         } else {
-            this._taskWorkItemsServiceProxy.getTaskWorkItemForEdit(taskWorkItemId).subscribe((result) => {
+            this._taskWorkItemsServiceProxy.getTaskWorkItemForEdit(taskWorkItemId).subscribe(result => {
                 this.taskWorkItem = result.taskWorkItem;
-
+                if (this.taskEventId) {
+                    this.taskEventId = result.taskWorkItem.taskEventId;
+                }
+                //this.status = result.taskWorkItem.openOrClosed ? 'completed' : 'incomplete';
                 this.taskEventName = result.taskEventName;
                 this.employeeName = result.employeeName;
+
 
                 this.active = true;
                 this.modal.show();
             });
         }
+
+
     }
 
     save(): void {
         this.saving = true;
-
+        this.taskWorkItem.taskEventId = this.taskEventId;
         this._taskWorkItemsServiceProxy
             .createOrEdit(this.taskWorkItem)
             .pipe(
@@ -114,4 +119,11 @@ export class CreateOrEditTaskWorkItemModalComponent extends AppComponentBase imp
     }
 
     ngOnInit(): void {}
+    startTimeValue(value: any) {
+        this.taskWorkItem.startTime = value;
+    }
+
+    endTimeValue(value: any) {
+        this.taskWorkItem.endTime = value;
+    }
 }

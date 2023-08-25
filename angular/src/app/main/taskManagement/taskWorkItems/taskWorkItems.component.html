@@ -1,24 +1,165 @@
 ﻿<div [@routerTransition]>
-    <sub-header [title]="'TaskWorkItems' | localize" [description]="'TaskWorkItemsHeaderInfo' | localize">
+    <!-- <sub-header [title]="'TaskWorkItems' | localize" [description]="'TaskWorkItemsHeaderInfo' | localize">
         <div role="actions">
             <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1">
                 <i class="fa fa-file-excel"></i>
                 {{ l('ExportToExcel') }}
             </button>
 
-            <button
-                *ngIf="isGranted('Pages.TaskWorkItems.Create')"
-                (click)="createTaskWorkItem()"
-                class="btn btn-primary blue"
-            >
+            <button *ngIf="isGranted('Pages.TaskWorkItems.Create')" (click)="createTaskWorkItem()"
+                class="btn btn-primary blue">
                 <i class="fa fa-plus"></i>
                 {{ l('CreateNewTaskWorkItem') }}
             </button>
         </div>
-    </sub-header>
+    </sub-header> -->
+    <div class="w-100 d-flex mb-6 ps-9 pe-9 mt-6 justify-content-between align-items-center ng-tns-c282-7">
+        <div class="d-flex">
+            <h1 class="fs-3 fw-bold  my-0 page-heading text-dark">
+                Work Items
+            </h1>
+        </div>
+        <button *ngIf="isGranted('Pages.TaskWorkItems.Create')" (click)="createTaskWorkItem()"
+            class="btn btn-primary blue">
+            <i class="fa fa-plus"></i>
+            Work Items
+        </button>
+    </div>
 
     <div [class]="containerClass">
-        <div class="card card-custom gutter-b">
+        <div class="row g-6 g-xl-9">
+            <!--begin::Col-->
+            <div class="col-md-6 col-xl-4" *ngFor="let workItem of workItems">
+                <!--begin::Card-->
+                <a href="javascript:;" class="card shadow-sm border-hover-primary">
+                    <!--begin::Card header-->
+                    <div class="card-header border-0 pt-9">
+                        <!--begin::Card Title-->
+                        <div class="card-title m-0">
+                            <!--begin::Avatar-->
+                            <div class="d-flex align-items-center">
+                                <div class="symbol-group symbol-hover">
+                                    <div data-bs-toggle="tooltip" aria-label="workItem?.employeeName"
+                                        data-bs-original-title="workItem?.employeeName" data-kt-initialized="1"
+                                        class="symbol symbol-50px w-50px bg-light">
+                                        <img alt="Pic" *ngIf="workItem?.picture" alt="Pic" src="{{workItem?.picture}}">
+                                        <span *ngIf="!workItem?.picture" title="{{workItem?.employeeName}}"
+                                            class="symbol-label bg-warning text-inverse-warning fw-bold">{{workItem?.employeeName
+                                            | nameSplit}}</span>
+                                    </div>
+                                </div>
+                                <span class="ms-2">{{workItem?.employeeName}}</span>
+                            </div>
+                            <!--end::Avatar-->
+                        </div>
+                        <!--end::Car Title-->
+                        <!--begin::Card toolbar-->
+                        <div class="card-toolbar" style="position: absolute; top: 0; right: 7px;">
+                            <span *ngIf="!workItem.taskWorkItem.openOrClosed"
+                                class="badge badge-light-primary fw-bold me-auto px-4 py-3">Open</span>
+                            <span *ngIf="workItem.taskWorkItem.openOrClosed"
+                                class="badge badge-light-success fw-bold me-auto px-4 py-3 ng-tns-c382-7">Closed</span>
+                            <div class="btn-group dropdown ms-3" dropdown container="body">
+                                <button class="dropdown-toggle btn btn-sm btn-light-primary" dropdownToggle>
+                                    <i class="fa fa-cog"></i>
+                                </button>
+                                <ul class="dropdown-menu" *dropdownMenu>
+                                    <li>
+                                        <a href="javascript:;" *ngIf="permission.isGranted('Pages.TaskWorkItems.Edit')"
+                                            class="dropdown-item" (click)="
+                                                createOrEditTaskWorkItemModal.show(workItem.taskWorkItem.id)
+                                            ">
+                                            {{ l('Edit') }}
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="javascript:;"
+                                            *ngIf="permission.isGranted('Pages.TaskWorkItems.Delete')"
+                                            (click)="deleteTaskWorkItem(workItem.taskWorkItem.id)">
+                                            {{ l('Delete') }}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!--end::Card toolbar-->
+                    </div>
+                    <!--end:: Card header-->
+                    <!--begin:: Card body-->
+                    <div class="card-body p-9">
+                        <!--begin::Name-->
+                        <div class="fs-3 fw-bold text-dark mb-5">{{workItem.taskWorkItem.name}}</div>
+                        <!--end::Name-->
+                        <!--begin::Description-->
+                        <!-- <p class="text-gray-400 fw-semibold fs-5 mt-1 mb-7">CRM App
+                            application to HR efficiency</p> -->
+                        <!--end::Description-->
+                        <!--begin::Info-->
+                        <div class="d-flex flex-wrap mb-5">
+                            <!--begin::Due-->
+                            <div class="border border-gray-300 border-dashed rounded  py-3 px-4 me-3 mb-3 w-60">
+                                <div class="fs-6 text-gray-800 fw-bold" *ngIf="workItem.taskWorkItem.startDate">
+                                    {{workItem.taskWorkItem.startDate | luxonFormat : 'dd-MM-yyyy'}}
+                                    <span
+                                        *ngIf="workItem.taskWorkItem.startTime && workItem.taskWorkItem.startDate">(</span>
+                                    <span
+                                        *ngIf="workItem.taskWorkItem.startTime">{{workItem.taskWorkItem.startTime}}</span>
+                                    <span
+                                        *ngIf="workItem.taskWorkItem.startTime && workItem.taskWorkItem.startDate">)</span>
+                                </div>
+                                <div class="fw-semibold text-gray-400">Start Date</div>
+                            </div>
+                            <div class="border border-gray-300 border-dashed rounded  py-3 px-4 mb-3 w-30">
+                                <div class="fs-6 text-gray-800 fw-bold" *ngIf="workItem.taskWorkItem.endDate">
+                                    {{workItem.taskWorkItem.estimatedHours}} Hr.
+                                </div>
+                                <div class="fw-semibold text-gray-400">Est. Time</div>
+                            </div>
+
+                        </div>
+                        <div class="d-flex flex-wrap mb-5">
+                            <!--begin::Due-->
+                            <div class="border border-gray-300 border-dashed rounded  py-3 px-4 me-3 mb-3 w-60">
+                                <div class="fs-6 text-gray-800 fw-bold" *ngIf="workItem.taskWorkItem.endDate">
+                                    {{workItem.taskWorkItem.endDate | luxonFormat : 'dd-MM-yyyy'}}
+                                    <span
+                                        *ngIf="workItem.taskWorkItem.endTime && workItem.taskWorkItem.endDate">(</span>
+                                    <span *ngIf="workItem.taskWorkItem.endTime">{{workItem.taskWorkItem.endTime}}</span>
+                                    <span
+                                        *ngIf="workItem.taskWorkItem.endTime && workItem.taskWorkItem.endDate">)</span>
+                                </div>
+                                <div class="fw-semibold text-gray-400">End Date</div>
+                            </div>
+                            <div class="border border-gray-300 border-dashed rounded  py-3 px-4 mb-3 w-30">
+                                <div class="fs-6 text-gray-800 fw-bold" *ngIf="workItem.taskWorkItem.endDate">
+                                    {{workItem.taskWorkItem.actualHours}} Hr.
+                                </div>
+                                <div class="fw-semibold text-gray-400">Actual Time</div>
+                            </div>
+                            <!--end::Due-->
+                            <!--begin::Budget-->
+                            <!-- <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 mb-3">
+                                <div class="fs-6 text-gray-800 fw-bold">$284,900.00</div>
+                                <div class="fw-semibold text-gray-400">Budget</div>
+                            </div> -->
+                            <!--end::Budget-->
+                        </div>
+
+                        <!--end::Info-->
+                        <!--begin::Progress-->
+                        <div>
+                            <p-slider [(ngModel)]="workItem.taskWorkItem.completionPercentage"></p-slider>
+                        </div>
+                        <!--end::Progress-->
+                    </div>
+                    <!--end:: Card body-->
+                </a>
+                <!--end::Card-->
+            </div>
+            <!--end::Col-->
+
+        </div>
+        <!-- <div class="card card-custom gutter-b">
             <div class="card-body">
                 <form class="form" autocomplete="off">
                     <div>
@@ -26,15 +167,9 @@
                             <div class="col-xl-12">
                                 <div class="my-3">
                                     <div class="input-group mb-3">
-                                        <input
-                                            [(ngModel)]="filterText"
-                                            (ngModelChange)="getTaskWorkItems()"
-                                            name="filterText"
-                                            autoFocus
-                                            type="text"
-                                            class="form-control"
-                                            [placeholder]="l('SearchWithThreeDot')"
-                                        />
+                                        <input [(ngModel)]="filterText" (ngModelChange)="getTaskWorkItems()"
+                                            name="filterText" autoFocus type="text" class="form-control"
+                                            [placeholder]="l('SearchWithThreeDot')" />
                                         <button class="btn btn-primary" type="submit" (click)="getTaskWorkItems()">
                                             <i class="flaticon-search-1"></i>
                                         </button>
@@ -48,14 +183,8 @@
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="NameFilter">{{ l('Name') }}</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="NameFilter"
-                                        name="nameFilter"
-                                        [(ngModel)]="nameFilter"
-                                        (ngModelChange)="getTaskWorkItems()"
-                                    />
+                                    <input type="text" class="form-control" id="NameFilter" name="nameFilter"
+                                        [(ngModel)]="nameFilter" (ngModelChange)="getTaskWorkItems()" />
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -63,54 +192,32 @@
                                     <label class="form-label" for="EstimatedHoursFilter">
                                         {{ l('EstimatedHours') }}
                                     </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="EstimatedHoursFilter"
-                                        name="estimatedHoursFilter"
-                                        [(ngModel)]="estimatedHoursFilter"
-                                        (ngModelChange)="getTaskWorkItems()"
-                                    />
+                                    <input type="text" class="form-control" id="EstimatedHoursFilter"
+                                        name="estimatedHoursFilter" [(ngModel)]="estimatedHoursFilter"
+                                        (ngModelChange)="getTaskWorkItems()" />
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="ActualHoursFilter">{{ l('ActualHours') }}</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="ActualHoursFilter"
-                                        name="actualHoursFilter"
-                                        [(ngModel)]="actualHoursFilter"
-                                        (ngModelChange)="getTaskWorkItems()"
-                                    />
+                                    <input type="text" class="form-control" id="ActualHoursFilter"
+                                        name="actualHoursFilter" [(ngModel)]="actualHoursFilter"
+                                        (ngModelChange)="getTaskWorkItems()" />
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="MinStartDateFilter">{{ l('StartDateRange') }}</label>
                                     <div class="input-group">
-                                        <input
-                                            class="form-control m-input"
-                                            id="MinStartDateFilter"
-                                            name="MinStartDateFilter"
-                                            type="datetime"
-                                            bsDatepicker
-                                            placeholder="{{ l('MinValue') }}"
-                                            [(ngModel)]="minStartDateFilter"
-                                            (ngModelChange)="getTaskWorkItems()"
-                                        />
+                                        <input class="form-control m-input" id="MinStartDateFilter"
+                                            name="MinStartDateFilter" type="datetime" bsDatepicker
+                                            placeholder="{{ l('MinValue') }}" [(ngModel)]="minStartDateFilter"
+                                            (ngModelChange)="getTaskWorkItems()" />
                                         <span style="line-height: 40px; padding: 0 15px 0 15px">&mdash;</span>
-                                        <input
-                                            class="form-control m-input"
-                                            id="MaxStartDateFilter"
-                                            name="MaxStartDateFilter"
-                                            type="datetime"
-                                            bsDatepicker
-                                            placeholder="{{ l('MaxValue') }}"
-                                            [(ngModel)]="maxStartDateFilter"
-                                            (ngModelChange)="getTaskWorkItems()"
-                                        />
+                                        <input class="form-control m-input" id="MaxStartDateFilter"
+                                            name="MaxStartDateFilter" type="datetime" bsDatepicker
+                                            placeholder="{{ l('MaxValue') }}" [(ngModel)]="maxStartDateFilter"
+                                            (ngModelChange)="getTaskWorkItems()" />
                                     </div>
                                 </div>
                             </div>
@@ -118,54 +225,30 @@
                                 <div class="my-3">
                                     <label class="form-label" for="MinEndDateFilter">{{ l('EndDateRange') }}</label>
                                     <div class="input-group">
-                                        <input
-                                            class="form-control m-input"
-                                            id="MinEndDateFilter"
-                                            name="MinEndDateFilter"
-                                            type="datetime"
-                                            bsDatepicker
-                                            placeholder="{{ l('MinValue') }}"
-                                            [(ngModel)]="minEndDateFilter"
-                                            (ngModelChange)="getTaskWorkItems()"
-                                        />
+                                        <input class="form-control m-input" id="MinEndDateFilter"
+                                            name="MinEndDateFilter" type="datetime" bsDatepicker
+                                            placeholder="{{ l('MinValue') }}" [(ngModel)]="minEndDateFilter"
+                                            (ngModelChange)="getTaskWorkItems()" />
                                         <span style="line-height: 40px; padding: 0 15px 0 15px">&mdash;</span>
-                                        <input
-                                            class="form-control m-input"
-                                            id="MaxEndDateFilter"
-                                            name="MaxEndDateFilter"
-                                            type="datetime"
-                                            bsDatepicker
-                                            placeholder="{{ l('MaxValue') }}"
-                                            [(ngModel)]="maxEndDateFilter"
-                                            (ngModelChange)="getTaskWorkItems()"
-                                        />
+                                        <input class="form-control m-input" id="MaxEndDateFilter"
+                                            name="MaxEndDateFilter" type="datetime" bsDatepicker
+                                            placeholder="{{ l('MaxValue') }}" [(ngModel)]="maxEndDateFilter"
+                                            (ngModelChange)="getTaskWorkItems()" />
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="StartTimeFilter">{{ l('StartTime') }}</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="StartTimeFilter"
-                                        name="startTimeFilter"
-                                        [(ngModel)]="startTimeFilter"
-                                        (ngModelChange)="getTaskWorkItems()"
-                                    />
+                                    <input type="text" class="form-control" id="StartTimeFilter" name="startTimeFilter"
+                                        [(ngModel)]="startTimeFilter" (ngModelChange)="getTaskWorkItems()" />
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="EndTimeFilter">{{ l('EndTime') }}</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="EndTimeFilter"
-                                        name="endTimeFilter"
-                                        [(ngModel)]="endTimeFilter"
-                                        (ngModelChange)="getTaskWorkItems()"
-                                    />
+                                    <input type="text" class="form-control" id="EndTimeFilter" name="endTimeFilter"
+                                        [(ngModel)]="endTimeFilter" (ngModelChange)="getTaskWorkItems()" />
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -173,13 +256,8 @@
                                     <label class="form-label" for="OpenOrClosedFilterSelect">
                                         {{ l('OpenOrClosed') }}
                                     </label>
-                                    <select
-                                        class="form-select"
-                                        name="OpenOrClosedFilter"
-                                        id="OpenOrClosedFilterSelect"
-                                        [(ngModel)]="openOrClosedFilter"
-                                        (ngModelChange)="getTaskWorkItems()"
-                                    >
+                                    <select class="form-select" name="OpenOrClosedFilter" id="OpenOrClosedFilterSelect"
+                                        [(ngModel)]="openOrClosedFilter" (ngModelChange)="getTaskWorkItems()">
                                         <option value="-1">{{ l('All') }}</option>
                                         <option value="0">{{ l('False') }}</option>
                                         <option value="1">{{ l('True') }}</option>
@@ -192,23 +270,14 @@
                                         {{ l('MinMax') }} {{ l('CompletionPercentage') }}
                                     </label>
                                     <div class="input-group">
-                                        <input
-                                            type="number"
-                                            class="form-control"
-                                            id="MinCompletionPercentageFilter"
+                                        <input type="number" class="form-control" id="MinCompletionPercentageFilter"
                                             [(ngModel)]="minCompletionPercentageFilter"
-                                            placeholder="{{ l('MinValue') }}"
-                                            name="minCompletionPercentageFilter"
-                                            (ngModelChange)="getTaskWorkItems()"
-                                        />
-                                        <input
-                                            type="number"
-                                            class="form-control"
+                                            placeholder="{{ l('MinValue') }}" name="minCompletionPercentageFilter"
+                                            (ngModelChange)="getTaskWorkItems()" />
+                                        <input type="number" class="form-control"
                                             [(ngModel)]="maxCompletionPercentageFilter"
-                                            placeholder="{{ l('MaxValue') }}"
-                                            name="maxCompletionPercentageFilter"
-                                            (ngModelChange)="getTaskWorkItems()"
-                                        />
+                                            placeholder="{{ l('MaxValue') }}" name="maxCompletionPercentageFilter"
+                                            (ngModelChange)="getTaskWorkItems()" />
                                     </div>
                                 </div>
                             </div>
@@ -218,13 +287,8 @@
                                     <label class="form-label" for="TaskEventNameFilter">
                                         ({{ l('TaskEvent') }}) {{ l('Name') }}
                                     </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="TaskEventNameFilter"
-                                        name="taskEventNameFilter"
-                                        [(ngModel)]="taskEventNameFilter"
-                                    />
+                                    <input type="text" class="form-control" id="TaskEventNameFilter"
+                                        name="taskEventNameFilter" [(ngModel)]="taskEventNameFilter" />
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -232,40 +296,26 @@
                                     <label class="form-label" for="EmployeeNameFilter">
                                         ({{ l('Employee') }}) {{ l('Name') }}
                                     </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="EmployeeNameFilter"
-                                        name="employeeNameFilter"
-                                        [(ngModel)]="employeeNameFilter"
-                                    />
+                                    <input type="text" class="form-control" id="EmployeeNameFilter"
+                                        name="employeeNameFilter" [(ngModel)]="employeeNameFilter" />
                                 </div>
                             </div>
                             <div class="col-md-12 mt-5">
-                                <button
-                                    (click)="resetFilters()"
-                                    class="btn btn-secondary btn-sm"
-                                    id="btn-reset-filters"
-                                >
+                                <button (click)="resetFilters()" class="btn btn-secondary btn-sm"
+                                    id="btn-reset-filters">
                                     Reset
                                 </button>
                             </div>
                         </div>
                         <div class="row my-4">
                             <div class="col-sm-12">
-                                <span
-                                    class="clickable-item text-muted"
-                                    *ngIf="!advancedFiltersAreShown"
-                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown"
-                                >
+                                <span class="clickable-item text-muted" *ngIf="!advancedFiltersAreShown"
+                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown">
                                     <i class="fa fa-angle-down"></i>
                                     {{ l('ShowAdvancedFilters') }}
                                 </span>
-                                <span
-                                    class="clickable-item text-muted"
-                                    *ngIf="advancedFiltersAreShown"
-                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown"
-                                >
+                                <span class="clickable-item text-muted" *ngIf="advancedFiltersAreShown"
+                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown">
                                     <i class="fa fa-angle-up"></i>
                                     {{ l('HideAdvancedFilters') }}
                                 </span>
@@ -275,28 +325,16 @@
                 </form>
 
                 <div class="row align-items-center">
-                    <!--<Primeng-Datatable-Start>-->
                     <div class="primeng-datatable-container col-12" [busyIf]="primengTableHelper.isLoading">
-                        <p-table
-                            #dataTable
-                            (onLazyLoad)="getTaskWorkItems($event)"
-                            [value]="primengTableHelper.records"
-                            rows="{{ primengTableHelper.defaultRecordsCountPerPage }}"
-                            [paginator]="false"
-                            [lazy]="true"
-                            [scrollable]="true"
-                            ScrollWidth="100%"
-                            [responsive]="primengTableHelper.isResponsive"
-                            [resizableColumns]="primengTableHelper.resizableColumns"
-                        >
+                        <p-table #dataTable (onLazyLoad)="getTaskWorkItems($event)" [value]="primengTableHelper.records"
+                            rows="{{ primengTableHelper.defaultRecordsCountPerPage }}" [paginator]="false" [lazy]="true"
+                            [scrollable]="true" ScrollWidth="100%" [responsive]="primengTableHelper.isResponsive"
+                            [resizableColumns]="primengTableHelper.resizableColumns">
                             <ng-template pTemplate="header">
                                 <tr>
-                                    <th
-                                        style="width: 130px"
-                                        [hidden]="
+                                    <th style="width: 130px" [hidden]="
                                             !isGrantedAny('Pages.TaskWorkItems.Edit', 'Pages.TaskWorkItems.Delete')
-                                        "
-                                    >
+                                        ">
                                         {{ l('Actions') }}
                                     </th>
                                     <th style="width: 150px" pSortableColumn="taskEventFk.name">
@@ -347,12 +385,9 @@
                             </ng-template>
                             <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
                                 <tr>
-                                    <td
-                                        style="width: 130px"
-                                        [hidden]="
+                                    <td style="width: 130px" [hidden]="
                                             !isGrantedAny('Pages.TaskWorkItems.Edit', 'Pages.TaskWorkItems.Delete')
-                                        "
-                                    >
+                                        ">
                                         <div class="btn-group dropdown" dropdown container="body">
                                             <button class="dropdown-toggle btn btn-sm btn-primary" dropdownToggle>
                                                 <i class="fa fa-cog"></i>
@@ -361,33 +396,24 @@
                                             </button>
                                             <ul class="dropdown-menu" *dropdownMenu>
                                                 <li>
-                                                    <a
-                                                        href="javascript:;"
-                                                        class="dropdown-item"
-                                                        (click)="viewTaskWorkItemModal.show(record)"
-                                                    >
+                                                    <a href="javascript:;" class="dropdown-item"
+                                                        (click)="viewTaskWorkItemModal.show(record)">
                                                         {{ l('View') }}
                                                     </a>
                                                 </li>
                                                 <li>
-                                                    <a
-                                                        href="javascript:;"
+                                                    <a href="javascript:;"
                                                         *ngIf="permission.isGranted('Pages.TaskWorkItems.Edit')"
-                                                        class="dropdown-item"
-                                                        (click)="
+                                                        class="dropdown-item" (click)="
                                                             createOrEditTaskWorkItemModal.show(record.taskWorkItem.id)
-                                                        "
-                                                    >
+                                                        ">
                                                         {{ l('Edit') }}
                                                     </a>
                                                 </li>
                                                 <li>
-                                                    <a
-                                                        class="dropdown-item"
-                                                        href="javascript:;"
+                                                    <a class="dropdown-item" href="javascript:;"
                                                         *ngIf="permission.isGranted('Pages.TaskWorkItems.Delete')"
-                                                        (click)="deleteTaskWorkItem(record.taskWorkItem)"
-                                                    >
+                                                        (click)="deleteTaskWorkItem(record.taskWorkItem)">
                                                         {{ l('Delete') }}
                                                     </a>
                                                 </li>
@@ -456,27 +482,21 @@
                             {{ l('NoData') }}
                         </div>
                         <div class="primeng-paging-container">
-                            <p-paginator
-                                [rows]="primengTableHelper.defaultRecordsCountPerPage"
-                                #paginator
+                            <p-paginator [rows]="primengTableHelper.defaultRecordsCountPerPage" #paginator
                                 (onPageChange)="getTaskWorkItems($event)"
                                 [totalRecords]="primengTableHelper.totalRecordsCount"
                                 [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
-                                [showCurrentPageReport]="true"
-                                [currentPageReportTemplate]="
+                                [showCurrentPageReport]="true" [currentPageReportTemplate]="
                                     'TotalRecordsCount' | localize : primengTableHelper.totalRecordsCount
-                                "
-                            ></p-paginator>
+                                "></p-paginator>
                         </div>
                     </div>
-                    <!--<Primeng-Datatable-End>-->
                 </div>
             </div>
-        </div>
+        </div> -->
+
     </div>
-    <createOrEditTaskWorkItemModal
-        #createOrEditTaskWorkItemModal
-        (modalSave)="getTaskWorkItems()"
-    ></createOrEditTaskWorkItemModal>
+    <createOrEditTaskWorkItemModal #createOrEditTaskWorkItemModal (modalSave)="getTaskWorkItems()">
+    </createOrEditTaskWorkItemModal>
     <viewTaskWorkItemModal #viewTaskWorkItemModal></viewTaskWorkItemModal>
 </div>

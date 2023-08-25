@@ -125,10 +125,12 @@ export class CreateOrEditHubZipCodeMapModalComponent extends AppComponentBase im
     getNewCityId() {
         this.hubZipCodeMap.cityId = this.hubZipCodeMapCityLookupTableModal.id;
         this.cityName = this.hubZipCodeMapCityLookupTableModal.displayName;
+        this.hubZipCodeMap.cityName = this.hubZipCodeMapZipCodeLookupTableModal.displayName;
     }
     getNewZipCodeId() {
         this.hubZipCodeMap.zipCodeId = this.hubZipCodeMapZipCodeLookupTableModal.id;
         this.zipCodeName = this.hubZipCodeMapZipCodeLookupTableModal.displayName;
+        this.hubZipCodeMap.zipCode = this.hubZipCodeMapZipCodeLookupTableModal.displayName;
     }
 
     close(): void {

@@ -15,10 +15,10 @@
                 <div class="modal-body">
                     <div class="my-5 p_filter">
                         <label class="form-label" for="team">{{ l('Select from Template') }}</label>
-                        <p-dropdown [options]="allTeams" [filter]="true" [virtualScroll]="true"
+                        <p-dropdown [options]="allTemplate" [filter]="true" [virtualScroll]="true"
                             placeholder="Select from Template" [itemSize]="30" name="displayName"
-                            optionLabel="displayName" optionId="id" [(ngModel)]="allTemplate" filterBy="displayName"
-                            [style]="{ width: '100%' }"></p-dropdown>
+                            optionLabel="displayName" optionId="id" [(ngModel)]="selectedTemplate" filterBy="displayName"
+                            [style]="{ width: '100%' }" (onChange)="onTemplateSelect($event)"></p-dropdown>
                     </div>
                     <div class="my-5">
                         <label class="form-label" for="TaskEvent_Name">{{ l('Task Title') }} *</label>
@@ -141,15 +141,32 @@
                             </div>
                         </div>
                         <div class="col-md-12">
-                            <div class="my-5 p_filter">
-                                <label class="form-label" for="team">{{ l('Team') }}</label>
-                                <p-dropdown [options]="allTeams" [filter]="true" [virtualScroll]="true"
-                                    placeholder="Select Team" [itemSize]="30" name="displayName"
-                                    optionLabel="displayName" optionId="id" [(ngModel)]="selectedTeam"
-                                    filterBy="displayName" [style]="{ width: '100%' }"></p-dropdown>
+                            <div class="my-5">
+                                <label class="form-label" for="TaskEvent_completionPercentage">{{ l('Completion Percentage') }}</label>
+                                <input type="text" #TaskEvent_completionPercentage="ngModel" id="TaskEvent_completionPercentage"
+                                    class="form-control" [(ngModel)]="taskEvent.completionPercentage" name="completionPercentage"
+                                    minlength="0" maxlength="100" />
+                                <validation-messages [formCtrl]="TaskEvent_completionPercentage"></validation-messages>
                             </div>
                         </div>
                         <div class="col-md-12">
+                            <!-- <div class="my-5 p_filter">
+                                <label class="form-label" for="team">{{ l('Team') }}</label>
+                                <!-- <p-dropdown [options]="allTeams" [filter]="true" [virtualScroll]="true"
+                                    placeholder="Select Team" [itemSize]="30" name="displayName"
+                                    optionLabel="displayName" optionId="id" [(ngModel)]="selectedTeam"
+                                    filterBy="displayName" [style]="{ width: '100%' }"></p-dropdown>
+                            </div> -->
+                            <div class="my-5">
+                                <label class="mb-2" for="employee">{{l("Teams")}}</label>
+                                <p-multiSelect name="employee" id="employee" [options]="employeeList"
+                                    [(ngModel)]="selectedEmployees" optionLabel="displayName" [virtualScroll]="true"
+                                    [filter]="true" [itemSize]="34" [maxSelectedLabels]="2"
+                                    class="multiselect-custom-virtual-scroll" (onChange)="onEmployeeSelect($event)">
+                                </p-multiSelect>
+                            </div>
+                        </div>
+                        <!-- <div class="col-md-12">
                             <div class="my-5 p_filter">
                                 <label class="form-label" for="team">{{ l('Tag') }}</label>
                                 <p-dropdown [options]="allTags" [filter]="true" [virtualScroll]="true"
@@ -157,7 +174,7 @@
                                     optionLabel="displayName" optionId="id" [(ngModel)]="selectedTag"
                                     filterBy="displayName" [style]="{ width: '100%' }"></p-dropdown>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
 
 
@@ -195,7 +212,7 @@
                         </div>
                         <div class="form-check form-check-solid form-switch form-check-custom fv-row">
                             <input class="form-check-input w-45px h-30px" type="checkbox" id="allowmarketing"
-                                checked="checked">
+                                checked="checked" [(ngModel)]="taskEvent.template">
                             <label class="form-check-label" for="allowmarketing"></label>
                         </div>
                     </div>

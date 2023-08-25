@@ -11,6 +11,7 @@ import { Paginator } from 'primeng/paginator';
 import { Table } from 'primeng/table';
 import { CreateOrEditHubModalComponent } from '../create-or-edit-hub-modal.component';
 import { ViewHubModalComponent } from '../view-hub-modal.component';
+import { AppSessionService } from '@shared/common/session/app-session.service';
 
 @Component({
   selector: 'app-my-hub-list',
@@ -88,6 +89,8 @@ export class MyHubListComponent extends AppComponentBase {
   skipCount: number;
   maxResultCount: number = 10;
 
+  employeeId: number;
+
   constructor(
     injector: Injector,
     private _hubsServiceProxy: HubsServiceProxy,
@@ -95,9 +98,13 @@ export class MyHubListComponent extends AppComponentBase {
     private _tokenAuth: TokenAuthServiceProxy,
     private _activatedRoute: ActivatedRoute,
     private _fileDownloadService: FileDownloadService,
+    private _appSessionService: AppSessionService,
     private _dateTimeService: DateTimeService
   ) {
     super(injector);
+    if (this._appSessionService.userId != null) {
+      this.employeeId = this._appSessionService.userId;
+    }
     this._hubsServiceProxy.getAllCountryForTableDropdown().subscribe((result) => {
       this.allCountrys = result;
     });
@@ -172,6 +179,7 @@ export class MyHubListComponent extends AppComponentBase {
         // this.primengTableHelper.getSorting(this.dataTable),
         // this.primengTableHelper.getSkipCount(this.paginator, event),
         // this.primengTableHelper.getMaxResultCount(this.paginator, event)
+        this.employeeId,
         '',
         this.skipCount,
         this.maxResultCount

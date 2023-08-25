@@ -1,9 +1,10 @@
 ﻿import { AppConsts } from '@shared/AppConsts';
-import { Component, Injector, ViewEncapsulation, ViewChild } from '@angular/core';
+import { Component, Injector, ViewEncapsulation, ViewChild, Input, OnInit, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
     ProductCrossSellProductsServiceProxy,
     ProductCrossSellProductDto,
+    PublicPagesCommonServiceProxy,
 } from '@shared/service-proxies/service-proxies';
 import { NotifyService } from 'abp-ng2-module';
 import { AppComponentBase } from '@shared/common/app-component-base';
@@ -19,14 +20,40 @@ import { FileDownloadService } from '@shared/utils/file-download.service';
 import { filter as _filter } from 'lodash-es';
 import { DateTime } from 'luxon';
 
-import { DateTimeService } from '@app/shared/common/timing/date-time.service';
 
+import SwiperCore, {
+    Navigation,
+    Pagination,
+    Scrollbar,
+    A11y,
+    Virtual,
+    Zoom,
+    Autoplay,
+    Thumbs,
+    Controller,
+} from 'swiper';
+import { BehaviorSubject } from "rxjs";
+import Swiper from "swiper";
+import { DateTimeService } from '@app/shared/common/timing/date-time.service';
+import { GetPublicProductForViewDto } from '@shared/service-proxies/service-proxies';
+
+// install Swiper components
+SwiperCore.use([
+    Navigation,
+    Pagination,
+    Scrollbar,
+    A11y,
+    Virtual,
+    Zoom,
+    Autoplay,
+    Thumbs,
+    Controller
+]);
 @Component({
-    templateUrl: './productCrossSellProducts.component.html',
-    encapsulation: ViewEncapsulation.None,
-    animations: [appModuleAnimation()],
+    selector: 'app-crossSellProducts',
+    templateUrl: './productCrossSellProducts.component.html'
 })
-export class ProductCrossSellProductsComponent extends AppComponentBase {
+export class ProductCrossSellProductsComponent extends AppComponentBase implements OnInit, AfterViewInit {
     @ViewChild('createOrEditProductCrossSellProductModal', { static: true })
     createOrEditProductCrossSellProductModal: CreateOrEditProductCrossSellProductModalComponent;
     @ViewChild('viewProductCrossSellProductModal', { static: true })
@@ -47,6 +74,18 @@ export class ProductCrossSellProductsComponent extends AppComponentBase {
     minCrossSellScoreFilterEmpty: number;
     productNameFilter = '';
 
+    @Input() productId: number;
+
+    thumbs: any;
+    slides$ = new BehaviorSubject<string[]>(['']);
+    breakpoints = {
+        640: { slidesPerView: 2, spaceBetween: 20 },
+        768: { slidesPerView: 4, spaceBetween: 20 },
+        1024: { slidesPerView: 5, spaceBetween: 20 },
+    };
+    controlledSwiper: any;
+    responsiveOptions: any;
+    crossSellProducts: GetPublicProductForViewDto[] = [];
     constructor(
         injector: Injector,
         private _productCrossSellProductsServiceProxy: ProductCrossSellProductsServiceProxy,
@@ -54,11 +93,52 @@ export class ProductCrossSellProductsComponent extends AppComponentBase {
         private _tokenAuth: TokenAuthServiceProxy,
         private _activatedRoute: ActivatedRoute,
         private _fileDownloadService: FileDownloadService,
+        private _publicPagesCommonServiceProxy: PublicPagesCommonServiceProxy,
         private _dateTimeService: DateTimeService
     ) {
         super(injector);
+        this.getAllCrossSellProduct();
     }
 
+    ngOnInit(): void {
+        this.initializeSwiper();
+    }
+    ngAfterViewInit(): void {
+        this.initializeSwiper();
+    }
+
+    initializeSwiper(): void {
+        this.controlledSwiper = new Swiper('.swiper-container', {
+            observer: true,
+            observeParents: true,
+            slidesPerView: 5,
+            spaceBetween: 20,
+            navigation: {
+                prevEl: '.swiper-navigation-prev',
+                nextEl: '.swiper-navigation-next',
+            },
+            breakpoints: {
+                1920: { slidesPerView: 5, spaceBetween: 20 },
+                1366: { slidesPerView: 5, spaceBetween: 20 },
+                1024: { slidesPerView: 4, spaceBetween: 20 },
+                768: { slidesPerView: 2, spaceBetween: 20 },
+                560: { slidesPerView: 1, spaceBetween: 20 },
+            },
+        });
+    }
+    getAllCrossSellProduct() {
+        this._publicPagesCommonServiceProxy.getCrossSellProduct(this.productId).subscribe(result => {
+            this.crossSellProducts = result;
+        })
+    }
+
+
+    onDeleteCrossSellProduct(primaryProductId: number, crossSellProductId: number) {
+        this._productCrossSellProductsServiceProxy.deleteByProductId(primaryProductId, crossSellProductId).subscribe(result => {
+            this.notify.success(this.l('DeletedSuccessfully'));
+            this.getAllCrossSellProduct();
+        })
+    }
     getProductCrossSellProducts(event?: LazyLoadEvent) {
         if (this.primengTableHelper.shouldResetPaging(event)) {
             this.paginator.changePage(0);
@@ -93,6 +173,7 @@ export class ProductCrossSellProductsComponent extends AppComponentBase {
     }
 
     createProductCrossSellProduct(): void {
+        this.createOrEditProductCrossSellProductModal.productId = this.productId;
         this.createOrEditProductCrossSellProductModal.show();
     }
 
@@ -132,4 +213,9 @@ export class ProductCrossSellProductsComponent extends AppComponentBase {
 
         this.getProductCrossSellProducts();
     }
+
+    setControlledSwiper(swiper) {
+        this.controlledSwiper = swiper;
+    }
+
 }

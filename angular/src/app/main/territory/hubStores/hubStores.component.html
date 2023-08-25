@@ -156,9 +156,6 @@
                                     <th style="width: 150px; text-align: center; ">
                                         {{l('Published')}}
                                     </th>
-                                    <th style="width: 150px; text-align: center; ">
-                                        {{l('Local Store')}}
-                                    </th>
                                     <th style="width: 150px; text-align: center;">
                                         {{l('Verified')}}
                                     </th>
@@ -209,43 +206,47 @@
                                         <span class="p-column-title">{{ l('Name') }}</span>
                                         <div class="d-flex align-items-center">
                                             <div class="square_logo_box shadow-sm">
-                                                <!-- <img *ngIf="record.picture"
-                                                    src="{{record.picture != null? record.picture:'/assets/common/images/sampleProfilePics/noimg.png'}}"
-                                                    class="mw-100" alt=""> -->
-                                                <span *ngIf="record.storeName">{{ record.storeName | nameSplit}}</span>
+                                                <img *ngIf="record.picture"
+                                                    src="{{record.picture}}"
+                                                    class="mw-100" alt="">
+                                                <span *ngIf="!record.picture">{{ record.storeName | nameSplit}}</span>
                                             </div>
                                             <div class="d-flex flex-wrap flex-grow-1 mt-n2 mt-lg-n1">
                                                 <div class="d-flex flex-column flex-grow-1 my-lg-0 my-2 pe-3">
                                                     <a href="javascript:;" title="{{ record.storeName }}"
-                                                        [routerLink]="['/app/main/shop/stores/dashboard',record.id]"
+                                                        [routerLink]="['/app/main/shop/stores/dashboard',record.hubStore.storeId]"
                                                         class="fs-5 text-gray-800 text-hover-primary fw-bold">
                                                         {{ record.storeName }}
                                                         <i class="fas fa-check-circle ml-1 mr-0 text-success"
                                                             title="Published"></i>
                                                     </a>
-                                                    <span class="text-gray-400 fw-semibold fs-7 my-0">
+                                                    <span *ngIf="record.primaryCategoryName" class="text-gray-400 fw-semibold fs-7 my-0">
                                                         <i class="fas fa-tags mr-1"></i>
-                                                        Primary Category
+                                                        {{record.primaryCategoryName}}
                                                     </span>
-                                                    <span class="text-gray-400 fw-semibold fs-7 my-1">
+                                                    <span
+                                                        *ngIf="record.city || record.stateName || record.countryName || record.zipCode"
+                                                        class="text-gray-400 fw-semibold fs-7 my-1">
                                                         <i class="fas fa-map-marked-alt mr-1"></i>
                                                         <span>
-                                                            City
+                                                            {{ record.city }}
                                                         </span>
-                                                        <span>,
-                                                        </span>
-                                                        <span>
-                                                            State
-                                                        </span>
-                                                        <span>,
+                                                        <span
+                                                            *ngIf="record.city && (record.stateName || record.countryName || record.zipCode)">,
                                                         </span>
                                                         <span>
-                                                            Coauntry
+                                                            {{ record.stateName }}
                                                         </span>
-                                                        <span>,
+                                                        <span
+                                                            *ngIf="record.stateName && (record.countryName || record.zipCode)">,
                                                         </span>
                                                         <span>
-                                                            Zipcode
+                                                            {{ record.countryName }}
+                                                        </span>
+                                                        <span *ngIf=" record.countryName && record.zipCode">,
+                                                        </span>
+                                                        <span>
+                                                            {{ record.zipCode }}
                                                         </span>
                                                     </span>
                                                 </div>
@@ -254,48 +255,41 @@
                                     </td>
                                     <td style="width: 180px">
                                         <span class="p-column-title">{{ l('Mobile') }}</span>
-                                        <i class="fas fa-phone-alt mr-1"></i>
-                                        01777221292
+                                        <i *ngIf="record.mobile " class="fas fa-phone-alt mr-1"></i>
+                                        {{ record.mobile }}
                                     </td>
                                     <td style="width: 220px">
                                         <span class="p-column-title">{{ l('Email') }}</span>
-                                        <i class="fas fa-envelope"></i>
-                                        rashedronybd4u@gmail.com
+                                        <i *ngIf="record.email" class="fas fa-envelope"></i>
+                                        {{ record.email }}
                                     </td>
                                     <td style="width: 90px; text-align: center;">
                                         <span class="p-column-title">{{ l('Connect') }}</span>
-                                        <i class="fas fa-comments text-primary"></i>
+                                        <a href="javascript:;" (click)="onConnectClick(record.hubStore.storeId)">
+                                            <i class="fas fa-comments text-primary fs-3"></i>
+                                        </a>
                                     </td>
                                     <td style="width: 150px; text-align: center;">
                                         <span class="p-column-title">{{ l('#Products') }}</span>
-                                        100
+                                        {{record.numberOfProducts}}
                                     </td>
                                     <td style="width:150px; text-align: center;">
                                         <span class="p-column-title">{{ l('Published?') }}</span>
-                                        <div>
+                                        <div *ngIf="record.isPublished">
                                             <span style="width: 3rem;" class="badge badge-success">Yes</span>
                                         </div>
-                                        <!-- <div *ngIf="!record.isPublished">
+                                        <div *ngIf="!record.isPublished">
                                             <span style="width: 3rem;" class="badge badge-danger">No</span>
-                                        </div> -->
-                                    </td>
-                                    <td style="width:150px; text-align: center;">
-                                        <span class="p-column-title">{{ l('Local Store') }}</span>
-                                        <div>
-                                            <span style="width: 3rem;" class="badge badge-success">Yes</span>
                                         </div>
-                                        <!-- <div *ngIf="record.isLocalOrOnlineStore">
-                                            <span style="width: 3rem;" class="badge badge-danger">No</span>
-                                        </div> -->
                                     </td>
                                     <td style="width:150px; text-align: center;">
                                         <span class="p-column-title">{{ l('Verified') }}</span>
-                                        <div>
+                                        <div *ngIf="record.isVerified">
                                             <span style="width: 3rem;" class="badge badge-success">Yes</span>
                                         </div>
-                                        <!-- <div *ngIf="!record.isVerified">
+                                        <div *ngIf="!record.isVerified">
                                             <span style="width: 3rem;" class="badge badge-danger">No</span>
-                                        </div> -->
+                                        </div>
                                     </td>
 
                                     <td style="width: 150px">
@@ -380,4 +374,5 @@
     </div>
     <createOrEditHubStoreModal #createOrEditHubStoreModal (modalSave)="getHubStores()"></createOrEditHubStoreModal>
     <viewHubStoreModal #viewHubStoreModal></viewHubStoreModal>
+    <oneToOneConnectModal #oneToOneConnectModal></oneToOneConnectModal>
 </div>

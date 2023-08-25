@@ -1,0 +1,65 @@
+﻿.others_applicant_info {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #b1b1b1;
+    width: 6.5rem;
+    margin-bottom: 0px;
+}
+
+.applicant_others_exp {
+    p {
+        margin-bottom: 4px;
+        font-size: 1rem;
+        color: #74788d;
+        i {
+            color: #5867dd;
+        }
+    }
+}
+
+.cust_bottom {
+    background: #f1f1f1;
+    margin-left: 0rem;
+    margin-right: 0rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 14px;
+    padding-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+
+    .block_section {
+        border: 1px solid #d2d2d2;
+        padding: 5px 10px 6px 10px;
+        background: white;
+        border-radius: 6px;
+        margin-right: 12px;
+        color: #929292;
+        margin-bottom: 6px;
+    }
+
+    .block_section:hover {
+        color: #5867dd !important;
+    }
+}
+
+.social_icon {
+    padding-bottom: 0px;
+    display: inline-block;
+    height: 43px;
+    line-height: 35px;
+}
+
+
+.icon_snd {
+
+    // border: 1px solid #bbbbbb;
+    // padding: 7px 4px 3px 6px;
+    // border-radius: 50%;
+    // background: white;
+    // margin-right: 0px;
+    i {
+        font-size: 30px;
+        color: #b2b2b3;
+    }
+}

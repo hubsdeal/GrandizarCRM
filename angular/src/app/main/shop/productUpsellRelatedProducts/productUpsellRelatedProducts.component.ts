@@ -1,9 +1,11 @@
 ﻿import { AppConsts } from '@shared/AppConsts';
-import { Component, Injector, ViewEncapsulation, ViewChild } from '@angular/core';
+import { Component, Injector, ViewEncapsulation, ViewChild, Input, OnInit, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
     ProductUpsellRelatedProductsServiceProxy,
     ProductUpsellRelatedProductDto,
+    GetPublicProductForViewDto,
+    PublicPagesCommonServiceProxy,
 } from '@shared/service-proxies/service-proxies';
 import { NotifyService } from 'abp-ng2-module';
 import { AppComponentBase } from '@shared/common/app-component-base';
@@ -21,12 +23,37 @@ import { DateTime } from 'luxon';
 
 import { DateTimeService } from '@app/shared/common/timing/date-time.service';
 
+import SwiperCore, {
+    Navigation,
+    Pagination,
+    Scrollbar,
+    A11y,
+    Virtual,
+    Zoom,
+    Autoplay,
+    Thumbs,
+    Controller,
+} from 'swiper';
+import { BehaviorSubject } from "rxjs";
+import Swiper from "swiper";
+
+// install Swiper components
+SwiperCore.use([
+    Navigation,
+    Pagination,
+    Scrollbar,
+    A11y,
+    Virtual,
+    Zoom,
+    Autoplay,
+    Thumbs,
+    Controller
+]);
 @Component({
+    selector: 'app-RelatedProducts',
     templateUrl: './productUpsellRelatedProducts.component.html',
-    encapsulation: ViewEncapsulation.None,
-    animations: [appModuleAnimation()],
 })
-export class ProductUpsellRelatedProductsComponent extends AppComponentBase {
+export class ProductUpsellRelatedProductsComponent extends AppComponentBase implements OnInit, AfterViewInit {
     @ViewChild('createOrEditProductUpsellRelatedProductModal', { static: true })
     createOrEditProductUpsellRelatedProductModal: CreateOrEditProductUpsellRelatedProductModalComponent;
     @ViewChild('viewProductUpsellRelatedProductModal', { static: true })
@@ -46,7 +73,19 @@ export class ProductUpsellRelatedProductsComponent extends AppComponentBase {
     minDisplaySequenceFilter: number;
     minDisplaySequenceFilterEmpty: number;
     productNameFilter = '';
+    @Input() productId: number;
 
+    thumbs: any;
+    slides$ = new BehaviorSubject<string[]>(['']);
+    breakpoints = {
+        640: { slidesPerView: 2, spaceBetween: 20 },
+        768: { slidesPerView: 4, spaceBetween: 20 },
+        1024: { slidesPerView: 5, spaceBetween: 20 },
+    };
+    controlledSwiper: any;
+    responsiveOptions: any;
+
+    relatedProducts: GetPublicProductForViewDto[] = [];
     constructor(
         injector: Injector,
         private _productUpsellRelatedProductsServiceProxy: ProductUpsellRelatedProductsServiceProxy,
@@ -54,11 +93,51 @@ export class ProductUpsellRelatedProductsComponent extends AppComponentBase {
         private _tokenAuth: TokenAuthServiceProxy,
         private _activatedRoute: ActivatedRoute,
         private _fileDownloadService: FileDownloadService,
+        private _publicPagesCommonServiceProxy: PublicPagesCommonServiceProxy,
         private _dateTimeService: DateTimeService
     ) {
         super(injector);
+        this.getRelatedProduct(this.productId);
     }
 
+    ngOnInit(): void {
+        this.initializeSwiper();
+    }
+    ngAfterViewInit(): void {
+        this.initializeSwiper();
+    }
+
+    initializeSwiper(): void {
+        this.controlledSwiper = new Swiper('.swiper-container', {
+            observer: true,
+            observeParents: true,
+            slidesPerView: 5,
+            spaceBetween: 20,
+            navigation: {
+                prevEl: '.swiper-navigation-prev',
+                nextEl: '.swiper-navigation-next',
+            },
+            breakpoints: {
+                1920: { slidesPerView: 5, spaceBetween: 20 },
+                1366: { slidesPerView: 5, spaceBetween: 20 },
+                1024: { slidesPerView: 4, spaceBetween: 20 },
+                768: { slidesPerView: 2, spaceBetween: 20 },
+                560: { slidesPerView: 1, spaceBetween: 20 },
+            },
+        });
+    }
+
+    getRelatedProduct(productId: number) {
+        this._publicPagesCommonServiceProxy.getRelatedProduct(productId).subscribe(result => {
+            this.relatedProducts = result;
+        });
+    }
+    onDeleteRelatedProduct(primaryProductId: number, relatedProductId: number) {
+        this._productUpsellRelatedProductsServiceProxy.deleteByProductId(primaryProductId, relatedProductId).subscribe(result => {
+            this.notify.success(this.l('DeletedSuccessfully'));
+            this.getRelatedProduct(this.productId);
+        })
+    }
     getProductUpsellRelatedProducts(event?: LazyLoadEvent) {
         if (this.primengTableHelper.shouldResetPaging(event)) {
             this.paginator.changePage(0);
@@ -101,6 +180,7 @@ export class ProductUpsellRelatedProductsComponent extends AppComponentBase {
     }
 
     createProductUpsellRelatedProduct(): void {
+        this.createOrEditProductUpsellRelatedProductModal.productId = this.productId;
         this.createOrEditProductUpsellRelatedProductModal.show();
     }
 
@@ -148,4 +228,9 @@ export class ProductUpsellRelatedProductsComponent extends AppComponentBase {
 
         this.getProductUpsellRelatedProducts();
     }
+
+    setControlledSwiper(swiper) {
+        this.controlledSwiper = swiper;
+    }
+
 }

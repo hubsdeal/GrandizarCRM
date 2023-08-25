@@ -26,7 +26,7 @@
                     ></button>
                 </div>
                 <div class="modal-body">
-                    <div class="my-3">
+                    <div class="my-3" *ngIf="!taskEventId">
                         <label class="form-label" for="TaskEventName">{{ l('TaskEvent') }}</label>
                         <div class="input-group">
                             <input
@@ -46,7 +46,7 @@
                             </button>
                         </div>
                     </div>
-                    <input
+                    <input *ngIf="!taskEventId"
                         class="form-control"
                         name="taskWorkItem.taskEventId"
                         [(ngModel)]="taskWorkItem.taskEventId"
@@ -84,7 +84,7 @@
                     />
 
                     <div class="my-3">
-                        <label class="form-label" for="TaskWorkItem_Name">{{ l('Name') }} *</label>
+                        <label class="form-label" for="TaskWorkItem_Name">Work Item Title</label>
                         <input
                             type="text"
                             #TaskWorkItem_Name="ngModel"
@@ -146,7 +146,7 @@
 
                     <div class="my-3">
                         <label class="form-label" for="TaskWorkItem_EndDate">{{ l('EndDate') }}</label>
-                        <input
+                        <!-- <input
                             class="form-control m-input"
                             #TaskWorkItem_EndDate
                             type="datetime"
@@ -155,13 +155,17 @@
                             [(date)]="taskWorkItem.endDate"
                             id="TaskWorkItem_EndDate"
                             name="TaskWorkItem_EndDate"
-                        />
+                        /> -->
+                        <input class="form-control m-input" #TaskWorkItem_EndDate type="datetime" bsDatepicker
+                        datePickerLuxonModifier [(date)]="taskWorkItem.endDate" id="TaskWorkItem_EndDate"
+                        name="TaskWorkItem_EndDate" />
+                 
                         <validation-messages [formCtrl]="TaskWorkItem_EndDate"></validation-messages>
                     </div>
 
                     <div class="my-3">
                         <label class="form-label" for="TaskWorkItem_StartTime">{{ l('StartTime') }}</label>
-                        <input
+                        <!-- <input
                             type="text"
                             #TaskWorkItem_StartTime="ngModel"
                             id="TaskWorkItem_StartTime"
@@ -171,12 +175,16 @@
                             minlength="1"
                             maxlength="50"
                         />
-                        <validation-messages [formCtrl]="TaskWorkItem_StartTime"></validation-messages>
+                        <validation-messages [formCtrl]="TaskWorkItem_StartTime"></validation-messages> -->
+                        <input class="form-control" [(ngModel)]="taskWorkItem.startTime" name="StartTime"
+                        [ngxTimepicker]="startTime" aria-label="12hr format" type="text" readonly>
+                    <ngx-material-timepicker #startTime (timeSet)="startTimeValue($event)">
+                    </ngx-material-timepicker>
                     </div>
 
                     <div class="my-3">
                         <label class="form-label" for="TaskWorkItem_EndTime">{{ l('EndTime') }}</label>
-                        <input
+                        <!-- <input
                             type="text"
                             #TaskWorkItem_EndTime="ngModel"
                             id="TaskWorkItem_EndTime"
@@ -185,8 +193,12 @@
                             name="EndTime"
                             minlength="1"
                             maxlength="50"
-                        />
-                        <validation-messages [formCtrl]="TaskWorkItem_EndTime"></validation-messages>
+                        /> -->
+                        <input class="form-control" [(ngModel)]="taskWorkItem.endTime" name="EndTime"
+                        [ngxTimepicker]="endTime" aria-label="12hr format" type="text" readonly>
+                    <ngx-material-timepicker #endTime (timeSet)="endTimeValue($event)">
+                    </ngx-material-timepicker>
+                        <!-- <validation-messages [formCtrl]="TaskWorkItem_EndTime"></validation-messages> -->
                     </div>
 
                     <br />

@@ -6,6 +6,7 @@ import { ProductCrossSellProductsComponent } from './productCrossSellProducts.co
 import { CreateOrEditProductCrossSellProductModalComponent } from './create-or-edit-productCrossSellProduct-modal.component';
 import { ViewProductCrossSellProductModalComponent } from './view-productCrossSellProduct-modal.component';
 import { ProductCrossSellProductProductLookupTableModalComponent } from './productCrossSellProduct-product-lookup-table-modal.component';
+import { SwiperModule } from 'swiper/angular';
 
 @NgModule({
     declarations: [
@@ -15,6 +16,13 @@ import { ProductCrossSellProductProductLookupTableModalComponent } from './produ
 
         ProductCrossSellProductProductLookupTableModalComponent,
     ],
-    imports: [AppSharedModule, ProductCrossSellProductRoutingModule, AdminSharedModule],
+    imports: [AppSharedModule, ProductCrossSellProductRoutingModule, AdminSharedModule, SwiperModule],
+    exports:[
+        ProductCrossSellProductsComponent,
+        CreateOrEditProductCrossSellProductModalComponent,
+        ViewProductCrossSellProductModalComponent,
+
+        ProductCrossSellProductProductLookupTableModalComponent,
+    ]
 })
 export class ProductCrossSellProductModule {}

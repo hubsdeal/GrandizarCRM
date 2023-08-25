@@ -5,7 +5,7 @@ import { ChatGptResponseModalComponent } from '@app/shared/chat-gpt-response-mod
 import { GeocodingService } from '@app/shared/chat-gpt-response-modal/services/chat-gpt-lat-long.service';
 import { AppConsts } from '@shared/AppConsts';
 import { AppComponentBase } from '@shared/common/app-component-base';
-import { CreateOrEditHubDto, HubCountryLookupTableDto, HubStateLookupTableDto, HubCityLookupTableDto, HubCountyLookupTableDto, HubHubTypeLookupTableDto, HubCurrencyLookupTableDto, CountiesServiceProxy, CitiesServiceProxy, StatesServiceProxy, HubsServiceProxy, HubWidgetMapsServiceProxy } from '@shared/service-proxies/service-proxies';
+import { CreateOrEditHubDto, HubCountryLookupTableDto, HubStateLookupTableDto, HubCityLookupTableDto, HubCountyLookupTableDto, HubHubTypeLookupTableDto, HubCurrencyLookupTableDto, CountiesServiceProxy, CitiesServiceProxy, StatesServiceProxy, HubsServiceProxy, HubWidgetMapsServiceProxy, HubTopStatsForViewDto } from '@shared/service-proxies/service-proxies';
 import { IAjaxResponse, TokenService } from 'abp-ng2-module';
 import { FileItem, FileUploader, FileUploaderOptions } from 'ng2-file-upload';
 import { SelectItem } from 'primeng/api';
@@ -58,6 +58,8 @@ export class HubDashboardComponent extends AppComponentBase implements OnInit, A
 
   saving = false;
 
+  countView: HubTopStatsForViewDto = new HubTopStatsForViewDto();
+
   constructor(
     injector: Injector,
     private route: ActivatedRoute,
@@ -68,7 +70,7 @@ export class HubDashboardComponent extends AppComponentBase implements OnInit, A
     private _countyServiceProxy: CountiesServiceProxy,
     private _hubWidgetMapsServiceProxy: HubWidgetMapsServiceProxy,
     private geocodingService: GeocodingService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
   ) {
     super(injector);
   }
@@ -111,6 +113,9 @@ export class HubDashboardComponent extends AppComponentBase implements OnInit, A
       this.hubAddress = values.join(', ');
       //this.mediaLibraryName = result.pi;
       this.imageSrc = result.picture;
+      this._hubsServiceProxy.getHubTopStats(id).subscribe(result => {
+        this.countView = result;
+      });
     });
   }
 

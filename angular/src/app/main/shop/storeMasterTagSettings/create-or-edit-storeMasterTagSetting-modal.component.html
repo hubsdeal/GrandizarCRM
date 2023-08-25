@@ -15,105 +15,88 @@
                         [disabled]="saving"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="my-5 p_filter">
-                        <label class="form-label required" for="StoreTagSettingCategoryName">
-                            Store Business Type
-                        </label>
-                        <!-- <div class="input-group">
-                            <input class="form-control" id="StoreTagSettingCategoryName"
-                                name="storeTagSettingCategoryName" [(ngModel)]="storeTagSettingCategoryName" type="text"
-                                disabled />
-                            <button class="btn btn-primary blue" (click)="openSelectStoreTagSettingCategoryModal()"
-                                type="button">
-                                <i class="fa fa-search"></i>
-                                {{ l('Pick') }}
-                            </button>
-                            <button class="btn btn-danger btn-icon" type="button"
-                                (click)="setStoreTagSettingCategoryIdNull()">
-                                <i class="fa fa-times"></i>
-                            </button>
-                        </div> -->
-                        <p-dropdown [options]="storeTagSettingCategoryOptions" [filter]="true" [virtualScroll]="true"
-                            (onChange)="onStoreTagSettingCategoryClick($event)" placeholder="Select Store Category"
-                            [itemSize]="30" name="displayName" optionLabel="displayName" optionId="id"
-                            [(ngModel)]="selectedStoreTagSettingCategory" filterBy="displayName" required
-                            [style]="{ width: '100%' }"></p-dropdown>
-                    </div>
-                    <!-- <input class="form-control" name="storeMasterTagSetting.storeTagSettingCategoryId"
-                        [(ngModel)]="storeMasterTagSetting.storeTagSettingCategoryId" type="text" required hidden /> -->
-                    <!-- <div class="d-flex flex-wrap my-5">
-                        <a href="javascript:;" class="btn btn-light-primary me-3">
-                            English
-                        </a>
-                        <a href="javascript:;" class="btn btn-light-primary me-3">
-                            Hindi
-                        </a>
-                        <a href="javascript:;" class="btn btn-light-primary me-3">
-                            German
-                        </a>
-                        <a href="javascript:;" class="btn btn-light-primary me-3">
-                            English
-                        </a>
-                    </div> -->
 
-                    <div class="my-5 p_filter">
-                        <label class="form-label" for="MasterTagCategoryName">{{ l('Store Tag Category') }}</label>
-                        <p-dropdown [options]="masterTagCategoryOptions" [filter]="true" [virtualScroll]="true"
-                            (onChange)="onMasterTagCategoryClick($event)" placeholder="Select Tag Category"
-                            [itemSize]="30" name="displayName" optionLabel="displayName" optionId="id"
-                            [(ngModel)]="selectedTagCategory" filterBy="displayName"
-                            [style]="{ width: '100%' }"></p-dropdown>
-                    </div>
-                    <!-- <input class="form-control" name="storeMasterTagSetting.masterTagCategoryId"
-                        [(ngModel)]="storeMasterTagSetting.masterTagCategoryId" type="text" hidden /> -->
+                    <div class="w-100" *ngIf="isStoreTag">
+                        <div class="my-5 p_filter">
+                            <label class="form-label required" for="StoreTagSettingCategoryName">
+                                Store Business Type
+                            </label>
+                            <p-dropdown [options]="storeTagSettingCategoryOptions" [filter]="true"
+                                [virtualScroll]="true" placeholder="Select Store Category" [itemSize]="30"
+                                name="storeBusinessTypeName" optionLabel="displayName" optionValue="id"
+                                optionId="storeBusinessTypeId" [(ngModel)]="storeMasterTagSetting.storeTagSettingCategoryId"
+                                filterBy="displayName" required [style]="{ width: '100%' }"></p-dropdown>
+                        </div>
 
-                    <div class="my-5">
-                        <label class="form-label required" for="StoreMasterTagSetting_CustomTagTitle">
-                            Title - (Customize if needed)
-                        </label>
-                        <input type="text" #StoreMasterTagSetting_CustomTagTitle="ngModel"
-                            id="StoreMasterTagSetting_CustomTagTitle" class="form-control"
-                            [(ngModel)]="storeMasterTagSetting.customTagTitle" name="CustomTagTitle" minlength="1" required
-                            maxlength="128" />
-                        <validation-messages [formCtrl]="StoreMasterTagSetting_CustomTagTitle"></validation-messages>
+                        <div class="my-5 p_filter">
+                            <label class="form-label" for="MasterTagCategoryName">{{ l('Store Tag Category') }}</label>
+                            <p-dropdown [options]="masterTagCategoryOptions" [filter]="true" [virtualScroll]="true"
+                                (onChange)="onMasterTagCategoryClick($event)" placeholder="Select Tag Category"
+                                [itemSize]="30" name="displayName" optionLabel="displayName" optionId="id"
+                                [(ngModel)]="selectedTagCategory" filterBy="displayName"
+                                [style]="{ width: '100%' }"></p-dropdown>
+                        </div>
+                        <div class="my-5">
+                            <label class="form-label required" for="StoreMasterTagSetting_CustomTagTitle">
+                                Title - (Customize if needed)
+                            </label>
+                            <input type="text" #StoreMasterTagSetting_CustomTagTitle="ngModel"
+                                id="StoreMasterTagSetting_CustomTagTitle" class="form-control"
+                                [(ngModel)]="storeMasterTagSetting.customTagTitle" name="CustomTagTitle" minlength="1"
+                                required maxlength="128" />
+                            <validation-messages
+                                [formCtrl]="StoreMasterTagSetting_CustomTagTitle"></validation-messages>
+                        </div>
                     </div>
 
-                    <div class="my-3">
-                        <label class="form-label" for="StoreMasterTagSetting_CustomTagChatQuestion">
-                            Tag Questions
-                        </label>
-                        <input type="text" #StoreMasterTagSetting_CustomTagChatQuestion="ngModel"
-                            id="StoreMasterTagSetting_CustomTagChatQuestion" class="form-control"
-                            [(ngModel)]="storeMasterTagSetting.customTagChatQuestion" name="CustomTagChatQuestion"
-                            minlength="1" maxlength="512" />
-                        <validation-messages
-                            [formCtrl]="StoreMasterTagSetting_CustomTagChatQuestion"></validation-messages>
-                    </div>
-                    <div class="my-5">
-                        <label class="form-label" for="StoreMasterTagSetting_AnswerTypeId">
-                            {{ l('Tag Answer Type') }}
-                        </label>
-                        <select class="form-select" name="AnswerTypeId"
-                            id="StoreMasterTagSetting_AnswerTypeId"
-                            [(ngModel)]="storeMasterTagSetting.answerTypeId">
-                            <option value="-1">Select Answer Type</option>
-                            <option *ngFor="let item of answerTypeOptions" value="{{item.value}}">{{item.label}}</option>
-                        </select>
+
+                    <div class="w-100" *ngIf="isStoreTagQuestion">
+                        <div class="my-5 p_filter">
+                            <label class="form-label required" for="StoreTagSettingCategoryName">
+                                Store Business Type
+                            </label>
+                            <p-dropdown [options]="storeTagSettingCategoryOptions" [filter]="true"
+                                [virtualScroll]="true" (onChange)="onStoreTagSettingCategoryClick($event)"
+                                placeholder="Select Store Category" [itemSize]="30" name="displayName"
+                                optionLabel="displayName" optionId="id" [(ngModel)]="selectedStoreTagSettingCategory"
+                                filterBy="displayName" required [style]="{ width: '100%' }"></p-dropdown>
+                        </div>
+
+                        <div class="my-3">
+                            <label class="form-label" for="StoreMasterTagSetting_CustomTagChatQuestion">
+                                Tag Questions
+                            </label>
+                            <input type="text" #StoreMasterTagSetting_CustomTagChatQuestion="ngModel"
+                                id="StoreMasterTagSetting_CustomTagChatQuestion" class="form-control"
+                                [(ngModel)]="storeMasterTagSetting.customTagChatQuestion" name="CustomTagChatQuestion"
+                                minlength="1" maxlength="512" />
+                            <validation-messages
+                                [formCtrl]="StoreMasterTagSetting_CustomTagChatQuestion"></validation-messages>
+                        </div>
+                        <div class="my-5">
+                            <label class="form-label" for="StoreMasterTagSetting_AnswerTypeId">
+                                {{ l('Tag Answer Type') }}
+                            </label>
+                            <select class="form-select" name="AnswerTypeId" id="StoreMasterTagSetting_AnswerTypeId"
+                                [(ngModel)]="storeMasterTagSetting.answerTypeId">
+                                <option value="-1">Select Answer Type</option>
+                                <option *ngFor="let item of answerTypeOptions" value="{{item.value}}">{{item.label}}
+                                </option>
+                            </select>
+                        </div>
                     </div>
 
-                    
+
+
+
+
+
 
                     <div class="my-5">
-                        <!-- <label class="form-label" for="StoreMasterTagSetting_DisplaySequence">
-                            {{ l('DisplaySequence') }}
-                        </label>
-                        <input type="number" #StoreMasterTagSetting_DisplaySequence="ngModel"
-                            id="StoreMasterTagSetting_DisplaySequence" class="form-control"
-                            [(ngModel)]="storeMasterTagSetting.displaySequence" name="DisplaySequence" />
-                        <validation-messages [formCtrl]="StoreMasterTagSetting_DisplaySequence"></validation-messages> -->
                         <label class="form-check form-check-custom form-check-solid">
-                            <input id="StoreMasterTagSetting_DisplayPublic" #StoreMasterTagSetting_DisplayPublic="ngModel"
-                                name="DisplayPublic" [(ngModel)]="storeMasterTagSetting.displayPublic" type="checkbox"
+                            <input id="StoreMasterTagSetting_DisplayPublic"
+                                #StoreMasterTagSetting_DisplayPublic="ngModel" name="DisplayPublic"
+                                [(ngModel)]="storeMasterTagSetting.displayPublic" type="checkbox"
                                 class="form-check-input" />
                             <span class="form-check-label ms-3">
                                 {{ l('Display on Store Public Profile') }}
@@ -122,7 +105,6 @@
                         <validation-messages [formCtrl]="StoreMasterTagSetting_DisplayPublic"></validation-messages>
                     </div>
 
-                    
                 </div>
                 <div class="modal-footer">
                     <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">

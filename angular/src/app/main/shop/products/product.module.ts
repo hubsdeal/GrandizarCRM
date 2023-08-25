@@ -22,6 +22,11 @@ import { ContactModule } from '@app/main/crm/contacts/contact.module';
 import { ProductTaskMapModule } from '../productTaskMaps/productTaskMap.module';
 import { ProductNoteModule } from '../productNotes/productNote.module';
 import { ProductAccountTeamModule } from '../productAccountTeams/productAccountTeam.module';
+import { MediaLibraryModule } from '@app/main/lookupData/mediaLibraries/mediaLibrary.module';
+import { CreateOrEditBulkProductMediaLibraryModalComponent } from './product-dashboard/create-or-edit-bulk-product-media-library-modal/create-or-edit-bulk-product-media-library-modal.component';
+import { ProductCrossSellProductModule } from '../productCrossSellProducts/productCrossSellProduct.module';
+import { ProductUpsellRelatedProductModule } from '../productUpsellRelatedProducts/productUpsellRelatedProduct.module';
+import { LeadModule } from '@app/main/salesLeadManagement/leads/lead.module';
 
 @NgModule({
     declarations: [
@@ -38,10 +43,15 @@ import { ProductAccountTeamModule } from '../productAccountTeams/productAccountT
         ProductStoreLookupTableModalComponent,
         ProductDashboardComponent,
         ProductLibrariesComponent,
-        MyProductsComponent
+        MyProductsComponent,
+        CreateOrEditBulkProductMediaLibraryModalComponent
     ],
     imports: [AppSharedModule, ProductRoutingModule, AdminSharedModule, ProductTagModule, ProductMediaModule,
         OrderModule, ContactModule, ProductTaskMapModule, ProductNoteModule,
-        ProductAccountTeamModule],
+        ProductAccountTeamModule,
+        MediaLibraryModule,
+        ProductCrossSellProductModule,
+        ProductUpsellRelatedProductModule,
+        LeadModule],
 })
 export class ProductModule { }

@@ -1,5 +1,5 @@
 ﻿import { AppConsts } from '@shared/AppConsts';
-import { Component, Injector, ViewEncapsulation, ViewChild } from '@angular/core';
+import { Component, Injector, ViewEncapsulation, ViewChild, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HubSalesProjectionsServiceProxy, HubSalesProjectionDto } from '@shared/service-proxies/service-proxies';
 import { NotifyService } from 'abp-ng2-module';
@@ -56,6 +56,7 @@ export class HubSalesProjectionsComponent extends AppComponentBase {
     storeNameFilter = '';
     currencyNameFilter = '';
 
+    @Input() hubId:number;
     constructor(
         injector: Injector,
         private _hubSalesProjectionsServiceProxy: HubSalesProjectionsServiceProxy,
@@ -79,7 +80,8 @@ export class HubSalesProjectionsComponent extends AppComponentBase {
         this.primengTableHelper.showLoadingIndicator();
 
         this._hubSalesProjectionsServiceProxy
-            .getAll(
+            .getAllByHubId(
+                this.hubId,
                 this.filterText,
                 this.maxDurationTypeIdFilter == null ? this.maxDurationTypeIdFilterEmpty : this.maxDurationTypeIdFilter,
                 this.minDurationTypeIdFilter == null ? this.minDurationTypeIdFilterEmpty : this.minDurationTypeIdFilter,
@@ -127,6 +129,7 @@ export class HubSalesProjectionsComponent extends AppComponentBase {
     }
 
     createHubSalesProjection(): void {
+        this.createOrEditHubSalesProjectionModal.hubId = this.hubId;
         this.createOrEditHubSalesProjectionModal.show();
     }
 

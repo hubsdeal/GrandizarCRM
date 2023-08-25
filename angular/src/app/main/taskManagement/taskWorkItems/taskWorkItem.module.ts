@@ -18,5 +18,13 @@ import { TaskWorkItemEmployeeLookupTableModalComponent } from './taskWorkItem-em
         TaskWorkItemEmployeeLookupTableModalComponent,
     ],
     imports: [AppSharedModule, TaskWorkItemRoutingModule, AdminSharedModule],
+    exports:[
+        TaskWorkItemsComponent,
+        CreateOrEditTaskWorkItemModalComponent,
+        ViewTaskWorkItemModalComponent,
+
+        TaskWorkItemTaskEventLookupTableModalComponent,
+        TaskWorkItemEmployeeLookupTableModalComponent,
+    ]
 })
 export class TaskWorkItemModule {}

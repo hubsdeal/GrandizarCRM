@@ -19,6 +19,7 @@ import { HubProductModule } from '../hubProducts/hubProduct.module';
 import { HubStoreModule } from '../hubStores/hubStore.module';
 import { HubContactModule } from '../hubContacts/hubContact.module';
 import { HubBusinessModule } from '../hubBusinesses/hubBusiness.module';
+import { HubDocumentComponent } from './hub-dashboard/hub-document/hub-document.component';
 
 @NgModule({
     declarations: [
@@ -29,6 +30,7 @@ import { HubBusinessModule } from '../hubBusinesses/hubBusiness.module';
         HubMediaLibraryLookupTableModalComponent,
         HubDashboardComponent,
         MyHubListComponent,
+        HubDocumentComponent,
     ],
     imports: [AppSharedModule, HubRoutingModule, AdminSharedModule, StoreModule, HubWidgetMapModule, HubZipCodeMapModule, HubNavigationMenuModule,
         HubSalesProjectionModule,

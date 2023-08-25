@@ -1,22 +1,9 @@
-﻿<div
-    bsModal
-    #createOrEditModal="bs-modal"
-    class="modal fade"
-    tabindex="-1"
-    role="dialog"
-    aria-labelledby="createOrEditModal"
-    aria-hidden="true"
-    [config]="{ backdrop: 'static' }"
->
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{ backdrop: 'static' }">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <form
-                *ngIf="active"
-                #productUpsellRelatedProductForm="ngForm"
-                novalidate
-                (ngSubmit)="save()"
-                autocomplete="off"
-            >
+            <form *ngIf="active" #productUpsellRelatedProductForm="ngForm" novalidate (ngSubmit)="save()"
+                autocomplete="off">
                 <div class="modal-header">
                     <h4 class="modal-title">
                         <span *ngIf="productUpsellRelatedProduct.id">{{ l('EditProductUpsellRelatedProduct') }}</span>
@@ -25,26 +12,15 @@
                         </span>
                     </h4>
 
-                    <button
-                        type="button"
-                        class="btn-close"
-                        (click)="close()"
-                        aria-label="Close"
-                        [disabled]="saving"
-                    ></button>
+                    <button type="button" class="btn-close" (click)="close()" aria-label="Close"
+                        [disabled]="saving"></button>
                 </div>
                 <div class="modal-body">
                     <div class="my-3">
                         <label class="form-label" for="ProductName">{{ l('Product') }}</label>
                         <div class="input-group">
-                            <input
-                                class="form-control"
-                                id="ProductName"
-                                name="productName"
-                                [(ngModel)]="productName"
-                                type="text"
-                                disabled
-                            />
+                            <input class="form-control" id="ProductName" name="productName" [(ngModel)]="productName"
+                                type="text" disabled />
                             <button class="btn btn-primary blue" (click)="openSelectProductModal()" type="button">
                                 <i class="fa fa-search"></i>
                                 {{ l('Pick') }}
@@ -54,60 +30,38 @@
                             </button>
                         </div>
                     </div>
-                    <input
-                        class="form-control"
-                        name="productUpsellRelatedProduct.primaryProductId"
-                        [(ngModel)]="productUpsellRelatedProduct.primaryProductId"
-                        type="text"
-                        required
-                        hidden
-                    />
+                    <input class="form-control" name="productUpsellRelatedProduct.relatedProductId"
+                        [(ngModel)]="productUpsellRelatedProduct.relatedProductId" type="text" required hidden />
 
-                    <div class="my5">
+                    <!-- <div class="my-5">
                         <label class="form-label" for="ProductUpsellRelatedProduct_RelatedProductId">
                             {{ l('RelatedProductId') }}
                         </label>
-                        <input
-                            type="number"
-                            #ProductUpsellRelatedProduct_RelatedProductId="ngModel"
-                            id="ProductUpsellRelatedProduct_RelatedProductId"
-                            class="form-control"
-                            [(ngModel)]="productUpsellRelatedProduct.relatedProductId"
-                            name="RelatedProductId"
-                        />
+                        <input type="number" #ProductUpsellRelatedProduct_RelatedProductId="ngModel"
+                            id="ProductUpsellRelatedProduct_RelatedProductId" class="form-control"
+                            [(ngModel)]="productUpsellRelatedProduct.relatedProductId" name="RelatedProductId" />
                         <validation-messages
-                            [formCtrl]="ProductUpsellRelatedProduct_RelatedProductId"
-                        ></validation-messages>
-                    </div>
+                            [formCtrl]="ProductUpsellRelatedProduct_RelatedProductId"></validation-messages>
+                    </div> -->
 
-                    <div class="my5">
+                    <div class="my-5">
                         <label class="form-label" for="ProductUpsellRelatedProduct_DisplaySequence">
                             {{ l('DisplaySequence') }}
                         </label>
-                        <input
-                            type="number"
-                            #ProductUpsellRelatedProduct_DisplaySequence="ngModel"
-                            id="ProductUpsellRelatedProduct_DisplaySequence"
-                            class="form-control"
-                            [(ngModel)]="productUpsellRelatedProduct.displaySequence"
-                            name="DisplaySequence"
-                        />
+                        <input type="number" #ProductUpsellRelatedProduct_DisplaySequence="ngModel"
+                            id="ProductUpsellRelatedProduct_DisplaySequence" class="form-control"
+                            [(ngModel)]="productUpsellRelatedProduct.displaySequence" name="DisplaySequence" />
                         <validation-messages
-                            [formCtrl]="ProductUpsellRelatedProduct_DisplaySequence"
-                        ></validation-messages>
+                            [formCtrl]="ProductUpsellRelatedProduct_DisplaySequence"></validation-messages>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
                         {{ l('Cancel') }}
                     </button>
-                    <button
-                        type="submit"
-                        class="btn btn-primary blue"
-                        [disabled]="!productUpsellRelatedProductForm.form.valid"
-                        [buttonBusy]="saving"
-                        [busyText]="l('SavingWithThreeDot')"
-                    >
+                    <button type="submit" class="btn btn-primary blue"
+                        [disabled]="!productUpsellRelatedProductForm.form.valid" [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')">
                         <i class="fa fa-save"></i>
                         <span>{{ l('Save') }}</span>
                     </button>
@@ -115,8 +69,6 @@
             </form>
         </div>
     </div>
-    <productUpsellRelatedProductProductLookupTableModal
-        #productUpsellRelatedProductProductLookupTableModal
-        (modalSave)="getNewPrimaryProductId()"
-    ></productUpsellRelatedProductProductLookupTableModal>
+    <productUpsellRelatedProductProductLookupTableModal #productUpsellRelatedProductProductLookupTableModal
+        (modalSave)="getNewPrimaryProductId()"></productUpsellRelatedProductProductLookupTableModal>
 </div>
