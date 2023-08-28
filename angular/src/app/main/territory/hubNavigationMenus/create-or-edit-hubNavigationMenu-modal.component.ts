@@ -4,6 +4,7 @@ import { finalize } from 'rxjs/operators';
 import {
     HubNavigationMenusServiceProxy,
     CreateOrEditHubNavigationMenuDto,
+    HubNavigationMenuMasterNavigationMenuLookupTableDto,
 } from '@shared/service-proxies/service-proxies';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { DateTime } from 'luxon';
@@ -29,10 +30,15 @@ export class CreateOrEditHubNavigationMenuModalComponent extends AppComponentBas
     saving = false;
 
     hubNavigationMenu: CreateOrEditHubNavigationMenuDto = new CreateOrEditHubNavigationMenuDto();
-
     hubName = '';
     masterNavigationMenuName = '';
 
+    hubId: number;
+    allMasterNavigationMenu: HubNavigationMenuMasterNavigationMenuLookupTableDto[] = [];
+    selectedMasterNavigationMenu: HubNavigationMenuMasterNavigationMenuLookupTableDto[] = [];
+
+    allParentMenu: HubNavigationMenuMasterNavigationMenuLookupTableDto[] = [];
+    selectedParentMenu: HubNavigationMenuMasterNavigationMenuLookupTableDto[] = [];
     constructor(
         injector: Injector,
         private _hubNavigationMenusServiceProxy: HubNavigationMenusServiceProxy,
@@ -52,10 +58,11 @@ export class CreateOrEditHubNavigationMenuModalComponent extends AppComponentBas
             this.modal.show();
         } else {
             this._hubNavigationMenusServiceProxy
-                .getHubNavigationMenuForEdit(hubNavigationMenuId)
-                .subscribe((result) => {
+                .getHubNavigationMenuForEdit(hubNavigationMenuId).subscribe((result) => {
                     this.hubNavigationMenu = result.hubNavigationMenu;
-
+                    if (this.hubId) {
+                        this.hubId = result.hubNavigationMenu.hubId;
+                    }
                     this.hubName = result.hubName;
                     this.masterNavigationMenuName = result.masterNavigationMenuName;
 
@@ -63,10 +70,16 @@ export class CreateOrEditHubNavigationMenuModalComponent extends AppComponentBas
                     this.modal.show();
                 });
         }
+        this._hubNavigationMenusServiceProxy.getAllMasterNavigationMenuForLookupTable('','',0,100000).subscribe(result => {
+            this.allMasterNavigationMenu = result.items;
+        });
     }
 
     save(): void {
         this.saving = true;
+        if (this.hubId) {
+            this.hubNavigationMenu.hubId = this.hubId;
+        }
 
         this._hubNavigationMenusServiceProxy
             .createOrEdit(this.hubNavigationMenu)
@@ -112,9 +125,12 @@ export class CreateOrEditHubNavigationMenuModalComponent extends AppComponentBas
     }
 
     close(): void {
+        this.selectedMasterNavigationMenu=null;
         this.active = false;
         this.modal.hide();
     }
 
-    ngOnInit(): void {}
+    ngOnInit(): void { }
+
+    
 }

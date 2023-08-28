@@ -1,13 +1,5 @@
-﻿<div
-    bsModal
-    #createOrEditModal="bs-modal"
-    class="modal fade"
-    tabindex="-1"
-    role="dialog"
-    aria-labelledby="createOrEditModal"
-    aria-hidden="true"
-    [config]="{ backdrop: 'static' }"
->
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{ backdrop: 'static' }">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <form *ngIf="active" #hubNavigationMenuForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
@@ -17,26 +9,15 @@
                         <span *ngIf="!hubNavigationMenu.id">{{ l('CreateNewHubNavigationMenu') }}</span>
                     </h4>
 
-                    <button
-                        type="button"
-                        class="btn-close"
-                        (click)="close()"
-                        aria-label="Close"
-                        [disabled]="saving"
-                    ></button>
+                    <button type="button" class="btn-close" (click)="close()" aria-label="Close"
+                        [disabled]="saving"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="my-3">
+                    <div class="my-3" *ngIf="!hubId">
                         <label class="form-label" for="HubName">{{ l('Hub') }}</label>
                         <div class="input-group">
-                            <input
-                                class="form-control"
-                                id="HubName"
-                                name="hubName"
-                                [(ngModel)]="hubName"
-                                type="text"
-                                disabled
-                            />
+                            <input class="form-control" id="HubName" name="hubName" [(ngModel)]="hubName" type="text"
+                                disabled />
                             <button class="btn btn-primary blue" (click)="openSelectHubModal()" type="button">
                                 <i class="fa fa-search"></i>
                                 {{ l('Pick') }}
@@ -46,92 +27,88 @@
                             </button>
                         </div>
                     </div>
-                    <input
-                        class="form-control"
-                        name="hubNavigationMenu.hubId"
-                        [(ngModel)]="hubNavigationMenu.hubId"
-                        type="text"
-                        required
-                        hidden
-                    />
+                    <input *ngIf="!hubId" class="form-control" name="hubNavigationMenu.hubId"
+                        [(ngModel)]="hubNavigationMenu.hubId" type="text" required hidden />
 
-                    <div class="my-3">
-                        <label class="form-label" for="MasterNavigationMenuName">{{ l('MasterNavigationMenu') }}</label>
+                    <!-- <div class="my-3">
+                        <label class="form-label" for="MasterNavigationMenuName">{{ l('Master Navigation Menu') }}</label>
                         <div class="input-group">
-                            <input
-                                class="form-control"
-                                id="MasterNavigationMenuName"
-                                name="masterNavigationMenuName"
-                                [(ngModel)]="masterNavigationMenuName"
-                                type="text"
-                                disabled
-                            />
-                            <button
-                                class="btn btn-primary blue"
-                                (click)="openSelectMasterNavigationMenuModal()"
-                                type="button"
-                            >
+                            <input class="form-control" id="MasterNavigationMenuName" name="masterNavigationMenuName"
+                                [(ngModel)]="masterNavigationMenuName" type="text" disabled />
+                            <button class="btn btn-primary blue" (click)="openSelectMasterNavigationMenuModal()"
+                                type="button">
                                 <i class="fa fa-search"></i>
                                 {{ l('Pick') }}
                             </button>
-                            <button
-                                class="btn btn-danger btn-icon"
-                                type="button"
-                                (click)="setMasterNavigationMenuIdNull()"
-                            >
+                            <button class="btn btn-danger btn-icon" type="button"
+                                (click)="setMasterNavigationMenuIdNull()">
                                 <i class="fa fa-times"></i>
                             </button>
                         </div>
                     </div>
-                    <input
-                        class="form-control"
-                        name="hubNavigationMenu.masterNavigationMenuId"
-                        [(ngModel)]="hubNavigationMenu.masterNavigationMenuId"
-                        type="text"
-                        hidden
-                    />
+                    <input class="form-control" name="hubNavigationMenu.masterNavigationMenuId"
+                        [(ngModel)]="hubNavigationMenu.masterNavigationMenuId" type="text" hidden /> -->
+                    <div class="my-5">
+                        <div class="p_filter">
+                            <label class="form-label required" for="navigationMenu">
+                                Navigation Menu
+                            </label>
+                            <p-dropdown [options]="allMasterNavigationMenu" [filter]="true" [virtualScroll]="true"
+                                placeholder="Select Navigation Menu" [itemSize]="30" name="displayName"
+                                optionLabel="displayName" optionValue="id" optionId="id"
+                                [(ngModel)]="hubNavigationMenu.masterNavigationMenuId" filterBy="displayName" required
+                                [style]="{ width: '100%' }"></p-dropdown>
+                        </div>
+                    </div>
 
-                    <div class="my-3">
-                        <label class="form-label" for="HubNavigationMenu_CustomName">{{ l('CustomName') }}</label>
-                        <input
-                            type="text"
-                            #HubNavigationMenu_CustomName="ngModel"
-                            id="HubNavigationMenu_CustomName"
-                            class="form-control"
-                            [(ngModel)]="hubNavigationMenu.customName"
-                            name="CustomName"
-                            minlength="1"
-                            maxlength="128"
-                        />
+                    <div class="my-5" *ngIf="hubNavigationMenu.masterNavigationMenuId">
+                        <label class="form-label" for="HubNavigationMenu_CustomName">{{ l('Custom Name') }}</label>
+                        <input type="text" #HubNavigationMenu_CustomName="ngModel" id="HubNavigationMenu_CustomName"
+                            class="form-control" [(ngModel)]="hubNavigationMenu.customName" name="CustomName"
+                            minlength="1" maxlength="128" />
                         <validation-messages [formCtrl]="HubNavigationMenu_CustomName"></validation-messages>
                     </div>
 
-                    <div class="my-3">
-                        <label class="form-label" for="HubNavigationMenu_NavigationLink">
-                            {{ l('NavigationLink') }}
-                        </label>
-                        <input
-                            type="text"
-                            #HubNavigationMenu_NavigationLink="ngModel"
-                            id="HubNavigationMenu_NavigationLink"
-                            class="form-control"
-                            [(ngModel)]="hubNavigationMenu.navigationLink"
-                            name="NavigationLink"
-                        />
-                        <validation-messages [formCtrl]="HubNavigationMenu_NavigationLink"></validation-messages>
+                    <div *ngIf="hubNavigationMenu.masterNavigationMenuId" class="col-xl-12 d-flex align-items-center">
+                        <div class="me-5 fw-semibold text-gray">
+                            Has Parent Menu?
+                        </div>
+                        <div class="form-check form-check-solid form-switch form-check-custom fv-row">
+                            <input class="form-check-input w-45px h-30px" type="checkbox" id="hasParentMenu" name="hasParentMenu"
+                                [(ngModel)]="hubNavigationMenu.hasParentMenu">
+                            <label class="form-check-label" for="hasParentMenu"></label>
+                        </div>
                     </div>
+
+                    <div class="my-5" *ngIf="hubNavigationMenu.hasParentMenu">
+                        <div class="p_filter">
+                            <label class="form-label" for="parenMenu">
+                                Parent Menu
+                            </label>
+                            <p-dropdown [options]="allMasterNavigationMenu" [filter]="true" [virtualScroll]="true"
+                                placeholder="Select Navigation Menu" [itemSize]="30" name="parenMenu"
+                                optionLabel="displayName" optionValue="id" optionId="id"
+                                [(ngModel)]="hubNavigationMenu.parentMenuId" filterBy="displayName"
+                                [style]="{ width: '100%' }"></p-dropdown>
+                        </div>
+                    </div>
+
+                    <!-- <div class="my-3">
+                        <label class="form-label" for="HubNavigationMenu_NavigationLink">
+                            {{ l('Navigation Link') }}
+                        </label>
+                        <input type="text" #HubNavigationMenu_NavigationLink="ngModel"
+                            id="HubNavigationMenu_NavigationLink" class="form-control"
+                            [(ngModel)]="hubNavigationMenu.navigationLink" name="NavigationLink" />
+                        <validation-messages [formCtrl]="HubNavigationMenu_NavigationLink"></validation-messages>
+                    </div> -->
                 </div>
                 <div class="modal-footer">
                     <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
                         {{ l('Cancel') }}
                     </button>
-                    <button
-                        type="submit"
-                        class="btn btn-primary blue"
-                        [disabled]="!hubNavigationMenuForm.form.valid"
-                        [buttonBusy]="saving"
-                        [busyText]="l('SavingWithThreeDot')"
-                    >
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!hubNavigationMenuForm.form.valid"
+                        [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')">
                         <i class="fa fa-save"></i>
                         <span>{{ l('Save') }}</span>
                     </button>
@@ -139,12 +116,8 @@
             </form>
         </div>
     </div>
-    <hubNavigationMenuHubLookupTableModal
-        #hubNavigationMenuHubLookupTableModal
-        (modalSave)="getNewHubId()"
-    ></hubNavigationMenuHubLookupTableModal>
-    <hubNavigationMenuMasterNavigationMenuLookupTableModal
-        #hubNavigationMenuMasterNavigationMenuLookupTableModal
-        (modalSave)="getNewMasterNavigationMenuId()"
-    ></hubNavigationMenuMasterNavigationMenuLookupTableModal>
+    <hubNavigationMenuHubLookupTableModal #hubNavigationMenuHubLookupTableModal (modalSave)="getNewHubId()">
+    </hubNavigationMenuHubLookupTableModal>
+    <hubNavigationMenuMasterNavigationMenuLookupTableModal #hubNavigationMenuMasterNavigationMenuLookupTableModal
+        (modalSave)="getNewMasterNavigationMenuId()"></hubNavigationMenuMasterNavigationMenuLookupTableModal>
 </div>

@@ -763,7 +763,7 @@
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="hub_navigation_menu" role="tabpanel">
-                                <app-hubNavigationMenus></app-hubNavigationMenus>
+                                <app-hubNavigationMenus *ngIf="hubId" [hubId]="hubId"></app-hubNavigationMenus>
                             </div>
                             <!-- <div class="tab-pane fade" id="hub_widgets" role="tabpanel">
                                 <app-hubWidgetMaps *ngIf="hubId" [hubId]="hubId"></app-hubWidgetMaps>
