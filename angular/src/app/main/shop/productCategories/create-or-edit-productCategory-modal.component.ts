@@ -1,7 +1,7 @@
 ﻿import { Component, ViewChild, Injector, Output, EventEmitter, OnInit, ElementRef } from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs/operators';
-import { ProductCategoriesServiceProxy, CreateOrEditProductCategoryDto, MediaLibrariesServiceProxy, CreateOrEditMediaLibraryDto } from '@shared/service-proxies/service-proxies';
+import { ProductCategoriesServiceProxy, CreateOrEditProductCategoryDto, MediaLibrariesServiceProxy, CreateOrEditMediaLibraryDto, TaskTeamEmployeeLookupTableDto, ProductCategoryTeamEmployeeLookupTableDto, ProductCategoryTeamsServiceProxy } from '@shared/service-proxies/service-proxies';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { DateTime } from 'luxon';
 
@@ -35,18 +35,23 @@ export class CreateOrEditProductCategoryModalComponent extends AppComponentBase 
     private _uploaderOptions: FileUploaderOptions = {};
     public uploader: FileUploader;
     public temporaryPictureUrl: string;
-
+    employeeList: ProductCategoryTeamEmployeeLookupTableDto[] = [];
+    selectedEmployees: ProductCategoryTeamEmployeeLookupTableDto[] = [];
     constructor(
         injector: Injector,
         private _productCategoriesServiceProxy: ProductCategoriesServiceProxy,
         private _dateTimeService: DateTimeService,
         private _tokenService: TokenService,
-        private _mediaLibrariesServiceProxy: MediaLibrariesServiceProxy
+        private _mediaLibrariesServiceProxy: MediaLibrariesServiceProxy,
+        private _productCategoryTeamsServiceProxy:ProductCategoryTeamsServiceProxy
     ) {
         super(injector);
     }
 
     show(productCategoryId?: number): void {
+        this._productCategoryTeamsServiceProxy.getAllEmployeeForLookupTable('','',0,1000).subscribe(result => {
+            this.employeeList = result.items;
+        });
         if (!productCategoryId) {
             this.productCategory = new CreateOrEditProductCategoryDto();
             this.productCategory.id = productCategoryId;
@@ -200,4 +205,21 @@ export class CreateOrEditProductCategoryModalComponent extends AppComponentBase 
     }
 
     ngOnInit(): void { }
+    onEmployeeSelect(event: any) {
+        if (event) {
+            let index =this.productCategory.teams?this.productCategory.teams.findIndex(x => x.id == event.itemValue.id):-1;
+            if(index<0){
+                this.productCategory.teams = event.value;
+            }else if(index>=0 && this.productCategory.id){
+                // this._taskTeamsServiceProxy.deleteByTask(this.taskEvent.id,event.itemValue.id).subscribe(result=>{
+                //     this.taskEvent.teams.splice(index, 1);
+                // });
+            }
+        }
+
+        // console.log(event);
+        // if (event.value.length > 0) {
+
+        // }
+    }
 }

@@ -35,6 +35,14 @@ export class AppSessionService {
         return this.user ? this.user.id : null;
     }
 
+    get contactId(): number {
+        return this.user ? this.user.contactId : null;
+    }
+
+    get employeeId(): number {
+        return this.user ? this.user.employeeId : null;
+    }
+
     get tenant(): TenantLoginInfoDto {
         return this._tenant;
     }

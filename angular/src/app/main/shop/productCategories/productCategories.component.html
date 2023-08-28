@@ -387,7 +387,7 @@
                                         [queryParams]="{categoryId:rowData.id}">{{rowData.numberOfProducts}}</a>
                                 </td>
 
-                                <td class="text-center" style="width:150px">
+                                <!-- <td class="text-center" style="width:150px">
                                     <div style="justify-content: center;"
                                         class="kt-section__content d-flex mb-1 flex-wrap kt-section__content--solid--">
                                         <div *ngFor="let record of rowData.assignees"
@@ -403,8 +403,19 @@
                                         </div>
 
                                     </div>
+                                </td> -->
+                                <td style="width: 180px; text-align: center;">
+                                    <div class="symbol-group symbol-hover flex-nowrap d-flex justify-content-center">
+                                        <div *ngFor="let team of rowData.assignees" class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
+                                            data-bs-original-title="team.employeeName" data-kt-initialized="1">
+                                            
+                                            <span *ngIf ="!team.employeePicture" title="{{team.employeeName}}"
+                                                class="symbol-label bg-warning text-inverse-warning fw-bold">{{team.employeeName | nameSplit}}</span>
+                                                <img *ngIf ="team.employeePicture" alt="Pic" src="{{team.employeePicture}}">
+                                        </div>
+                                       
+                                    </div>
                                 </td>
-
                                 <td class="text-center" style="width: 130px"
                                     [hidden]="!isGrantedAny('Pages.ProductCategories.Edit', 'Pages.ProductCategories.Delete')">
                                     <div class="btn-group dropdown" dropdown container="body" normalizePosition>
