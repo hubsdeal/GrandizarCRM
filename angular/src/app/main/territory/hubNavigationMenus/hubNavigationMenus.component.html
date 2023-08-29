@@ -1,5 +1,5 @@
 ﻿<div [@routerTransition]>
-    <sub-header [title]="'Hub Navigation Menus' | localize" [description]="'HubNavigationMenusHeaderInfo' | localize">
+    <sub-header [title]="'Hub Navigation Menus' | localize" [description]="">
         <div role="actions">
             <!-- <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1">
                 <i class="fa fa-file-excel"></i>
@@ -14,6 +14,38 @@
         </div>
     </sub-header>
 
+    <style>
+        .cell {
+            border: 2px solid transparent;
+            padding: 5px 5px;
+            width: 100%;
+            height: 100%;
+        }
+
+        .cell :hover {
+            cursor: pointer;
+            border: 2px dashed gray;
+        }
+
+        .cellInput_menu {
+            border: 1px solid #5867dd33;
+            padding: 5px 6px;
+            width: 75%;
+            border-radius: 3px;
+        }
+
+        .pro-name__cat_new {
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: #565656;
+            line-height: 2.4rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-top: 5px;
+        }
+    </style>
+
     <div [class]="containerClass">
         <div class="card card-custom gutter-b">
             <div class="card-body">
@@ -23,10 +55,10 @@
                             <div class="col-xl-12">
                                 <div class="my-3">
                                     <div class="input-group mb-3">
-                                        <input [(ngModel)]="filterText" (ngModelChange)="getHubNavigationMenus()"
+                                        <input [(ngModel)]="filterText" (ngModelChange)="getMenusTreeNode()"
                                             name="filterText" autoFocus type="text" class="form-control"
                                             [placeholder]="l('SearchWithThreeDot')" />
-                                        <button class="btn btn-primary" type="submit" (click)="getHubNavigationMenus()">
+                                        <button class="btn btn-primary" type="submit" (click)="getMenusTreeNode()">
                                             <i class="flaticon-search-1"></i>
                                         </button>
                                     </div>
@@ -41,10 +73,10 @@
                                     <label class="form-label" for="CustomNameFilter">{{ l('CustomName') }}</label>
                                     <input type="text" class="form-control" id="CustomNameFilter"
                                         name="customNameFilter" [(ngModel)]="customNameFilter"
-                                        (ngModelChange)="getHubNavigationMenus()" />
+                                        (ngModelChange)="getMenusTreeNode()" />
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <!-- <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="NavigationLinkFilter">
                                         {{ l('NavigationLink') }}
@@ -53,7 +85,7 @@
                                         name="navigationLinkFilter" [(ngModel)]="navigationLinkFilter"
                                         (ngModelChange)="getHubNavigationMenus()" />
                                 </div>
-                            </div>
+                            </div> -->
 
                             <!-- <div class="col-md-3">
                                 <div class="my-3">
@@ -100,7 +132,80 @@
 
                 <div class="row align-items-center">
                     <!--<Primeng-Datatable-Start>-->
-                    <div class="primeng-datatable-container col-12" [busyIf]="primengTableHelper.isLoading">
+                    <div class="row align-items-center">
+                        <p-treeTable [value]="masterNavigationMenus" [paginator]="false" [rows]="10">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th style="width: 200px;">Category</th>
+
+                                    <th class="pl-0" style="width: 200px;">Custom Name</th>
+
+                                    <th class="pl-0" style="width: 200px;">URL</th>
+
+                                    <th style="width: 130px;" class="pl-0">Action </th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-rowNode let-rowData="rowData">
+                                <tr>
+                                    <td style="width: 200px;">
+                                        <div class="d-flex">
+                                            <p-treeTableToggler class="mt-2" [rowNode]="rowNode"></p-treeTableToggler>
+                                            <div class="pro-name__cat_new">
+                                                <a href="javascript:;"
+                                                    [routerLink]="['/app/main/shop/productCategories/dashboard', rowData.masterNavigationMenuId]">
+                                                    {{rowData.menuName}}
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                    </td>
+                                    <td style="width:200px">
+                                        <!-- <div class="w-75">
+                                            <div *ngIf="!editMenuModer || rowDataId != rowData.id"
+                                                (click)="editModeCustomMenu(rowData.id)" class="cell w-100">
+                                                {{rowData.name}}
+                                            </div>
+                                            <input *ngIf="editMenuModer && rowDataId==rowData.id" name="customName"
+                                                id="customName"
+                                                (focusout)="onFocusOutCustomMenu(rowData.name, rowData.id)"
+                                                (keydown.enter)="$event.target.blur()" [(ngModel)]="rowData.name"
+                                                class="cellInput_menu" appAutofocus type="text"
+                                                (keydown.enter)="$event.target.blur()" (focusout)="editMenuModer=false">
+                                        </div> -->
+                                        {{rowData.name}}
+                                    </td>
+                                    <td style="width:200px">
+                                        {{rowData.contentLink}}
+                                    </td>
+                                    <td style="width: 130px">
+
+                                        <div class="btn-group dropdown" dropdown container="body">
+                                            <button class="dropdown-toggle btn btn-sm btn-primary" dropdownToggle>
+                                                <i class="fa fa-cog"></i>
+                                            </button>
+                                            <ul class="dropdown-menu" *dropdownMenu>
+                                                <li>
+                                                    <a href="javascript:;"
+                                                        *ngIf="permission.isGranted('Pages.HubNavigationMenus.Edit')"
+                                                        class="dropdown-item" (click)="editMenu(rowData.id)">
+                                                        {{ l('Edit') }}
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="javascript:;"
+                                                        *ngIf="permission.isGranted('Pages.HubNavigationMenus.Delete')"
+                                                        (click)="deleteMenu(rowData.id)">
+                                                        {{ l('Delete') }}
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-treeTable>
+                    </div>
+                    <!-- <div class="primeng-datatable-container col-12" [busyIf]="primengTableHelper.isLoading">
                         <p-table #dataTable (onLazyLoad)="getHubNavigationMenus($event)"
                             [value]="primengTableHelper.records"
                             rows="{{ primengTableHelper.defaultRecordsCountPerPage }}" [paginator]="false" [lazy]="true"
@@ -167,12 +272,6 @@
                                                 {{ l('Actions') }}
                                             </button>
                                             <ul class="dropdown-menu" *dropdownMenu>
-                                                <!-- <li>
-                                                    <a href="javascript:;" class="dropdown-item"
-                                                        (click)="viewHubNavigationMenuModal.show(record)">
-                                                        {{ l('View') }}
-                                                    </a>
-                                                </li> -->
                                                 <li>
                                                     <a href="javascript:;"
                                                         *ngIf="permission.isGranted('Pages.HubNavigationMenus.Edit')"
@@ -209,13 +308,13 @@
                                     'TotalRecordsCount' | localize : primengTableHelper.totalRecordsCount
                                 "></p-paginator>
                         </div>
-                    </div>
+                    </div> -->
                     <!--<Primeng-Datatable-End>-->
                 </div>
             </div>
         </div>
     </div>
-    <createOrEditHubNavigationMenuModal #createOrEditHubNavigationMenuModal (modalSave)="getHubNavigationMenus()">
+    <createOrEditHubNavigationMenuModal #createOrEditHubNavigationMenuModal (modalSave)="getMenusTreeNode()">
     </createOrEditHubNavigationMenuModal>
     <viewHubNavigationMenuModal #viewHubNavigationMenuModal></viewHubNavigationMenuModal>
 </div>
