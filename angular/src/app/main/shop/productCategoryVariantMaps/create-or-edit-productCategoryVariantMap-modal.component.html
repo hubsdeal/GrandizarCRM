@@ -32,7 +32,7 @@
                     ></button>
                 </div>
                 <div class="modal-body">
-                    <div class="my-3">
+                    <div class="my-3" *ngIf="!productCategoryIdFilter">
                         <label class="form-label" for="ProductCategoryName">{{ l('ProductCategory') }}</label>
                         <div class="input-group">
                             <input
@@ -61,7 +61,7 @@
                         name="productCategoryVariantMap.productCategoryId"
                         [(ngModel)]="productCategoryVariantMap.productCategoryId"
                         type="text"
-                        required
+                        
                         hidden
                     />
 

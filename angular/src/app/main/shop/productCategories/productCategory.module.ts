@@ -7,6 +7,10 @@ import { CreateOrEditProductCategoryModalComponent } from './create-or-edit-prod
 import { ViewProductCategoryModalComponent } from './view-productCategory-modal.component';
 import { ProductCategoryMediaLibraryLookupTableModalComponent } from './productCategory-mediaLibrary-lookup-table-modal.component';
 import { NodeService } from './nodeservice';
+import { ProductCategoryDashboardComponent } from './productCategoriesDashboard/product-category-dashboard/product-category-dashboard.component';
+import { ProductCategoryTeamsComponent } from '../productCategoryTeams/productCategoryTeams.component';
+import { ProductCategoryTeamModule } from '../productCategoryTeams/productCategoryTeam.module';
+import { ProductCategoryVariantMapModule } from '../productCategoryVariantMaps/productCategoryVariantMap.module';
 
 @NgModule({
     declarations: [
@@ -15,8 +19,9 @@ import { NodeService } from './nodeservice';
         ViewProductCategoryModalComponent,
 
         ProductCategoryMediaLibraryLookupTableModalComponent,
+          ProductCategoryDashboardComponent,
     ],
-    imports: [AppSharedModule, ProductCategoryRoutingModule, AdminSharedModule],
+    imports: [AppSharedModule, ProductCategoryRoutingModule, AdminSharedModule,ProductCategoryTeamModule,ProductCategoryVariantMapModule],
     providers: [ NodeService ]
 })
 export class ProductCategoryModule {}

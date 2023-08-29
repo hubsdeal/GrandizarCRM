@@ -1,10 +1,8 @@
 ﻿<div [@routerTransition]>
-    <sub-header [title]="'ProductCategoryTeams' | localize" [description]="'ProductCategoryTeamsHeaderInfo' | localize">
+    <sub-header [title]="'Teams' | localize" [description]="getTotalcount(primengTableHelper.totalRecordsCount)">
+        
         <div role="actions">
-            <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1">
-                <i class="fa fa-file-excel"></i>
-                {{ l('ExportToExcel') }}
-            </button>
+
 
             <button
                 *ngIf="isGranted('Pages.ProductCategoryTeams.Create')"
@@ -12,7 +10,7 @@
                 class="btn btn-primary blue"
             >
                 <i class="fa fa-plus"></i>
-                {{ l('CreateNewProductCategoryTeam') }}
+                Team
             </button>
         </div>
     </sub-header>
@@ -20,7 +18,7 @@
     <div [class]="containerClass">
         <div class="card card-custom gutter-b">
             <div class="card-body">
-                <form class="form" autocomplete="off">
+                <!-- <form class="form" autocomplete="off">
                     <div>
                         <div class="row align-items-center">
                             <div class="col-xl-12">
@@ -125,12 +123,12 @@
                             </div>
                         </div>
                     </div>
-                </form>
+                </form> -->
 
                 <div class="row align-items-center">
                     <!--<Primeng-Datatable-Start>-->
                     <div class="primeng-datatable-container col-12" [busyIf]="primengTableHelper.isLoading">
-                        <p-table
+                        <!-- <p-table
                             #dataTable
                             (onLazyLoad)="getProductCategoryTeams($event)"
                             [value]="primengTableHelper.records"
@@ -244,11 +242,98 @@
                                     </td>
                                 </tr>
                             </ng-template>
-                        </p-table>
+                        </p-table> -->
+                        <div class="col-xl-6" *ngFor="let record of primengTableHelper.records">
+                            <div class="w-100 p-5 border-1 border-dashed rounded border-gray-300">
+                                <div class="d-flex justify-content-between align-baseline">
+                                    <div class="d-flex gap-7 align-items-center">
+                                        <div class="symbol symbol-circle symbol-100px">
+                                            <img *ngIf ="record.employeePicture" alt="Pic" src="{{record.employeePicture}}">
+                                            <img *ngIf ="!record.employeePicture" src="assets/common/images/default-profile-picture.png"
+                                                alt="image">
+                                        </div>
+                                        <div class="d-flex flex-column gap-2">
+                                            <h3 class="mb-0">{{record.employeeName}}</h3>
+                                            <div class="d-flex align-items-center gap-2" *ngIf="record?.jobTitle">
+                                                <span class="svg-icon svg-icon-2">
+                                                    <i class="fas fa-store-alt"></i>
+                                                </span>
+                                               <a href="javascript:;"
+                                                    class="text-muted text-hover-primary">
+                                                    {{record?.jobTitle}}
+                                                </a> 
+                                            </div>
+                                            <div class="d-flex align-items-center gap-2" *ngIf="record?.personalEmail">
+                                                <span class="svg-icon svg-icon-2">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24"
+                                                        fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path opacity="0.3"
+                                                            d="M21 19H3C2.4 19 2 18.6 2 18V6C2 5.4 2.4 5 3 5H21C21.6 5 22 5.4 22 6V18C22 18.6 21.6 19 21 19Z"
+                                                            fill="currentColor"></path>
+                                                        <path
+                                                            d="M21 5H2.99999C2.69999 5 2.49999 5.10005 2.29999 5.30005L11.2 13.3C11.7 13.7 12.4 13.7 12.8 13.3L21.7 5.30005C21.5 5.10005 21.3 5 21 5Z"
+                                                            fill="currentColor"></path>
+                                                    </svg>
+                                                </span>
+                                                 <a href="#"
+                                                    class="text-muted text-hover-primary">{{record?.personalEmail}}</a>
+                                            </div>
+                                            <div class="d-flex align-items-center gap-2" *ngIf="record?.mobile">
+                                                <span class="svg-icon svg-icon-2">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24"
+                                                        fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path
+                                                            d="M5 20H19V21C19 21.6 18.6 22 18 22H6C5.4 22 5 21.6 5 21V20ZM19 3C19 2.4 18.6 2 18 2H6C5.4 2 5 2.4 5 3V4H19V3Z"
+                                                            fill="currentColor"></path>
+                                                        <path opacity="0.3" d="M19 4H5V20H19V4Z"
+                                                            fill="currentColor"></path>
+                                                    </svg>
+                                                </span>
+                                                <a href="javascript:;"
+                                                    class="text-muted text-hover-primary">{{record?.mobile }}</a>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="card-toolbar gap-3">
+                                        <button class="btn btn-sm btn-light btn-active-light-primary"
+                                            data-kt-drawer-show="true"
+                                            data-kt-drawer-target="#kt_drawer_chat" *ngIf="permission.isGranted('Pages.ProductCategoryTeams.Edit')"
+                                            (click)="createOrEditProductCategoryTeamModal.show(record.productCategoryTeam.id)"
+                                            class="kt-nav__link">
+                                            <span class="svg-icon svg-icon-2">
+                                                <i class="fas fa-edit"></i>
+                                            </span>
+                                        </button>
+                                        <a href="javascript:;"
+                                            class="btn btn-sm btn-light btn-active-light-primary"
+                                            *ngIf="permission.isGranted('Pages.ProductCategoryTeams.Delete')"
+                                            (click)="deleteProductCategoryTeam(record.productCategoryTeam)">
+                                            <span class="svg-icon svg-icon-2">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </span>
+                                        </a>
+                                    </div>
+                                </div>
+                                <!--end::Item-->
+                                <!-- <div class="separator separator-dashed my-5"></div> -->
+                                <!--begin::Item-->
+                                <!-- <div class="w-100">
+                                    <span class="fw-light text-gray-400">
+                                        Jornalists call this critical, introductory section the
+                                        "Lede," and when bridge properly executed, it's the that
+                                        carries your reader from an headine try at
+                                        attention-grabbing to the body of your blog post, if you
+                                        want to get it right on of these 10 clever ways to omen
+                                        your next blog posr with a bang
+                                    </span>
+                                </div> -->
+                            </div>
+                        </div>
                         <div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
                             {{ l('NoData') }}
                         </div>
-                        <div class="primeng-paging-container">
+                        <!-- <div class="primeng-paging-container">
                             <p-paginator
                                 [rows]="primengTableHelper.defaultRecordsCountPerPage"
                                 #paginator
@@ -260,7 +345,7 @@
                                     'TotalRecordsCount' | localize : primengTableHelper.totalRecordsCount
                                 "
                             ></p-paginator>
-                        </div>
+                        </div> -->
                     </div>
                     <!--<Primeng-Datatable-End>-->
                 </div>

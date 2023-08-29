@@ -9,7 +9,7 @@
             <button *ngIf="isGranted('Pages.ProductCategories.Create')" (click)="createProductCategory()"
                 class="btn btn-primary blue">
                 <i class="fa fa-plus"></i>
-                {{ l('CreateNewProductCategory') }}
+                {{ l('Product Caterogy') }}
             </button>
         </div>
     </sub-header>
@@ -383,8 +383,7 @@
                                 </td> -->
 
                                 <td class="text-center" style="width:80px">
-                                    <a href="javascript:;" [routerLink]="['/app/main/shop/products']"
-                                        [queryParams]="{categoryId:rowData.id}">{{rowData.numberOfProducts}}</a>
+                                    <a href="javascript:;" [routerLink]="['/app/main/shop/productCategories/dashboard', rowData.id]">{{rowData.numberOfProducts}}</a>
                                 </td>
 
                                 <!-- <td class="text-center" style="width:150px">
@@ -430,7 +429,7 @@
                                             <li>
                                                 <a *ngIf="permission.isGranted('Pages.ProductCategories.Edit')"
                                                     href="javascript:;"
-                                                    (click)="createOrEditProductCategoryModal.show(rowData.id)">{{l('Edit')}}</a>
+                                                    [routerLink]="['/app/main/shop/productCategories/dashboard', rowData.id]">{{l('Edit')}}</a>
                                                 <!-- (click)="createOrEditProductCategoryModal.show(rowData.id)" -->
                                             </li>
                                             <!-- <li>

@@ -33,7 +33,7 @@ export class CreateOrEditProductCategoryVariantMapModalComponent extends AppComp
 
     productCategoryName = '';
     productVariantCategoryName = '';
-
+    productCategoryIdFilter:number;
     constructor(
         injector: Injector,
         private _productCategoryVariantMapsServiceProxy: ProductCategoryVariantMapsServiceProxy,
@@ -69,18 +69,17 @@ export class CreateOrEditProductCategoryVariantMapModalComponent extends AppComp
     save(): void {
         this.saving = true;
 
-        this._productCategoryVariantMapsServiceProxy
-            .createOrEdit(this.productCategoryVariantMap)
-            .pipe(
-                finalize(() => {
-                    this.saving = false;
-                })
-            )
-            .subscribe(() => {
-                this.notify.info(this.l('SavedSuccessfully'));
-                this.close();
-                this.modalSave.emit(null);
-            });
+            if (this.productCategoryIdFilter) {
+                this.productCategoryVariantMap.productCategoryId = this.productCategoryIdFilter;
+            }
+    
+            this._productCategoryVariantMapsServiceProxy.createOrEdit(this.productCategoryVariantMap)
+                .pipe(finalize(() => { this.saving = false; }))
+                .subscribe(() => {
+                    this.notify.info(this.l('SavedSuccessfully'));
+                    this.close();
+                    this.modalSave.emit(null);
+                });
     }
 
     openSelectProductCategoryModal() {

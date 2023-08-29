@@ -32,7 +32,7 @@ export class CreateOrEditProductCategoryTeamModalComponent extends AppComponentB
 
     productCategoryName = '';
     employeeName = '';
-
+    productCategoryId:number;
     constructor(
         injector: Injector,
         private _productCategoryTeamsServiceProxy: ProductCategoryTeamsServiceProxy,
@@ -42,6 +42,7 @@ export class CreateOrEditProductCategoryTeamModalComponent extends AppComponentB
     }
 
     show(productCategoryTeamId?: number): void {
+        this.productCategoryTeam.productCategoryId =this.productCategoryId
         if (!productCategoryTeamId) {
             this.productCategoryTeam = new CreateOrEditProductCategoryTeamDto();
             this.productCategoryTeam.id = productCategoryTeamId;
@@ -55,7 +56,7 @@ export class CreateOrEditProductCategoryTeamModalComponent extends AppComponentB
                 .getProductCategoryTeamForEdit(productCategoryTeamId)
                 .subscribe((result) => {
                     this.productCategoryTeam = result.productCategoryTeam;
-
+                    this.productCategoryId = this.productCategoryTeam.productCategoryId;
                     this.productCategoryName = result.productCategoryName;
                     this.employeeName = result.employeeName;
 
@@ -68,18 +69,19 @@ export class CreateOrEditProductCategoryTeamModalComponent extends AppComponentB
     save(): void {
         this.saving = true;
 
-        this._productCategoryTeamsServiceProxy
-            .createOrEdit(this.productCategoryTeam)
-            .pipe(
-                finalize(() => {
-                    this.saving = false;
-                })
-            )
-            .subscribe(() => {
-                this.notify.info(this.l('SavedSuccessfully'));
-                this.close();
-                this.modalSave.emit(null);
-            });
+        this.saving = true;
+
+        if(this.productCategoryId){
+            this.productCategoryTeam.productCategoryId = this.productCategoryId;
+        }
+        
+        this._productCategoryTeamsServiceProxy.createOrEdit(this.productCategoryTeam)
+         .pipe(finalize(() => { this.saving = false;}))
+         .subscribe(() => {
+            this.notify.info(this.l('SavedSuccessfully'));
+            this.close();
+            this.modalSave.emit(null);
+         });
     }
 
     openSelectProductCategoryModal() {
