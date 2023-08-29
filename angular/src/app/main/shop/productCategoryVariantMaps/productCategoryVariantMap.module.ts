@@ -18,5 +18,6 @@ import { ProductCategoryVariantMapProductVariantCategoryLookupTableModalComponen
         ProductCategoryVariantMapProductVariantCategoryLookupTableModalComponent,
     ],
     imports: [AppSharedModule, ProductCategoryVariantMapRoutingModule, AdminSharedModule],
+    exports:[ProductCategoryVariantMapsComponent]
 })
 export class ProductCategoryVariantMapModule {}

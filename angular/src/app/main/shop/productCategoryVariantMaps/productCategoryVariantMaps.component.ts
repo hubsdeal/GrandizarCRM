@@ -1,5 +1,5 @@
 ﻿import { AppConsts } from '@shared/AppConsts';
-import { Component, Injector, ViewEncapsulation, ViewChild } from '@angular/core';
+import { Component, Injector, ViewEncapsulation, ViewChild, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
     ProductCategoryVariantMapsServiceProxy,
@@ -22,6 +22,7 @@ import { DateTime } from 'luxon';
 import { DateTimeService } from '@app/shared/common/timing/date-time.service';
 
 @Component({
+    selector:'appProductCategoryAndVariantCategoryMap',
     templateUrl: './productCategoryVariantMaps.component.html',
     encapsulation: ViewEncapsulation.None,
     animations: [appModuleAnimation()],
@@ -39,7 +40,7 @@ export class ProductCategoryVariantMapsComponent extends AppComponentBase {
     filterText = '';
     productCategoryNameFilter = '';
     productVariantCategoryNameFilter = '';
-
+    @Input() productCategoryIdFilter:number;
     constructor(
         injector: Injector,
         private _productCategoryVariantMapsServiceProxy: ProductCategoryVariantMapsServiceProxy,
@@ -64,6 +65,7 @@ export class ProductCategoryVariantMapsComponent extends AppComponentBase {
 
         this._productCategoryVariantMapsServiceProxy
             .getAll(
+                this.productCategoryIdFilter,
                 this.filterText,
                 this.productCategoryNameFilter,
                 this.productVariantCategoryNameFilter,
@@ -83,8 +85,10 @@ export class ProductCategoryVariantMapsComponent extends AppComponentBase {
     }
 
     createProductCategoryVariantMap(): void {
+        this.createOrEditProductCategoryVariantMapModal.productCategoryIdFilter=this.productCategoryIdFilter;
         this.createOrEditProductCategoryVariantMapModal.show();
     }
+   
 
     deleteProductCategoryVariantMap(productCategoryVariantMap: ProductCategoryVariantMapDto): void {
         this.message.confirm('', this.l('AreYouSure'), (isConfirmed) => {
@@ -115,5 +119,8 @@ export class ProductCategoryVariantMapsComponent extends AppComponentBase {
         this.productVariantCategoryNameFilter = '';
 
         this.getProductCategoryVariantMaps();
+    }
+    getTotalcount(total){
+        return '| Total : ' + total;
     }
 }

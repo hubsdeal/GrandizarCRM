@@ -17,6 +17,7 @@ import { ProductCategoryTeamEmployeeLookupTableModalComponent } from './productC
         ProductCategoryTeamProductCategoryLookupTableModalComponent,
         ProductCategoryTeamEmployeeLookupTableModalComponent,
     ],
+    exports:[ProductCategoryTeamsComponent],
     imports: [AppSharedModule, ProductCategoryTeamRoutingModule, AdminSharedModule],
 })
 export class ProductCategoryTeamModule {}
