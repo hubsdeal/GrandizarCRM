@@ -53,5 +53,20 @@ import { LeadModule } from '@app/main/salesLeadManagement/leads/lead.module';
         ProductCrossSellProductModule,
         ProductUpsellRelatedProductModule,
         LeadModule],
+        exports:[ProductsComponent,
+            CreateOrEditProductModalComponent,
+            ViewProductModalComponent,
+    
+            ProductProductCategoryLookupTableModalComponent,
+            ProductMediaLibraryLookupTableModalComponent,
+            ProductMeasurementUnitLookupTableModalComponent,
+            ProductCurrencyLookupTableModalComponent,
+            ProductRatingLikeLookupTableModalComponent,
+            ProductContactLookupTableModalComponent,
+            ProductStoreLookupTableModalComponent,
+            ProductDashboardComponent,
+            ProductLibrariesComponent,
+            MyProductsComponent,
+            CreateOrEditBulkProductMediaLibraryModalComponent]
 })
 export class ProductModule { }

@@ -19,6 +19,7 @@ import { DateTime } from 'luxon';
 import { DateTimeService } from '@app/shared/common/timing/date-time.service';
 
 @Component({
+    selector:'appMasterProduct',
     templateUrl: './products.component.html',
     encapsulation: ViewEncapsulation.None,
     animations: [appModuleAnimation()],
@@ -116,7 +117,7 @@ export class ProductsComponent extends AppComponentBase {
 
     @Input() businessIdFilter: number;
     @Input() employeeId: number;
-
+    @Input() productCategoryId;
     maxPriceDiscountAmountFilter: number;
     minPriceDiscountAmountFilter: number;
 
@@ -152,7 +153,7 @@ export class ProductsComponent extends AppComponentBase {
             .getAllProductsBySp(
                 this.minPriceFilter,
                 this.maxpriceFilter,
-                this.productCategoryidFilter != null ? this.productCategoryidFilter : undefined,
+                this.productCategoryId != null ? this.productCategoryId : undefined,
                 this.currencyIdFilter,
                 this.measurementUnitIdFilter,
                 this.ratingLikeIdFilter,

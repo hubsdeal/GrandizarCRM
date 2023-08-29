@@ -148,7 +148,7 @@
                                 </li>
 
                                 <li class="nav-item">
-                                    <a class="nav-link" data-bs-toggle="tab" href="#pr_orders">
+                                    <a class="nav-link" data-bs-toggle="tab" href="#pc_product">
                                         <i class="fas fa-cart-arrow-down"></i> Product
                                     </a>
                                 </li>
@@ -358,6 +358,16 @@
                                             <!--end::Form-->
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="pc_product" role="tabpanel">
+                        <div class="card mb-6">
+                            <div class="card-body">
+                                <div class="row">
+                                    <appMasterProduct *ngIf="productCategoryId"
+                                    [productCategoryId]="productCategoryId"></appMasterProduct>
                                 </div>
                             </div>
                         </div>

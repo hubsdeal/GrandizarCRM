@@ -11,6 +11,7 @@ import { ProductCategoryDashboardComponent } from './productCategoriesDashboard/
 import { ProductCategoryTeamsComponent } from '../productCategoryTeams/productCategoryTeams.component';
 import { ProductCategoryTeamModule } from '../productCategoryTeams/productCategoryTeam.module';
 import { ProductCategoryVariantMapModule } from '../productCategoryVariantMaps/productCategoryVariantMap.module';
+import { ProductModule } from '../products/product.module';
 
 @NgModule({
     declarations: [
@@ -21,7 +22,7 @@ import { ProductCategoryVariantMapModule } from '../productCategoryVariantMaps/p
         ProductCategoryMediaLibraryLookupTableModalComponent,
           ProductCategoryDashboardComponent,
     ],
-    imports: [AppSharedModule, ProductCategoryRoutingModule, AdminSharedModule,ProductCategoryTeamModule,ProductCategoryVariantMapModule],
+    imports: [AppSharedModule, ProductCategoryRoutingModule, AdminSharedModule,ProductCategoryTeamModule,ProductCategoryVariantMapModule,ProductModule],
     providers: [ NodeService ]
 })
 export class ProductCategoryModule {}
