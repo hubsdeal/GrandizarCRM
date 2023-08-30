@@ -85,7 +85,7 @@
 
                     <div class="my-3">
                         <label class="form-label" for="TaskWorkItem_Name">Work Item Title</label>
-                        <input
+                        <!-- <input
                             type="text"
                             #TaskWorkItem_Name="ngModel"
                             id="TaskWorkItem_Name"
@@ -95,7 +95,9 @@
                             minlength="1"
                             maxlength="1024"
                             required
-                        />
+                        /> -->
+                        <textarea type="text" #TaskWorkItem_Name="ngModel" id="TaskWorkItem_Name" class="form-control" (input)="onInput($event)"
+                        [(ngModel)]="taskWorkItem.name" name="Name" required cols="30" rows="10"></textarea>
                         <validation-messages [formCtrl]="TaskWorkItem_Name"></validation-messages>
                     </div>
 

@@ -8,6 +8,7 @@ import { DateTime } from 'luxon';
 import { DateTimeService } from '@app/shared/common/timing/date-time.service';
 import { TaskWorkItemTaskEventLookupTableModalComponent } from './taskWorkItem-taskEvent-lookup-table-modal.component';
 import { TaskWorkItemEmployeeLookupTableModalComponent } from './taskWorkItem-employee-lookup-table-modal.component';
+import { SelectItem } from 'primeng/api';
 
 @Component({
     selector: 'createOrEditTaskWorkItemModal',
@@ -29,7 +30,10 @@ export class CreateOrEditTaskWorkItemModalComponent extends AppComponentBase imp
 
     taskEventName = '';
     employeeName = '';
-
+    //taskEventId: number;
+    statusOptions: SelectItem[];
+    status: string = 'incomplete';
+    lineItems: string[] = [];
     constructor(
         injector: Injector,
         private _taskWorkItemsServiceProxy: TaskWorkItemsServiceProxy,
@@ -67,23 +71,92 @@ export class CreateOrEditTaskWorkItemModalComponent extends AppComponentBase imp
 
     }
 
+    // save(): void {
+    //     this.saving = true;
+    //     this.taskWorkItem.taskEventId = this.taskEventId;
+    //     this._taskWorkItemsServiceProxy
+    //         .createOrEdit(this.taskWorkItem)
+    //         .pipe(
+    //             finalize(() => {
+    //                 this.saving = false;
+    //             })
+    //         )
+    //         .subscribe(() => {
+    //             this.notify.info(this.l('SavedSuccessfully'));
+    //             this.close();
+    //             this.modalSave.emit(null);
+    //         });
+    // }
+
     save(): void {
         this.saving = true;
-        this.taskWorkItem.taskEventId = this.taskEventId;
-        this._taskWorkItemsServiceProxy
-            .createOrEdit(this.taskWorkItem)
-            .pipe(
-                finalize(() => {
-                    this.saving = false;
-                })
-            )
-            .subscribe(() => {
-                this.notify.info(this.l('SavedSuccessfully'));
-                this.close();
-                this.modalSave.emit(null);
-            });
+        if (this.taskEventId) {
+            this.taskWorkItem.taskEventId = this.taskEventId;
+        }
+        this.taskWorkItem.openOrClosed = this.status === 'completed' ? true : false;
+        if (this.lineItems.length > 1) {
+            this.message.confirm(
+                `You have entered ${this.lineItems.length} items.`,
+                this.l('Do you want to save multiple tasks items?'),
+                (isConfirmed) => {
+                    if (isConfirmed) {
+                        for (let i = 0; i < this.lineItems.length; i++) {
+                            const value = this.lineItems[i];
+                            this.taskWorkItem.name = value;
+                            this._taskWorkItemsServiceProxy.createOrEdit(this.taskWorkItem)
+                                .pipe(finalize(() => { this.saving = false; }))
+                                .subscribe(() => {
+                                    this.notify.info(this.l('SavedSuccessfully'));
+                                    this.lineItems = [];
+                                    this.close();
+                                    this.modalSave.emit(null);
+                                });
+                        }
+                    } else {
+                        this._taskWorkItemsServiceProxy.createOrEdit(this.taskWorkItem)
+                            .pipe(finalize(() => { this.saving = false; }))
+                            .subscribe(() => {
+                                this.notify.info(this.l('SavedSuccessfully'));
+                                this.lineItems = [];
+                                this.close();
+                                this.modalSave.emit(null);
+                            });
+                    }
+                }
+            );
+        } else {
+            this._taskWorkItemsServiceProxy.createOrEdit(this.taskWorkItem)
+                .pipe(finalize(() => { this.saving = false; }))
+                .subscribe(() => {
+                    this.notify.info(this.l('SavedSuccessfully'));
+                    this.lineItems = [];
+                    this.close();
+                    this.modalSave.emit(null);
+                });
+        }
+
+
+        // if (this.lineItems.length > 0) {
+        //     for (let i = 0; i < this.lineItems.length; i++) {
+        //         const value = this.lineItems[i];
+        //         this.taskWorkItem.name = value;
+        //         this._taskWorkItemsServiceProxy.createOrEdit(this.taskWorkItem)
+        //         .pipe(finalize(() => { this.saving = false; }))
+        //         .subscribe(() => {
+        //             this.notify.info(this.l('SavedSuccessfully'));
+        //             this.close();
+        //             this.modalSave.emit(null);
+        //         });
+        //     }
+        // } else {
+
+        // }
     }
 
+    onInput(event: any) {
+        const value = event.target.value;
+        this.lineItems = value.split('\n');
+    }
     openSelectTaskEventModal() {
         this.taskWorkItemTaskEventLookupTableModal.id = this.taskWorkItem.taskEventId;
         this.taskWorkItemTaskEventLookupTableModal.displayName = this.taskEventName;
