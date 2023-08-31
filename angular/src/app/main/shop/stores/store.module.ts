@@ -16,6 +16,7 @@ import { StoreNoteModule } from '../storeNotes/storeNote.module';
 import { OrderModule } from '@app/main/orderManagement/orders/order.module';
 import { StoreProductMapModule } from '../storeProductMaps/storeProductMap.module';
 import { StoreContactMapModule } from '../storeContactMaps/storeContactMap.module';
+import { StoreMarketplaceCommissionSettingModule } from '../storeMarketplaceCommissionSettings/storeMarketplaceCommissionSetting.module';
 
 @NgModule({
     declarations: [
@@ -31,7 +32,8 @@ import { StoreContactMapModule } from '../storeContactMaps/storeContactMap.modul
     imports: [AppSharedModule, StoreRoutingModule, AdminSharedModule, StoreMediaModule, TaskEventModule, StoreTagModule, StoreNoteModule,
         OrderModule,
         StoreProductMapModule,
-        StoreContactMapModule
+        StoreContactMapModule,
+        StoreMarketplaceCommissionSettingModule
     ],
     exports:[
         MyStoresComponent,

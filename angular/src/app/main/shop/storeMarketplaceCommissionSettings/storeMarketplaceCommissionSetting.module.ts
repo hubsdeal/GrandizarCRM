@@ -22,5 +22,15 @@ import { StoreMarketplaceCommissionSettingProductLookupTableModalComponent } fro
         StoreMarketplaceCommissionSettingProductLookupTableModalComponent,
     ],
     imports: [AppSharedModule, StoreMarketplaceCommissionSettingRoutingModule, AdminSharedModule],
+    exports: [
+        StoreMarketplaceCommissionSettingsComponent,
+        CreateOrEditStoreMarketplaceCommissionSettingModalComponent,
+        ViewStoreMarketplaceCommissionSettingModalComponent,
+
+        StoreMarketplaceCommissionSettingStoreLookupTableModalComponent,
+        StoreMarketplaceCommissionSettingMarketplaceCommissionTypeLookupTableModalComponent,
+        StoreMarketplaceCommissionSettingProductCategoryLookupTableModalComponent,
+        StoreMarketplaceCommissionSettingProductLookupTableModalComponent,
+    ]
 })
 export class StoreMarketplaceCommissionSettingModule {}

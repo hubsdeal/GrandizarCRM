@@ -17,17 +17,23 @@
     <div class="w-100 d-flex mb-6 ps-9 pe-9 mt-6 justify-content-between align-items-center ng-tns-c282-7">
         <div class="d-flex align-items-center">
             <h1 class="fs-3 fw-bold  my-0 page-heading text-dark me-6">
-                Settings for Store Tag & Question 
+                Settings for Store Tag & Question
             </h1>
             <div class="p_filter me-6">
-                <p-dropdown [options]="storeTagSettingCategoryOptions" [filter]="true"
-                    [virtualScroll]="true" (onChange)="onStoreTagSettingCategoryClick($event)"
-                    placeholder="Select Store Category" [itemSize]="30" name="displayName"
-                    optionLabel="displayName" optionId="id" [(ngModel)]="selectedStoreTagSettingCategory"
-                    filterBy="displayName" required [style]="{ width: '100%' }"></p-dropdown>
+                <!-- <p-dropdown [options]="storeTagSettingCategoryOptions" [filter]="true" [virtualScroll]="true"
+                    (onChange)="onStoreTagSettingCategoryClick($event)" placeholder="Select Store Category"
+                    [itemSize]="30" name="storeTagSettingCategoryName" optionLabel="displayName" optionId="id"
+                    [(ngModel)]="selectedStoreTagSettingCategoryId.id" filterBy="displayName" required
+                    [style]="{ width: '100%' }"></p-dropdown> -->
+
+                <p-dropdown [options]="storeTagSettingCategoryOptions" [filter]="true" [virtualScroll]="true"
+                    placeholder="Select Store Category" [itemSize]="30" name="storeBusinessTypeName" (onChange)="onStoreTagSettingCategoryClick($event)"
+                    optionLabel="displayName" optionValue="id" optionId="storeBusinessTypeId"
+                    [(ngModel)]="storeMasterTagSetting.storeTagSettingCategoryId" filterBy="displayName" required
+                    [style]="{ width: '100%' }"></p-dropdown>
             </div>
             <button class="btn btn-primary btn-sm">
-                Tags <span class="badge badge-circle badge-success ms-2">5</span>
+                Total <span class="badge badge-circle badge-success ms-2">{{primengTableHelper.totalRecordsCount}}</span>
             </button>
         </div>
         <div>
@@ -199,47 +205,38 @@
                                             </span>
                                             <div class="d-flex flex-stack flex-grow-1">
                                                 <div class="fw-semibold tag_block_custom">
-                                                    <h4
+                                                    <h4 *ngIf="!record.storeMasterTagSetting.customTagChatQuestion"
                                                         class="text-gray-600 fw-bold d-flex justify-content-between align-items-center">
                                                         {{record.masterTagCategoryName}}
                                                         <span class="d-flex align-items-center">
                                                             <span class="me-4 cursor-move">
                                                                 <i class="fa-solid fa-bars fs-1 me-4 text-primary"></i>
                                                             </span>
-                                                            <span
-                                                                class="badge badge-primary badge-square badge-lg">4</span>
+                                                        </span>
+                                                    </h4>
+                                                    <h4 *ngIf="record.storeMasterTagSetting.customTagChatQuestion"
+                                                        class="text-gray-600 fw-bold d-flex justify-content-between align-items-center">
+                                                        {{record.storeMasterTagSetting.customTagChatQuestion}}
+                                                        <span class="d-flex align-items-center">
+                                                            <span class="me-4 cursor-move">
+                                                                <i class="fa-solid fa-bars fs-1 me-4 text-primary"></i>
+                                                            </span>
                                                         </span>
                                                     </h4>
                                                     <div class="fs-6">
-                                                        <div style="display: inline-block;" class="row w-100 pl-2">
-                                                            <span>
+                                                        <div *ngIf="!record.storeMasterTagSetting.customTagChatQuestion" style="display: inline-block;" class="row w-100 pl-2">
+                                                            <span *ngFor="let item of record.masterTags">
                                                                 <button type="button"
-                                                                    class="btn btn-outline-brand btn-sm active">
-                                                                    <!-- <p-progressSpinner
-                                                                        *ngIf="loader_anim_show && (tags.id==loaderSelectedMasterTagId)"
-                                                                        [style]="{width: '19px', height: '19px', position:'absolute'}"
-                                                                        styleClass="custom-spinner" strokeWidth="8"
-                                                                        fill="#EEEEEE" animationDuration=".5s">
-                                                                    </p-progressSpinner> -->
-                                                                    <!-- <i class="fas fa-plus mr-2"></i> -->
-                                                                    <i class="fas fa-check-circle mr-2"></i>
-                                                                    Chinese
+                                                                    class="btn btn-outline-brand btn-sm">
+                                                                    <i class="fas fa-eye mr-2"></i>
+                                                                    {{item.name}}
                                                                 </button>
                                                             </span>
-                                                            <span>
-                                                                <button type="button"
-                                                                    class="btn btn-outline-brand btn-sm active">
-                                                                    <!-- <p-progressSpinner
-                                                                        *ngIf="loader_anim_show && (tags.id==loaderSelectedMasterTagId)"
-                                                                        [style]="{width: '19px', height: '19px', position:'absolute'}"
-                                                                        styleClass="custom-spinner" strokeWidth="8"
-                                                                        fill="#EEEEEE" animationDuration=".5s">
-                                                                    </p-progressSpinner> -->
-                                                                    <!-- <i class="fas fa-plus mr-2"></i> -->
-                                                                    <i class="fas fa-check-circle mr-2"></i>
-                                                                    Chinese
-                                                                </button>
-                                                            </span>
+                                                        </div>
+                                                        <div *ngIf="record.storeMasterTagSetting.customTagChatQuestion" style="display: inline-block;" class="row w-100 pl-2">
+                                                            <div>
+                                                                Answer Type: {{ getAnswerTypeString(record.storeMasterTagSetting.answerTypeId) }}
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>

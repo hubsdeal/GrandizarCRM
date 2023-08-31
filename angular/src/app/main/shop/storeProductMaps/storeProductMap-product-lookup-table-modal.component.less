@@ -3,3 +3,53 @@
         display: none;
     }
 }
+
+
+.category_map_del {
+    font-size: 10px;
+    position: absolute;
+    right: 2px;
+    top: -1px;
+    display: none;
+}
+
+.main_category_box_order:hover {
+    .category_map_del {
+        display: block;
+    }
+}
+
+.main_category_box_order {
+    padding: 10px;
+    border-radius: 4px;
+    height: 8.5rem;
+    .second_box {
+        width: 100%;
+        text-align: center;
+        img {
+            width: 7rem;
+            height: 4.5rem;
+            object-fit: contain;
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: pixelated;
+        }
+    }
+    .cat_name_title_t {
+        font-size: 9px;
+        font-weight: 500;
+        color: #989898;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        cursor: pointer;
+        /* width: 79%; */
+        text-align: left;
+        margin: auto;
+        line-height: 10px;
+        a {
+            color: #989898;
+        }
+    }
+}

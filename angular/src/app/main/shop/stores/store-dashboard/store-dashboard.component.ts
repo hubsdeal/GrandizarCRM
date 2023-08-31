@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ChatGptResponseModalComponent } from '@app/shared/chat-gpt-response-modal/chat-gpt-response-modal.component';
 import { AppConsts } from '@shared/AppConsts';
 import { AppComponentBase } from '@shared/common/app-component-base';
-import { CreateOrEditStoreDto, CreateOrEditStoreMediaDto, GetStoreMediaForViewDto, StatesServiceProxy, StoreMediasServiceProxy, StoresServiceProxy } from '@shared/service-proxies/service-proxies';
+import { CreateOrEditStoreDto, CreateOrEditStoreMediaDto, GetStoreMediaForViewDto, StatesServiceProxy, StoreMediasServiceProxy, StoreTopStatsForViewDto, StoresServiceProxy } from '@shared/service-proxies/service-proxies';
 import { IAjaxResponse, TokenService } from 'abp-ng2-module';
 import { FileItem, FileUploader, FileUploaderOptions } from 'ng2-file-upload';
 import { SelectItem } from 'primeng/api';
@@ -35,7 +35,8 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
   tags: string[] = [];
 
   chatGPTPromt: string;
-
+  
+  countView: StoreTopStatsForViewDto = new StoreTopStatsForViewDto();
   stateName: string;
   countryName: string;
   picture: string;
@@ -191,6 +192,9 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
       }
       console.log(result)
       this.getStoreMedia();
+    });
+    this._storeServiceProxy.getStoreTopStats(id).subscribe(result => {
+      this.countView = result;
     });
     // console.log("db"+this.storeTagSettingCategoryId);
     // console.log("db"+this.storeId);

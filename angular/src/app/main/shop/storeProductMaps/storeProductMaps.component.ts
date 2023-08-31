@@ -1,7 +1,7 @@
 ﻿import { AppConsts } from '@shared/AppConsts';
-import { Component, Injector, ViewEncapsulation, ViewChild } from '@angular/core';
+import { Component, Injector, ViewEncapsulation, ViewChild, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { StoreProductMapsServiceProxy, StoreProductMapDto } from '@shared/service-proxies/service-proxies';
+import { StoreProductMapsServiceProxy, StoreProductMapDto, StoreProductCategoryMapsServiceProxy } from '@shared/service-proxies/service-proxies';
 import { NotifyService } from 'abp-ng2-module';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { TokenAuthServiceProxy } from '@shared/service-proxies/service-proxies';
@@ -21,10 +21,11 @@ import { DateTimeService } from '@app/shared/common/timing/date-time.service';
 @Component({
     selector: 'app-storeProductMaps',
     templateUrl: './storeProductMaps.component.html',
+    styleUrls: ['./storeProductMap-product-lookup-table-modal.component.less'],
     encapsulation: ViewEncapsulation.None,
     animations: [appModuleAnimation()],
 })
-export class StoreProductMapsComponent extends AppComponentBase {
+export class StoreProductMapsComponent extends AppComponentBase implements OnInit {
     @ViewChild('createOrEditStoreProductMapModal', { static: true })
     createOrEditStoreProductMapModal: CreateOrEditStoreProductMapModalComponent;
     @ViewChild('viewStoreProductMapModal', { static: true })
@@ -47,6 +48,17 @@ export class StoreProductMapsComponent extends AppComponentBase {
     selectedAll: boolean = false;
     selectedInput: number[] = [];
 
+    showGridView: boolean;
+    showListView: boolean;
+
+    allCategories: any[] = [];
+
+    @Input() storeId: number;
+    @Input() productId: number;
+    productCategoryIdFilter:number;
+
+    productCategoryOptions: any;
+
     constructor(
         injector: Injector,
         private _storeProductMapsServiceProxy: StoreProductMapsServiceProxy,
@@ -54,7 +66,8 @@ export class StoreProductMapsComponent extends AppComponentBase {
         private _tokenAuth: TokenAuthServiceProxy,
         private _activatedRoute: ActivatedRoute,
         private _fileDownloadService: FileDownloadService,
-        private _dateTimeService: DateTimeService
+        private _dateTimeService: DateTimeService,
+        private _storeCategoryMapsServiceProxy: StoreProductCategoryMapsServiceProxy
     ) {
         super(injector);
     }
@@ -69,27 +82,24 @@ export class StoreProductMapsComponent extends AppComponentBase {
 
         this.primengTableHelper.showLoadingIndicator();
 
-        this._storeProductMapsServiceProxy
-            .getAll(
-                this.filterText,
-                this.publishedFilter,
-                this.maxDisplaySequenceFilter == null
-                    ? this.maxDisplaySequenceFilterEmpty
-                    : this.maxDisplaySequenceFilter,
-                this.minDisplaySequenceFilter == null
-                    ? this.minDisplaySequenceFilterEmpty
-                    : this.minDisplaySequenceFilter,
-                this.storeNameFilter,
-                this.productNameFilter,
-                this.primengTableHelper.getSorting(this.dataTable),
-                this.primengTableHelper.getSkipCount(this.paginator, event),
-                this.primengTableHelper.getMaxResultCount(this.paginator, event)
-            )
-            .subscribe((result) => {
-                this.primengTableHelper.totalRecordsCount = result.totalCount;
-                this.primengTableHelper.records = result.items;
-                this.primengTableHelper.hideLoadingIndicator();
-            });
+        this._storeProductMapsServiceProxy.getAllByProductIdAndStoreId(
+            this.productId != null ? this.productId : undefined,
+            this.storeId != null ? this.storeId : undefined,
+            this.productCategoryIdFilter != null ? this.productCategoryIdFilter : undefined,
+            this.filterText,
+            this.publishedFilter,
+            this.maxDisplaySequenceFilter == null ? this.maxDisplaySequenceFilterEmpty : this.maxDisplaySequenceFilter,
+            this.minDisplaySequenceFilter == null ? this.minDisplaySequenceFilterEmpty : this.minDisplaySequenceFilter,
+            this.storeNameFilter,
+            this.productNameFilter,
+            this.primengTableHelper.getSorting(this.dataTable),
+            this.primengTableHelper.getSkipCount(this.paginator, event),
+            this.primengTableHelper.getMaxResultCount(this.paginator, event)
+        ).subscribe(result => {
+            this.primengTableHelper.totalRecordsCount = result.totalCount;
+            this.primengTableHelper.records = result.items;
+            this.primengTableHelper.hideLoadingIndicator();
+        });
     }
 
     reloadPage(): void {
@@ -97,6 +107,7 @@ export class StoreProductMapsComponent extends AppComponentBase {
     }
 
     createStoreProductMap(): void {
+        this.createOrEditStoreProductMapModal.storeId = this.storeId;
         this.createOrEditStoreProductMapModal.show();
     }
 
@@ -159,5 +170,37 @@ export class StoreProductMapsComponent extends AppComponentBase {
             this.primengTableHelper.records[i].selected = false;
         }
         this.reloadPage();
+    }
+
+    onGridView() {
+        this.showGridView = !this.showGridView;
+        this.showListView = !this.showListView;
+    }
+
+    onListView() {
+        this.showListView = !this.showListView;
+        this.showGridView = !this.showGridView;
+    }
+
+    ngOnInit() {
+        this._storeCategoryMapsServiceProxy.getAllCategoriesByStoreId(this.storeId).subscribe(result => {
+            this.allCategories = result.items;
+        });
+    }
+
+    deletestoreProductCategoryMap(id: number): void {
+        this.message.confirm(
+            '',
+            this.l('AreYouSure'),
+            (isConfirmed) => {
+                if (isConfirmed) {
+                    this._storeCategoryMapsServiceProxy.delete(id)
+                        .subscribe(() => {
+                            this.ngOnInit();
+                            this.notify.success(this.l('SuccessfullyDeleted'));
+                        });
+                }
+            }
+        );
     }
 }

@@ -1,20 +1,13 @@
 ﻿<div [@routerTransition]>
-    <sub-header [title]="'Store Products' | localize" [description]="">
-        <div role="actions">
-            <!-- <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1">
-                <i class="fa fa-file-excel"></i>
-                {{ l('ExportToExcel') }}
-            </button> -->
-
-            <button *ngIf="isGranted('Pages.StoreProductMaps.Create')" (click)="createStoreProductMap()"
-                class="btn btn-primary blue">
-                <i class="fa fa-plus"></i>
-                {{ l('Store Products') }}
-            </button>
+    <div class="w-100 d-flex mb-6 mt-6 justify-content-between align-items-center ng-tns-c282-7">
+        <div>
+            <h1 class="fs-3 fw-bold  my-0 page-heading text-dark me-6">
+                Products
+            </h1>
         </div>
-    </sub-header>
+    </div>
 
-    <div [class]="containerClass">
+    <div class="w-100">
         <div class="card card-custom gutter-b">
             <div class="card-body">
                 <form class="form" autocomplete="off">
@@ -104,9 +97,35 @@
                         </div>
                     </div>
                 </form>
-
+                <div class="w-100 my-5 text-right justify-content-end d-flex">
+                    <a href="javascript:;" *ngIf="isGranted('Pages.StoreProductMaps.Create')"
+                        (click)="createStoreProductMap()" class="btn me-3 btn-secondary">
+                        <i class="fas fa-plus fs-3"></i>
+                        Product
+                    </a>
+                    <a href="#" class="btn btn-secondary">
+                        <i class="fas fa-plus fs-3"></i>
+                        Bulk Product
+                    </a>
+                </div>
+                <div class="w-100 my-5">
+                    <div class="row">
+                        <div class="col-xl-1" *ngFor="let item of allCategories">
+                            <a class="nav-link nav-link-border-solid btn btn-outline btn-flex btn-active-color-primary flex-column flex-stack p-4 w-100 page-bg show"
+                                title="{{item.productCategoryName}}" href="javascript:;">
+                                <div class="nav-icon mb-3">
+                                    <img src="{{item.picture != null? item.picture:'/assets/common/images/sampleProfilePics/noimg.png'}}"
+                                        class="w-50px" alt="">
+                                </div>
+                                <div>
+                                    <span style="width: 73px;"
+                                        class="text-gray-400 fw-light fs-8 text-truncate d-block">{{item.productCategoryName}}</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
                 <div class="row align-items-center">
-                    <!--<Primeng-Datatable-Start>-->
                     <div class="primeng-datatable-container col-12" [busyIf]="primengTableHelper.isLoading">
                         <p-table #dataTable (onLazyLoad)="getStoreProductMaps($event)"
                             [value]="primengTableHelper.records"
@@ -115,7 +134,7 @@
                             [resizableColumns]="primengTableHelper.resizableColumns">
                             <ng-template pTemplate="header">
                                 <tr>
-                                    
+
                                     <th style="width:30px; text-align: center;">
                                         <label
                                             class="form-check form-check-custom form-check-inline form-check-solid is-invalid">
@@ -134,9 +153,6 @@
                                     <th style="width: 150px">
                                         {{l('Sales Price')}}
                                     </th>
-                                    <!-- <th style="width: 150px">
-                                        {{l('Member Price')}}
-                                    </th> -->
                                     <th style="width: 150px">
                                         {{l('Inventory')}}
                                     </th>
@@ -169,72 +185,45 @@
                                         <span class="p-column-title">{{ l('Name') }}</span>
                                         <div class="d-flex align-items-center">
                                             <div class="img_box_product shadow-sm">
-                                                <!-- <img src="{{record.picture != null? record.picture:'/assets/common/images/sampleProfilePics/noimg.png'}}"
-                                                    class="mw-100" alt=""> -->
-                                                    <img src="/assets/common/images/sampleProfilePics/noimg.png"
+                                                <img src="{{record.picture != null? record.picture:'/assets/common/images/sampleProfilePics/noimg.png'}}"
                                                     class="mw-100" alt="">
                                             </div>
                                             <div class="d-flex flex-wrap flex-grow-1 mt-n2 mt-lg-n1">
                                                 <div class="d-flex flex-column flex-grow-1 my-lg-0 my-2 pe-3">
                                                     <a href="javascript:;" title="{{record.productName}}"
-                                                        [routerLink]="['/app/main/shop/products/dashboard', record.id]"
+                                                        [routerLink]="['/app/main/shop/products/dashboard', record.pictureId]"
                                                         class="fs-5 text-gray-800 text-hover-primary fw-bold">
                                                         {{record.productName}}
-                                                        <i 
+                                                        <i *ngIf="record.isPublished"
                                                             class="fas fa-check-circle ml-1 mr-0 text-success"
                                                             title="Published"></i>
                                                     </a>
-                                                    <!-- <span *ngIf="record.categoryName"
+                                                    <span *ngIf="record.categoryName"
                                                         class="text-gray-400 fw-semibold fs-7 my-0">
                                                         <i class="fas fa-tags mr-1"></i>
                                                         {{ record.categoryName }}
-                                                    </span>
-                                                    <span *ngIf="record.storeName" class="text-gray-400 fw-semibold fs-7 my-1">
-                                                        <i class="fas fa-store-alt mr-1"></i>
-                                                        {{record.storeName}}
                                                     </span>
                                                     <span class="text-gray-400 fw-semibold fs-7"
                                                         *ngIf="record.isPackageProduct">
                                                         <i class="fas fa-box-open mr-1"></i>
                                                         Package Product
-                                                    </span> -->
+                                                    </span>
                                                 </div>
                                             </div>
                                         </div>
                                     </td>
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('Regular Price') }}</span>
-                                        <!-- <span *ngIf="record.regularPrice">${{record.regularPrice}}</span> -->
+                                        <span *ngIf="record.regularPrice">${{record.regularPrice}}</span>
                                     </td>
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('Sale Price') }}</span>
-                                        <!-- <span *ngIf="record.salesPrice">${{record.salesPrice}}</span> -->
-                                    </td>
-                                    <!-- <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('Name') }}</span>
-                                        <span *ngIf="record.membershipPrice"> ${{record.membershipPrice}}</span>
-                                    </td> -->
-                                    <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('Name') }}</span>
-                                        <!-- {{record.stockQuantity}} -->
-                                    </td>
-                                    <!-- <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('Name') }}</span>
-                                        {{ record.storeName }}
+                                        <span *ngIf="record.salesPrice">${{record.salesPrice}}</span>
                                     </td>
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('Name') }}</span>
-                                        {{ record.productName }}
+                                        {{record.stockQuantity}}
                                     </td>
-                                    <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('Published') }}</span>
-                                        <div *ngIf="record.storeProductMap.published" class="text-center">
-                                            <i class="fa fa-check-circle text-success" title="True"></i>
-                                        </div>
-                                        <div *ngIf="!record.storeProductMap.published" class="text-center">
-                                            <i class="fa fa-times-circle" title="False"></i>
-                                        </div>
-                                    </td> -->
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('DisplaySequence') }}</span>
                                         {{ record.storeProductMap.displaySequence }}
@@ -251,12 +240,6 @@
                                                 <span class="caret"></span>
                                             </button>
                                             <ul class="dropdown-menu" *dropdownMenu>
-                                                <!-- <li>
-                                                    <a href="javascript:;" class="dropdown-item"
-                                                        (click)="viewStoreProductMapModal.show(record)">
-                                                        {{ l('View') }}
-                                                    </a>
-                                                </li> -->
                                                 <li>
                                                     <a href="javascript:;"
                                                         *ngIf="permission.isGranted('Pages.StoreProductMaps.Edit')"
@@ -294,7 +277,6 @@
                                 "></p-paginator>
                         </div>
                     </div>
-                    <!--<Primeng-Datatable-End>-->
                 </div>
             </div>
         </div>

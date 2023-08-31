@@ -5,6 +5,8 @@ import {
     StoreMasterTagSettingsServiceProxy,
     StoreMasterTagSettingDto,
     AnswerType,
+    StoreMasterTagSettingStoreTagSettingCategoryLookupTableDto,
+    CreateOrEditStoreMasterTagSettingDto,
 } from '@shared/service-proxies/service-proxies';
 import { NotifyService } from 'abp-ng2-module';
 import { AppComponentBase } from '@shared/common/app-component-base';
@@ -22,6 +24,7 @@ import { DateTime } from 'luxon';
 
 import { DateTimeService } from '@app/shared/common/timing/date-time.service';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { GetStoreMasterTagSettingForViewDto } from '@shared/service-proxies/service-proxies';
 
 @Component({
     templateUrl: './storeMasterTagSettings.component.html',
@@ -51,9 +54,17 @@ export class StoreMasterTagSettingsComponent extends AppComponentBase {
     masterTagCategoryNameFilter = '';
 
     answerType = AnswerType;
-
-    selectedStoreTagSettingCategory: any;
+    storeMasterTagSetting: CreateOrEditStoreMasterTagSettingDto = new CreateOrEditStoreMasterTagSettingDto();
     storeTagSettingCategoryOptions: any = []
+
+
+    answers = [
+        { AnswerTypeId: AnswerType.True_false },
+        { AnswerTypeId: AnswerType.Multiple_choice },
+        { AnswerTypeId: AnswerType.Write_The_Answer },
+    ];
+
+    sortedStoreMaasterTagSettingsList: GetStoreMasterTagSettingForViewDto[] = [];
 
     constructor(
         injector: Injector,
@@ -65,9 +76,25 @@ export class StoreMasterTagSettingsComponent extends AppComponentBase {
         private _dateTimeService: DateTimeService
     ) {
         super(injector);
+
+        this.storeMasterTagSetting.storeTagSettingCategoryId = 6;
         this._storeMasterTagSettingsServiceProxy.getAllStoreTagSettingCategoryForLookupTable('', '', 0, 1000).subscribe(result => {
             this.storeTagSettingCategoryOptions = result.items;
         });
+
+    }
+
+    getAnswerTypeString(answerTypeId: number): string {
+        switch (answerTypeId) {
+            case AnswerType.True_false:
+                return 'True/False';
+            case AnswerType.Multiple_choice:
+                return 'Multiple Choice';
+            case AnswerType.Write_The_Answer:
+                return 'Write the Answer';
+            default:
+                return 'Unknown';
+        }
     }
 
     getStoreMasterTagSettings(event?: LazyLoadEvent) {
@@ -77,33 +104,41 @@ export class StoreMasterTagSettingsComponent extends AppComponentBase {
                 return;
             }
         }
-
         this.primengTableHelper.showLoadingIndicator();
-
-        this._storeMasterTagSettingsServiceProxy
-            .getAll(
-                this.filterText,
-                this.customTagTitleFilter,
-                this.customTagChatQuestionFilter,
-                this.displayPublicFilter,
-                this.maxDisplaySequenceFilter == null
-                    ? this.maxDisplaySequenceFilterEmpty
-                    : this.maxDisplaySequenceFilter,
-                this.minDisplaySequenceFilter == null
-                    ? this.minDisplaySequenceFilterEmpty
-                    : this.minDisplaySequenceFilter,
-                this.answerTypeIdFilter,
-                this.storeTagSettingCategoryNameFilter,
-                this.masterTagCategoryNameFilter,
-                this.primengTableHelper.getSorting(this.dataTable),
-                this.primengTableHelper.getSkipCount(this.paginator, event),
-                this.primengTableHelper.getMaxResultCount(this.paginator, event)
-            )
-            .subscribe((result) => {
-                this.primengTableHelper.totalRecordsCount = result.totalCount;
-                this.primengTableHelper.records = result.items;
-                this.primengTableHelper.hideLoadingIndicator();
-            });
+        this._storeMasterTagSettingsServiceProxy.getAllByStoreCategoryId(
+            this.storeMasterTagSetting.storeTagSettingCategoryId,
+            this.primengTableHelper.getSorting(this.dataTable),
+            this.primengTableHelper.getSkipCount(this.paginator, event),
+            this.primengTableHelper.getMaxResultCount(this.paginator, event)
+        ).subscribe((result) => {
+            this.primengTableHelper.totalRecordsCount = result.totalCount;
+            this.primengTableHelper.records = result.items;
+            this.primengTableHelper.hideLoadingIndicator();
+        });
+        // this._storeMasterTagSettingsServiceProxy
+        //     .getAll(
+        //         this.filterText,
+        //         this.customTagTitleFilter,
+        //         this.customTagChatQuestionFilter,
+        //         this.displayPublicFilter,
+        //         this.maxDisplaySequenceFilter == null
+        //             ? this.maxDisplaySequenceFilterEmpty
+        //             : this.maxDisplaySequenceFilter,
+        //         this.minDisplaySequenceFilter == null
+        //             ? this.minDisplaySequenceFilterEmpty
+        //             : this.minDisplaySequenceFilter,
+        //         this.answerTypeIdFilter,
+        //         this.storeTagSettingCategoryNameFilter,
+        //         this.masterTagCategoryNameFilter,
+        //         this.primengTableHelper.getSorting(this.dataTable),
+        //         this.primengTableHelper.getSkipCount(this.paginator, event),
+        //         this.primengTableHelper.getMaxResultCount(this.paginator, event)
+        //     )
+        //     .subscribe((result) => {
+        //         this.primengTableHelper.totalRecordsCount = result.totalCount;
+        //         this.primengTableHelper.records = result.items;
+        //         this.primengTableHelper.hideLoadingIndicator();
+        //     });
     }
 
     reloadPage(): void {
@@ -111,15 +146,17 @@ export class StoreMasterTagSettingsComponent extends AppComponentBase {
     }
 
     createStoreMasterTagSettingStoreTags(): void {
-        this.createOrEditStoreMasterTagSettingModal.isStoreTag=true;
+        this.createOrEditStoreMasterTagSettingModal.isStoreTag = true;
+        this.createOrEditStoreMasterTagSettingModal.storeMasterTagSetting.storeTagSettingCategoryId = this.storeMasterTagSetting.storeTagSettingCategoryId;
         this.createOrEditStoreMasterTagSettingModal.show();
     }
 
     createStoreMasterTagSettingStoreTagsQuestions(): void {
-        this.createOrEditStoreMasterTagSettingModal.isStoreTagQuestion=true;
+        this.createOrEditStoreMasterTagSettingModal.isStoreTagQuestion = true;
+        this.createOrEditStoreMasterTagSettingModal.storeMasterTagSetting.storeTagSettingCategoryId = this.storeMasterTagSetting.storeTagSettingCategoryId;
         this.createOrEditStoreMasterTagSettingModal.show();
     }
-    
+
     deleteStoreMasterTagSetting(storeMasterTagSetting: StoreMasterTagSettingDto): void {
         this.message.confirm('', this.l('AreYouSure'), (isConfirmed) => {
             if (isConfirmed) {
@@ -167,15 +204,27 @@ export class StoreMasterTagSettingsComponent extends AppComponentBase {
         this.getStoreMasterTagSettings();
     }
 
+    // drop(event: CdkDragDrop<string[]>) {
+    //     // console.log(this.allStoreTags, event.previousIndex, event.currentIndex);
+    //     moveItemInArray(this.primengTableHelper.records, event.previousIndex, event.currentIndex);
+    // }
     drop(event: CdkDragDrop<string[]>) {
-        // console.log(this.allStoreTags, event.previousIndex, event.currentIndex);
         moveItemInArray(this.primengTableHelper.records, event.previousIndex, event.currentIndex);
+        this.sortedStoreMaasterTagSettingsList = this.primengTableHelper.records;
+        this.primengTableHelper.showLoadingIndicator();
+        this._storeMasterTagSettingsServiceProxy.updateDisplaySequence(
+            event.previousIndex,
+            event.currentIndex,
+            this.sortedStoreMaasterTagSettingsList[event.currentIndex].storeMasterTagSetting.id,
+            this.storeMasterTagSetting.storeTagSettingCategoryId).subscribe(result => {
+                this.getStoreMasterTagSettings();
+                this.primengTableHelper.hideLoadingIndicator();
+            });
     }
 
     onStoreTagSettingCategoryClick(event: any) {
-        if (event.value != null) {
-            this.createOrEditStoreMasterTagSettingModal.storeMasterTagSetting.storeTagSettingCategoryId = event.value.id;
-        }
+        console.log(event)
+        this.getStoreMasterTagSettings();
     }
 
 }

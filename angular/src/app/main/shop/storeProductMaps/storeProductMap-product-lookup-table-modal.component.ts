@@ -3,6 +3,7 @@ import { ModalDirective } from 'ngx-bootstrap/modal';
 import {
     StoreProductMapsServiceProxy,
     StoreProductMapProductLookupTableDto,
+    ProductsServiceProxy,
 } from '@shared/service-proxies/service-proxies';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { Table } from 'primeng/table';
@@ -27,7 +28,8 @@ export class StoreProductMapProductLookupTableModalComponent extends AppComponen
     active = false;
     saving = false;
 
-    constructor(injector: Injector, private _storeProductMapsServiceProxy: StoreProductMapsServiceProxy) {
+    constructor(injector: Injector, private _storeProductMapsServiceProxy: StoreProductMapsServiceProxy, 
+        private _productsServiceProxy: ProductsServiceProxy) {
         super(injector);
     }
 
@@ -52,8 +54,8 @@ export class StoreProductMapProductLookupTableModalComponent extends AppComponen
 
         this.primengTableHelper.showLoadingIndicator();
 
-        this._storeProductMapsServiceProxy
-            .getAllProductForLookupTable(
+        this._productsServiceProxy
+            .getAllMyProductForLookupTable(
                 this.filterText,
                 this.primengTableHelper.getSorting(this.dataTable),
                 this.primengTableHelper.getSkipCount(this.paginator, event),
