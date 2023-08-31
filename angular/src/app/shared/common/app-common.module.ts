@@ -43,6 +43,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { TreeTableModule } from 'primeng/treetable';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { SwiperModule } from "swiper/angular";
+import { FullCalendarModule } from 'ng-fullcalendar';
 @NgModule({
     imports: [
         CommonModule,
@@ -66,7 +67,8 @@ import { SwiperModule } from "swiper/angular";
         NgxMaterialTimepickerModule,
         TreeTableModule,
         MultiSelectModule,
-        SwiperModule
+        SwiperModule,
+        FullCalendarModule
     ], 
     declarations: [
         TimeZoneComboComponent,
@@ -97,7 +99,8 @@ import { SwiperModule } from "swiper/angular";
         NgxMaterialTimepickerModule,
         TreeTableModule,
         MultiSelectModule,
-        SwiperModule
+        SwiperModule,
+        FullCalendarModule
     ],
     providers: [
         DateTimeService,
