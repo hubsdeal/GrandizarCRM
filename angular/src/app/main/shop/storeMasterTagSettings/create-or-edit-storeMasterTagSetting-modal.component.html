@@ -63,21 +63,21 @@
                         </div>
 
                         <div class="my-3">
-                            <label class="form-label" for="StoreMasterTagSetting_CustomTagChatQuestion">
+                            <label class="form-label required" for="StoreMasterTagSetting_CustomTagChatQuestion">
                                 Tag Questions
                             </label>
                             <input type="text" #StoreMasterTagSetting_CustomTagChatQuestion="ngModel"
                                 id="StoreMasterTagSetting_CustomTagChatQuestion" class="form-control"
                                 [(ngModel)]="storeMasterTagSetting.customTagChatQuestion" name="CustomTagChatQuestion"
-                                minlength="1" maxlength="512" />
+                                minlength="1" maxlength="512" required/>
                             <validation-messages
                                 [formCtrl]="StoreMasterTagSetting_CustomTagChatQuestion"></validation-messages>
                         </div>
                         <div class="my-5">
-                            <label class="form-label" for="StoreMasterTagSetting_AnswerTypeId">
+                            <label class="form-label required" for="StoreMasterTagSetting_AnswerTypeId">
                                 {{ l('Tag Answer Type') }}
                             </label>
-                            <select class="form-select" name="AnswerTypeId" id="StoreMasterTagSetting_AnswerTypeId"
+                            <select class="form-select" required name="AnswerTypeId" id="StoreMasterTagSetting_AnswerTypeId"
                                 [(ngModel)]="storeMasterTagSetting.answerTypeId">
                                 <option value="-1">Select Answer Type</option>
                                 <option *ngFor="let item of answerTypeOptions" value="{{item.value}}">{{item.label}}
