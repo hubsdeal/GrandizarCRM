@@ -13,7 +13,7 @@
                         [disabled]="saving"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="my-3" *ngIf="!storeId">
+                    <div class="my-3" *ngIf="!storeId && bulkProductTemplateAssignToStore">
                         <label class="form-label" for="StoreName">{{ l('Store') }}</label>
                         <div class="input-group">
                             <input class="form-control" id="StoreName" name="storeName" [(ngModel)]="storeName"
@@ -30,61 +30,63 @@
                     <input *ngIf="!storeId" class="form-control" name="storeProductMap.storeId"
                         [(ngModel)]="storeProductMap.storeId" type="text" required hidden />
 
-                    <div class="my-3">
-                        <div class="input-group">
-                            <input class="form-control" id="ProductName" name="productName"
-                                placeholder="Add from My Product List" [(ngModel)]="productName" type="text" disabled />
-                            <button class="btn btn-primary blue" (click)="openSelectProductModal()" type="button">
-                                <i class="fa fa-search"></i>
-                                {{ l('Pick') }}
-                            </button>
-                            <button class="btn btn-danger btn-icon" type="button" (click)="setProductIdNull()">
-                                <i class="fa fa-times"></i>
-                            </button>
+                    <div *ngIf="!bulkProductTemplateAssignToStore">
+                        <div class="my-3">
+                            <div class="input-group">
+                                <input class="form-control" id="ProductName" name="productName"
+                                    placeholder="Add from My Product List" [(ngModel)]="productName" type="text" disabled />
+                                <button class="btn btn-primary blue" (click)="openSelectProductModal()" type="button">
+                                    <i class="fa fa-search"></i>
+                                    {{ l('Pick') }}
+                                </button>
+                                <button class="btn btn-danger btn-icon" type="button" (click)="setProductIdNull()">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                            </div>
                         </div>
+                        <input class="form-control" name="storeProductMap.productId" [(ngModel)]="storeProductMap.productId"
+                            type="text" required hidden />
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <div class="my-3">
+                                    <label class="form-label" for="Product_Name">{{ l('Name') }} *</label>
+                                    <input type="text" #Product_Name="ngModel" id="Product_Name" class="form-control"
+                                        [(ngModel)]="product.name" name="Name" minlength="1" maxlength="1024" required />
+                                    <validation-messages [formCtrl]="Product_Name"></validation-messages>
+                                </div>
+                            </div>
+                            <div class="col-xl-12">
+                                <div class="my-5 p_filter">
+                                    <label class="form-label required" for="ProductCategoryName">
+                                        Product Category
+                                    </label>
+                                    <p-dropdown [options]="productCategoryOptions" [filter]="true" [virtualScroll]="true"
+                                        placeholder="Select Product Category" [itemSize]="30" name="productCategory"
+                                        optionLabel="displayName" optionValue="id" optionId="productCategoryId"
+                                        [(ngModel)]="product.productCategoryId" filterBy="displayName" required
+                                        [style]="{ width: '100%' }"></p-dropdown>
+                                </div>
+                            </div>
+                            <div class="col-xl-12">
+                                <!--begin::Input group-->
+                                <div class="fv-row mb-7 mt-7 fv-plugins-icon-container select_button_custom">
+                                    <p-selectButton [options]="productServiceOptions" name="productServiceOptions"
+                                        id="productServiceOptions" [(ngModel)]="product.isService" optionLabel="label"
+                                        optionValue="value"></p-selectButton>
+                                </div>
+                                <!--end::Input group-->
+                            </div>
+                        </div>
+                        <br>
+                        <label class="form-check form-check-custom form-check-solid">
+                            <input id="StoreProductMap_Published" #StoreProductMap_Published="ngModel" name="Published"
+                                [(ngModel)]="storeProductMap.published" type="checkbox" class="form-check-input" />
+                            <span class="form-check-label">
+                                {{ l('Published') }}
+                            </span>
+                        </label>
+                        <validation-messages [formCtrl]="StoreProductMap_Published"></validation-messages>
                     </div>
-                    <input class="form-control" name="storeProductMap.productId" [(ngModel)]="storeProductMap.productId"
-                        type="text" required hidden />
-                    <div class="row">
-                        <div class="col-xl-12">
-                            <div class="my-3">
-                                <label class="form-label" for="Product_Name">{{ l('Name') }} *</label>
-                                <input type="text" #Product_Name="ngModel" id="Product_Name" class="form-control"
-                                    [(ngModel)]="product.name" name="Name" minlength="1" maxlength="1024" required />
-                                <validation-messages [formCtrl]="Product_Name"></validation-messages>
-                            </div>
-                        </div>
-                        <div class="col-xl-12">
-                            <div class="my-5 p_filter">
-                                <label class="form-label required" for="ProductCategoryName">
-                                    Product Category
-                                </label>
-                                <p-dropdown [options]="productCategoryOptions" [filter]="true" [virtualScroll]="true"
-                                    placeholder="Select Product Category" [itemSize]="30" name="productCategory"
-                                    optionLabel="displayName" optionValue="id" optionId="productCategoryId"
-                                    [(ngModel)]="product.productCategoryId" filterBy="displayName" required
-                                    [style]="{ width: '100%' }"></p-dropdown>
-                            </div>
-                        </div>
-                        <div class="col-xl-12">
-                            <!--begin::Input group-->
-                            <div class="fv-row mb-7 mt-7 fv-plugins-icon-container select_button_custom">
-                                <p-selectButton [options]="productServiceOptions" name="productServiceOptions"
-                                    id="productServiceOptions" [(ngModel)]="product.isService" optionLabel="label"
-                                    optionValue="value"></p-selectButton>
-                            </div>
-                            <!--end::Input group-->
-                        </div>
-                    </div>
-                    <br>
-                    <label class="form-check form-check-custom form-check-solid">
-                        <input id="StoreProductMap_Published" #StoreProductMap_Published="ngModel" name="Published"
-                            [(ngModel)]="storeProductMap.published" type="checkbox" class="form-check-input" />
-                        <span class="form-check-label">
-                            {{ l('Published') }}
-                        </span>
-                    </label>
-                    <validation-messages [formCtrl]="StoreProductMap_Published"></validation-messages>
 
                     <!-- <div class="my-5">
                         <label class="form-label" for="StoreProductMap_DisplaySequence">

@@ -24,5 +24,14 @@ import { ProductCustomerStatSocialMediaLookupTableModalComponent } from './produ
         ProductCustomerStatSocialMediaLookupTableModalComponent,
     ],
     imports: [AppSharedModule, ProductCustomerStatRoutingModule, AdminSharedModule],
+    exports: [ProductCustomerStatsComponent,
+        CreateOrEditProductCustomerStatModalComponent,
+        ViewProductCustomerStatModalComponent,
+
+        ProductCustomerStatProductLookupTableModalComponent,
+        ProductCustomerStatContactLookupTableModalComponent,
+        ProductCustomerStatStoreLookupTableModalComponent,
+        ProductCustomerStatHubLookupTableModalComponent,
+        ProductCustomerStatSocialMediaLookupTableModalComponent,]
 })
-export class ProductCustomerStatModule {}
+export class ProductCustomerStatModule { }

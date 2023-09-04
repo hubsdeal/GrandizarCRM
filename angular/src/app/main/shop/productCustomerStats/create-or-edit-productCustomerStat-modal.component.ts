@@ -44,7 +44,7 @@ export class CreateOrEditProductCustomerStatModalComponent extends AppComponentB
     storeName = '';
     hubName = '';
     socialMediaName = '';
-
+    productId:number;
     constructor(
         injector: Injector,
         private _productCustomerStatsServiceProxy: ProductCustomerStatsServiceProxy,
@@ -70,7 +70,9 @@ export class CreateOrEditProductCustomerStatModalComponent extends AppComponentB
                 .getProductCustomerStatForEdit(productCustomerStatId)
                 .subscribe((result) => {
                     this.productCustomerStat = result.productCustomerStat;
-
+                    if(this.productId){
+                        this.productId = result.productCustomerStat.productId;
+                    }
                     this.productName = result.productName;
                     this.contactFullName = result.contactFullName;
                     this.storeName = result.storeName;
@@ -85,7 +87,9 @@ export class CreateOrEditProductCustomerStatModalComponent extends AppComponentB
 
     save(): void {
         this.saving = true;
-
+        if(this.productId){
+            this.productCustomerStat.productId = this.productId;
+        }
         this._productCustomerStatsServiceProxy
             .createOrEdit(this.productCustomerStat)
             .pipe(

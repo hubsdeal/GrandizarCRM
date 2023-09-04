@@ -1,5 +1,5 @@
 ﻿import { AppConsts } from '@shared/AppConsts';
-import { Component, Injector, ViewEncapsulation, ViewChild } from '@angular/core';
+import { Component, Injector, ViewEncapsulation, ViewChild, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductCustomerStatsServiceProxy, ProductCustomerStatDto } from '@shared/service-proxies/service-proxies';
 import { NotifyService } from 'abp-ng2-module';
@@ -19,6 +19,7 @@ import { DateTime } from 'luxon';
 import { DateTimeService } from '@app/shared/common/timing/date-time.service';
 
 @Component({
+    selector: 'app-productCustomerStats',
     templateUrl: './productCustomerStats.component.html',
     encapsulation: ViewEncapsulation.None,
     animations: [appModuleAnimation()],
@@ -51,6 +52,8 @@ export class ProductCustomerStatsComponent extends AppComponentBase {
     hubNameFilter = '';
     socialMediaNameFilter = '';
 
+    @Input() productId:number;
+
     constructor(
         injector: Injector,
         private _productCustomerStatsServiceProxy: ProductCustomerStatsServiceProxy,
@@ -74,7 +77,8 @@ export class ProductCustomerStatsComponent extends AppComponentBase {
         this.primengTableHelper.showLoadingIndicator();
 
         this._productCustomerStatsServiceProxy
-            .getAll(
+            .getAllByProductId(
+                this.productId,
                 this.filterText,
                 this.clickedFilter,
                 this.wishedOrFavoriteFilter,
@@ -110,6 +114,7 @@ export class ProductCustomerStatsComponent extends AppComponentBase {
     }
 
     createProductCustomerStat(): void {
+        this.createOrEditProductCustomerStatModal.productId = this.productId;
         this.createOrEditProductCustomerStatModal.show();
     }
 

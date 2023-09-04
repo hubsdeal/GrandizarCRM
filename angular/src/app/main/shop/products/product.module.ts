@@ -27,6 +27,9 @@ import { CreateOrEditBulkProductMediaLibraryModalComponent } from './product-das
 import { ProductCrossSellProductModule } from '../productCrossSellProducts/productCrossSellProduct.module';
 import { ProductUpsellRelatedProductModule } from '../productUpsellRelatedProducts/productUpsellRelatedProduct.module';
 import { LeadModule } from '@app/main/salesLeadManagement/leads/lead.module';
+import { CategoryWiseProductTemplateComponent } from './product-libraries/category-wise-product-template/category-wise-product-template.component';
+import { StoreProductMapModule } from '../storeProductMaps/storeProductMap.module';
+import { ProductCustomerStatModule } from '../productCustomerStats/productCustomerStat.module';
 
 @NgModule({
     declarations: [
@@ -44,7 +47,8 @@ import { LeadModule } from '@app/main/salesLeadManagement/leads/lead.module';
         ProductDashboardComponent,
         ProductLibrariesComponent,
         MyProductsComponent,
-        CreateOrEditBulkProductMediaLibraryModalComponent
+        CreateOrEditBulkProductMediaLibraryModalComponent,
+        CategoryWiseProductTemplateComponent
     ],
     imports: [AppSharedModule, ProductRoutingModule, AdminSharedModule, ProductTagModule, ProductMediaModule,
         OrderModule, ContactModule, ProductTaskMapModule, ProductNoteModule,
@@ -52,21 +56,23 @@ import { LeadModule } from '@app/main/salesLeadManagement/leads/lead.module';
         MediaLibraryModule,
         ProductCrossSellProductModule,
         ProductUpsellRelatedProductModule,
+        StoreProductMapModule,
+        ProductCustomerStatModule,
         LeadModule],
-        exports:[ProductsComponent,
-            CreateOrEditProductModalComponent,
-            ViewProductModalComponent,
-    
-            ProductProductCategoryLookupTableModalComponent,
-            ProductMediaLibraryLookupTableModalComponent,
-            ProductMeasurementUnitLookupTableModalComponent,
-            ProductCurrencyLookupTableModalComponent,
-            ProductRatingLikeLookupTableModalComponent,
-            ProductContactLookupTableModalComponent,
-            ProductStoreLookupTableModalComponent,
-            ProductDashboardComponent,
-            ProductLibrariesComponent,
-            MyProductsComponent,
-            CreateOrEditBulkProductMediaLibraryModalComponent]
+    exports: [ProductsComponent,
+        CreateOrEditProductModalComponent,
+        ViewProductModalComponent,
+
+        ProductProductCategoryLookupTableModalComponent,
+        ProductMediaLibraryLookupTableModalComponent,
+        ProductMeasurementUnitLookupTableModalComponent,
+        ProductCurrencyLookupTableModalComponent,
+        ProductRatingLikeLookupTableModalComponent,
+        ProductContactLookupTableModalComponent,
+        ProductStoreLookupTableModalComponent,
+        ProductDashboardComponent,
+        ProductLibrariesComponent,
+        MyProductsComponent,
+        CreateOrEditBulkProductMediaLibraryModalComponent]
 })
 export class ProductModule { }
