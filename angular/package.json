@@ -33,6 +33,7 @@
     "@angular/router": "^15.0.3",
     "@azure/msal-browser": "^2.32.1",
     "@fullcalendar/core": "^5.11.3",
+    "fullcalendar": "3.6.1",
     "@microsoft/signalr": "^7.0.0",
     "@popperjs/core": "^2.11.6",
     "@swimlane/ngx-charts": "^20.1.2",
@@ -79,7 +80,8 @@
     "@angular/material": "^14.2.7",
     "openai": "^3.1.0",
     "ngx-material-timepicker": "^5.5.3",
-    "swiper": "^6"
+    "swiper": "^6",
+    "ng-fullcalendar": "1.7.1"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^15.0.3",
