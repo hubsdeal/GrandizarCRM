@@ -1,7 +1,7 @@
 ﻿import { Component, ViewChild, Injector, Output, EventEmitter, OnInit, ElementRef } from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs/operators';
-import { StoreProductMapsServiceProxy, CreateOrEditStoreProductMapDto, ProductsServiceProxy } from '@shared/service-proxies/service-proxies';
+import { StoreProductMapsServiceProxy, CreateOrEditStoreProductMapDto, ProductsServiceProxy, StoresServiceProxy } from '@shared/service-proxies/service-proxies';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { DateTime } from 'luxon';
 
@@ -39,10 +39,16 @@ export class CreateOrEditStoreProductMapModalComponent extends AppComponentBase 
     productCategoryOptions: any = []
     selectedProductCategory: any;
 
+    productId: number;
+    selectedInput: number[] = [];
+    bulkProductAssignToStore: boolean = false;
+    bulkProductTemplateAssignToStore: boolean = false;
+
     constructor(
         injector: Injector,
         private _storeProductMapsServiceProxy: StoreProductMapsServiceProxy,
         private _productsServiceProxy: ProductsServiceProxy,
+        private _storesServiceProxy: StoresServiceProxy,
         private _router: Router,
         private _dateTimeService: DateTimeService
     ) {
@@ -89,19 +95,27 @@ export class CreateOrEditStoreProductMapModalComponent extends AppComponentBase 
     // }
     save(): void {
         this.saving = true;
-        if (this.storeId) {
-            this.product.storeId = this.storeId;
+        if (this.bulkProductTemplateAssignToStore) {
+            this._storesServiceProxy.bulkProductAssignFromProductLibrary(this.storeProductMap.storeId, this.selectedInput)
+                .pipe(finalize(() => { this.saving = false; }))
+                .subscribe(() => {
+                    this.notify.info(this.l('SavedSuccessfully'));
+                    this.close();
+                    this.modalSave.emit(null);
+                });
+        } else {
+            if (this.storeId) {
+                this.product.storeId = this.storeId;
+            }
+            this._productsServiceProxy.createOrEdit(this.product)
+                .pipe(finalize(() => { this.saving = false; }))
+                .subscribe(result => {
+                    this.notify.info(this.l('SavedSuccessfully'));
+                    this.close();
+                    this.modalSave.emit(null);
+                    this._router.navigate(['/app/main/shop/products/dashboard/', result]);
+                });
         }
-        this._productsServiceProxy.createOrEdit(this.product)
-            .pipe(finalize(() => { this.saving = false; }))
-            .subscribe(result => {
-                this.notify.info(this.l('SavedSuccessfully'));
-                this.close();
-                this.modalSave.emit(null);
-                this._router.navigate(['/app/main/shop/products/dashboard/', result]);
-            });
-
-
     }
 
     openSelectStoreModal() {

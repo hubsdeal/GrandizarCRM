@@ -1,45 +1,45 @@
 ﻿<div [@routerTransition]>
-    <sub-header [title]="'ProductCustomerStats' | localize" [description]="'ProductCustomerStatsHeaderInfo' | localize">
+    <!-- <sub-header [title]="'ProductCustomerStats' | localize" [description]="'ProductCustomerStatsHeaderInfo' | localize">
         <div role="actions">
             <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1">
                 <i class="fa fa-file-excel"></i>
                 {{ l('ExportToExcel') }}
             </button>
 
-            <button
-                *ngIf="isGranted('Pages.ProductCustomerStats.Create')"
-                (click)="createProductCustomerStat()"
-                class="btn btn-primary blue"
-            >
+            <button *ngIf="isGranted('Pages.ProductCustomerStats.Create')" (click)="createProductCustomerStat()"
+                class="btn btn-primary blue">
                 <i class="fa fa-plus"></i>
                 {{ l('CreateNewProductCustomerStat') }}
             </button>
         </div>
-    </sub-header>
+    </sub-header> -->
+    <div class="w-100 d-flex mb-6 ps-9 pe-9 mt-6 justify-content-between align-items-center ng-tns-c282-7">
+        <div class="d-flex">
+            <h1 class="fs-3 fw-bold  my-0 page-heading text-dark">
+                Customer Stats
+            </h1>
+        </div>
+        <button *ngIf="isGranted('Pages.ProductCustomerStats.Create')" (click)="createProductCustomerStat()"
+            class="btn btn-primary blue">
+            <i class="fa fa-plus"></i>
+            Customer Stat
+        </button>
+    </div>
 
     <div [class]="containerClass">
         <div class="card card-custom gutter-b">
             <div class="card-body">
-                <form class="form" autocomplete="off">
+                <!-- <form class="form" autocomplete="off">
                     <div>
                         <div class="row align-items-center">
                             <div class="col-xl-12">
                                 <div class="my-3">
                                     <div class="input-group mb-3">
-                                        <input
-                                            [(ngModel)]="filterText"
-                                            (ngModelChange)="getProductCustomerStats()"
-                                            name="filterText"
-                                            autoFocus
-                                            type="text"
-                                            class="form-control"
-                                            [placeholder]="l('SearchWithThreeDot')"
-                                        />
-                                        <button
-                                            class="btn btn-primary"
-                                            type="submit"
-                                            (click)="getProductCustomerStats()"
-                                        >
+                                        <input [(ngModel)]="filterText" (ngModelChange)="getProductCustomerStats()"
+                                            name="filterText" autoFocus type="text" class="form-control"
+                                            [placeholder]="l('SearchWithThreeDot')" />
+                                        <button class="btn btn-primary" type="submit"
+                                            (click)="getProductCustomerStats()">
                                             <i class="flaticon-search-1"></i>
                                         </button>
                                     </div>
@@ -52,13 +52,8 @@
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="ClickedFilterSelect">{{ l('Clicked') }}</label>
-                                    <select
-                                        class="form-select"
-                                        name="ClickedFilter"
-                                        id="ClickedFilterSelect"
-                                        [(ngModel)]="clickedFilter"
-                                        (ngModelChange)="getProductCustomerStats()"
-                                    >
+                                    <select class="form-select" name="ClickedFilter" id="ClickedFilterSelect"
+                                        [(ngModel)]="clickedFilter" (ngModelChange)="getProductCustomerStats()">
                                         <option value="-1">{{ l('All') }}</option>
                                         <option value="0">{{ l('False') }}</option>
                                         <option value="1">{{ l('True') }}</option>
@@ -70,13 +65,9 @@
                                     <label class="form-label" for="WishedOrFavoriteFilterSelect">
                                         {{ l('WishedOrFavorite') }}
                                     </label>
-                                    <select
-                                        class="form-select"
-                                        name="WishedOrFavoriteFilter"
-                                        id="WishedOrFavoriteFilterSelect"
-                                        [(ngModel)]="wishedOrFavoriteFilter"
-                                        (ngModelChange)="getProductCustomerStats()"
-                                    >
+                                    <select class="form-select" name="WishedOrFavoriteFilter"
+                                        id="WishedOrFavoriteFilterSelect" [(ngModel)]="wishedOrFavoriteFilter"
+                                        (ngModelChange)="getProductCustomerStats()">
                                         <option value="-1">{{ l('All') }}</option>
                                         <option value="0">{{ l('False') }}</option>
                                         <option value="1">{{ l('True') }}</option>
@@ -86,13 +77,8 @@
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="PurchasedFilterSelect">{{ l('Purchased') }}</label>
-                                    <select
-                                        class="form-select"
-                                        name="PurchasedFilter"
-                                        id="PurchasedFilterSelect"
-                                        [(ngModel)]="purchasedFilter"
-                                        (ngModelChange)="getProductCustomerStats()"
-                                    >
+                                    <select class="form-select" name="PurchasedFilter" id="PurchasedFilterSelect"
+                                        [(ngModel)]="purchasedFilter" (ngModelChange)="getProductCustomerStats()">
                                         <option value="-1">{{ l('All') }}</option>
                                         <option value="0">{{ l('False') }}</option>
                                         <option value="1">{{ l('True') }}</option>
@@ -105,36 +91,22 @@
                                         {{ l('MinMax') }} {{ l('PurchasedQuantity') }}
                                     </label>
                                     <div class="input-group">
-                                        <input
-                                            type="number"
-                                            class="form-control"
-                                            id="MinPurchasedQuantityFilter"
-                                            [(ngModel)]="minPurchasedQuantityFilter"
-                                            placeholder="{{ l('MinValue') }}"
+                                        <input type="number" class="form-control" id="MinPurchasedQuantityFilter"
+                                            [(ngModel)]="minPurchasedQuantityFilter" placeholder="{{ l('MinValue') }}"
                                             name="minPurchasedQuantityFilter"
-                                            (ngModelChange)="getProductCustomerStats()"
-                                        />
-                                        <input
-                                            type="number"
-                                            class="form-control"
-                                            [(ngModel)]="maxPurchasedQuantityFilter"
-                                            placeholder="{{ l('MaxValue') }}"
+                                            (ngModelChange)="getProductCustomerStats()" />
+                                        <input type="number" class="form-control"
+                                            [(ngModel)]="maxPurchasedQuantityFilter" placeholder="{{ l('MaxValue') }}"
                                             name="maxPurchasedQuantityFilter"
-                                            (ngModelChange)="getProductCustomerStats()"
-                                        />
+                                            (ngModelChange)="getProductCustomerStats()" />
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="SharedFilterSelect">{{ l('Shared') }}</label>
-                                    <select
-                                        class="form-select"
-                                        name="SharedFilter"
-                                        id="SharedFilterSelect"
-                                        [(ngModel)]="sharedFilter"
-                                        (ngModelChange)="getProductCustomerStats()"
-                                    >
+                                    <select class="form-select" name="SharedFilter" id="SharedFilterSelect"
+                                        [(ngModel)]="sharedFilter" (ngModelChange)="getProductCustomerStats()">
                                         <option value="-1">{{ l('All') }}</option>
                                         <option value="0">{{ l('False') }}</option>
                                         <option value="1">{{ l('True') }}</option>
@@ -144,26 +116,15 @@
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="PageLinkFilter">{{ l('PageLink') }}</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="PageLinkFilter"
-                                        name="pageLinkFilter"
-                                        [(ngModel)]="pageLinkFilter"
-                                        (ngModelChange)="getProductCustomerStats()"
-                                    />
+                                    <input type="text" class="form-control" id="PageLinkFilter" name="pageLinkFilter"
+                                        [(ngModel)]="pageLinkFilter" (ngModelChange)="getProductCustomerStats()" />
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="AppOrWebFilterSelect">{{ l('AppOrWeb') }}</label>
-                                    <select
-                                        class="form-select"
-                                        name="AppOrWebFilter"
-                                        id="AppOrWebFilterSelect"
-                                        [(ngModel)]="appOrWebFilter"
-                                        (ngModelChange)="getProductCustomerStats()"
-                                    >
+                                    <select class="form-select" name="AppOrWebFilter" id="AppOrWebFilterSelect"
+                                        [(ngModel)]="appOrWebFilter" (ngModelChange)="getProductCustomerStats()">
                                         <option value="-1">{{ l('All') }}</option>
                                         <option value="0">{{ l('False') }}</option>
                                         <option value="1">{{ l('True') }}</option>
@@ -173,14 +134,9 @@
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="QuitFromLinkFilter">{{ l('QuitFromLink') }}</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="QuitFromLinkFilter"
-                                        name="quitFromLinkFilter"
-                                        [(ngModel)]="quitFromLinkFilter"
-                                        (ngModelChange)="getProductCustomerStats()"
-                                    />
+                                    <input type="text" class="form-control" id="QuitFromLinkFilter"
+                                        name="quitFromLinkFilter" [(ngModel)]="quitFromLinkFilter"
+                                        (ngModelChange)="getProductCustomerStats()" />
                                 </div>
                             </div>
 
@@ -189,13 +145,8 @@
                                     <label class="form-label" for="ProductNameFilter">
                                         ({{ l('Product') }}) {{ l('Name') }}
                                     </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="ProductNameFilter"
-                                        name="productNameFilter"
-                                        [(ngModel)]="productNameFilter"
-                                    />
+                                    <input type="text" class="form-control" id="ProductNameFilter"
+                                        name="productNameFilter" [(ngModel)]="productNameFilter" />
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -203,13 +154,8 @@
                                     <label class="form-label" for="ContactFullNameFilter">
                                         ({{ l('Contact') }}) {{ l('FullName') }}
                                     </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="ContactFullNameFilter"
-                                        name="contactFullNameFilter"
-                                        [(ngModel)]="contactFullNameFilter"
-                                    />
+                                    <input type="text" class="form-control" id="ContactFullNameFilter"
+                                        name="contactFullNameFilter" [(ngModel)]="contactFullNameFilter" />
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -217,13 +163,8 @@
                                     <label class="form-label" for="StoreNameFilter">
                                         ({{ l('Store') }}) {{ l('Name') }}
                                     </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="StoreNameFilter"
-                                        name="storeNameFilter"
-                                        [(ngModel)]="storeNameFilter"
-                                    />
+                                    <input type="text" class="form-control" id="StoreNameFilter" name="storeNameFilter"
+                                        [(ngModel)]="storeNameFilter" />
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -231,13 +172,8 @@
                                     <label class="form-label" for="HubNameFilter">
                                         ({{ l('Hub') }}) {{ l('Name') }}
                                     </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="HubNameFilter"
-                                        name="hubNameFilter"
-                                        [(ngModel)]="hubNameFilter"
-                                    />
+                                    <input type="text" class="form-control" id="HubNameFilter" name="hubNameFilter"
+                                        [(ngModel)]="hubNameFilter" />
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -245,203 +181,183 @@
                                     <label class="form-label" for="SocialMediaNameFilter">
                                         ({{ l('SocialMedia') }}) {{ l('Name') }}
                                     </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="SocialMediaNameFilter"
-                                        name="socialMediaNameFilter"
-                                        [(ngModel)]="socialMediaNameFilter"
-                                    />
+                                    <input type="text" class="form-control" id="SocialMediaNameFilter"
+                                        name="socialMediaNameFilter" [(ngModel)]="socialMediaNameFilter" />
                                 </div>
                             </div>
                             <div class="col-md-12 mt-5">
-                                <button
-                                    (click)="resetFilters()"
-                                    class="btn btn-secondary btn-sm"
-                                    id="btn-reset-filters"
-                                >
+                                <button (click)="resetFilters()" class="btn btn-secondary btn-sm"
+                                    id="btn-reset-filters">
                                     Reset
                                 </button>
                             </div>
                         </div>
                         <div class="row my-4">
                             <div class="col-sm-12">
-                                <span
-                                    class="clickable-item text-muted"
-                                    *ngIf="!advancedFiltersAreShown"
-                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown"
-                                >
+                                <span class="clickable-item text-muted" *ngIf="!advancedFiltersAreShown"
+                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown">
                                     <i class="fa fa-angle-down"></i>
                                     {{ l('ShowAdvancedFilters') }}
                                 </span>
-                                <span
-                                    class="clickable-item text-muted"
-                                    *ngIf="advancedFiltersAreShown"
-                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown"
-                                >
+                                <span class="clickable-item text-muted" *ngIf="advancedFiltersAreShown"
+                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown">
                                     <i class="fa fa-angle-up"></i>
                                     {{ l('HideAdvancedFilters') }}
                                 </span>
                             </div>
                         </div>
                     </div>
-                </form>
+                </form> -->
 
                 <div class="row align-items-center">
                     <!--<Primeng-Datatable-Start>-->
                     <div class="primeng-datatable-container col-12" [busyIf]="primengTableHelper.isLoading">
-                        <p-table
-                            #dataTable
-                            (onLazyLoad)="getProductCustomerStats($event)"
+                        <p-table #dataTable (onLazyLoad)="getProductCustomerStats($event)"
                             [value]="primengTableHelper.records"
-                            rows="{{ primengTableHelper.defaultRecordsCountPerPage }}"
-                            [paginator]="false"
-                            [lazy]="true"
-                            [scrollable]="true"
-                            ScrollWidth="100%"
-                            [responsive]="primengTableHelper.isResponsive"
-                            [resizableColumns]="primengTableHelper.resizableColumns"
-                        >
+                            rows="{{ primengTableHelper.defaultRecordsCountPerPage }}" [paginator]="false" [lazy]="true"
+                            [scrollable]="true" ScrollWidth="100%" [responsive]="primengTableHelper.isResponsive"
+                            [resizableColumns]="primengTableHelper.resizableColumns">
                             <ng-template pTemplate="header">
                                 <tr>
-                                    <th
-                                        style="width: 130px"
-                                        [hidden]="
+
+                                    <!-- <th style="width: 200px">
+                                        {{ l('Product') }}
+                                    </th>
+                                    <th style="width: 200px">
+                                        {{ l('Customer') }}
+                                    </th>
+                                    <th style="width: 200px">
+                                        {{ l('Store') }}
+                                    </th>
+                                    <th style="width: 200px">
+                                        {{ l('Hub') }}
+                                    </th> -->
+                                    <th style="width: 250px">
+                                        {{ l('Customer') }}
+                                    </th>
+                                    <th style="width: 200px">
+                                        {{ l('Details') }}
+                                    </th>
+                                    <th style="width: 150px">
+                                        {{ l('Purchased') }}
+                                    </th>
+                                    <!-- <th style="width: 150px">
+                                        {{ l('Social') }}
+                                    </th>
+                                    <th style="width: 150px">
+                                        {{ l('Clicked') }}
+                                    </th>
+                                    <th style="width: 150px">
+                                        {{ l('WishedOrFavorite') }}
+                                    </th>
+                                    <th style="width: 150px">
+                                        {{ l('Purchased') }}
+                                    </th>
+                                    <th style="width: 150px">
+                                        {{ l('PurchasedQuantity') }}
+                                    </th>
+                                    <th style="width: 150px">
+                                        {{ l('Shared') }}
+                                    </th>
+                                -->
+                                    <th style="width: 150px">
+                                        {{ l('PageLink') }}
+                                    </th>
+                                    <th style="width: 150px">
+                                        {{ l('AppOrWeb') }}
+                                    </th>
+                                    <th style="width: 150px">
+                                        {{ l('QuitFromLink') }}
+                                    </th>
+
+                                    <th style="width: 130px" [hidden]="
                                             !isGrantedAny(
                                                 'Pages.ProductCustomerStats.Edit',
                                                 'Pages.ProductCustomerStats.Delete'
                                             )
-                                        "
-                                    >
+                                        ">
                                         {{ l('Actions') }}
-                                    </th>
-                                    <th style="width: 150px" pSortableColumn="productFk.name">
-                                        {{ l('Name') }}
-                                        <p-sortIcon field="productName"></p-sortIcon>
-                                    </th>
-                                    <th style="width: 150px" pSortableColumn="contactFk.fullName">
-                                        {{ l('FullName') }}
-                                        <p-sortIcon field="contactFullName"></p-sortIcon>
-                                    </th>
-                                    <th style="width: 150px" pSortableColumn="storeFk.name">
-                                        {{ l('Name') }}
-                                        <p-sortIcon field="storeName"></p-sortIcon>
-                                    </th>
-                                    <th style="width: 150px" pSortableColumn="hubFk.name">
-                                        {{ l('Name') }}
-                                        <p-sortIcon field="hubName"></p-sortIcon>
-                                    </th>
-                                    <th style="width: 150px" pSortableColumn="socialMediaFk.name">
-                                        {{ l('Name') }}
-                                        <p-sortIcon field="socialMediaName"></p-sortIcon>
-                                    </th>
-                                    <th style="width: 150px" pSortableColumn="clicked">
-                                        {{ l('Clicked') }}
-                                        <p-sortIcon field="productCustomerStat.clicked"></p-sortIcon>
-                                    </th>
-                                    <th style="width: 150px" pSortableColumn="wishedOrFavorite">
-                                        {{ l('WishedOrFavorite') }}
-                                        <p-sortIcon field="productCustomerStat.wishedOrFavorite"></p-sortIcon>
-                                    </th>
-                                    <th style="width: 150px" pSortableColumn="purchased">
-                                        {{ l('Purchased') }}
-                                        <p-sortIcon field="productCustomerStat.purchased"></p-sortIcon>
-                                    </th>
-                                    <th style="width: 150px" pSortableColumn="purchasedQuantity">
-                                        {{ l('PurchasedQuantity') }}
-                                        <p-sortIcon field="productCustomerStat.purchasedQuantity"></p-sortIcon>
-                                    </th>
-                                    <th style="width: 150px" pSortableColumn="shared">
-                                        {{ l('Shared') }}
-                                        <p-sortIcon field="productCustomerStat.shared"></p-sortIcon>
-                                    </th>
-                                    <th style="width: 150px" pSortableColumn="pageLink">
-                                        {{ l('PageLink') }}
-                                        <p-sortIcon field="productCustomerStat.pageLink"></p-sortIcon>
-                                    </th>
-                                    <th style="width: 150px" pSortableColumn="appOrWeb">
-                                        {{ l('AppOrWeb') }}
-                                        <p-sortIcon field="productCustomerStat.appOrWeb"></p-sortIcon>
-                                    </th>
-                                    <th style="width: 150px" pSortableColumn="quitFromLink">
-                                        {{ l('QuitFromLink') }}
-                                        <p-sortIcon field="productCustomerStat.quitFromLink"></p-sortIcon>
                                     </th>
                                 </tr>
                             </ng-template>
                             <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
                                 <tr>
-                                    <td
-                                        style="width: 130px"
-                                        [hidden]="
-                                            !isGrantedAny(
-                                                'Pages.ProductCustomerStats.Edit',
-                                                'Pages.ProductCustomerStats.Delete'
-                                            )
-                                        "
-                                    >
-                                        <div class="btn-group dropdown" dropdown container="body">
-                                            <button class="dropdown-toggle btn btn-sm btn-primary" dropdownToggle>
-                                                <i class="fa fa-cog"></i>
-                                                <span class="caret"></span>
-                                                {{ l('Actions') }}
-                                            </button>
-                                            <ul class="dropdown-menu" *dropdownMenu>
-                                                <li>
-                                                    <a
-                                                        href="javascript:;"
-                                                        class="dropdown-item"
-                                                        (click)="viewProductCustomerStatModal.show(record)"
-                                                    >
-                                                        {{ l('View') }}
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a
-                                                        href="javascript:;"
-                                                        *ngIf="permission.isGranted('Pages.ProductCustomerStats.Edit')"
-                                                        class="dropdown-item"
-                                                        (click)="
-                                                            createOrEditProductCustomerStatModal.show(
-                                                                record.productCustomerStat.id
-                                                            )
-                                                        "
-                                                    >
-                                                        {{ l('Edit') }}
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a
-                                                        class="dropdown-item"
-                                                        href="javascript:;"
-                                                        *ngIf="
-                                                            permission.isGranted('Pages.ProductCustomerStats.Delete')
-                                                        "
-                                                        (click)="deleteProductCustomerStat(record.productCustomerStat)"
-                                                    >
-                                                        {{ l('Delete') }}
-                                                    </a>
-                                                </li>
-                                            </ul>
+
+                                    <!-- <td style="width: 200px">
+                                        <span class="p-column-title">{{ l('Name') }}</span>
+                                        {{ record.productName }}
+                                    </td> -->
+                                    <td style="width: 250px">
+                                        <span class="p-column-title">{{ l('FullName') }}</span>
+                                        <div class="d-flex flex-wrap flex-grow-1 mt-n2 mt-lg-n1">
+                                            <div class="d-flex flex-column flex-grow-1 my-lg-0 my-2 pe-3">
+                                                <a href="javascript:;" title="{{ record.contactFullName }}"
+                                                    [routerLink]="['/app/main/crm/contacts/dashboard',record.productCustomerStat.contactId]"
+                                                    class="fs-5 text-gray-800 text-hover-primary fw-bold">
+                                                    {{ record.contactFullName }}
+                                                </a>
+                                                <span class="text-gray-400 fw-semibold fs-7 my-0"
+                                                    *ngIf="record.storeName">
+                                                    <i class="fas fa-store-alt mr-1"></i>
+                                                    {{record.storeName}}
+                                                </span>
+                                                <span class="text-gray-400 fw-semibold fs-7 my-0"
+                                                    *ngIf="record.hubName">
+                                                    <i class="fas fa-location-arrow mr-1"></i>
+                                                    {{record.hubName}}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td style="width: 200px">
+                                        <div class="d-flex align-items-center mb-1">
+                                            <span class="me-3">
+                                                Clicked
+                                            </span>
+                                            <span *ngIf="record.productCustomerStat.clicked"
+                                                class="badge badge-success badge">Yes</span>
+                                            <span *ngIf="!record.productCustomerStat.clicked"
+                                                class="badge badge-danger badge">No</span>
+                                        </div>
+                                        <div class="d-flex align-items-center mb-1">
+                                            <span class="me-3">
+                                                Wished
+                                            </span>
+                                            <span *ngIf="record.productCustomerStat.wishedOrFavorite"
+                                                class="badge badge-success badge">Yes</span>
+                                            <span *ngIf="!record.productCustomerStat.wishedOrFavorite"
+                                                class="badge badge-danger badge">No</span>
+                                        </div>
+                                        <div class="d-flex align-items-center mb-1">
+                                            <span class="me-3">
+                                                Shared
+                                            </span>
+                                            <span *ngIf="record.productCustomerStat.shared"
+                                                class="badge badge-success badge">Yes</span>
+                                            <span *ngIf="!record.productCustomerStat.shared"
+                                                class="badge badge-danger badge">No</span>
                                         </div>
                                     </td>
                                     <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('Name') }}</span>
-                                        {{ record.productName }}
+                                        <div class="d-flex align-items-center mb-1">
+                                            <span class="me-3">
+                                                Purchased
+                                            </span>
+                                            <span *ngIf="record.productCustomerStat.purchased"
+                                                class="badge badge-success badge">
+                                                Yes <span class="ms-2">Quantity:
+                                                    {{record.productCustomerStat.purchasedQuantity}}</span>
+                                            </span>
+                                            <span *ngIf="!record.productCustomerStat.purchased"
+                                                class="badge badge-danger badge">No</span>
+                                        </div>
                                     </td>
-                                    <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('FullName') }}</span>
-                                        {{ record.contactFullName }}
-                                    </td>
-                                    <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('Name') }}</span>
-                                        {{ record.storeName }}
-                                    </td>
-                                    <td style="width: 150px">
+                                    <!--
+                                    <td style="width: 200px">
                                         <span class="p-column-title">{{ l('Name') }}</span>
                                         {{ record.hubName }}
-                                    </td>
-                                    <td style="width: 150px">
+                                    </td> -->
+                                    <!-- <td style="width: 150px">
                                         <span class="p-column-title">{{ l('Name') }}</span>
                                         {{ record.socialMediaName }}
                                     </td>
@@ -453,8 +369,8 @@
                                         <div *ngIf="!record.productCustomerStat.clicked" class="text-center">
                                             <i class="fa fa-times-circle" title="False"></i>
                                         </div>
-                                    </td>
-                                    <td style="width: 150px">
+                                    </td> -->
+                                    <!-- <td style="width: 150px">
                                         <span class="p-column-title">{{ l('WishedOrFavorite') }}</span>
                                         <div *ngIf="record.productCustomerStat.wishedOrFavorite" class="text-center">
                                             <i class="fa fa-check-circle text-success" title="True"></i>
@@ -462,8 +378,8 @@
                                         <div *ngIf="!record.productCustomerStat.wishedOrFavorite" class="text-center">
                                             <i class="fa fa-times-circle" title="False"></i>
                                         </div>
-                                    </td>
-                                    <td style="width: 150px">
+                                    </td> -->
+                                    <!-- <td style="width: 150px">
                                         <span class="p-column-title">{{ l('Purchased') }}</span>
                                         <div *ngIf="record.productCustomerStat.purchased" class="text-center">
                                             <i class="fa fa-check-circle text-success" title="True"></i>
@@ -471,12 +387,12 @@
                                         <div *ngIf="!record.productCustomerStat.purchased" class="text-center">
                                             <i class="fa fa-times-circle" title="False"></i>
                                         </div>
-                                    </td>
-                                    <td style="width: 150px">
+                                    </td> -->
+                                    <!-- <td style="width: 150px">
                                         <span class="p-column-title">{{ l('PurchasedQuantity') }}</span>
                                         {{ record.productCustomerStat.purchasedQuantity }}
-                                    </td>
-                                    <td style="width: 150px">
+                                    </td> -->
+                                    <!-- <td style="width: 150px">
                                         <span class="p-column-title">{{ l('Shared') }}</span>
                                         <div *ngIf="record.productCustomerStat.shared" class="text-center">
                                             <i class="fa fa-check-circle text-success" title="True"></i>
@@ -484,23 +400,60 @@
                                         <div *ngIf="!record.productCustomerStat.shared" class="text-center">
                                             <i class="fa fa-times-circle" title="False"></i>
                                         </div>
-                                    </td>
+                                    </td> -->
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('PageLink') }}</span>
                                         {{ record.productCustomerStat.pageLink }}
                                     </td>
                                     <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('AppOrWeb') }}</span>
+                                        <!-- <span class="p-column-title">{{ l('AppOrWeb') }}</span>
                                         <div *ngIf="record.productCustomerStat.appOrWeb" class="text-center">
                                             <i class="fa fa-check-circle text-success" title="True"></i>
                                         </div>
                                         <div *ngIf="!record.productCustomerStat.appOrWeb" class="text-center">
                                             <i class="fa fa-times-circle" title="False"></i>
-                                        </div>
+                                        </div> -->
+                                        <span *ngIf="record.productCustomerStat.appOrWeb"
+                                            class="badge badge-success badge">From APP</span>
+                                        <span *ngIf="!record.productCustomerStat.appOrWeb"
+                                            class="badge badge-success badge">From Web</span>
                                     </td>
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('QuitFromLink') }}</span>
                                         {{ record.productCustomerStat.quitFromLink }}
+                                    </td>
+                                    <td style="width: 130px" [hidden]="
+                                            !isGrantedAny(
+                                                'Pages.ProductCustomerStats.Edit',
+                                                'Pages.ProductCustomerStats.Delete'
+                                            )
+                                        ">
+                                        <div class="btn-group dropdown" dropdown container="body">
+                                            <button class="dropdown-toggle btn btn-sm btn-primary" dropdownToggle>
+                                                <i class="fa fa-cog"></i>
+                                            </button>
+                                            <ul class="dropdown-menu" *dropdownMenu>
+                                                <li>
+                                                    <a href="javascript:;"
+                                                        *ngIf="permission.isGranted('Pages.ProductCustomerStats.Edit')"
+                                                        class="dropdown-item" (click)="
+                                                            createOrEditProductCustomerStatModal.show(
+                                                                record.productCustomerStat.id
+                                                            )
+                                                        ">
+                                                        {{ l('Edit') }}
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="javascript:;" *ngIf="
+                                                            permission.isGranted('Pages.ProductCustomerStats.Delete')
+                                                        "
+                                                        (click)="deleteProductCustomerStat(record.productCustomerStat)">
+                                                        {{ l('Delete') }}
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </td>
                                 </tr>
                             </ng-template>
@@ -509,17 +462,13 @@
                             {{ l('NoData') }}
                         </div>
                         <div class="primeng-paging-container">
-                            <p-paginator
-                                [rows]="primengTableHelper.defaultRecordsCountPerPage"
-                                #paginator
+                            <p-paginator [rows]="primengTableHelper.defaultRecordsCountPerPage" #paginator
                                 (onPageChange)="getProductCustomerStats($event)"
                                 [totalRecords]="primengTableHelper.totalRecordsCount"
                                 [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
-                                [showCurrentPageReport]="true"
-                                [currentPageReportTemplate]="
+                                [showCurrentPageReport]="true" [currentPageReportTemplate]="
                                     'TotalRecordsCount' | localize : primengTableHelper.totalRecordsCount
-                                "
-                            ></p-paginator>
+                                "></p-paginator>
                         </div>
                     </div>
                     <!--<Primeng-Datatable-End>-->
@@ -527,9 +476,7 @@
             </div>
         </div>
     </div>
-    <createOrEditProductCustomerStatModal
-        #createOrEditProductCustomerStatModal
-        (modalSave)="getProductCustomerStats()"
-    ></createOrEditProductCustomerStatModal>
+    <createOrEditProductCustomerStatModal #createOrEditProductCustomerStatModal (modalSave)="getProductCustomerStats()">
+    </createOrEditProductCustomerStatModal>
     <viewProductCustomerStatModal #viewProductCustomerStatModal></viewProductCustomerStatModal>
 </div>

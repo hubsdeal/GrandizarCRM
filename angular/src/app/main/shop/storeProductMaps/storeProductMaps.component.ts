@@ -67,6 +67,7 @@ export class StoreProductMapsComponent extends AppComponentBase implements OnIni
         private _activatedRoute: ActivatedRoute,
         private _fileDownloadService: FileDownloadService,
         private _dateTimeService: DateTimeService,
+        private _router:Router,
         private _storeCategoryMapsServiceProxy: StoreProductCategoryMapsServiceProxy
     ) {
         super(injector);
@@ -203,4 +204,8 @@ export class StoreProductMapsComponent extends AppComponentBase implements OnIni
             }
         );
     }
+    
+  createStoreBulkProduct(): void {
+    this._router.navigate(['/app/main/shop/productLibraries/'], { queryParams: { storeId: this.storeId } });
+  }
 }

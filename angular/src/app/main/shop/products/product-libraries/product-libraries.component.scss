@@ -1,0 +1,53 @@
+.pro__img-p {
+    width: 54px;
+    min-height: auto;
+    height: 45px;
+    object-fit: contain;
+    overflow: hidden;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    image-rendering: pixelated;
+    padding: 3px;
+}
+
+.txt-elip--n {
+    white-space: nowrap;
+    width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.product_link {
+    color: #757575;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.kt-badge.kt-badge--inline {
+    height: 0;
+    width: auto;
+    padding: 1rem 0.75rem;
+    border-radius: 2px;
+    font-size: 0.9rem;
+}
+
+.main_box {
+    line-height: 3rem;
+}
+
+.cat__p_img {
+    width: 60px;
+    height: 50px;
+}
+
+
+
+.custom_caccordion_pr {
+    cursor: pointer;
+    i {
+        font-size: 1.3rem;
+        margin-right: 15px;
+        margin-top: 0px;
+        color: gray;
+    }
+}
