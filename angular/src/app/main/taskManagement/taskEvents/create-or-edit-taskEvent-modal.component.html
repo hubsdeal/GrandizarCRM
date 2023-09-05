@@ -4,16 +4,20 @@
         <div class="modal-content">
             <form *ngIf="active" #taskEventForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
                 <div class="modal-header">
-                    <h4 class="modal-title">
-                        <span *ngIf="taskEvent.id">{{ l('Edit Task Event') }}</span>
-                        <span *ngIf="!taskEvent.id">{{ l('Create New Task Event') }}</span>
+                    <h4 class="modal-title" *ngIf="isFromTaskLibrary">
+                        <span *ngIf="taskEvent.id">{{ l('Edit Task Template') }}</span>
+                        <span *ngIf="!taskEvent.id">{{ l('Create New Task Template') }}</span>
+                    </h4>
+                    <h4 class="modal-title" *ngIf="!isFromTaskLibrary">
+                        <span *ngIf="taskEvent.id">{{ l('Edit Task') }}</span>
+                        <span *ngIf="!taskEvent.id">{{ l('Create New Task') }}</span>
                     </h4>
 
                     <button type="button" class="btn-close" (click)="close()" aria-label="Close"
                         [disabled]="saving"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="my-5 p_filter">
+                    <div class="my-5 p_filter" *ngIf="!isFromTaskLibrary">
                         <label class="form-label" for="team">{{ l('Select from Template') }}</label>
                         <p-dropdown [options]="allTemplate" [filter]="true" [virtualScroll]="true"
                             placeholder="Select from Template" [itemSize]="30" name="displayName"
@@ -34,15 +38,7 @@
 
 
 
-                    <div class="my-5">
-                        <label class="form-label" for="TaskStatusName">{{ l('Task Status') }}</label>
-                        <select name="taskEvent.taskStatusId" [(ngModel)]="taskEvent.taskStatusId" class="form-select">
-                            <option value="">{{ l('SelectATaskStatus') }}</option>
-                            <option *ngFor="let item of allTaskStatuss" value="{{ item.id }}">
-                                {{ item.displayName }}
-                            </option>
-                        </select>
-                    </div>
+                    
 
                     <!-- <div class="my-5 select_button_custom">
                         <label class="form-label" for="TaskStatusName">{{ l('Status') }}</label>
@@ -77,7 +73,7 @@
                     </label>
                     <validation-messages [formCtrl]="TaskEvent_Priority"></validation-messages> -->
                     <div class="row">
-                        <div class="col-xl-6">
+                        <div class="col-xl-6" *ngIf="!isFromTaskLibrary">
                             <div class="my-5">
                                 <label class="form-label" for="TaskEvent_EventDate">{{ l('Start Date') }}</label>
                                 <input class="form-control m-input" #TaskEvent_EventDate type="datetime" bsDatepicker
@@ -86,7 +82,7 @@
                                 <validation-messages [formCtrl]="TaskEvent_EventDate"></validation-messages>
                             </div>
                         </div>
-                        <div class="col-xl-6">
+                        <div class="col-xl-6" *ngIf="!isFromTaskLibrary">
                             <div class="my-5">
                                 <label class="form-label" for="TaskEvent_EndDate">{{ l('End Date') }}</label>
                                 <input class="form-control m-input" #TaskEvent_EndDate type="datetime" bsDatepicker
@@ -95,7 +91,7 @@
                                 <validation-messages [formCtrl]="TaskEvent_EndDate"></validation-messages>
                             </div>
                         </div>
-                        <div class="col-xl-6">
+                        <div class="col-xl-6" *ngIf="!isFromTaskLibrary">
                             <div class="my-5">
                                 <label class="form-label" for="TaskEvent_StartTime">{{ l('Start Time') }}</label>
                                 <input class="form-control" [(ngModel)]="taskEvent.startTime" name="StartTime"
@@ -108,7 +104,7 @@
                                 <validation-messages [formCtrl]="TaskEvent_StartTime"></validation-messages> -->
                             </div>
                         </div>
-                        <div class="col-xl-6">
+                        <div class="col-xl-6" *ngIf="!isFromTaskLibrary">
                             <div class="my-5">
                                 <label class="form-label" for="TaskEvent_EndTime">{{ l('End Time') }}</label>
                                 <input class="form-control" [(ngModel)]="taskEvent.endTime" name="EndTime"
@@ -121,7 +117,7 @@
                                 <validation-messages [formCtrl]="TaskEvent_EndTime"></validation-messages> -->
                             </div>
                         </div>
-                        <div class="col-xl-6">
+                        <div class="col-xl-6" *ngIf="!isFromTaskLibrary">
                             <div class="my-5">
                                 <label class="form-label" for="TaskEvent_EstimatedTime">{{ l('Estimated Hours')
                                     }}</label>
@@ -131,7 +127,7 @@
                                 <validation-messages [formCtrl]="TaskEvent_EstimatedTime"></validation-messages>
                             </div>
                         </div>
-                        <div class="col-xl-6">
+                        <div class="col-xl-6" *ngIf="!isFromTaskLibrary">
                             <div class="my-5">
                                 <label class="form-label" for="TaskEvent_ActualTime">{{ l('Actual Hours') }}</label>
                                 <input type="text" #TaskEvent_ActualTime="ngModel" id="TaskEvent_ActualTime"
@@ -140,13 +136,44 @@
                                 <validation-messages [formCtrl]="TaskEvent_ActualTime"></validation-messages>
                             </div>
                         </div>
-                        <div class="col-md-12">
+                        <div class="col-xl-6 col-md-6">
+                            <div class="my-5" *ngIf="!isFromTaskLibrary">
+                                <label class="form-label" for="TaskStatusName">{{ l('Task Status') }}</label>
+                                <select name="taskEvent.taskStatusId" [(ngModel)]="taskEvent.taskStatusId" class="form-select">
+                                    <option value="">{{ l('SelectATaskStatus') }}</option>
+                                    <option *ngFor="let item of allTaskStatuss" value="{{ item.id }}">
+                                        {{ item.displayName }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-md-6" *ngIf="!isFromTaskLibrary">
                             <div class="my-5">
                                 <label class="form-label" for="TaskEvent_completionPercentage">{{ l('Completion Percentage') }}</label>
-                                <input type="text" #TaskEvent_completionPercentage="ngModel" id="TaskEvent_completionPercentage"
-                                    class="form-control" [(ngModel)]="taskEvent.completionPercentage" name="completionPercentage"
-                                    minlength="0" maxlength="100" />
-                                <validation-messages [formCtrl]="TaskEvent_completionPercentage"></validation-messages>
+                                <!-- <input type="text" #TaskEvent_completionPercentage="ngModel" id="TaskEvent_completionPercentage"
+                                    class="form-control" type="number" [(ngModel)]="taskEvent.completionPercentage" name="completionPercentage"
+                                    minlength="0" maxlength="100" /> -->
+                                    <input type="text" pInputText [(ngModel)]="taskEvent.completionPercentage" name="completionPercentage" class="w-full form-control"/>
+                                    <p-slider [(ngModel)]="taskEvent.completionPercentage" name="completionPercentageSlider" class="w-full"></p-slider>
+                                <!-- <validation-messages [formCtrl]="TaskEvent_completionPercentage"></validation-messages> -->
+                            </div>
+                        </div>
+                        <div class="col-md-6" *ngIf="!isFromTaskLibrary">
+                            <div class="my-5">
+                                <label class="form-label" for="TaskEvent_billingAmount">{{ l('Billing Amount') }}</label>
+                                <input type="text" #TaskEvent_billingAmount="ngModel" id="TaskEvent_billingAmount"
+                                    class="form-control" type="number" [(ngModel)]="taskEvent.billingAmount" name="billingAmount"
+                                    minlength="0"  />
+                                <validation-messages [formCtrl]="TaskEvent_billingAmount"></validation-messages>
+                            </div>
+                        </div>
+                        <div class="col-md-6" *ngIf="!isFromTaskLibrary">
+                            <div class="my-5">
+                                <label class="form-label" for="TaskEvent_costAmount">{{ l('Cost Amount') }}</label>
+                                <input type="text" #TaskEvent_costAmount="ngModel" id="TaskEvent_costAmount"
+                                    class="form-control" type="number" [(ngModel)]="taskEvent.costAmount" name="costAmount"
+                                    minlength="0"  />
+                                <validation-messages [formCtrl]="TaskEvent_costAmount"></validation-messages>
                             </div>
                         </div>
                         <div class="col-md-12">
@@ -206,13 +233,13 @@
                         <validation-messages [formCtrl]="TaskEvent_HourAndMinutes"></validation-messages>
                     </div> -->
                     <!-- Need to implement save as task library -->
-                    <div class="col-xl-12 d-flex align-items-center">
+                    <div class="col-xl-12 d-flex align-items-center" *ngIf="false">
                         <div class="me-5 fw-semibold text-gray">
                             Save as Library
                         </div>
                         <div class="form-check form-check-solid form-switch form-check-custom fv-row">
                             <input class="form-check-input w-45px h-30px" type="checkbox" id="allowmarketing"
-                                checked="checked" [(ngModel)]="taskEvent.template">
+                                 [(ngModel)]="taskEvent.template" (change)="saveAsLibararyEvent()">
                             <label class="form-check-label" for="allowmarketing"></label>
                         </div>
                     </div>

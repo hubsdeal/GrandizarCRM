@@ -27,7 +27,7 @@ export class CreateOrEditTaskWorkItemModalComponent extends AppComponentBase imp
     saving = false;
     taskEventId: number;
     taskWorkItem: CreateOrEditTaskWorkItemDto = new CreateOrEditTaskWorkItemDto();
-
+    OpenOrClosedOptions:any;
     taskEventName = '';
     employeeName = '';
     //taskEventId: number;
@@ -50,6 +50,7 @@ export class CreateOrEditTaskWorkItemModalComponent extends AppComponentBase imp
             this.taskWorkItem.startDate = this._dateTimeService.getStartOfDay();
             this.taskWorkItem.endDate = this._dateTimeService.getStartOfDay();
             //this.status = 'incomplete';
+            this.taskWorkItem.openOrClosed = false;
             this.active = true;
             this.modal.show();
         } else {
@@ -62,13 +63,12 @@ export class CreateOrEditTaskWorkItemModalComponent extends AppComponentBase imp
                 this.taskEventName = result.taskEventName;
                 this.employeeName = result.employeeName;
 
-
+                this.taskWorkItem.openOrClosed=result.taskWorkItem.openOrClosed;
                 this.active = true;
                 this.modal.show();
             });
         }
-
-
+        this.OpenOrClosedOptions = [{ label: 'Open', value: false }, { label: 'Closed', value: true }];
     }
 
     // save(): void {

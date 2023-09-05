@@ -10,6 +10,7 @@ import { ProductCategoryMediaLibraryLookupTableModalComponent } from './productC
 import { FileItem, FileUploader, FileUploaderOptions } from 'ng2-file-upload';
 import { IAjaxResponse, TokenService } from 'abp-ng2-module';
 import { AppConsts } from '@shared/AppConsts';
+import { SelectItem } from 'primeng/api';
 
 @Component({
     selector: 'createOrEditProductCategoryModal',
@@ -31,7 +32,8 @@ export class CreateOrEditProductCategoryModalComponent extends AppComponentBase 
     mediaLibraryName = '';
     allParentCategories: any[];
     imageSrc: any = 'assets/common/images/c_logo.png';
-
+    productServiceOptions: SelectItem[];
+    PublishingOptions: SelectItem[];
     private _uploaderOptions: FileUploaderOptions = {};
     public uploader: FileUploader;
     public temporaryPictureUrl: string;
@@ -72,8 +74,14 @@ export class CreateOrEditProductCategoryModalComponent extends AppComponentBase 
             });
         }
         this._productCategoriesServiceProxy.getAllProductCategoryForTableDropdown().subscribe(result => {
+            debugger;
             this.allParentCategories = result;
+            //this.allParentCategories = this.allParentCategories.sort((a, b) => a.localeCompare(b));
         });
+        this.productCategory.productOrService=true;
+        this.productCategory.published=false;
+        this.productServiceOptions = [{ label: 'Product', value: true }, { label: 'Service', value: false }];
+        this.PublishingOptions= [{ label: 'Published', value: true }, { label: 'Unpublished', value: false }];
         this.initFileUploader();
     }
 

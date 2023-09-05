@@ -1,5 +1,5 @@
 ﻿<div [@routerTransition]>
-    <sub-header [title]="'ProductCategories' | localize" [description]="'ProductCategoriesHeaderInfo' | localize">
+    <sub-header [title]="'Product Category List'" [description]="'' | localize">
         <div role="actions">
             <!-- <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1">
                 <i class="fa fa-file-excel"></i>
@@ -43,14 +43,14 @@
                                         [(ngModel)]="nameFilter" (ngModelChange)="getProductCategoriesTreeNode()" />
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <div class="my-3">
+                            <!-- <div class="col-md-3">
+                                 <div class="my-3">
                                     <label class="form-label" for="DescriptionFilter">{{ l('Description') }}</label>
                                     <input type="text" class="form-control" id="DescriptionFilter"
                                         name="descriptionFilter" [(ngModel)]="descriptionFilter"
                                         (ngModelChange)="getProductCategoriesTreeNode()" />
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="HasParentCategoryFilterSelect">
@@ -65,7 +65,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <!-- <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="MinParentCategoryIdFilter">
                                         {{ l('MinMax') }} {{ l('ParentCategoryId') }}
@@ -79,8 +79,8 @@
                                             name="maxParentCategoryIdFilter" (ngModelChange)="getProductCategoriesTreeNode()" />
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-3">
+                            </div> -->
+                            <!-- <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="UrlFilter">{{ l('Url') }}</label>
                                     <input type="text" class="form-control" id="UrlFilter" name="urlFilter"
@@ -116,7 +116,7 @@
                                             (ngModelChange)="getProductCategoriesTreeNode()" />
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="ProductOrServiceFilterSelect">
@@ -132,7 +132,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
+                            <!-- <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="MediaLibraryNameFilter">
                                         ({{ l('MediaLibrary') }}) {{ l('Name') }}
@@ -140,7 +140,7 @@
                                     <input type="text" class="form-control" id="MediaLibraryNameFilter"
                                         name="mediaLibraryNameFilter" [(ngModel)]="mediaLibraryNameFilter" />
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="col-md-12 mt-5">
                                 <button (click)="resetFilters()" class="btn btn-secondary btn-sm"
                                     id="btn-reset-filters">
@@ -337,8 +337,8 @@
                         <ng-template pTemplate="header">
                             <tr>
                                 <th style="width: 300px;">{{l('Name')}}</th>
-                                <!-- <th style="width: 75px;" class="text-center"> {{l('Published')}}</th> -->
-
+                                <th style="width: 75px;" class="text-center"> {{l('Published')}}</th> 
+                                <th style="width: 80px;" class="text-center"> {{l('Product/Service')}}</th>
                                 <th style="width: 80px;" class="text-center"> {{l('#Products')}}</th>
 
                                 <th style="width: 150px;" class="text-center"> {{l('Teams')}}</th>
@@ -358,14 +358,14 @@
                                             <img *ngIf="!rowData.picture" class="image pro-cat__img mt-1"
                                                 src="{{defaultimage}}" alt="rowData.name" />
                                         </div>
-                                        <div class="pro-name__cat">
+                                         <div class="pro-name__cat">
                                             <a href="javascript:;"
                                                 [routerLink]="['/app/main/shop/productCategories/dashboard', rowData.id]">
                                                 {{rowData.name}}
-                                                <span title="Publish" *ngIf="rowData.published"
+                                                <!-- <span title="Publish" *ngIf="rowData.published"
                                                     class="badge badge-success">Yes</span>
                                                 <span title="Not Publish" *ngIf="!rowData.published"
-                                                    class="badge badge-danger">No</span>
+                                                    class="badge badge-danger">No</span> -->
                                             </a>
                                         </div>
                                     </div>
@@ -373,15 +373,28 @@
                                 </td>
 
 
-                                <!-- <td class="text-center" style="width:75px">
-                                    <div *ngIf="rowData.published" class="text-muted">
-                                        <span class="kt-badge kt-badge--success kt-badge--inline kt-badge--pill kt-badge--rounded">Yes</span>
+                                <td class="text-center" style="width:75px">
+                                    <span title="Publish" *ngIf="rowData.published"
+                                    class="badge badge-success">Yes</span>
+                                <span title="Not Publish" *ngIf="!rowData.published"
+                                    class="badge badge-danger">No</span>
+                                    <!-- <div *ngIf="rowData.published" class="text-muted">
+                                        <span class="kt-badge kt-badge--success kt-badge--inline kt-badge--pill kt-badge--rounded">Published</span>
                                     </div>
                                     <div *ngIf="!rowData.published" class="text-muted">
-                                        <span class="kt-badge kt-badge--danger kt-badge--inline kt-badge--pill kt-badge--rounded">No</span>
+                                        <span class="kt-badge kt-badge--danger kt-badge--inline kt-badge--pill kt-badge--rounded">Unpublished</span>
+                                    </div> -->
+                                </td> 
+                                <td>
+                                    <div *ngIf="rowData.productOrService" class="text-center">
+                                        <span title="Publish" *ngIf="rowData.published"
+                                        class="badge badge-primary">Product</span>
                                     </div>
-                                </td> -->
-
+                                    <div *ngIf="!rowData.productOrService" class="text-center">
+                                        <span title="Publish" *ngIf="rowData.published"
+                                        class="badge badge-warning">Service</span>
+                                    </div>
+                                </td>
                                 <td class="text-center" style="width:80px">
                                     <a href="javascript:;" [routerLink]="['/app/main/shop/productCategories/dashboard', rowData.id]">{{rowData.numberOfProducts}}</a>
                                 </td>

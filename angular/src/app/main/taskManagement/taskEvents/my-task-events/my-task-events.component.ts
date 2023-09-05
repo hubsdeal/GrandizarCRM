@@ -46,7 +46,7 @@ export class MyTaskEventsComponent extends AppComponentBase {
   hourAndMinutesFilter = '';
   taskStatusNameFilter = '';
   selectedEmployeesId:number;
-  
+ 
   selectedTeam:any;
   allTeams:any[]=[{id:1,displayName:"Team 1"},{id:2,displayName:"Team 2"},{id:3,displayName:"Team 3"}]
 
