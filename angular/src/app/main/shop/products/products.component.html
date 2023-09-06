@@ -126,7 +126,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="CallForPriceFilterSelect">
@@ -464,6 +464,34 @@
                     </div>
                 </form>
 
+                <div class="w-100 d-flex justify-content-end py-5 mb-5">
+                    <div class="btn-group dropdown" dropdown container="body">
+                        <button class="dropdown-toggle btn btn-sm btn-light btn-active-light-primary" dropdownToggle>
+                            <i class="fa fa-cog"></i>
+                            <span class="caret"></span> Bulk Actions
+                        </button>
+                        <ul class="dropdown-menu" *dropdownMenu>
+                            <li>
+                                <a href="javascript:;" data-bs-toggle="modal" data-bs-target="#bulkCategoryModal"
+                                    class="dropdown-item">
+                                    {{ l('Category Assign') }}
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="javascript:;" data-bs-toggle="modal" data-bs-target="#bulkHubAssignModal">
+                                    {{ l('Add to Hub') }}
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="javascript:;" data-bs-toggle="modal"
+                                    data-bs-target="#bulkStoreAssignModal">
+                                    {{ l('Add to Store') }}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
                 <div class="row align-items-center">
                     <!--<Primeng-Datatable-Start>-->
                     <div class="primeng-datatable-container col-12" [busyIf]="primengTableHelper.isLoading">
@@ -660,7 +688,8 @@
                                                         <i class="fas fa-tags mr-1"></i>
                                                         {{ record.categoryName }}
                                                     </span>
-                                                    <span *ngIf="record.storeName" class="text-gray-400 fw-semibold fs-7 my-1">
+                                                    <span *ngIf="record.storeName"
+                                                        class="text-gray-400 fw-semibold fs-7 my-1">
                                                         <i class="fas fa-store-alt mr-1"></i>
                                                         {{record.storeName}}
                                                     </span>
@@ -884,8 +913,7 @@
                         </div>
                         <div class="primeng-paging-container">
                             <p-paginator [rows]="primengTableHelper.defaultRecordsCountPerPage" #paginator
-                                (onPageChange)="paginate($event)"
-                                [totalRecords]="primengTableHelper.totalRecordsCount"
+                                (onPageChange)="paginate($event)" [totalRecords]="primengTableHelper.totalRecordsCount"
                                 [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
                                 [showCurrentPageReport]="true" [currentPageReportTemplate]="
                                     'TotalRecordsCount' | localize : primengTableHelper.totalRecordsCount
@@ -899,4 +927,110 @@
     </div>
     <createOrEditProductModal #createOrEditProductModal (modalSave)="getProducts()"></createOrEditProductModal>
     <viewProductModal #viewProductModal></viewProductModal>
+</div>
+
+<div class="modal fade" tabindex="-1" id="bulkCategoryModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Bulk Product Assign to Category</h3>
+
+                <!--begin::Close-->
+                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal"
+                    aria-label="Close">
+                    <i class="fas fa-times"></i>
+                </div>
+                <!--end::Close-->
+            </div>
+
+            <div class="modal-body">
+                <div class="p_filter">
+                    <label class="form-label required" for="ProductCategoryName">
+                        Category
+                    </label>
+                    <p-dropdown [options]="productCategoryOptions" [filter]="true" [virtualScroll]="true"
+                        placeholder="Select Product Category" [itemSize]="30" name="displayName"
+                        optionLabel="displayName" optionValue="id" optionId="id"
+                        (onChange)="onProductCategoryChange($event)" filterBy="displayName" required
+                        [style]="{ width: '100%' }"></p-dropdown>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" (click)="saveBulkCategory()"
+                    data-bs-dismiss="modal">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" id="bulkStoreAssignModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Bulk Product Assign to Store</h3>
+
+                <!--begin::Close-->
+                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal"
+                    aria-label="Close">
+                    <i class="fas fa-times"></i>
+                </div>
+                <!--end::Close-->
+            </div>
+
+            <div class="modal-body">
+                <div class="p_filter">
+                    <label class="form-label required" for="Store">
+                        Store
+                    </label>
+                    <p-dropdown [options]="storeOptions" [filter]="true" [virtualScroll]="true"
+                        placeholder="Select Store" [itemSize]="30" name="storeName" optionLabel="displayName"
+                        optionValue="id" optionId="storeId" (onChange)="onStoreChange($event)" filterBy="displayName"
+                        required [style]="{ width: '100%' }"></p-dropdown>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" (click)="saveBulkStore()"
+                    data-bs-dismiss="modal">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" id="bulkHubAssignModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Bulk Product Assign to Hub</h3>
+
+                <!--begin::Close-->
+                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal"
+                    aria-label="Close">
+                    <i class="fas fa-times"></i>
+                </div>
+                <!--end::Close-->
+            </div>
+
+            <div class="modal-body">
+                <div class="p_filter">
+                    <label class="form-label required" for="Store">
+                        Hub
+                    </label>
+                    <p-dropdown [options]="hubOptions" [filter]="true" [virtualScroll]="true"
+                        placeholder="Select Hub" [itemSize]="30" name="hubName" optionLabel="displayName"
+                        optionValue="id" optionId="hubId" (onChange)="onHubChange($event)" filterBy="displayName"
+                        required [style]="{ width: '100%' }"></p-dropdown>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" (click)="saveBulkHub()"
+                    data-bs-dismiss="modal">Save</button>
+            </div>
+        </div>
+    </div>
 </div>

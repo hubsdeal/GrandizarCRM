@@ -1,7 +1,7 @@
 ﻿import { AppConsts } from '@shared/AppConsts';
 import { Component, Injector, ViewEncapsulation, ViewChild, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ProductsServiceProxy, ProductDto } from '@shared/service-proxies/service-proxies';
+import { ProductsServiceProxy, ProductDto, HubStoresServiceProxy } from '@shared/service-proxies/service-proxies';
 import { NotifyService } from 'abp-ng2-module';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { TokenAuthServiceProxy } from '@shared/service-proxies/service-proxies';
@@ -17,9 +17,11 @@ import { filter as _filter } from 'lodash-es';
 import { DateTime } from 'luxon';
 
 import { DateTimeService } from '@app/shared/common/timing/date-time.service';
+import { ModalDirective } from 'ngx-bootstrap/modal';
+import { finalize } from 'rxjs';
 
 @Component({
-    selector:'appMasterProduct',
+    selector: 'appMasterProduct',
     templateUrl: './products.component.html',
     encapsulation: ViewEncapsulation.None,
     animations: [appModuleAnimation()],
@@ -123,8 +125,14 @@ export class ProductsComponent extends AppComponentBase {
 
     skipCount: number;
     maxResultCount: number = 10;
-    publishedCount: number =0;
-    unpublishedCount: number =0;
+    publishedCount: number = 0;
+    unpublishedCount: number = 0;
+
+    bulkModalCategoryId: number;
+    storeOptions: any = [];
+    bulkStoreAssignId: number;
+    hubOptions:any=[];
+    bulkAssignHubId:number;
 
     constructor(
         injector: Injector,
@@ -133,10 +141,20 @@ export class ProductsComponent extends AppComponentBase {
         private _tokenAuth: TokenAuthServiceProxy,
         private _activatedRoute: ActivatedRoute,
         private _fileDownloadService: FileDownloadService,
-        private _dateTimeService: DateTimeService
+        private _dateTimeService: DateTimeService,
+        private _hubStoresServiceProxy:HubStoresServiceProxy
     ) {
         super(injector);
         this.getProducts();
+        this._productsServiceProxy.getAllProductCategoryForLookupTable('', '', 0, 10000).subscribe(result => {
+            this.productCategoryOptions = result.items;
+        });
+        this._productsServiceProxy.getAllStoreForLookupTable('', '', 0, 10000).subscribe(result => {
+            this.storeOptions = result.items;
+        });
+        this._hubStoresServiceProxy.getAllHubForLookupTable('', '', 0, 10000).subscribe(result => {
+            this.hubOptions = result.items;
+        });
     }
 
     getProducts(event?: LazyLoadEvent) {
@@ -215,7 +233,7 @@ export class ProductsComponent extends AppComponentBase {
                 this.primengTableHelper.totalRecordsCount = result.totalCount;
                 this.primengTableHelper.records = result.products;
                 this.publishedCount = result.published;
-                this.unpublishedCount=result.unPublished;
+                this.unpublishedCount = result.unPublished;
                 this.primengTableHelper.hideLoadingIndicator();
             });
     }
@@ -383,4 +401,70 @@ export class ProductsComponent extends AppComponentBase {
         this.getProducts();
     }
 
+    onProductCategoryChange(event: any) {
+        if (event.value) {
+            this.bulkModalCategoryId = event.value;
+        } else {
+            this.bulkModalCategoryId = null;
+        }
+        console.log(this.bulkModalCategoryId);
+    }
+
+    onStoreChange(event: any) {
+        if (event.value) {
+            this.bulkStoreAssignId = event.value;
+        } else {
+            this.bulkStoreAssignId = null;
+        }
+    }
+
+    onHubChange(event: any) {
+        if (event.value) {
+            this.bulkAssignHubId = event.value;
+        } else {
+            this.bulkAssignHubId = null;
+        }
+    }
+
+    saveBulkCategory() {
+        this.selectedInput = this.primengTableHelper.records.filter(x => x.selected == true).map(x => x.id);
+        if (this.selectedInput.length > 0) {
+            this._productsServiceProxy.bulkUpdateCategory(this.bulkModalCategoryId, this.selectedInput)
+                .pipe(finalize(() => { }))
+                .subscribe(result => {
+                    this.notify.info(this.l('SavedSuccessfully'));
+                    this.getProducts();
+                });
+        } else {
+            this.notify.error(this.l('Please Select Product'));
+        }
+    }
+
+    saveBulkStore() {
+        this.selectedInput = this.primengTableHelper.records.filter(x => x.selected == true).map(x => x.id);
+        if (this.selectedInput.length > 0) {
+            this._productsServiceProxy.bulkAddToStore(this.bulkStoreAssignId, this.selectedInput)
+                .pipe(finalize(() => { }))
+                .subscribe(result => {
+                    this.notify.info(this.l('SavedSuccessfully'));
+                    this.getProducts();
+                });
+        } else {
+            this.notify.error(this.l('Please Select Product'));
+        }
+    }
+
+    saveBulkHub() {
+        this.selectedInput = this.primengTableHelper.records.filter(x => x.selected == true).map(x => x.id);
+        if (this.selectedInput.length > 0) {
+            this._productsServiceProxy.bulkAddToHub(this.bulkAssignHubId, this.selectedInput)
+                .pipe(finalize(() => { }))
+                .subscribe(result => {
+                    this.notify.info(this.l('SavedSuccessfully'));
+                    this.getProducts();
+                });
+        } else {
+            this.notify.error(this.l('Please Select Product'));
+        }
+    }
 }
