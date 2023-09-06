@@ -243,6 +243,23 @@
                             <label class="form-check-label" for="allowmarketing"></label>
                         </div>
                     </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="TaskEventName">{{ l('Task Event') }}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="TaskEventName" name="taskEventName"
+                                [(ngModel)]="taskEventName" type="text" disabled />
+                            <button class="btn btn-primary blue" (click)="openSelectTaskEventModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setTaskEventIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input class="form-control" name="taskEventId"
+                        [(ngModel)]="taskEventId" type="text" required hidden />
                 </div>
                 <div class="modal-footer">
                     <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
@@ -257,4 +274,7 @@
             </form>
         </div>
     </div>
+
+    <taskEventLookupTableModal #taskEventLookupTableModal (modalSave)="getNewTaskEventId()">
+    </taskEventLookupTableModal>
 </div>

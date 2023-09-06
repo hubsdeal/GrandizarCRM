@@ -14,6 +14,7 @@ import { DateTime } from 'luxon';
 import { DateTimeService } from '@app/shared/common/timing/date-time.service';
 import { SelectItem } from 'primeng/api';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
+import { TaskEventsLookupTableModalComponent } from './task-events-lookup-table-modal/task-events-lookup-table-modal.component';
 
 
 @Component({
@@ -26,6 +27,9 @@ export class CreateOrEditTaskEventModalComponent extends AppComponentBase implem
     @ViewChild('createOrEditModal', { static: true }) modal: ModalDirective;
 
     @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
+
+    @ViewChild('taskEventLookupTableModal', { static: true })
+    taskEventLookupTableModal: TaskEventsLookupTableModalComponent;
 
     active = false;
     saving = false;
@@ -52,6 +56,9 @@ export class CreateOrEditTaskEventModalComponent extends AppComponentBase implem
 
     employeeList: TaskTeamEmployeeLookupTableDto[] = [];
     selectedEmployees: TaskTeamEmployeeLookupTableDto[] = [];
+
+    taskEventId:number;
+    taskEventName:string;
 
     constructor(
         injector: Injector,
@@ -171,5 +178,21 @@ export class CreateOrEditTaskEventModalComponent extends AppComponentBase implem
     }
     getcompletionPercentage(event){
         console.log(event);
+    }
+
+    getNewTaskEventId() {
+        this.taskEventId = this.taskEventLookupTableModal.id;
+        this.taskEventName = this.taskEventLookupTableModal.displayName;
+    }
+
+    openSelectTaskEventModal() {
+        this.taskEventLookupTableModal.id = this.taskEventId;
+        this.taskEventLookupTableModal.displayName = this.taskEventName;
+        this.taskEventLookupTableModal.show();
+    }
+
+    setTaskEventIdNull() {
+        this.taskEventId = null;
+        this.taskEventName = '';
     }
 }

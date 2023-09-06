@@ -1,10 +1,10 @@
-﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
     aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{ backdrop: 'static' }">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">
-                    <span>{{ l('PickProductCategory') }}</span>
+                    <span>{{ l('PickTaskEvent') }}</span>
                 </h4>
 
                 <button type="button" class="btn-close" (click)="close()" aria-label="Close"
@@ -68,7 +68,7 @@
                             </div>
                             <div class="primeng-paging-container">
                                 <p-paginator rows="{{ primengTableHelper.defaultRecordsCountPerPage }}" #paginator
-                                    styleClass="productCategory-lookup-table-paginator" (onPageChange)="getAll($event)"
+                                    styleClass="taskEvent-lookup-table-paginator" (onPageChange)="getAll($event)"
                                     [totalRecords]="primengTableHelper.totalRecordsCount"
                                     [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
                                     [showCurrentPageReport]="true" [currentPageReportTemplate]="
