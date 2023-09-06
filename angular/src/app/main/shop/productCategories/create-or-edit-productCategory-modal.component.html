@@ -107,7 +107,7 @@
                     </div>
 
                     <div class="my-5">
-                        <label class="form-label" for="ProductCategory_Url">{{ l('Url') }}</label>
+                        <label class="form-label" for="ProductCategory_Url">{{ l('PublicUrl') }}</label>
                         <input type="text" #ProductCategory_Url="ngModel" id="ProductCategory_Url" class="form-control"
                             [(ngModel)]="productCategory.url" name="Url" minlength="1" maxlength="512" />
                         <validation-messages [formCtrl]="ProductCategory_Url"></validation-messages>
@@ -139,7 +139,7 @@
                         <validation-messages [formCtrl]="ProductCategory_DisplaySequence"></validation-messages>
                     </div>
                     <div class="my-5">
-                        <label class="mb-2" for="employee">{{l("Teams")}}</label>
+                        <label class="mb-2" for="employee">{{l("Category Managment Teams")}}</label>
                         <p-multiSelect name="employee" id="employee" [options]="employeeList"
                             [(ngModel)]="selectedEmployees" optionLabel="displayName" [virtualScroll]="true"
                             [filter]="true" [itemSize]="34" [maxSelectedLabels]="2"
@@ -147,26 +147,36 @@
                         </p-multiSelect>
                     </div>
                     <div class="my-5">
-                        <label class="form-check form-check-custom form-check-solid">
+                        <!-- <label class="form-check form-check-custom form-check-solid">
                             <input id="ProductCategory_ProductOrService" #ProductCategory_ProductOrService="ngModel"
                                 name="ProductOrService" [(ngModel)]="productCategory.productOrService" type="checkbox"
                                 class="form-check-input" />
                             <span class="form-check-label">
                                 {{ l('ProductOrService') }}
                             </span>
-                        </label>
-                        <validation-messages [formCtrl]="ProductCategory_ProductOrService"></validation-messages>
+                        </label> -->
+                        <div class="fv-row mb-7 mt-7 fv-plugins-icon-container select_button_custom">
+                            <p-selectButton [options]="productServiceOptions" name="productServiceOptions"
+                                id="productServiceOptions" [(ngModel)]="productCategory.productOrService" optionLabel="label"
+                                optionValue="value"></p-selectButton>
+                        </div>
+                        <!-- <validation-messages [formCtrl]="ProductCategory_ProductOrService"></validation-messages> -->
                     </div>
 
                     <div class="my-5">
-                        <label class="form-check form-check-custom form-check-solid">
+                        <!-- <label class="form-check form-check-custom form-check-solid">
                             <input id="published"
                                 name="published" [(ngModel)]="productCategory.published" type="checkbox"
                                 class="form-check-input" />
                             <span class="form-check-label">
                                 {{ l('Published') }}
                             </span>
-                        </label>
+                        </label> -->
+                        <div class="fv-row mb-7 mt-7 fv-plugins-icon-container select_button_custom">
+                            <p-selectButton [options]="PublishingOptions" name="PublishingOptions"
+                                id="PublishingOptions" [(ngModel)]="productCategory.published" optionLabel="label"
+                                optionValue="value"></p-selectButton>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">

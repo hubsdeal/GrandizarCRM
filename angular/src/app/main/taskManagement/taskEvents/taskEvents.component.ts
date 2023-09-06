@@ -107,7 +107,7 @@ export class TaskEventsComponent extends AppComponentBase {
                     : this._dateTimeService.getStartOfDayForDate(this.minEventDateFilter),
                 this.startTimeFilter,
                 this.endTimeFilter,
-                this.templateFilter,
+                0,
                 this.actualTimeFilter,
                 this.maxEndDateFilter === undefined
                     ? this.maxEndDateFilter
@@ -165,7 +165,7 @@ export class TaskEventsComponent extends AppComponentBase {
                     : this._dateTimeService.getStartOfDayForDate(this.minEventDateFilter),
                 this.startTimeFilter,
                 this.endTimeFilter,
-                this.templateFilter,
+                0,
                 this.actualTimeFilter,
                 this.maxEndDateFilter === undefined
                     ? this.maxEndDateFilter

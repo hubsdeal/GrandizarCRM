@@ -76,7 +76,8 @@
                         </div>
                         <div class="separator"></div>
                         <div class="d-flex py-6 align-items-end">
-                            <a href="javascript:;" class="btn btn-sm btn-light-primary">
+                        
+                           <a href="javascript:;" *ngIf="permission.isGranted('Pages.TaskEvents.Edit')" (click)="createOrEditTaskEventModal.show(this.taskEventId)" class="btn btn-sm btn-light-primary">
                                 <i class="fas fa-edit fs-5 me-2"></i> Edit
                             </a>
                             <a *ngIf="taskEvent.taskStatusName" href="javascript:;" class="btn btn-sm btn-success">
@@ -463,6 +464,7 @@
             </div>
 
         </div>
-
+        <createOrEditTaskEventModal #createOrEditTaskEventModal (modalSave)="getTaskById()"></createOrEditTaskEventModal>
+        <viewTaskEventModal #viewTaskEventModal></viewTaskEventModal>
     </div>
 </div>

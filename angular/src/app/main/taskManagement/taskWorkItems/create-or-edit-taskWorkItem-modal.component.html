@@ -100,110 +100,147 @@
                         [(ngModel)]="taskWorkItem.name" name="Name" required cols="30" rows="10"></textarea>
                         <validation-messages [formCtrl]="TaskWorkItem_Name"></validation-messages>
                     </div>
+                    <div class="row">
 
-                    <div class="my-3">
-                        <label class="form-label" for="TaskWorkItem_EstimatedHours">{{ l('EstimatedHours') }}</label>
-                        <input
-                            type="text"
-                            #TaskWorkItem_EstimatedHours="ngModel"
-                            id="TaskWorkItem_EstimatedHours"
-                            class="form-control"
-                            [(ngModel)]="taskWorkItem.estimatedHours"
-                            name="EstimatedHours"
-                            minlength="1"
-                            maxlength="50"
-                        />
-                        <validation-messages [formCtrl]="TaskWorkItem_EstimatedHours"></validation-messages>
+
+                        <div class="col-md-6 col-xl-6">
+                            <div class="my-3">
+                                <label class="form-label" for="TaskWorkItem_EstimatedHours">{{ l('EstimatedHours') }}</label>
+                                <input
+                                    type="text"
+                                    #TaskWorkItem_EstimatedHours="ngModel"
+                                    id="TaskWorkItem_EstimatedHours"
+                                    class="form-control"
+                                    [(ngModel)]="taskWorkItem.estimatedHours"
+                                    name="EstimatedHours"
+                                    minlength="1"
+                                    maxlength="50"
+                                />
+                                <validation-messages [formCtrl]="TaskWorkItem_EstimatedHours"></validation-messages>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xl-6">
+                            <div class="my-3">
+                                <label class="form-label" for="TaskWorkItem_ActualHours">{{ l('ActualHours') }}</label>
+                                <input
+                                    type="text"
+                                    #TaskWorkItem_ActualHours="ngModel"
+                                    id="TaskWorkItem_ActualHours"
+                                    class="form-control"
+                                    [(ngModel)]="taskWorkItem.actualHours"
+                                    name="ActualHours"
+                                    minlength="1"
+                                    maxlength="50"
+                                />
+                                <validation-messages [formCtrl]="TaskWorkItem_ActualHours"></validation-messages>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xl-6">
+                            <div class="my-3">
+                                <label class="form-label" for="TaskWorkItem_StartDate">{{ l('StartDate') }}</label>
+                                <input
+                                    class="form-control m-input"
+                                    #TaskWorkItem_StartDate
+                                    type="datetime"
+                                    bsDatepicker
+                                    datePickerLuxonModifier
+                                    [(date)]="taskWorkItem.startDate"
+                                    id="TaskWorkItem_StartDate"
+                                    name="TaskWorkItem_StartDate"
+                                />
+                                <validation-messages [formCtrl]="TaskWorkItem_StartDate"></validation-messages>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xl-6">
+                            <div class="my-3">
+                                <label class="form-label" for="TaskWorkItem_EndDate">{{ l('EndDate') }}</label>
+                                <!-- <input
+                                    class="form-control m-input"
+                                    #TaskWorkItem_EndDate
+                                    type="datetime"
+                                    bsDatepicker
+                                    datePickerLuxonModifier
+                                    [(date)]="taskWorkItem.endDate"
+                                    id="TaskWorkItem_EndDate"
+                                    name="TaskWorkItem_EndDate"
+                                /> -->
+                                <input class="form-control m-input" #TaskWorkItem_EndDate type="datetime" bsDatepicker
+                                datePickerLuxonModifier [(date)]="taskWorkItem.endDate" id="TaskWorkItem_EndDate"
+                                name="TaskWorkItem_EndDate" />
+                         
+                                <validation-messages [formCtrl]="TaskWorkItem_EndDate"></validation-messages>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xl-6">
+                            <div class="my-3">
+                                <label class="form-label" for="TaskWorkItem_StartTime">{{ l('StartTime') }}</label>
+                                <!-- <input
+                                    type="text"
+                                    #TaskWorkItem_StartTime="ngModel"
+                                    id="TaskWorkItem_StartTime"
+                                    class="form-control"
+                                    [(ngModel)]="taskWorkItem.startTime"
+                                    name="StartTime"
+                                    minlength="1"
+                                    maxlength="50"
+                                />
+                                <validation-messages [formCtrl]="TaskWorkItem_StartTime"></validation-messages> -->
+                                <input class="form-control" [(ngModel)]="taskWorkItem.startTime" name="StartTime"
+                                [ngxTimepicker]="startTime" aria-label="12hr format" type="text" readonly>
+                            <ngx-material-timepicker #startTime (timeSet)="startTimeValue($event)">
+                            </ngx-material-timepicker>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xl-6">
+                            <div class="my-3">
+                                <label class="form-label" for="TaskWorkItem_EndTime">{{ l('EndTime') }}</label>
+                                <!-- <input
+                                    type="text"
+                                    #TaskWorkItem_EndTime="ngModel"
+                                    id="TaskWorkItem_EndTime"
+                                    class="form-control"
+                                    [(ngModel)]="taskWorkItem.endTime"
+                                    name="EndTime"
+                                    minlength="1"
+                                    maxlength="50"
+                                /> -->
+                                <input class="form-control" [(ngModel)]="taskWorkItem.endTime" name="EndTime"
+                                [ngxTimepicker]="endTime" aria-label="12hr format" type="text" readonly>
+                            <ngx-material-timepicker #endTime (timeSet)="endTimeValue($event)">
+                            </ngx-material-timepicker>
+                                <!-- <validation-messages [formCtrl]="TaskWorkItem_EndTime"></validation-messages> -->
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="my-5">
+                                <label class="form-label" for="taskWorkItem_billingAmount">{{ l('Billing Amount') }}</label>
+                                <input type="text" #taskWorkItem_billingAmount="ngModel" id="taskWorkItem_billingAmount"
+                                    class="form-control" type="number" [(ngModel)]="taskWorkItem.billingAmount" name="billingAmount"
+                                    minlength="0"  />
+                                <validation-messages [formCtrl]="taskWorkItem_billingAmount"></validation-messages>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="my-5">
+                                <label class="form-label" for="taskWorkItem_costAmount">{{ l('Cost Amount') }}</label>
+                                <input type="text" #taskWorkItem_costAmount="ngModel" id="taskWorkItem_costAmount"
+                                    class="form-control" type="number" [(ngModel)]="taskWorkItem.costAmount" name="costAmount"
+                                    minlength="0"  />
+                                <validation-messages [formCtrl]="taskWorkItem_costAmount"></validation-messages>
+                            </div>
+                        </div>
                     </div>
+                    
 
-                    <div class="my-3">
-                        <label class="form-label" for="TaskWorkItem_ActualHours">{{ l('ActualHours') }}</label>
-                        <input
-                            type="text"
-                            #TaskWorkItem_ActualHours="ngModel"
-                            id="TaskWorkItem_ActualHours"
-                            class="form-control"
-                            [(ngModel)]="taskWorkItem.actualHours"
-                            name="ActualHours"
-                            minlength="1"
-                            maxlength="50"
-                        />
-                        <validation-messages [formCtrl]="TaskWorkItem_ActualHours"></validation-messages>
-                    </div>
+                    
 
-                    <div class="my-3">
-                        <label class="form-label" for="TaskWorkItem_StartDate">{{ l('StartDate') }}</label>
-                        <input
-                            class="form-control m-input"
-                            #TaskWorkItem_StartDate
-                            type="datetime"
-                            bsDatepicker
-                            datePickerLuxonModifier
-                            [(date)]="taskWorkItem.startDate"
-                            id="TaskWorkItem_StartDate"
-                            name="TaskWorkItem_StartDate"
-                        />
-                        <validation-messages [formCtrl]="TaskWorkItem_StartDate"></validation-messages>
-                    </div>
+                    
 
-                    <div class="my-3">
-                        <label class="form-label" for="TaskWorkItem_EndDate">{{ l('EndDate') }}</label>
-                        <!-- <input
-                            class="form-control m-input"
-                            #TaskWorkItem_EndDate
-                            type="datetime"
-                            bsDatepicker
-                            datePickerLuxonModifier
-                            [(date)]="taskWorkItem.endDate"
-                            id="TaskWorkItem_EndDate"
-                            name="TaskWorkItem_EndDate"
-                        /> -->
-                        <input class="form-control m-input" #TaskWorkItem_EndDate type="datetime" bsDatepicker
-                        datePickerLuxonModifier [(date)]="taskWorkItem.endDate" id="TaskWorkItem_EndDate"
-                        name="TaskWorkItem_EndDate" />
+                   
+
                  
-                        <validation-messages [formCtrl]="TaskWorkItem_EndDate"></validation-messages>
-                    </div>
 
-                    <div class="my-3">
-                        <label class="form-label" for="TaskWorkItem_StartTime">{{ l('StartTime') }}</label>
-                        <!-- <input
-                            type="text"
-                            #TaskWorkItem_StartTime="ngModel"
-                            id="TaskWorkItem_StartTime"
-                            class="form-control"
-                            [(ngModel)]="taskWorkItem.startTime"
-                            name="StartTime"
-                            minlength="1"
-                            maxlength="50"
-                        />
-                        <validation-messages [formCtrl]="TaskWorkItem_StartTime"></validation-messages> -->
-                        <input class="form-control" [(ngModel)]="taskWorkItem.startTime" name="StartTime"
-                        [ngxTimepicker]="startTime" aria-label="12hr format" type="text" readonly>
-                    <ngx-material-timepicker #startTime (timeSet)="startTimeValue($event)">
-                    </ngx-material-timepicker>
-                    </div>
-
-                    <div class="my-3">
-                        <label class="form-label" for="TaskWorkItem_EndTime">{{ l('EndTime') }}</label>
-                        <!-- <input
-                            type="text"
-                            #TaskWorkItem_EndTime="ngModel"
-                            id="TaskWorkItem_EndTime"
-                            class="form-control"
-                            [(ngModel)]="taskWorkItem.endTime"
-                            name="EndTime"
-                            minlength="1"
-                            maxlength="50"
-                        /> -->
-                        <input class="form-control" [(ngModel)]="taskWorkItem.endTime" name="EndTime"
-                        [ngxTimepicker]="endTime" aria-label="12hr format" type="text" readonly>
-                    <ngx-material-timepicker #endTime (timeSet)="endTimeValue($event)">
-                    </ngx-material-timepicker>
-                        <!-- <validation-messages [formCtrl]="TaskWorkItem_EndTime"></validation-messages> -->
-                    </div>
-
-                    <br />
+                    <!-- <br />
                     <label class="form-check form-check-custom form-check-solid">
                         <input
                             id="TaskWorkItem_OpenOrClosed"
@@ -217,9 +254,13 @@
                             {{ l('OpenOrClosed') }}
                         </span>
                     </label>
-                    <validation-messages [formCtrl]="TaskWorkItem_OpenOrClosed"></validation-messages>
-
-                    <div class="my5">
+                    <validation-messages [formCtrl]="TaskWorkItem_OpenOrClosed"></validation-messages> -->
+                    <div class="my-5 select_button_custom">
+                        <label class="form-label" for="TaskWorkItem_OpenOrClosed">{{ l('OpenOrClosed') }}</label>
+                        <p-selectButton [options]="OpenOrClosedOptions" name="OpenOrClosedOptions" id="TaskWorkItem_OpenOrClosed"
+                            [(ngModel)]="taskWorkItem.openOrClosed" optionLabel="label" optionValue="value"></p-selectButton>
+                    </div>
+                    <div class="my-5">
                         <label class="form-label" for="TaskWorkItem_CompletionPercentage">
                             {{ l('CompletionPercentage') }}
                         </label>

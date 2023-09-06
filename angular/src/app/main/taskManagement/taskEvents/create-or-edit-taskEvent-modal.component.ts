@@ -1,4 +1,4 @@
-﻿import { Component, ViewChild, Injector, Output, EventEmitter, OnInit, ElementRef } from '@angular/core';
+﻿import { Component, ViewChild, Injector, Output, EventEmitter, OnInit, ElementRef, ViewEncapsulation } from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs/operators';
 import {
@@ -13,10 +13,14 @@ import { DateTime } from 'luxon';
 
 import { DateTimeService } from '@app/shared/common/timing/date-time.service';
 import { SelectItem } from 'primeng/api';
+import { appModuleAnimation } from '@shared/animations/routerTransition';
+
 
 @Component({
     selector: 'createOrEditTaskEventModal',
     templateUrl: './create-or-edit-taskEvent-modal.component.html',
+    encapsulation: ViewEncapsulation.None,
+    animations: [appModuleAnimation()],
 })
 export class CreateOrEditTaskEventModalComponent extends AppComponentBase implements OnInit {
     @ViewChild('createOrEditModal', { static: true }) modal: ModalDirective;
@@ -29,7 +33,7 @@ export class CreateOrEditTaskEventModalComponent extends AppComponentBase implem
     taskEvent: CreateOrEditTaskEventDto = new CreateOrEditTaskEventDto();
 
     taskStatusName = '';
-
+    isFromTaskLibrary:boolean=false
     allTaskStatuss: TaskEventTaskStatusLookupTableDto[];
 
     taskStatusOptions: SelectItem[];
@@ -72,13 +76,14 @@ export class CreateOrEditTaskEventModalComponent extends AppComponentBase implem
             //this.taskEvent.status = false;
             this.taskEvent.priority = false;
             this.active = true;
+            this.taskEvent.template=this.isFromTaskLibrary;
             this.modal.show();
         } else {
             this._taskEventsServiceProxy.getTaskEventForEdit(taskEventId).subscribe((result) => {
                 this.taskEvent = result.taskEvent;
 
                 this.taskStatusName = result.taskStatusName;
-
+                this.taskEvent.priority = result.taskEvent.priority;
                 this.active = true;
                 this.modal.show();
             });
@@ -93,7 +98,6 @@ export class CreateOrEditTaskEventModalComponent extends AppComponentBase implem
 
     save(): void {
         this.saving = true;
-
         this._taskEventsServiceProxy
             .createOrEdit(this.taskEvent)
             .pipe(
@@ -161,5 +165,11 @@ export class CreateOrEditTaskEventModalComponent extends AppComponentBase implem
         // if (event.value.length > 0) {
 
         // }
+    }
+    saveAsLibararyEvent(){
+        this.taskEvent.template = !this.taskEvent.template
+    }
+    getcompletionPercentage(event){
+        console.log(event);
     }
 }

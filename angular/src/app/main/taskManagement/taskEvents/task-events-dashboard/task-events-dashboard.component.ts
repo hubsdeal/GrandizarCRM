@@ -11,6 +11,7 @@ import { LazyLoadEvent } from 'primeng/api';
 import { Paginator } from 'primeng/paginator';
 import { Table } from 'primeng/table';
 import { finalize } from 'rxjs/operators';
+import { CreateOrEditTaskEventModalComponent } from '../create-or-edit-taskEvent-modal.component';
 
 
 
@@ -22,6 +23,8 @@ import { finalize } from 'rxjs/operators';
   animations: [appModuleAnimation()]
 })
 export class TaskEventsDashboardComponent extends AppComponentBase implements OnInit, AfterViewInit {
+  @ViewChild('createOrEditTaskEventModal', { static: true })
+    createOrEditTaskEventModal: CreateOrEditTaskEventModalComponent;
   taskEventId: number;
   taskEvent: any;
   docTypes: GetDocumentTypeForViewDto[];
@@ -173,4 +176,8 @@ deleteTaskDocuments(id:number){
     this.notify.info(this.l('DeletedSuccessfully'));
   });
 }
+createTaskEvent(): void {
+  this.createOrEditTaskEventModal.show();
+}
+
 }
