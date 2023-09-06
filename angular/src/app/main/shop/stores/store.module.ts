@@ -17,6 +17,7 @@ import { OrderModule } from '@app/main/orderManagement/orders/order.module';
 import { StoreProductMapModule } from '../storeProductMaps/storeProductMap.module';
 import { StoreContactMapModule } from '../storeContactMaps/storeContactMap.module';
 import { StoreMarketplaceCommissionSettingModule } from '../storeMarketplaceCommissionSettings/storeMarketplaceCommissionSetting.module';
+import { StoreTaskMapModule } from '@app/main/taskManagement/storeTaskMaps/storeTaskMap.module';
 
 @NgModule({
     declarations: [
@@ -33,7 +34,8 @@ import { StoreMarketplaceCommissionSettingModule } from '../storeMarketplaceComm
         OrderModule,
         StoreProductMapModule,
         StoreContactMapModule,
-        StoreMarketplaceCommissionSettingModule
+        StoreMarketplaceCommissionSettingModule,
+        StoreTaskMapModule
     ],
     exports:[
         MyStoresComponent,

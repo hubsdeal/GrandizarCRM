@@ -29,7 +29,7 @@ export class CreateOrEditStoreTaskMapModalComponent extends AppComponentBase imp
 
     storeName = '';
     taskEventName = '';
-
+    storeId:number;
     constructor(
         injector: Injector,
         private _storeTaskMapsServiceProxy: StoreTaskMapsServiceProxy,
@@ -50,7 +50,7 @@ export class CreateOrEditStoreTaskMapModalComponent extends AppComponentBase imp
         } else {
             this._storeTaskMapsServiceProxy.getStoreTaskMapForEdit(storeTaskMapId).subscribe((result) => {
                 this.storeTaskMap = result.storeTaskMap;
-
+                this.storeId = result.storeTaskMap.storeId;
                 this.storeName = result.storeName;
                 this.taskEventName = result.taskEventName;
 
@@ -62,7 +62,7 @@ export class CreateOrEditStoreTaskMapModalComponent extends AppComponentBase imp
 
     save(): void {
         this.saving = true;
-
+        this.storeTaskMap.storeId = this.storeId;
         this._storeTaskMapsServiceProxy
             .createOrEdit(this.storeTaskMap)
             .pipe(

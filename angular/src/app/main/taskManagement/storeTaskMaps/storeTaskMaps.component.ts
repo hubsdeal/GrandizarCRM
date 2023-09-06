@@ -1,5 +1,5 @@
 ﻿import { AppConsts } from '@shared/AppConsts';
-import { Component, Injector, ViewEncapsulation, ViewChild } from '@angular/core';
+import { Component, Injector, ViewEncapsulation, ViewChild, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StoreTaskMapsServiceProxy, StoreTaskMapDto } from '@shared/service-proxies/service-proxies';
 import { NotifyService } from 'abp-ng2-module';
@@ -19,6 +19,7 @@ import { DateTime } from 'luxon';
 import { DateTimeService } from '@app/shared/common/timing/date-time.service';
 
 @Component({
+    selector: 'app-storeTaskMaps',
     templateUrl: './storeTaskMaps.component.html',
     encapsulation: ViewEncapsulation.None,
     animations: [appModuleAnimation()],
@@ -35,6 +36,11 @@ export class StoreTaskMapsComponent extends AppComponentBase {
     filterText = '';
     storeNameFilter = '';
     taskEventNameFilter = '';
+
+    @Input() storeId:number;
+    value: number = 50;
+
+    selectedAll: boolean = false;
 
     constructor(
         injector: Injector,
@@ -59,7 +65,8 @@ export class StoreTaskMapsComponent extends AppComponentBase {
         this.primengTableHelper.showLoadingIndicator();
 
         this._storeTaskMapsServiceProxy
-            .getAll(
+            .getAllByStoreId(
+                this.storeId,
                 this.filterText,
                 this.storeNameFilter,
                 this.taskEventNameFilter,
@@ -79,6 +86,7 @@ export class StoreTaskMapsComponent extends AppComponentBase {
     }
 
     createStoreTaskMap(): void {
+        this.createOrEditStoreTaskMapModal.storeId = this.storeId;
         this.createOrEditStoreTaskMapModal.show();
     }
 
@@ -107,5 +115,17 @@ export class StoreTaskMapsComponent extends AppComponentBase {
         this.taskEventNameFilter = '';
 
         this.getStoreTaskMaps();
+    }
+
+    onChangesSelectAll() {
+        for (var i = 0; i < this.primengTableHelper.records.length; i++) {
+            this.primengTableHelper.records[i].selected = this.selectedAll;
+        }
+    }
+  
+    checkIfAllSelected() {
+        this.selectedAll = this.primengTableHelper.records.every(function (item: any) {
+            return item.selected == true;
+        })
     }
 }

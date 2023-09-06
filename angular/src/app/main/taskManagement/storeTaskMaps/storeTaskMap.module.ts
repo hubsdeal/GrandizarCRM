@@ -18,5 +18,13 @@ import { StoreTaskMapTaskEventLookupTableModalComponent } from './storeTaskMap-t
         StoreTaskMapTaskEventLookupTableModalComponent,
     ],
     imports: [AppSharedModule, StoreTaskMapRoutingModule, AdminSharedModule],
+    exports: [
+        StoreTaskMapsComponent,
+        CreateOrEditStoreTaskMapModalComponent,
+        ViewStoreTaskMapModalComponent,
+
+        StoreTaskMapStoreLookupTableModalComponent,
+        StoreTaskMapTaskEventLookupTableModalComponent,
+    ]
 })
 export class StoreTaskMapModule {}

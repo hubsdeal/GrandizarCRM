@@ -2738,7 +2738,7 @@
 
                                 <div class="tab-content" id="myTabContent">
                                     <div class="tab-pane fade show active" id="m_tasks_m" role="tabpanel">
-                                        <app-my-task-events></app-my-task-events>
+                                        <app-storeTaskMaps *ngIf="store" [storeId]="store.id"></app-storeTaskMaps> 
                                     </div>
                                     <div class="tab-pane fade" id="m_notes_m" role="tabpanel">
                                         <app-storeNotes *ngIf="store" [storeId]="store.id"></app-storeNotes>
