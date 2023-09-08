@@ -14,7 +14,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-xl-12">
+                        <div class="col-xl-3">
                             <!--begin::Input group-->
                             <div class="mb-7">
                                 <div class="image-input image-input-outline"
@@ -39,27 +39,30 @@
                             </div>
                             <!--end::Input group-->
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xl-6">
-                            <div class="my-3">
-                                <label class="form-label" for="Employee_FirstName">{{ l('FirstName') }} *</label>
-                                <input type="text" #Employee_FirstName="ngModel" id="Employee_FirstName"
-                                    class="form-control" [(ngModel)]="employee.firstName" name="FirstName" minlength="1"
-                                    maxlength="128" required />
-                                <validation-messages [formCtrl]="Employee_FirstName"></validation-messages>
+                        <div class="col-xl-9">
+                            <div class="row">
+                                <div class="col-xl-12">
+                                    <div class="my-3">
+                                        <label class="form-label" for="Employee_FirstName">{{ l('FirstName') }} *</label>
+                                        <input type="text" #Employee_FirstName="ngModel" id="Employee_FirstName"
+                                            class="form-control" [(ngModel)]="employee.firstName" name="FirstName" minlength="1"
+                                            maxlength="128" required />
+                                        <validation-messages [formCtrl]="Employee_FirstName"></validation-messages>
+                                    </div>
+                                </div>
+                                <div class="col-xl-12">
+                                    <div class="my-3">
+                                        <label class="form-label" for="Employee_LastName">{{ l('LastName') }}</label>
+                                        <input type="text" #Employee_LastName="ngModel" id="Employee_LastName"
+                                            class="form-control" [(ngModel)]="employee.lastName" name="LastName" minlength="1"
+                                            maxlength="128" />
+                                        <validation-messages [formCtrl]="Employee_LastName"></validation-messages>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-xl-6">
-                            <div class="my-3">
-                                <label class="form-label" for="Employee_LastName">{{ l('LastName') }}</label>
-                                <input type="text" #Employee_LastName="ngModel" id="Employee_LastName"
-                                    class="form-control" [(ngModel)]="employee.lastName" name="LastName" minlength="1"
-                                    maxlength="128" />
-                                <validation-messages [formCtrl]="Employee_LastName"></validation-messages>
-                            </div>
-                        </div>
                     </div>
+                    
                     <div class="row">
                         <div class="col-xl-6">
                             <div class="my-3">

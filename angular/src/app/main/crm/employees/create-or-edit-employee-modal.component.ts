@@ -36,7 +36,7 @@ export class CreateOrEditEmployeeModalComponent extends AppComponentBase impleme
     stateName = '';
     countryName = '';
     contactFullName = '';
-    imageSrc: any = 'assets/common/images/c_logo.png';
+    imageSrc: any = '/assets/common/images/sampleProfilePics/noimg.png';
 
     private _uploaderOptions: FileUploaderOptions = {};
     public uploader: FileUploader;
@@ -103,14 +103,7 @@ export class CreateOrEditEmployeeModalComponent extends AppComponentBase impleme
         this.saving = true;
         this.employee.fileToken = fileToken;
         this.employee.name = this.employee.firstName + " " + this.employee.lastName;
-        if (this.employee.mobile || this.employee.officePhone) {
-            this.mobile.nativeElement.dispatchEvent(
-                new KeyboardEvent('keyup', { bubbles: true })
-            );
-            this.phone.nativeElement.dispatchEvent(
-                new KeyboardEvent('keyup', { bubbles: true })
-            );
-        };
+       
 
         //this.employee.departments = this.selectedDepartment;
         this._employeesServiceProxy.createOrEdit(this.employee)
@@ -128,11 +121,11 @@ export class CreateOrEditEmployeeModalComponent extends AppComponentBase impleme
     }
 
     save() {
-        // if (this.uploader.queue != null && this.uploader.queue.length > 0) {
-        //     this.uploader.uploadAll();
-        // } else {
+        if (this.uploader.queue != null && this.uploader.queue.length > 0) {
+            this.uploader.uploadAll();
+        } else {
             this.saveEmployee();
-        //}
+        }
     }
 
     openSelectStateModal() {
@@ -152,7 +145,7 @@ export class CreateOrEditEmployeeModalComponent extends AppComponentBase impleme
     }
     initFileUploader(): void {
 
-        this.uploader = new FileUploader({ url: AppConsts.remoteServiceBaseUrl + '/MediaUpload/UploadPicture' });
+        this.uploader = new FileUploader({ url: AppConsts.remoteServiceBaseUrl + '/api/MediaUpload/UploadPicture' });
         this._uploaderOptions.autoUpload = false;
         this._uploaderOptions.authToken = 'Bearer ' + this._tokenService.getToken();
         this._uploaderOptions.removeAfterUpload = true;
@@ -246,5 +239,7 @@ export class CreateOrEditEmployeeModalComponent extends AppComponentBase impleme
         this.modal.hide();
     }
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        this.initFileUploader();
+    }
 }
