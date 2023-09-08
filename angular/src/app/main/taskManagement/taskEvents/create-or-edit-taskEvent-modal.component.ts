@@ -88,7 +88,7 @@ export class CreateOrEditTaskEventModalComponent extends AppComponentBase implem
         } else {
             this._taskEventsServiceProxy.getTaskEventForEdit(taskEventId).subscribe((result) => {
                 this.taskEvent = result.taskEvent;
-
+                this.taskEventId = result.taskEvent.dependentTaskEventId;
                 this.taskStatusName = result.taskStatusName;
                 this.taskEvent.priority = result.taskEvent.priority;
                 this.active = true;
@@ -105,6 +105,7 @@ export class CreateOrEditTaskEventModalComponent extends AppComponentBase implem
 
     save(): void {
         this.saving = true;
+        this.taskEvent.dependentTaskEventId = this.taskEventId;
         this._taskEventsServiceProxy
             .createOrEdit(this.taskEvent)
             .pipe(

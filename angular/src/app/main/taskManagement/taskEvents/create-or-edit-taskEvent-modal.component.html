@@ -36,7 +36,35 @@
                             ngDefaultControl [style]="{ height: '300px' }" placeholder="'Type here...'"></p-editor>
                     </div>
 
+                    <div class="my-5">
+                        <label class="form-check form-check-custom form-check-solid">
+                            <input id="TaskEvent_hasDependency" #TaskEvent_hasDependency="ngModel"
+                                name="hasDependency" [(ngModel)]="taskEvent.hasDependency" type="checkbox"
+                                class="form-check-input" />
+                            <span class="form-check-label">
+                                {{ l('Has Dependency?') }}
+                            </span>
+                        </label>
+                        <validation-messages [formCtrl]="TaskEvent_hasDependency"></validation-messages>
+                    </div>
 
+                    <div class="my-5" *ngIf="taskEvent?.hasDependency">
+                        <div class="my-3">
+                        <label class="form-label" for="TaskEventName">{{ l('Task Event') }}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="TaskEventName" name="taskEventName"
+                                [(ngModel)]="taskEventName" type="text" disabled />
+                            <button class="btn btn-primary blue" (click)="openSelectTaskEventModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setTaskEventIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                       
+                    </div>
 
                     
 
@@ -244,20 +272,7 @@
                         </div>
                     </div>
 
-                    <div class="my-3">
-                        <label class="form-label" for="TaskEventName">{{ l('Task Event') }}</label>
-                        <div class="input-group">
-                            <input class="form-control" id="TaskEventName" name="taskEventName"
-                                [(ngModel)]="taskEventName" type="text" disabled />
-                            <button class="btn btn-primary blue" (click)="openSelectTaskEventModal()" type="button">
-                                <i class="fa fa-search"></i>
-                                {{ l('Pick') }}
-                            </button>
-                            <button class="btn btn-danger btn-icon" type="button" (click)="setTaskEventIdNull()">
-                                <i class="fa fa-times"></i>
-                            </button>
-                        </div>
-                    </div>
+                    
                     <input class="form-control" name="taskEventId"
                         [(ngModel)]="taskEventId" type="text" required hidden />
                 </div>

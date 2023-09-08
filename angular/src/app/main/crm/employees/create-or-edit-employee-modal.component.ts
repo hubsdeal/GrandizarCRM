@@ -1,7 +1,7 @@
 ﻿import { Component, ViewChild, Injector, Output, EventEmitter, OnInit, ElementRef } from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs/operators';
-import { EmployeesServiceProxy, CreateOrEditEmployeeDto } from '@shared/service-proxies/service-proxies';
+import { EmployeesServiceProxy, CreateOrEditEmployeeDto, CreateOrEditMediaLibraryDto } from '@shared/service-proxies/service-proxies';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { DateTime } from 'luxon';
 
@@ -9,6 +9,9 @@ import { DateTimeService } from '@app/shared/common/timing/date-time.service';
 import { EmployeeStateLookupTableModalComponent } from './employee-state-lookup-table-modal.component';
 import { EmployeeCountryLookupTableModalComponent } from './employee-country-lookup-table-modal.component';
 import { EmployeeContactLookupTableModalComponent } from './employee-contact-lookup-table-modal.component';
+import { FileItem, FileUploader, FileUploaderOptions } from 'ng2-file-upload';
+import { IAjaxResponse, TokenService } from 'abp-ng2-module';
+import { AppConsts } from '@shared/AppConsts';
 
 @Component({
     selector: 'createOrEditEmployeeModal',
@@ -33,11 +36,22 @@ export class CreateOrEditEmployeeModalComponent extends AppComponentBase impleme
     stateName = '';
     countryName = '';
     contactFullName = '';
+    imageSrc: any = 'assets/common/images/c_logo.png';
 
+    private _uploaderOptions: FileUploaderOptions = {};
+    public uploader: FileUploader;
+    public temporaryPictureUrl: string;
+    mediaLibrary: CreateOrEditMediaLibraryDto = new CreateOrEditMediaLibraryDto();
+
+    @ViewChild('mobile') mobile: ElementRef;
+    @ViewChild('phone') phone: ElementRef;
+    mediaLibraryName = '';
     constructor(
         injector: Injector,
         private _employeesServiceProxy: EmployeesServiceProxy,
-        private _dateTimeService: DateTimeService
+        private _dateTimeService: DateTimeService,
+        private _tokenService: TokenService,
+       // private _employeeDepartmentMapServiceProxy: EmployeeDepartmentMapsServiceProxy
     ) {
         super(injector);
     }
@@ -68,21 +82,57 @@ export class CreateOrEditEmployeeModalComponent extends AppComponentBase impleme
         }
     }
 
-    save(): void {
-        this.saving = true;
+    // save(): void {
+    //     this.saving = true;
 
-        this._employeesServiceProxy
-            .createOrEdit(this.employee)
-            .pipe(
-                finalize(() => {
-                    this.saving = false;
-                })
-            )
-            .subscribe(() => {
+    //     this._employeesServiceProxy
+    //         .createOrEdit(this.employee)
+    //         .pipe(
+    //             finalize(() => {
+    //                 this.saving = false;
+    //             })
+    //         )
+    //         .subscribe(() => {
+    //             this.notify.info(this.l('SavedSuccessfully'));
+    //             this.close();
+    //             this.modalSave.emit(null);
+    //         });
+    // }
+    saveEmployee(fileToken?: string): void {
+        debugger;
+        this.saving = true;
+        this.employee.fileToken = fileToken;
+        this.employee.name = this.employee.firstName + " " + this.employee.lastName;
+        if (this.employee.mobile || this.employee.officePhone) {
+            this.mobile.nativeElement.dispatchEvent(
+                new KeyboardEvent('keyup', { bubbles: true })
+            );
+            this.phone.nativeElement.dispatchEvent(
+                new KeyboardEvent('keyup', { bubbles: true })
+            );
+        };
+
+        //this.employee.departments = this.selectedDepartment;
+        this._employeesServiceProxy.createOrEdit(this.employee)
+            .pipe(finalize(() => { this.saving = false; }))
+            .subscribe((result) => {
+                // this._employeeDepartmentMapServiceProxy.saveMultipleDepartmentByEmployee(result,this.selectedDepartment.map(x=>x.id)).subscribe(r=>{
+                //     this.notify.info(this.l('SavedSuccessfully'));
+                //     this.close();
+                //     this.modalSave.emit(null);
+                // })
                 this.notify.info(this.l('SavedSuccessfully'));
                 this.close();
                 this.modalSave.emit(null);
             });
+    }
+
+    save() {
+        // if (this.uploader.queue != null && this.uploader.queue.length > 0) {
+        //     this.uploader.uploadAll();
+        // } else {
+            this.saveEmployee();
+        //}
     }
 
     openSelectStateModal() {
@@ -100,7 +150,71 @@ export class CreateOrEditEmployeeModalComponent extends AppComponentBase impleme
         this.employeeContactLookupTableModal.displayName = this.contactFullName;
         this.employeeContactLookupTableModal.show();
     }
+    initFileUploader(): void {
 
+        this.uploader = new FileUploader({ url: AppConsts.remoteServiceBaseUrl + '/MediaUpload/UploadPicture' });
+        this._uploaderOptions.autoUpload = false;
+        this._uploaderOptions.authToken = 'Bearer ' + this._tokenService.getToken();
+        this._uploaderOptions.removeAfterUpload = true;
+        this.uploader.onAfterAddingFile = (file) => {
+            file.withCredentials = false;
+        };
+
+        this.uploader.onBuildItemForm = (fileItem: FileItem, form: any) => {
+            form.append('FileToken', this.guid());
+        };
+
+        this.uploader.onSuccessItem = (item, response, status) => {
+            const resp = <IAjaxResponse>JSON.parse(response);
+            if (resp.success) {
+                this.saveEmployee(resp.result.fileToken);
+            } else {
+                this.message.error(resp.error.message);
+            }
+        };
+
+        this.uploader.setOptions(this._uploaderOptions);
+    }
+
+    fileChangeEvent(event: any) {
+        if (event.target.files && event.target.files[0]) {
+            var reader = new FileReader();
+
+            reader.readAsDataURL(event.target.files[0]); // read file as data url
+
+            reader.onload = (event) => { // called once readAsDataURL is completed
+
+                this.imageSrc = event.target.result;
+            }
+        }
+    }
+
+    guid(): string {
+        function s4() {
+            return Math.floor((1 + Math.random()) * 0x10000)
+                .toString(16)
+                .substring(1);
+        }
+        return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+    }
+
+    // saveAndMakeUser() {
+    //     this.savingUser = true;
+
+    //     this.employee.isRequestToMakeUser = true;
+    //     this.employee.name = this.employee.firstName + " " + this.employee.lastName;
+    //     this._employeesServiceProxy.createOrEdit(this.employee)
+    //         .pipe(finalize(() => { this.saving = false; }))
+    //         .subscribe((result) => {
+    //             this._employeeDepartmentMapServiceProxy.saveMultipleDepartmentByEmployee(result,this.selectedDepartment.map(x=>x.id)).subscribe(r=>{
+    //                 this.notify.info(this.l('SavedSuccessfully'));
+    //                 this.close();
+    //                 this.modalSave.emit(null);
+    //                 this.employee.isRequestToMakeUser = false;
+    //             })
+               
+    //         });
+    // }
     setStateIdNull() {
         this.employee.stateId = null;
         this.stateName = '';
