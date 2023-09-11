@@ -14,6 +14,9 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { GeocodingService } from '@app/shared/chat-gpt-response-modal/services/chat-gpt-lat-long.service';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { StoreMasterTagSettingsServiceProxy } from '@shared/service-proxies/service-proxies';
+import { CreateOrEditStoreTaskMapModalComponent } from '@app/main/taskManagement/storeTaskMaps/create-or-edit-storeTaskMap-modal.component';
+import { CreateOrEditStoreNoteModalComponent } from '../../storeNotes/create-or-edit-storeNote-modal.component';
+import { CreateOrEditStoreAccountTeamModalComponent } from '../../storeAccountTeams/create-or-edit-storeAccountTeam-modal.component';
 
 @Component({
   selector: 'app-store-dashboard',
@@ -23,8 +26,14 @@ import { StoreMasterTagSettingsServiceProxy } from '@shared/service-proxies/serv
 export class StoreDashboardComponent extends AppComponentBase implements OnInit, AfterViewInit {
   @ViewChild('createOrEditStoreMediaModal', { static: true })
   createOrEditStoreMediaModal: CreateOrEditStoreMediaModalComponent;
+  @ViewChild('createOrEditStoreNoteModal', { static: true })
+  createOrEditStoreNoteModal: CreateOrEditStoreNoteModalComponent;
+  @ViewChild('createOrEditStoreTaskMapModal', { static: true })
+  createOrEditStoreTaskMapModal: CreateOrEditStoreTaskMapModalComponent;
+  @ViewChild('createOrEditStoreAccountTeamModal', { static: true })
+  createOrEditStoreAccountTeamModal: CreateOrEditStoreAccountTeamModalComponent;
   saving = false;
-  storeId: number; 
+  storeId: number;
   productShortDesc: string;
   modalTile: string
   bindingData: any;
@@ -35,7 +44,7 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
   tags: string[] = [];
 
   chatGPTPromt: string;
-  
+
   countView: StoreTopStatsForViewDto = new StoreTopStatsForViewDto();
   stateName: string;
   countryName: string;
@@ -91,7 +100,7 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
       value: "Customer Group"
     }
   ];
-  storeTagSettingCategoryId:number;
+  storeTagSettingCategoryId: number;
 
   constructor(
     injector: Injector,
@@ -342,27 +351,92 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
     }
   }
 
-  async getCoordinates() {
-    try {
-      if (this.selectedCountry && this.selectedState && this.store.city && this.store.zipCode) {
-        this.chatGPTPromt = 'Give me only the Latitude and longitude for ' + this.selectedCountry.displayName + ', ' + this.selectedState.displayName + ', ' + this.store.city + ', ' + this.store.zipCode + ' as json format as Key latitude and longitude';
-      } else if (this.selectedCountry && this.selectedState && this.store.city) {
-        this.chatGPTPromt = 'Give me only the Latitude and longitude for ' + this.selectedCountry.displayName + ', ' + this.selectedState.displayName + ', ' + this.store.city + ' as json format as Key latitude and longitude';
-      } else if (this.selectedCountry && this.selectedState) {
-        this.chatGPTPromt = 'Give me only the Latitude and longitude for ' + this.selectedCountry.displayName + ', ' + this.selectedState.displayName + ' as json format as Key latitude and longitude';
-      } else if (this.selectedCountry) {
-        this.chatGPTPromt = 'Give me only the Latitude and longitude for ' + this.selectedCountry.displayName + ' as json format as Key latitude and longitude';
+  // async getCoordinates() {
+  //   try {
+  //     if (this.selectedCountry && this.selectedState && this.store.city && this.store.zipCode) {
+  //       this.chatGPTPromt = 'Give me only the Latitude and longitude for ' + this.selectedCountry.displayName + ', ' + this.selectedState.displayName + ', ' + this.store.city + ', ' + this.store.zipCode + ' as json format as Key latitude and longitude';
+  //     } else if (this.selectedCountry && this.selectedState && this.store.city) {
+  //       this.chatGPTPromt = 'Give me only the Latitude and longitude for ' + this.selectedCountry.displayName + ', ' + this.selectedState.displayName + ', ' + this.store.city + ' as json format as Key latitude and longitude';
+  //     } else if (this.selectedCountry && this.selectedState) {
+  //       this.chatGPTPromt = 'Give me only the Latitude and longitude for ' + this.selectedCountry.displayName + ', ' + this.selectedState.displayName + ' as json format as Key latitude and longitude';
+  //     } else if (this.selectedCountry) {
+  //       this.chatGPTPromt = 'Give me only the Latitude and longitude for ' + this.selectedCountry.displayName + ' as json format as Key latitude and longitude';
+  //     }
+  //     console.log(this.chatGPTPromt);
+  //     const coordinates = await this.geocodingService.invokeGPT(this.chatGPTPromt);
+  //     console.log('Coordinates:', coordinates);
+  //     if (coordinates) {
+  //       this.store.latitude = coordinates.latitude;
+  //       this.store.longitude = coordinates.longitude;
+  //     }
+  //   } catch (error) {
+  //     console.error('Error:', error);
+  //   }
+  // }
+
+  openAiModalForLatLong(fieldName: string): void {
+    const storeName = this.store.name;
+    if (this.selectedCountry && this.selectedState && this.store.city && this.store.zipCode) {
+      this.chatGPTPromt = `Give me only the Latitude and longitude for 
+    Country: ${this.selectedCountry.displayName}, 
+    State: ${this.selectedState.displayName}, 
+    City: ${this.store.city}, 
+    Zipcode: ${this.store.zipCode} 
+    as json format as Key latitude and longitude`;
+    } else if (this.selectedCountry && this.selectedState && this.store.city) {
+      this.chatGPTPromt = `Give me only the Latitude and longitude for 
+    Country: ${this.selectedCountry.displayName}, 
+    State: ${this.selectedState.displayName}, 
+    City: ${this.store.city} 
+    as json format as Key latitude and longitude`;
+    } else if (this.selectedCountry && this.selectedState) {
+      this.chatGPTPromt = `Give me only the Latitude and longitude for 
+    Country: ${this.selectedCountry.displayName}, 
+    State: ${this.selectedState.displayName} 
+    as json format as Key latitude and longitude`;
+    } else if (this.selectedCountry) {
+      this.chatGPTPromt = `Give me only the Latitude and longitude for 
+    Country: ${this.selectedCountry.displayName} 
+    as json format as Key latitude and longitude`;
+    }
+
+    var modalTitle = `AI Text Generator - Store ${fieldName}`;
+    const dialogRef = this.dialog.open(ChatGptResponseModalComponent, {
+      data: { promtFromAnotherComponent: this.chatGPTPromt, feildName: fieldName, modalTitle: modalTitle },
+      width: '1100px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result.data != null) {
+        const responseText = this.extractCoordinates(result.data);
+        if (responseText) {
+          this.store.latitude = responseText.latitude;
+          this.store.longitude = responseText.longitude;
+        }
       }
-      console.log(this.chatGPTPromt);
-      const coordinates = await this.geocodingService.invokeGPT(this.chatGPTPromt);
-      console.log('Coordinates:', coordinates);
-      if (coordinates) {
-        this.store.latitude = coordinates.latitude;
-        this.store.longitude = coordinates.longitude;
+    });
+  }
+
+
+  private extractCoordinates(responseText: string): { latitude: number, longitude: number } {
+    // Remove HTML tags from the response text
+    const cleanText = responseText.replace(/<[^>]+>/g, '');
+
+    try {
+      const response = JSON.parse(cleanText);
+
+      if (response.latitude && response.longitude) {
+        const latitude = response.latitude;
+        const longitude = response.longitude;
+        return { latitude, longitude };
       }
     } catch (error) {
-      console.error('Error:', error);
+      // JSON parsing failed, handle the error as needed
+      throw new Error('Unable to parse the response as JSON');
     }
+
+    // If the response does not contain the latitude and longitude, return null or throw an error
+    throw new Error('Unable to extract coordinates from the response');
   }
 
   drop(event: CdkDragDrop<string[]>) {
@@ -376,4 +450,24 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
     }
   }
 
+  createStoreTaskMap(): void {
+    this.createOrEditStoreTaskMapModal.storeId = this.storeId;
+    this.createOrEditStoreTaskMapModal.show();
+  }
+
+  getStoreTaskMaps() {
+    window.location.reload();
+  }
+
+  createStoreNote(): void {
+    this.createOrEditStoreNoteModal.storeId = this.storeId;
+    this.createOrEditStoreNoteModal.show();
+  }
+  getAllStoreNotes() {
+    window.location.reload();
+  }
+
+  createStoreAccountTeam(): void {
+    this.createOrEditStoreAccountTeamModal.show();
+  }
 }

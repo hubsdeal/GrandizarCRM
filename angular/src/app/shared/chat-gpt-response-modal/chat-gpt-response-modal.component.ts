@@ -50,9 +50,22 @@ export class ChatGptResponseModalComponent implements OnInit {
     if (promptText.length < 2)
       return;
     try {
+
+      // this.response = undefined;
+      // const configuration = new Configuration({
+      //   apiKey: environment.openAIapiKey,
+      //   organization: environment.OpenAIOrgId,
+      // });
+      // configuration.baseOptions.headers = {
+      //   Authorization: "Bearer " + configuration.apiKey,
+      // };
+      // let openai = new OpenAIApi(configuration);
+
+
       this.response = undefined;
       let configuration: Configuration;
       configuration = new Configuration({ apiKey: environment.openAIapiKey });
+      delete configuration.baseOptions.headers['User-Agent'];
       let openai = new OpenAIApi(configuration);
 
       let requestData = {

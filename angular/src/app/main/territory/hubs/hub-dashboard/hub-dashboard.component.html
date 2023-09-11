@@ -452,6 +452,10 @@
                                                             class="image-input-wrapper w-125px h-125px"
                                                             [style.background-image]="'url(' + imageSrc + ')'">
                                                         </div>
+                                                        <div *ngIf="!imageSrc"
+                                                            class="image-input-wrapper w-125px h-125px"
+                                                            style="background-image: url(assets/common/images/location.png)">
+                                                        </div>
                                                         <label
                                                             class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
                                                             data-kt-image-input-action="change" data-bs-toggle="tooltip"
@@ -649,8 +653,8 @@
                                                     </div>
                                                     <div class="cold-flex align-items-end">
                                                         <div class="d-flex align-items-end">
-                                                            <a href="javascript:;" (click)="getCoordinates()"
-                                                                class="btn btn mb-0 ms-4 fw-bold btn-primary">
+                                                            <a href="javascript:;" (click)="getCoordinates('Latitude and Longitude')"
+                                                                class="btn btn mb-0 ms-0 mb-4 fw-bold btn-primary">
                                                                 <i class="fa fa-map-marker"></i> Get Lat. Long. Data
                                                             </a>
                                                         </div>

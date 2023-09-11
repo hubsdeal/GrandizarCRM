@@ -18,5 +18,13 @@ import { StoreAccountTeamEmployeeLookupTableModalComponent } from './storeAccoun
         StoreAccountTeamEmployeeLookupTableModalComponent,
     ],
     imports: [AppSharedModule, StoreAccountTeamRoutingModule, AdminSharedModule],
+    exports:[
+        StoreAccountTeamsComponent,
+        CreateOrEditStoreAccountTeamModalComponent,
+        ViewStoreAccountTeamModalComponent,
+
+        StoreAccountTeamStoreLookupTableModalComponent,
+        StoreAccountTeamEmployeeLookupTableModalComponent,
+    ]
 })
 export class StoreAccountTeamModule {}

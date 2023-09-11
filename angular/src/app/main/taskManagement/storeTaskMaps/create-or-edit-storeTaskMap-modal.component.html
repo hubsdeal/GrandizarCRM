@@ -5,15 +5,173 @@
             <form *ngIf="active" #storeTaskMapForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
                 <div class="modal-header">
                     <h4 class="modal-title">
-                        <span *ngIf="storeTaskMap.id">{{ l('EditStoreTaskMap') }}</span>
-                        <span *ngIf="!storeTaskMap.id">{{ l('CreateNewStoreTaskMap') }}</span>
+                        <span *ngIf="storeTaskMap.id">{{ l('Edit Store Task') }}</span>
+                        <span *ngIf="!storeTaskMap.id">{{ l('Create Store Task') }}</span>
                     </h4>
 
                     <button type="button" class="btn-close" (click)="close()" aria-label="Close"
                         [disabled]="saving"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="my-3" *ngIf="!storeId">
+                    <div class="my-5 p_filter" *ngIf="!isFromTaskLibrary">
+                        <label class="form-label" for="team">{{ l('Select from Template') }}</label>
+                        <p-dropdown [options]="allTemplate" [filter]="true" [virtualScroll]="true"
+                            placeholder="Select from Template" [itemSize]="30" name="displayName"
+                            optionLabel="displayName" optionId="id" [(ngModel)]="selectedTemplate" filterBy="displayName"
+                            [style]="{ width: '100%' }" (onChange)="onTemplateSelect($event)"></p-dropdown>
+                    </div>
+                    <div class="my-5">
+                        <label class="form-label" for="TaskEvent_Name">{{ l('Task Title') }} *</label>
+                        <input type="text" #TaskEvent_Name="ngModel" id="TaskEvent_Name" class="form-control"
+                            [(ngModel)]="taskEvent.name" name="Name" minlength="1" maxlength="2048" required />
+                        <validation-messages [formCtrl]="TaskEvent_Name"></validation-messages>
+                    </div>
+                    <div class="my-5">
+                        <label class="form-label" for="TaskEvent_Description">{{ l('Description') }}</label>
+                        <p-editor id="description" name="description" [(ngModel)]="taskEvent.description"
+                            ngDefaultControl [style]="{ height: '300px' }" placeholder="'Type here...'"></p-editor>
+                    </div>
+
+                    <div class="my-5">
+                        <label class="form-check form-check-custom form-check-solid">
+                            <input id="TaskEvent_hasDependency" #TaskEvent_hasDependency="ngModel"
+                                name="hasDependency" [(ngModel)]="taskEvent.hasDependency" type="checkbox"
+                                class="form-check-input" />
+                            <span class="form-check-label">
+                                {{ l('Has Dependency?') }}
+                            </span>
+                        </label>
+                        <validation-messages [formCtrl]="TaskEvent_hasDependency"></validation-messages>
+                    </div>
+
+                    <div class="my-5" *ngIf="taskEvent?.hasDependency">
+                        <div class="my-3">
+                        <label class="form-label" for="TaskEventName">{{ l('Task Event') }}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="TaskEventName" name="taskEventName"
+                                [(ngModel)]="taskEventName" type="text" disabled />
+                            <button class="btn btn-primary blue" (click)="openSelectTaskEventModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setTaskEventIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                       
+                    </div>
+
+                    <div class="my-5 select_button_custom">
+                        <label class="form-label" for="TaskStatusName">{{ l('Priority') }}</label>
+                        <p-selectButton [options]="priorityOptions" name="priorityOptions" id="priorityOptions"
+                            [(ngModel)]="taskEvent.priority" optionLabel="label" optionValue="value"></p-selectButton>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-6" *ngIf="!isFromTaskLibrary">
+                            <div class="my-5">
+                                <label class="form-label" for="TaskEvent_EventDate">{{ l('Start Date') }}</label>
+                                <input class="form-control m-input" #TaskEvent_EventDate type="datetime" bsDatepicker
+                                    datePickerLuxonModifier [(date)]="taskEvent.eventDate" id="TaskEvent_EventDate"
+                                    name="TaskEvent_EventDate" />
+                                <validation-messages [formCtrl]="TaskEvent_EventDate"></validation-messages>
+                            </div>
+                        </div>
+                        <div class="col-xl-6" *ngIf="!isFromTaskLibrary">
+                            <div class="my-5">
+                                <label class="form-label" for="TaskEvent_EndDate">{{ l('End Date') }}</label>
+                                <input class="form-control m-input" #TaskEvent_EndDate type="datetime" bsDatepicker
+                                    datePickerLuxonModifier [(date)]="taskEvent.endDate" id="TaskEvent_EndDate"
+                                    name="TaskEvent_EndDate" />
+                                <validation-messages [formCtrl]="TaskEvent_EndDate"></validation-messages>
+                            </div>
+                        </div>
+                        <div class="col-xl-6" *ngIf="!isFromTaskLibrary">
+                            <div class="my-5">
+                                <label class="form-label" for="TaskEvent_StartTime">{{ l('Start Time') }}</label>
+                                <input class="form-control" [(ngModel)]="taskEvent.startTime" name="StartTime"
+                                    [ngxTimepicker]="startTime" aria-label="12hr format" type="text" readonly>
+                                <ngx-material-timepicker #startTime (timeSet)="startTimeValue($event)">
+                                </ngx-material-timepicker>
+                            </div>
+                        </div>
+                        <div class="col-xl-6" *ngIf="!isFromTaskLibrary">
+                            <div class="my-5">
+                                <label class="form-label" for="TaskEvent_EndTime">{{ l('End Time') }}</label>
+                                <input class="form-control" [(ngModel)]="taskEvent.endTime" name="EndTime"
+                                    [ngxTimepicker]="endTime" aria-label="12hr format" type="text" readonly>
+                                <ngx-material-timepicker #endTime (timeSet)="endTimeValue($event)">
+                                </ngx-material-timepicker>
+                            </div>
+                        </div>
+                        <div class="col-xl-6" *ngIf="!isFromTaskLibrary">
+                            <div class="my-5">
+                                <label class="form-label" for="TaskEvent_EstimatedTime">{{ l('Estimated Hours')
+                                    }}</label>
+                                <input type="text" #TaskEvent_EstimatedTime="ngModel" id="TaskEvent_EstimatedTime"
+                                    class="form-control" [(ngModel)]="taskEvent.estimatedTime" name="EstimatedTime"
+                                    minlength="1" maxlength="50" />
+                                <validation-messages [formCtrl]="TaskEvent_EstimatedTime"></validation-messages>
+                            </div>
+                        </div>
+                        <div class="col-xl-6" *ngIf="!isFromTaskLibrary">
+                            <div class="my-5">
+                                <label class="form-label" for="TaskEvent_ActualTime">{{ l('Actual Hours') }}</label>
+                                <input type="text" #TaskEvent_ActualTime="ngModel" id="TaskEvent_ActualTime"
+                                    class="form-control" [(ngModel)]="taskEvent.actualTime" name="ActualTime"
+                                    minlength="1" maxlength="50" />
+                                <validation-messages [formCtrl]="TaskEvent_ActualTime"></validation-messages>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-md-6">
+                            <div class="my-5" *ngIf="!isFromTaskLibrary">
+                                <label class="form-label" for="TaskStatusName">{{ l('Task Status') }}</label>
+                                <select name="taskEvent.taskStatusId" [(ngModel)]="taskEvent.taskStatusId" class="form-select">
+                                    <option value="">{{ l('SelectATaskStatus') }}</option>
+                                    <option *ngFor="let item of allTaskStatuss" value="{{ item.id }}">
+                                        {{ item.displayName }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-md-6" *ngIf="!isFromTaskLibrary">
+                            <div class="my-5">
+                                <label class="form-label" for="TaskEvent_completionPercentage">{{ l('Completion Percentage') }}</label>
+                                    <input type="text" pInputText [(ngModel)]="taskEvent.completionPercentage" name="completionPercentage" class="w-full form-control"/>
+                                    <p-slider [(ngModel)]="taskEvent.completionPercentage" name="completionPercentageSlider" class="w-full"></p-slider>
+                            </div>
+                        </div>
+                        <div class="col-md-6" *ngIf="!isFromTaskLibrary">
+                            <div class="my-5">
+                                <label class="form-label" for="TaskEvent_billingAmount">{{ l('Billing Amount') }}</label>
+                                <input type="text" #TaskEvent_billingAmount="ngModel" id="TaskEvent_billingAmount"
+                                    class="form-control" type="number" [(ngModel)]="taskEvent.billingAmount" name="billingAmount"
+                                    minlength="0"  />
+                                <validation-messages [formCtrl]="TaskEvent_billingAmount"></validation-messages>
+                            </div>
+                        </div>
+                        <div class="col-md-6" *ngIf="!isFromTaskLibrary">
+                            <div class="my-5">
+                                <label class="form-label" for="TaskEvent_costAmount">{{ l('Cost Amount') }}</label>
+                                <input type="text" #TaskEvent_costAmount="ngModel" id="TaskEvent_costAmount"
+                                    class="form-control" type="number" [(ngModel)]="taskEvent.costAmount" name="costAmount"
+                                    minlength="0"  />
+                                <validation-messages [formCtrl]="TaskEvent_costAmount"></validation-messages>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="my-5">
+                                <label class="mb-2" for="employee">{{l("Teams")}}</label>
+                                <p-multiSelect name="employee" id="employee" [options]="employeeList"
+                                    [(ngModel)]="selectedEmployees" optionLabel="displayName" [virtualScroll]="true"
+                                    [filter]="true" [itemSize]="34" [maxSelectedLabels]="2"
+                                    class="multiselect-custom-virtual-scroll" (onChange)="onEmployeeSelect($event)">
+                                </p-multiSelect>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- <div class="my-3" *ngIf="!storeId">
                         <label class="form-label" for="StoreName">{{ l('Store') }}</label>
                         <div class="input-group">
                             <input class="form-control" id="StoreName" name="storeName" [(ngModel)]="storeName"
@@ -45,7 +203,7 @@
                         </div>
                     </div>
                     <input class="form-control" name="storeTaskMap.taskEventId" [(ngModel)]="storeTaskMap.taskEventId"
-                        type="text" required hidden />
+                        type="text" required hidden /> -->
                 </div>
                 <div class="modal-footer">
                     <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">

@@ -33,18 +33,18 @@
                     <div class="card-body">
                         <h5 class="mb-4 text-dark">Account Management</h5>
                         <div class="d-flex align-items-center">
-                            <a href="javascript:;" class="btn btn-primary me-3">
+                            <a href="javascript:;" class="btn btn-primary me-3" (click)="createStoreTaskMap()">
                                 <i class="fas fa-list fs-3"></i>
                                 Task
                             </a>
-                            <a href="javascript:;" class="btn btn-info me-3">
+                            <a href="javascript:;" class="btn btn-info me-3" (click)="createStoreNote()">
                                 <i class="fas fa-comment-dots fs-3"></i>
                                 Notes
                             </a>
-                            <a href="javascript:;" class="btn btn-info me-3">
+                            <!-- <a href="javascript:;" class="btn btn-info me-3">
                                 <i class="fas fa-dollar-sign fs-3"></i>
                                 Sales Status
-                            </a>
+                            </a> -->
                             <div class="symbol-group symbol-hover">
                                 <div class="symbol symbol-35px symbol-circle">
                                     <span class="symbol-label bg-warning text-inverse-warning fw-bold">A</span>
@@ -55,7 +55,7 @@
                                 <div class="symbol symbol-35px symbol-circle">
                                     <img alt="Pic" src="/assets/common/images/default-profile-picture.png">
                                 </div>
-                                <a href="javascript:;" class="symbol symbol-35px symbol-circle">
+                                <a href="javascript:;" class="symbol symbol-35px symbol-circle" (click)="createStoreAccountTeam()">
                                     <span class="symbol-label bg-dark text-inverse-dark fs-8 fw-bold">
                                         <i class="fas fa-plus"></i>
                                     </span>
@@ -476,7 +476,7 @@
                                                     </div>
                                                     <div class="col-md-4 d-flex align-items-center pt-3">
                                                         <div class="fv-row mb-0 mt-2 fv-plugins-icon-container">
-                                                            <a href="javascript:;" (click)="getCoordinates()"
+                                                            <a href="javascript:;" (click)="openAiModalForLatLong('Latitude and Longitude')"
                                                                 class="btn btn-outline btn-outline-dashed btn-outline-primary btn-active-light-primary">
                                                                 <i class="fa fa-map-marker"></i> Get Lat. Long. Data
                                                             </a>
@@ -3240,4 +3240,11 @@
     </div>
     <createOrEditStoreMediaModal #createOrEditStoreMediaModal (saveStoreMedia)="uploadStoreMedia($event)">
     </createOrEditStoreMediaModal>
+    <createOrEditStoreTaskMapModal #createOrEditStoreTaskMapModal (modalSave)="getStoreTaskMaps()">
+    </createOrEditStoreTaskMapModal>
+    <createOrEditStoreNoteModal #createOrEditStoreNoteModal (modalSave)="getAllStoreNotes()">
+    </createOrEditStoreNoteModal>
+    <createOrEditStoreAccountTeamModal
+        #createOrEditStoreAccountTeamModal
+    ></createOrEditStoreAccountTeamModal>
 </div>

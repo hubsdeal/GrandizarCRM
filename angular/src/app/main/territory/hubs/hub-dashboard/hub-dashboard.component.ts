@@ -263,30 +263,90 @@ export class HubDashboardComponent extends AppComponentBase implements OnInit, A
 
   }
 
-  async getCoordinates() {
-    try {
-      if (this.selectedCountry && this.selectedState && this.selectedCity && this.selectedCounty) {
-        this.chatGPTPromt = 'Give me only the Latitude and longitude for ' + this.selectedCountry.displayName + ', ' + this.selectedState.displayName + ', ' + this.selectedCounty.displayName + ', ' + this.selectedCity.displayName + ' as json format as Key latitude and longitude';
-      } else if (this.selectedCountry && this.selectedState && this.selectedCounty) {
-        this.chatGPTPromt = 'Give me only the Latitude and longitude for ' + this.selectedCountry.displayName + ', ' + this.selectedState.displayName + ', ' + this.selectedCounty.displayName + ' as json format as Key latitude and longitude';
-      } else if (this.selectedCountry && this.selectedState) {
-        this.chatGPTPromt = 'Give me only the Latitude and longitude for ' + this.selectedCountry.displayName + ', ' + this.selectedState.displayName + ' as json format as Key latitude and longitude';
-      } else if (this.selectedCountry) {
-        this.chatGPTPromt = 'Give me only the Latitude and longitude for ' + this.selectedCountry.displayName + ' as json format as Key latitude and longitude';
-      }
-      console.log(this.chatGPTPromt);
-      const location = 'Give me Latitude and longitude for New York as json format as Key latitude and longitude'; // Replace with the desired location
-      const coordinates = await this.geocodingService.invokeGPT(this.chatGPTPromt);
-      console.log('Coordinates:', coordinates);
-      if (coordinates) {
-        this.hub.latitude = coordinates.latitude;
-        this.hub.longitude = coordinates.longitude;
-      }
-    } catch (error) {
-      console.error('Error:', error);
+  getCoordinates(fieldName: string) {
+    // try {
+    //   if (this.selectedCountry && this.selectedState && this.selectedCity && this.selectedCounty) {
+    //     this.chatGPTPromt = 'Give me only the Latitude and longitude for ' + this.selectedCountry.displayName + ', ' + this.selectedState.displayName + ', ' + this.selectedCounty.displayName + ', ' + this.selectedCity.displayName + ' as json format as Key latitude and longitude';
+    //   } else if (this.selectedCountry && this.selectedState && this.selectedCounty) {
+    //     this.chatGPTPromt = 'Give me only the Latitude and longitude for ' + this.selectedCountry.displayName + ', ' + this.selectedState.displayName + ', ' + this.selectedCounty.displayName + ' as json format as Key latitude and longitude';
+    //   } else if (this.selectedCountry && this.selectedState) {
+    //     this.chatGPTPromt = 'Give me only the Latitude and longitude for ' + this.selectedCountry.displayName + ', ' + this.selectedState.displayName + ' as json format as Key latitude and longitude';
+    //   } else if (this.selectedCountry) {
+    //     this.chatGPTPromt = 'Give me only the Latitude and longitude for ' + this.selectedCountry.displayName + ' as json format as Key latitude and longitude';
+    //   }
+    //   console.log(this.chatGPTPromt);
+    //   const location = 'Give me Latitude and longitude for New York as json format as Key latitude and longitude'; // Replace with the desired location
+    //   const coordinates = await this.geocodingService.invokeGPT(this.chatGPTPromt);
+    //   console.log('Coordinates:', coordinates);
+    //   if (coordinates) {
+    //     this.hub.latitude = coordinates.latitude;
+    //     this.hub.longitude = coordinates.longitude;
+    //   }
+    // } catch (error) {
+    //   console.error('Error:', error);
+    // }
+    const storeName = this.hub.name;
+    if (this.selectedCountry && this.selectedState && this.selectedCity && this.selectedCounty) {
+      this.chatGPTPromt = `Give me only the Latitude and longitude for 
+    Country: ${this.selectedCountry.displayName}, 
+    State: ${this.selectedState.displayName}, 
+    City: ${this.selectedCity}, 
+    County: ${this.selectedCounty} 
+    as json format as Key latitude and longitude`;
+    } else if (this.selectedCountry && this.selectedState && this.selectedCity) {
+      this.chatGPTPromt = `Give me only the Latitude and longitude for 
+    Country: ${this.selectedCountry.displayName}, 
+    State: ${this.selectedState.displayName}, 
+    City: ${this.selectedCity} 
+    as json format as Key latitude and longitude`;
+    } else if (this.selectedCountry && this.selectedState) {
+      this.chatGPTPromt = `Give me only the Latitude and longitude for 
+    Country: ${this.selectedCountry.displayName}, 
+    State: ${this.selectedState.displayName} 
+    as json format as Key latitude and longitude`;
+    } else if (this.selectedCountry) {
+      this.chatGPTPromt = `Give me only the Latitude and longitude for 
+    Country: ${this.selectedCountry.displayName} 
+    as json format as Key latitude and longitude`;
     }
+
+    var modalTitle = `AI Text Generator - Store ${fieldName}`;
+    const dialogRef = this.dialog.open(ChatGptResponseModalComponent, {
+      data: { promtFromAnotherComponent: this.chatGPTPromt, feildName: fieldName, modalTitle: modalTitle },
+      width: '1100px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result.data != null) {
+        const responseText = this.extractCoordinates(result.data);
+        if (responseText) {
+          this.hub.latitude = responseText.latitude;
+          this.hub.longitude = responseText.longitude;
+        }
+      }
+    });
   }
 
+  private extractCoordinates(responseText: string): { latitude: number, longitude: number } {
+    // Remove HTML tags from the response text
+    const cleanText = responseText.replace(/<[^>]+>/g, '');
+
+    try {
+      const response = JSON.parse(cleanText);
+
+      if (response.latitude && response.longitude) {
+        const latitude = response.latitude;
+        const longitude = response.longitude;
+        return { latitude, longitude };
+      }
+    } catch (error) {
+      // JSON parsing failed, handle the error as needed
+      throw new Error('Unable to parse the response as JSON');
+    }
+
+    // If the response does not contain the latitude and longitude, return null or throw an error
+    throw new Error('Unable to extract coordinates from the response');
+  }
 
 
   openAiModalPr(feildName: string): void {

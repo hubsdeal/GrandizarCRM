@@ -7,6 +7,7 @@ import { CreateOrEditStoreTaskMapModalComponent } from './create-or-edit-storeTa
 import { ViewStoreTaskMapModalComponent } from './view-storeTaskMap-modal.component';
 import { StoreTaskMapStoreLookupTableModalComponent } from './storeTaskMap-store-lookup-table-modal.component';
 import { StoreTaskMapTaskEventLookupTableModalComponent } from './storeTaskMap-taskEvent-lookup-table-modal.component';
+import { TaskEventModule } from '../taskEvents/taskEvent.module';
 
 @NgModule({
     declarations: [
@@ -17,7 +18,7 @@ import { StoreTaskMapTaskEventLookupTableModalComponent } from './storeTaskMap-t
         StoreTaskMapStoreLookupTableModalComponent,
         StoreTaskMapTaskEventLookupTableModalComponent,
     ],
-    imports: [AppSharedModule, StoreTaskMapRoutingModule, AdminSharedModule],
+    imports: [AppSharedModule, StoreTaskMapRoutingModule, AdminSharedModule, TaskEventModule],
     exports: [
         StoreTaskMapsComponent,
         CreateOrEditStoreTaskMapModalComponent,
