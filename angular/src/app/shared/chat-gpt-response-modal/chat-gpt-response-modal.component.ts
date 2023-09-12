@@ -69,8 +69,8 @@ export class ChatGptResponseModalComponent implements OnInit {
       let openai = new OpenAIApi(configuration);
 
       let requestData = {
-        model: 'text-davinci-003',//'text-davinci-003',//"text-curie-001",
-        prompt: promptText,//this.generatePrompt(animal),
+        model: 'text-davinci-003',
+        prompt: promptText,
         temperature: 0.95,
         max_tokens: 1500,
         top_p: 1.0,
