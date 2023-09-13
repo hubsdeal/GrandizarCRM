@@ -16,7 +16,7 @@
     <div [class]="containerClass">
         <div class="card card-custom gutter-b">
             <div class="card-body">
-                <form class="form" autocomplete="off">
+                <form name="advFilter" class="form" autocomplete="off">
                     <div>
                         <div class="row align-items-center">
                             <div class="col-xl-12">
@@ -461,9 +461,9 @@
                                         <span class="p-column-title">{{ l('Name') }}</span>
                                         <div class="d-flex align-items-center">
                                             <div class="square_logo_box shadow-sm">
-                                                <!-- <img src="/assets/common/images/sampleProfilePics/noimg.png"
-                                                    class="mw-100" alt=""> -->
-                                                <span>{{ record.employee.name | nameSplit}}</span>
+                                                <img *ngIf="record.picture" src="{{record.picture}}"
+                                                    class="mw-100" alt=""> 
+                                                <span *ngIf="!record.picture">{{ record.employee.name | nameSplit}}</span>
                                             </div>
                                             <div class="d-flex flex-wrap flex-grow-1 mt-n2 mt-lg-n1">
                                                 <div class="d-flex flex-column flex-grow-1 my-lg-0 my-2 pe-3">

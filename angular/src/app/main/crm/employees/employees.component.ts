@@ -119,6 +119,10 @@ export class EmployeesComponent extends AppComponentBase {
                 this.stateNameFilter,
                 this.countryNameFilter,
                 this.contactFullNameFilter,
+                undefined,//organizationUnitDisplayNameFilter
+                undefined, //contactNameFilter
+                -1, //currentEmployee
+                undefined, //departmentIdFilter
                 this.primengTableHelper.getSorting(this.dataTable),
                 this.primengTableHelper.getSkipCount(this.paginator, event),
                 this.primengTableHelper.getMaxResultCount(this.paginator, event)

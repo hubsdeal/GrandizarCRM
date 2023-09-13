@@ -116,9 +116,14 @@ export class MyEmployeesComponent extends AppComponentBase {
               this.stateNameFilter,
               this.countryNameFilter,
               this.contactFullNameFilter,
+              null,//organizationUnitDisplayNameFilter
+              null, //contactNameFilter
+              null, //currentEmployee
+                null, //departmentIdFilter
               this.primengTableHelper.getSorting(this.dataTable),
               this.primengTableHelper.getSkipCount(this.paginator, event),
-              this.primengTableHelper.getMaxResultCount(this.paginator, event)
+              this.primengTableHelper.getMaxResultCount(this.paginator, event),
+
           )
           .subscribe((result) => {
               this.primengTableHelper.totalRecordsCount = result.totalCount;
