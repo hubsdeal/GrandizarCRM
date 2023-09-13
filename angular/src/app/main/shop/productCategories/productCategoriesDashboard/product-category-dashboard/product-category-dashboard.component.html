@@ -187,8 +187,9 @@
                                         aria-labelledby="kt_accordion_1_header_1" data-bs-parent="#kt_accordion_1">
                                         <div class="card-body pt-10">
                                             <!--begin::Form-->
-                                            <form  #productCategoryForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
-                                               
+                                            <form #productCategoryForm="ngForm" novalidate (ngSubmit)="save()"
+                                                autocomplete="off">
+
                                                 <div class="modal-body">
                                                     <!-- <div class="my-5">
                                                         <label class="form-label" for="MediaLibraryName">{{ l('MediaLibrary') }}</label>
@@ -212,68 +213,98 @@
                                                             <div class="mb-7">
                                                                 <div class="image-input image-input-outline"
                                                                     style="background-image: url(assets/common/images/location.png)">
-                                                                    <div *ngIf="imageSrc" class="image-input-wrapper w-125px h-125px"
+                                                                    <div *ngIf="imageSrc"
+                                                                        class="image-input-wrapper w-125px h-125px"
                                                                         [style.background-image]="'url(' + imageSrc + ')'">
+                                                                    </div>
+                                                                    <div *ngIf="!imageSrc"
+                                                                        class="image-input-wrapper w-125px h-125px"
+                                                                        style="background-image: url(assets/common/images/location.png)">
                                                                     </div>
                                                                     <label
                                                                         class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                                                                        data-kt-image-input-action="change" data-bs-toggle="tooltip"
-                                                                        aria-label="Change avatar" data-bs-original-title="Change avatar"
+                                                                        data-kt-image-input-action="change"
+                                                                        data-bs-toggle="tooltip"
+                                                                        aria-label="Change avatar"
+                                                                        data-bs-original-title="Change avatar"
                                                                         data-kt-initialized="1">
                                                                         <i class="bi bi-pencil-fill fs-7"></i>
-                                                                        <input type="file" name="profile_avatar" id="customFile" ng2FileSelect
-                                                                            [uploader]="uploader" (change)="fileChangeEvent($event)"
+                                                                        <input type="file" name="profile_avatar"
+                                                                            id="customFile" ng2FileSelect
+                                                                            [uploader]="uploader"
+                                                                            (change)="fileChangeEvent($event)"
                                                                             accept=".png, .jpg, .jpeg">
                                                                         <input type="hidden" name="avatar_remove">
                                                                     </label>
                                                                 </div>
-                                                                <div class="form-text">Allowed file types: png, jpg, jpeg.
+                                                                <div class="form-text">Allowed file types: png, jpg,
+                                                                    jpeg.
                                                                 </div>
                                                             </div>
                                                             <!--end::Input group-->
                                                         </div>
                                                     </div>
-                                
+
                                                     <div class="my-5">
-                                                        <label class="form-label" for="ProductCategory_Name">{{ l('Name') }} *</label>
-                                                        <input type="text" #ProductCategory_Name="ngModel" id="ProductCategory_Name"
-                                                            class="form-control" [(ngModel)]="productCategory.name" name="Name" minlength="1"
+                                                        <label class="form-label" for="ProductCategory_Name">{{
+                                                            l('Name') }} *</label>
+                                                        <input type="text" #ProductCategory_Name="ngModel"
+                                                            id="ProductCategory_Name" class="form-control"
+                                                            [(ngModel)]="productCategory.name" name="Name" minlength="1"
                                                             maxlength="128" required />
-                                                        <validation-messages [formCtrl]="ProductCategory_Name"></validation-messages>
+                                                        <validation-messages
+                                                            [formCtrl]="ProductCategory_Name"></validation-messages>
                                                     </div>
-                                
-                                                   <!-- <div class="my-5">
+
+                                                    <!-- <div class="my-5">
                                                         <label class="form-label" for="ProductCategory_Description">{{ l('Description') }}</label>
                                                         <input type="text" #ProductCategory_Description="ngModel" id="ProductCategory_Description"
                                                             class="form-control" [(ngModel)]="productCategory.description" name="Description" />
                                                         <validation-messages [formCtrl]="ProductCategory_Description"></validation-messages>
                                                     </div>  -->
                                                     <div class="my-5">
-                                                        <label class="form-label" for="ProductCategory_Description">{{ l('Description') }}</label>
-                                                        <p-editor id="ProductCategory_Description" name="description" [(ngModel)]="productCategory.description"
-                                                            ngDefaultControl [style]="{ height: '300px' }" placeholder="'Type here...'"></p-editor>
+                                                        <label class="form-label mt-3 w-100 mb-5">
+                                                            <div class="d-flex align-items-end justify-content-between">
+                                                                <span class="required">Description</span>
+                                                                <button class="btn btn-sm btn-light-primary"
+                                                                    (click)="openAiModal('Category Description')">
+                                                                    <i class="fa-file-signature fas me-2"></i>
+                                                                    Generate Description
+                                                                </button>
+                                                            </div>
+                                                        </label>
+                                                        <p-editor id="ProductCategory_Description" name="description"
+                                                            [(ngModel)]="productCategory.description" ngDefaultControl
+                                                            [style]="{ height: '300px' }"
+                                                            placeholder="'Type here...'"></p-editor>
                                                     </div>
-                                
+
                                                     <div class="my-5">
                                                         <label class="form-check form-check-custom form-check-solid">
-                                                            <input id="ProductCategory_HasParentCategory" #ProductCategory_HasParentCategory="ngModel"
-                                                                name="HasParentCategory" [(ngModel)]="productCategory.hasParentCategory" type="checkbox"
-                                                                class="form-check-input" />
+                                                            <input id="ProductCategory_HasParentCategory"
+                                                                #ProductCategory_HasParentCategory="ngModel"
+                                                                name="HasParentCategory"
+                                                                [(ngModel)]="productCategory.hasParentCategory"
+                                                                type="checkbox" class="form-check-input" />
                                                             <span class="form-check-label">
                                                                 {{ l('HasParentCategory') }}
                                                             </span>
                                                         </label>
-                                                        <validation-messages [formCtrl]="ProductCategory_HasParentCategory"></validation-messages>
+                                                        <validation-messages
+                                                            [formCtrl]="ProductCategory_HasParentCategory"></validation-messages>
                                                     </div>
-                                
+
                                                     <div class="my-5" *ngIf="productCategory.hasParentCategory">
-                                                        <label class="form-label" for="ProductCategory_ParentCategoryId">
+                                                        <label class="form-label"
+                                                            for="ProductCategory_ParentCategoryId">
                                                             {{ l('Parent Category') }}
                                                         </label>
-                                                        <select name="parentCategoryId" [(ngModel)]="productCategory.parentCategoryId"
+                                                        <select name="parentCategoryId"
+                                                            [(ngModel)]="productCategory.parentCategoryId"
                                                             class="form-select " required>
                                                             <option value="">{{ l('Select Parent Category') }}</option>
-                                                            <option *ngFor="let item of allParentCategories" value="{{ item.id }}">
+                                                            <option *ngFor="let item of allParentCategories"
+                                                                value="{{ item.id }}">
                                                                 {{ item.displayName }}
                                                             </option>
                                                         </select>
@@ -282,63 +313,80 @@
                                                             [(ngModel)]="productCategory.parentCategoryId" name="ParentCategoryId" />
                                                         <validation-messages [formCtrl]="ProductCategory_ParentCategoryId"></validation-messages> -->
                                                     </div>
-                                
+
                                                     <div class="my-5">
-                                                        <label class="form-label" for="ProductCategory_Url">{{ l('Url') }}</label>
-                                                        <input type="text" #ProductCategory_Url="ngModel" id="ProductCategory_Url" class="form-control"
-                                                            [(ngModel)]="productCategory.url" name="Url" minlength="1" maxlength="512" />
-                                                        <validation-messages [formCtrl]="ProductCategory_Url"></validation-messages>
+                                                        <label class="form-label" for="ProductCategory_Url">{{ l('Url')
+                                                            }}</label>
+                                                        <input type="text" #ProductCategory_Url="ngModel"
+                                                            id="ProductCategory_Url" class="form-control"
+                                                            [(ngModel)]="productCategory.url" name="Url" minlength="1"
+                                                            maxlength="512" />
+                                                        <validation-messages
+                                                            [formCtrl]="ProductCategory_Url"></validation-messages>
                                                     </div>
-                                
+
                                                     <div class="my-5">
-                                                        <label class="form-label" for="ProductCategory_MetaTitle">{{ l('MetaTitle') }}</label>
-                                                        <input type="text" #ProductCategory_MetaTitle="ngModel" id="ProductCategory_MetaTitle"
-                                                            class="form-control" [(ngModel)]="productCategory.metaTitle" name="MetaTitle" minlength="1"
-                                                            maxlength="128" />
-                                                        <validation-messages [formCtrl]="ProductCategory_MetaTitle"></validation-messages>
+                                                        <label class="form-label" for="ProductCategory_MetaTitle">{{
+                                                            l('MetaTitle') }}</label>
+                                                        <input type="text" #ProductCategory_MetaTitle="ngModel"
+                                                            id="ProductCategory_MetaTitle" class="form-control"
+                                                            [(ngModel)]="productCategory.metaTitle" name="MetaTitle"
+                                                            minlength="1" maxlength="128" />
+                                                        <validation-messages
+                                                            [formCtrl]="ProductCategory_MetaTitle"></validation-messages>
                                                     </div>
-                                
+
                                                     <div class="my-5">
-                                                        <label class="form-label" for="ProductCategory_MetaKeywords">{{ l('MetaKeywords') }}</label>
-                                                        <input type="text" #ProductCategory_MetaKeywords="ngModel" id="ProductCategory_MetaKeywords"
-                                                            class="form-control" [(ngModel)]="productCategory.metaKeywords" name="MetaKeywords"
-                                                            minlength="1" maxlength="512" />
-                                                        <validation-messages [formCtrl]="ProductCategory_MetaKeywords"></validation-messages>
-                                                    </div> 
-                                
+                                                        <label class="form-label" for="ProductCategory_MetaKeywords">{{
+                                                            l('MetaKeywords') }}</label>
+                                                        <input type="text" #ProductCategory_MetaKeywords="ngModel"
+                                                            id="ProductCategory_MetaKeywords" class="form-control"
+                                                            [(ngModel)]="productCategory.metaKeywords"
+                                                            name="MetaKeywords" minlength="1" maxlength="512" />
+                                                        <validation-messages
+                                                            [formCtrl]="ProductCategory_MetaKeywords"></validation-messages>
+                                                    </div>
+
                                                     <div class="my-5">
                                                         <label class="form-label" for="ProductCategory_DisplaySequence">
                                                             {{ l('DisplaySequence') }}
                                                         </label>
                                                         <input type="number" #ProductCategory_DisplaySequence="ngModel"
                                                             id="ProductCategory_DisplaySequence" class="form-control"
-                                                            [(ngModel)]="productCategory.displaySequence" name="DisplaySequence" />
-                                                        <validation-messages [formCtrl]="ProductCategory_DisplaySequence"></validation-messages>
+                                                            [(ngModel)]="productCategory.displaySequence"
+                                                            name="DisplaySequence" />
+                                                        <validation-messages
+                                                            [formCtrl]="ProductCategory_DisplaySequence"></validation-messages>
                                                     </div>
                                                     <div class="my-5">
                                                         <label class="mb-2" for="employee">{{l("Teams")}}</label>
-                                                        <p-multiSelect name="employee" id="employee" [options]="employeeList"
-                                                            [(ngModel)]="selectedEmployees" optionLabel="displayName" [virtualScroll]="true"
+                                                        <p-multiSelect name="employee" id="employee"
+                                                            [options]="employeeList" [(ngModel)]="selectedEmployees"
+                                                            optionLabel="displayName" [virtualScroll]="true"
                                                             [filter]="true" [itemSize]="34" [maxSelectedLabels]="2"
-                                                            class="multiselect-custom-virtual-scroll" (onChange)="onEmployeeSelect($event)">
+                                                            class="multiselect-custom-virtual-scroll"
+                                                            (onChange)="onEmployeeSelect($event)">
                                                         </p-multiSelect>
                                                     </div>
                                                     <div class="my-5">
                                                         <label class="form-check form-check-custom form-check-solid">
-                                                            <input id="ProductCategory_ProductOrService" #ProductCategory_ProductOrService="ngModel"
-                                                                name="ProductOrService" [(ngModel)]="productCategory.productOrService" type="checkbox"
-                                                                class="form-check-input" />
+                                                            <input id="ProductCategory_ProductOrService"
+                                                                #ProductCategory_ProductOrService="ngModel"
+                                                                name="ProductOrService"
+                                                                [(ngModel)]="productCategory.productOrService"
+                                                                type="checkbox" class="form-check-input" />
                                                             <span class="form-check-label">
                                                                 {{ l('ProductOrService') }}
                                                             </span>
                                                         </label>
-                                                        <validation-messages [formCtrl]="ProductCategory_ProductOrService"></validation-messages>
+                                                        <validation-messages
+                                                            [formCtrl]="ProductCategory_ProductOrService"></validation-messages>
                                                     </div>
-                                
+
                                                     <div class="my-5">
                                                         <label class="form-check form-check-custom form-check-solid">
-                                                            <input id="published"
-                                                                name="published" [(ngModel)]="productCategory.published" type="checkbox"
+                                                            <input id="published" name="published"
+                                                                [(ngModel)]="productCategory.published" type="checkbox"
                                                                 class="form-check-input" />
                                                             <span class="form-check-label">
                                                                 {{ l('Published') }}
@@ -347,8 +395,9 @@
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    
-                                                    <button type="submit" class="btn btn-primary blue" [disabled]="!productCategoryForm.form.valid"
+
+                                                    <button type="submit" class="btn btn-primary blue"
+                                                        [disabled]="!productCategoryForm.form.valid"
                                                         [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')">
                                                         <i class="fa fa-save"></i>
                                                         <span>{{ l('Save') }}</span>
@@ -366,8 +415,8 @@
                         <div class="card mb-6">
                             <div class="card-body">
                                 <div class="row">
-                                    <appMasterProduct *ngIf="productCategoryId"
-                                    [productCategoryId]="productCategoryId"></appMasterProduct>
+                                    <appMasterProduct *ngIf="productCategoryId" [productCategoryId]="productCategoryId">
+                                    </appMasterProduct>
                                 </div>
                             </div>
                         </div>
@@ -377,7 +426,8 @@
                             <div class="card-body">
                                 <div class="row">
                                     <appProductCategoryAndVariantCategoryMap *ngIf="productCategoryId"
-                                    [productCategoryIdFilter]="productCategoryId"></appProductCategoryAndVariantCategoryMap>
+                                        [productCategoryIdFilter]="productCategoryId">
+                                    </appProductCategoryAndVariantCategoryMap>
                                 </div>
                             </div>
                         </div>
@@ -387,12 +437,12 @@
                             <div class="card-body">
                                 <div class="row">
                                     <appProductCategoryTeams *ngIf="productCategoryId"
-                                    [productCategoryId]="productCategoryId"></appProductCategoryTeams>
+                                        [productCategoryId]="productCategoryId"></appProductCategoryTeams>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div> 
+                </div>
             </div>
 
         </div>

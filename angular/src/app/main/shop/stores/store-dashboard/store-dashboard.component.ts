@@ -439,6 +439,73 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
     throw new Error('Unable to extract coordinates from the response');
   }
 
+
+  copyPasteStoreDataAI(fieldName: string): void {
+    this.chatGPTPromt = `Please take one value for address, Email, Web and convert this data to json format based on key and pair and insert just the specific data. 
+    Ex. for mobile number just insert only the number and same goes for the others fields.
+    Note: I just only want to insert these data to 
+    Name, 
+    Full Address, 
+    Address, 
+    Description, 
+    Phone Number, 
+    Mobile number, 
+    Email, 
+    Web
+    Where Phone and Mobile is number.
+    
+    'Insert your data here'`;
+    var modalTitle = `AI Text Generator - ${fieldName}`;
+    const dialogRef = this.dialog.open(ChatGptResponseModalComponent, {
+      data: { promtFromAnotherComponent: this.chatGPTPromt, feildName: fieldName, modalTitle: modalTitle },
+      width: '1100px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result.data != null) {
+        console.log(result.data);
+        const responseText = this.extractStoreData(result.data);
+        if (responseText) {
+          this.store.name = responseText.Name;
+          this.store.fullAddress = responseText.FullAddress;
+          this.store.address = responseText.Address;
+          this.store.description = responseText.Description;
+          this.store.phone = responseText.PhoneNumber;
+          this.store.mobile = responseText.MobileNumber;
+          this.store.email = responseText.Email;
+          this.store.website = responseText.Web;
+        }
+      }
+    });
+  }
+
+  private extractStoreData(responseText: string): { Name: string, FullAddress: string, Address: string, Description: string, PhoneNumber: string, MobileNumber: string, Email: string, Web: string } {
+    // Remove HTML tags and line breaks from the response text
+    const cleanText = responseText.replace(/<br>/g, '').replace(/\n/g, '');
+    console.log(cleanText);
+    try {
+      const response = JSON.parse(cleanText);
+  
+      if (response.Name && response['Full Address'] && response.Address && response.Description && response['Phone Number'] && response['Mobile Number'] && response.Email && response.Web) {
+        const Name = response.Name;
+        const FullAddress = response['Full Address'];
+        const Address = response.Address;
+        const Description = response.Description;
+        const PhoneNumber = response['Phone Number'];
+        const MobileNumber = response['Mobile Number'];
+        const Email = response.Email;
+        const Web = response.Web;
+        return { Name, FullAddress, Address, Description, PhoneNumber, MobileNumber, Email, Web };
+      }
+    } catch (error) {
+      // JSON parsing failed, handle the error as needed
+      throw new Error('Unable to parse the response as JSON');
+    }
+    throw new Error('Unable to extract data from the response');
+  }
+  
+
+
   drop(event: CdkDragDrop<string[]>) {
     console.log(this.storeTags, event.previousIndex, event.currentIndex);
     moveItemInArray(this.storeTags, event.previousIndex, event.currentIndex);

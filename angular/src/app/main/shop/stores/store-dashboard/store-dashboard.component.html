@@ -287,16 +287,20 @@
                                             aria-expanded="true" aria-controls="kt_accordion_1_body_1">
                                             <i class="fas fa-info-circle fa-1x me-2"></i>
                                             Basic Store Info
-                                            <span class="badge ms-6 badge-primary badge">
-                                                <i class="fa-brands fa-nfc-directional text-white me-2"></i> Store Data
-                                                Parser
-                                            </span>
                                         </button>
                                     </h2>
                                     <div id="kt_accordion_1_body_1" class="accordion-collapse collapse show"
                                         aria-labelledby="kt_accordion_1_header_1" data-bs-parent="#kt_accordion_1">
                                         <div class="card-body pt-10">
                                             <!--begin::Form-->
+                                            <div class="row">
+                                                <div class="col-xl-12 d-flex justify-content-end mb-5">
+                                                    <span class="badge badge-primary badge cursor-pointer" (click)="copyPasteStoreDataAI('Copy and Paste Store Data')">
+                                                        <i class="fa-brands fa-nfc-directional text-white me-2"></i>
+                                                        Copy and Paste Store Data
+                                                    </span>
+                                                </div>
+                                            </div>
                                             <form id="kt_ecommerce_settings_general_form" #storeForm="ngForm" novalidate
                                                 class="form fv-plugins-bootstrap5 fv-plugins-framework">
                                                 <!--begin::Input group-->

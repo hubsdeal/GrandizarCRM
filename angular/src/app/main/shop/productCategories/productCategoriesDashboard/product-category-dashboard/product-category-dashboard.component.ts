@@ -11,6 +11,8 @@ import { ProductCategoryMediaLibraryLookupTableModalComponent } from '../../prod
 import { finalize } from 'rxjs';
 import { AppConsts } from '@shared/AppConsts';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
+import { MatDialog } from '@angular/material/dialog';
+import { ChatGptResponseModalComponent } from '@app/shared/chat-gpt-response-modal/chat-gpt-response-modal.component';
 
 @Component({
   selector: 'app-product-category-dashboard',
@@ -42,14 +44,15 @@ export class ProductCategoryDashboardComponent extends AppComponentBase implemen
   mediaLibrary: CreateOrEditMediaLibraryDto = new CreateOrEditMediaLibraryDto();
   parentCategoryName: string;
   selectedParentCategory: ProductProductCategoryLookupTableDto = new ProductProductCategoryLookupTableDto();
-
+  chatGPTPromt: string;
   constructor(
     injector: Injector,
     private _route: ActivatedRoute,
     private _productCategoryServiceProxy: ProductCategoriesServiceProxy,
     private _tokenService: TokenService,
     private _mediaLibrariesServiceProxy: MediaLibrariesServiceProxy,
-    private _productCategoryTeamsServiceProxy:ProductCategoryTeamsServiceProxy
+    private dialog: MatDialog,
+    private _productCategoryTeamsServiceProxy: ProductCategoryTeamsServiceProxy
   ) {
     super(injector);
     this._productCategoryServiceProxy.getAllProductCategoryForTableDropdown().subscribe(result => {
@@ -62,11 +65,11 @@ export class ProductCategoryDashboardComponent extends AppComponentBase implemen
     this.productCategoryId = parseInt(productCategoryId);
     this.temporaryPictureUrl = '';
     this.initFileUploader();
-    
+
     this.getProductCategoryDetails(this.productCategoryId);
-    this._productCategoryTeamsServiceProxy.getAllEmployeeForLookupTable('','',0,1000).subscribe(result => {
+    this._productCategoryTeamsServiceProxy.getAllEmployeeForLookupTable('', '', 0, 1000).subscribe(result => {
       this.employeeList = result.items;
-  });
+    });
   }
 
   getProductCategoryDetails(id: number) {
@@ -202,22 +205,73 @@ export class ProductCategoryDashboardComponent extends AppComponentBase implemen
   }
   getFileExtension(filename) {
     return filename.split('.').pop();
-}
-onEmployeeSelect(event: any) {
-  if (event) {
-      let index =this.productCategory.teams?this.productCategory.teams.findIndex(x => x.id == event.itemValue.id):-1;
-      if(index<0){
-          this.productCategory.teams = event.value;
-      }else if(index>=0 && this.productCategory.id){
-          // this._taskTeamsServiceProxy.deleteByTask(this.taskEvent.id,event.itemValue.id).subscribe(result=>{
-          //     this.taskEvent.teams.splice(index, 1);
-          // });
+  }
+  onEmployeeSelect(event: any) {
+    if (event) {
+      let index = this.productCategory.teams ? this.productCategory.teams.findIndex(x => x.id == event.itemValue.id) : -1;
+      if (index < 0) {
+        this.productCategory.teams = event.value;
+      } else if (index >= 0 && this.productCategory.id) {
+        // this._taskTeamsServiceProxy.deleteByTask(this.taskEvent.id,event.itemValue.id).subscribe(result=>{
+        //     this.taskEvent.teams.splice(index, 1);
+        // });
       }
+    }
+
+    // console.log(event);
+    // if (event.value.length > 0) {
+
+    // }
   }
 
-  // console.log(event);
-  // if (event.value.length > 0) {
+  openAiModal(fieldName: string): void {
+    this.chatGPTPromt = `Generate Product Category Information where 
+    Category Name: ${this.productCategory.name}
+    Please just add the value for 
+    Description, 
+    URL, 
+    MetaTitle, 
+    MetaKeywords
+    to json format based on key and pair.`;
+    var modalTitle = `AI Text Generator - ${fieldName}`;
+    const dialogRef = this.dialog.open(ChatGptResponseModalComponent, {
+      data: { promtFromAnotherComponent: this.chatGPTPromt, feildName: fieldName, modalTitle: modalTitle },
+      width: '1100px',
+    });
 
-  // }
-}
+    dialogRef.afterClosed().subscribe(result => {
+      if (result.data != null) {
+        console.log(result.data);
+        const responseText = this.extractCategoryeData(result.data);
+        if (responseText) {
+          this.productCategory.description = responseText.Description;
+          this.productCategory.url = responseText.URL;
+          this.productCategory.metaTitle = responseText.MetaTitle;
+          this.productCategory.metaKeywords = responseText.MetaKeywords;
+        }
+      }
+    });
+  }
+
+  private extractCategoryeData(responseText: string): { Description: string, URL: string, MetaTitle: string, MetaKeywords: string} {
+    // Remove HTML tags and line breaks from the response text
+    const cleanText = responseText.replace(/<br>/g, '').replace(/\n/g, '');
+    console.log(cleanText);
+    try {
+      const response = JSON.parse(cleanText);
+
+      if (response.Description && response.URL && response.MetaTitle && response.MetaKeywords) {
+        const Description = response.Description;
+        const URL = response.URL;
+        const MetaTitle = response.MetaTitle;
+        const MetaKeywords = response.MetaKeywords;
+        return { Description, URL, MetaTitle, MetaKeywords };
+      }
+    } catch (error) {
+      // JSON parsing failed, handle the error as needed
+      throw new Error('Unable to parse the response as JSON');
+    }
+    throw new Error('Unable to extract data from the response');
+  }
+
 }
