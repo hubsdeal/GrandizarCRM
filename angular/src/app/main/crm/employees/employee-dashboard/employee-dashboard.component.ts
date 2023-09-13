@@ -11,6 +11,9 @@ import { TokenService } from 'abp-ng2-module';
 export class EmployeeDashboardComponent extends AppComponentBase implements OnInit, AfterViewInit {
   employeeId: number;
   @ViewChild('profile_editor_tab') profileEditorTab: ElementRef<HTMLAnchorElement>;
+
+  showCalendarView: boolean;
+  showListView: boolean;
   constructor(
     injector: Injector,
     private route: ActivatedRoute,
@@ -28,6 +31,16 @@ export class EmployeeDashboardComponent extends AppComponentBase implements OnIn
   }
   activateTab(profile_editor_tab: ElementRef<HTMLAnchorElement>) {
     profile_editor_tab.nativeElement.click();
+  }
+
+  onCalenderView() {
+    this.showCalendarView = !this.showCalendarView;
+    this.showListView = !this.showListView;
+  }
+
+  onListView() {
+    this.showListView = !this.showListView;
+    this.showCalendarView = !this.showCalendarView;
   }
 }
 

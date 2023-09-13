@@ -11,6 +11,8 @@ import { EmployeeContactLookupTableModalComponent } from './employee-contact-loo
 import { EmployeeDashboardComponent } from './employee-dashboard/employee-dashboard.component';
 import { StoreModule } from '@app/main/shop/stores/store.module';
 import { MyEmployeesComponent } from './my-employees/my-employees.component';
+import { MainModule } from '@app/main/main.module';
+import { TaskEventModule } from '@app/main/taskManagement/taskEvents/taskEvent.module';
 
 @NgModule({
     declarations: [
@@ -24,6 +26,6 @@ import { MyEmployeesComponent } from './my-employees/my-employees.component';
         EmployeeDashboardComponent,
         MyEmployeesComponent,
     ],
-    imports: [AppSharedModule, EmployeeRoutingModule, AdminSharedModule, StoreModule],
+    imports: [AppSharedModule, EmployeeRoutingModule, AdminSharedModule, StoreModule, MainModule, TaskEventModule],
 })
 export class EmployeeModule {}
