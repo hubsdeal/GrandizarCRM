@@ -103,6 +103,9 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
   ];
   storeTagSettingCategoryId: number;
 
+  showCalendarView: boolean;
+  showListView: boolean;
+
   constructor(
     injector: Injector,
     private route: ActivatedRoute,
@@ -566,5 +569,15 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
 
   createStoreAccountTeam(): void {
     this.createOrEditStoreAccountTeamModal.show();
+  }
+
+  onCalenderView() {
+    this.showCalendarView = !this.showCalendarView;
+    this.showListView = !this.showListView;
+  }
+
+  onListView() {
+    this.showListView = !this.showListView;
+    this.showCalendarView = !this.showCalendarView;
   }
 }
