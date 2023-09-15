@@ -894,7 +894,7 @@
                                                     <a href="javascript:;"
                                                         *ngIf="permission.isGranted('Pages.Stores.Edit')"
                                                         class="dropdown-item"
-                                                        (click)="createOrEditStoreModal.show(record.id)">
+                                                        [routerLink]="['/app/main/shop/stores/dashboard',record.id]">
                                                         {{ l('Edit') }}
                                                     </a>
                                                 </li>

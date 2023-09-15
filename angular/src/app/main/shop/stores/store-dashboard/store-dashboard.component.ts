@@ -38,6 +38,7 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
   modalTile: string
   bindingData: any;
   localOrVirtualStoreOptions: SelectItem[];
+  storeVerifiedOptions: SelectItem[];
   storePublishedOptions: SelectItem[];
   store: CreateOrEditStoreDto;
 
@@ -124,7 +125,8 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
     this.getStoreDetails(this.storeId);
     this.initFileUploader();
     this.localOrVirtualStoreOptions = [{ label: 'Local Store', value: false }, { label: 'Virtual Store', value: true }];
-    this.storePublishedOptions = [{ label: 'Draft', value: false }, { label: 'Published', value: true }];
+    this.storeVerifiedOptions = [{ label: 'Verified', value: true }, { label: 'Not Verified', value: false }];
+    this.storePublishedOptions = [{ label: 'Un Published', value: false }, { label: 'Published', value: true }];
   }
   ngAfterViewInit() {
 
@@ -397,6 +399,34 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
     } else if (this.selectedCountry) {
       this.chatGPTPromt = `Give me only the Latitude and longitude for 
     Country: ${this.selectedCountry.displayName} 
+    as json format as Key latitude and longitude`;
+    }
+
+    var modalTitle = `AI Text Generator - Store ${fieldName}`;
+    const dialogRef = this.dialog.open(ChatGptResponseModalComponent, {
+      data: { promtFromAnotherComponent: this.chatGPTPromt, feildName: fieldName, modalTitle: modalTitle },
+      width: '1100px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result.data != null) {
+        const responseText = this.extractCoordinates(result.data);
+        if (responseText) {
+          this.store.latitude = responseText.latitude;
+          this.store.longitude = responseText.longitude;
+        }
+      }
+    });
+  }
+
+  openAiModalForLatLongForOperator(fieldName: string): void {
+    const storeName = this.store.name;
+    if (this.countryName || this.stateName && this.store.city || this.store.zipCode) {
+      this.chatGPTPromt = `Give me only the Latitude and longitude for 
+    Country: ${this.countryName}, 
+    State: ${this.stateName}, 
+    City: ${this.store.city}, 
+    Zipcode: ${this.store.zipCode} 
     as json format as Key latitude and longitude`;
     }
 
