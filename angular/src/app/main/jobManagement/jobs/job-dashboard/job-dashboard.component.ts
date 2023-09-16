@@ -18,6 +18,8 @@ export class JobDashboardComponent extends AppComponentBase implements OnInit, A
   description: string;
   salaryBasedOrFixedPriceOptions: SelectItem[];
   publishedOptions: SelectItem[];
+  showCalendarView: boolean;
+  showListView: boolean;
   constructor(
     injector: Injector,
     private route: ActivatedRoute,
@@ -40,5 +42,15 @@ export class JobDashboardComponent extends AppComponentBase implements OnInit, A
 
   openAiModal(fsf: string) {
 
+  }
+
+  onCalenderView() {
+    this.showCalendarView = !this.showCalendarView;
+    this.showListView = !this.showListView;
+  }
+
+  onListView() {
+    this.showListView = !this.showListView;
+    this.showCalendarView = !this.showCalendarView;
   }
 }

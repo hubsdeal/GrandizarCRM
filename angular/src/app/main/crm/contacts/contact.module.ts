@@ -7,6 +7,8 @@ import { CreateOrEditContactModalComponent } from './create-or-edit-contact-moda
 import { ViewContactModalComponent } from './view-contact-modal.component';
 import { ContactUserLookupTableModalComponent } from './contact-user-lookup-table-modal.component';
 import { ContactDashboardComponent } from './contact-dashboard/contact-dashboard.component';
+import { MainModule } from '@app/main/main.module';
+import { TaskEventModule } from '@app/main/taskManagement/taskEvents/taskEvent.module';
 
 @NgModule({
     declarations: [
@@ -17,7 +19,8 @@ import { ContactDashboardComponent } from './contact-dashboard/contact-dashboard
         ContactUserLookupTableModalComponent,
           ContactDashboardComponent,
     ],
-    imports: [AppSharedModule, ContactRoutingModule, AdminSharedModule],
+    imports: [AppSharedModule, ContactRoutingModule, AdminSharedModule, MainModule, 
+        TaskEventModule],
     exports: [ContactsComponent, CreateOrEditContactModalComponent, ViewContactModalComponent, ContactUserLookupTableModalComponent],
 })
 export class ContactModule {}

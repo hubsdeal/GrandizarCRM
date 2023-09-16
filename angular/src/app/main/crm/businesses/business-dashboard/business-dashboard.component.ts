@@ -11,6 +11,9 @@ import { TokenService } from 'abp-ng2-module';
 })
 export class BusinessDashboardComponent extends AppComponentBase implements OnInit, AfterViewInit {
   businessId: number;
+  
+  showCalendarView: boolean;
+  showListView: boolean;
   constructor(
     injector: Injector,
     private route: ActivatedRoute,
@@ -25,5 +28,15 @@ export class BusinessDashboardComponent extends AppComponentBase implements OnIn
   }
   ngAfterViewInit() {
 
+  }
+
+  onCalenderView() {
+    this.showCalendarView = !this.showCalendarView;
+    this.showListView = !this.showListView;
+  }
+
+  onListView() {
+    this.showListView = !this.showListView;
+    this.showCalendarView = !this.showCalendarView;
   }
 }

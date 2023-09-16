@@ -28,7 +28,7 @@
             </div>
         </div>
         <!-- end Topbar -->
-        <div id="kt_app_content" class="app-content flex-column-fluid">
+        <div id="kt_app_content" class="app-content flex-column-fluid" *ngIf="employee">
             <div id="kt_app_content_container" class="app-container">
                 <div class="row">
                     <!-- top bar -->
@@ -38,17 +38,18 @@
                                 <div class="d-flex mb-0">
                                     <div class="d-block">
                                         <div class="symbol symbol-150px h-175px border rounded p-3 shadow-sm mb-7">
-                                            <img src="/assets/common/images/default-profile-picture.png" alt="image">
+                                            <img *ngIf="picture" src="{{picture}}" alt="image">
+                                            <img *ngIf="!picture"
+                                                src="/assets/common/images/default-profile-picture.png" alt="image">
                                         </div>
                                         <div class="d-flex justify-content-center">
-                                            <a href="javascript:;" class="btn btn-icon btn-secondary btn-sm me-2">
+                                            <a *ngIf="employee.facebook" href="{{employee.facebook}}"
+                                                class="btn btn-icon btn-secondary btn-sm me-2">
                                                 <i class="fab fa-facebook fs-1"></i>
                                             </a>
-                                            <a href="javascript:;" class="btn btn-icon btn-secondary btn-sm me-2">
+                                            <a *ngIf="employee.linkedIn" href="{{employee.linkedIn}}"
+                                                href="javascript:;" class="btn btn-icon btn-secondary btn-sm me-0">
                                                 <i class="fab fa-linkedin fs-1"></i>
-                                            </a>
-                                            <a href="javascript:;" class="btn btn-icon btn-secondary btn-sm me-0">
-                                                <i class="fab fa-twitter fs-1"></i>
                                             </a>
                                         </div>
                                     </div>
@@ -56,26 +57,46 @@
                                         <div class="d-block">
                                             <a href="javascript:;"
                                                 class="fs-3 text-gray-800 text-hover-primary fw-bold mb-2 d-block">
-                                                Max Smith <i class="fas fa-check-circle text-primary"></i>
+                                                {{fullName}} <i *ngIf="isUser"
+                                                    class="fas fa-check-circle text-success"></i>
                                             </a>
-                                            <div class="fs-5 fw-semibold text-muted mb-2">
-                                                <i class="fas fa-briefcase me-2"></i> Software Enginer at Amazon.Inc
+                                            <div class="fs-5 fw-semibold text-muted mb-2"
+                                                *ngIf="employee.jobTitle && employee.companyName">
+                                                <i class="fas fa-briefcase me-2"></i>
+                                                <span *ngIf="employee.jobTitle">
+                                                    {{employee.jobTitle}}
+                                                </span>
+                                                <span *ngIf="employee.jobTitle && employee.companyName">
+                                                    ,
+                                                </span>
+                                                <span *ngIf="employee.companyName">
+                                                    {{employee.companyName}}
+                                                </span>
                                             </div>
-                                            <div class="fs-5 fw-semibold text-muted mb-2">
-                                                <i class="fas fa-map-marked-alt me-2"></i> Nikunja 02, Dhaka-1229,
-                                                Bangladesh
+                                            <div class="fs-5 fw-semibold text-muted mb-2"
+                                                *ngIf="employee.address || employee.city || stateName || countryName">
+                                                <i class="fas fa-map-marked-alt me-2"></i>
+                                                <span title="Address">{{employee.address}}</span>
+                                                <span *ngIf="employee.address && employee.city">,
+                                                </span>
+                                                <span title="City"> {{employee.city}}</span>
+                                                <span *ngIf="employee.city && stateName">, </span>
+                                                <span title="State Name"> {{stateName}}</span>
+                                                <span *ngIf="stateName && countryName">, </span>
+                                                <span title="Country Name">{{countryName}}</span>
                                             </div>
-                                            <div class="fs-5 fw-semibold text-muted mb-2">
+                                            <div class="fs-5 fw-semibold text-muted mb-2"
+                                                *ngIf="employee.mobile || employee.officePhone">
                                                 <i class="fas fa-phone-alt me-2"></i>
-                                                <span title="Business Mobile" class="me-1">+88013453453453</span>
-                                                <span>,</span>
-                                                <span title="Personal Mobile" class="ms-1">+88013453453453</span>
+                                                <span title="Mobile">{{employee.mobile}}</span>
+                                                <span *ngIf="employee.mobile && employee.officePhone">, </span>
+                                                <span title="Office Phone"> {{employee.officePhone}}</span>
                                             </div>
-                                            <div class="fs-5 fw-semibold text-muted mb-2">
+                                            <div class="fs-5 fw-semibold text-muted mb-2" *ngIf="employee.personalEmail || employee.businessEmail">
                                                 <i class="fas fa-envelope me-2"></i>
-                                                <span title="Business Email" class="me-1">rashed@gmail.com</span>
-                                                <span>,</span>
-                                                <span title="Personal Email" class="ms-1">rashed@gmail.com</span>
+                                                <span title="Personal Email">{{employee.personalEmail}}</span>
+                                                <span *ngIf="employee.personalEmail && employee.businessEmail">, </span>
+                                                <span title="Business Email"> {{employee.businessEmail}}</span>
                                             </div>
                                             <div class="fs-5 fw-semibold text-muted mb-2">
                                                 <i class="fas fa-tags me-2"></i> Software and IT
@@ -87,7 +108,7 @@
                                                     <i class="fas fa-message text-white me-2"></i> Connect
                                                 </span>
                                             </a>
-                                            <a href="javascript:;">
+                                            <a href="javascript:;"  *ngIf="isUser">
                                                 <span class="badge badge-success">
                                                     <i class="fas fa-user-check text-white me-2"></i> Current Employee
                                                 </span>
@@ -993,12 +1014,13 @@
                                         <div class="col-xl-8">
                                             <div class="text-right d-flex justify-content-end mb-3 mt-4 mr-4 pr-2">
                                                 <div class="btn-group" role="group" aria-label="...">
-                                                    <button (click)="onCalenderView()" [class.active]="!showCalendarView"
-                                                        title="Calendar View" type="button" class="btn btn-secondary">
+                                                    <button (click)="onCalenderView()"
+                                                        [class.active]="!showCalendarView" title="Calendar View"
+                                                        type="button" class="btn btn-secondary">
                                                         <i class="fas fa-calendar-day"></i>
                                                     </button>
-                                                    <button (click)="onListView()" [class.active]="showListView" title="List View"
-                                                        type="button" class="btn btn-secondary">
+                                                    <button (click)="onListView()" [class.active]="showListView"
+                                                        title="List View" type="button" class="btn btn-secondary">
                                                         <i class="fas fa-list"></i>
                                                     </button>
                                                 </div>

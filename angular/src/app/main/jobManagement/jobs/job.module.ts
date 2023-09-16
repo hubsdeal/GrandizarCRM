@@ -16,6 +16,8 @@ import { JobCityLookupTableModalComponent } from './job-city-lookup-table-modal.
 import { JobJobStatusTypeLookupTableModalComponent } from './job-jobStatusType-lookup-table-modal.component';
 import { JobStoreLookupTableModalComponent } from './job-store-lookup-table-modal.component';
 import { JobDashboardComponent } from './job-dashboard/job-dashboard.component';
+import { MainModule } from '@app/main/main.module';
+import { TaskEventModule } from '@app/main/taskManagement/taskEvents/taskEvent.module';
 
 @NgModule({
     declarations: [
@@ -35,6 +37,7 @@ import { JobDashboardComponent } from './job-dashboard/job-dashboard.component';
         JobStoreLookupTableModalComponent,
         JobDashboardComponent,
     ],
-    imports: [AppSharedModule, JobRoutingModule, AdminSharedModule],
+    imports: [AppSharedModule, JobRoutingModule, AdminSharedModule, MainModule, 
+        TaskEventModule],
 })
 export class JobModule {}
