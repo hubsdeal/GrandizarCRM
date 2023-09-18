@@ -92,7 +92,8 @@
                                                 <span *ngIf="employee.mobile && employee.officePhone">, </span>
                                                 <span title="Office Phone"> {{employee.officePhone}}</span>
                                             </div>
-                                            <div class="fs-5 fw-semibold text-muted mb-2" *ngIf="employee.personalEmail || employee.businessEmail">
+                                            <div class="fs-5 fw-semibold text-muted mb-2"
+                                                *ngIf="employee.personalEmail || employee.businessEmail">
                                                 <i class="fas fa-envelope me-2"></i>
                                                 <span title="Personal Email">{{employee.personalEmail}}</span>
                                                 <span *ngIf="employee.personalEmail && employee.businessEmail">, </span>
@@ -108,7 +109,7 @@
                                                     <i class="fas fa-message text-white me-2"></i> Connect
                                                 </span>
                                             </a>
-                                            <a href="javascript:;"  *ngIf="isUser">
+                                            <a href="javascript:;" *ngIf="isUser">
                                                 <span class="badge badge-success">
                                                     <i class="fas fa-user-check text-white me-2"></i> Current Employee
                                                 </span>
@@ -229,9 +230,10 @@
                                                         </div>
                                                         <div class="row g-6 g-xl-9">
                                                             <!--begin::Col-->
-                                                            <div class="col-md-12 col-xl-12">
+                                                            <div class="col-md-12 col-xl-12"
+                                                                *ngFor="let record of taskEventList">
                                                                 <!--begin::Card-->
-                                                                <a href="../../demo1/dist/apps/projects/project.html"
+                                                                <a href="javascript:;"
                                                                     class="card border-hover-primary">
                                                                     <!--begin::Card header-->
                                                                     <div class="card-header border-0 pt-9">
@@ -249,7 +251,7 @@
                                                                         <!--begin::Card toolbar-->
                                                                         <div class="card-toolbar">
                                                                             <span
-                                                                                class="badge badge-light fw-bold me-auto px-4 py-3">Pending</span>
+                                                                                class="badge badge-primary fw-bold me-auto px-4 py-3">{{record.taskStatusName}}</span>
                                                                         </div>
                                                                         <!--end::Card toolbar-->
                                                                     </div>
@@ -257,42 +259,93 @@
                                                                     <!--begin:: Card body-->
                                                                     <div class="card-body p-9">
                                                                         <!--begin::Name-->
-                                                                        <div class="fs-3 fw-bold text-dark">Finance
-                                                                            Dispatch
+                                                                        <div class="fs-3 fw-bold text-dark">{{
+                                                                            record.taskEvent.name }}
                                                                         </div>
                                                                         <!--end::Name-->
                                                                         <!--begin::Description-->
-                                                                        <p
+                                                                        <div class="text-gray-400 fw-semibold fs-5 mt-1 mb-7"
+                                                                            *ngIf="sanitizeHtml(record.taskEvent.description)">
+                                                                            <div [innerHTML]="sanitizedHtml"></div>
+                                                                        </div>
+                                                                        <!-- <p
                                                                             class="text-gray-400 fw-semibold fs-5 mt-1 mb-7">
-                                                                            CRM App application
-                                                                            to HR efficiency</p>
+                                                                            {{ record.taskEvent.description }}</p> -->
                                                                         <!--end::Description-->
                                                                         <!--begin::Info-->
                                                                         <div class="d-flex flex-wrap mb-5">
-                                                                            <!--begin::Due-->
                                                                             <div
+                                                                                class="d-flex flex-wrap fw-semibold fs-6 mb-1 pe-2">
+                                                                                <a href="javascript:;"
+                                                                                    class="d-flex align-items-center text-gray-400 text-hover-primary me-5 mb-2">
+                                                                                    <!--begin::Svg Icon | path: icons/duotune/communication/com006.svg-->
+                                                                                    <i
+                                                                                        class="fas fa-calendar-day fs-3 me-3"></i>
+                                                                                    {{record.taskEvent?.eventDate |
+                                                                                    luxonFormat : 'dd MMM, yyyy' }} -
+                                                                                    {{record.taskEvent?.endDate |
+                                                                                    luxonFormat : 'dd MMM, yyyy'}}
+                                                                                </a>
+                                                                            </div>
+                                                                            <div
+                                                                                class="d-flex justify-content-between align-items-end">
+                                                                                <div
+                                                                                    class="d-flex flex-wrap fw-semibold fs-6">
+                                                                                    <a href="javascript:;"
+                                                                                        class="d-flex align-items-center text-gray-400 text-primary me-5 mb-2">
+                                                                                        <i
+                                                                                            class="fas fa-clock fs-3 me-3  text-primary"></i>
+                                                                                        {{record.taskEvent?.estimatedTime}}
+                                                                                        Hours
+                                                                                    </a>
+                                                                                </div>
+
+                                                                                <div
+                                                                                    class="d-flex flex-wrap fw-semibold fs-6">
+                                                                                    <a href="javascript:;"
+                                                                                        class="d-flex align-items-center text-gray-400 text-gray-600 me-5 mb-2">
+                                                                                        <i
+                                                                                            class="fas fa-clock fs-3 me-3 text-danger"></i>
+                                                                                        {{record.taskEvent?.actualTime}}
+                                                                                        Hours
+                                                                                    </a>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="d-flex flex-wrap mb-5">
+                                                                            <!--begin::Due-->
+                                                                            <!-- <div
                                                                                 class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-7 mb-3">
                                                                                 <div class="fs-6 text-gray-800 fw-bold">
-                                                                                    Sep
-                                                                                    22, 2023</div>
+                                                                                    {{record.taskEvent.endDate |
+                                                                                    luxonFormat : 'dd-MM-yyyy'}}</div>
                                                                                 <div class="fw-semibold text-gray-400">
-                                                                                    Due
+                                                                                    End
                                                                                     Date</div>
+                                                                            </div> -->
+                                                                            <div
+                                                                                class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 mb-3">
+                                                                                <div class="fs-6 text-gray-800 fw-bold">
+                                                                                    ${{record.taskEvent?.billingAmount}}
+                                                                                </div>
+                                                                                <div class="fw-semibold text-gray-400">
+                                                                                    Billing Amt.</div>
                                                                             </div>
                                                                             <!--end::Due-->
                                                                             <!--begin::Budget-->
                                                                             <div
                                                                                 class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 mb-3">
                                                                                 <div class="fs-6 text-gray-800 fw-bold">
-                                                                                    $284,900.00</div>
+                                                                                    ${{record.taskEvent?.costAmount}}
+                                                                                </div>
                                                                                 <div class="fw-semibold text-gray-400">
-                                                                                    Budget</div>
+                                                                                    Cost Amt.</div>
                                                                             </div>
                                                                             <!--end::Budget-->
                                                                         </div>
                                                                         <!--end::Info-->
                                                                         <!--begin::Progress-->
-                                                                        <div class="h-4px w-100 bg-light mb-5"
+                                                                        <!-- <div class="h-4px w-100 bg-light mb-5"
                                                                             data-bs-toggle="tooltip"
                                                                             aria-label="This project 60% completed"
                                                                             data-bs-original-title="This project 60% completed"
@@ -301,28 +354,44 @@
                                                                                 role="progressbar" style="width: 60%"
                                                                                 aria-valuenow="60" aria-valuemin="0"
                                                                                 aria-valuemax="100"></div>
+                                                                        </div> -->
+                                                                        <div
+                                                                            class="d-flex align-items-center flex-column mt-5">
+                                                                            <div
+                                                                                class="d-flex justify-content-between w-100 mt-auto mb-2">
+                                                                                <span
+                                                                                    class="fw-semibold fs-6 text-gray-400">
+                                                                                    Compleation Percentage</span>
+                                                                                <span
+                                                                                    class="fw-bold fs-6">{{record.taskEvent?.completionPercentage}}%</span>
+
+                                                                            </div>
+                                                                            <div class="h-5px mx-3 w-100 bg-light mb-3">
+                                                                                <!-- <div class="bg-success rounded h-5px"
+                                                                                        role="progressbar"
+                                                                                        style="width: 50%;"
+                                                                                        aria-valuenow="50"
+                                                                                        aria-valuemin="0"
+                                                                                        aria-valuemax="100"></div> -->
+                                                                                <p-slider
+                                                                                    [(ngModel)]="record.taskEvent.completionPercentage"></p-slider>
+                                                                            </div>
                                                                         </div>
                                                                         <!--end::Progress-->
                                                                         <!--begin::Users-->
-                                                                        <div class="symbol-group symbol-hover">
-                                                                            <!--begin::User-->
-                                                                            <div class="symbol symbol-35px symbol-circle"
-                                                                                data-bs-toggle="tooltip"
-                                                                                data-bs-original-title="Nich Warden"
-                                                                                data-kt-initialized="1">
-                                                                                <span
-                                                                                    class="symbol-label bg-warning text-inverse-warning fw-bold">N</span>
+
+                                                                        <div class="d-flex flex-wrap mb-5"
+                                                                            >
+                                                                            <div class="symbol-group symbol-hover flex-nowrap d-flex justify-content-center">
+                                                                                <div *ngFor="let team of record.team" class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
+                                                                                    data-bs-original-title="Alan Warden" data-kt-initialized="1">
+                                                                                    
+                                                                                    <span *ngIf ="!team.picture" title="{{team.employeeName}}"
+                                                                                        class="symbol-label bg-warning text-inverse-warning fw-bold">{{team.employeeName | nameSplit}}</span>
+                                                                                        <img *ngIf ="team.picture" alt="Pic" src="{{team.picture}}">
+                                                                                </div>
+                                                                               
                                                                             </div>
-                                                                            <!--begin::User-->
-                                                                            <!--begin::User-->
-                                                                            <div class="symbol symbol-35px symbol-circle"
-                                                                                data-bs-toggle="tooltip"
-                                                                                data-bs-original-title="Rob Otto"
-                                                                                data-kt-initialized="1">
-                                                                                <span
-                                                                                    class="symbol-label bg-success text-inverse-success fw-bold">R</span>
-                                                                            </div>
-                                                                            <!--begin::User-->
                                                                         </div>
                                                                         <!--end::Users-->
                                                                     </div>
@@ -331,228 +400,12 @@
                                                                 <!--end::Card-->
                                                             </div>
                                                             <!--end::Col-->
-                                                            <!--begin::Col-->
-                                                            <div class="col-md-12 col-xl-12">
-                                                                <!--begin::Card-->
-                                                                <a href="../../demo1/dist/apps/projects/project.html"
-                                                                    class="card border-hover-primary">
-                                                                    <!--begin::Card header-->
-                                                                    <div class="card-header border-0 pt-9">
-                                                                        <!--begin::Card Title-->
-                                                                        <div class="card-title m-0">
-                                                                            <!--begin::Avatar-->
-                                                                            <div
-                                                                                class="symbol symbol-50px w-50px bg-light">
-                                                                                <img src="assets/media/svg/brand-logos/xing-icon.svg"
-                                                                                    alt="image" class="p-3">
-                                                                            </div>
-                                                                            <!--end::Avatar-->
-                                                                        </div>
-                                                                        <!--end::Car Title-->
-                                                                        <!--begin::Card toolbar-->
-                                                                        <div class="card-toolbar">
-                                                                            <span
-                                                                                class="badge badge-light-primary fw-bold me-auto px-4 py-3">In
-                                                                                Progress</span>
-                                                                        </div>
-                                                                        <!--end::Card toolbar-->
-                                                                    </div>
-                                                                    <!--end:: Card header-->
-                                                                    <!--begin:: Card body-->
-                                                                    <div class="card-body p-9">
-                                                                        <!--begin::Name-->
-                                                                        <div class="fs-3 fw-bold text-dark">9 Degree
-                                                                        </div>
-                                                                        <!--end::Name-->
-                                                                        <!--begin::Description-->
-                                                                        <p
-                                                                            class="text-gray-400 fw-semibold fs-5 mt-1 mb-7">
-                                                                            CRM App application
-                                                                            to HR efficiency</p>
-                                                                        <!--end::Description-->
-                                                                        <!--begin::Info-->
-                                                                        <div class="d-flex flex-wrap mb-5">
-                                                                            <!--begin::Due-->
-                                                                            <div
-                                                                                class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-7 mb-3">
-                                                                                <div class="fs-6 text-gray-800 fw-bold">
-                                                                                    Sep
-                                                                                    22, 2023</div>
-                                                                                <div class="fw-semibold text-gray-400">
-                                                                                    Due
-                                                                                    Date</div>
-                                                                            </div>
-                                                                            <!--end::Due-->
-                                                                            <!--begin::Budget-->
-                                                                            <div
-                                                                                class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 mb-3">
-                                                                                <div class="fs-6 text-gray-800 fw-bold">
-                                                                                    $284,900.00</div>
-                                                                                <div class="fw-semibold text-gray-400">
-                                                                                    Budget</div>
-                                                                            </div>
-                                                                            <!--end::Budget-->
-                                                                        </div>
-                                                                        <!--end::Info-->
-                                                                        <!--begin::Progress-->
-                                                                        <div class="h-4px w-100 bg-light mb-5"
-                                                                            data-bs-toggle="tooltip"
-                                                                            aria-label="This project 40% completed"
-                                                                            data-bs-original-title="This project 40% completed"
-                                                                            data-kt-initialized="1">
-                                                                            <div class="bg-primary rounded h-4px"
-                                                                                role="progressbar" style="width: 40%"
-                                                                                aria-valuenow="40" aria-valuemin="0"
-                                                                                aria-valuemax="100"></div>
-                                                                        </div>
-                                                                        <!--end::Progress-->
-                                                                        <!--begin::Users-->
-                                                                        <div class="symbol-group symbol-hover">
-                                                                            <!--begin::User-->
-                                                                            <div class="symbol symbol-35px symbol-circle"
-                                                                                data-bs-toggle="tooltip"
-                                                                                aria-label="Francis Mitcham"
-                                                                                data-bs-original-title="Francis Mitcham"
-                                                                                data-kt-initialized="1">
-                                                                                <img alt="Pic"
-                                                                                    src="assets/media/avatars/300-20.jpg">
-                                                                            </div>
-                                                                            <!--begin::User-->
-                                                                            <!--begin::User-->
-                                                                            <div class="symbol symbol-35px symbol-circle"
-                                                                                data-bs-toggle="tooltip"
-                                                                                aria-label="Michelle Swanston"
-                                                                                data-bs-original-title="Michelle Swanston"
-                                                                                data-kt-initialized="1">
-                                                                                <img alt="Pic"
-                                                                                    src="assets/media/avatars/300-7.jpg">
-                                                                            </div>
-                                                                            <!--begin::User-->
-                                                                            <!--begin::User-->
-                                                                            <div class="symbol symbol-35px symbol-circle"
-                                                                                data-bs-toggle="tooltip"
-                                                                                data-bs-original-title="Susan Redwood"
-                                                                                data-kt-initialized="1">
-                                                                                <span
-                                                                                    class="symbol-label bg-primary text-inverse-primary fw-bold">S</span>
-                                                                            </div>
-                                                                            <!--begin::User-->
-                                                                        </div>
-                                                                        <!--end::Users-->
-                                                                    </div>
-                                                                    <!--end:: Card body-->
-                                                                </a>
-                                                                <!--end::Card-->
-                                                            </div>
-                                                            <!--end::Col-->
-                                                            <!--begin::Col-->
-                                                            <div class="col-md-12 col-xl-12">
-                                                                <!--begin::Card-->
-                                                                <a href="../../demo1/dist/apps/projects/project.html"
-                                                                    class="card border-hover-primary">
-                                                                    <!--begin::Card header-->
-                                                                    <div class="card-header border-0 pt-9">
-                                                                        <!--begin::Card Title-->
-                                                                        <div class="card-title m-0">
-                                                                            <!--begin::Avatar-->
-                                                                            <div
-                                                                                class="symbol symbol-50px w-50px bg-light">
-                                                                                <img src="assets/media/svg/brand-logos/tvit.svg"
-                                                                                    alt="image" class="p-3">
-                                                                            </div>
-                                                                            <!--end::Avatar-->
-                                                                        </div>
-                                                                        <!--end::Car Title-->
-                                                                        <!--begin::Card toolbar-->
-                                                                        <div class="card-toolbar">
-                                                                            <span
-                                                                                class="badge badge-light-primary fw-bold me-auto px-4 py-3">In
-                                                                                Progress</span>
-                                                                        </div>
-                                                                        <!--end::Card toolbar-->
-                                                                    </div>
-                                                                    <!--end:: Card header-->
-                                                                    <!--begin:: Card body-->
-                                                                    <div class="card-body p-9">
-                                                                        <!--begin::Name-->
-                                                                        <div class="fs-3 fw-bold text-dark">GoPro App
-                                                                        </div>
-                                                                        <!--end::Name-->
-                                                                        <!--begin::Description-->
-                                                                        <p
-                                                                            class="text-gray-400 fw-semibold fs-5 mt-1 mb-7">
-                                                                            CRM App application
-                                                                            to HR efficiency</p>
-                                                                        <!--end::Description-->
-                                                                        <!--begin::Info-->
-                                                                        <div class="d-flex flex-wrap mb-5">
-                                                                            <!--begin::Due-->
-                                                                            <div
-                                                                                class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-7 mb-3">
-                                                                                <div class="fs-6 text-gray-800 fw-bold">
-                                                                                    Jun
-                                                                                    24, 2023</div>
-                                                                                <div class="fw-semibold text-gray-400">
-                                                                                    Due
-                                                                                    Date</div>
-                                                                            </div>
-                                                                            <!--end::Due-->
-                                                                            <!--begin::Budget-->
-                                                                            <div
-                                                                                class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 mb-3">
-                                                                                <div class="fs-6 text-gray-800 fw-bold">
-                                                                                    $284,900.00</div>
-                                                                                <div class="fw-semibold text-gray-400">
-                                                                                    Budget</div>
-                                                                            </div>
-                                                                            <!--end::Budget-->
-                                                                        </div>
-                                                                        <!--end::Info-->
-                                                                        <!--begin::Progress-->
-                                                                        <div class="h-4px w-100 bg-light mb-5"
-                                                                            data-bs-toggle="tooltip"
-                                                                            aria-label="This project 70% completed"
-                                                                            data-bs-original-title="This project 70% completed"
-                                                                            data-kt-initialized="1">
-                                                                            <div class="bg-primary rounded h-4px"
-                                                                                role="progressbar" style="width: 70%"
-                                                                                aria-valuenow="70" aria-valuemin="0"
-                                                                                aria-valuemax="100"></div>
-                                                                        </div>
-                                                                        <!--end::Progress-->
-                                                                        <!--begin::Users-->
-                                                                        <div class="symbol-group symbol-hover">
-                                                                            <!--begin::User-->
-                                                                            <div class="symbol symbol-35px symbol-circle"
-                                                                                data-bs-toggle="tooltip"
-                                                                                aria-label="Melody Macy"
-                                                                                data-bs-original-title="Melody Macy"
-                                                                                data-kt-initialized="1">
-                                                                                <img alt="Pic"
-                                                                                    src="assets/media/avatars/300-2.jpg">
-                                                                            </div>
-                                                                            <!--begin::User-->
-                                                                            <!--begin::User-->
-                                                                            <div class="symbol symbol-35px symbol-circle"
-                                                                                data-bs-toggle="tooltip"
-                                                                                data-bs-original-title="Robin Watterman"
-                                                                                data-kt-initialized="1">
-                                                                                <span
-                                                                                    class="symbol-label bg-success text-inverse-success fw-bold">R</span>
-                                                                            </div>
-                                                                            <!--begin::User-->
-                                                                        </div>
-                                                                        <!--end::Users-->
-                                                                    </div>
-                                                                    <!--end:: Card body-->
-                                                                </a>
-                                                                <!--end::Card-->
-                                                            </div>
+
                                                         </div>
                                                     </div>
 
                                                     <div class="tab-pane fade" id="emp_work_items" role="tabpanel">
-                                                        <div class="card mb-9">
+                                                        <div class="card mb-9" *ngFor="let item of workItems">
                                                             <div class="card-body">
                                                                 <div class="d-flex flex-wrap flex-sm-nowrap">
                                                                     <!--begin::Info-->
@@ -566,8 +419,7 @@
                                                                                 <div
                                                                                     class="d-flex align-items-center mb-2">
                                                                                     <a href="javascript:;"
-                                                                                        class="text-gray-900 text-hover-primary fs-4 fw-bold me-1">Task
-                                                                                        work items</a>
+                                                                                        class="text-gray-900 text-hover-primary fs-4 fw-bold me-1">{{item.taskEventName}}</a>
                                                                                 </div>
                                                                                 <div
                                                                                     class="d-flex flex-wrap fw-semibold fs-6 mb-4 pe-2">
@@ -576,14 +428,20 @@
                                                                                         <!--begin::Svg Icon | path: icons/duotune/communication/com006.svg-->
                                                                                         <i
                                                                                             class="fas fa-tasks-alt fs-3 me-3"></i>
-                                                                                        Task Event Name
+                                                                                        {{item.taskWorkItem?.name}}
                                                                                     </a>
                                                                                 </div>
                                                                             </div>
                                                                             <div class="d-flex my-4">
                                                                                 <a href="javascript:;"
+                                                                                    *ngIf="!item.taskWorkItem.openOrClosed"
                                                                                     class="btn btn-sm btn-primary me-2">
                                                                                     Open
+                                                                                </a>
+                                                                                <a href="javascript:;"
+                                                                                    *ngIf="item.taskWorkItem.openOrClosed"
+                                                                                    class="btn btn-sm btn-success me-2">
+                                                                                    Closed
                                                                                 </a>
                                                                             </div>
                                                                         </div>
@@ -597,7 +455,10 @@
                                                                                     <!--begin::Svg Icon | path: icons/duotune/communication/com006.svg-->
                                                                                     <i
                                                                                         class="fas fa-calendar-day fs-3 me-3"></i>
-                                                                                    Jan 23, 2023 - Jan 23, 2023
+                                                                                    {{item.taskWorkItem?.startDate |
+                                                                                    luxonFormat : 'dd MMM, yyyy' }} -
+                                                                                    {{item.taskWorkItem?.endDate |
+                                                                                    luxonFormat : 'dd MMM, yyyy'}}
                                                                                 </a>
                                                                             </div>
                                                                             <div
@@ -608,7 +469,8 @@
                                                                                         class="d-flex align-items-center text-gray-400 text-primary me-5 mb-2">
                                                                                         <i
                                                                                             class="fas fa-clock fs-3 me-3  text-primary"></i>
-                                                                                        45mins
+                                                                                        {{item.taskWorkItem?.estimatedHours}}
+                                                                                        Hours
                                                                                     </a>
                                                                                 </div>
 
@@ -618,12 +480,13 @@
                                                                                         class="d-flex align-items-center text-gray-400 text-gray-600 me-5 mb-2">
                                                                                         <i
                                                                                             class="fas fa-clock fs-3 me-3 text-danger"></i>
-                                                                                        45mins
+                                                                                        {{item.taskWorkItem?.actualHours}}
+                                                                                        Hours
                                                                                     </a>
                                                                                 </div>
 
                                                                                 <div class="symbol-group symbol-hover">
-                                                                                    <div
+                                                                                    <!-- <div
                                                                                         class="symbol symbol-35px symbol-circle">
                                                                                         <span
                                                                                             class="symbol-label bg-warning text-inverse-warning fw-bold">N</span>
@@ -632,6 +495,20 @@
                                                                                         class="symbol symbol-35px symbol-circle">
                                                                                         <span
                                                                                             class="symbol-label bg-success text-inverse-success fw-bold">R</span>
+                                                                                    </div> -->
+                                                                                    <div data-bs-toggle="tooltip"
+                                                                                        aria-label="item?.employeeName"
+                                                                                        data-bs-original-title="item?.employeeName"
+                                                                                        data-kt-initialized="1"
+                                                                                        class="symbol symbol-50px w-50px bg-light">
+                                                                                        <img alt="Pic"
+                                                                                            *ngIf="item?.picture"
+                                                                                            alt="Pic"
+                                                                                            src="{{item?.picture}}">
+                                                                                        <span *ngIf="!item?.picture"
+                                                                                            title="{{item?.employeeName}}"
+                                                                                            class="symbol-label bg-warning text-inverse-warning fw-bold">{{item?.employeeName
+                                                                                            | nameSplit}}</span>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -645,16 +522,19 @@
                                                                                         class="fw-semibold fs-6 text-gray-400">
                                                                                         Compleation Percentage</span>
                                                                                     <span
-                                                                                        class="fw-bold fs-6">50%</span>
+                                                                                        class="fw-bold fs-6">{{item.taskWorkItem?.completionPercentage}}%</span>
+
                                                                                 </div>
                                                                                 <div
                                                                                     class="h-5px mx-3 w-100 bg-light mb-3">
-                                                                                    <div class="bg-success rounded h-5px"
+                                                                                    <!-- <div class="bg-success rounded h-5px"
                                                                                         role="progressbar"
                                                                                         style="width: 50%;"
                                                                                         aria-valuenow="50"
                                                                                         aria-valuemin="0"
-                                                                                        aria-valuemax="100"></div>
+                                                                                        aria-valuemax="100"></div> -->
+                                                                                    <p-slider
+                                                                                        [(ngModel)]="item.taskWorkItem.completionPercentage"></p-slider>
                                                                                 </div>
                                                                             </div>
                                                                             <!--end::Progress-->
@@ -666,347 +546,7 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="card mb-9">
-                                                            <div class="card-body">
-                                                                <div class="d-flex flex-wrap flex-sm-nowrap">
-                                                                    <!--begin::Info-->
-                                                                    <div class="flex-grow-1">
-                                                                        <!--begin::Title-->
-                                                                        <div
-                                                                            class="d-flex justify-content-between align-items-start flex-wrap">
-                                                                            <!--begin::User-->
-                                                                            <div class="d-grid flex-column">
-                                                                                <!--begin::Name-->
-                                                                                <div
-                                                                                    class="d-flex align-items-center mb-2">
-                                                                                    <a href="javascript:;"
-                                                                                        class="text-gray-900 text-hover-primary fs-4 fw-bold me-1">Task
-                                                                                        work items</a>
-                                                                                </div>
-                                                                                <div
-                                                                                    class="d-flex flex-wrap fw-semibold fs-6 mb-4 pe-2">
-                                                                                    <a href="javascript:;"
-                                                                                        class="d-flex align-items-center text-gray-400 text-hover-primary me-5 mb-2">
-                                                                                        <!--begin::Svg Icon | path: icons/duotune/communication/com006.svg-->
-                                                                                        <i
-                                                                                            class="fas fa-tasks-alt fs-3 me-3"></i>
-                                                                                        Task Event Name
-                                                                                    </a>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="d-flex my-4">
-                                                                                <a href="javascript:;"
-                                                                                    class="btn btn-sm btn-primary me-2">
-                                                                                    Open
-                                                                                </a>
-                                                                            </div>
-                                                                        </div>
-                                                                        <!--end::Title-->
-                                                                        <!--begin::Stats-->
-                                                                        <div class="d-grid">
-                                                                            <div
-                                                                                class="d-flex flex-wrap fw-semibold fs-6 mb-1 pe-2">
-                                                                                <a href="javascript:;"
-                                                                                    class="d-flex align-items-center text-gray-400 text-hover-primary me-5 mb-2">
-                                                                                    <!--begin::Svg Icon | path: icons/duotune/communication/com006.svg-->
-                                                                                    <i
-                                                                                        class="fas fa-calendar-day fs-3 me-3"></i>
-                                                                                    Jan 23, 2023 - Jan 23, 2023
-                                                                                </a>
-                                                                            </div>
-                                                                            <div
-                                                                                class="d-flex justify-content-between align-items-end">
-                                                                                <div
-                                                                                    class="d-flex flex-wrap fw-semibold fs-6">
-                                                                                    <a href="javascript:;"
-                                                                                        class="d-flex align-items-center text-gray-400 text-primary me-5 mb-2">
-                                                                                        <i
-                                                                                            class="fas fa-clock fs-3 me-3  text-primary"></i>
-                                                                                        45mins
-                                                                                    </a>
-                                                                                </div>
 
-                                                                                <div
-                                                                                    class="d-flex flex-wrap fw-semibold fs-6">
-                                                                                    <a href="javascript:;"
-                                                                                        class="d-flex align-items-center text-gray-400 text-gray-600 me-5 mb-2">
-                                                                                        <i
-                                                                                            class="fas fa-clock fs-3 me-3 text-danger"></i>
-                                                                                        45mins
-                                                                                    </a>
-                                                                                </div>
-
-                                                                                <div class="symbol-group symbol-hover">
-                                                                                    <div
-                                                                                        class="symbol symbol-35px symbol-circle">
-                                                                                        <span
-                                                                                            class="symbol-label bg-warning text-inverse-warning fw-bold">N</span>
-                                                                                    </div>
-                                                                                    <div
-                                                                                        class="symbol symbol-35px symbol-circle">
-                                                                                        <span
-                                                                                            class="symbol-label bg-success text-inverse-success fw-bold">R</span>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-
-                                                                            <!--begin::Progress-->
-                                                                            <div
-                                                                                class="d-flex align-items-center flex-column mt-5">
-                                                                                <div
-                                                                                    class="d-flex justify-content-between w-100 mt-auto mb-2">
-                                                                                    <span
-                                                                                        class="fw-semibold fs-6 text-gray-400">
-                                                                                        Compleation Percentage</span>
-                                                                                    <span
-                                                                                        class="fw-bold fs-6">50%</span>
-                                                                                </div>
-                                                                                <div
-                                                                                    class="h-5px mx-3 w-100 bg-light mb-3">
-                                                                                    <div class="bg-success rounded h-5px"
-                                                                                        role="progressbar"
-                                                                                        style="width: 50%;"
-                                                                                        aria-valuenow="50"
-                                                                                        aria-valuemin="0"
-                                                                                        aria-valuemax="100"></div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <!--end::Progress-->
-                                                                        </div>
-                                                                        <!--end::Stats-->
-                                                                    </div>
-                                                                    <!--end::Info-->
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="card mb-9">
-                                                            <div class="card-body">
-                                                                <div class="d-flex flex-wrap flex-sm-nowrap">
-                                                                    <!--begin::Info-->
-                                                                    <div class="flex-grow-1">
-                                                                        <!--begin::Title-->
-                                                                        <div
-                                                                            class="d-flex justify-content-between align-items-start flex-wrap">
-                                                                            <!--begin::User-->
-                                                                            <div class="d-grid flex-column">
-                                                                                <!--begin::Name-->
-                                                                                <div
-                                                                                    class="d-flex align-items-center mb-2">
-                                                                                    <a href="javascript:;"
-                                                                                        class="text-gray-900 text-hover-primary fs-4 fw-bold me-1">Task
-                                                                                        work items</a>
-                                                                                </div>
-                                                                                <div
-                                                                                    class="d-flex flex-wrap fw-semibold fs-6 mb-4 pe-2">
-                                                                                    <a href="javascript:;"
-                                                                                        class="d-flex align-items-center text-gray-400 text-hover-primary me-5 mb-2">
-                                                                                        <!--begin::Svg Icon | path: icons/duotune/communication/com006.svg-->
-                                                                                        <i
-                                                                                            class="fas fa-tasks-alt fs-3 me-3"></i>
-                                                                                        Task Event Name
-                                                                                    </a>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="d-flex my-4">
-                                                                                <a href="javascript:;"
-                                                                                    class="btn btn-sm btn-primary me-2">
-                                                                                    Open
-                                                                                </a>
-                                                                            </div>
-                                                                        </div>
-                                                                        <!--end::Title-->
-                                                                        <!--begin::Stats-->
-                                                                        <div class="d-grid">
-                                                                            <div
-                                                                                class="d-flex flex-wrap fw-semibold fs-6 mb-1 pe-2">
-                                                                                <a href="javascript:;"
-                                                                                    class="d-flex align-items-center text-gray-400 text-hover-primary me-5 mb-2">
-                                                                                    <!--begin::Svg Icon | path: icons/duotune/communication/com006.svg-->
-                                                                                    <i
-                                                                                        class="fas fa-calendar-day fs-3 me-3"></i>
-                                                                                    Jan 23, 2023 - Jan 23, 2023
-                                                                                </a>
-                                                                            </div>
-                                                                            <div
-                                                                                class="d-flex justify-content-between align-items-end">
-                                                                                <div
-                                                                                    class="d-flex flex-wrap fw-semibold fs-6">
-                                                                                    <a href="javascript:;"
-                                                                                        class="d-flex align-items-center text-gray-400 text-primary me-5 mb-2">
-                                                                                        <i
-                                                                                            class="fas fa-clock fs-3 me-3  text-primary"></i>
-                                                                                        45mins
-                                                                                    </a>
-                                                                                </div>
-
-                                                                                <div
-                                                                                    class="d-flex flex-wrap fw-semibold fs-6">
-                                                                                    <a href="javascript:;"
-                                                                                        class="d-flex align-items-center text-gray-400 text-gray-600 me-5 mb-2">
-                                                                                        <i
-                                                                                            class="fas fa-clock fs-3 me-3 text-danger"></i>
-                                                                                        45mins
-                                                                                    </a>
-                                                                                </div>
-
-                                                                                <div class="symbol-group symbol-hover">
-                                                                                    <div
-                                                                                        class="symbol symbol-35px symbol-circle">
-                                                                                        <span
-                                                                                            class="symbol-label bg-warning text-inverse-warning fw-bold">N</span>
-                                                                                    </div>
-                                                                                    <div
-                                                                                        class="symbol symbol-35px symbol-circle">
-                                                                                        <span
-                                                                                            class="symbol-label bg-success text-inverse-success fw-bold">R</span>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-
-                                                                            <!--begin::Progress-->
-                                                                            <div
-                                                                                class="d-flex align-items-center flex-column mt-5">
-                                                                                <div
-                                                                                    class="d-flex justify-content-between w-100 mt-auto mb-2">
-                                                                                    <span
-                                                                                        class="fw-semibold fs-6 text-gray-400">
-                                                                                        Compleation Percentage</span>
-                                                                                    <span
-                                                                                        class="fw-bold fs-6">50%</span>
-                                                                                </div>
-                                                                                <div
-                                                                                    class="h-5px mx-3 w-100 bg-light mb-3">
-                                                                                    <div class="bg-success rounded h-5px"
-                                                                                        role="progressbar"
-                                                                                        style="width: 50%;"
-                                                                                        aria-valuenow="50"
-                                                                                        aria-valuemin="0"
-                                                                                        aria-valuemax="100"></div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <!--end::Progress-->
-                                                                        </div>
-                                                                        <!--end::Stats-->
-                                                                    </div>
-                                                                    <!--end::Info-->
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="card mb-0">
-                                                            <div class="card-body">
-                                                                <div class="d-flex flex-wrap flex-sm-nowrap">
-                                                                    <!--begin::Info-->
-                                                                    <div class="flex-grow-1">
-                                                                        <!--begin::Title-->
-                                                                        <div
-                                                                            class="d-flex justify-content-between align-items-start flex-wrap">
-                                                                            <!--begin::User-->
-                                                                            <div class="d-grid flex-column">
-                                                                                <!--begin::Name-->
-                                                                                <div
-                                                                                    class="d-flex align-items-center mb-2">
-                                                                                    <a href="javascript:;"
-                                                                                        class="text-gray-900 text-hover-primary fs-4 fw-bold me-1">Task
-                                                                                        work items</a>
-                                                                                </div>
-                                                                                <div
-                                                                                    class="d-flex flex-wrap fw-semibold fs-6 mb-4 pe-2">
-                                                                                    <a href="javascript:;"
-                                                                                        class="d-flex align-items-center text-gray-400 text-hover-primary me-5 mb-2">
-                                                                                        <!--begin::Svg Icon | path: icons/duotune/communication/com006.svg-->
-                                                                                        <i
-                                                                                            class="fas fa-tasks-alt fs-3 me-3"></i>
-                                                                                        Task Event Name
-                                                                                    </a>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="d-flex my-4">
-                                                                                <a href="javascript:;"
-                                                                                    class="btn btn-sm btn-primary me-2">
-                                                                                    Open
-                                                                                </a>
-                                                                            </div>
-                                                                        </div>
-                                                                        <!--end::Title-->
-                                                                        <!--begin::Stats-->
-                                                                        <div class="d-grid">
-                                                                            <div
-                                                                                class="d-flex flex-wrap fw-semibold fs-6 mb-1 pe-2">
-                                                                                <a href="javascript:;"
-                                                                                    class="d-flex align-items-center text-gray-400 text-hover-primary me-5 mb-2">
-                                                                                    <!--begin::Svg Icon | path: icons/duotune/communication/com006.svg-->
-                                                                                    <i
-                                                                                        class="fas fa-calendar-day fs-3 me-3"></i>
-                                                                                    Jan 23, 2023 - Jan 23, 2023
-                                                                                </a>
-                                                                            </div>
-                                                                            <div
-                                                                                class="d-flex justify-content-between align-items-end">
-                                                                                <div
-                                                                                    class="d-flex flex-wrap fw-semibold fs-6">
-                                                                                    <a href="javascript:;"
-                                                                                        class="d-flex align-items-center text-gray-400 text-primary me-5 mb-2">
-                                                                                        <i
-                                                                                            class="fas fa-clock fs-3 me-3  text-primary"></i>
-                                                                                        45mins
-                                                                                    </a>
-                                                                                </div>
-
-                                                                                <div
-                                                                                    class="d-flex flex-wrap fw-semibold fs-6">
-                                                                                    <a href="javascript:;"
-                                                                                        class="d-flex align-items-center text-gray-400 text-gray-600 me-5 mb-2">
-                                                                                        <i
-                                                                                            class="fas fa-clock fs-3 me-3 text-danger"></i>
-                                                                                        45mins
-                                                                                    </a>
-                                                                                </div>
-
-                                                                                <div class="symbol-group symbol-hover">
-                                                                                    <div
-                                                                                        class="symbol symbol-35px symbol-circle">
-                                                                                        <span
-                                                                                            class="symbol-label bg-warning text-inverse-warning fw-bold">N</span>
-                                                                                    </div>
-                                                                                    <div
-                                                                                        class="symbol symbol-35px symbol-circle">
-                                                                                        <span
-                                                                                            class="symbol-label bg-success text-inverse-success fw-bold">R</span>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-
-                                                                            <!--begin::Progress-->
-                                                                            <div
-                                                                                class="d-flex align-items-center flex-column mt-5">
-                                                                                <div
-                                                                                    class="d-flex justify-content-between w-100 mt-auto mb-2">
-                                                                                    <span
-                                                                                        class="fw-semibold fs-6 text-gray-400">
-                                                                                        Compleation Percentage</span>
-                                                                                    <span
-                                                                                        class="fw-bold fs-6">50%</span>
-                                                                                </div>
-                                                                                <div
-                                                                                    class="h-5px mx-3 w-100 bg-light mb-3">
-                                                                                    <div class="bg-success rounded h-5px"
-                                                                                        role="progressbar"
-                                                                                        style="width: 50%;"
-                                                                                        aria-valuenow="50"
-                                                                                        aria-valuemin="0"
-                                                                                        aria-valuemax="100"></div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <!--end::Progress-->
-                                                                        </div>
-                                                                        <!--end::Stats-->
-                                                                    </div>
-                                                                    <!--end::Info-->
-                                                                </div>
-                                                            </div>
-                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
