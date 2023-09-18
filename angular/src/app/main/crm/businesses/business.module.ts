@@ -7,6 +7,8 @@ import { CreateOrEditBusinessModalComponent } from './create-or-edit-business-mo
 import { ViewBusinessModalComponent } from './view-business-modal.component';
 import { BusinessMediaLibraryLookupTableModalComponent } from './business-mediaLibrary-lookup-table-modal.component';
 import { BusinessDashboardComponent } from './business-dashboard/business-dashboard.component';
+import { MainModule } from '@app/main/main.module';
+import { TaskEventModule } from '@app/main/taskManagement/taskEvents/taskEvent.module';
 
 @NgModule({
     declarations: [
@@ -15,8 +17,10 @@ import { BusinessDashboardComponent } from './business-dashboard/business-dashbo
         ViewBusinessModalComponent,
 
         BusinessMediaLibraryLookupTableModalComponent,
-          BusinessDashboardComponent,
+        BusinessDashboardComponent,
     ],
-    imports: [AppSharedModule, BusinessRoutingModule, AdminSharedModule],
+    imports: [AppSharedModule, BusinessRoutingModule, AdminSharedModule, MainModule, 
+        TaskEventModule
+    ],
 })
-export class BusinessModule {}
+export class BusinessModule { }

@@ -30,6 +30,7 @@ import { LeadModule } from '@app/main/salesLeadManagement/leads/lead.module';
 import { CategoryWiseProductTemplateComponent } from './product-libraries/category-wise-product-template/category-wise-product-template.component';
 import { StoreProductMapModule } from '../storeProductMaps/storeProductMap.module';
 import { ProductCustomerStatModule } from '../productCustomerStats/productCustomerStat.module';
+import { MainModule } from '@app/main/main.module';
 
 @NgModule({
     declarations: [
@@ -58,6 +59,7 @@ import { ProductCustomerStatModule } from '../productCustomerStats/productCustom
         ProductUpsellRelatedProductModule,
         StoreProductMapModule,
         ProductCustomerStatModule,
+        MainModule,
         LeadModule],
     exports: [ProductsComponent,
         CreateOrEditProductModalComponent,

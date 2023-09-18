@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AppConsts } from '@shared/AppConsts';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
 import { AppComponentBase } from '@shared/common/app-component-base';
-import { CreateOrEditTaskDocumentDto, DocumentTypesServiceProxy, GetDocumentTypeForViewDto, TaskDocumentsServiceProxy, TaskEventsServiceProxy } from '@shared/service-proxies/service-proxies';
+import { CreateOrEditTaskDocumentDto, DocumentTypesServiceProxy, GetDocumentTypeForViewDto, GetTaskEventForViewDto, TaskDocumentsServiceProxy, TaskEventsServiceProxy } from '@shared/service-proxies/service-proxies';
 import { FileDownloadService } from '@shared/utils/file-download.service';
 import { IAjaxResponse, TokenService } from 'abp-ng2-module';
 import { FileItem, FileUploader, FileUploaderOptions } from 'ng2-file-upload';
@@ -12,6 +12,8 @@ import { Paginator } from 'primeng/paginator';
 import { Table } from 'primeng/table';
 import { finalize } from 'rxjs/operators';
 import { CreateOrEditTaskEventModalComponent } from '../create-or-edit-taskEvent-modal.component';
+import { ChatGptResponseModalComponent } from '@app/shared/chat-gpt-response-modal/chat-gpt-response-modal.component';
+import { MatDialog } from '@angular/material/dialog';
 
 
 
@@ -26,7 +28,7 @@ export class TaskEventsDashboardComponent extends AppComponentBase implements On
   @ViewChild('createOrEditTaskEventModal', { static: true })
     createOrEditTaskEventModal: CreateOrEditTaskEventModalComponent;
   taskEventId: number;
-  taskEvent: any;
+  taskEvent: GetTaskEventForViewDto = new GetTaskEventForViewDto();
   docTypes: GetDocumentTypeForViewDto[];
   taskDocument: CreateOrEditTaskDocumentDto = new CreateOrEditTaskDocumentDto();
   private _uploaderOptions: FileUploaderOptions = {};
@@ -42,7 +44,7 @@ export class TaskEventsDashboardComponent extends AppComponentBase implements On
 
   @ViewChild('dataTable', { static: true }) dataTable: Table;
   @ViewChild('paginator', { static: true }) paginator: Paginator;
-
+  taskDescription:any;
   constructor(
     injector: Injector,
     private route: ActivatedRoute,
@@ -51,6 +53,7 @@ export class TaskEventsDashboardComponent extends AppComponentBase implements On
     private _documentTypes: DocumentTypesServiceProxy,
     private _taskDocumentsServiceProxy: TaskDocumentsServiceProxy,
     private _activatedRoute: ActivatedRoute,
+    private dialog: MatDialog,
     private _fileDownloadService: FileDownloadService,
   ) {
     super(injector);
@@ -180,4 +183,20 @@ createTaskEvent(): void {
   this.createOrEditTaskEventModal.show();
 }
 
+
+openAiModalPr(fieldName: string): void {
+  const taskName = this.taskEvent.taskEvent.name;
+  this.taskDescription = `Write a ${fieldName} for a task where task title is ${taskName}`;
+  var modalTitle = `AI Task Description Generator`;
+  const dialogRef = this.dialog.open(ChatGptResponseModalComponent, {
+    data: { promtFromAnotherComponent: this.taskDescription, feildName: fieldName, modalTitle: modalTitle },
+    width: '1100px',
+  });
+
+  dialogRef.afterClosed().subscribe(result => {
+    if (result.data != null) {
+      this.taskEvent.taskEvent.description = result.data;
+    }
+  });
+}
 }

@@ -43,47 +43,81 @@
                             <div class="row">
                                 <div class="col-xl-12">
                                     <div class="my-3">
-                                        <label class="form-label" for="Employee_FirstName">{{ l('FirstName') }} *</label>
+                                        <label class="form-label required" for="Employee_FirstName">{{ l('FirstName') }}
+                                            *</label>
                                         <input type="text" #Employee_FirstName="ngModel" id="Employee_FirstName"
-                                            class="form-control" [(ngModel)]="employee.firstName" name="FirstName" minlength="1"
-                                            maxlength="128" required />
+                                            class="form-control" [(ngModel)]="employee.firstName" name="FirstName"
+                                            minlength="1" maxlength="128" required />
                                         <validation-messages [formCtrl]="Employee_FirstName"></validation-messages>
                                     </div>
                                 </div>
                                 <div class="col-xl-12">
                                     <div class="my-3">
-                                        <label class="form-label" for="Employee_LastName">{{ l('LastName') }}</label>
+                                        <label class="form-label required" for="Employee_LastName">{{ l('LastName')
+                                            }}</label>
                                         <input type="text" #Employee_LastName="ngModel" id="Employee_LastName"
-                                            class="form-control" [(ngModel)]="employee.lastName" name="LastName" minlength="1"
-                                            maxlength="128" />
+                                            class="form-control" [(ngModel)]="employee.lastName" name="LastName"
+                                            minlength="1" maxlength="128" required />
                                         <validation-messages [formCtrl]="Employee_LastName"></validation-messages>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="row">
                         <div class="col-xl-6">
                             <div class="my-3">
-                                <label class="form-label" for="StateName">{{ l('State') }}</label>
-                                <div class="input-group">
-                                    <input class="form-control" id="StateName" name="stateName" [(ngModel)]="stateName"
-                                        type="text" disabled />
-                                    <button class="btn btn-primary blue" (click)="openSelectStateModal()" type="button">
-                                        <i class="fa fa-search"></i>
-                                        {{ l('Pick') }}
-                                    </button>
-                                    <button class="btn btn-danger btn-icon" type="button" (click)="setStateIdNull()">
-                                        <i class="fa fa-times"></i>
-                                    </button>
-                                </div>
+                                <label class="form-label required" for="Employee_CompanyName">{{ l('Company Name')
+                                    }}</label>
+                                <input type="text" #Employee_CompanyName="ngModel" id="Employee_CompanyName"
+                                    class="form-control" [(ngModel)]="employee.companyName" name="CompanyName"
+                                    minlength="1" maxlength="128" required />
+                                <validation-messages [formCtrl]="Employee_CompanyName"></validation-messages>
                             </div>
-                            <input class="form-control" name="employee.stateId" [(ngModel)]="employee.stateId"
-                                type="text" hidden />
                         </div>
                         <div class="col-xl-6">
                             <div class="my-3">
+                                <label class="form-label required" for="Employee_JobTitle">{{ l('Job Title') }}</label>
+                                <input type="text" #Employee_JobTitle="ngModel" id="Employee_JobTitle" required
+                                    class="form-control" [(ngModel)]="employee.jobTitle" name="JobTitle" minlength="1"
+                                    maxlength="128" />
+                                <validation-messages [formCtrl]="Employee_JobTitle"></validation-messages>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-12">
+                            <div class="my-5">
+                                <label class="mb-2" for="employee">{{l("Department")}}</label>
+                                <p-multiSelect name="employee" id="employee" [options]="employeeList"
+                                    [(ngModel)]="selectedEmployees" optionLabel="displayName" [virtualScroll]="true"
+                                    [filter]="true" [itemSize]="34" [maxSelectedLabels]="2"
+                                    class="multiselect-custom-virtual-scroll" (onChange)="onEmployeeSelect($event)">
+                                </p-multiSelect>
+                            </div>
+                        </div>
+                        <div class="col-xl-12">
+                            <div class="my-3">
+                                <label class="form-label" for="Employee_FullAddress">{{ l('Full Address') }}</label>
+                                <input type="text" #Employee_FullAddress="ngModel" id="Employee_FullAddress"
+                                    class="form-control" [(ngModel)]="employee.fullAddress" name="FullAddress"
+                                    minlength="1" maxlength="1024" />
+                                <validation-messages [formCtrl]="Employee_FullAddress"></validation-messages>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-12">
+                            <div class="my-3">
+                                <label class="form-label" for="Employee_Address">{{ l('Address') }}</label>
+                                <input type="text" #Employee_Address="ngModel" id="Employee_Address"
+                                    class="form-control" [(ngModel)]="employee.address" name="Address" minlength="1"
+                                    maxlength="512" />
+                                <validation-messages [formCtrl]="Employee_Address"></validation-messages>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-6">
+                            <!-- <div class="my-3">
                                 <label class="form-label" for="CountryName">{{ l('Country') }}</label>
                                 <div class="input-group">
                                     <input class="form-control" id="CountryName" name="countryName"
@@ -99,36 +133,43 @@
                                 </div>
                             </div>
                             <input class="form-control" name="employee.countryId" [(ngModel)]="employee.countryId"
-                                type="text" hidden />
+                                type="text" hidden /> -->
+                            <div class="my-3 p_filter">
+                                <label class="form-label" for="CountryName">{{ l('Country') }}</label>
+                                <p-dropdown [options]="allCountrys" [filter]="true" [virtualScroll]="true"
+                                    (onChange)="onCountryChange($event)" placeholder="Select Country" [itemSize]="30"
+                                    name="displayName" optionLabel="displayName" optionId="id"
+                                    [(ngModel)]="selectedCountry" filterBy="displayName"
+                                    [style]="{ width: '100%' }"></p-dropdown>
+                            </div>
                         </div>
                         <div class="col-xl-6">
-                            <div class="my-3">
-                                <label class="form-label" for="ContactFullName">{{ l('Contact') }}</label>
+                            <!-- <div class="my-3">
+                                <label class="form-label" for="StateName">{{ l('State') }}</label>
                                 <div class="input-group">
-                                    <input class="form-control" id="ContactFullName" name="contactFullName"
-                                        [(ngModel)]="contactFullName" type="text" disabled />
-                                    <button class="btn btn-primary blue" (click)="openSelectContactModal()"
-                                        type="button">
+                                    <input class="form-control" id="StateName" name="stateName" [(ngModel)]="stateName"
+                                        type="text" disabled />
+                                    <button class="btn btn-primary blue" (click)="openSelectStateModal()" type="button">
                                         <i class="fa fa-search"></i>
                                         {{ l('Pick') }}
                                     </button>
-                                    <button class="btn btn-danger btn-icon" type="button" (click)="setContactIdNull()">
+                                    <button class="btn btn-danger btn-icon" type="button" (click)="setStateIdNull()">
                                         <i class="fa fa-times"></i>
                                     </button>
                                 </div>
                             </div>
-                            <input class="form-control" name="employee.contactId" [(ngModel)]="employee.contactId"
-                                type="text" hidden />
-                        </div>
-                        <div class="col-xl-6">
-                            <div class="my-3">
-                                <label class="form-label" for="Employee_Address">{{ l('Address') }}</label>
-                                <input type="text" #Employee_Address="ngModel" id="Employee_Address"
-                                    class="form-control" [(ngModel)]="employee.address" name="Address" minlength="1"
-                                    maxlength="512" />
-                                <validation-messages [formCtrl]="Employee_Address"></validation-messages>
+                            <input class="form-control" name="employee.stateId" [(ngModel)]="employee.stateId"
+                                type="text" hidden /> -->
+                            <div class="my-3 p_filter">
+                                <label class="form-label" for="StateName">{{ l('State') }}</label>
+                                <p-dropdown [options]="allStates" [filter]="true" [virtualScroll]="true"
+                                     placeholder="Select State" [itemSize]="30"
+                                    name="displayName" optionLabel="displayName" optionId="id"
+                                    [(ngModel)]="selectedState" filterBy="displayName"
+                                    [style]="{ width: '100%' }"></p-dropdown>
                             </div>
                         </div>
+
                         <div class="col-xl-6">
                             <div class="my-3">
                                 <label class="form-label" for="Employee_City">{{ l('City') }}</label>
@@ -146,15 +187,27 @@
                                 <validation-messages [formCtrl]="Employee_ZipCode"></validation-messages>
                             </div>
                         </div>
-                        <div class="col-xl-12">
+
+                        <!-- <div class="col-xl-12">
                             <div class="my-3">
-                                <label class="form-label" for="Employee_FullAddress">{{ l('FullAddress') }}</label>
-                                <input type="text" #Employee_FullAddress="ngModel" id="Employee_FullAddress"
-                                    class="form-control" [(ngModel)]="employee.fullAddress" name="FullAddress"
-                                    minlength="1" maxlength="1024" />
-                                <validation-messages [formCtrl]="Employee_FullAddress"></validation-messages>
+                                <label class="form-label" for="ContactFullName">{{ l('Contact') }}</label>
+                                <div class="input-group">
+                                    <input class="form-control" id="ContactFullName" name="contactFullName"
+                                        [(ngModel)]="contactFullName" type="text" disabled />
+                                    <button class="btn btn-primary blue" (click)="openSelectContactModal()"
+                                        type="button">
+                                        <i class="fa fa-search"></i>
+                                        {{ l('Pick') }}
+                                    </button>
+                                    <button class="btn btn-danger btn-icon" type="button" (click)="setContactIdNull()">
+                                        <i class="fa fa-times"></i>
+                                    </button>
+                                </div>
                             </div>
-                        </div>
+                            <input class="form-control" name="employee.contactId" [(ngModel)]="employee.contactId"
+                                type="text" hidden />
+                        </div> -->
+
                     </div>
 
 
@@ -185,16 +238,7 @@
 
 
                     <div class="row">
-                        <div class="col-xl-6">
-                            <div class="my-3">
-                                <label class="form-label" for="Employee_DateOfBirth">{{ l('DateOfBirth') }}</label>
-                                <input class="form-control m-input" #Employee_DateOfBirth type="datetime" bsDatepicker
-                                    datePickerLuxonModifier [(date)]="employee.dateOfBirth" id="Employee_DateOfBirth"
-                                    name="Employee_DateOfBirth" />
-                                <validation-messages [formCtrl]="Employee_DateOfBirth"></validation-messages>
-                            </div>
-                        </div>
-                        <div class="col-xl-6">
+                        <div class="col-xl-4">
                             <div class="my-3">
                                 <label class="form-label" for="Employee_Mobile">{{ l('Mobile') }}</label>
                                 <input type="text" #Employee_Mobile="ngModel" id="Employee_Mobile" class="form-control"
@@ -202,44 +246,7 @@
                                 <validation-messages [formCtrl]="Employee_Mobile"></validation-messages>
                             </div>
                         </div>
-                        <div class="col-xl-6">
-                            <div class="my-3">
-                                <label class="form-label" for="Employee_PersonalEmail">{{ l('PersonalEmail') }}</label>
-                                <input type="text" #Employee_PersonalEmail="ngModel" id="Employee_PersonalEmail"
-                                    class="form-control" [(ngModel)]="employee.personalEmail" name="PersonalEmail"
-                                    minlength="1" maxlength="128" />
-                                <validation-messages [formCtrl]="Employee_PersonalEmail"></validation-messages>
-                            </div>
-                        </div>
-                        <div class="col-xl-6">
-                            <div class="my-3">
-                                <label class="form-label" for="Employee_CompanyName">{{ l('CompanyName') }}</label>
-                                <input type="text" #Employee_CompanyName="ngModel" id="Employee_CompanyName"
-                                    class="form-control" [(ngModel)]="employee.companyName" name="CompanyName"
-                                    minlength="1" maxlength="128" />
-                                <validation-messages [formCtrl]="Employee_CompanyName"></validation-messages>
-                            </div>
-                        </div>
-                        <div class="col-xl-6">
-
-                            <div class="my-3">
-                                <label class="form-label" for="Employee_JobTitle">{{ l('JobTitle') }}</label>
-                                <input type="text" #Employee_JobTitle="ngModel" id="Employee_JobTitle"
-                                    class="form-control" [(ngModel)]="employee.jobTitle" name="JobTitle" minlength="1"
-                                    maxlength="128" />
-                                <validation-messages [formCtrl]="Employee_JobTitle"></validation-messages>
-                            </div>
-                        </div>
-                        <div class="col-xl-6">
-                            <div class="my-3">
-                                <label class="form-label" for="Employee_HireDate">{{ l('HireDate') }}</label>
-                                <input class="form-control m-input" #Employee_HireDate type="datetime" bsDatepicker
-                                    datePickerLuxonModifier [(date)]="employee.hireDate" id="Employee_HireDate"
-                                    name="Employee_HireDate" />
-                                <validation-messages [formCtrl]="Employee_HireDate"></validation-messages>
-                            </div>
-                        </div>
-                        <div class="col-xl-6">
+                        <div class="col-xl-4">
                             <div class="my-3">
                                 <label class="form-label" for="Employee_OfficePhone">{{ l('OfficePhone') }}</label>
                                 <input type="text" #Employee_OfficePhone="ngModel" id="Employee_OfficePhone"
@@ -248,9 +255,18 @@
                                 <validation-messages [formCtrl]="Employee_OfficePhone"></validation-messages>
                             </div>
                         </div>
+                        <div class="col-xl-4">
+                            <div class="my-3">
+                                <label class="form-label" for="Employee_Fax">{{ l('Fax') }}</label>
+                                <input type="text" #Employee_Fax="ngModel" id="Employee_Fax" class="form-control"
+                                    [(ngModel)]="employee.fax" name="Fax" minlength="1" maxlength="50" />
+                                <validation-messages [formCtrl]="Employee_Fax"></validation-messages>
+                            </div>
+                        </div>
+
                         <div class="col-xl-6">
                             <div class="my-3">
-                                <label class="form-label" for="Employee_BusinessEmail">{{ l('BusinessEmail') }}</label>
+                                <label class="form-label" for="Employee_BusinessEmail">{{ l('Business Email') }}</label>
                                 <input type="text" #Employee_BusinessEmail="ngModel" id="Employee_BusinessEmail"
                                     class="form-control" [(ngModel)]="employee.businessEmail" name="BusinessEmail"
                                     minlength="1" maxlength="128" />
@@ -259,12 +275,62 @@
                         </div>
                         <div class="col-xl-6">
                             <div class="my-3">
-                                <label class="form-label" for="Employee_Fax">{{ l('Fax') }}</label>
-                                <input type="text" #Employee_Fax="ngModel" id="Employee_Fax" class="form-control"
-                                    [(ngModel)]="employee.fax" name="Fax" minlength="1" maxlength="50" />
-                                <validation-messages [formCtrl]="Employee_Fax"></validation-messages>
+                                <label class="form-label" for="Employee_PersonalEmail">{{ l('Personal Email') }}</label>
+                                <input type="text" #Employee_PersonalEmail="ngModel" id="Employee_PersonalEmail"
+                                    class="form-control" [(ngModel)]="employee.personalEmail" name="PersonalEmail"
+                                    minlength="1" maxlength="128" />
+                                <validation-messages [formCtrl]="Employee_PersonalEmail"></validation-messages>
                             </div>
                         </div>
+                        <div class="col-xl-6">
+                            <div class="my-3">
+                                <label class="form-label" for="Employee_Facebook">{{ l('Facebook') }}</label>
+                                <input type="text" #Employee_Facebook="ngModel" id="Employee_Facebook"
+                                    class="form-control" [(ngModel)]="employee.facebook" name="Facebook" minlength="1"
+                                    maxlength="1024" />
+                                <validation-messages [formCtrl]="Employee_Facebook"></validation-messages>
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="my-3">
+                                <label class="form-label" for="Employee_LinkedIn">{{ l('LinkedIn') }}</label>
+                                <input type="text" #Employee_LinkedIn="ngModel" id="Employee_LinkedIn"
+                                    class="form-control" [(ngModel)]="employee.linkedIn" name="LinkedIn" minlength="1"
+                                    maxlength="1024" />
+                                <validation-messages [formCtrl]="Employee_LinkedIn"></validation-messages>
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="my-3">
+                                <label class="form-label" for="Employee_DateOfBirth">{{ l('Date of Birth') }}</label>
+                                <input class="form-control m-input" #Employee_DateOfBirth type="datetime" bsDatepicker
+                                    datePickerLuxonModifier [(date)]="employee.dateOfBirth" id="Employee_DateOfBirth"
+                                    name="Employee_DateOfBirth" />
+                                <validation-messages [formCtrl]="Employee_DateOfBirth"></validation-messages>
+                            </div>
+                        </div>
+
+
+
+                        <div class="col-xl-6">
+                            <div class="my-3">
+                                <label class="form-label" for="Employee_HireDate">{{ l('Hire Date') }}</label>
+                                <input class="form-control m-input" #Employee_HireDate type="datetime" bsDatepicker
+                                    datePickerLuxonModifier [(date)]="employee.hireDate" id="Employee_HireDate"
+                                    name="Employee_HireDate" />
+                                <validation-messages [formCtrl]="Employee_HireDate"></validation-messages>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-12">
+                            <div class="my-3">
+                                <label class="form-label" for="Employee_Profile">{{ l('Short Profile') }}</label>
+                                <p-editor id="description" name="description" [(ngModel)]="employee.profile"
+                                    ngDefaultControl [style]="{ height: '300px' }"
+                                    placeholder="'Type here...'"></p-editor>
+                            </div>
+                        </div>
+
                     </div>
 
 
@@ -284,34 +350,10 @@
 
 
 
-                    <!-- <div class="my-3">
-                        <label class="form-label" for="Employee_Profile">{{ l('Profile') }}</label>
-                        <input
-                            type="text"
-                            #Employee_Profile="ngModel"
-                            id="Employee_Profile"
-                            class="form-control"
-                            [(ngModel)]="employee.profile"
-                            name="Profile"
-                        />
-                        <validation-messages [formCtrl]="Employee_Profile"></validation-messages>
-                    </div> -->
+                    <!--  -->
 
 
 
-                    <div class="my-3">
-                        <label class="form-label" for="Employee_Facebook">{{ l('Facebook') }}</label>
-                        <input type="text" #Employee_Facebook="ngModel" id="Employee_Facebook" class="form-control"
-                            [(ngModel)]="employee.facebook" name="Facebook" minlength="1" maxlength="1024" />
-                        <validation-messages [formCtrl]="Employee_Facebook"></validation-messages>
-                    </div>
-
-                    <div class="my-3">
-                        <label class="form-label" for="Employee_LinkedIn">{{ l('LinkedIn') }}</label>
-                        <input type="text" #Employee_LinkedIn="ngModel" id="Employee_LinkedIn" class="form-control"
-                            [(ngModel)]="employee.linkedIn" name="LinkedIn" minlength="1" maxlength="1024" />
-                        <validation-messages [formCtrl]="Employee_LinkedIn"></validation-messages>
-                    </div>
 
 
 

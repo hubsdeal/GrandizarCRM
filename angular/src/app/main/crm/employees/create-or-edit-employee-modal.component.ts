@@ -1,7 +1,7 @@
 ﻿import { Component, ViewChild, Injector, Output, EventEmitter, OnInit, ElementRef } from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs/operators';
-import { EmployeesServiceProxy, CreateOrEditEmployeeDto, CreateOrEditMediaLibraryDto } from '@shared/service-proxies/service-proxies';
+import { EmployeesServiceProxy, CreateOrEditEmployeeDto, CreateOrEditMediaLibraryDto, TaskTeamEmployeeLookupTableDto, TaskTeamsServiceProxy, StatesServiceProxy, HubCountryLookupTableDto, HubStateLookupTableDto, HubsServiceProxy } from '@shared/service-proxies/service-proxies';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { DateTime } from 'luxon';
 
@@ -46,10 +46,22 @@ export class CreateOrEditEmployeeModalComponent extends AppComponentBase impleme
     @ViewChild('mobile') mobile: ElementRef;
     @ViewChild('phone') phone: ElementRef;
     mediaLibraryName = '';
+
+    employeeList: TaskTeamEmployeeLookupTableDto[] = [];
+    selectedEmployees: TaskTeamEmployeeLookupTableDto[] = [];
+
+    selectedCountry: any;
+    selectedState: any;
+
+    allCountrys: HubCountryLookupTableDto[];
+    allStates: HubStateLookupTableDto[];
     constructor(
         injector: Injector,
         private _employeesServiceProxy: EmployeesServiceProxy,
         private _dateTimeService: DateTimeService,
+        private _stateServiceProxy: StatesServiceProxy,
+        private _taskTeamsServiceProxy: TaskTeamsServiceProxy,
+        private _hubsServiceProxy: HubsServiceProxy,
         private _tokenService: TokenService,
        // private _employeeDepartmentMapServiceProxy: EmployeeDepartmentMapsServiceProxy
     ) {
@@ -80,6 +92,12 @@ export class CreateOrEditEmployeeModalComponent extends AppComponentBase impleme
                 this.modal.show();
             });
         }
+        this._hubsServiceProxy.getAllCountryForTableDropdown().subscribe((result) => {
+            this.allCountrys = result;
+        });
+        this._taskTeamsServiceProxy.getAllEmployeeForLookupTable('','',0,1000).subscribe(result => {
+            this.employeeList = result.items;
+        });
     }
 
     // save(): void {
@@ -99,7 +117,6 @@ export class CreateOrEditEmployeeModalComponent extends AppComponentBase impleme
     //         });
     // }
     saveEmployee(fileToken?: string): void {
-        debugger;
         this.saving = true;
         this.employee.fileToken = fileToken;
         this.employee.name = this.employee.firstName + " " + this.employee.lastName;
@@ -241,5 +258,18 @@ export class CreateOrEditEmployeeModalComponent extends AppComponentBase impleme
 
     ngOnInit(): void {
         this.initFileUploader();
+    }
+
+    onEmployeeSelect(event: any) {
+    }
+
+    onCountryChange(event: any) {
+        if (event.value != null) {
+            this.employee.countryId = event.value.id;
+            this._stateServiceProxy.getAllStateForTableDropdown(event.value.id).subscribe((result) => {
+                this.allStates = result;
+            });
+        }
+        console.log("countryId" + this.selectedCountry.displayName);
     }
 }

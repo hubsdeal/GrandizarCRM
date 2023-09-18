@@ -20,6 +20,8 @@ import { TaskLibrariesComponent } from './taskManagement/task-libraries/task-lib
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { SwiperModule } from "swiper/angular";
+import { TaskScheduleCalendarComponent } from './taskManagement/task-schedule-calendar/task-schedule-calendar.component';
+import { EventService } from './taskManagement/task-schedule-calendar/event.service';
 NgxBootstrapDatePickerConfigService.registerNgxBootstrapDatePickerLocales();
 
 @NgModule({
@@ -42,13 +44,18 @@ NgxBootstrapDatePickerConfigService.registerNgxBootstrapDatePickerLocales();
         SwiperModule
     ],
     declarations: [
-    MasterDataIndexComponent,
-    TaskLibrariesComponent
-  ],
+        MasterDataIndexComponent,
+        TaskLibrariesComponent,
+        TaskScheduleCalendarComponent
+    ],
     providers: [
         { provide: BsDatepickerConfig, useFactory: NgxBootstrapDatePickerConfigService.getDatepickerConfig },
         { provide: BsDaterangepickerConfig, useFactory: NgxBootstrapDatePickerConfigService.getDaterangepickerConfig },
         { provide: BsLocaleService, useFactory: NgxBootstrapDatePickerConfigService.getDatepickerLocale },
+        EventService
     ],
+    exports:[
+        TaskScheduleCalendarComponent
+    ]
 })
-export class MainModule {}
+export class MainModule { }

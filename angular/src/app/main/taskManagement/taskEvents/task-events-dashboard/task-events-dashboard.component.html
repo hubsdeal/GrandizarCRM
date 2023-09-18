@@ -1,5 +1,5 @@
 <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
-    <div class="d-flex flex-column flex-column-fluid">
+    <div *ngIf="taskEvent" class="d-flex flex-column flex-column-fluid">
         <!-- topbar -->
         <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
             <div id="kt_app_toolbar_container" class="app-container container-xxl d-flex flex-stack">
@@ -34,12 +34,12 @@
                             <div class="w-100">
                                 <div class="d-flex justify-content-between align-items-start flex-wrap mb-2">
                                     <div class="d-flex flex-column">
-                                        <!-- <div class="d-flex align-items-center mb-3">
+                                        <div class="d-flex align-items-center mb-3">
                                             <a href="javascript:;"
                                                 class="text-gray-800 text-hover-primary fs-2 fw-bold me-3">
-                                                Job Data - Indeed USA
+                                                {{taskEvent?.taskEvent?.name}}
                                             </a>
-                                        </div> -->
+                                        </div>
                                         <div
                                             class="d-flex flex-wrap fw-semibold mb-1 align-items-center fs-6 text-gray-500">
                                             <i class="fas fa-user-gear me-2 ms-1"></i>
@@ -57,7 +57,7 @@
                                             </span>
                                             <!--end::Title-->
                                             <!--begin::Users group-->
-                                            <div class="symbol-group symbol-hover flex-nowrap">
+                                            <div *ngIf="taskEvent" class="symbol-group symbol-hover flex-nowrap">
                                                 <div *ngFor="let team of taskEvent.team"
                                                     class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
                                                     data-bs-original-title="Alan Warden" data-kt-initialized="1">
@@ -76,15 +76,17 @@
                         </div>
                         <div class="separator"></div>
                         <div class="d-flex py-6 align-items-end">
-                        
-                           <a href="javascript:;" *ngIf="permission.isGranted('Pages.TaskEvents.Edit')" (click)="createOrEditTaskEventModal.show(this.taskEventId)" class="btn btn-sm btn-light-primary">
+
+                            <a href="javascript:;" *ngIf="permission.isGranted('Pages.TaskEvents.Edit')"
+                                (click)="createOrEditTaskEventModal.show(this.taskEventId)"
+                                class="btn btn-sm btn-light-primary">
                                 <i class="fas fa-edit fs-5 me-2"></i> Edit
                             </a>
                             <a *ngIf="taskEvent.taskStatusName" href="javascript:;" class="btn btn-sm btn-success">
                                 {{taskEvent?.taskStatusName}}</a>
-                            <a href="javascript:;" *ngIf="taskEvent.taskEvent.priority" class="btn btn-sm btn-danger">
+                            <a href="javascript:;" *ngIf="taskEvent?.taskEvent?.priority" class="btn btn-sm btn-danger">
                                 High</a>
-                            <a href="javascript:;" *ngIf="!taskEvent.taskEvent.priority" class="btn btn-sm btn-warning">
+                            <a href="javascript:;" *ngIf="!taskEvent?.taskEvent?.priority" class="btn btn-sm btn-warning">
                                 Low</a>
 
                             <a href="javascript:;" class="btn btn-sm btn-secondary"><i
@@ -96,38 +98,6 @@
                     </div>
                 </div>
                 <div class="accordion card_accordion" id="kt_accordion_1">
-                    <div class="card mb-6">
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="kt_accordion_1_header_1">
-                                <button class="accordion-button fs-4 fw-bold" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#kt_accordion_1_body_1" aria-expanded="true"
-                                    aria-controls="kt_accordion_1_body_1">
-                                    <i class="fas fa-list-alt fa-1x me-2"></i>
-                                    Description
-                                </button>
-                            </h2>
-                            <div id="kt_accordion_1_body_1" class="accordion-collapse collapse show"
-                                aria-labelledby="kt_accordion_1_header_1" data-bs-parent="#kt_accordion_1">
-                                <div class="card-body pt-10">
-                                    <!-- <p-editor id="description" name="description" ngDefaultControl
-                                        [style]="{ height: '400px' }"
-                                        placeholder="'Description goes here...'"></p-editor> -->
-                                    <p-editor id="description" name="description"
-                                        [(ngModel)]="taskEvent.taskEvent.description" ngDefaultControl
-                                        [style]="{ height: '400px' }" placeholder="'Type here...'"></p-editor>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card mb-6">
-                        <div class="card-body pt-10">
-                            <div class="d-flex">
-                                <h3 class="me-3 text-primary">Reference:</h3>
-                                <h3>Add Task Reference</h3>
-                            </div>
-                        </div>
-                    </div>
 
                     <div class="card mb-6">
                         <div class="card-body">
@@ -158,6 +128,26 @@
                                         data-bs-toggle="tab" href="#task_documents" data-kt-initialized="1"
                                         aria-selected="false" role="tab" tabindex="-1">
                                         <i class="fas fa-file me-1"></i> Documents
+                                    </a>
+                                </li>
+                                <!--end:::Tab item-->
+
+                                 <!--begin:::Tab item-->
+                                 <li class="nav-item" role="presentation">
+                                    <a class="nav-link text-active-primary pb-4" data-kt-countup-tabs="true"
+                                        data-bs-toggle="tab" href="#task_description" data-kt-initialized="1"
+                                        aria-selected="false" role="tab" tabindex="-1">
+                                        <i class="fas fa-file me-1"></i> Description
+                                    </a>
+                                </li>
+                                <!--end:::Tab item-->
+
+                                 <!--begin:::Tab item-->
+                                 <li class="nav-item" role="presentation">
+                                    <a class="nav-link text-active-primary pb-4" data-kt-countup-tabs="true"
+                                        data-bs-toggle="tab" href="#task_reference" data-kt-initialized="1"
+                                        aria-selected="false" role="tab" tabindex="-1">
+                                        <i class="fas fa-file me-1"></i> Reference
                                     </a>
                                 </li>
                                 <!--end:::Tab item-->
@@ -456,6 +446,57 @@
                                     </div>
                                 </div>
                                 <!--end:::Tab pane-->
+
+                                <div class="tab-pane fade" id="task_description" role="tabpanel">
+                                    <div class="card mb-6">
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="kt_accordion_1_header_1">
+                                                <button class="accordion-button fs-4 fw-bold" type="button" data-bs-toggle="collapse"
+                                                    data-bs-target="#kt_accordion_1_body_1" aria-expanded="true"
+                                                    aria-controls="kt_accordion_1_body_1">
+                                                    <i class="fas fa-list-alt fa-1x me-2"></i>
+                                                    Description
+                                                </button>
+                                            </h2>
+                                            <div id="kt_accordion_1_body_1" class="accordion-collapse collapse show"
+                                                aria-labelledby="kt_accordion_1_header_1" data-bs-parent="#kt_accordion_1">
+                                                <div class="card-body pt-10">
+                                                    <div class="fv-row mb-7 fv-plugins-icon-container">
+                                                        <label class="fs-6 fw-semibold form-label mt-3 w-100 mb-5">
+                                                            <div class="d-flex align-items-end justify-content-between">
+                                                                <span class="required">Description</span>
+                                                                <button class="btn btn-sm btn-light-primary"
+                                                                    (click)="openAiModalPr('Task Description')">
+                                                                    <i class="fa-file-signature fas me-2"></i>
+                                                                    Generate Description
+                                                                </button>
+                                                            </div>
+                                                        </label>
+                
+                                                        <p-editor id="description" name="description"
+                                                            [(ngModel)]="taskEvent.taskEvent.description" ngDefaultControl
+                                                            [style]="{ height: '400px' }" placeholder="'Type here...'"></p-editor>
+                                                    </div>
+                
+                                                    <!-- <p-editor id="description" name="description" ngDefaultControl
+                                                        [style]="{ height: '400px' }"
+                                                        placeholder="'Description goes here...'"></p-editor> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane fade" id="task_reference" role="tabpanel">
+                                    <div class="card mb-6">
+                                        <div class="card-body pt-10">
+                                            <div class="d-flex">
+                                                <h3 class="me-3 text-primary">Reference:</h3>
+                                                <h3>Add Task Reference</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <!--end:::Tab content-->
                         </div>
@@ -464,7 +505,8 @@
             </div>
 
         </div>
-        <createOrEditTaskEventModal #createOrEditTaskEventModal (modalSave)="getTaskById()"></createOrEditTaskEventModal>
+        <createOrEditTaskEventModal #createOrEditTaskEventModal (modalSave)="getTaskById()">
+        </createOrEditTaskEventModal>
         <viewTaskEventModal #viewTaskEventModal></viewTaskEventModal>
     </div>
 </div>

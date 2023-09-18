@@ -119,6 +119,9 @@ export class ProductDashboardComponent extends AppComponentBase {
 
   editablePrice: number;
 
+
+  showCalendarView: boolean;
+  showListView: boolean;
   constructor(
     injector: Injector,
     private route: ActivatedRoute,
@@ -553,6 +556,16 @@ export class ProductDashboardComponent extends AppComponentBase {
     this._productVariantsServiceProxy.getAddedVariantTypeByProduct(this.productId).subscribe(result => {
       this.allAddedVariants = result;
     });
+  }
+
+  onCalenderView() {
+    this.showCalendarView = !this.showCalendarView;
+    this.showListView = !this.showListView;
+  }
+
+  onListView() {
+    this.showListView = !this.showListView;
+    this.showCalendarView = !this.showCalendarView;
   }
 
 }

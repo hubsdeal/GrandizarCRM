@@ -19,6 +19,7 @@ import { StoreContactMapModule } from '../storeContactMaps/storeContactMap.modul
 import { StoreMarketplaceCommissionSettingModule } from '../storeMarketplaceCommissionSettings/storeMarketplaceCommissionSetting.module';
 import { StoreTaskMapModule } from '@app/main/taskManagement/storeTaskMaps/storeTaskMap.module';
 import { StoreAccountTeamModule } from '../storeAccountTeams/storeAccountTeam.module';
+import { MainModule } from '@app/main/main.module';
 
 @NgModule({
     declarations: [
@@ -37,7 +38,8 @@ import { StoreAccountTeamModule } from '../storeAccountTeams/storeAccountTeam.mo
         StoreContactMapModule,
         StoreMarketplaceCommissionSettingModule,
         StoreTaskMapModule,
-        StoreAccountTeamModule
+        StoreAccountTeamModule,
+        MainModule
     ],
     exports:[
         MyStoresComponent,
