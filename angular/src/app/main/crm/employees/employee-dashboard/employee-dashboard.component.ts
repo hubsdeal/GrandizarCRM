@@ -1,11 +1,14 @@
-import { AfterViewInit, Component, ElementRef, Injector, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Injector, OnInit, Output, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AppConsts } from '@shared/AppConsts';
 import { AppComponentBase } from '@shared/common/app-component-base';
-import { CreateOrEditEmployeeDto, EmployeesServiceProxy, HubCountryLookupTableDto, HubStateLookupTableDto, HubsServiceProxy, StatesServiceProxy, TaskTeamEmployeeLookupTableDto, TaskTeamsServiceProxy } from '@shared/service-proxies/service-proxies';
+import { CreateOrEditEmployeeDto, EmployeesServiceProxy, HubCountryLookupTableDto, HubStateLookupTableDto, HubsServiceProxy, StatesServiceProxy, TaskEventsServiceProxy, TaskTeamEmployeeLookupTableDto, TaskTeamsServiceProxy, TaskWorkItemsServiceProxy } from '@shared/service-proxies/service-proxies';
 import { IAjaxResponse, TokenService } from 'abp-ng2-module';
 import { FileItem, FileUploader, FileUploaderOptions } from 'ng2-file-upload';
 import { finalize } from 'rxjs';
+import { DateTime } from 'luxon';
+import { DateTimeService } from '@app/shared/common/timing/date-time.service';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-employee-dashboard',
@@ -44,6 +47,29 @@ export class EmployeeDashboardComponent extends AppComponentBase implements OnIn
   allStates: HubStateLookupTableDto[];
   employeeList: TaskTeamEmployeeLookupTableDto[] = [];
   selectedEmployees: TaskTeamEmployeeLookupTableDto[] = [];
+  @Output() isReload: EventEmitter<boolean> = new EventEmitter<boolean>();
+  workItems: any;
+  taskEventList: any;
+  advancedFiltersAreShown = false;
+  filterText = '';
+  nameFilter = '';
+  estimatedHoursFilter = '';
+  actualHoursFilter = '';
+  maxStartDateFilter: DateTime;
+  minStartDateFilter: DateTime;
+  maxEndDateFilter: DateTime;
+  minEndDateFilter: DateTime;
+  startTimeFilter = '';
+  endTimeFilter = '';
+  openOrClosedFilter = -1;
+  maxCompletionPercentageFilter: number;
+  maxCompletionPercentageFilterEmpty: number;
+  minCompletionPercentageFilter: number;
+  minCompletionPercentageFilterEmpty: number;
+  taskEventNameFilter = '';
+  employeeNameFilter = '';
+
+  sanitizedHtml: SafeHtml;
   constructor(
     injector: Injector,
     private route: ActivatedRoute,
@@ -51,9 +77,14 @@ export class EmployeeDashboardComponent extends AppComponentBase implements OnIn
     private _hubsServiceProxy: HubsServiceProxy,
     private _stateServiceProxy: StatesServiceProxy,
     private _taskTeamsServiceProxy: TaskTeamsServiceProxy,
-    private _tokenService: TokenService
+    private _tokenService: TokenService,
+    private _taskWorkItemsServiceProxy: TaskWorkItemsServiceProxy,
+    private _dateTimeService: DateTimeService,
+    private _taskEventsServiceProxy: TaskEventsServiceProxy,
+    private sanitizer: DomSanitizer
   ) {
     super(injector);
+    //this.sanitizedHtml = this.sanitizeHtml(this.rawHtml);
     this.loadAllDropdown();
   }
 
@@ -63,6 +94,8 @@ export class EmployeeDashboardComponent extends AppComponentBase implements OnIn
     this.getEmployeeDetails(this.employeeId);
     this.temporaryPictureUrl = '';
     this.initFileUploader();
+    this.getTaskWorkItems();
+    this.getTaskEvents();
   }
 
   getEmployeeDetails(id: number) {
@@ -188,6 +221,101 @@ export class EmployeeDashboardComponent extends AppComponentBase implements OnIn
         .substring(1);
     }
     return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+  }
+  getTaskWorkItems() {
+    // if (this.primengTableHelper.shouldResetPaging(event)) {
+    //   this.paginator.changePage(0);
+    //   return;
+    // }
+
+    // this.primengTableHelper.showLoadingIndicator();
+
+    this._taskWorkItemsServiceProxy.getAllByTaskEventId(
+      //this.taskEventId,
+      undefined,
+      this.filterText,
+      this.nameFilter,
+      this.estimatedHoursFilter,
+      this.actualHoursFilter,
+      this.maxStartDateFilter === undefined
+        ? this.maxStartDateFilter
+        : this._dateTimeService.getEndOfDayForDate(this.maxStartDateFilter),
+      this.minStartDateFilter === undefined
+        ? this.minStartDateFilter
+        : this._dateTimeService.getStartOfDayForDate(this.minStartDateFilter),
+      this.maxEndDateFilter === undefined
+        ? this.maxEndDateFilter
+        : this._dateTimeService.getEndOfDayForDate(this.maxEndDateFilter),
+      this.minEndDateFilter === undefined
+        ? this.minEndDateFilter
+        : this._dateTimeService.getStartOfDayForDate(this.minEndDateFilter),
+      this.startTimeFilter,
+      this.endTimeFilter,
+      this.openOrClosedFilter,
+      this.maxCompletionPercentageFilter == null
+        ? this.maxCompletionPercentageFilterEmpty
+        : this.maxCompletionPercentageFilter,
+      this.minCompletionPercentageFilter == null
+        ? this.minCompletionPercentageFilterEmpty
+        : this.minCompletionPercentageFilter,
+      this.taskEventNameFilter,
+      this.employeeNameFilter,
+      this.employeeId,
+      '',
+      0,
+      50
+      // this.primengTableHelper.getSorting(this.dataTable),
+      // this.primengTableHelper.getSkipCount(this.paginator, event),
+      // this.primengTableHelper.getMaxResultCount(this.paginator, event)
+    ).subscribe(result => {
+      //   this.primengTableHelper.totalRecordsCount = result.totalCount;
+      //   this.primengTableHelper.records = result.items;
+      //   this.totalCount.emit(this.primengTableHelper.totalRecordsCount);
+      //this.isReload.emit(true);
+      //this.primengTableHelper.hideLoadingIndicator();
+      this.workItems = result.items
+
+    });
+  }
+  getTaskEvents() {
+
+
+    this._taskEventsServiceProxy
+      .getAll(
+        this.filterText,
+        this.nameFilter,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        this.startTimeFilter,
+        this.endTimeFilter,
+        0,
+        undefined,
+        this.maxEndDateFilter === undefined
+          ? this.maxEndDateFilter
+          : this._dateTimeService.getEndOfDayForDate(this.maxEndDateFilter),
+        this.minEndDateFilter === undefined
+          ? this.minEndDateFilter
+          : this._dateTimeService.getStartOfDayForDate(this.minEndDateFilter),
+        undefined,
+        undefined,
+        undefined,
+        this.employeeId,
+        '',
+        0,
+        100
+      )
+      .subscribe((result) => {
+        this.taskEventList = result.taskEvents;
+      });
+  }
+  sanitizeHtml(input: string) {
+    // Remove single and double quotation marks from the HTML content
+    const modifiedHtml = input.replace(/['"]/g, '');
+    this.sanitizedHtml =  this.sanitizer.bypassSecurityTrustHtml(modifiedHtml);
+    return true;
   }
 }
 

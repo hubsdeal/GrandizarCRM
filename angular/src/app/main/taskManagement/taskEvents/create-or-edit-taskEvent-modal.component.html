@@ -45,7 +45,7 @@
                                 {{ l('Has Dependency?') }}
                             </span>
                         </label>
-                        <validation-messages [formCtrl]="TaskEvent_hasDependency"></validation-messages>
+                        <!-- <validation-messages [formCtrl]="TaskEvent_hasDependency"></validation-messages> -->
                     </div>
 
                     <div class="my-5" *ngIf="taskEvent?.hasDependency">
@@ -274,7 +274,7 @@
 
                     
                     <input class="form-control" name="taskEventId"
-                        [(ngModel)]="taskEventId" type="text" required hidden />
+                        [(ngModel)]="taskEventId" type="text" hidden />
                 </div>
                 <div class="modal-footer">
                     <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
