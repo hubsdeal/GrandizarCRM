@@ -1,0 +1,75 @@
+﻿
+  <div [@routerTransition]>
+
+    <div class="w-100 d-flex mb-6 ps-9 pe-9 mt-6 justify-content-between align-items-center ng-tns-c282-7">
+        <div class="d-flex">
+            <h1 class="fs-3 fw-bold  my-0 page-heading text-dark">
+                Notes
+            </h1>
+        </div>
+        <button *ngIf="isGranted('Pages.TaskNotes.Create')" (click)="createTaskNote()"  class="btn btn-primary blue">
+            <i class="fa fa-plus"></i>
+            {{ l('Note') }}
+        </button>
+    </div>
+
+    <div [class]="containerClass">
+        <div class="card mb-5 mb-xxl-8">
+            
+            <div class="card-body border rounded mb-5 pb-0" *ngFor="let item of allTaskNotes">
+                <div class="d-flex align-items-center mb-5">
+                    <div class="d-flex align-items-center flex-grow-1">
+                        <div class="symbol symbol-45px me-5">
+                            <img *ngIf="!item?.picture" src="assets/common/images/default-profile-picture.png"
+                                alt="User">
+                            <img *ngIf="item?.picture" src="{{item?.picture}}" alt="User">
+                        </div>
+                        <div class="d-flex flex-column">
+                            <a href="javascript:;" class="text-gray-600 text-hover-primary fs-5 fw-bold">
+                                {{item?.createdBy}} <span class="fs-6 text-gray-400">({{item?.username}})</span>
+                            </a>
+                            <span class="text-gray-400 fw-bold">
+                                <span *ngIf="item.creationTime">{{item?.creationTime
+                                    | luxonFormat : 'F'}} 
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="btn-group dropdown" dropdown container="body">
+                        <button class="dropdown-toggle btn btn-sm btn-primary" dropdownToggle>
+                            <i class="fa fa-cog"></i>
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" *dropdownMenu>
+                            <li>
+                                <a href="javascript:;"
+                                    *ngIf="permission.isGranted('Pages.TaskNotes.Edit')"
+                                    class="dropdown-item"
+                                    (click)="createOrEditTaskNoteModal.show(item.taskNote.id)">
+                                    {{ l('Edit') }}
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="javascript:;"
+                                    *ngIf="permission.isGranted('Pages.TaskNotes.Delete')"
+                                    (click)="deleteTaskNote(item.taskNote)">
+                                    {{ l('Delete') }}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="mb-7">
+                    <div class="text-gray-800 mb-5">
+                        {{item?.taskNote?.note}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <createOrEditTaskNoteModal #createOrEditTaskNoteModal (modalSave)="getTaskNotes()"></createOrEditTaskNoteModal>    
+    <viewTaskNoteModal #viewTaskNoteModal></viewTaskNoteModal>
+</div>

@@ -16,6 +16,8 @@ export class ContactDashboardComponent extends AppComponentBase {
 
   companyDescriptionGenerateCommand: string;
   bindingDataprofile: any;
+  showCalendarView: boolean;
+  showListView: boolean;
   constructor(
     injector: Injector,
     private route: ActivatedRoute,
@@ -53,5 +55,15 @@ export class ContactDashboardComponent extends AppComponentBase {
       console.log(result)
       this.bindingDataprofile = result.data;
     });
+  }
+
+  onCalenderView() {
+    this.showCalendarView = !this.showCalendarView;
+    this.showListView = !this.showListView;
+  }
+
+  onListView() {
+    this.showListView = !this.showListView;
+    this.showCalendarView = !this.showCalendarView;
   }
 }

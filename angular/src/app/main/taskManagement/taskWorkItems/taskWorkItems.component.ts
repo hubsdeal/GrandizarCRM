@@ -113,6 +113,7 @@ export class TaskWorkItemsComponent extends AppComponentBase implements OnInit{
                     : this.minCompletionPercentageFilter,
                 this.taskEventNameFilter,
                 this.employeeNameFilter,
+                0,
                 '',
                 0,
                 50
