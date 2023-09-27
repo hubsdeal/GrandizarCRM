@@ -1,0 +1,70 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #rewardPointPriceSettingForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="rewardPointPriceSetting.id">{{l("EditRewardPointPriceSetting")}}</span>
+                        <span *ngIf="!rewardPointPriceSetting.id">{{l("CreateNewRewardPointPriceSetting")}}</span>
+                    </h4>                    
+                    
+                    
+                 <button type="button" class="btn-close" (click)="close()" aria-label="Close" [disabled]="saving"></button>
+             
+                </div>
+                <div class="modal-body">
+                 
+
+
+					<div class="my-3">
+                        <label class="form-label" for="CurrencyName">{{l("Currency")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="CurrencyName" name="currencyName" [(ngModel)]="currencyName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectCurrencyModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setCurrencyIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="rewardPointPriceSetting.currencyId" [(ngModel)]="rewardPointPriceSetting.currencyId" type="text"  hidden>
+                        
+
+
+								<div class="my5">
+									<label class="form-label" for="RewardPointPriceSetting_NumberOfPoints">{{l("NumberOfPoints")}}</label>
+									<input type="number" #RewardPointPriceSetting_NumberOfPoints="ngModel" id="RewardPointPriceSetting_NumberOfPoints" class="form-control" [(ngModel)]="rewardPointPriceSetting.numberOfPoints" name="NumberOfPoints"    />
+									<validation-messages [formCtrl]="RewardPointPriceSetting_NumberOfPoints"></validation-messages>
+								</div>
+					
+								<div class="my5">
+									<label class="form-label" for="RewardPointPriceSetting_CreditAmount">{{l("CreditAmount")}}</label>
+									<input type="number" #RewardPointPriceSetting_CreditAmount="ngModel" id="RewardPointPriceSetting_CreditAmount" class="form-control" [(ngModel)]="rewardPointPriceSetting.creditAmount" name="CreditAmount"    />
+									<validation-messages [formCtrl]="RewardPointPriceSetting_CreditAmount"></validation-messages>
+								</div>
+					
+								<br/>
+								<label class="form-check form-check-custom form-check-solid">
+                                    <input
+                                        id="RewardPointPriceSetting_Active" 
+                                        #RewardPointPriceSetting_Active="ngModel"
+                                        name="Active" 
+                                        [(ngModel)]="rewardPointPriceSetting.active"
+                                        type="checkbox"
+                                        class="form-check-input"
+                                    />
+                                    <span class="form-check-label">
+                                        {{l("Active")}}
+                                    </span>
+                                </label>
+                                <validation-messages [formCtrl]="RewardPointPriceSetting_Active"></validation-messages>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!rewardPointPriceSettingForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+<rewardPointPriceSettingCurrencyLookupTableModal #rewardPointPriceSettingCurrencyLookupTableModal (modalSave)="getNewCurrencyId()"></rewardPointPriceSettingCurrencyLookupTableModal>
+		 
+</div>

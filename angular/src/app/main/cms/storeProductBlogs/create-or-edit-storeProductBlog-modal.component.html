@@ -1,0 +1,81 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #storeProductBlogForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="storeProductBlog.id">{{l("EditStoreProductBlog")}}</span>
+                        <span *ngIf="!storeProductBlog.id">{{l("CreateNewStoreProductBlog")}}</span>
+                    </h4>                    
+                    
+                    
+                 <button type="button" class="btn-close" (click)="close()" aria-label="Close" [disabled]="saving"></button>
+             
+                </div>
+                <div class="modal-body">
+                 
+
+
+					<div class="my-3">
+                        <label class="form-label" for="ContentTitle">{{l("Content")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="ContentTitle" name="contentTitle" [(ngModel)]="contentTitle" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectContentModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setContentIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="storeProductBlog.contentId" [(ngModel)]="storeProductBlog.contentId" type="text"  hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="ProductName">{{l("Product")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="ProductName" name="productName" [(ngModel)]="productName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectProductModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setProductIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="storeProductBlog.productId" [(ngModel)]="storeProductBlog.productId" type="text"  hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="StoreName">{{l("Store")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="StoreName" name="storeName" [(ngModel)]="storeName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectStoreModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setStoreIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="storeProductBlog.storeId" [(ngModel)]="storeProductBlog.storeId" type="text"  hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="HubName">{{l("Hub")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="HubName" name="hubName" [(ngModel)]="hubName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectHubModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setHubIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="storeProductBlog.hubId" [(ngModel)]="storeProductBlog.hubId" type="text"  hidden>
+                        
+
+
+								<div class="my5">
+									<label class="form-label" for="StoreProductBlog_DisplaySequence">{{l("DisplaySequence")}}</label>
+									<input type="number" #StoreProductBlog_DisplaySequence="ngModel" id="StoreProductBlog_DisplaySequence" class="form-control" [(ngModel)]="storeProductBlog.displaySequence" name="DisplaySequence"    />
+									<validation-messages [formCtrl]="StoreProductBlog_DisplaySequence"></validation-messages>
+								</div>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!storeProductBlogForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+<storeProductBlogContentLookupTableModal #storeProductBlogContentLookupTableModal (modalSave)="getNewContentId()"></storeProductBlogContentLookupTableModal>
+		 <storeProductBlogProductLookupTableModal #storeProductBlogProductLookupTableModal (modalSave)="getNewProductId()"></storeProductBlogProductLookupTableModal>
+		 <storeProductBlogStoreLookupTableModal #storeProductBlogStoreLookupTableModal (modalSave)="getNewStoreId()"></storeProductBlogStoreLookupTableModal>
+		 <storeProductBlogHubLookupTableModal #storeProductBlogHubLookupTableModal (modalSave)="getNewHubId()"></storeProductBlogHubLookupTableModal>
+		 
+</div>

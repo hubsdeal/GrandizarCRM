@@ -1,0 +1,132 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #storeProductServiceLocalityMapForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="storeProductServiceLocalityMap.id">{{l("EditStoreProductServiceLocalityMap")}}</span>
+                        <span *ngIf="!storeProductServiceLocalityMap.id">{{l("CreateNewStoreProductServiceLocalityMap")}}</span>
+                    </h4>                    
+                    
+                    
+                 <button type="button" class="btn-close" (click)="close()" aria-label="Close" [disabled]="saving"></button>
+             
+                </div>
+                <div class="modal-body">
+                 
+
+
+					<div class="my-3">
+                        <label class="form-label" for="ProductName">{{l("Product")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="ProductName" name="productName" [(ngModel)]="productName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectProductModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setProductIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="storeProductServiceLocalityMap.productId" [(ngModel)]="storeProductServiceLocalityMap.productId" type="text"  hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="StoreName">{{l("Store")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="StoreName" name="storeName" [(ngModel)]="storeName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectStoreModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setStoreIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="storeProductServiceLocalityMap.storeId" [(ngModel)]="storeProductServiceLocalityMap.storeId" type="text"  hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="ZipCodeName">{{l("ZipCode")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="ZipCodeName" name="zipCodeName" [(ngModel)]="zipCodeName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectZipCodeModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setZipCodeIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="storeProductServiceLocalityMap.zipCodeId" [(ngModel)]="storeProductServiceLocalityMap.zipCodeId" type="text"  hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="CityName">{{l("City")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="CityName" name="cityName" [(ngModel)]="cityName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectCityModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setCityIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="storeProductServiceLocalityMap.cityId" [(ngModel)]="storeProductServiceLocalityMap.cityId" type="text"  hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="StateName">{{l("State")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="StateName" name="stateName" [(ngModel)]="stateName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectStateModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setStateIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="storeProductServiceLocalityMap.stateId" [(ngModel)]="storeProductServiceLocalityMap.stateId" type="text"  hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="CountryName">{{l("Country")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="CountryName" name="countryName" [(ngModel)]="countryName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectCountryModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setCountryIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="storeProductServiceLocalityMap.countryId" [(ngModel)]="storeProductServiceLocalityMap.countryId" type="text"  hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="HubName">{{l("Hub")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="HubName" name="hubName" [(ngModel)]="hubName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectHubModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setHubIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="storeProductServiceLocalityMap.hubId" [(ngModel)]="storeProductServiceLocalityMap.hubId" type="text"  hidden>
+                        
+
+
+								<div class="my-3">
+									<label class="form-label" for="StoreProductServiceLocalityMap_LocalityName">{{l("LocalityName")}}</label>
+									<input type="text" #StoreProductServiceLocalityMap_LocalityName="ngModel" id="StoreProductServiceLocalityMap_LocalityName" class="form-control" [(ngModel)]="storeProductServiceLocalityMap.localityName" name="LocalityName"   minlength="1"  maxlength="128" />
+								    <validation-messages [formCtrl]="StoreProductServiceLocalityMap_LocalityName"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="StoreProductServiceLocalityMap_ZipCode">{{l("ZipCode")}}</label>
+									<input type="text" #StoreProductServiceLocalityMap_ZipCode="ngModel" id="StoreProductServiceLocalityMap_ZipCode" class="form-control" [(ngModel)]="storeProductServiceLocalityMap.zipCode" name="ZipCode"   minlength="1"  maxlength="50" />
+								    <validation-messages [formCtrl]="StoreProductServiceLocalityMap_ZipCode"></validation-messages>
+								</div>
+					
+								<div class="my5">
+									<label class="form-label" for="StoreProductServiceLocalityMap_Latitude">{{l("Latitude")}}</label>
+									<input type="number" #StoreProductServiceLocalityMap_Latitude="ngModel" id="StoreProductServiceLocalityMap_Latitude" class="form-control" [(ngModel)]="storeProductServiceLocalityMap.latitude" name="Latitude"    />
+									<validation-messages [formCtrl]="StoreProductServiceLocalityMap_Latitude"></validation-messages>
+								</div>
+					
+								<div class="my5">
+									<label class="form-label" for="StoreProductServiceLocalityMap_Longitude">{{l("Longitude")}}</label>
+									<input type="number" #StoreProductServiceLocalityMap_Longitude="ngModel" id="StoreProductServiceLocalityMap_Longitude" class="form-control" [(ngModel)]="storeProductServiceLocalityMap.longitude" name="Longitude"    />
+									<validation-messages [formCtrl]="StoreProductServiceLocalityMap_Longitude"></validation-messages>
+								</div>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!storeProductServiceLocalityMapForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+<storeProductServiceLocalityMapProductLookupTableModal #storeProductServiceLocalityMapProductLookupTableModal (modalSave)="getNewProductId()"></storeProductServiceLocalityMapProductLookupTableModal>
+		 <storeProductServiceLocalityMapStoreLookupTableModal #storeProductServiceLocalityMapStoreLookupTableModal (modalSave)="getNewStoreId()"></storeProductServiceLocalityMapStoreLookupTableModal>
+		 <storeProductServiceLocalityMapZipCodeLookupTableModal #storeProductServiceLocalityMapZipCodeLookupTableModal (modalSave)="getNewZipCodeId()"></storeProductServiceLocalityMapZipCodeLookupTableModal>
+		 <storeProductServiceLocalityMapCityLookupTableModal #storeProductServiceLocalityMapCityLookupTableModal (modalSave)="getNewCityId()"></storeProductServiceLocalityMapCityLookupTableModal>
+		 <storeProductServiceLocalityMapStateLookupTableModal #storeProductServiceLocalityMapStateLookupTableModal (modalSave)="getNewStateId()"></storeProductServiceLocalityMapStateLookupTableModal>
+		 <storeProductServiceLocalityMapCountryLookupTableModal #storeProductServiceLocalityMapCountryLookupTableModal (modalSave)="getNewCountryId()"></storeProductServiceLocalityMapCountryLookupTableModal>
+		 <storeProductServiceLocalityMapHubLookupTableModal #storeProductServiceLocalityMapHubLookupTableModal (modalSave)="getNewHubId()"></storeProductServiceLocalityMapHubLookupTableModal>
+		 
+</div>

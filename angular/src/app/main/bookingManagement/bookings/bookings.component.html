@@ -1,0 +1,395 @@
+﻿<div [@routerTransition]>
+  
+  
+   <sub-header [title]="'Bookings' | localize" [description]="'BookingsHeaderInfo' | localize">
+             <div role="actions">
+                 <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1"><i class="fa fa-file-excel"></i> {{l("ExportToExcel")}}</button>
+                
+                 <button *ngIf="isGranted('Pages.Bookings.Create')" (click)="createBooking()" 
+                                        class="btn btn-primary blue"><i class="fa fa-plus"></i> {{l("CreateNewBooking")}}</button>
+             </div>
+            </sub-header>
+    
+    <div [class]="containerClass">
+        <div class="card card-custom gutter-b">
+            <div class="card-body">
+                <form class="form" autocomplete="off">
+                    <div>
+                        <div class="row align-items-center">
+                            <div class="col-xl-12">
+                                
+                                
+        	<div class="my-3">                
+                <div class="input-group mb-3">
+                  <input [(ngModel)]="filterText" (ngModelChange)="getBookings()" name="filterText" autoFocus type="text" class="form-control" [placeholder]="l('SearchWithThreeDot')">
+                  <button class="btn btn-primary" type="submit" (click)="getBookings()"><i class="flaticon-search-1"></i></button>
+                </div>
+            </div>
+        	
+                            </div>
+                        </div>
+						 <div class="row" [hidden]="!advancedFiltersAreShown">
+						 	<div class="col-md-12">
+						         
+						     </div>
+
+
+
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="TitleFilter">{{l("Title")}}</label>
+									<input type="text" class="form-control" id="TitleFilter" name="titleFilter" [(ngModel)]="titleFilter" (ngModelChange)="getBookings()">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="BookingReferenceNumberFilter">{{l("BookingReferenceNumber")}}</label>
+									<input type="text" class="form-control" id="BookingReferenceNumberFilter" name="bookingReferenceNumberFilter" [(ngModel)]="bookingReferenceNumberFilter" (ngModelChange)="getBookings()">
+								</div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+									<label class="form-label" for="MinStartDateFilter">{{l("StartDateRange")}}</label>
+									<div class="input-group">
+                                        
+                                        <input class="form-control m-input" id="MinStartDateFilter" name="MinStartDateFilter" type="datetime" bsDatepicker  placeholder="{{l('MinValue')}}" [(ngModel)]="minStartDateFilter" (ngModelChange)="getBookings()">
+			                            <span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
+                                        <input class="form-control m-input" id="MaxStartDateFilter" name="MaxStartDateFilter" type="datetime" bsDatepicker  placeholder="{{l('MaxValue')}}" [(ngModel)]="maxStartDateFilter" (ngModelChange)="getBookings()">
+									</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+									<label class="form-label" for="MinEndDateFilter">{{l("EndDateRange")}}</label>
+									<div class="input-group">
+                                        
+                                        <input class="form-control m-input" id="MinEndDateFilter" name="MinEndDateFilter" type="datetime" bsDatepicker  placeholder="{{l('MinValue')}}" [(ngModel)]="minEndDateFilter" (ngModelChange)="getBookings()">
+			                            <span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
+                                        <input class="form-control m-input" id="MaxEndDateFilter" name="MaxEndDateFilter" type="datetime" bsDatepicker  placeholder="{{l('MaxValue')}}" [(ngModel)]="maxEndDateFilter" (ngModelChange)="getBookings()">
+									</div>
+                                </div>
+                            </div>
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="StartTimeFilter">{{l("StartTime")}}</label>
+									<input type="text" class="form-control" id="StartTimeFilter" name="startTimeFilter" [(ngModel)]="startTimeFilter" (ngModelChange)="getBookings()">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="EndTimeFilter">{{l("EndTime")}}</label>
+									<input type="text" class="form-control" id="EndTimeFilter" name="endTimeFilter" [(ngModel)]="endTimeFilter" (ngModelChange)="getBookings()">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="TimeZoneIdFilter">{{l("TimeZoneId")}}</label>
+									<input type="text" class="form-control" id="TimeZoneIdFilter" name="timeZoneIdFilter" [(ngModel)]="timeZoneIdFilter" (ngModelChange)="getBookings()">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="DescriptionFilter">{{l("Description")}}</label>
+									<input type="text" class="form-control" id="DescriptionFilter" name="descriptionFilter" [(ngModel)]="descriptionFilter" (ngModelChange)="getBookings()">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="CustomerRemarksFilter">{{l("CustomerRemarks")}}</label>
+									<input type="text" class="form-control" id="CustomerRemarksFilter" name="customerRemarksFilter" [(ngModel)]="customerRemarksFilter" (ngModelChange)="getBookings()">
+								</div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+									<label class="form-label" for="MinCheckInDateTimeFilter">{{l("CheckInDateTimeRange")}}</label>
+									<div class="input-group">
+                                        
+                                        <input class="form-control m-input" id="MinCheckInDateTimeFilter" name="MinCheckInDateTimeFilter" type="datetime" bsDatepicker  placeholder="{{l('MinValue')}}" [(ngModel)]="minCheckInDateTimeFilter" (ngModelChange)="getBookings()">
+			                            <span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
+                                        <input class="form-control m-input" id="MaxCheckInDateTimeFilter" name="MaxCheckInDateTimeFilter" type="datetime" bsDatepicker  placeholder="{{l('MaxValue')}}" [(ngModel)]="maxCheckInDateTimeFilter" (ngModelChange)="getBookings()">
+									</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+									<label class="form-label" for="MinCheckOutDateTimeFilter">{{l("CheckOutDateTimeRange")}}</label>
+									<div class="input-group">
+                                        
+                                        <input class="form-control m-input" id="MinCheckOutDateTimeFilter" name="MinCheckOutDateTimeFilter" type="datetime" bsDatepicker  placeholder="{{l('MinValue')}}" [(ngModel)]="minCheckOutDateTimeFilter" (ngModelChange)="getBookings()">
+			                            <span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
+                                        <input class="form-control m-input" id="MaxCheckOutDateTimeFilter" name="MaxCheckOutDateTimeFilter" type="datetime" bsDatepicker  placeholder="{{l('MaxValue')}}" [(ngModel)]="maxCheckOutDateTimeFilter" (ngModelChange)="getBookings()">
+									</div>
+                                </div>
+                            </div>
+
+
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="BookingTypeNameFilter">({{l("BookingType")}}) {{l("Name")}}</label>
+									<input type="text" class="form-control" id="BookingTypeNameFilter" name="bookingTypeNameFilter" [(ngModel)]="bookingTypeNameFilter">
+                                </div>
+                            </div>
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="BookingStatusNameFilter">({{l("BookingStatus")}}) {{l("Name")}}</label>
+									<input type="text" class="form-control" id="BookingStatusNameFilter" name="bookingStatusNameFilter" [(ngModel)]="bookingStatusNameFilter">
+                                </div>
+                            </div>
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="ContactFullNameFilter">({{l("Contact")}}) {{l("FullName")}}</label>
+									<input type="text" class="form-control" id="ContactFullNameFilter" name="contactFullNameFilter" [(ngModel)]="contactFullNameFilter">
+                                </div>
+                            </div>
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="StoreNameFilter">({{l("Store")}}) {{l("Name")}}</label>
+									<input type="text" class="form-control" id="StoreNameFilter" name="storeNameFilter" [(ngModel)]="storeNameFilter">
+                                </div>
+                            </div>
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="ProductNameFilter">({{l("Product")}}) {{l("Name")}}</label>
+									<input type="text" class="form-control" id="ProductNameFilter" name="productNameFilter" [(ngModel)]="productNameFilter">
+                                </div>
+                            </div>
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="OrderInvoiceNumberFilter">({{l("Order")}}) {{l("InvoiceNumber")}}</label>
+									<input type="text" class="form-control" id="OrderInvoiceNumberFilter" name="orderInvoiceNumberFilter" [(ngModel)]="orderInvoiceNumberFilter">
+                                </div>
+                            </div>
+                            <div class="col-md-12 mt-5">
+                                <button (click)="resetFilters()" class="btn btn-secondary btn-sm" id="btn-reset-filters">Reset</button>
+                            </div>
+                        </div>
+                        <div class="row my-4">
+                            <div class="col-sm-12">
+                                <span class="clickable-item text-muted" *ngIf="!advancedFiltersAreShown" (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i class="fa fa-angle-down"></i> {{l("ShowAdvancedFilters")}}</span>
+                                <span class="clickable-item text-muted" *ngIf="advancedFiltersAreShown" (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i class="fa fa-angle-up"></i> {{l("HideAdvancedFilters")}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="row align-items-center">
+                    <!--<Primeng-Datatable-Start>-->
+                    <div class="primeng-datatable-container col-12"
+                         [busyIf]="primengTableHelper.isLoading">
+                        <p-table #dataTable
+                                     (onLazyLoad)="getBookings($event)"
+                                     [value]="primengTableHelper.records"
+                                     rows="{{primengTableHelper.defaultRecordsCountPerPage}}"
+                                     [paginator]="false"
+                                     [lazy]="true"
+                                     [scrollable]="true"
+                                     ScrollWidth="100%"
+                                     [responsive]="primengTableHelper.isResponsive"
+                                     [resizableColumns]="primengTableHelper.resizableColumns">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th style="width: 130px" [hidden]="!isGrantedAny('Pages.Bookings.Edit', 'Pages.Bookings.Delete')">{{l('Actions')}}</th>
+                                    <th style="width: 150px" pSortableColumn="bookingTypeFk.name">
+                                        {{l('Name')}}
+                                        <p-sortIcon field="bookingTypeName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="bookingStatusFk.name">
+                                        {{l('Name')}}
+                                        <p-sortIcon field="bookingStatusName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="contactFk.fullName">
+                                        {{l('FullName')}}
+                                        <p-sortIcon field="contactFullName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="storeFk.name">
+                                        {{l('Name')}}
+                                        <p-sortIcon field="storeName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="productFk.name">
+                                        {{l('Name')}}
+                                        <p-sortIcon field="productName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="orderFk.invoiceNumber">
+                                        {{l('InvoiceNumber')}}
+                                        <p-sortIcon field="orderInvoiceNumber"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="title">
+                                        {{l('Title')}}
+                                        <p-sortIcon field="booking.title"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="bookingReferenceNumber">
+                                        {{l('BookingReferenceNumber')}}
+                                        <p-sortIcon field="booking.bookingReferenceNumber"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="startDate">
+                                        {{l('StartDate')}}
+                                        <p-sortIcon field="booking.startDate"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="endDate">
+                                        {{l('EndDate')}}
+                                        <p-sortIcon field="booking.endDate"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="startTime">
+                                        {{l('StartTime')}}
+                                        <p-sortIcon field="booking.startTime"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="endTime">
+                                        {{l('EndTime')}}
+                                        <p-sortIcon field="booking.endTime"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="timeZoneId">
+                                        {{l('TimeZoneId')}}
+                                        <p-sortIcon field="booking.timeZoneId"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="description">
+                                        {{l('Description')}}
+                                        <p-sortIcon field="booking.description"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="customerRemarks">
+                                        {{l('CustomerRemarks')}}
+                                        <p-sortIcon field="booking.customerRemarks"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="checkInDateTime">
+                                        {{l('CheckInDateTime')}}
+                                        <p-sortIcon field="booking.checkInDateTime"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="checkOutDateTime">
+                                        {{l('CheckOutDateTime')}}
+                                        <p-sortIcon field="booking.checkOutDateTime"></p-sortIcon>
+                                    </th>
+
+                                </tr>
+                            </ng-template>                           
+							<ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
+                                <tr>
+                                    <td style="width: 130px"
+                                        [hidden]="!isGrantedAny('Pages.Bookings.Edit', 'Pages.Bookings.Delete')">
+                                       <div class="btn-group dropdown" dropdown container="body">
+                                            <button class="dropdown-toggle btn btn-sm btn-primary" dropdownToggle>
+                                                <i class="fa fa-cog"></i><span class="caret"></span> {{l("Actions")}}
+                                            </button>
+												<ul class="dropdown-menu"  *dropdownMenu>
+												<li>
+													<a href="javascript:;" class="dropdown-item"
+														(click)="viewBookingModal.show(record)">{{l('View')}}</a>
+												</li>
+												<li>
+                                                <a href="javascript:;" *ngIf="permission.isGranted('Pages.Bookings.Edit')" class="dropdown-item"
+														(click)="createOrEditBookingModal.show(record.booking.id)">{{l('Edit')}}</a>												
+                                                </li>
+												<li>
+											        <a class="dropdown-item" href="javascript:;" *ngIf="permission.isGranted('Pages.Bookings.Delete')"
+														(click)="deleteBooking(record.booking)">{{l('Delete')}}</a>
+												</li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                    <td style="width:150px">
+												<span class="p-column-title"> {{l('Name')}}</span>
+												{{record.bookingTypeName}}
+											</td>
+                                    <td style="width:150px">
+												<span class="p-column-title"> {{l('Name')}}</span>
+												{{record.bookingStatusName}}
+											</td>
+                                    <td style="width:150px">
+												<span class="p-column-title"> {{l('FullName')}}</span>
+												{{record.contactFullName}}
+											</td>
+                                    <td style="width:150px">
+												<span class="p-column-title"> {{l('Name')}}</span>
+												{{record.storeName}}
+											</td>
+                                    <td style="width:150px">
+												<span class="p-column-title"> {{l('Name')}}</span>
+												{{record.productName}}
+											</td>
+                                    <td style="width:150px">
+												<span class="p-column-title"> {{l('InvoiceNumber')}}</span>
+												{{record.orderInvoiceNumber}}
+											</td>
+                                    <td style="width:150px">
+											<span class="p-column-title"> {{l('Title')}}</span>
+											{{record.booking.title}}
+										</td>
+                                    <td style="width:150px">
+											<span class="p-column-title"> {{l('BookingReferenceNumber')}}</span>
+											{{record.booking.bookingReferenceNumber}}
+										</td>
+                                    <td style="width:150px">
+										<span class="p-column-title"> {{l('StartDate')}}</span>
+                                        <span *ngIf="record.booking.startDate">
+											{{record.booking.startDate |  luxonFormat:'F' }}
+                                        </span>
+                                        <span *ngIf="!record.booking.startDate">-</span>
+                                    </td>
+                                    <td style="width:150px">
+										<span class="p-column-title"> {{l('EndDate')}}</span>
+                                        <span *ngIf="record.booking.endDate">
+											{{record.booking.endDate |  luxonFormat:'F' }}
+                                        </span>
+                                        <span *ngIf="!record.booking.endDate">-</span>
+                                    </td>
+                                    <td style="width:150px">
+											<span class="p-column-title"> {{l('StartTime')}}</span>
+											{{record.booking.startTime}}
+										</td>
+                                    <td style="width:150px">
+											<span class="p-column-title"> {{l('EndTime')}}</span>
+											{{record.booking.endTime}}
+										</td>
+                                    <td style="width:150px">
+											<span class="p-column-title"> {{l('TimeZoneId')}}</span>
+											{{record.booking.timeZoneId}}
+										</td>
+                                    <td style="width:150px">
+											<span class="p-column-title"> {{l('Description')}}</span>
+											{{record.booking.description}}
+										</td>
+                                    <td style="width:150px">
+											<span class="p-column-title"> {{l('CustomerRemarks')}}</span>
+											{{record.booking.customerRemarks}}
+										</td>
+                                    <td style="width:150px">
+										<span class="p-column-title"> {{l('CheckInDateTime')}}</span>
+                                        <span *ngIf="record.booking.checkInDateTime">
+											{{record.booking.checkInDateTime |  luxonFormat:'F' }}
+                                        </span>
+                                        <span *ngIf="!record.booking.checkInDateTime">-</span>
+                                    </td>
+                                    <td style="width:150px">
+										<span class="p-column-title"> {{l('CheckOutDateTime')}}</span>
+                                        <span *ngIf="record.booking.checkOutDateTime">
+											{{record.booking.checkOutDateTime |  luxonFormat:'F' }}
+                                        </span>
+                                        <span *ngIf="!record.booking.checkOutDateTime">-</span>
+                                    </td>
+
+                                </tr>
+                               
+                            </ng-template>
+                        </p-table>
+						<div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
+                            {{l('NoData')}}
+                        </div>
+                        <div class="primeng-paging-container">
+                            <p-paginator [rows]="primengTableHelper.defaultRecordsCountPerPage"
+                                         #paginator
+                                         (onPageChange)="getBookings($event)"
+                                         [totalRecords]="primengTableHelper.totalRecordsCount"
+                                         [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
+                                         [showCurrentPageReport]="true"
+                                         [currentPageReportTemplate]="'TotalRecordsCount' | localize:primengTableHelper.totalRecordsCount"    
+                            >
+                            </p-paginator>
+                        </div>
+                    </div>
+                    <!--<Primeng-Datatable-End>-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <createOrEditBookingModal #createOrEditBookingModal (modalSave)="getBookings()"></createOrEditBookingModal>    
+    <viewBookingModal #viewBookingModal></viewBookingModal>
+    
+  </div>

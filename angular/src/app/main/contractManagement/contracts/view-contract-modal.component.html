@@ -1,0 +1,160 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span>{{l("Details")}}</span>
+                </h4>               
+                
+                
+                 <button type="button" class="btn-close" (click)="close()" aria-label="Close" [disabled]="saving"></button>
+             
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="col-6 mb-3">
+                        <h6>{{l("Title")}} :</h6>
+                        {{ item.contract.title }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("ReferenceNumber")}} :</h6>
+                        {{ item.contract.referenceNumber }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("StartDate")}} :</h6>
+                        {{ item.contract.startDate |  luxonFormat:'yyyy-LL-dd HH:mm:ss'  }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("EndDate")}} :</h6>
+                        {{ item.contract.endDate |  luxonFormat:'yyyy-LL-dd HH:mm:ss'  }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("Description")}} :</h6>
+                        {{ item.contract.description }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("Template")}} :</h6>
+                        <div *ngIf="item.contract.template" class="text-left"><i class="fa fa-check-circle text-success"
+                                title="True"></i></div>
+                        <div *ngIf="!item.contract.template" class="text-left"><i class="fa fa-times-circle" title="False"></i></div>
+                    </div>                    <div class="col-6 mb-3">
+                        <h6>{{l("Remarks")}} :</h6>
+                        {{ item.contract.remarks }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("StoreMarketplaceCommissionSettingId")}} :</h6>
+                        {{ item.contract.storeMarketplaceCommissionSettingId }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("FirstPartyFullName")}} :</h6>
+                        {{ item.contract.firstPartyFullName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("FirstPartyAddress")}} :</h6>
+                        {{ item.contract.firstPartyAddress }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("FirstPartyPhone")}} :</h6>
+                        {{ item.contract.firstPartyPhone }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("FirstPartyEmailAddress")}} :</h6>
+                        {{ item.contract.firstPartyEmailAddress }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("FirstPartyIdTypeAndNumber")}} :</h6>
+                        {{ item.contract.firstPartyIdTypeAndNumber }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("FirstPartySignDate")}} :</h6>
+                        {{ item.contract.firstPartySignDate |  luxonFormat:'yyyy-LL-dd HH:mm:ss'  }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("FirstPartySignBinaryId")}} :</h6>
+                        {{ item.contract.firstPartySignBinaryId }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("FirstPartyIpAddress")}} :</h6>
+                        {{ item.contract.firstPartyIpAddress }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("SecondPartyFullName")}} :</h6>
+                        {{ item.contract.secondPartyFullName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("SecondPartyAddress")}} :</h6>
+                        {{ item.contract.secondPartyAddress }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("SecondPartyPhone")}} :</h6>
+                        {{ item.contract.secondPartyPhone }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("SecondPartyEmailAddress")}} :</h6>
+                        {{ item.contract.secondPartyEmailAddress }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("SecondPartyIdTypeAndNumber")}} :</h6>
+                        {{ item.contract.secondPartyIdTypeAndNumber }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("SecondPartySignDate")}} :</h6>
+                        {{ item.contract.secondPartySignDate |  luxonFormat:'yyyy-LL-dd HH:mm:ss'  }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("SecondPartySignBinaryId")}} :</h6>
+                        {{ item.contract.secondPartySignBinaryId }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("SecondPartyIpAddress")}} :</h6>
+                        {{ item.contract.secondPartyIpAddress }}
+                    </div>
+
+                    <div class="col-6 mb-3">
+                        <h6>({{l("ContractType")}}) {{l("Name")}} :</h6>
+                        {{item.contractTypeName}}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{l("Store")}}) {{l("Name")}} :</h6>
+                        {{item.storeName}}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{l("Business")}}) {{l("Name")}} :</h6>
+                        {{item.businessName}}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{l("Employee")}}) {{l("Name")}} :</h6>
+                        {{item.employeeName}}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{l("Job")}}) {{l("Title")}} :</h6>
+                        {{item.jobTitle}}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{l("Product")}}) {{l("Name")}} :</h6>
+                        {{item.productName}}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{l("Hub")}}) {{l("Name")}} :</h6>
+                        {{item.hubName}}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{l("Contact")}}) {{l("FullName")}} :</h6>
+                        {{item.contactFullName}}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{l("Contact")}}) {{l("FullName")}} :</h6>
+                        {{item.contactFullName2}}
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button [disabled]="saving" type="button" class="btn btn-primary blue" (click)="close()">{{l("Close")}}</button>
+            </div>
+        </div>
+    </div>
+
+</div>

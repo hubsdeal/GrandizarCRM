@@ -1,0 +1,320 @@
+﻿<div [@routerTransition]>
+  
+  
+   <sub-header [title]="'ContractFinancialTerms' | localize" [description]="'ContractFinancialTermsHeaderInfo' | localize">
+             <div role="actions">
+                 <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1"><i class="fa fa-file-excel"></i> {{l("ExportToExcel")}}</button>
+                
+                 <button *ngIf="isGranted('Pages.ContractFinancialTerms.Create')" (click)="createContractFinancialTerm()" 
+                                        class="btn btn-primary blue"><i class="fa fa-plus"></i> {{l("CreateNewContractFinancialTerm")}}</button>
+             </div>
+            </sub-header>
+    
+    <div [class]="containerClass">
+        <div class="card card-custom gutter-b">
+            <div class="card-body">
+                <form class="form" autocomplete="off">
+                    <div>
+                        <div class="row align-items-center">
+                            <div class="col-xl-12">
+                                
+                                
+        	<div class="my-3">                
+                <div class="input-group mb-3">
+                  <input [(ngModel)]="filterText" (ngModelChange)="getContractFinancialTerms()" name="filterText" autoFocus type="text" class="form-control" [placeholder]="l('SearchWithThreeDot')">
+                  <button class="btn btn-primary" type="submit" (click)="getContractFinancialTerms()"><i class="flaticon-search-1"></i></button>
+                </div>
+            </div>
+        	
+                            </div>
+                        </div>
+						 <div class="row" [hidden]="!advancedFiltersAreShown">
+						 	<div class="col-md-12">
+						         
+						     </div>
+
+
+
+                            <div class="col-md-3">
+                                <div class="my-3">
+									<label class="form-label" for="MinPercentageFilter">{{l("MinMax")}} {{l("Percentage")}}</label>
+									<div class="input-group">
+                                        <input type="number" class="form-control" id="MinPercentageFilter" [(ngModel)]="minPercentageFilter" placeholder="{{l('MinValue')}}" name="minPercentageFilter" (ngModelChange)="getContractFinancialTerms()"/>
+                                        <input type="number" class="form-control" [(ngModel)]="maxPercentageFilter" placeholder="{{l('MaxValue')}}" name="maxPercentageFilter" (ngModelChange)="getContractFinancialTerms()"/>
+									</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+									<label class="form-label" for="MinFixedAmountFilter">{{l("MinMax")}} {{l("FixedAmount")}}</label>
+									<div class="input-group">
+                                        <input type="number" class="form-control" id="MinFixedAmountFilter" [(ngModel)]="minFixedAmountFilter" placeholder="{{l('MinValue')}}" name="minFixedAmountFilter" (ngModelChange)="getContractFinancialTerms()"/>
+                                        <input type="number" class="form-control" [(ngModel)]="maxFixedAmountFilter" placeholder="{{l('MaxValue')}}" name="maxFixedAmountFilter" (ngModelChange)="getContractFinancialTerms()"/>
+									</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+									<label class="form-label" for="MinStartDateFilter">{{l("StartDateRange")}}</label>
+									<div class="input-group">
+                                        
+                                        <input class="form-control m-input" id="MinStartDateFilter" name="MinStartDateFilter" type="datetime" bsDatepicker  placeholder="{{l('MinValue')}}" [(ngModel)]="minStartDateFilter" (ngModelChange)="getContractFinancialTerms()">
+			                            <span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
+                                        <input class="form-control m-input" id="MaxStartDateFilter" name="MaxStartDateFilter" type="datetime" bsDatepicker  placeholder="{{l('MaxValue')}}" [(ngModel)]="maxStartDateFilter" (ngModelChange)="getContractFinancialTerms()">
+									</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+									<label class="form-label" for="MinEndDateFilter">{{l("EndDateRange")}}</label>
+									<div class="input-group">
+                                        
+                                        <input class="form-control m-input" id="MinEndDateFilter" name="MinEndDateFilter" type="datetime" bsDatepicker  placeholder="{{l('MinValue')}}" [(ngModel)]="minEndDateFilter" (ngModelChange)="getContractFinancialTerms()">
+			                            <span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
+                                        <input class="form-control m-input" id="MaxEndDateFilter" name="MaxEndDateFilter" type="datetime" bsDatepicker  placeholder="{{l('MaxValue')}}" [(ngModel)]="maxEndDateFilter" (ngModelChange)="getContractFinancialTerms()">
+									</div>
+                                </div>
+                            </div>	
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="IsActiveFilterSelect">{{l("IsActive")}}</label>
+									<select class="form-select" name="IsActiveFilter" id="IsActiveFilterSelect" [(ngModel)]="isActiveFilter" (ngModelChange)="getContractFinancialTerms()">
+									<option value="-1">{{l("All")}}</option>
+									<option value="0">{{l("False")}}</option>
+									<option value="1">{{l("True")}}</option>
+									</select>
+								</div>
+                            </div>
+
+
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="ContractFirstPartyFullNameFilter">({{l("Contract")}}) {{l("FirstPartyFullName")}}</label>
+									<input type="text" class="form-control" id="ContractFirstPartyFullNameFilter" name="contractFirstPartyFullNameFilter" [(ngModel)]="contractFirstPartyFullNameFilter">
+                                </div>
+                            </div>
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="HubNameFilter">({{l("Hub")}}) {{l("Name")}}</label>
+									<input type="text" class="form-control" id="HubNameFilter" name="hubNameFilter" [(ngModel)]="hubNameFilter">
+                                </div>
+                            </div>
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="BusinessNameFilter">({{l("Business")}}) {{l("Name")}}</label>
+									<input type="text" class="form-control" id="BusinessNameFilter" name="businessNameFilter" [(ngModel)]="businessNameFilter">
+                                </div>
+                            </div>
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="StoreNameFilter">({{l("Store")}}) {{l("Name")}}</label>
+									<input type="text" class="form-control" id="StoreNameFilter" name="storeNameFilter" [(ngModel)]="storeNameFilter">
+                                </div>
+                            </div>
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="JobTitleFilter">({{l("Job")}}) {{l("Title")}}</label>
+									<input type="text" class="form-control" id="JobTitleFilter" name="jobTitleFilter" [(ngModel)]="jobTitleFilter">
+                                </div>
+                            </div>
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="ProductCategoryNameFilter">({{l("ProductCategory")}}) {{l("Name")}}</label>
+									<input type="text" class="form-control" id="ProductCategoryNameFilter" name="productCategoryNameFilter" [(ngModel)]="productCategoryNameFilter">
+                                </div>
+                            </div>
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="ProductNameFilter">({{l("Product")}}) {{l("Name")}}</label>
+									<input type="text" class="form-control" id="ProductNameFilter" name="productNameFilter" [(ngModel)]="productNameFilter">
+                                </div>
+                            </div>
+                            <div class="col-md-12 mt-5">
+                                <button (click)="resetFilters()" class="btn btn-secondary btn-sm" id="btn-reset-filters">Reset</button>
+                            </div>
+                        </div>
+                        <div class="row my-4">
+                            <div class="col-sm-12">
+                                <span class="clickable-item text-muted" *ngIf="!advancedFiltersAreShown" (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i class="fa fa-angle-down"></i> {{l("ShowAdvancedFilters")}}</span>
+                                <span class="clickable-item text-muted" *ngIf="advancedFiltersAreShown" (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i class="fa fa-angle-up"></i> {{l("HideAdvancedFilters")}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="row align-items-center">
+                    <!--<Primeng-Datatable-Start>-->
+                    <div class="primeng-datatable-container col-12"
+                         [busyIf]="primengTableHelper.isLoading">
+                        <p-table #dataTable
+                                     (onLazyLoad)="getContractFinancialTerms($event)"
+                                     [value]="primengTableHelper.records"
+                                     rows="{{primengTableHelper.defaultRecordsCountPerPage}}"
+                                     [paginator]="false"
+                                     [lazy]="true"
+                                     [scrollable]="true"
+                                     ScrollWidth="100%"
+                                     [responsive]="primengTableHelper.isResponsive"
+                                     [resizableColumns]="primengTableHelper.resizableColumns">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th style="width: 130px" [hidden]="!isGrantedAny('Pages.ContractFinancialTerms.Edit', 'Pages.ContractFinancialTerms.Delete')">{{l('Actions')}}</th>
+                                    <th style="width: 150px" pSortableColumn="contractFk.firstPartyFullName">
+                                        {{l('FirstPartyFullName')}}
+                                        <p-sortIcon field="contractFirstPartyFullName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="hubFk.name">
+                                        {{l('Name')}}
+                                        <p-sortIcon field="hubName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="businessFk.name">
+                                        {{l('Name')}}
+                                        <p-sortIcon field="businessName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="storeFk.name">
+                                        {{l('Name')}}
+                                        <p-sortIcon field="storeName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="jobFk.title">
+                                        {{l('Title')}}
+                                        <p-sortIcon field="jobTitle"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="productCategoryFk.name">
+                                        {{l('Name')}}
+                                        <p-sortIcon field="productCategoryName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="productFk.name">
+                                        {{l('Name')}}
+                                        <p-sortIcon field="productName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="percentage">
+                                        {{l('Percentage')}}
+                                        <p-sortIcon field="contractFinancialTerm.percentage"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="fixedAmount">
+                                        {{l('FixedAmount')}}
+                                        <p-sortIcon field="contractFinancialTerm.fixedAmount"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="startDate">
+                                        {{l('StartDate')}}
+                                        <p-sortIcon field="contractFinancialTerm.startDate"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="endDate">
+                                        {{l('EndDate')}}
+                                        <p-sortIcon field="contractFinancialTerm.endDate"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="isActive">
+                                        {{l('IsActive')}}
+                                        <p-sortIcon field="contractFinancialTerm.isActive"></p-sortIcon>
+                                    </th>
+
+                                </tr>
+                            </ng-template>                           
+							<ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
+                                <tr>
+                                    <td style="width: 130px"
+                                        [hidden]="!isGrantedAny('Pages.ContractFinancialTerms.Edit', 'Pages.ContractFinancialTerms.Delete')">
+                                       <div class="btn-group dropdown" dropdown container="body">
+                                            <button class="dropdown-toggle btn btn-sm btn-primary" dropdownToggle>
+                                                <i class="fa fa-cog"></i><span class="caret"></span> {{l("Actions")}}
+                                            </button>
+												<ul class="dropdown-menu"  *dropdownMenu>
+												<li>
+													<a href="javascript:;" class="dropdown-item"
+														(click)="viewContractFinancialTermModal.show(record)">{{l('View')}}</a>
+												</li>
+												<li>
+                                                <a href="javascript:;" *ngIf="permission.isGranted('Pages.ContractFinancialTerms.Edit')" class="dropdown-item"
+														(click)="createOrEditContractFinancialTermModal.show(record.contractFinancialTerm.id)">{{l('Edit')}}</a>												
+                                                </li>
+												<li>
+											        <a class="dropdown-item" href="javascript:;" *ngIf="permission.isGranted('Pages.ContractFinancialTerms.Delete')"
+														(click)="deleteContractFinancialTerm(record.contractFinancialTerm)">{{l('Delete')}}</a>
+												</li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                    <td style="width:150px">
+												<span class="p-column-title"> {{l('FirstPartyFullName')}}</span>
+												{{record.contractFirstPartyFullName}}
+											</td>
+                                    <td style="width:150px">
+												<span class="p-column-title"> {{l('Name')}}</span>
+												{{record.hubName}}
+											</td>
+                                    <td style="width:150px">
+												<span class="p-column-title"> {{l('Name')}}</span>
+												{{record.businessName}}
+											</td>
+                                    <td style="width:150px">
+												<span class="p-column-title"> {{l('Name')}}</span>
+												{{record.storeName}}
+											</td>
+                                    <td style="width:150px">
+												<span class="p-column-title"> {{l('Title')}}</span>
+												{{record.jobTitle}}
+											</td>
+                                    <td style="width:150px">
+												<span class="p-column-title"> {{l('Name')}}</span>
+												{{record.productCategoryName}}
+											</td>
+                                    <td style="width:150px">
+												<span class="p-column-title"> {{l('Name')}}</span>
+												{{record.productName}}
+											</td>
+                                    <td style="width:150px">
+											<span class="p-column-title"> {{l('Percentage')}}</span>
+											{{record.contractFinancialTerm.percentage}}
+										</td>
+                                    <td style="width:150px">
+											<span class="p-column-title"> {{l('FixedAmount')}}</span>
+											{{record.contractFinancialTerm.fixedAmount}}
+										</td>
+                                    <td style="width:150px">
+										<span class="p-column-title"> {{l('StartDate')}}</span>
+                                        <span *ngIf="record.contractFinancialTerm.startDate">
+											{{record.contractFinancialTerm.startDate |  luxonFormat:'F' }}
+                                        </span>
+                                        <span *ngIf="!record.contractFinancialTerm.startDate">-</span>
+                                    </td>
+                                    <td style="width:150px">
+										<span class="p-column-title"> {{l('EndDate')}}</span>
+                                        <span *ngIf="record.contractFinancialTerm.endDate">
+											{{record.contractFinancialTerm.endDate |  luxonFormat:'F' }}
+                                        </span>
+                                        <span *ngIf="!record.contractFinancialTerm.endDate">-</span>
+                                    </td>
+                                    <td style="width:150px">
+										<span class="p-column-title"> {{l('IsActive')}}</span>
+                                        <div *ngIf="record.contractFinancialTerm.isActive" class="text-center"><i class="fa fa-check-circle text-success" title="True"></i></div>
+										<div *ngIf="!record.contractFinancialTerm.isActive" class="text-center"><i class="fa fa-times-circle" title="False"></i></div>
+                                    </td>
+
+                                </tr>
+                               
+                            </ng-template>
+                        </p-table>
+						<div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
+                            {{l('NoData')}}
+                        </div>
+                        <div class="primeng-paging-container">
+                            <p-paginator [rows]="primengTableHelper.defaultRecordsCountPerPage"
+                                         #paginator
+                                         (onPageChange)="getContractFinancialTerms($event)"
+                                         [totalRecords]="primengTableHelper.totalRecordsCount"
+                                         [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
+                                         [showCurrentPageReport]="true"
+                                         [currentPageReportTemplate]="'TotalRecordsCount' | localize:primengTableHelper.totalRecordsCount"    
+                            >
+                            </p-paginator>
+                        </div>
+                    </div>
+                    <!--<Primeng-Datatable-End>-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <createOrEditContractFinancialTermModal #createOrEditContractFinancialTermModal (modalSave)="getContractFinancialTerms()"></createOrEditContractFinancialTermModal>    
+    <viewContractFinancialTermModal #viewContractFinancialTermModal></viewContractFinancialTermModal>
+    
+  </div>

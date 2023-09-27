@@ -1,0 +1,188 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #connectMessageForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="connectMessage.id">{{l("EditConnectMessage")}}</span>
+                        <span *ngIf="!connectMessage.id">{{l("CreateNewConnectMessage")}}</span>
+                    </h4>                    
+                    
+                    
+                 <button type="button" class="btn-close" (click)="close()" aria-label="Close" [disabled]="saving"></button>
+             
+                </div>
+                <div class="modal-body">
+                 
+
+
+					<div class="my-3">
+                        <label class="form-label" for="ConnectChannelName">{{l("ConnectChannel")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="ConnectChannelName" name="connectChannelName" [(ngModel)]="connectChannelName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectConnectChannelModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setConnectChannelIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="connectMessage.connectChannelId" [(ngModel)]="connectMessage.connectChannelId" type="text"  hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="UserName">{{l("User")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="UserName" name="userName" [(ngModel)]="userName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectUserModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setFromUserIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="connectMessage.fromUserId" [(ngModel)]="connectMessage.fromUserId" type="text"  hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="ContactFullName">{{l("Contact")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="ContactFullName" name="contactFullName" [(ngModel)]="contactFullName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectContactModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setSendToContactIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="connectMessage.sendToContactId" [(ngModel)]="connectMessage.sendToContactId" type="text"  hidden>
+                        
+
+
+								<div class="my-3">
+									<label class="form-label" for="ConnectMessage_From">{{l("From")}}</label>
+									<input type="text" #ConnectMessage_From="ngModel" id="ConnectMessage_From" class="form-control" [(ngModel)]="connectMessage.from" name="From"   minlength="1"  maxlength="256" />
+								    <validation-messages [formCtrl]="ConnectMessage_From"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="ConnectMessage_To">{{l("To")}}</label>
+									<input type="text" #ConnectMessage_To="ngModel" id="ConnectMessage_To" class="form-control" [(ngModel)]="connectMessage.to" name="To"   minlength="1"  maxlength="256" />
+								    <validation-messages [formCtrl]="ConnectMessage_To"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="ConnectMessage_Subject">{{l("Subject")}}</label>
+									<input type="text" #ConnectMessage_Subject="ngModel" id="ConnectMessage_Subject" class="form-control" [(ngModel)]="connectMessage.subject" name="Subject"   minlength="1"  maxlength="1024" />
+								    <validation-messages [formCtrl]="ConnectMessage_Subject"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="ConnectMessage_Body">{{l("Body")}}</label>
+									<input type="text" #ConnectMessage_Body="ngModel" id="ConnectMessage_Body" class="form-control" [(ngModel)]="connectMessage.body" name="Body"    />
+								    <validation-messages [formCtrl]="ConnectMessage_Body"></validation-messages>
+								</div>
+					
+								<br/>
+								<label class="form-check form-check-custom form-check-solid">
+                                    <input
+                                        id="ConnectMessage_SendOrReceive" 
+                                        #ConnectMessage_SendOrReceive="ngModel"
+                                        name="SendOrReceive" 
+                                        [(ngModel)]="connectMessage.sendOrReceive"
+                                        type="checkbox"
+                                        class="form-check-input"
+                                    />
+                                    <span class="form-check-label">
+                                        {{l("SendOrReceive")}}
+                                    </span>
+                                </label>
+                                <validation-messages [formCtrl]="ConnectMessage_SendOrReceive"></validation-messages>
+					
+								<div class="my-3">
+									<label class="form-label" for="ConnectMessage_SendDate">{{l("SendDate")}}</label>
+									 <input class="form-control m-input" #ConnectMessage_SendDate type="datetime" bsDatepicker  datePickerLuxonModifier  [(date)]="connectMessage.sendDate" id="ConnectMessage_SendDate" name="ConnectMessage_SendDate">
+									<validation-messages [formCtrl]="ConnectMessage_SendDate"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="ConnectMessage_SendTime">{{l("SendTime")}}</label>
+									<input type="text" #ConnectMessage_SendTime="ngModel" id="ConnectMessage_SendTime" class="form-control" [(ngModel)]="connectMessage.sendTime" name="SendTime"   minlength="1"  maxlength="50" />
+								    <validation-messages [formCtrl]="ConnectMessage_SendTime"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="ConnectMessage_ViewDate">{{l("ViewDate")}}</label>
+									 <input class="form-control m-input" #ConnectMessage_ViewDate type="datetime" bsDatepicker  datePickerLuxonModifier  [(date)]="connectMessage.viewDate" id="ConnectMessage_ViewDate" name="ConnectMessage_ViewDate">
+									<validation-messages [formCtrl]="ConnectMessage_ViewDate"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="ConnectMessage_ViewTime">{{l("ViewTime")}}</label>
+									<input type="text" #ConnectMessage_ViewTime="ngModel" id="ConnectMessage_ViewTime" class="form-control" [(ngModel)]="connectMessage.viewTime" name="ViewTime"   minlength="1"  maxlength="50" />
+								    <validation-messages [formCtrl]="ConnectMessage_ViewTime"></validation-messages>
+								</div>
+					
+								<br/>
+								<label class="form-check form-check-custom form-check-solid">
+                                    <input
+                                        id="ConnectMessage_Viewed" 
+                                        #ConnectMessage_Viewed="ngModel"
+                                        name="Viewed" 
+                                        [(ngModel)]="connectMessage.viewed"
+                                        type="checkbox"
+                                        class="form-check-input"
+                                    />
+                                    <span class="form-check-label">
+                                        {{l("Viewed")}}
+                                    </span>
+                                </label>
+                                <validation-messages [formCtrl]="ConnectMessage_Viewed"></validation-messages>
+					
+								<br/>
+								<label class="form-check form-check-custom form-check-solid">
+                                    <input
+                                        id="ConnectMessage_Clicked" 
+                                        #ConnectMessage_Clicked="ngModel"
+                                        name="Clicked" 
+                                        [(ngModel)]="connectMessage.clicked"
+                                        type="checkbox"
+                                        class="form-check-input"
+                                    />
+                                    <span class="form-check-label">
+                                        {{l("Clicked")}}
+                                    </span>
+                                </label>
+                                <validation-messages [formCtrl]="ConnectMessage_Clicked"></validation-messages>
+					
+								<div class="my-3">
+									<label class="form-label" for="ConnectMessage_Notes">{{l("Notes")}}</label>
+									<input type="text" #ConnectMessage_Notes="ngModel" id="ConnectMessage_Notes" class="form-control" [(ngModel)]="connectMessage.notes" name="Notes"    />
+								    <validation-messages [formCtrl]="ConnectMessage_Notes"></validation-messages>
+								</div>
+					
+								<br/>
+								<label class="form-check form-check-custom form-check-solid">
+                                    <input
+                                        id="ConnectMessage_SendNowOrScheduled" 
+                                        #ConnectMessage_SendNowOrScheduled="ngModel"
+                                        name="SendNowOrScheduled" 
+                                        [(ngModel)]="connectMessage.sendNowOrScheduled"
+                                        type="checkbox"
+                                        class="form-check-input"
+                                    />
+                                    <span class="form-check-label">
+                                        {{l("SendNowOrScheduled")}}
+                                    </span>
+                                </label>
+                                <validation-messages [formCtrl]="ConnectMessage_SendNowOrScheduled"></validation-messages>
+					
+								<div class="my-3">
+									<label class="form-label" for="ConnectMessage_ScheduleSendDateTime">{{l("ScheduleSendDateTime")}}</label>
+									 <input class="form-control m-input" #ConnectMessage_ScheduleSendDateTime type="datetime" bsDatepicker  datePickerLuxonModifier  [(date)]="connectMessage.scheduleSendDateTime" id="ConnectMessage_ScheduleSendDateTime" name="ConnectMessage_ScheduleSendDateTime">
+									<validation-messages [formCtrl]="ConnectMessage_ScheduleSendDateTime"></validation-messages>
+								</div>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!connectMessageForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+<connectMessageConnectChannelLookupTableModal #connectMessageConnectChannelLookupTableModal (modalSave)="getNewConnectChannelId()"></connectMessageConnectChannelLookupTableModal>
+		 <connectMessageUserLookupTableModal #connectMessageUserLookupTableModal (modalSave)="getNewFromUserId()"></connectMessageUserLookupTableModal>
+		 <connectMessageContactLookupTableModal #connectMessageContactLookupTableModal (modalSave)="getNewSendToContactId()"></connectMessageContactLookupTableModal>
+		 
+</div>

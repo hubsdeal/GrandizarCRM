@@ -1,0 +1,43 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #rewardPointTypeForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="rewardPointType.id">{{l("EditRewardPointType")}}</span>
+                        <span *ngIf="!rewardPointType.id">{{l("CreateNewRewardPointType")}}</span>
+                    </h4>                    
+                    
+                    
+                 <button type="button" class="btn-close" (click)="close()" aria-label="Close" [disabled]="saving"></button>
+             
+                </div>
+                <div class="modal-body">
+                 
+
+
+
+
+								<div class="my-3">
+									<label class="form-label" for="RewardPointType_Name">{{l("Name")}}</label>
+									<input type="text" #RewardPointType_Name="ngModel" id="RewardPointType_Name" class="form-control" [(ngModel)]="rewardPointType.name" name="Name"   minlength="1"  maxlength="128" />
+								    <validation-messages [formCtrl]="RewardPointType_Name"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="RewardPointType_Description">{{l("Description")}}</label>
+									<input type="text" #RewardPointType_Description="ngModel" id="RewardPointType_Description" class="form-control" [(ngModel)]="rewardPointType.description" name="Description"    />
+								    <validation-messages [formCtrl]="RewardPointType_Description"></validation-messages>
+								</div>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!rewardPointTypeForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>

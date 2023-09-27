@@ -1,0 +1,356 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #jobReferralFeeDetailForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="jobReferralFeeDetail.id">{{l("EditJobReferralFeeDetail")}}</span>
+                        <span *ngIf="!jobReferralFeeDetail.id">{{l("CreateNewJobReferralFeeDetail")}}</span>
+                    </h4>
+
+
+                    <button type="button" class="btn-close" (click)="close()" aria-label="Close"
+                        [disabled]="saving"></button>
+
+                </div>
+                <div class="modal-body">
+
+
+
+                    <div class="my-3">
+                        <label class="form-label" for="JobTitle">{{l("Job")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="JobTitle" name="jobTitle" [(ngModel)]="jobTitle" type="text"
+                                disabled>
+                            <button class="btn btn-primary blue" (click)="openSelectJobModal()" type="button"><i
+                                    class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setJobIdNull()"><i
+                                    class="fa fa-times"></i></button>
+                        </div>
+                    </div>
+                    <input class="form-control" name="jobReferralFeeDetail.jobId"
+                        [(ngModel)]="jobReferralFeeDetail.jobId" type="text" hidden>
+
+                    <div class="my-3">
+                        <label class="form-label" for="StoreName">{{l("Store")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="StoreName" name="storeName" [(ngModel)]="storeName"
+                                type="text" disabled>
+                            <button class="btn btn-primary blue" (click)="openSelectStoreModal()" type="button"><i
+                                    class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setStoreIdNull()"><i
+                                    class="fa fa-times"></i></button>
+                        </div>
+                    </div>
+                    <input class="form-control" name="jobReferralFeeDetail.storeId"
+                        [(ngModel)]="jobReferralFeeDetail.storeId" type="text" hidden>
+
+                    <div class="my-3">
+                        <label class="form-label" for="BusinessName">{{l("Business")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="BusinessName" name="businessName" [(ngModel)]="businessName"
+                                type="text" disabled>
+                            <button class="btn btn-primary blue" (click)="openSelectBusinessModal()" type="button"><i
+                                    class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setBusinessIdNull()"><i
+                                    class="fa fa-times"></i></button>
+                        </div>
+                    </div>
+                    <input class="form-control" name="jobReferralFeeDetail.businessId"
+                        [(ngModel)]="jobReferralFeeDetail.businessId" type="text" hidden>
+
+                    <div class="my-3">
+                        <label class="form-label" for="OrderInvoiceNumber">{{l("Order")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="OrderInvoiceNumber" name="orderInvoiceNumber"
+                                [(ngModel)]="orderInvoiceNumber" type="text" disabled>
+                            <button class="btn btn-primary blue" (click)="openSelectOrderModal()" type="button"><i
+                                    class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setOrderIdNull()"><i
+                                    class="fa fa-times"></i></button>
+                        </div>
+                    </div>
+                    <input class="form-control" name="jobReferralFeeDetail.orderId"
+                        [(ngModel)]="jobReferralFeeDetail.orderId" type="text" hidden>
+
+                    <div class="my-3">
+                        <label class="form-label"
+                            for="JobReferralFeeSplitPolicyTitleName">{{l("JobReferralFeeSplitPolicy")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="JobReferralFeeSplitPolicyTitleName"
+                                name="jobReferralFeeSplitPolicyTitleName"
+                                [(ngModel)]="jobReferralFeeSplitPolicyTitleName" type="text" disabled>
+                            <button class="btn btn-primary blue" (click)="openSelectJobReferralFeeSplitPolicyModal()"
+                                type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button"
+                                (click)="setJobReferralFeeSplitPolicyIdNull()"><i class="fa fa-times"></i></button>
+                        </div>
+                    </div>
+                    <input class="form-control" name="jobReferralFeeDetail.jobReferralFeeSplitPolicyId"
+                        [(ngModel)]="jobReferralFeeDetail.jobReferralFeeSplitPolicyId" type="text" hidden>
+
+                    <div class="my-3">
+                        <label class="form-label" for="CurrencyName">{{l("Currency")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="CurrencyName" name="currencyName" [(ngModel)]="currencyName"
+                                type="text" disabled>
+                            <button class="btn btn-primary blue" (click)="openSelectCurrencyModal()" type="button"><i
+                                    class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setCurrencyIdNull()"><i
+                                    class="fa fa-times"></i></button>
+                        </div>
+                    </div>
+                    <input class="form-control" name="jobReferralFeeDetail.currencyId"
+                        [(ngModel)]="jobReferralFeeDetail.currencyId" type="text" hidden>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ContactFullName">{{l("Contact")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="ContactFullName" name="contactFullName"
+                                [(ngModel)]="contactFullName" type="text" disabled>
+                            <button class="btn btn-primary blue" (click)="openSelectContactModal()" type="button"><i
+                                    class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button"
+                                (click)="setApplicantContactIdNull()"><i class="fa fa-times"></i></button>
+                        </div>
+                    </div>
+                    <input class="form-control" name="jobReferralFeeDetail.applicantContactId"
+                        [(ngModel)]="jobReferralFeeDetail.applicantContactId" type="text" hidden>
+
+                    <div class="my-3">
+                        <label class="form-label" for="ContactFullName2">{{l("Contact")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="ContactFullName2" name="contactFullName2"
+                                [(ngModel)]="contactFullName2" type="text" disabled>
+                            <button class="btn btn-primary blue" (click)="openSelectContactModal2()" type="button"><i
+                                    class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button"
+                                (click)="setReferralContactIdNull()"><i class="fa fa-times"></i></button>
+                        </div>
+                    </div>
+                    <input class="form-control" name="jobReferralFeeDetail.referralContactId"
+                        [(ngModel)]="jobReferralFeeDetail.referralContactId" type="text" hidden>
+
+                    <div class="my-3">
+                        <label class="form-label" for="EmployeeName">{{l("Employee")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="EmployeeName" name="employeeName" [(ngModel)]="employeeName"
+                                type="text" disabled>
+                            <button class="btn btn-primary blue" (click)="openSelectEmployeeModal()" type="button"><i
+                                    class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button"
+                                (click)="setHubPartnerEmployeeIdNull()"><i class="fa fa-times"></i></button>
+                        </div>
+                    </div>
+                    <input class="form-control" name="jobReferralFeeDetail.hubPartnerEmployeeId"
+                        [(ngModel)]="jobReferralFeeDetail.hubPartnerEmployeeId" type="text" hidden>
+
+                    <div class="my-3">
+                        <label class="form-label" for="EmployeeName2">{{l("Employee")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="EmployeeName2" name="employeeName2"
+                                [(ngModel)]="employeeName2" type="text" disabled>
+                            <button class="btn btn-primary blue" (click)="openSelectEmployeeModal2()" type="button"><i
+                                    class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setEmployeeIdNull()"><i
+                                    class="fa fa-times"></i></button>
+                        </div>
+                    </div>
+                    <input class="form-control" name="jobReferralFeeDetail.employeeId"
+                        [(ngModel)]="jobReferralFeeDetail.employeeId" type="text" hidden>
+
+
+
+                    <div class="my5">
+                        <label class="form-label"
+                            for="JobReferralFeeDetail_TotalReferralAmount">{{l("TotalReferralAmount")}}</label>
+                        <input type="number" #JobReferralFeeDetail_TotalReferralAmount="ngModel"
+                            id="JobReferralFeeDetail_TotalReferralAmount" class="form-control"
+                            [(ngModel)]="jobReferralFeeDetail.totalReferralAmount" name="TotalReferralAmount" />
+                        <validation-messages
+                            [formCtrl]="JobReferralFeeDetail_TotalReferralAmount"></validation-messages>
+                    </div>
+
+                    <div class="my5">
+                        <label class="form-label"
+                            for="JobReferralFeeDetail_PlatformPercentage">{{l("PlatformPercentage")}}</label>
+                        <input type="number" #JobReferralFeeDetail_PlatformPercentage="ngModel"
+                            id="JobReferralFeeDetail_PlatformPercentage" class="form-control"
+                            [(ngModel)]="jobReferralFeeDetail.platformPercentage" name="PlatformPercentage" />
+                        <validation-messages [formCtrl]="JobReferralFeeDetail_PlatformPercentage"></validation-messages>
+                    </div>
+
+                    <div class="my5">
+                        <label class="form-label"
+                            for="JobReferralFeeDetail_PlatformAmount">{{l("PlatformAmount")}}</label>
+                        <input type="number" #JobReferralFeeDetail_PlatformAmount="ngModel"
+                            id="JobReferralFeeDetail_PlatformAmount" class="form-control"
+                            [(ngModel)]="jobReferralFeeDetail.platformAmount" name="PlatformAmount" />
+                        <validation-messages [formCtrl]="JobReferralFeeDetail_PlatformAmount"></validation-messages>
+                    </div>
+
+                    <div class="my5">
+                        <label class="form-label"
+                            for="JobReferralFeeDetail_ApplicantAmount">{{l("ApplicantAmount")}}</label>
+                        <input type="number" #JobReferralFeeDetail_ApplicantAmount="ngModel"
+                            id="JobReferralFeeDetail_ApplicantAmount" class="form-control"
+                            [(ngModel)]="jobReferralFeeDetail.applicantAmount" name="ApplicantAmount" />
+                        <validation-messages [formCtrl]="JobReferralFeeDetail_ApplicantAmount"></validation-messages>
+                    </div>
+
+                    <div class="my5">
+                        <label class="form-label"
+                            for="JobReferralFeeDetail_ApplicantAmountPercentage">{{l("ApplicantAmountPercentage")}}</label>
+                        <input type="number" #JobReferralFeeDetail_ApplicantAmountPercentage="ngModel"
+                            id="JobReferralFeeDetail_ApplicantAmountPercentage" class="form-control"
+                            [(ngModel)]="jobReferralFeeDetail.applicantAmountPercentage"
+                            name="ApplicantAmountPercentage" />
+                        <validation-messages
+                            [formCtrl]="JobReferralFeeDetail_ApplicantAmountPercentage"></validation-messages>
+                    </div>
+
+                    <br />
+                    <label class="form-check form-check-custom form-check-solid">
+                        <input id="JobReferralFeeDetail_ApplicantPaid" #JobReferralFeeDetail_ApplicantPaid="ngModel"
+                            name="ApplicantPaid" [(ngModel)]="jobReferralFeeDetail.applicantPaid" type="checkbox"
+                            class="form-check-input" />
+                        <span class="form-check-label">
+                            {{l("ApplicantPaid")}}
+                        </span>
+                    </label>
+                    <validation-messages [formCtrl]="JobReferralFeeDetail_ApplicantPaid"></validation-messages>
+
+                    <div class="my5">
+                        <label class="form-label"
+                            for="JobReferralFeeDetail_ReferralContactPercentage">{{l("ReferralContactPercentage")}}</label>
+                        <input type="number" #JobReferralFeeDetail_ReferralContactPercentage="ngModel"
+                            id="JobReferralFeeDetail_ReferralContactPercentage" class="form-control"
+                            [(ngModel)]="jobReferralFeeDetail.referralContactPercentage"
+                            name="ReferralContactPercentage" />
+                        <validation-messages
+                            [formCtrl]="JobReferralFeeDetail_ReferralContactPercentage"></validation-messages>
+                    </div>
+
+                    <div class="my5">
+                        <label class="form-label"
+                            for="JobReferralFeeDetail_ReferrerAmount">{{l("ReferrerAmount")}}</label>
+                        <input type="number" #JobReferralFeeDetail_ReferrerAmount="ngModel"
+                            id="JobReferralFeeDetail_ReferrerAmount" class="form-control"
+                            [(ngModel)]="jobReferralFeeDetail.referrerAmount" name="ReferrerAmount" />
+                        <validation-messages [formCtrl]="JobReferralFeeDetail_ReferrerAmount"></validation-messages>
+                    </div>
+
+                    <br />
+                    <label class="form-check form-check-custom form-check-solid">
+                        <input id="JobReferralFeeDetail_ReferrerPaid" #JobReferralFeeDetail_ReferrerPaid="ngModel"
+                            name="ReferrerPaid" [(ngModel)]="jobReferralFeeDetail.referrerPaid" type="checkbox"
+                            class="form-check-input" />
+                        <span class="form-check-label">
+                            {{l("ReferrerPaid")}}
+                        </span>
+                    </label>
+                    <validation-messages [formCtrl]="JobReferralFeeDetail_ReferrerPaid"></validation-messages>
+
+                    <div class="my5">
+                        <label class="form-label"
+                            for="JobReferralFeeDetail_HubPartnerPercentage">{{l("HubPartnerPercentage")}}</label>
+                        <input type="number" #JobReferralFeeDetail_HubPartnerPercentage="ngModel"
+                            id="JobReferralFeeDetail_HubPartnerPercentage" class="form-control"
+                            [(ngModel)]="jobReferralFeeDetail.hubPartnerPercentage" name="HubPartnerPercentage" />
+                        <validation-messages
+                            [formCtrl]="JobReferralFeeDetail_HubPartnerPercentage"></validation-messages>
+                    </div>
+
+                    <div class="my5">
+                        <label class="form-label"
+                            for="JobReferralFeeDetail_HubPartnerAmount">{{l("HubPartnerAmount")}}</label>
+                        <input type="number" #JobReferralFeeDetail_HubPartnerAmount="ngModel"
+                            id="JobReferralFeeDetail_HubPartnerAmount" class="form-control"
+                            [(ngModel)]="jobReferralFeeDetail.hubPartnerAmount" name="HubPartnerAmount" />
+                        <validation-messages [formCtrl]="JobReferralFeeDetail_HubPartnerAmount"></validation-messages>
+                    </div>
+
+                    <br />
+                    <label class="form-check form-check-custom form-check-solid">
+                        <input id="JobReferralFeeDetail_HubPartnerPaid" #JobReferralFeeDetail_HubPartnerPaid="ngModel"
+                            name="HubPartnerPaid" [(ngModel)]="jobReferralFeeDetail.hubPartnerPaid" type="checkbox"
+                            class="form-check-input" />
+                        <span class="form-check-label">
+                            {{l("HubPartnerPaid")}}
+                        </span>
+                    </label>
+                    <validation-messages [formCtrl]="JobReferralFeeDetail_HubPartnerPaid"></validation-messages>
+
+                    <div class="my5">
+                        <label class="form-label"
+                            for="JobReferralFeeDetail_EmployeePercentage">{{l("EmployeePercentage")}}</label>
+                        <input type="number" #JobReferralFeeDetail_EmployeePercentage="ngModel"
+                            id="JobReferralFeeDetail_EmployeePercentage" class="form-control"
+                            [(ngModel)]="jobReferralFeeDetail.employeePercentage" name="EmployeePercentage" />
+                        <validation-messages [formCtrl]="JobReferralFeeDetail_EmployeePercentage"></validation-messages>
+                    </div>
+
+                    <div class="my5">
+                        <label class="form-label"
+                            for="JobReferralFeeDetail_EmployeeAmount">{{l("EmployeeAmount")}}</label>
+                        <input type="number" #JobReferralFeeDetail_EmployeeAmount="ngModel"
+                            id="JobReferralFeeDetail_EmployeeAmount" class="form-control"
+                            [(ngModel)]="jobReferralFeeDetail.employeeAmount" name="EmployeeAmount" />
+                        <validation-messages [formCtrl]="JobReferralFeeDetail_EmployeeAmount"></validation-messages>
+                    </div>
+
+                    <br />
+                    <label class="form-check form-check-custom form-check-solid">
+                        <input id="JobReferralFeeDetail_EmployeePaid" #JobReferralFeeDetail_EmployeePaid="ngModel"
+                            name="EmployeePaid" [(ngModel)]="jobReferralFeeDetail.employeePaid" type="checkbox"
+                            class="form-check-input" />
+                        <span class="form-check-label">
+                            {{l("EmployeePaid")}}
+                        </span>
+                    </label>
+                    <validation-messages [formCtrl]="JobReferralFeeDetail_EmployeePaid"></validation-messages>
+
+                    <div class="my-3">
+                        <label class="form-label" for="JobReferralFeeDetail_Remarks">{{l("Remarks")}}</label>
+                        <input type="text" #JobReferralFeeDetail_Remarks="ngModel" id="JobReferralFeeDetail_Remarks"
+                            class="form-control" [(ngModel)]="jobReferralFeeDetail.remarks" name="Remarks" />
+                        <validation-messages [formCtrl]="JobReferralFeeDetail_Remarks"></validation-messages>
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default"
+                        (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!jobReferralFeeDetailForm.form.valid"
+                        [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i>
+                        <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <jobReferralFeeDetailJobLookupTableModal #jobReferralFeeDetailJobLookupTableModal (modalSave)="getNewJobId()">
+    </jobReferralFeeDetailJobLookupTableModal>
+    <jobReferralFeeDetailStoreLookupTableModal #jobReferralFeeDetailStoreLookupTableModal (modalSave)="getNewStoreId()">
+    </jobReferralFeeDetailStoreLookupTableModal>
+    <jobReferralFeeDetailBusinessLookupTableModal #jobReferralFeeDetailBusinessLookupTableModal
+        (modalSave)="getNewBusinessId()"></jobReferralFeeDetailBusinessLookupTableModal>
+    <jobReferralFeeDetailOrderLookupTableModal #jobReferralFeeDetailOrderLookupTableModal (modalSave)="getNewOrderId()">
+    </jobReferralFeeDetailOrderLookupTableModal>
+    <jobReferralFeeDetailJobReferralFeeSplitPolicyLookupTableModal
+        #jobReferralFeeDetailJobReferralFeeSplitPolicyLookupTableModal
+        (modalSave)="getNewJobReferralFeeSplitPolicyId()">
+    </jobReferralFeeDetailJobReferralFeeSplitPolicyLookupTableModal>
+    <jobReferralFeeDetailCurrencyLookupTableModal #jobReferralFeeDetailCurrencyLookupTableModal
+        (modalSave)="getNewCurrencyId()"></jobReferralFeeDetailCurrencyLookupTableModal>
+    <jobReferralFeeDetailContactLookupTableModal #jobReferralFeeDetailContactLookupTableModal
+        (modalSave)="getNewApplicantContactId()"></jobReferralFeeDetailContactLookupTableModal>
+    <jobReferralFeeDetailContactLookupTableModal #jobReferralFeeDetailContactLookupTableModal2
+        (modalSave)="getNewReferralContactId()"></jobReferralFeeDetailContactLookupTableModal>
+    <jobReferralFeeDetailEmployeeLookupTableModal #jobReferralFeeDetailEmployeeLookupTableModal
+        (modalSave)="getNewHubPartnerEmployeeId()"></jobReferralFeeDetailEmployeeLookupTableModal>
+    <jobReferralFeeDetailEmployeeLookupTableModal #jobReferralFeeDetailEmployeeLookupTableModal2
+        (modalSave)="getNewEmployeeId()"></jobReferralFeeDetailEmployeeLookupTableModal>
+
+</div>

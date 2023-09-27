@@ -1,0 +1,175 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #orderDeliveryByCaptainForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="orderDeliveryByCaptain.id">{{l("EditOrderDeliveryByCaptain")}}</span>
+                        <span *ngIf="!orderDeliveryByCaptain.id">{{l("CreateNewOrderDeliveryByCaptain")}}</span>
+                    </h4>                    
+                    
+                    
+                 <button type="button" class="btn-close" (click)="close()" aria-label="Close" [disabled]="saving"></button>
+             
+                </div>
+                <div class="modal-body">
+                 
+
+
+					<div class="my-3">
+                        <label class="form-label" for="OrderInvoiceNumber">{{l("Order")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="OrderInvoiceNumber" name="orderInvoiceNumber" [(ngModel)]="orderInvoiceNumber" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectOrderModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setOrderIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="orderDeliveryByCaptain.orderId" [(ngModel)]="orderDeliveryByCaptain.orderId" type="text"  hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="StoreName">{{l("Store")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="StoreName" name="storeName" [(ngModel)]="storeName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectStoreModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setStoreIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="orderDeliveryByCaptain.storeId" [(ngModel)]="orderDeliveryByCaptain.storeId" type="text"  hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="ContactFullName">{{l("Contact")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="ContactFullName" name="contactFullName" [(ngModel)]="contactFullName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectContactModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setContactIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="orderDeliveryByCaptain.contactId" [(ngModel)]="orderDeliveryByCaptain.contactId" type="text"  hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="EmployeeName">{{l("Employee")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="EmployeeName" name="employeeName" [(ngModel)]="employeeName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectEmployeeModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setEmployeeCaptainIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="orderDeliveryByCaptain.employeeCaptainId" [(ngModel)]="orderDeliveryByCaptain.employeeCaptainId" type="text"  hidden>
+                        
+
+
+								<br/>
+								<label class="form-check form-check-custom form-check-solid">
+                                    <input
+                                        id="OrderDeliveryByCaptain_CaptainSelectionAutoOrManual" 
+                                        #OrderDeliveryByCaptain_CaptainSelectionAutoOrManual="ngModel"
+                                        name="CaptainSelectionAutoOrManual" 
+                                        [(ngModel)]="orderDeliveryByCaptain.captainSelectionAutoOrManual"
+                                        type="checkbox"
+                                        class="form-check-input"
+                                    />
+                                    <span class="form-check-label">
+                                        {{l("CaptainSelectionAutoOrManual")}}
+                                    </span>
+                                </label>
+                                <validation-messages [formCtrl]="OrderDeliveryByCaptain_CaptainSelectionAutoOrManual"></validation-messages>
+					
+								<div class="my-3">
+									<label class="form-label" for="OrderDeliveryByCaptain_CaptainOrderAcceptedDateTime">{{l("CaptainOrderAcceptedDateTime")}}</label>
+									 <input class="form-control m-input" #OrderDeliveryByCaptain_CaptainOrderAcceptedDateTime type="datetime" bsDatepicker  datePickerLuxonModifier  [(date)]="orderDeliveryByCaptain.captainOrderAcceptedDateTime" id="OrderDeliveryByCaptain_CaptainOrderAcceptedDateTime" name="OrderDeliveryByCaptain_CaptainOrderAcceptedDateTime">
+									<validation-messages [formCtrl]="OrderDeliveryByCaptain_CaptainOrderAcceptedDateTime"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="OrderDeliveryByCaptain_CaptainOrderPickedupDateTime">{{l("CaptainOrderPickedupDateTime")}}</label>
+									 <input class="form-control m-input" #OrderDeliveryByCaptain_CaptainOrderPickedupDateTime type="datetime" bsDatepicker  datePickerLuxonModifier  [(date)]="orderDeliveryByCaptain.captainOrderPickedupDateTime" id="OrderDeliveryByCaptain_CaptainOrderPickedupDateTime" name="OrderDeliveryByCaptain_CaptainOrderPickedupDateTime">
+									<validation-messages [formCtrl]="OrderDeliveryByCaptain_CaptainOrderPickedupDateTime"></validation-messages>
+								</div>
+					
+								<div class="my5">
+									<label class="form-label" for="OrderDeliveryByCaptain_OrderDeliveryEstimatedTime">{{l("OrderDeliveryEstimatedTime")}}</label>
+									<input type="number" #OrderDeliveryByCaptain_OrderDeliveryEstimatedTime="ngModel" id="OrderDeliveryByCaptain_OrderDeliveryEstimatedTime" class="form-control" [(ngModel)]="orderDeliveryByCaptain.orderDeliveryEstimatedTime" name="OrderDeliveryEstimatedTime"    />
+									<validation-messages [formCtrl]="OrderDeliveryByCaptain_OrderDeliveryEstimatedTime"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="OrderDeliveryByCaptain_CaptainOrderDeliveredToCustomerDateTime">{{l("CaptainOrderDeliveredToCustomerDateTime")}}</label>
+									 <input class="form-control m-input" #OrderDeliveryByCaptain_CaptainOrderDeliveredToCustomerDateTime type="datetime" bsDatepicker  datePickerLuxonModifier  [(date)]="orderDeliveryByCaptain.captainOrderDeliveredToCustomerDateTime" id="OrderDeliveryByCaptain_CaptainOrderDeliveredToCustomerDateTime" name="OrderDeliveryByCaptain_CaptainOrderDeliveredToCustomerDateTime">
+									<validation-messages [formCtrl]="OrderDeliveryByCaptain_CaptainOrderDeliveredToCustomerDateTime"></validation-messages>
+								</div>
+					
+								<div class="my5">
+									<label class="form-label" for="OrderDeliveryByCaptain_OrderDeliveryActualTime">{{l("OrderDeliveryActualTime")}}</label>
+									<input type="number" #OrderDeliveryByCaptain_OrderDeliveryActualTime="ngModel" id="OrderDeliveryByCaptain_OrderDeliveryActualTime" class="form-control" [(ngModel)]="orderDeliveryByCaptain.orderDeliveryActualTime" name="OrderDeliveryActualTime"    />
+									<validation-messages [formCtrl]="OrderDeliveryByCaptain_OrderDeliveryActualTime"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="OrderDeliveryByCaptain_OrderDeliveryRouteData">{{l("OrderDeliveryRouteData")}}</label>
+									<input type="text" #OrderDeliveryByCaptain_OrderDeliveryRouteData="ngModel" id="OrderDeliveryByCaptain_OrderDeliveryRouteData" class="form-control" [(ngModel)]="orderDeliveryByCaptain.orderDeliveryRouteData" name="OrderDeliveryRouteData"    />
+								    <validation-messages [formCtrl]="OrderDeliveryByCaptain_OrderDeliveryRouteData"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="OrderDeliveryByCaptain_DeliveryNotes">{{l("DeliveryNotes")}}</label>
+									<input type="text" #OrderDeliveryByCaptain_DeliveryNotes="ngModel" id="OrderDeliveryByCaptain_DeliveryNotes" class="form-control" [(ngModel)]="orderDeliveryByCaptain.deliveryNotes" name="DeliveryNotes"    />
+								    <validation-messages [formCtrl]="OrderDeliveryByCaptain_DeliveryNotes"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="OrderDeliveryByCaptain_DeliveryPointPhoto">{{l("DeliveryPointPhoto")}}</label>
+									<input type="text" #OrderDeliveryByCaptain_DeliveryPointPhoto="ngModel" id="OrderDeliveryByCaptain_DeliveryPointPhoto" class="form-control" [(ngModel)]="orderDeliveryByCaptain.deliveryPointPhoto" name="DeliveryPointPhoto"    />
+								    <validation-messages [formCtrl]="OrderDeliveryByCaptain_DeliveryPointPhoto"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="OrderDeliveryByCaptain_CustomerSignature">{{l("CustomerSignature")}}</label>
+									<input type="text" #OrderDeliveryByCaptain_CustomerSignature="ngModel" id="OrderDeliveryByCaptain_CustomerSignature" class="form-control" [(ngModel)]="orderDeliveryByCaptain.customerSignature" name="CustomerSignature"    />
+								    <validation-messages [formCtrl]="OrderDeliveryByCaptain_CustomerSignature"></validation-messages>
+								</div>
+					
+								<div class="my5">
+									<label class="form-label" for="OrderDeliveryByCaptain_CaptainRatingByCustomer">{{l("CaptainRatingByCustomer")}}</label>
+									<input type="number" #OrderDeliveryByCaptain_CaptainRatingByCustomer="ngModel" id="OrderDeliveryByCaptain_CaptainRatingByCustomer" class="form-control" [(ngModel)]="orderDeliveryByCaptain.captainRatingByCustomer" name="CaptainRatingByCustomer"    />
+									<validation-messages [formCtrl]="OrderDeliveryByCaptain_CaptainRatingByCustomer"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="OrderDeliveryByCaptain_CustomerNotes">{{l("CustomerNotes")}}</label>
+									<input type="text" #OrderDeliveryByCaptain_CustomerNotes="ngModel" id="OrderDeliveryByCaptain_CustomerNotes" class="form-control" [(ngModel)]="orderDeliveryByCaptain.customerNotes" name="CustomerNotes"    />
+								    <validation-messages [formCtrl]="OrderDeliveryByCaptain_CustomerNotes"></validation-messages>
+								</div>
+					
+								<div class="my5">
+									<label class="form-label" for="OrderDeliveryByCaptain_DeliveryStages">{{l("DeliveryStages")}}</label>
+									<input type="number" #OrderDeliveryByCaptain_DeliveryStages="ngModel" id="OrderDeliveryByCaptain_DeliveryStages" class="form-control" [(ngModel)]="orderDeliveryByCaptain.deliveryStages" name="DeliveryStages"    />
+									<validation-messages [formCtrl]="OrderDeliveryByCaptain_DeliveryStages"></validation-messages>
+								</div>
+					
+								<div class="my5">
+									<label class="form-label" for="OrderDeliveryByCaptain_DeliveryCostToDriver">{{l("DeliveryCostToDriver")}}</label>
+									<input type="number" #OrderDeliveryByCaptain_DeliveryCostToDriver="ngModel" id="OrderDeliveryByCaptain_DeliveryCostToDriver" class="form-control" [(ngModel)]="orderDeliveryByCaptain.deliveryCostToDriver" name="DeliveryCostToDriver"    />
+									<validation-messages [formCtrl]="OrderDeliveryByCaptain_DeliveryCostToDriver"></validation-messages>
+								</div>
+					
+								<div class="my5">
+									<label class="form-label" for="OrderDeliveryByCaptain_DeliveryCostToCustomer">{{l("DeliveryCostToCustomer")}}</label>
+									<input type="number" #OrderDeliveryByCaptain_DeliveryCostToCustomer="ngModel" id="OrderDeliveryByCaptain_DeliveryCostToCustomer" class="form-control" [(ngModel)]="orderDeliveryByCaptain.deliveryCostToCustomer" name="DeliveryCostToCustomer"    />
+									<validation-messages [formCtrl]="OrderDeliveryByCaptain_DeliveryCostToCustomer"></validation-messages>
+								</div>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!orderDeliveryByCaptainForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+<orderDeliveryByCaptainOrderLookupTableModal #orderDeliveryByCaptainOrderLookupTableModal (modalSave)="getNewOrderId()"></orderDeliveryByCaptainOrderLookupTableModal>
+		 <orderDeliveryByCaptainStoreLookupTableModal #orderDeliveryByCaptainStoreLookupTableModal (modalSave)="getNewStoreId()"></orderDeliveryByCaptainStoreLookupTableModal>
+		 <orderDeliveryByCaptainContactLookupTableModal #orderDeliveryByCaptainContactLookupTableModal (modalSave)="getNewContactId()"></orderDeliveryByCaptainContactLookupTableModal>
+		 <orderDeliveryByCaptainEmployeeLookupTableModal #orderDeliveryByCaptainEmployeeLookupTableModal (modalSave)="getNewEmployeeCaptainId()"></orderDeliveryByCaptainEmployeeLookupTableModal>
+		 
+</div>

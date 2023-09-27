@@ -1,0 +1,148 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #contractFinancialTermForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="contractFinancialTerm.id">{{l("EditContractFinancialTerm")}}</span>
+                        <span *ngIf="!contractFinancialTerm.id">{{l("CreateNewContractFinancialTerm")}}</span>
+                    </h4>                    
+                    
+                    
+                 <button type="button" class="btn-close" (click)="close()" aria-label="Close" [disabled]="saving"></button>
+             
+                </div>
+                <div class="modal-body">
+                 
+
+
+					<div class="my-3">
+                        <label class="form-label" for="ContractFirstPartyFullName">{{l("Contract")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="ContractFirstPartyFullName" name="contractFirstPartyFullName" [(ngModel)]="contractFirstPartyFullName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectContractModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setContractIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="contractFinancialTerm.contractId" [(ngModel)]="contractFinancialTerm.contractId" type="text"  hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="HubName">{{l("Hub")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="HubName" name="hubName" [(ngModel)]="hubName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectHubModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setHubIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="contractFinancialTerm.hubId" [(ngModel)]="contractFinancialTerm.hubId" type="text"  hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="BusinessName">{{l("Business")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="BusinessName" name="businessName" [(ngModel)]="businessName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectBusinessModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setBusinessIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="contractFinancialTerm.businessId" [(ngModel)]="contractFinancialTerm.businessId" type="text"  hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="StoreName">{{l("Store")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="StoreName" name="storeName" [(ngModel)]="storeName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectStoreModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setStoreIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="contractFinancialTerm.storeId" [(ngModel)]="contractFinancialTerm.storeId" type="text"  hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="JobTitle">{{l("Job")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="JobTitle" name="jobTitle" [(ngModel)]="jobTitle" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectJobModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setJobIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="contractFinancialTerm.jobId" [(ngModel)]="contractFinancialTerm.jobId" type="text"  hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="ProductCategoryName">{{l("ProductCategory")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="ProductCategoryName" name="productCategoryName" [(ngModel)]="productCategoryName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectProductCategoryModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setProductCategoryIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="contractFinancialTerm.productCategoryId" [(ngModel)]="contractFinancialTerm.productCategoryId" type="text"  hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="ProductName">{{l("Product")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="ProductName" name="productName" [(ngModel)]="productName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectProductModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setProductIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="contractFinancialTerm.productId" [(ngModel)]="contractFinancialTerm.productId" type="text"  hidden>
+                        
+
+
+								<div class="my5">
+									<label class="form-label" for="ContractFinancialTerm_Percentage">{{l("Percentage")}}</label>
+									<input type="number" #ContractFinancialTerm_Percentage="ngModel" id="ContractFinancialTerm_Percentage" class="form-control" [(ngModel)]="contractFinancialTerm.percentage" name="Percentage"    />
+									<validation-messages [formCtrl]="ContractFinancialTerm_Percentage"></validation-messages>
+								</div>
+					
+								<div class="my5">
+									<label class="form-label" for="ContractFinancialTerm_FixedAmount">{{l("FixedAmount")}}</label>
+									<input type="number" #ContractFinancialTerm_FixedAmount="ngModel" id="ContractFinancialTerm_FixedAmount" class="form-control" [(ngModel)]="contractFinancialTerm.fixedAmount" name="FixedAmount"    />
+									<validation-messages [formCtrl]="ContractFinancialTerm_FixedAmount"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="ContractFinancialTerm_StartDate">{{l("StartDate")}}</label>
+									 <input class="form-control m-input" #ContractFinancialTerm_StartDate type="datetime" bsDatepicker  datePickerLuxonModifier  [(date)]="contractFinancialTerm.startDate" id="ContractFinancialTerm_StartDate" name="ContractFinancialTerm_StartDate">
+									<validation-messages [formCtrl]="ContractFinancialTerm_StartDate"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="ContractFinancialTerm_EndDate">{{l("EndDate")}}</label>
+									 <input class="form-control m-input" #ContractFinancialTerm_EndDate type="datetime" bsDatepicker  datePickerLuxonModifier  [(date)]="contractFinancialTerm.endDate" id="ContractFinancialTerm_EndDate" name="ContractFinancialTerm_EndDate">
+									<validation-messages [formCtrl]="ContractFinancialTerm_EndDate"></validation-messages>
+								</div>
+					
+								<br/>
+								<label class="form-check form-check-custom form-check-solid">
+                                    <input
+                                        id="ContractFinancialTerm_IsActive" 
+                                        #ContractFinancialTerm_IsActive="ngModel"
+                                        name="IsActive" 
+                                        [(ngModel)]="contractFinancialTerm.isActive"
+                                        type="checkbox"
+                                        class="form-check-input"
+                                    />
+                                    <span class="form-check-label">
+                                        {{l("IsActive")}}
+                                    </span>
+                                </label>
+                                <validation-messages [formCtrl]="ContractFinancialTerm_IsActive"></validation-messages>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!contractFinancialTermForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+<contractFinancialTermContractLookupTableModal #contractFinancialTermContractLookupTableModal (modalSave)="getNewContractId()"></contractFinancialTermContractLookupTableModal>
+		 <contractFinancialTermHubLookupTableModal #contractFinancialTermHubLookupTableModal (modalSave)="getNewHubId()"></contractFinancialTermHubLookupTableModal>
+		 <contractFinancialTermBusinessLookupTableModal #contractFinancialTermBusinessLookupTableModal (modalSave)="getNewBusinessId()"></contractFinancialTermBusinessLookupTableModal>
+		 <contractFinancialTermStoreLookupTableModal #contractFinancialTermStoreLookupTableModal (modalSave)="getNewStoreId()"></contractFinancialTermStoreLookupTableModal>
+		 <contractFinancialTermJobLookupTableModal #contractFinancialTermJobLookupTableModal (modalSave)="getNewJobId()"></contractFinancialTermJobLookupTableModal>
+		 <contractFinancialTermProductCategoryLookupTableModal #contractFinancialTermProductCategoryLookupTableModal (modalSave)="getNewProductCategoryId()"></contractFinancialTermProductCategoryLookupTableModal>
+		 <contractFinancialTermProductLookupTableModal #contractFinancialTermProductLookupTableModal (modalSave)="getNewProductId()"></contractFinancialTermProductLookupTableModal>
+		 
+</div>

@@ -1,0 +1,183 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #contactExperienceForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="contactExperience.id">{{l("EditContactExperience")}}</span>
+                        <span *ngIf="!contactExperience.id">{{l("CreateNewContactExperience")}}</span>
+                    </h4>                    
+                    
+                    
+                 <button type="button" class="btn-close" (click)="close()" aria-label="Close" [disabled]="saving"></button>
+             
+                </div>
+                <div class="modal-body">
+                 
+
+
+					<div class="my-3">
+                        <label class="form-label" for="ContactFullName">{{l("Contact")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="ContactFullName" name="contactFullName" [(ngModel)]="contactFullName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectContactModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setContactIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="contactExperience.contactId" [(ngModel)]="contactExperience.contactId" type="text"  hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="EmployeeName">{{l("Employee")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="EmployeeName" name="employeeName" [(ngModel)]="employeeName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectEmployeeModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setVerifiedByEmployeeIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="contactExperience.verifiedByEmployeeId" [(ngModel)]="contactExperience.verifiedByEmployeeId" type="text"  hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="BusinessName">{{l("Business")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="BusinessName" name="businessName" [(ngModel)]="businessName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectBusinessModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setBusinessIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="contactExperience.businessId" [(ngModel)]="contactExperience.businessId" type="text"  hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="CurrencyName">{{l("Currency")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="CurrencyName" name="currencyName" [(ngModel)]="currencyName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectCurrencyModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setCurrencyIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="contactExperience.currencyId" [(ngModel)]="contactExperience.currencyId" type="text"  hidden>
+                        
+
+
+								<div class="my-3">
+									<label class="form-label" for="ContactExperience_JobTitle">{{l("JobTitle")}} *</label>
+									<input type="text" #ContactExperience_JobTitle="ngModel" id="ContactExperience_JobTitle" class="form-control" [(ngModel)]="contactExperience.jobTitle" name="JobTitle"   minlength="1"  maxlength="512"  required/>
+								    <validation-messages [formCtrl]="ContactExperience_JobTitle"></validation-messages>
+								</div>
+					
+								<br/>
+								<label class="form-check form-check-custom form-check-solid">
+                                    <input
+                                        id="ContactExperience_Current" 
+                                        #ContactExperience_Current="ngModel"
+                                        name="Current" 
+                                        [(ngModel)]="contactExperience.current"
+                                        type="checkbox"
+                                        class="form-check-input"
+                                    />
+                                    <span class="form-check-label">
+                                        {{l("Current")}}
+                                    </span>
+                                </label>
+                                <validation-messages [formCtrl]="ContactExperience_Current"></validation-messages>
+					
+								<div class="my-3">
+									<label class="form-label" for="ContactExperience_EmployerName">{{l("EmployerName")}}</label>
+									<input type="text" #ContactExperience_EmployerName="ngModel" id="ContactExperience_EmployerName" class="form-control" [(ngModel)]="contactExperience.employerName" name="EmployerName"   minlength="1"  maxlength="1024" />
+								    <validation-messages [formCtrl]="ContactExperience_EmployerName"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="ContactExperience_EmployerWebsite">{{l("EmployerWebsite")}}</label>
+									<input type="text" #ContactExperience_EmployerWebsite="ngModel" id="ContactExperience_EmployerWebsite" class="form-control" [(ngModel)]="contactExperience.employerWebsite" name="EmployerWebsite"   minlength="1"  maxlength="2048" />
+								    <validation-messages [formCtrl]="ContactExperience_EmployerWebsite"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="ContactExperience_Location">{{l("Location")}}</label>
+									<input type="text" #ContactExperience_Location="ngModel" id="ContactExperience_Location" class="form-control" [(ngModel)]="contactExperience.location" name="Location"   minlength="1"  maxlength="1024" />
+								    <validation-messages [formCtrl]="ContactExperience_Location"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="ContactExperience_StartDate">{{l("StartDate")}}</label>
+									 <input class="form-control m-input" #ContactExperience_StartDate type="datetime" bsDatepicker  datePickerLuxonModifier  [(date)]="contactExperience.startDate" id="ContactExperience_StartDate" name="ContactExperience_StartDate">
+									<validation-messages [formCtrl]="ContactExperience_StartDate"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="ContactExperience_EndDate">{{l("EndDate")}}</label>
+									 <input class="form-control m-input" #ContactExperience_EndDate type="datetime" bsDatepicker  datePickerLuxonModifier  [(date)]="contactExperience.endDate" id="ContactExperience_EndDate" name="ContactExperience_EndDate">
+									<validation-messages [formCtrl]="ContactExperience_EndDate"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="ContactExperience_JobDescription">{{l("JobDescription")}}</label>
+									<input type="text" #ContactExperience_JobDescription="ngModel" id="ContactExperience_JobDescription" class="form-control" [(ngModel)]="contactExperience.jobDescription" name="JobDescription"    />
+								    <validation-messages [formCtrl]="ContactExperience_JobDescription"></validation-messages>
+								</div>
+					
+								<br/>
+								<label class="form-check form-check-custom form-check-solid">
+                                    <input
+                                        id="ContactExperience_Verified" 
+                                        #ContactExperience_Verified="ngModel"
+                                        name="Verified" 
+                                        [(ngModel)]="contactExperience.verified"
+                                        type="checkbox"
+                                        class="form-check-input"
+                                    />
+                                    <span class="form-check-label">
+                                        {{l("Verified")}}
+                                    </span>
+                                </label>
+                                <validation-messages [formCtrl]="ContactExperience_Verified"></validation-messages>
+					
+								<br/>
+								<label class="form-check form-check-custom form-check-solid">
+                                    <input
+                                        id="ContactExperience_ThumbsUpDown" 
+                                        #ContactExperience_ThumbsUpDown="ngModel"
+                                        name="ThumbsUpDown" 
+                                        [(ngModel)]="contactExperience.thumbsUpDown"
+                                        type="checkbox"
+                                        class="form-check-input"
+                                    />
+                                    <span class="form-check-label">
+                                        {{l("ThumbsUpDown")}}
+                                    </span>
+                                </label>
+                                <validation-messages [formCtrl]="ContactExperience_ThumbsUpDown"></validation-messages>
+					
+								<div class="my-3">
+									<label class="form-label" for="ContactExperience_InternalNotes">{{l("InternalNotes")}}</label>
+									<input type="text" #ContactExperience_InternalNotes="ngModel" id="ContactExperience_InternalNotes" class="form-control" [(ngModel)]="contactExperience.internalNotes" name="InternalNotes"    />
+								    <validation-messages [formCtrl]="ContactExperience_InternalNotes"></validation-messages>
+								</div>
+					
+								<div class="my5">
+									<label class="form-label" for="ContactExperience_GrossSalary">{{l("GrossSalary")}}</label>
+									<input type="number" #ContactExperience_GrossSalary="ngModel" id="ContactExperience_GrossSalary" class="form-control" [(ngModel)]="contactExperience.grossSalary" name="GrossSalary"    />
+									<validation-messages [formCtrl]="ContactExperience_GrossSalary"></validation-messages>
+								</div>
+					
+								<div class="my5">
+									<label class="form-label" for="ContactExperience_DisplaySequence">{{l("DisplaySequence")}}</label>
+									<input type="number" #ContactExperience_DisplaySequence="ngModel" id="ContactExperience_DisplaySequence" class="form-control" [(ngModel)]="contactExperience.displaySequence" name="DisplaySequence"    />
+									<validation-messages [formCtrl]="ContactExperience_DisplaySequence"></validation-messages>
+								</div>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!contactExperienceForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+<contactExperienceContactLookupTableModal #contactExperienceContactLookupTableModal (modalSave)="getNewContactId()"></contactExperienceContactLookupTableModal>
+		 <contactExperienceEmployeeLookupTableModal #contactExperienceEmployeeLookupTableModal (modalSave)="getNewVerifiedByEmployeeId()"></contactExperienceEmployeeLookupTableModal>
+		 <contactExperienceBusinessLookupTableModal #contactExperienceBusinessLookupTableModal (modalSave)="getNewBusinessId()"></contactExperienceBusinessLookupTableModal>
+		 <contactExperienceCurrencyLookupTableModal #contactExperienceCurrencyLookupTableModal (modalSave)="getNewCurrencyId()"></contactExperienceCurrencyLookupTableModal>
+		 
+</div>

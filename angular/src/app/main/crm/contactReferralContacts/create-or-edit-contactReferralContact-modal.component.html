@@ -1,0 +1,132 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #contactReferralContactForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="contactReferralContact.id">{{l("EditContactReferralContact")}}</span>
+                        <span *ngIf="!contactReferralContact.id">{{l("CreateNewContactReferralContact")}}</span>
+                    </h4>                    
+                    
+                    
+                 <button type="button" class="btn-close" (click)="close()" aria-label="Close" [disabled]="saving"></button>
+             
+                </div>
+                <div class="modal-body">
+                 
+
+
+					<div class="my-3">
+                        <label class="form-label" for="ContactFullName">{{l("Contact")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="ContactFullName" name="contactFullName" [(ngModel)]="contactFullName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectContactModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setReferredByContactIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="contactReferralContact.referredByContactId" [(ngModel)]="contactReferralContact.referredByContactId" type="text"  hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="ContactFullName2">{{l("Contact")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="ContactFullName2" name="contactFullName2" [(ngModel)]="contactFullName2" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectContactModal2()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setSyncedByContactIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="contactReferralContact.syncedByContactId" [(ngModel)]="contactReferralContact.syncedByContactId" type="text"  hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="ContactFullName3">{{l("Contact")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="ContactFullName3" name="contactFullName3" [(ngModel)]="contactFullName3" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectContactModal3()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setMappedContactIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="contactReferralContact.mappedContactId" [(ngModel)]="contactReferralContact.mappedContactId" type="text"  hidden>
+                        
+
+
+								<div class="my-3">
+									<label class="form-label" for="ContactReferralContact_FirstName">{{l("FirstName")}}</label>
+									<input type="text" #ContactReferralContact_FirstName="ngModel" id="ContactReferralContact_FirstName" class="form-control" [(ngModel)]="contactReferralContact.firstName" name="FirstName"   minlength="1"  maxlength="512" />
+								    <validation-messages [formCtrl]="ContactReferralContact_FirstName"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="ContactReferralContact_LastName">{{l("LastName")}}</label>
+									<input type="text" #ContactReferralContact_LastName="ngModel" id="ContactReferralContact_LastName" class="form-control" [(ngModel)]="contactReferralContact.lastName" name="LastName"   minlength="1"  maxlength="512" />
+								    <validation-messages [formCtrl]="ContactReferralContact_LastName"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="ContactReferralContact_Email">{{l("Email")}}</label>
+									<input type="text" #ContactReferralContact_Email="ngModel" id="ContactReferralContact_Email" class="form-control" [(ngModel)]="contactReferralContact.email" name="Email"   minlength="1"  maxlength="512" />
+								    <validation-messages [formCtrl]="ContactReferralContact_Email"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="ContactReferralContact_Mobile">{{l("Mobile")}}</label>
+									<input type="text" #ContactReferralContact_Mobile="ngModel" id="ContactReferralContact_Mobile" class="form-control" [(ngModel)]="contactReferralContact.mobile" name="Mobile"   minlength="1"  maxlength="50" />
+								    <validation-messages [formCtrl]="ContactReferralContact_Mobile"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="ContactReferralContact_FacebookLink">{{l("FacebookLink")}}</label>
+									<input type="text" #ContactReferralContact_FacebookLink="ngModel" id="ContactReferralContact_FacebookLink" class="form-control" [(ngModel)]="contactReferralContact.facebookLink" name="FacebookLink"    />
+								    <validation-messages [formCtrl]="ContactReferralContact_FacebookLink"></validation-messages>
+								</div>
+					
+								<br/>
+								<label class="form-check form-check-custom form-check-solid">
+                                    <input
+                                        id="ContactReferralContact_Referred" 
+                                        #ContactReferralContact_Referred="ngModel"
+                                        name="Referred" 
+                                        [(ngModel)]="contactReferralContact.referred"
+                                        type="checkbox"
+                                        class="form-check-input"
+                                    />
+                                    <span class="form-check-label">
+                                        {{l("Referred")}}
+                                    </span>
+                                </label>
+                                <validation-messages [formCtrl]="ContactReferralContact_Referred"></validation-messages>
+					
+								<br/>
+								<label class="form-check form-check-custom form-check-solid">
+                                    <input
+                                        id="ContactReferralContact_UniqueReferred" 
+                                        #ContactReferralContact_UniqueReferred="ngModel"
+                                        name="UniqueReferred" 
+                                        [(ngModel)]="contactReferralContact.uniqueReferred"
+                                        type="checkbox"
+                                        class="form-check-input"
+                                    />
+                                    <span class="form-check-label">
+                                        {{l("UniqueReferred")}}
+                                    </span>
+                                </label>
+                                <validation-messages [formCtrl]="ContactReferralContact_UniqueReferred"></validation-messages>
+					
+								<div class="my-3">
+									<label class="form-label" for="ContactReferralContact_ReferredDateTime">{{l("ReferredDateTime")}}</label>
+									 <input class="form-control m-input" #ContactReferralContact_ReferredDateTime type="datetime" bsDatepicker  datePickerLuxonModifier  [(date)]="contactReferralContact.referredDateTime" id="ContactReferralContact_ReferredDateTime" name="ContactReferralContact_ReferredDateTime">
+									<validation-messages [formCtrl]="ContactReferralContact_ReferredDateTime"></validation-messages>
+								</div>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!contactReferralContactForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+<contactReferralContactContactLookupTableModal #contactReferralContactContactLookupTableModal (modalSave)="getNewReferredByContactId()"></contactReferralContactContactLookupTableModal>
+		 <contactReferralContactContactLookupTableModal #contactReferralContactContactLookupTableModal2 (modalSave)="getNewSyncedByContactId()"></contactReferralContactContactLookupTableModal>
+		 <contactReferralContactContactLookupTableModal #contactReferralContactContactLookupTableModal3 (modalSave)="getNewMappedContactId()"></contactReferralContactContactLookupTableModal>
+		 
+</div>

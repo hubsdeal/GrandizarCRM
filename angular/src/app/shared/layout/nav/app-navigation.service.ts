@@ -57,8 +57,8 @@ export class AppNavigationService {
                 '',
                 [],
                 [
-                    new AppMenuItem('Delivery Team', 'Pages.Employees', 'fas fa-users', '/app/main/crm/employees'),
-                    new AppMenuItem('Order & Delivery Tracking', 'Pages.Employees', 'fas fa-users', '/app/main/crm/employees'),
+                    new AppMenuItem('Order Delivery Captains', 'Pages.OrderDeliveryByCaptains', 'fas fa-users', '/app/main/orderManagement/orderDeliveryByCaptains'),
+                    new AppMenuItem('Order Delivery Change Captains', 'Pages.OrderDeliveryChangeCaptains', 'fas fa-users', '/app/main/orderManagement/orderDeliveryChangeCaptains'),
                 ]
             ),
             new AppMenuItem(
@@ -71,6 +71,7 @@ export class AppNavigationService {
                     new AppMenuItem('Master Store List', 'Pages.Stores', 'flaticon2-list-1', '/app/main/shop/stores'),
                     new AppMenuItem('My Store List', 'Pages.Stores', 'flaticon2-list-2', '/app/main/shop/myStores'),
                     new AppMenuItem('Store Data Settings', 'Pages.Stores', 'fas fa-database', '/app/main/shop/storeMasterTagSettings'),
+                    new AppMenuItem('Store Product Service Locality', 'Pages.StoreProductServiceLocalityMaps', 'fas fa-database', '/app/main/shop/storeProductServiceLocalityMaps'),
                 ]
             ),
             new AppMenuItem(
@@ -85,6 +86,7 @@ export class AppNavigationService {
                     new AppMenuItem('Product Library', 'Pages.Products', 'flaticon2-delivery-package', '/app/main/shop/productLibraries'),
                     new AppMenuItem('Product Category', 'Pages.ProductCategories', 'flaticon-map', '/app/main/shop/productCategories'),
                     new AppMenuItem('Media Library', 'Pages.MediaLibraries', 'fas fa-photo-video', '/app/main/lookupData/mediaLibraries'),
+                    new AppMenuItem('Product Gig Worker Portfolios', 'Pages.ProductGigWorkerPortfolios', 'flaticon-map', '/app/main/shop/productGigWorkerPortfolios'),
                 ]
             ),
             new AppMenuItem(
@@ -111,19 +113,24 @@ export class AppNavigationService {
                     new AppMenuItem('Master Job List', 'Pages.Jobs', 'fas fa-briefcase', '/app/main/jobManagement/jobs'),
                     new AppMenuItem('My Job List', 'Pages.Jobs', 'fas fa-briefcase', '/app/main/jobManagement/jobs'),
                     new AppMenuItem('Applicant List', 'Pages.Jobs', 'fas fa-briefcase', '/app/main/jobManagement/ApplicantsList'),
+                    new AppMenuItem('Job Applicant Hire Matrixes', 'Pages.JobApplicantHireMatrixes', 'fas fa-briefcase', '/app/main/jobManagement/jobApplicantHireMatrixes'),
+                    new AppMenuItem('Job Applicant Hire Status Typess', 'Pages.JobApplicantHireStatusTypes', 'fas fa-briefcase', '/app/main/jobManagement/jobApplicantHireStatusTypes'),
+                    new AppMenuItem('Job Hiring Teams', 'Pages.JobHiringTeams', 'fas fa-briefcase', '/app/main/jobManagement/jobHiringTeams'),
+                    new AppMenuItem('Job Referral Fee Details', 'Pages.JobReferralFeeDetails', 'fas fa-briefcase', '/app/main/jobManagement/jobReferralFeeDetails'),
+                    new AppMenuItem('JobReferralFeeSplitPolicies', 'Pages.JobReferralFeeSplitPolicies', 'fas fa-briefcase', '/app/main/jobManagement/jobReferralFeeSplitPolicies'),
                 ]
             ),
-/*
-            new AppMenuItem(
-                'Applicant & Gigs',
-                '',
-                'flaticon-profile-1',
-                '',
-                [],
-                [
-                    new AppMenuItem('Applicants', '', 'fas fa-user-tie', '/app/main/jobManagement/applicants'),
-                ]
-            ),*/
+            /*
+                        new AppMenuItem(
+                            'Applicant & Gigs',
+                            '',
+                            'flaticon-profile-1',
+                            '',
+                            [],
+                            [
+                                new AppMenuItem('Applicants', '', 'fas fa-user-tie', '/app/main/jobManagement/applicants'),
+                            ]
+                        ),*/
 
             new AppMenuItem(
                 'Contact Management',
@@ -136,6 +143,20 @@ export class AppNavigationService {
                     new AppMenuItem('My Customer List', 'Pages.Contacts', 'fas fa-user-friends', '/app/main/crm/contacts'),
                     new AppMenuItem('Master Customer List', 'Pages.Contacts', 'fas fa-users', '/app/main/crm/contacts'),
                     new AppMenuItem('Premium Customer List', 'Pages.Contacts', 'flaticon-medal', '/app/main/crm/contacts'),
+
+                    new AppMenuItem('Contact Addresses', 'Pages.ContactAddresses', 'flaticon-medal', '/app/main/crm/contactAddresses'),
+                    new AppMenuItem('Contact Educations', 'Pages.ContactEducations', 'flaticon-medal', '/app/main/crm/contactEducations'),
+                    new AppMenuItem('Contact Certification Licenses', 'Pages.ContactCertificationLicenses', 'flaticon-medal', '/app/main/crm/contactCertificationLicenses'),
+                    new AppMenuItem('Contact Experiences', 'Pages.contactExperiences', 'flaticon-medal', '/app/main/crm/contactExperiences'),
+                    new AppMenuItem('Contact Membership Histories', 'Pages.ContactMembershipHistories', 'flaticon-medal', '/app/main/crm/contactMembershipHistories'),
+                    new AppMenuItem('Contact Applicant Teams', 'Pages.ContactOrApplicantTeams', 'flaticon-medal', '/app/main/crm/contactOrApplicantTeams'),
+                    new AppMenuItem('Contact Product Recommendations', 'Pages.ContactProductRecommendations', 'flaticon-medal', '/app/main/crm/contactProductRecommendations'),
+                    new AppMenuItem('Contact Referral Contacts', 'Pages.ContactReferralContacts', 'flaticon-medal', '/app/main/crm/contactReferralContacts'),
+                    new AppMenuItem('Contact Vetted Infos', 'Pages.ContactVettedInfos', 'flaticon-medal', '/app/main/crm/contactVettedInfos'),
+                    new AppMenuItem('Customer Localities Maps', 'Pages.CustomerLocalitiesZipCodeMaps', 'flaticon-medal', '/app/main/crm/customerLocalitiesZipCodeMaps'),
+                    new AppMenuItem('Customer Wallet Transactions', 'Pages.CustomerWalletTransactions', 'flaticon-medal', '/app/main/crm/customerWalletTransactions'),
+                    new AppMenuItem('Employee Teams', 'Pages.EmployeeTeams', 'flaticon-medal', '/app/main/crm/employeeTeams'),
+
                 ]
             ),
 
@@ -165,6 +186,8 @@ export class AppNavigationService {
                     new AppMenuItem('My Hub List', 'Pages.Hubs', 'flaticon2-list-2', '/app/main/territory/myHubs'),
 
                     new AppMenuItem('Master Sales Projection', 'Pages.Hubs', 'fas fa-percentage', '/app/main/territory/hubSalesProjections'),
+
+                    new AppMenuItem('Hub Jobs', 'Pages.HubJobs', 'fas fa-percentage', '/app/main/territory/hubJobs'),
                 ]
             ),
 
@@ -175,7 +198,7 @@ export class AppNavigationService {
                 '',
                 [],
                 [
-                    //new AppMenuItem('ConnectChannels', 'Pages.ConnectChannels', 'flaticon-more', '/app/main/lookupData/connectChannels'),
+                    new AppMenuItem('Connect Messages', 'Pages.ConnectMessages', 'flaticon-more', '/app/main/crm/connectMessages'),
 
                     new AppMenuItem('EmailTemplates', 'Pages.EmailTemplates', 'flaticon-more', '/app/main/lookupData/emailTemplates'),
 
@@ -192,6 +215,47 @@ export class AppNavigationService {
                 [
                     new AppMenuItem('Site Default Content', 'Pages.Contents', 'flaticon-more', '/app/main/cms/siteDefaultContents'),
                     new AppMenuItem('Contents', 'Pages.Contents', 'flaticon-more', '/app/main/cms/contents'),
+                    new AppMenuItem('Store Product Blogs', 'Pages.StoreProductBlogs', 'flaticon-more', '/app/main/cms/storeProductBlogs'),
+                ]
+            ),
+            new AppMenuItem(
+                'Booking Management',
+                '',
+                'flaticon2-document',
+                '',
+                [],
+                [
+                    new AppMenuItem('Bookings', 'Pages.Bookings', 'flaticon-more', '/app/main/bookingManagement/bookings'),
+                    new AppMenuItem('Booking Statuses', 'Pages.BookingStatuses', 'flaticon-more', '/app/main/bookingManagement/bookingStatuses'),
+                    new AppMenuItem('Booking Timeslot Settings', 'Pages.BookingTimeslotSettings', 'flaticon-more', '/app/main/bookingManagement/bookingTimeslotSettings'),
+                    new AppMenuItem('Booking Types', 'Pages.BookingTypes', 'flaticon-more', '/app/main/bookingManagement/bookingTypes'),
+
+                ]
+            ),
+            new AppMenuItem(
+                'Contract Management',
+                '',
+                'flaticon2-document',
+                '',
+                [],
+                [
+                    new AppMenuItem('Contract', 'Pages.Contracts', 'flaticon-more', '/app/main/contractManagement/contracts'),
+                    new AppMenuItem('Contract Financial Terms', 'Pages.ContractFinancialTerms', 'flaticon-more', '/app/main/contractManagement/contractFinancialTerms'),
+
+                ]
+            ),
+            new AppMenuItem(
+                'Reward Point Management',
+                '',
+                'flaticon2-document',
+                '',
+                [],
+                [
+                    new AppMenuItem('Reward Point Histories', 'Pages.RewardPointHistories', 'flaticon-more', '/app/main/rewardManagement/rewardPointHistories'),
+                    new AppMenuItem('Reward Point Award Settings', 'Pages.RewardPointAwardSettings', 'flaticon-more', '/app/main/rewardManagement/rewardPointAwardSettings'),
+                    new AppMenuItem('Reward Point Price Settings', 'Pages.RewardPointPriceSettings', 'flaticon-more', '/app/main/rewardManagement/rewardPointPriceSettings'),
+                    new AppMenuItem('Reward Point Types', 'Pages.RewardPointTypes', 'flaticon-more', '/app/main/rewardManagement/rewardPointTypes'),
+
                 ]
             ),
             new AppMenuItem('Dashboard', 'Pages.Tenant.Dashboard', 'flaticon-line-graph', '/app/main/dashboard'),

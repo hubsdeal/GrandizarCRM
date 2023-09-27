@@ -1,0 +1,165 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #bookingTimeslotSettingForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="bookingTimeslotSetting.id">{{l("EditBookingTimeslotSetting")}}</span>
+                        <span *ngIf="!bookingTimeslotSetting.id">{{l("CreateNewBookingTimeslotSetting")}}</span>
+                    </h4>                    
+                    
+                    
+                 <button type="button" class="btn-close" (click)="close()" aria-label="Close" [disabled]="saving"></button>
+             
+                </div>
+                <div class="modal-body">
+                 
+
+
+					<div class="my-3">
+                        <label class="form-label" for="StoreName">{{l("Store")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="StoreName" name="storeName" [(ngModel)]="storeName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectStoreModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setStoreIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="bookingTimeslotSetting.storeId" [(ngModel)]="bookingTimeslotSetting.storeId" type="text"  hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="ProductName">{{l("Product")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="ProductName" name="productName" [(ngModel)]="productName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectProductModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setProductIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="bookingTimeslotSetting.productId" [(ngModel)]="bookingTimeslotSetting.productId" type="text"  hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="BookingTypeName">{{l("BookingType")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="BookingTypeName" name="bookingTypeName" [(ngModel)]="bookingTypeName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectBookingTypeModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setBookingTypeIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="bookingTimeslotSetting.bookingTypeId" [(ngModel)]="bookingTimeslotSetting.bookingTypeId" type="text"  hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="BookingStatusName">{{l("BookingStatus")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="BookingStatusName" name="bookingStatusName" [(ngModel)]="bookingStatusName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectBookingStatusModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setBookingStatusIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="bookingTimeslotSetting.bookingStatusId" [(ngModel)]="bookingTimeslotSetting.bookingStatusId" type="text"  hidden>
+                        
+
+
+								<div class="my-3">
+									<label class="form-label" for="BookingTimeslotSetting_TimezoneId">{{l("TimezoneId")}}</label>
+									<input type="text" #BookingTimeslotSetting_TimezoneId="ngModel" id="BookingTimeslotSetting_TimezoneId" class="form-control" [(ngModel)]="bookingTimeslotSetting.timezoneId" name="TimezoneId"   minlength="1"  maxlength="128" />
+								    <validation-messages [formCtrl]="BookingTimeslotSetting_TimezoneId"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="BookingTimeslotSetting_StartDate">{{l("StartDate")}}</label>
+									 <input class="form-control m-input" #BookingTimeslotSetting_StartDate type="datetime" bsDatepicker  datePickerLuxonModifier  [(date)]="bookingTimeslotSetting.startDate" id="BookingTimeslotSetting_StartDate" name="BookingTimeslotSetting_StartDate">
+									<validation-messages [formCtrl]="BookingTimeslotSetting_StartDate"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="BookingTimeslotSetting_EndDate">{{l("EndDate")}}</label>
+									 <input class="form-control m-input" #BookingTimeslotSetting_EndDate type="datetime" bsDatepicker  datePickerLuxonModifier  [(date)]="bookingTimeslotSetting.endDate" id="BookingTimeslotSetting_EndDate" name="BookingTimeslotSetting_EndDate">
+									<validation-messages [formCtrl]="BookingTimeslotSetting_EndDate"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="BookingTimeslotSetting_StartTime">{{l("StartTime")}}</label>
+									<input type="text" #BookingTimeslotSetting_StartTime="ngModel" id="BookingTimeslotSetting_StartTime" class="form-control" [(ngModel)]="bookingTimeslotSetting.startTime" name="StartTime"   minlength="1"  maxlength="50" />
+								    <validation-messages [formCtrl]="BookingTimeslotSetting_StartTime"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="BookingTimeslotSetting_EndTime">{{l("EndTime")}}</label>
+									<input type="text" #BookingTimeslotSetting_EndTime="ngModel" id="BookingTimeslotSetting_EndTime" class="form-control" [(ngModel)]="bookingTimeslotSetting.endTime" name="EndTime"   minlength="1"  maxlength="50" />
+								    <validation-messages [formCtrl]="BookingTimeslotSetting_EndTime"></validation-messages>
+								</div>
+					
+								<br/>
+								<label class="form-check form-check-custom form-check-solid">
+                                    <input
+                                        id="BookingTimeslotSetting_PubliclyPublished" 
+                                        #BookingTimeslotSetting_PubliclyPublished="ngModel"
+                                        name="PubliclyPublished" 
+                                        [(ngModel)]="bookingTimeslotSetting.publiclyPublished"
+                                        type="checkbox"
+                                        class="form-check-input"
+                                    />
+                                    <span class="form-check-label">
+                                        {{l("PubliclyPublished")}}
+                                    </span>
+                                </label>
+                                <validation-messages [formCtrl]="BookingTimeslotSetting_PubliclyPublished"></validation-messages>
+					
+								<div class="my-3">
+									<label class="form-label" for="BookingTimeslotSetting_TermsAndPolicy">{{l("TermsAndPolicy")}}</label>
+									<input type="text" #BookingTimeslotSetting_TermsAndPolicy="ngModel" id="BookingTimeslotSetting_TermsAndPolicy" class="form-control" [(ngModel)]="bookingTimeslotSetting.termsAndPolicy" name="TermsAndPolicy"    />
+								    <validation-messages [formCtrl]="BookingTimeslotSetting_TermsAndPolicy"></validation-messages>
+								</div>
+					
+								<br/>
+								<label class="form-check form-check-custom form-check-solid">
+                                    <input
+                                        id="BookingTimeslotSetting_AutomaticOrManualApproval" 
+                                        #BookingTimeslotSetting_AutomaticOrManualApproval="ngModel"
+                                        name="AutomaticOrManualApproval" 
+                                        [(ngModel)]="bookingTimeslotSetting.automaticOrManualApproval"
+                                        type="checkbox"
+                                        class="form-check-input"
+                                    />
+                                    <span class="form-check-label">
+                                        {{l("AutomaticOrManualApproval")}}
+                                    </span>
+                                </label>
+                                <validation-messages [formCtrl]="BookingTimeslotSetting_AutomaticOrManualApproval"></validation-messages>
+					
+								<br/>
+								<label class="form-check form-check-custom form-check-solid">
+                                    <input
+                                        id="BookingTimeslotSetting_StoreTeamNotification" 
+                                        #BookingTimeslotSetting_StoreTeamNotification="ngModel"
+                                        name="StoreTeamNotification" 
+                                        [(ngModel)]="bookingTimeslotSetting.storeTeamNotification"
+                                        type="checkbox"
+                                        class="form-check-input"
+                                    />
+                                    <span class="form-check-label">
+                                        {{l("StoreTeamNotification")}}
+                                    </span>
+                                </label>
+                                <validation-messages [formCtrl]="BookingTimeslotSetting_StoreTeamNotification"></validation-messages>
+					
+								<div class="my5">
+									<label class="form-label" for="BookingTimeslotSetting_CancellationDeadlineHours">{{l("CancellationDeadlineHours")}}</label>
+									<input type="number" #BookingTimeslotSetting_CancellationDeadlineHours="ngModel" id="BookingTimeslotSetting_CancellationDeadlineHours" class="form-control" [(ngModel)]="bookingTimeslotSetting.cancellationDeadlineHours" name="CancellationDeadlineHours"    />
+									<validation-messages [formCtrl]="BookingTimeslotSetting_CancellationDeadlineHours"></validation-messages>
+								</div>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!bookingTimeslotSettingForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+<bookingTimeslotSettingStoreLookupTableModal #bookingTimeslotSettingStoreLookupTableModal (modalSave)="getNewStoreId()"></bookingTimeslotSettingStoreLookupTableModal>
+		 <bookingTimeslotSettingProductLookupTableModal #bookingTimeslotSettingProductLookupTableModal (modalSave)="getNewProductId()"></bookingTimeslotSettingProductLookupTableModal>
+		 <bookingTimeslotSettingBookingTypeLookupTableModal #bookingTimeslotSettingBookingTypeLookupTableModal (modalSave)="getNewBookingTypeId()"></bookingTimeslotSettingBookingTypeLookupTableModal>
+		 <bookingTimeslotSettingBookingStatusLookupTableModal #bookingTimeslotSettingBookingStatusLookupTableModal (modalSave)="getNewBookingStatusId()"></bookingTimeslotSettingBookingStatusLookupTableModal>
+		 
+</div>

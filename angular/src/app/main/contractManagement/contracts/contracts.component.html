@@ -1,0 +1,627 @@
+﻿<div [@routerTransition]>
+  
+  
+   <sub-header [title]="'Contracts' | localize" [description]="'ContractsHeaderInfo' | localize">
+             <div role="actions">
+                 <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1"><i class="fa fa-file-excel"></i> {{l("ExportToExcel")}}</button>
+                
+                 <button *ngIf="isGranted('Pages.Contracts.Create')" (click)="createContract()" 
+                                        class="btn btn-primary blue"><i class="fa fa-plus"></i> {{l("CreateNewContract")}}</button>
+             </div>
+            </sub-header>
+    
+    <div [class]="containerClass">
+        <div class="card card-custom gutter-b">
+            <div class="card-body">
+                <form class="form" autocomplete="off">
+                    <div>
+                        <div class="row align-items-center">
+                            <div class="col-xl-12">
+                                
+                                
+        	<div class="my-3">                
+                <div class="input-group mb-3">
+                  <input [(ngModel)]="filterText" (ngModelChange)="getContracts()" name="filterText" autoFocus type="text" class="form-control" [placeholder]="l('SearchWithThreeDot')">
+                  <button class="btn btn-primary" type="submit" (click)="getContracts()"><i class="flaticon-search-1"></i></button>
+                </div>
+            </div>
+        	
+                            </div>
+                        </div>
+						 <div class="row" [hidden]="!advancedFiltersAreShown">
+						 	<div class="col-md-12">
+						         
+						     </div>
+
+
+
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="TitleFilter">{{l("Title")}}</label>
+									<input type="text" class="form-control" id="TitleFilter" name="titleFilter" [(ngModel)]="titleFilter" (ngModelChange)="getContracts()">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="ReferenceNumberFilter">{{l("ReferenceNumber")}}</label>
+									<input type="text" class="form-control" id="ReferenceNumberFilter" name="referenceNumberFilter" [(ngModel)]="referenceNumberFilter" (ngModelChange)="getContracts()">
+								</div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+									<label class="form-label" for="MinStartDateFilter">{{l("StartDateRange")}}</label>
+									<div class="input-group">
+                                        
+                                        <input class="form-control m-input" id="MinStartDateFilter" name="MinStartDateFilter" type="datetime" bsDatepicker  placeholder="{{l('MinValue')}}" [(ngModel)]="minStartDateFilter" (ngModelChange)="getContracts()">
+			                            <span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
+                                        <input class="form-control m-input" id="MaxStartDateFilter" name="MaxStartDateFilter" type="datetime" bsDatepicker  placeholder="{{l('MaxValue')}}" [(ngModel)]="maxStartDateFilter" (ngModelChange)="getContracts()">
+									</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+									<label class="form-label" for="MinEndDateFilter">{{l("EndDateRange")}}</label>
+									<div class="input-group">
+                                        
+                                        <input class="form-control m-input" id="MinEndDateFilter" name="MinEndDateFilter" type="datetime" bsDatepicker  placeholder="{{l('MinValue')}}" [(ngModel)]="minEndDateFilter" (ngModelChange)="getContracts()">
+			                            <span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
+                                        <input class="form-control m-input" id="MaxEndDateFilter" name="MaxEndDateFilter" type="datetime" bsDatepicker  placeholder="{{l('MaxValue')}}" [(ngModel)]="maxEndDateFilter" (ngModelChange)="getContracts()">
+									</div>
+                                </div>
+                            </div>
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="DescriptionFilter">{{l("Description")}}</label>
+									<input type="text" class="form-control" id="DescriptionFilter" name="descriptionFilter" [(ngModel)]="descriptionFilter" (ngModelChange)="getContracts()">
+								</div>
+                            </div>	
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="TemplateFilterSelect">{{l("Template")}}</label>
+									<select class="form-select" name="TemplateFilter" id="TemplateFilterSelect" [(ngModel)]="templateFilter" (ngModelChange)="getContracts()">
+									<option value="-1">{{l("All")}}</option>
+									<option value="0">{{l("False")}}</option>
+									<option value="1">{{l("True")}}</option>
+									</select>
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="RemarksFilter">{{l("Remarks")}}</label>
+									<input type="text" class="form-control" id="RemarksFilter" name="remarksFilter" [(ngModel)]="remarksFilter" (ngModelChange)="getContracts()">
+								</div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+									<label class="form-label" for="MinStoreMarketplaceCommissionSettingIdFilter">{{l("MinMax")}} {{l("StoreMarketplaceCommissionSettingId")}}</label>
+									<div class="input-group">
+                                        <input type="number" class="form-control" id="MinStoreMarketplaceCommissionSettingIdFilter" [(ngModel)]="minStoreMarketplaceCommissionSettingIdFilter" placeholder="{{l('MinValue')}}" name="minStoreMarketplaceCommissionSettingIdFilter" (ngModelChange)="getContracts()"/>
+                                        <input type="number" class="form-control" [(ngModel)]="maxStoreMarketplaceCommissionSettingIdFilter" placeholder="{{l('MaxValue')}}" name="maxStoreMarketplaceCommissionSettingIdFilter" (ngModelChange)="getContracts()"/>
+									</div>
+                                </div>
+                            </div>
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="FirstPartyFullNameFilter">{{l("FirstPartyFullName")}}</label>
+									<input type="text" class="form-control" id="FirstPartyFullNameFilter" name="firstPartyFullNameFilter" [(ngModel)]="firstPartyFullNameFilter" (ngModelChange)="getContracts()">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="FirstPartyAddressFilter">{{l("FirstPartyAddress")}}</label>
+									<input type="text" class="form-control" id="FirstPartyAddressFilter" name="firstPartyAddressFilter" [(ngModel)]="firstPartyAddressFilter" (ngModelChange)="getContracts()">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="FirstPartyPhoneFilter">{{l("FirstPartyPhone")}}</label>
+									<input type="text" class="form-control" id="FirstPartyPhoneFilter" name="firstPartyPhoneFilter" [(ngModel)]="firstPartyPhoneFilter" (ngModelChange)="getContracts()">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="FirstPartyEmailAddressFilter">{{l("FirstPartyEmailAddress")}}</label>
+									<input type="text" class="form-control" id="FirstPartyEmailAddressFilter" name="firstPartyEmailAddressFilter" [(ngModel)]="firstPartyEmailAddressFilter" (ngModelChange)="getContracts()">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="FirstPartyIdTypeAndNumberFilter">{{l("FirstPartyIdTypeAndNumber")}}</label>
+									<input type="text" class="form-control" id="FirstPartyIdTypeAndNumberFilter" name="firstPartyIdTypeAndNumberFilter" [(ngModel)]="firstPartyIdTypeAndNumberFilter" (ngModelChange)="getContracts()">
+								</div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+									<label class="form-label" for="MinFirstPartySignDateFilter">{{l("FirstPartySignDateRange")}}</label>
+									<div class="input-group">
+                                        
+                                        <input class="form-control m-input" id="MinFirstPartySignDateFilter" name="MinFirstPartySignDateFilter" type="datetime" bsDatepicker  placeholder="{{l('MinValue')}}" [(ngModel)]="minFirstPartySignDateFilter" (ngModelChange)="getContracts()">
+			                            <span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
+                                        <input class="form-control m-input" id="MaxFirstPartySignDateFilter" name="MaxFirstPartySignDateFilter" type="datetime" bsDatepicker  placeholder="{{l('MaxValue')}}" [(ngModel)]="maxFirstPartySignDateFilter" (ngModelChange)="getContracts()">
+									</div>
+                                </div>
+                            </div>
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="FirstPartySignBinaryIdFilter">{{l("FirstPartySignBinaryId")}}</label>
+									<input type="text" class="form-control" id="FirstPartySignBinaryIdFilter" name="firstPartySignBinaryIdFilter" [(ngModel)]="firstPartySignBinaryIdFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="FirstPartyIpAddressFilter">{{l("FirstPartyIpAddress")}}</label>
+									<input type="text" class="form-control" id="FirstPartyIpAddressFilter" name="firstPartyIpAddressFilter" [(ngModel)]="firstPartyIpAddressFilter" (ngModelChange)="getContracts()">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="SecondPartyFullNameFilter">{{l("SecondPartyFullName")}}</label>
+									<input type="text" class="form-control" id="SecondPartyFullNameFilter" name="secondPartyFullNameFilter" [(ngModel)]="secondPartyFullNameFilter" (ngModelChange)="getContracts()">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="SecondPartyAddressFilter">{{l("SecondPartyAddress")}}</label>
+									<input type="text" class="form-control" id="SecondPartyAddressFilter" name="secondPartyAddressFilter" [(ngModel)]="secondPartyAddressFilter" (ngModelChange)="getContracts()">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="SecondPartyPhoneFilter">{{l("SecondPartyPhone")}}</label>
+									<input type="text" class="form-control" id="SecondPartyPhoneFilter" name="secondPartyPhoneFilter" [(ngModel)]="secondPartyPhoneFilter" (ngModelChange)="getContracts()">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="SecondPartyEmailAddressFilter">{{l("SecondPartyEmailAddress")}}</label>
+									<input type="text" class="form-control" id="SecondPartyEmailAddressFilter" name="secondPartyEmailAddressFilter" [(ngModel)]="secondPartyEmailAddressFilter" (ngModelChange)="getContracts()">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="SecondPartyIdTypeAndNumberFilter">{{l("SecondPartyIdTypeAndNumber")}}</label>
+									<input type="text" class="form-control" id="SecondPartyIdTypeAndNumberFilter" name="secondPartyIdTypeAndNumberFilter" [(ngModel)]="secondPartyIdTypeAndNumberFilter" (ngModelChange)="getContracts()">
+								</div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+									<label class="form-label" for="MinSecondPartySignDateFilter">{{l("SecondPartySignDateRange")}}</label>
+									<div class="input-group">
+                                        
+                                        <input class="form-control m-input" id="MinSecondPartySignDateFilter" name="MinSecondPartySignDateFilter" type="datetime" bsDatepicker  placeholder="{{l('MinValue')}}" [(ngModel)]="minSecondPartySignDateFilter" (ngModelChange)="getContracts()">
+			                            <span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
+                                        <input class="form-control m-input" id="MaxSecondPartySignDateFilter" name="MaxSecondPartySignDateFilter" type="datetime" bsDatepicker  placeholder="{{l('MaxValue')}}" [(ngModel)]="maxSecondPartySignDateFilter" (ngModelChange)="getContracts()">
+									</div>
+                                </div>
+                            </div>
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="SecondPartySignBinaryIdFilter">{{l("SecondPartySignBinaryId")}}</label>
+									<input type="text" class="form-control" id="SecondPartySignBinaryIdFilter" name="secondPartySignBinaryIdFilter" [(ngModel)]="secondPartySignBinaryIdFilter">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="SecondPartyIpAddressFilter">{{l("SecondPartyIpAddress")}}</label>
+									<input type="text" class="form-control" id="SecondPartyIpAddressFilter" name="secondPartyIpAddressFilter" [(ngModel)]="secondPartyIpAddressFilter" (ngModelChange)="getContracts()">
+								</div>
+                            </div>
+
+
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="ContractTypeNameFilter">({{l("ContractType")}}) {{l("Name")}}</label>
+									<input type="text" class="form-control" id="ContractTypeNameFilter" name="contractTypeNameFilter" [(ngModel)]="contractTypeNameFilter">
+                                </div>
+                            </div>
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="StoreNameFilter">({{l("Store")}}) {{l("Name")}}</label>
+									<input type="text" class="form-control" id="StoreNameFilter" name="storeNameFilter" [(ngModel)]="storeNameFilter">
+                                </div>
+                            </div>
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="BusinessNameFilter">({{l("Business")}}) {{l("Name")}}</label>
+									<input type="text" class="form-control" id="BusinessNameFilter" name="businessNameFilter" [(ngModel)]="businessNameFilter">
+                                </div>
+                            </div>
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="EmployeeNameFilter">({{l("Employee")}}) {{l("Name")}}</label>
+									<input type="text" class="form-control" id="EmployeeNameFilter" name="employeeNameFilter" [(ngModel)]="employeeNameFilter">
+                                </div>
+                            </div>
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="JobTitleFilter">({{l("Job")}}) {{l("Title")}}</label>
+									<input type="text" class="form-control" id="JobTitleFilter" name="jobTitleFilter" [(ngModel)]="jobTitleFilter">
+                                </div>
+                            </div>
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="ProductNameFilter">({{l("Product")}}) {{l("Name")}}</label>
+									<input type="text" class="form-control" id="ProductNameFilter" name="productNameFilter" [(ngModel)]="productNameFilter">
+                                </div>
+                            </div>
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="HubNameFilter">({{l("Hub")}}) {{l("Name")}}</label>
+									<input type="text" class="form-control" id="HubNameFilter" name="hubNameFilter" [(ngModel)]="hubNameFilter">
+                                </div>
+                            </div>
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="ContactFullNameFilter">({{l("Contact")}}) {{l("FullName")}}</label>
+									<input type="text" class="form-control" id="ContactFullNameFilter" name="contactFullNameFilter" [(ngModel)]="contactFullNameFilter">
+                                </div>
+                            </div>
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="ContactFullName2Filter">({{l("Contact2")}}) {{l("FullName")}}</label>
+									<input type="text" class="form-control" id="ContactFullName2Filter" name="contactFullName2Filter" [(ngModel)]="contactFullName2Filter">
+                                </div>
+                            </div>
+                            <div class="col-md-12 mt-5">
+                                <button (click)="resetFilters()" class="btn btn-secondary btn-sm" id="btn-reset-filters">Reset</button>
+                            </div>
+                        </div>
+                        <div class="row my-4">
+                            <div class="col-sm-12">
+                                <span class="clickable-item text-muted" *ngIf="!advancedFiltersAreShown" (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i class="fa fa-angle-down"></i> {{l("ShowAdvancedFilters")}}</span>
+                                <span class="clickable-item text-muted" *ngIf="advancedFiltersAreShown" (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i class="fa fa-angle-up"></i> {{l("HideAdvancedFilters")}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="row align-items-center">
+                    <!--<Primeng-Datatable-Start>-->
+                    <div class="primeng-datatable-container col-12"
+                         [busyIf]="primengTableHelper.isLoading">
+                        <p-table #dataTable
+                                     (onLazyLoad)="getContracts($event)"
+                                     [value]="primengTableHelper.records"
+                                     rows="{{primengTableHelper.defaultRecordsCountPerPage}}"
+                                     [paginator]="false"
+                                     [lazy]="true"
+                                     [scrollable]="true"
+                                     ScrollWidth="100%"
+                                     [responsive]="primengTableHelper.isResponsive"
+                                     [resizableColumns]="primengTableHelper.resizableColumns">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th style="width: 130px" [hidden]="!isGrantedAny('Pages.Contracts.Edit', 'Pages.Contracts.Delete')">{{l('Actions')}}</th>
+                                    <th style="width: 150px" pSortableColumn="contractTypeFk.name">
+                                        {{l('Name')}}
+                                        <p-sortIcon field="contractTypeName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="storeFk.name">
+                                        {{l('Name')}}
+                                        <p-sortIcon field="storeName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="businessFk.name">
+                                        {{l('Name')}}
+                                        <p-sortIcon field="businessName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="employeeFk.name">
+                                        {{l('Name')}}
+                                        <p-sortIcon field="employeeName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="jobFk.title">
+                                        {{l('Title')}}
+                                        <p-sortIcon field="jobTitle"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="productFk.name">
+                                        {{l('Name')}}
+                                        <p-sortIcon field="productName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="hubFk.name">
+                                        {{l('Name')}}
+                                        <p-sortIcon field="hubName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="firstPartyContactFk.fullName">
+                                        {{l('FullName')}}
+                                        <p-sortIcon field="contactFullName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="secondPartyContactFk.fullName">
+                                        {{l('FullName')}}
+                                        <p-sortIcon field="contactFullName2"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="title">
+                                        {{l('Title')}}
+                                        <p-sortIcon field="contract.title"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="referenceNumber">
+                                        {{l('ReferenceNumber')}}
+                                        <p-sortIcon field="contract.referenceNumber"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="startDate">
+                                        {{l('StartDate')}}
+                                        <p-sortIcon field="contract.startDate"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="endDate">
+                                        {{l('EndDate')}}
+                                        <p-sortIcon field="contract.endDate"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="description">
+                                        {{l('Description')}}
+                                        <p-sortIcon field="contract.description"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="template">
+                                        {{l('Template')}}
+                                        <p-sortIcon field="contract.template"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="remarks">
+                                        {{l('Remarks')}}
+                                        <p-sortIcon field="contract.remarks"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="storeMarketplaceCommissionSettingId">
+                                        {{l('StoreMarketplaceCommissionSettingId')}}
+                                        <p-sortIcon field="contract.storeMarketplaceCommissionSettingId"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="firstPartyFullName">
+                                        {{l('FirstPartyFullName')}}
+                                        <p-sortIcon field="contract.firstPartyFullName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="firstPartyAddress">
+                                        {{l('FirstPartyAddress')}}
+                                        <p-sortIcon field="contract.firstPartyAddress"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="firstPartyPhone">
+                                        {{l('FirstPartyPhone')}}
+                                        <p-sortIcon field="contract.firstPartyPhone"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="firstPartyEmailAddress">
+                                        {{l('FirstPartyEmailAddress')}}
+                                        <p-sortIcon field="contract.firstPartyEmailAddress"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="firstPartyIdTypeAndNumber">
+                                        {{l('FirstPartyIdTypeAndNumber')}}
+                                        <p-sortIcon field="contract.firstPartyIdTypeAndNumber"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="firstPartySignDate">
+                                        {{l('FirstPartySignDate')}}
+                                        <p-sortIcon field="contract.firstPartySignDate"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="firstPartySignBinaryId">
+                                        {{l('FirstPartySignBinaryId')}}
+                                        <p-sortIcon field="contract.firstPartySignBinaryId"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="firstPartyIpAddress">
+                                        {{l('FirstPartyIpAddress')}}
+                                        <p-sortIcon field="contract.firstPartyIpAddress"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="secondPartyFullName">
+                                        {{l('SecondPartyFullName')}}
+                                        <p-sortIcon field="contract.secondPartyFullName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="secondPartyAddress">
+                                        {{l('SecondPartyAddress')}}
+                                        <p-sortIcon field="contract.secondPartyAddress"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="secondPartyPhone">
+                                        {{l('SecondPartyPhone')}}
+                                        <p-sortIcon field="contract.secondPartyPhone"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="secondPartyEmailAddress">
+                                        {{l('SecondPartyEmailAddress')}}
+                                        <p-sortIcon field="contract.secondPartyEmailAddress"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="secondPartyIdTypeAndNumber">
+                                        {{l('SecondPartyIdTypeAndNumber')}}
+                                        <p-sortIcon field="contract.secondPartyIdTypeAndNumber"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="secondPartySignDate">
+                                        {{l('SecondPartySignDate')}}
+                                        <p-sortIcon field="contract.secondPartySignDate"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="secondPartySignBinaryId">
+                                        {{l('SecondPartySignBinaryId')}}
+                                        <p-sortIcon field="contract.secondPartySignBinaryId"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="secondPartyIpAddress">
+                                        {{l('SecondPartyIpAddress')}}
+                                        <p-sortIcon field="contract.secondPartyIpAddress"></p-sortIcon>
+                                    </th>
+
+                                </tr>
+                            </ng-template>                           
+							<ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
+                                <tr>
+                                    <td style="width: 130px"
+                                        [hidden]="!isGrantedAny('Pages.Contracts.Edit', 'Pages.Contracts.Delete')">
+                                       <div class="btn-group dropdown" dropdown container="body">
+                                            <button class="dropdown-toggle btn btn-sm btn-primary" dropdownToggle>
+                                                <i class="fa fa-cog"></i><span class="caret"></span> {{l("Actions")}}
+                                            </button>
+												<ul class="dropdown-menu"  *dropdownMenu>
+												<li>
+													<a href="javascript:;" class="dropdown-item"
+														(click)="viewContractModal.show(record)">{{l('View')}}</a>
+												</li>
+												<li>
+                                                <a href="javascript:;" *ngIf="permission.isGranted('Pages.Contracts.Edit')" class="dropdown-item"
+														(click)="createOrEditContractModal.show(record.contract.id)">{{l('Edit')}}</a>												
+                                                </li>
+												<li>
+											        <a class="dropdown-item" href="javascript:;" *ngIf="permission.isGranted('Pages.Contracts.Delete')"
+														(click)="deleteContract(record.contract)">{{l('Delete')}}</a>
+												</li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                    <td style="width:150px">
+												<span class="p-column-title"> {{l('Name')}}</span>
+												{{record.contractTypeName}}
+											</td>
+                                    <td style="width:150px">
+												<span class="p-column-title"> {{l('Name')}}</span>
+												{{record.storeName}}
+											</td>
+                                    <td style="width:150px">
+												<span class="p-column-title"> {{l('Name')}}</span>
+												{{record.businessName}}
+											</td>
+                                    <td style="width:150px">
+												<span class="p-column-title"> {{l('Name')}}</span>
+												{{record.employeeName}}
+											</td>
+                                    <td style="width:150px">
+												<span class="p-column-title"> {{l('Title')}}</span>
+												{{record.jobTitle}}
+											</td>
+                                    <td style="width:150px">
+												<span class="p-column-title"> {{l('Name')}}</span>
+												{{record.productName}}
+											</td>
+                                    <td style="width:150px">
+												<span class="p-column-title"> {{l('Name')}}</span>
+												{{record.hubName}}
+											</td>
+                                    <td style="width:150px">
+												<span class="p-column-title"> {{l('FullName')}}</span>
+												{{record.contactFullName}}
+											</td>
+                                    <td style="width:150px">
+												<span class="p-column-title"> {{l('FullName')}}</span>
+												{{record.contactFullName2}}
+											</td>
+                                    <td style="width:150px">
+											<span class="p-column-title"> {{l('Title')}}</span>
+											{{record.contract.title}}
+										</td>
+                                    <td style="width:150px">
+											<span class="p-column-title"> {{l('ReferenceNumber')}}</span>
+											{{record.contract.referenceNumber}}
+										</td>
+                                    <td style="width:150px">
+										<span class="p-column-title"> {{l('StartDate')}}</span>
+                                        <span *ngIf="record.contract.startDate">
+											{{record.contract.startDate |  luxonFormat:'F' }}
+                                        </span>
+                                        <span *ngIf="!record.contract.startDate">-</span>
+                                    </td>
+                                    <td style="width:150px">
+										<span class="p-column-title"> {{l('EndDate')}}</span>
+                                        <span *ngIf="record.contract.endDate">
+											{{record.contract.endDate |  luxonFormat:'F' }}
+                                        </span>
+                                        <span *ngIf="!record.contract.endDate">-</span>
+                                    </td>
+                                    <td style="width:150px">
+											<span class="p-column-title"> {{l('Description')}}</span>
+											{{record.contract.description}}
+										</td>
+                                    <td style="width:150px">
+										<span class="p-column-title"> {{l('Template')}}</span>
+                                        <div *ngIf="record.contract.template" class="text-center"><i class="fa fa-check-circle text-success" title="True"></i></div>
+										<div *ngIf="!record.contract.template" class="text-center"><i class="fa fa-times-circle" title="False"></i></div>
+                                    </td>
+                                    <td style="width:150px">
+											<span class="p-column-title"> {{l('Remarks')}}</span>
+											{{record.contract.remarks}}
+										</td>
+                                    <td style="width:150px">
+											<span class="p-column-title"> {{l('StoreMarketplaceCommissionSettingId')}}</span>
+											{{record.contract.storeMarketplaceCommissionSettingId}}
+										</td>
+                                    <td style="width:150px">
+											<span class="p-column-title"> {{l('FirstPartyFullName')}}</span>
+											{{record.contract.firstPartyFullName}}
+										</td>
+                                    <td style="width:150px">
+											<span class="p-column-title"> {{l('FirstPartyAddress')}}</span>
+											{{record.contract.firstPartyAddress}}
+										</td>
+                                    <td style="width:150px">
+											<span class="p-column-title"> {{l('FirstPartyPhone')}}</span>
+											{{record.contract.firstPartyPhone}}
+										</td>
+                                    <td style="width:150px">
+											<span class="p-column-title"> {{l('FirstPartyEmailAddress')}}</span>
+											{{record.contract.firstPartyEmailAddress}}
+										</td>
+                                    <td style="width:150px">
+											<span class="p-column-title"> {{l('FirstPartyIdTypeAndNumber')}}</span>
+											{{record.contract.firstPartyIdTypeAndNumber}}
+										</td>
+                                    <td style="width:150px">
+										<span class="p-column-title"> {{l('FirstPartySignDate')}}</span>
+                                        <span *ngIf="record.contract.firstPartySignDate">
+											{{record.contract.firstPartySignDate |  luxonFormat:'F' }}
+                                        </span>
+                                        <span *ngIf="!record.contract.firstPartySignDate">-</span>
+                                    </td>
+                                    <td style="width:150px">
+											<span class="p-column-title"> {{l('FirstPartySignBinaryId')}}</span>
+											{{record.contract.firstPartySignBinaryId}}
+										</td>
+                                    <td style="width:150px">
+											<span class="p-column-title"> {{l('FirstPartyIpAddress')}}</span>
+											{{record.contract.firstPartyIpAddress}}
+										</td>
+                                    <td style="width:150px">
+											<span class="p-column-title"> {{l('SecondPartyFullName')}}</span>
+											{{record.contract.secondPartyFullName}}
+										</td>
+                                    <td style="width:150px">
+											<span class="p-column-title"> {{l('SecondPartyAddress')}}</span>
+											{{record.contract.secondPartyAddress}}
+										</td>
+                                    <td style="width:150px">
+											<span class="p-column-title"> {{l('SecondPartyPhone')}}</span>
+											{{record.contract.secondPartyPhone}}
+										</td>
+                                    <td style="width:150px">
+											<span class="p-column-title"> {{l('SecondPartyEmailAddress')}}</span>
+											{{record.contract.secondPartyEmailAddress}}
+										</td>
+                                    <td style="width:150px">
+											<span class="p-column-title"> {{l('SecondPartyIdTypeAndNumber')}}</span>
+											{{record.contract.secondPartyIdTypeAndNumber}}
+										</td>
+                                    <td style="width:150px">
+										<span class="p-column-title"> {{l('SecondPartySignDate')}}</span>
+                                        <span *ngIf="record.contract.secondPartySignDate">
+											{{record.contract.secondPartySignDate |  luxonFormat:'F' }}
+                                        </span>
+                                        <span *ngIf="!record.contract.secondPartySignDate">-</span>
+                                    </td>
+                                    <td style="width:150px">
+											<span class="p-column-title"> {{l('SecondPartySignBinaryId')}}</span>
+											{{record.contract.secondPartySignBinaryId}}
+										</td>
+                                    <td style="width:150px">
+											<span class="p-column-title"> {{l('SecondPartyIpAddress')}}</span>
+											{{record.contract.secondPartyIpAddress}}
+										</td>
+
+                                </tr>
+                               
+                            </ng-template>
+                        </p-table>
+						<div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
+                            {{l('NoData')}}
+                        </div>
+                        <div class="primeng-paging-container">
+                            <p-paginator [rows]="primengTableHelper.defaultRecordsCountPerPage"
+                                         #paginator
+                                         (onPageChange)="getContracts($event)"
+                                         [totalRecords]="primengTableHelper.totalRecordsCount"
+                                         [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
+                                         [showCurrentPageReport]="true"
+                                         [currentPageReportTemplate]="'TotalRecordsCount' | localize:primengTableHelper.totalRecordsCount"    
+                            >
+                            </p-paginator>
+                        </div>
+                    </div>
+                    <!--<Primeng-Datatable-End>-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <createOrEditContractModal #createOrEditContractModal (modalSave)="getContracts()"></createOrEditContractModal>    
+    <viewContractModal #viewContractModal></viewContractModal>
+    
+  </div>

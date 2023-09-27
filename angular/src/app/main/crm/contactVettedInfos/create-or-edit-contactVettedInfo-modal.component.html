@@ -1,0 +1,114 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #contactVettedInfoForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="contactVettedInfo.id">{{l("EditContactVettedInfo")}}</span>
+                        <span *ngIf="!contactVettedInfo.id">{{l("CreateNewContactVettedInfo")}}</span>
+                    </h4>                    
+                    
+                    
+                 <button type="button" class="btn-close" (click)="close()" aria-label="Close" [disabled]="saving"></button>
+             
+                </div>
+                <div class="modal-body">
+                 
+
+
+					<div class="my-3">
+                        <label class="form-label" for="ContactFullName">{{l("Contact")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="ContactFullName" name="contactFullName" [(ngModel)]="contactFullName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectContactModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setContactIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="contactVettedInfo.contactId" [(ngModel)]="contactVettedInfo.contactId" type="text"  hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="ContactEducationName">{{l("ContactEducation")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="ContactEducationName" name="contactEducationName" [(ngModel)]="contactEducationName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectContactEducationModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setContactEducationIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="contactVettedInfo.contactEducationId" [(ngModel)]="contactVettedInfo.contactEducationId" type="text"  hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="ContactExperienceJobTitle">{{l("ContactExperience")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="ContactExperienceJobTitle" name="contactExperienceJobTitle" [(ngModel)]="contactExperienceJobTitle" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectContactExperienceModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setContactExperienceIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="contactVettedInfo.contactExperienceId" [(ngModel)]="contactVettedInfo.contactExperienceId" type="text"  hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="ContactCertificationLicenseName">{{l("ContactCertificationLicense")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="ContactCertificationLicenseName" name="contactCertificationLicenseName" [(ngModel)]="contactCertificationLicenseName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectContactCertificationLicenseModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setContactCertificationLicenseIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="contactVettedInfo.contactCertificationLicenseId" [(ngModel)]="contactVettedInfo.contactCertificationLicenseId" type="text"  hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="EmployeeName">{{l("Employee")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="EmployeeName" name="employeeName" [(ngModel)]="employeeName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectEmployeeModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setVerifiedEmployeeIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="contactVettedInfo.verifiedEmployeeId" [(ngModel)]="contactVettedInfo.verifiedEmployeeId" type="text"  hidden>
+                        
+
+
+								<br/>
+								<label class="form-check form-check-custom form-check-solid">
+                                    <input
+                                        id="ContactVettedInfo_VerificationStatus" 
+                                        #ContactVettedInfo_VerificationStatus="ngModel"
+                                        name="VerificationStatus" 
+                                        [(ngModel)]="contactVettedInfo.verificationStatus"
+                                        type="checkbox"
+                                        class="form-check-input"
+                                    />
+                                    <span class="form-check-label">
+                                        {{l("VerificationStatus")}}
+                                    </span>
+                                </label>
+                                <validation-messages [formCtrl]="ContactVettedInfo_VerificationStatus"></validation-messages>
+					
+								<div class="my-3">
+									<label class="form-label" for="ContactVettedInfo_ManagerRemarks">{{l("ManagerRemarks")}}</label>
+									<input type="text" #ContactVettedInfo_ManagerRemarks="ngModel" id="ContactVettedInfo_ManagerRemarks" class="form-control" [(ngModel)]="contactVettedInfo.managerRemarks" name="ManagerRemarks"    />
+								    <validation-messages [formCtrl]="ContactVettedInfo_ManagerRemarks"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="ContactVettedInfo_DateVerification">{{l("DateVerification")}}</label>
+									 <input class="form-control m-input" #ContactVettedInfo_DateVerification type="datetime" bsDatepicker  datePickerLuxonModifier  [(date)]="contactVettedInfo.dateVerification" id="ContactVettedInfo_DateVerification" name="ContactVettedInfo_DateVerification">
+									<validation-messages [formCtrl]="ContactVettedInfo_DateVerification"></validation-messages>
+								</div>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!contactVettedInfoForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+<contactVettedInfoContactLookupTableModal #contactVettedInfoContactLookupTableModal (modalSave)="getNewContactId()"></contactVettedInfoContactLookupTableModal>
+		 <contactVettedInfoContactEducationLookupTableModal #contactVettedInfoContactEducationLookupTableModal (modalSave)="getNewContactEducationId()"></contactVettedInfoContactEducationLookupTableModal>
+		 <contactVettedInfoContactExperienceLookupTableModal #contactVettedInfoContactExperienceLookupTableModal (modalSave)="getNewContactExperienceId()"></contactVettedInfoContactExperienceLookupTableModal>
+		 <contactVettedInfoContactCertificationLicenseLookupTableModal #contactVettedInfoContactCertificationLicenseLookupTableModal (modalSave)="getNewContactCertificationLicenseId()"></contactVettedInfoContactCertificationLicenseLookupTableModal>
+		 <contactVettedInfoEmployeeLookupTableModal #contactVettedInfoEmployeeLookupTableModal (modalSave)="getNewVerifiedEmployeeId()"></contactVettedInfoEmployeeLookupTableModal>
+		 
+</div>

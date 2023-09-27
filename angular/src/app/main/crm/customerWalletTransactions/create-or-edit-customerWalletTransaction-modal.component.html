@@ -1,0 +1,104 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #customerWalletTransactionForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="customerWalletTransaction.id">{{l("EditCustomerWalletTransaction")}}</span>
+                        <span *ngIf="!customerWalletTransaction.id">{{l("CreateNewCustomerWalletTransaction")}}</span>
+                    </h4>                    
+                    
+                    
+                 <button type="button" class="btn-close" (click)="close()" aria-label="Close" [disabled]="saving"></button>
+             
+                </div>
+                <div class="modal-body">
+                 
+
+
+					<div class="my-3">
+                        <label class="form-label" for="OrderInvoiceNumber">{{l("Order")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="OrderInvoiceNumber" name="orderInvoiceNumber" [(ngModel)]="orderInvoiceNumber" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectOrderModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setOrderIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="customerWalletTransaction.orderId" [(ngModel)]="customerWalletTransaction.orderId" type="text"  hidden>
+                        
+
+
+								<div class="my5">
+									<label class="form-label" for="CustomerWalletTransaction_BalanceBeforeTransaction">{{l("BalanceBeforeTransaction")}}</label>
+									<input type="number" #CustomerWalletTransaction_BalanceBeforeTransaction="ngModel" id="CustomerWalletTransaction_BalanceBeforeTransaction" class="form-control" [(ngModel)]="customerWalletTransaction.balanceBeforeTransaction" name="BalanceBeforeTransaction"    />
+									<validation-messages [formCtrl]="CustomerWalletTransaction_BalanceBeforeTransaction"></validation-messages>
+								</div>
+					
+								<br/>
+								<label class="form-check form-check-custom form-check-solid">
+                                    <input
+                                        id="CustomerWalletTransaction_AddOrDeduct" 
+                                        #CustomerWalletTransaction_AddOrDeduct="ngModel"
+                                        name="AddOrDeduct" 
+                                        [(ngModel)]="customerWalletTransaction.addOrDeduct"
+                                        type="checkbox"
+                                        class="form-check-input"
+                                    />
+                                    <span class="form-check-label">
+                                        {{l("AddOrDeduct")}}
+                                    </span>
+                                </label>
+                                <validation-messages [formCtrl]="CustomerWalletTransaction_AddOrDeduct"></validation-messages>
+					
+								<div class="my5">
+									<label class="form-label" for="CustomerWalletTransaction_Amount">{{l("Amount")}}</label>
+									<input type="number" #CustomerWalletTransaction_Amount="ngModel" id="CustomerWalletTransaction_Amount" class="form-control" [(ngModel)]="customerWalletTransaction.amount" name="Amount"    />
+									<validation-messages [formCtrl]="CustomerWalletTransaction_Amount"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="CustomerWalletTransaction_TransactionDate">{{l("TransactionDate")}}</label>
+									 <input class="form-control m-input" #CustomerWalletTransaction_TransactionDate type="datetime" bsDatepicker  datePickerLuxonModifier  [(date)]="customerWalletTransaction.transactionDate" id="CustomerWalletTransaction_TransactionDate" name="CustomerWalletTransaction_TransactionDate">
+									<validation-messages [formCtrl]="CustomerWalletTransaction_TransactionDate"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="CustomerWalletTransaction_TransactionTime">{{l("TransactionTime")}}</label>
+									<input type="text" #CustomerWalletTransaction_TransactionTime="ngModel" id="CustomerWalletTransaction_TransactionTime" class="form-control" [(ngModel)]="customerWalletTransaction.transactionTime" name="TransactionTime"   minlength="1"  maxlength="50" />
+								    <validation-messages [formCtrl]="CustomerWalletTransaction_TransactionTime"></validation-messages>
+								</div>
+					
+								<div class="my5">
+									<label class="form-label" for="CustomerWalletTransaction_CurrentBalanceAfterTransaction">{{l("CurrentBalanceAfterTransaction")}}</label>
+									<input type="number" #CustomerWalletTransaction_CurrentBalanceAfterTransaction="ngModel" id="CustomerWalletTransaction_CurrentBalanceAfterTransaction" class="form-control" [(ngModel)]="customerWalletTransaction.currentBalanceAfterTransaction" name="CurrentBalanceAfterTransaction"    />
+									<validation-messages [formCtrl]="CustomerWalletTransaction_CurrentBalanceAfterTransaction"></validation-messages>
+								</div>
+					
+								<div class="my5">
+									<label class="form-label" for="CustomerWalletTransaction_CustomerWalletId">{{l("CustomerWalletId")}}</label>
+									<input type="number" #CustomerWalletTransaction_CustomerWalletId="ngModel" id="CustomerWalletTransaction_CustomerWalletId" class="form-control" [(ngModel)]="customerWalletTransaction.customerWalletId" name="CustomerWalletId"    />
+									<validation-messages [formCtrl]="CustomerWalletTransaction_CustomerWalletId"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="CustomerWalletTransaction_WalletTransactionTypeId">{{l("WalletTransactionTypeId")}}</label>
+									<select class="form-select" #CustomerWalletTransaction_WalletTransactionTypeId="ngModel" name="WalletTransactionTypeId" id="CustomerWalletTransaction_WalletTransactionTypeId" [(ngModel)]="customerWalletTransaction.walletTransactionTypeId" >
+									<option value="1">{{l('Order')}}</option>
+
+
+									</select>
+									<validation-messages [formCtrl]="CustomerWalletTransaction_WalletTransactionTypeId"></validation-messages>
+								</div>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!customerWalletTransactionForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+<customerWalletTransactionOrderLookupTableModal #customerWalletTransactionOrderLookupTableModal (modalSave)="getNewOrderId()"></customerWalletTransactionOrderLookupTableModal>
+		 
+</div>

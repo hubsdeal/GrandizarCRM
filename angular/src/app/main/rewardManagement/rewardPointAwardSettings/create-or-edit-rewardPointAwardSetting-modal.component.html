@@ -1,0 +1,115 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #rewardPointAwardSettingForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="rewardPointAwardSetting.id">{{l("EditRewardPointAwardSetting")}}</span>
+                        <span *ngIf="!rewardPointAwardSetting.id">{{l("CreateNewRewardPointAwardSetting")}}</span>
+                    </h4>                    
+                    
+                    
+                 <button type="button" class="btn-close" (click)="close()" aria-label="Close" [disabled]="saving"></button>
+             
+                </div>
+                <div class="modal-body">
+                 
+
+
+					<div class="my-3">
+                        <label class="form-label" for="RewardPointTypeName">{{l("RewardPointType")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="RewardPointTypeName" name="rewardPointTypeName" [(ngModel)]="rewardPointTypeName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectRewardPointTypeModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setRewardPointTypeIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="rewardPointAwardSetting.rewardPointTypeId" [(ngModel)]="rewardPointAwardSetting.rewardPointTypeId" type="text"  hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="StoreName">{{l("Store")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="StoreName" name="storeName" [(ngModel)]="storeName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectStoreModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setStoreIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="rewardPointAwardSetting.storeId" [(ngModel)]="rewardPointAwardSetting.storeId" type="text"  hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="ProductName">{{l("Product")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="ProductName" name="productName" [(ngModel)]="productName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectProductModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setProductIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="rewardPointAwardSetting.productId" [(ngModel)]="rewardPointAwardSetting.productId" type="text"  hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="MembershipTypeName">{{l("MembershipType")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="MembershipTypeName" name="membershipTypeName" [(ngModel)]="membershipTypeName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectMembershipTypeModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setMembershipTypeIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="rewardPointAwardSetting.membershipTypeId" [(ngModel)]="rewardPointAwardSetting.membershipTypeId" type="text"  hidden>
+                        
+
+
+								<div class="my5">
+									<label class="form-label" for="RewardPointAwardSetting_BaseAmount">{{l("BaseAmount")}}</label>
+									<input type="number" #RewardPointAwardSetting_BaseAmount="ngModel" id="RewardPointAwardSetting_BaseAmount" class="form-control" [(ngModel)]="rewardPointAwardSetting.baseAmount" name="BaseAmount"    />
+									<validation-messages [formCtrl]="RewardPointAwardSetting_BaseAmount"></validation-messages>
+								</div>
+					
+								<div class="my5">
+									<label class="form-label" for="RewardPointAwardSetting_RewardPoint">{{l("RewardPoint")}}</label>
+									<input type="number" #RewardPointAwardSetting_RewardPoint="ngModel" id="RewardPointAwardSetting_RewardPoint" class="form-control" [(ngModel)]="rewardPointAwardSetting.rewardPoint" name="RewardPoint"    />
+									<validation-messages [formCtrl]="RewardPointAwardSetting_RewardPoint"></validation-messages>
+								</div>
+					
+								<div class="my5">
+									<label class="form-label" for="RewardPointAwardSetting_PremiumMemberBonusPercentage">{{l("PremiumMemberBonusPercentage")}}</label>
+									<input type="number" #RewardPointAwardSetting_PremiumMemberBonusPercentage="ngModel" id="RewardPointAwardSetting_PremiumMemberBonusPercentage" class="form-control" [(ngModel)]="rewardPointAwardSetting.premiumMemberBonusPercentage" name="PremiumMemberBonusPercentage"    />
+									<validation-messages [formCtrl]="RewardPointAwardSetting_PremiumMemberBonusPercentage"></validation-messages>
+								</div>
+					
+								<br/>
+								<label class="form-check form-check-custom form-check-solid">
+                                    <input
+                                        id="RewardPointAwardSetting_DeductPointForReturn" 
+                                        #RewardPointAwardSetting_DeductPointForReturn="ngModel"
+                                        name="DeductPointForReturn" 
+                                        [(ngModel)]="rewardPointAwardSetting.deductPointForReturn"
+                                        type="checkbox"
+                                        class="form-check-input"
+                                    />
+                                    <span class="form-check-label">
+                                        {{l("DeductPointForReturn")}}
+                                    </span>
+                                </label>
+                                <validation-messages [formCtrl]="RewardPointAwardSetting_DeductPointForReturn"></validation-messages>
+					
+								<div class="my5">
+									<label class="form-label" for="RewardPointAwardSetting_AddPointsAfterDays">{{l("AddPointsAfterDays")}}</label>
+									<input type="number" #RewardPointAwardSetting_AddPointsAfterDays="ngModel" id="RewardPointAwardSetting_AddPointsAfterDays" class="form-control" [(ngModel)]="rewardPointAwardSetting.addPointsAfterDays" name="AddPointsAfterDays"    />
+									<validation-messages [formCtrl]="RewardPointAwardSetting_AddPointsAfterDays"></validation-messages>
+								</div>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!rewardPointAwardSettingForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+<rewardPointAwardSettingRewardPointTypeLookupTableModal #rewardPointAwardSettingRewardPointTypeLookupTableModal (modalSave)="getNewRewardPointTypeId()"></rewardPointAwardSettingRewardPointTypeLookupTableModal>
+		 <rewardPointAwardSettingStoreLookupTableModal #rewardPointAwardSettingStoreLookupTableModal (modalSave)="getNewStoreId()"></rewardPointAwardSettingStoreLookupTableModal>
+		 <rewardPointAwardSettingProductLookupTableModal #rewardPointAwardSettingProductLookupTableModal (modalSave)="getNewProductId()"></rewardPointAwardSettingProductLookupTableModal>
+		 <rewardPointAwardSettingMembershipTypeLookupTableModal #rewardPointAwardSettingMembershipTypeLookupTableModal (modalSave)="getNewMembershipTypeId()"></rewardPointAwardSettingMembershipTypeLookupTableModal>
+		 
+</div>

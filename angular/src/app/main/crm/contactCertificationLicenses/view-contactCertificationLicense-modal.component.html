@@ -1,0 +1,97 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span>{{l("Details")}}</span>
+                </h4>               
+                
+                
+                 <button type="button" class="btn-close" (click)="close()" aria-label="Close" [disabled]="saving"></button>
+             
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="col-6 mb-3">
+                        <h6>{{l("Name")}} :</h6>
+                        {{ item.contactCertificationLicense.name }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("FromDate")}} :</h6>
+                        {{ item.contactCertificationLicense.fromDate |  luxonFormat:'yyyy-LL-dd HH:mm:ss'  }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("ToDate")}} :</h6>
+                        {{ item.contactCertificationLicense.toDate |  luxonFormat:'yyyy-LL-dd HH:mm:ss'  }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("InstituteName")}} :</h6>
+                        {{ item.contactCertificationLicense.instituteName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("Address")}} :</h6>
+                        {{ item.contactCertificationLicense.address }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("Description")}} :</h6>
+                        {{ item.contactCertificationLicense.description }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("LicenseNumber")}} :</h6>
+                        {{ item.contactCertificationLicense.licenseNumber }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("IssueDate")}} :</h6>
+                        {{ item.contactCertificationLicense.issueDate |  luxonFormat:'yyyy-LL-dd HH:mm:ss'  }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("ExpirationDate")}} :</h6>
+                        {{ item.contactCertificationLicense.expirationDate |  luxonFormat:'yyyy-LL-dd HH:mm:ss'  }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("Verified")}} :</h6>
+                        <div *ngIf="item.contactCertificationLicense.verified" class="text-left"><i class="fa fa-check-circle text-success"
+                                title="True"></i></div>
+                        <div *ngIf="!item.contactCertificationLicense.verified" class="text-left"><i class="fa fa-times-circle" title="False"></i></div>
+                    </div>                    <div class="col-6 mb-3">
+                        <h6>{{l("ThumbsUpDown")}} :</h6>
+                        <div *ngIf="item.contactCertificationLicense.thumbsUpDown" class="text-left"><i class="fa fa-check-circle text-success"
+                                title="True"></i></div>
+                        <div *ngIf="!item.contactCertificationLicense.thumbsUpDown" class="text-left"><i class="fa fa-times-circle" title="False"></i></div>
+                    </div>                    <div class="col-6 mb-3">
+                        <h6>{{l("InternalNotes")}} :</h6>
+                        {{ item.contactCertificationLicense.internalNotes }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("DisplaySequence")}} :</h6>
+                        {{ item.contactCertificationLicense.displaySequence }}
+                    </div>
+
+                    <div class="col-6 mb-3">
+                        <h6>({{l("Contact")}}) {{l("FullName")}} :</h6>
+                        {{item.contactFullName}}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{l("ContactDocument")}}) {{l("DocumentTitle")}} :</h6>
+                        {{item.contactDocumentDocumentTitle}}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{l("Employee")}}) {{l("Name")}} :</h6>
+                        {{item.employeeName}}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{l("Business")}}) {{l("Name")}} :</h6>
+                        {{item.businessName}}
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button [disabled]="saving" type="button" class="btn btn-primary blue" (click)="close()">{{l("Close")}}</button>
+            </div>
+        </div>
+    </div>
+
+</div>

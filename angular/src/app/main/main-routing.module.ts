@@ -113,6 +113,18 @@ import { TaskEventsLibraryComponent } from './taskManagement/taskEvents/task-eve
 
 
                     {
+                        path: 'shop/productGigWorkerPortfolios',
+                        loadChildren: () => import('./shop/productGigWorkerPortfolios/productGigWorkerPortfolio.module').then(m => m.ProductGigWorkerPortfolioModule),
+                        data: { permission: 'Pages.ProductGigWorkerPortfolios' }
+                    },
+
+                    {
+                        path: 'shop/storeProductServiceLocalityMaps',
+                        loadChildren: () => import('./shop/storeProductServiceLocalityMaps/storeProductServiceLocalityMap.module').then(m => m.StoreProductServiceLocalityMapModule),
+                        data: { permission: 'Pages.StoreProductServiceLocalityMaps' }
+                    },
+
+                    {
                         path: 'shop/productTaskMaps',
                         loadChildren: () => import('./shop/productTaskMaps/productTaskMap.module').then(m => m.ProductTaskMapModule),
                         data: { permission: 'Pages.ProductTaskMaps' }
@@ -190,6 +202,12 @@ import { TaskEventsLibraryComponent } from './taskManagement/taskEvents/task-eve
                         path: 'cms/contents',
                         loadChildren: () => import('./cms/contents/content.module').then(m => m.ContentModule),
                         data: { permission: 'Pages.Contents' }
+                    },
+
+                    {
+                        path: 'cms/storeProductBlogs',
+                        loadChildren: () => import('./cms/storeProductBlogs/storeProductBlog.module').then(m => m.StoreProductBlogModule),
+                        data: { permission: 'Pages.StoreProductBlogs' }
                     },
 
                     {
@@ -275,11 +293,28 @@ import { TaskEventsLibraryComponent } from './taskManagement/taskEvents/task-eve
                         data: { permission: 'Pages.OrderProductInfos' }
                     },
 
+                    {
+                        path: 'orderManagement/orderDeliveryByCaptains',
+                        loadChildren: () => import('./orderManagement/orderDeliveryByCaptains/orderDeliveryByCaptain.module').then(m => m.OrderDeliveryByCaptainModule),
+                        data: { permission: 'Pages.OrderDeliveryByCaptains' }
+                    },
+                    {
+                        path: 'orderManagement/orderDeliveryChangeCaptains',
+                        loadChildren: () => import('./orderManagement/orderDeliveryChangeCaptains/orderDeliveryChangeCaptain.module').then(m => m.OrderDeliveryChangeCaptainModule),
+                        data: { permission: 'Pages.OrderDeliveryChangeCaptains' }
+                    },
+
 
                     {
                         path: 'lookupData/paymentTypes',
                         loadChildren: () => import('./lookupData/paymentTypes/paymentType.module').then(m => m.PaymentTypeModule),
                         data: { permission: 'Pages.PaymentTypes' }
+                    },
+
+                    {
+                        path: 'lookupData/deliveryTypes',
+                        loadChildren: () => import('./lookupData/deliveryTypes/deliveryType.module').then(m => m.DeliveryTypeModule),
+                        data: { permission: 'Pages.DeliveryTypes' }
                     },
 
 
@@ -607,6 +642,12 @@ import { TaskEventsLibraryComponent } from './taskManagement/taskEvents/task-eve
                         path: 'territory/hubProductCategories',
                         loadChildren: () => import('./territory/hubProductCategories/hubProductCategory.module').then(m => m.HubProductCategoryModule),
                         data: { permission: 'Pages.HubProductCategories' }
+                    },
+
+                    {
+                        path: 'territory/hubJobs',
+                        loadChildren: () => import('./territory/hubJobs/hubJob.module').then(m => m.HubJobModule),
+                        data: { permission: 'Pages.HubJobs' }
                     },
 
 
@@ -1093,6 +1134,12 @@ import { TaskEventsLibraryComponent } from './taskManagement/taskEvents/task-eve
                         data: { permission: 'Pages.ConnectChannels' }
                     },
 
+                    {
+                        path: 'crm/connectMessages',
+                        loadChildren: () => import('./crm/connectMessages/connectMessage.module').then(m => m.ConnectMessageModule),
+                        data: { permission: 'Pages.ConnectMessages' }
+                    },
+
 
                     {
                         path: 'lookupData/zipCodes',
@@ -1162,6 +1209,149 @@ import { TaskEventsLibraryComponent } from './taskManagement/taskEvents/task-eve
                         loadChildren: () => import('./lookupData/currencies/currency.module').then(m => m.CurrencyModule),
                         data: { permission: 'Pages.Currencies' }
                     },
+
+                    {
+                        path: 'bookingManagement/bookings',
+                        loadChildren: () => import('./bookingManagement/bookings/booking.module').then(m => m.BookingModule),
+                        data: { permission: 'Pages.Bookings' }
+                    },
+                    {
+                        path: 'bookingManagement/bookingStatuses',
+                        loadChildren: () => import('./bookingManagement/bookingStatuses/bookingStatus.module').then(m => m.BookingStatusModule),
+                        data: { permission: 'Pages.BookingStatuses' }
+                    },
+
+                    {
+                        path: 'bookingManagement/bookingTimeslotSettings',
+                        loadChildren: () => import('./bookingManagement/bookingTimeslotSettings/bookingTimeslotSetting.module').then(m => m.BookingTimeslotSettingModule),
+                        data: { permission: 'Pages.BookingTimeslotSettings' }
+                    },
+
+                    {
+                        path: 'bookingManagement/bookingTypes',
+                        loadChildren: () => import('./bookingManagement/bookingTypes/bookingType.module').then(m => m.BookingTypeModule),
+                        data: { permission: 'Pages.BookingTypes' }
+                    },
+                    {
+                        path: 'contractManagement/contracts',
+                        loadChildren: () => import('./contractManagement/contracts/contract.module').then(m => m.ContractModule),
+                        data: { permission: 'Pages.Contracts' }
+                    },
+                    {
+                        path: 'contractManagement/contractFinancialTerms',
+                        loadChildren: () => import('./contractManagement/contractFinancialTerms/contractFinancialTerm.module').then(m => m.ContractFinancialTermModule),
+                        data: { permission: 'Pages.ContractFinancialTerms' }
+                    },
+
+                    {
+                        path: 'rewardManagement/rewardPointAwardSettings',
+                        loadChildren: () => import('./rewardManagement/rewardPointAwardSettings/rewardPointAwardSetting.module').then(m => m.RewardPointAwardSettingModule),
+                        data: { permission: 'Pages.RewardPointAwardSettings' }
+                    },
+                    {
+                        path: 'rewardManagement/rewardPointHistories',
+                        loadChildren: () => import('./rewardManagement/rewardPointHistories/rewardPointHistory.module').then(m => m.RewardPointHistoryModule),
+                        data: { permission: 'Pages.RewardPointHistories' }
+                    },
+                    {
+                        path: 'rewardManagement/rewardPointPriceSettings',
+                        loadChildren: () => import('./rewardManagement/rewardPointPriceSettings/rewardPointPriceSetting.module').then(m => m.RewardPointPriceSettingModule),
+                        data: { permission: 'Pages.RewardPointPriceSettings' }
+                    },
+                    {
+                        path: 'rewardManagement/rewardPointTypes',
+                        loadChildren: () => import('./rewardManagement/rewardPointTypes/rewardPointType.module').then(m => m.RewardPointTypeModule),
+                        data: { permission: 'Pages.RewardPointTypes' }
+                    },
+
+                    //crm
+                    {
+                        path: 'crm/contactAddresses',
+                        loadChildren: () => import('./crm/contactAddresses/contactAddress.module').then(m => m.ContactAddressModule),
+                        data: { permission: 'Pages.ContactAddresses' }
+                    },
+                    {
+                        path: 'crm/contactCertificationLicenses',
+                        loadChildren: () => import('./crm/contactCertificationLicenses/contactCertificationLicense.module').then(m => m.ContactCertificationLicenseModule),
+                        data: { permission: 'Pages.ContactCertificationLicenses' }
+                    },
+                    {
+                        path: 'crm/contactEducations',
+                        loadChildren: () => import('./crm/contactEducations/contactEducation.module').then(m => m.ContactEducationModule),
+                        data: { permission: 'Pages.ContactEducations' }
+                    },
+                    {
+                        path: 'crm/contactExperiences',
+                        loadChildren: () => import('./crm/contactExperiences/contactExperience.module').then(m => m.ContactExperienceModule),
+                        data: { permission: 'Pages.ContactExperiences' }
+                    },
+                    {
+                        path: 'crm/contactMembershipHistories',
+                        loadChildren: () => import('./crm/contactMembershipHistories/contactMembershipHistory.module').then(m => m.ContactMembershipHistoryModule),
+                        data: { permission: 'Pages.ContactMembershipHistories' }
+                    },
+                    {
+                        path: 'crm/contactOrApplicantTeams',
+                        loadChildren: () => import('./crm/contactOrApplicantTeams/contactOrApplicantTeam.module').then(m => m.ContactOrApplicantTeamModule),
+                        data: { permission: 'Pages.ContactOrApplicantTeams' }
+                    },
+                    {
+                        path: 'crm/contactProductRecommendations',
+                        loadChildren: () => import('./crm/contactProductRecommendations/contactProductRecommendation.module').then(m => m.ContactProductRecommendationModule),
+                        data: { permission: 'Pages.ContactProductRecommendations' }
+                    },
+                    {
+                        path: 'crm/contactReferralContacts',
+                        loadChildren: () => import('./crm/contactReferralContacts/contactReferralContact.module').then(m => m.ContactReferralContactModule),
+                        data: { permission: 'Pages.ContactReferralContacts' }
+                    },
+                    {
+                        path: 'crm/contactVettedInfos',
+                        loadChildren: () => import('./crm/contactVettedInfos/contactVettedInfo.module').then(m => m.ContactVettedInfoModule),
+                        data: { permission: 'Pages.ContactVettedInfos' }
+                    },
+                    {
+                        path: 'crm/customerLocalitiesZipCodeMaps',
+                        loadChildren: () => import('./crm/customerLocalitiesZipCodeMaps/customerLocalitiesZipCodeMap.module').then(m => m.CustomerLocalitiesZipCodeMapModule),
+                        data: { permission: 'Pages.CustomerLocalitiesZipCodeMaps' }
+                    },
+                    {
+                        path: 'crm/customerWalletTransactions',
+                        loadChildren: () => import('./crm/customerWalletTransactions/customerWalletTransaction.module').then(m => m.CustomerWalletTransactionModule),
+                        data: { permission: 'Pages.CustomerWalletTransactions' }
+                    },
+                    {
+                        path: 'crm/employeeTeams',
+                        loadChildren: () => import('./crm/employeeTeams/employeeTeam.module').then(m => m.EmployeeTeamModule),
+                        data: { permission: 'Pages.EmployeeTeams' }
+                    },
+                    //job
+                    {
+                        path: 'jobManagement/jobApplicantHireMatrixes',
+                        loadChildren: () => import('./jobManagement/jobApplicantHireMatrixes/jobApplicantHireMatrix.module').then(m => m.JobApplicantHireMatrixModule),
+                        data: { permission: 'Pages.JobApplicantHireMatrixes' }
+                    },
+                    {
+                        path: 'jobManagement/jobApplicantHireStatusTypes',
+                        loadChildren: () => import('./jobManagement/jobApplicantHireStatusTypes/jobApplicantHireStatusType.module').then(m => m.JobApplicantHireStatusTypeModule),
+                        data: { permission: 'Pages.JobApplicantHireStatusTypes' }
+                    },
+                    {
+                        path: 'jobManagement/jobHiringTeams',
+                        loadChildren: () => import('./jobManagement/jobHiringTeams/jobHiringTeam.module').then(m => m.JobHiringTeamModule),
+                        data: { permission: 'Pages.JobHiringTeams' }
+                    },
+                    {
+                        path: 'jobManagement/jobReferralFeeDetails',
+                        loadChildren: () => import('./jobManagement/jobReferralFeeDetails/jobReferralFeeDetail.module').then(m => m.JobReferralFeeDetailModule),
+                        data: { permission: 'Pages.JobReferralFeeDetails' }
+                    },
+                    {
+                        path: 'jobManagement/jobReferralFeeSplitPolicies',
+                        loadChildren: () => import('./jobManagement/jobReferralFeeSplitPolicies/jobReferralFeeSplitPolicy.module').then(m => m.JobReferralFeeSplitPolicyModule),
+                        data: { permission: 'Pages.JobReferralFeeSplitPolicies' }
+                    },
+
 
                     {
                         path: 'dashboard',

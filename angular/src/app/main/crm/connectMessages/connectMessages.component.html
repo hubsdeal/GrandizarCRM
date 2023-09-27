@@ -1,0 +1,407 @@
+﻿<div [@routerTransition]>
+  
+  
+   <sub-header [title]="'ConnectMessages' | localize" [description]="'ConnectMessagesHeaderInfo' | localize">
+             <div role="actions">
+                 <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1"><i class="fa fa-file-excel"></i> {{l("ExportToExcel")}}</button>
+                
+                 <button *ngIf="isGranted('Pages.ConnectMessages.Create')" (click)="createConnectMessage()" 
+                                        class="btn btn-primary blue"><i class="fa fa-plus"></i> {{l("CreateNewConnectMessage")}}</button>
+             </div>
+            </sub-header>
+    
+    <div [class]="containerClass">
+        <div class="card card-custom gutter-b">
+            <div class="card-body">
+                <form class="form" autocomplete="off">
+                    <div>
+                        <div class="row align-items-center">
+                            <div class="col-xl-12">
+                                
+                                
+        	<div class="my-3">                
+                <div class="input-group mb-3">
+                  <input [(ngModel)]="filterText" (ngModelChange)="getConnectMessages()" name="filterText" autoFocus type="text" class="form-control" [placeholder]="l('SearchWithThreeDot')">
+                  <button class="btn btn-primary" type="submit" (click)="getConnectMessages()"><i class="flaticon-search-1"></i></button>
+                </div>
+            </div>
+        	
+                            </div>
+                        </div>
+						 <div class="row" [hidden]="!advancedFiltersAreShown">
+						 	<div class="col-md-12">
+						         
+						     </div>
+
+
+
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="FromFilter">{{l("From")}}</label>
+									<input type="text" class="form-control" id="FromFilter" name="fromFilter" [(ngModel)]="fromFilter" (ngModelChange)="getConnectMessages()">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="ToFilter">{{l("To")}}</label>
+									<input type="text" class="form-control" id="ToFilter" name="toFilter" [(ngModel)]="toFilter" (ngModelChange)="getConnectMessages()">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="SubjectFilter">{{l("Subject")}}</label>
+									<input type="text" class="form-control" id="SubjectFilter" name="subjectFilter" [(ngModel)]="subjectFilter" (ngModelChange)="getConnectMessages()">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="BodyFilter">{{l("Body")}}</label>
+									<input type="text" class="form-control" id="BodyFilter" name="bodyFilter" [(ngModel)]="bodyFilter" (ngModelChange)="getConnectMessages()">
+								</div>
+                            </div>	
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="SendOrReceiveFilterSelect">{{l("SendOrReceive")}}</label>
+									<select class="form-select" name="SendOrReceiveFilter" id="SendOrReceiveFilterSelect" [(ngModel)]="sendOrReceiveFilter" (ngModelChange)="getConnectMessages()">
+									<option value="-1">{{l("All")}}</option>
+									<option value="0">{{l("False")}}</option>
+									<option value="1">{{l("True")}}</option>
+									</select>
+								</div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+									<label class="form-label" for="MinSendDateFilter">{{l("SendDateRange")}}</label>
+									<div class="input-group">
+                                        
+                                        <input class="form-control m-input" id="MinSendDateFilter" name="MinSendDateFilter" type="datetime" bsDatepicker  placeholder="{{l('MinValue')}}" [(ngModel)]="minSendDateFilter" (ngModelChange)="getConnectMessages()">
+			                            <span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
+                                        <input class="form-control m-input" id="MaxSendDateFilter" name="MaxSendDateFilter" type="datetime" bsDatepicker  placeholder="{{l('MaxValue')}}" [(ngModel)]="maxSendDateFilter" (ngModelChange)="getConnectMessages()">
+									</div>
+                                </div>
+                            </div>
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="SendTimeFilter">{{l("SendTime")}}</label>
+									<input type="text" class="form-control" id="SendTimeFilter" name="sendTimeFilter" [(ngModel)]="sendTimeFilter" (ngModelChange)="getConnectMessages()">
+								</div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+									<label class="form-label" for="MinViewDateFilter">{{l("ViewDateRange")}}</label>
+									<div class="input-group">
+                                        
+                                        <input class="form-control m-input" id="MinViewDateFilter" name="MinViewDateFilter" type="datetime" bsDatepicker  placeholder="{{l('MinValue')}}" [(ngModel)]="minViewDateFilter" (ngModelChange)="getConnectMessages()">
+			                            <span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
+                                        <input class="form-control m-input" id="MaxViewDateFilter" name="MaxViewDateFilter" type="datetime" bsDatepicker  placeholder="{{l('MaxValue')}}" [(ngModel)]="maxViewDateFilter" (ngModelChange)="getConnectMessages()">
+									</div>
+                                </div>
+                            </div>
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="ViewTimeFilter">{{l("ViewTime")}}</label>
+									<input type="text" class="form-control" id="ViewTimeFilter" name="viewTimeFilter" [(ngModel)]="viewTimeFilter" (ngModelChange)="getConnectMessages()">
+								</div>
+                            </div>	
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="ViewedFilterSelect">{{l("Viewed")}}</label>
+									<select class="form-select" name="ViewedFilter" id="ViewedFilterSelect" [(ngModel)]="viewedFilter" (ngModelChange)="getConnectMessages()">
+									<option value="-1">{{l("All")}}</option>
+									<option value="0">{{l("False")}}</option>
+									<option value="1">{{l("True")}}</option>
+									</select>
+								</div>
+                            </div>	
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="ClickedFilterSelect">{{l("Clicked")}}</label>
+									<select class="form-select" name="ClickedFilter" id="ClickedFilterSelect" [(ngModel)]="clickedFilter" (ngModelChange)="getConnectMessages()">
+									<option value="-1">{{l("All")}}</option>
+									<option value="0">{{l("False")}}</option>
+									<option value="1">{{l("True")}}</option>
+									</select>
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="NotesFilter">{{l("Notes")}}</label>
+									<input type="text" class="form-control" id="NotesFilter" name="notesFilter" [(ngModel)]="notesFilter" (ngModelChange)="getConnectMessages()">
+								</div>
+                            </div>	
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="SendNowOrScheduledFilterSelect">{{l("SendNowOrScheduled")}}</label>
+									<select class="form-select" name="SendNowOrScheduledFilter" id="SendNowOrScheduledFilterSelect" [(ngModel)]="sendNowOrScheduledFilter" (ngModelChange)="getConnectMessages()">
+									<option value="-1">{{l("All")}}</option>
+									<option value="0">{{l("False")}}</option>
+									<option value="1">{{l("True")}}</option>
+									</select>
+								</div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+									<label class="form-label" for="MinScheduleSendDateTimeFilter">{{l("ScheduleSendDateTimeRange")}}</label>
+									<div class="input-group">
+                                        
+                                        <input class="form-control m-input" id="MinScheduleSendDateTimeFilter" name="MinScheduleSendDateTimeFilter" type="datetime" bsDatepicker  placeholder="{{l('MinValue')}}" [(ngModel)]="minScheduleSendDateTimeFilter" (ngModelChange)="getConnectMessages()">
+			                            <span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
+                                        <input class="form-control m-input" id="MaxScheduleSendDateTimeFilter" name="MaxScheduleSendDateTimeFilter" type="datetime" bsDatepicker  placeholder="{{l('MaxValue')}}" [(ngModel)]="maxScheduleSendDateTimeFilter" (ngModelChange)="getConnectMessages()">
+									</div>
+                                </div>
+                            </div>
+
+
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="ConnectChannelNameFilter">({{l("ConnectChannel")}}) {{l("Name")}}</label>
+									<input type="text" class="form-control" id="ConnectChannelNameFilter" name="connectChannelNameFilter" [(ngModel)]="connectChannelNameFilter">
+                                </div>
+                            </div>
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="UserNameFilter">({{l("User")}}) {{l("Name")}}</label>
+									<input type="text" class="form-control" id="UserNameFilter" name="userNameFilter" [(ngModel)]="userNameFilter">
+                                </div>
+                            </div>
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="ContactFullNameFilter">({{l("Contact")}}) {{l("FullName")}}</label>
+									<input type="text" class="form-control" id="ContactFullNameFilter" name="contactFullNameFilter" [(ngModel)]="contactFullNameFilter">
+                                </div>
+                            </div>
+                            <div class="col-md-12 mt-5">
+                                <button (click)="resetFilters()" class="btn btn-secondary btn-sm" id="btn-reset-filters">Reset</button>
+                            </div>
+                        </div>
+                        <div class="row my-4">
+                            <div class="col-sm-12">
+                                <span class="clickable-item text-muted" *ngIf="!advancedFiltersAreShown" (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i class="fa fa-angle-down"></i> {{l("ShowAdvancedFilters")}}</span>
+                                <span class="clickable-item text-muted" *ngIf="advancedFiltersAreShown" (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i class="fa fa-angle-up"></i> {{l("HideAdvancedFilters")}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="row align-items-center">
+                    <!--<Primeng-Datatable-Start>-->
+                    <div class="primeng-datatable-container col-12"
+                         [busyIf]="primengTableHelper.isLoading">
+                        <p-table #dataTable
+                                     (onLazyLoad)="getConnectMessages($event)"
+                                     [value]="primengTableHelper.records"
+                                     rows="{{primengTableHelper.defaultRecordsCountPerPage}}"
+                                     [paginator]="false"
+                                     [lazy]="true"
+                                     [scrollable]="true"
+                                     ScrollWidth="100%"
+                                     [responsive]="primengTableHelper.isResponsive"
+                                     [resizableColumns]="primengTableHelper.resizableColumns">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th style="width: 130px" [hidden]="!isGrantedAny('Pages.ConnectMessages.Edit', 'Pages.ConnectMessages.Delete')">{{l('Actions')}}</th>
+                                    <th style="width: 150px" pSortableColumn="connectChannelFk.name">
+                                        {{l('Name')}}
+                                        <p-sortIcon field="connectChannelName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="fromUserFk.name">
+                                        {{l('Name')}}
+                                        <p-sortIcon field="userName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="sendToContactFk.fullName">
+                                        {{l('FullName')}}
+                                        <p-sortIcon field="contactFullName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="from">
+                                        {{l('From')}}
+                                        <p-sortIcon field="connectMessage.from"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="to">
+                                        {{l('To')}}
+                                        <p-sortIcon field="connectMessage.to"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="subject">
+                                        {{l('Subject')}}
+                                        <p-sortIcon field="connectMessage.subject"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="body">
+                                        {{l('Body')}}
+                                        <p-sortIcon field="connectMessage.body"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="sendOrReceive">
+                                        {{l('SendOrReceive')}}
+                                        <p-sortIcon field="connectMessage.sendOrReceive"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="sendDate">
+                                        {{l('SendDate')}}
+                                        <p-sortIcon field="connectMessage.sendDate"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="sendTime">
+                                        {{l('SendTime')}}
+                                        <p-sortIcon field="connectMessage.sendTime"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="viewDate">
+                                        {{l('ViewDate')}}
+                                        <p-sortIcon field="connectMessage.viewDate"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="viewTime">
+                                        {{l('ViewTime')}}
+                                        <p-sortIcon field="connectMessage.viewTime"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="viewed">
+                                        {{l('Viewed')}}
+                                        <p-sortIcon field="connectMessage.viewed"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="clicked">
+                                        {{l('Clicked')}}
+                                        <p-sortIcon field="connectMessage.clicked"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="notes">
+                                        {{l('Notes')}}
+                                        <p-sortIcon field="connectMessage.notes"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="sendNowOrScheduled">
+                                        {{l('SendNowOrScheduled')}}
+                                        <p-sortIcon field="connectMessage.sendNowOrScheduled"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="scheduleSendDateTime">
+                                        {{l('ScheduleSendDateTime')}}
+                                        <p-sortIcon field="connectMessage.scheduleSendDateTime"></p-sortIcon>
+                                    </th>
+
+                                </tr>
+                            </ng-template>                           
+							<ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
+                                <tr>
+                                    <td style="width: 130px"
+                                        [hidden]="!isGrantedAny('Pages.ConnectMessages.Edit', 'Pages.ConnectMessages.Delete')">
+                                       <div class="btn-group dropdown" dropdown container="body">
+                                            <button class="dropdown-toggle btn btn-sm btn-primary" dropdownToggle>
+                                                <i class="fa fa-cog"></i><span class="caret"></span> {{l("Actions")}}
+                                            </button>
+												<ul class="dropdown-menu"  *dropdownMenu>
+												<li>
+													<a href="javascript:;" class="dropdown-item"
+														(click)="viewConnectMessageModal.show(record)">{{l('View')}}</a>
+												</li>
+												<li>
+                                                <a href="javascript:;" *ngIf="permission.isGranted('Pages.ConnectMessages.Edit')" class="dropdown-item"
+														(click)="createOrEditConnectMessageModal.show(record.connectMessage.id)">{{l('Edit')}}</a>												
+                                                </li>
+												<li>
+											        <a class="dropdown-item" href="javascript:;" *ngIf="permission.isGranted('Pages.ConnectMessages.Delete')"
+														(click)="deleteConnectMessage(record.connectMessage)">{{l('Delete')}}</a>
+												</li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                    <td style="width:150px">
+												<span class="p-column-title"> {{l('Name')}}</span>
+												{{record.connectChannelName}}
+											</td>
+                                    <td style="width:150px">
+												<span class="p-column-title"> {{l('Name')}}</span>
+												{{record.userName}}
+											</td>
+                                    <td style="width:150px">
+												<span class="p-column-title"> {{l('FullName')}}</span>
+												{{record.contactFullName}}
+											</td>
+                                    <td style="width:150px">
+											<span class="p-column-title"> {{l('From')}}</span>
+											{{record.connectMessage.from}}
+										</td>
+                                    <td style="width:150px">
+											<span class="p-column-title"> {{l('To')}}</span>
+											{{record.connectMessage.to}}
+										</td>
+                                    <td style="width:150px">
+											<span class="p-column-title"> {{l('Subject')}}</span>
+											{{record.connectMessage.subject}}
+										</td>
+                                    <td style="width:150px">
+											<span class="p-column-title"> {{l('Body')}}</span>
+											{{record.connectMessage.body}}
+										</td>
+                                    <td style="width:150px">
+										<span class="p-column-title"> {{l('SendOrReceive')}}</span>
+                                        <div *ngIf="record.connectMessage.sendOrReceive" class="text-center"><i class="fa fa-check-circle text-success" title="True"></i></div>
+										<div *ngIf="!record.connectMessage.sendOrReceive" class="text-center"><i class="fa fa-times-circle" title="False"></i></div>
+                                    </td>
+                                    <td style="width:150px">
+										<span class="p-column-title"> {{l('SendDate')}}</span>
+                                        <span *ngIf="record.connectMessage.sendDate">
+											{{record.connectMessage.sendDate |  luxonFormat:'F' }}
+                                        </span>
+                                        <span *ngIf="!record.connectMessage.sendDate">-</span>
+                                    </td>
+                                    <td style="width:150px">
+											<span class="p-column-title"> {{l('SendTime')}}</span>
+											{{record.connectMessage.sendTime}}
+										</td>
+                                    <td style="width:150px">
+										<span class="p-column-title"> {{l('ViewDate')}}</span>
+                                        <span *ngIf="record.connectMessage.viewDate">
+											{{record.connectMessage.viewDate |  luxonFormat:'F' }}
+                                        </span>
+                                        <span *ngIf="!record.connectMessage.viewDate">-</span>
+                                    </td>
+                                    <td style="width:150px">
+											<span class="p-column-title"> {{l('ViewTime')}}</span>
+											{{record.connectMessage.viewTime}}
+										</td>
+                                    <td style="width:150px">
+										<span class="p-column-title"> {{l('Viewed')}}</span>
+                                        <div *ngIf="record.connectMessage.viewed" class="text-center"><i class="fa fa-check-circle text-success" title="True"></i></div>
+										<div *ngIf="!record.connectMessage.viewed" class="text-center"><i class="fa fa-times-circle" title="False"></i></div>
+                                    </td>
+                                    <td style="width:150px">
+										<span class="p-column-title"> {{l('Clicked')}}</span>
+                                        <div *ngIf="record.connectMessage.clicked" class="text-center"><i class="fa fa-check-circle text-success" title="True"></i></div>
+										<div *ngIf="!record.connectMessage.clicked" class="text-center"><i class="fa fa-times-circle" title="False"></i></div>
+                                    </td>
+                                    <td style="width:150px">
+											<span class="p-column-title"> {{l('Notes')}}</span>
+											{{record.connectMessage.notes}}
+										</td>
+                                    <td style="width:150px">
+										<span class="p-column-title"> {{l('SendNowOrScheduled')}}</span>
+                                        <div *ngIf="record.connectMessage.sendNowOrScheduled" class="text-center"><i class="fa fa-check-circle text-success" title="True"></i></div>
+										<div *ngIf="!record.connectMessage.sendNowOrScheduled" class="text-center"><i class="fa fa-times-circle" title="False"></i></div>
+                                    </td>
+                                    <td style="width:150px">
+										<span class="p-column-title"> {{l('ScheduleSendDateTime')}}</span>
+                                        <span *ngIf="record.connectMessage.scheduleSendDateTime">
+											{{record.connectMessage.scheduleSendDateTime |  luxonFormat:'F' }}
+                                        </span>
+                                        <span *ngIf="!record.connectMessage.scheduleSendDateTime">-</span>
+                                    </td>
+
+                                </tr>
+                               
+                            </ng-template>
+                        </p-table>
+						<div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
+                            {{l('NoData')}}
+                        </div>
+                        <div class="primeng-paging-container">
+                            <p-paginator [rows]="primengTableHelper.defaultRecordsCountPerPage"
+                                         #paginator
+                                         (onPageChange)="getConnectMessages($event)"
+                                         [totalRecords]="primengTableHelper.totalRecordsCount"
+                                         [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
+                                         [showCurrentPageReport]="true"
+                                         [currentPageReportTemplate]="'TotalRecordsCount' | localize:primengTableHelper.totalRecordsCount"    
+                            >
+                            </p-paginator>
+                        </div>
+                    </div>
+                    <!--<Primeng-Datatable-End>-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <createOrEditConnectMessageModal #createOrEditConnectMessageModal (modalSave)="getConnectMessages()"></createOrEditConnectMessageModal>    
+    <viewConnectMessageModal #viewConnectMessageModal></viewConnectMessageModal>
+    
+  </div>

@@ -1,0 +1,94 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span>{{l("Details")}}</span>
+                </h4>               
+                
+                
+                 <button type="button" class="btn-close" (click)="close()" aria-label="Close" [disabled]="saving"></button>
+             
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="col-6 mb-3">
+                        <h6>{{l("Name")}} :</h6>
+                        {{ item.contactEducation.name }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("HighestDegree")}} :</h6>
+                        <div *ngIf="item.contactEducation.highestDegree" class="text-left"><i class="fa fa-check-circle text-success"
+                                title="True"></i></div>
+                        <div *ngIf="!item.contactEducation.highestDegree" class="text-left"><i class="fa fa-times-circle" title="False"></i></div>
+                    </div>                    <div class="col-6 mb-3">
+                        <h6>{{l("InstituteName")}} :</h6>
+                        {{ item.contactEducation.instituteName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("MajorOrMinorDegreeSubject")}} :</h6>
+                        {{ item.contactEducation.majorOrMinorDegreeSubject }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("StartDate")}} :</h6>
+                        {{ item.contactEducation.startDate |  luxonFormat:'yyyy-LL-dd HH:mm:ss'  }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("EndDate")}} :</h6>
+                        {{ item.contactEducation.endDate |  luxonFormat:'yyyy-LL-dd HH:mm:ss'  }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("PassingGpa")}} :</h6>
+                        {{ item.contactEducation.passingGpa }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("Location")}} :</h6>
+                        {{ item.contactEducation.location }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("Verified")}} :</h6>
+                        <div *ngIf="item.contactEducation.verified" class="text-left"><i class="fa fa-check-circle text-success"
+                                title="True"></i></div>
+                        <div *ngIf="!item.contactEducation.verified" class="text-left"><i class="fa fa-times-circle" title="False"></i></div>
+                    </div>                    <div class="col-6 mb-3">
+                        <h6>{{l("ThumbsUpDown")}} :</h6>
+                        <div *ngIf="item.contactEducation.thumbsUpDown" class="text-left"><i class="fa fa-check-circle text-success"
+                                title="True"></i></div>
+                        <div *ngIf="!item.contactEducation.thumbsUpDown" class="text-left"><i class="fa fa-times-circle" title="False"></i></div>
+                    </div>                    <div class="col-6 mb-3">
+                        <h6>{{l("InternalNotes")}} :</h6>
+                        {{ item.contactEducation.internalNotes }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("DisplaySequence")}} :</h6>
+                        {{ item.contactEducation.displaySequence }}
+                    </div>
+
+                    <div class="col-6 mb-3">
+                        <h6>({{l("Contact")}}) {{l("FullName")}} :</h6>
+                        {{item.contactFullName}}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{l("Employee")}}) {{l("Name")}} :</h6>
+                        {{item.employeeName}}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{l("Business")}}) {{l("Name")}} :</h6>
+                        {{item.businessName}}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{l("ContactDocument")}}) {{l("DocumentTitle")}} :</h6>
+                        {{item.contactDocumentDocumentTitle}}
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button [disabled]="saving" type="button" class="btn btn-primary blue" (click)="close()">{{l("Close")}}</button>
+            </div>
+        </div>
+    </div>
+
+</div>
