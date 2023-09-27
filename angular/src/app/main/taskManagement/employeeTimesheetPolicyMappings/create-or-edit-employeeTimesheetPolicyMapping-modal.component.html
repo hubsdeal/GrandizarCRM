@@ -1,0 +1,81 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #employeeTimesheetPolicyMappingForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="employeeTimesheetPolicyMapping.id">{{l("EditEmployeeTimesheetPolicyMapping")}}</span>
+                        <span *ngIf="!employeeTimesheetPolicyMapping.id">{{l("CreateNewEmployeeTimesheetPolicyMapping")}}</span>
+                    </h4>                    
+                    
+                    
+                 <button type="button" class="btn-close" (click)="close()" aria-label="Close" [disabled]="saving"></button>
+             
+                </div>
+                <div class="modal-body">
+                 
+
+
+					<div class="my-3">
+                        <label class="form-label" for="EmployeeName">{{l("Employee")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="EmployeeName" name="employeeName" [(ngModel)]="employeeName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectEmployeeModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setEmployeeIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="employeeTimesheetPolicyMapping.employeeId" [(ngModel)]="employeeTimesheetPolicyMapping.employeeId" type="text" required hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="TimesheetPolicyPolicyName">{{l("TimesheetPolicy")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="TimesheetPolicyPolicyName" name="timesheetPolicyPolicyName" [(ngModel)]="timesheetPolicyPolicyName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectTimesheetPolicyModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setTimesheetPolicyIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="employeeTimesheetPolicyMapping.timesheetPolicyId" [(ngModel)]="employeeTimesheetPolicyMapping.timesheetPolicyId" type="text" required hidden>
+                        
+
+
+								<div class="my-3">
+									<label class="form-label" for="EmployeeTimesheetPolicyMapping_StartDate">{{l("StartDate")}}</label>
+									 <input class="form-control m-input" #EmployeeTimesheetPolicyMapping_StartDate type="datetime" bsDatepicker  datePickerLuxonModifier  [(date)]="employeeTimesheetPolicyMapping.startDate" id="EmployeeTimesheetPolicyMapping_StartDate" name="EmployeeTimesheetPolicyMapping_StartDate">
+									<validation-messages [formCtrl]="EmployeeTimesheetPolicyMapping_StartDate"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="EmployeeTimesheetPolicyMapping_EndDate">{{l("EndDate")}}</label>
+									 <input class="form-control m-input" #EmployeeTimesheetPolicyMapping_EndDate type="datetime" bsDatepicker  datePickerLuxonModifier  [(date)]="employeeTimesheetPolicyMapping.endDate" id="EmployeeTimesheetPolicyMapping_EndDate" name="EmployeeTimesheetPolicyMapping_EndDate">
+									<validation-messages [formCtrl]="EmployeeTimesheetPolicyMapping_EndDate"></validation-messages>
+								</div>
+					
+								<br/>
+								<label class="form-check form-check-custom form-check-solid">
+                                    <input
+                                        id="EmployeeTimesheetPolicyMapping_IsActive" 
+                                        #EmployeeTimesheetPolicyMapping_IsActive="ngModel"
+                                        name="IsActive" 
+                                        [(ngModel)]="employeeTimesheetPolicyMapping.isActive"
+                                        type="checkbox"
+                                        class="form-check-input"
+                                    />
+                                    <span class="form-check-label">
+                                        {{l("IsActive")}}
+                                    </span>
+                                </label>
+                                <validation-messages [formCtrl]="EmployeeTimesheetPolicyMapping_IsActive"></validation-messages>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!employeeTimesheetPolicyMappingForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+<employeeTimesheetPolicyMappingEmployeeLookupTableModal #employeeTimesheetPolicyMappingEmployeeLookupTableModal (modalSave)="getNewEmployeeId()"></employeeTimesheetPolicyMappingEmployeeLookupTableModal>
+		 <employeeTimesheetPolicyMappingTimesheetPolicyLookupTableModal #employeeTimesheetPolicyMappingTimesheetPolicyLookupTableModal (modalSave)="getNewTimesheetPolicyId()"></employeeTimesheetPolicyMappingTimesheetPolicyLookupTableModal>
+		 
+</div>

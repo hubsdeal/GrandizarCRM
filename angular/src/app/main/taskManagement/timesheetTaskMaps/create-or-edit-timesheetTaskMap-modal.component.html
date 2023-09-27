@@ -1,0 +1,53 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #timesheetTaskMapForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="timesheetTaskMap.id">{{l("EditTimesheetTaskMap")}}</span>
+                        <span *ngIf="!timesheetTaskMap.id">{{l("CreateNewTimesheetTaskMap")}}</span>
+                    </h4>                    
+                    
+                    
+                 <button type="button" class="btn-close" (click)="close()" aria-label="Close" [disabled]="saving"></button>
+             
+                </div>
+                <div class="modal-body">
+                 
+
+
+					<div class="my-3">
+                        <label class="form-label" for="TimesheetStartTime">{{l("Timesheet")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="TimesheetStartTime" name="timesheetStartTime" [(ngModel)]="timesheetStartTime" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectTimesheetModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setTimesheetIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="timesheetTaskMap.timesheetId" [(ngModel)]="timesheetTaskMap.timesheetId" type="text" required hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="TaskEventName">{{l("TaskEvent")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="TaskEventName" name="taskEventName" [(ngModel)]="taskEventName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectTaskEventModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setTaskEventIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="timesheetTaskMap.taskEventId" [(ngModel)]="timesheetTaskMap.taskEventId" type="text" required hidden>
+                        
+
+
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!timesheetTaskMapForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+<timesheetTaskMapTimesheetLookupTableModal #timesheetTaskMapTimesheetLookupTableModal (modalSave)="getNewTimesheetId()"></timesheetTaskMapTimesheetLookupTableModal>
+		 <timesheetTaskMapTaskEventLookupTableModal #timesheetTaskMapTaskEventLookupTableModal (modalSave)="getNewTaskEventId()"></timesheetTaskMapTaskEventLookupTableModal>
+		 
+</div>

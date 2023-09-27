@@ -1357,6 +1357,37 @@ import { TimesheetsComponent } from './taskManagement/timesheets/timesheets.comp
                         data: { permission: 'Pages.JobReferralFeeSplitPolicies' }
                     },
 
+                    //task
+                    {
+                        path: 'taskManagement/employeeTimesheetActivityTrackers',
+                        loadChildren: () => import('./taskManagement/employeeTimesheetActivityTrackers/employeeTimesheetActivityTracker.module').then(m => m.EmployeeTimesheetActivityTrackerModule),
+                        data: { permission: 'Pages.EmployeeTimesheetActivityTrackers' }
+                    },
+                    {
+                        path: 'taskManagement/employeeTimesheetPolicyMappings',
+                        loadChildren: () => import('./taskManagement/employeeTimesheetPolicyMappings/employeeTimesheetPolicyMapping.module').then(m => m.EmployeeTimesheetPolicyMappingModule),
+                        data: { permission: 'Pages.EmployeeTimesheetPolicyMappings' }
+                    },
+                    {
+                        path: 'taskManagement/orderTaskMaps',
+                        loadChildren: () => import('./taskManagement/orderTaskMaps/orderTaskMap.module').then(m => m.OrderTaskMapModule),
+                        data: { permission: 'Pages.OrderTaskMaps' }
+                    },
+                    {
+                        path: 'taskManagement/taskManagerRatings',
+                        loadChildren: () => import('./taskManagement/taskManagerRatings/taskManagerRating.module').then(m => m.TaskManagerRatingModule),
+                        data: { permission: 'Pages.TaskManagerRatings' }
+                    },
+                    {
+                        path: 'taskManagement/timesheetPolicies',
+                        loadChildren: () => import('./taskManagement/timesheetPolicies/timesheetPolicy.module').then(m => m.TimesheetPolicyModule),
+                        data: { permission: 'Pages.TimesheetPolicies' }
+                    },
+                    {
+                        path: 'taskManagement/timesheetTaskMaps',
+                        loadChildren: () => import('./taskManagement/timesheetTaskMaps/timesheetTaskMap.module').then(m => m.TimesheetTaskMapModule),
+                        data: { permission: 'Pages.TimesheetTaskMaps' }
+                    },
 
                     {
                         path: 'dashboard',

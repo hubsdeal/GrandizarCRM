@@ -1,0 +1,149 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #timesheetPolicyForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="timesheetPolicy.id">{{l("EditTimesheetPolicy")}}</span>
+                        <span *ngIf="!timesheetPolicy.id">{{l("CreateNewTimesheetPolicy")}}</span>
+                    </h4>                    
+                    
+                    
+                 <button type="button" class="btn-close" (click)="close()" aria-label="Close" [disabled]="saving"></button>
+             
+                </div>
+                <div class="modal-body">
+                 
+
+
+
+
+								<div class="my-3">
+									<label class="form-label" for="TimesheetPolicy_PolicyName">{{l("PolicyName")}}</label>
+									<input type="text" #TimesheetPolicy_PolicyName="ngModel" id="TimesheetPolicy_PolicyName" class="form-control" [(ngModel)]="timesheetPolicy.policyName" name="PolicyName"   minlength="1"  maxlength="128" />
+								    <validation-messages [formCtrl]="TimesheetPolicy_PolicyName"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="TimesheetPolicy_Description">{{l("Description")}}</label>
+									<input type="text" #TimesheetPolicy_Description="ngModel" id="TimesheetPolicy_Description" class="form-control" [(ngModel)]="timesheetPolicy.description" name="Description"    />
+								    <validation-messages [formCtrl]="TimesheetPolicy_Description"></validation-messages>
+								</div>
+					
+								<div class="my5">
+									<label class="form-label" for="TimesheetPolicy_MaxWorkHoursPerDay">{{l("MaxWorkHoursPerDay")}}</label>
+									<input type="number" #TimesheetPolicy_MaxWorkHoursPerDay="ngModel" id="TimesheetPolicy_MaxWorkHoursPerDay" class="form-control" [(ngModel)]="timesheetPolicy.maxWorkHoursPerDay" name="MaxWorkHoursPerDay"    />
+									<validation-messages [formCtrl]="TimesheetPolicy_MaxWorkHoursPerDay"></validation-messages>
+								</div>
+					
+								<div class="my5">
+									<label class="form-label" for="TimesheetPolicy_MaxWorkHoursPerWeek">{{l("MaxWorkHoursPerWeek")}}</label>
+									<input type="number" #TimesheetPolicy_MaxWorkHoursPerWeek="ngModel" id="TimesheetPolicy_MaxWorkHoursPerWeek" class="form-control" [(ngModel)]="timesheetPolicy.maxWorkHoursPerWeek" name="MaxWorkHoursPerWeek"    />
+									<validation-messages [formCtrl]="TimesheetPolicy_MaxWorkHoursPerWeek"></validation-messages>
+								</div>
+					
+								<div class="my5">
+									<label class="form-label" for="TimesheetPolicy_MinWorkHoursPerDay">{{l("MinWorkHoursPerDay")}}</label>
+									<input type="number" #TimesheetPolicy_MinWorkHoursPerDay="ngModel" id="TimesheetPolicy_MinWorkHoursPerDay" class="form-control" [(ngModel)]="timesheetPolicy.minWorkHoursPerDay" name="MinWorkHoursPerDay"    />
+									<validation-messages [formCtrl]="TimesheetPolicy_MinWorkHoursPerDay"></validation-messages>
+								</div>
+					
+								<div class="my5">
+									<label class="form-label" for="TimesheetPolicy_BreakTimePerDayInMinutes">{{l("BreakTimePerDayInMinutes")}}</label>
+									<input type="number" #TimesheetPolicy_BreakTimePerDayInMinutes="ngModel" id="TimesheetPolicy_BreakTimePerDayInMinutes" class="form-control" [(ngModel)]="timesheetPolicy.breakTimePerDayInMinutes" name="BreakTimePerDayInMinutes"    />
+									<validation-messages [formCtrl]="TimesheetPolicy_BreakTimePerDayInMinutes"></validation-messages>
+								</div>
+					
+								<br/>
+								<label class="form-check form-check-custom form-check-solid">
+                                    <input
+                                        id="TimesheetPolicy_RequireClockIn" 
+                                        #TimesheetPolicy_RequireClockIn="ngModel"
+                                        name="RequireClockIn" 
+                                        [(ngModel)]="timesheetPolicy.requireClockIn"
+                                        type="checkbox"
+                                        class="form-check-input"
+                                    />
+                                    <span class="form-check-label">
+                                        {{l("RequireClockIn")}}
+                                    </span>
+                                </label>
+                                <validation-messages [formCtrl]="TimesheetPolicy_RequireClockIn"></validation-messages>
+					
+								<br/>
+								<label class="form-check form-check-custom form-check-solid">
+                                    <input
+                                        id="TimesheetPolicy_RequireClockOut" 
+                                        #TimesheetPolicy_RequireClockOut="ngModel"
+                                        name="RequireClockOut" 
+                                        [(ngModel)]="timesheetPolicy.requireClockOut"
+                                        type="checkbox"
+                                        class="form-check-input"
+                                    />
+                                    <span class="form-check-label">
+                                        {{l("RequireClockOut")}}
+                                    </span>
+                                </label>
+                                <validation-messages [formCtrl]="TimesheetPolicy_RequireClockOut"></validation-messages>
+					
+								<br/>
+								<label class="form-check form-check-custom form-check-solid">
+                                    <input
+                                        id="TimesheetPolicy_RequireManagerApproval" 
+                                        #TimesheetPolicy_RequireManagerApproval="ngModel"
+                                        name="RequireManagerApproval" 
+                                        [(ngModel)]="timesheetPolicy.requireManagerApproval"
+                                        type="checkbox"
+                                        class="form-check-input"
+                                    />
+                                    <span class="form-check-label">
+                                        {{l("RequireManagerApproval")}}
+                                    </span>
+                                </label>
+                                <validation-messages [formCtrl]="TimesheetPolicy_RequireManagerApproval"></validation-messages>
+					
+								<div class="my5">
+									<label class="form-label" for="TimesheetPolicy_RequiredWorkCheckinFrequencyMinutes">{{l("RequiredWorkCheckinFrequencyMinutes")}}</label>
+									<input type="number" #TimesheetPolicy_RequiredWorkCheckinFrequencyMinutes="ngModel" id="TimesheetPolicy_RequiredWorkCheckinFrequencyMinutes" class="form-control" [(ngModel)]="timesheetPolicy.requiredWorkCheckinFrequencyMinutes" name="RequiredWorkCheckinFrequencyMinutes"    />
+									<validation-messages [formCtrl]="TimesheetPolicy_RequiredWorkCheckinFrequencyMinutes"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="TimesheetPolicy_EffectiveStartDate">{{l("EffectiveStartDate")}}</label>
+									 <input class="form-control m-input" #TimesheetPolicy_EffectiveStartDate type="datetime" bsDatepicker  datePickerLuxonModifier  [(date)]="timesheetPolicy.effectiveStartDate" id="TimesheetPolicy_EffectiveStartDate" name="TimesheetPolicy_EffectiveStartDate">
+									<validation-messages [formCtrl]="TimesheetPolicy_EffectiveStartDate"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="TimesheetPolicy_EffectiveEndDate">{{l("EffectiveEndDate")}}</label>
+									 <input class="form-control m-input" #TimesheetPolicy_EffectiveEndDate type="datetime" bsDatepicker  datePickerLuxonModifier  [(date)]="timesheetPolicy.effectiveEndDate" id="TimesheetPolicy_EffectiveEndDate" name="TimesheetPolicy_EffectiveEndDate">
+									<validation-messages [formCtrl]="TimesheetPolicy_EffectiveEndDate"></validation-messages>
+								</div>
+					
+								<br/>
+								<label class="form-check form-check-custom form-check-solid">
+                                    <input
+                                        id="TimesheetPolicy_IsDefaultPolicy" 
+                                        #TimesheetPolicy_IsDefaultPolicy="ngModel"
+                                        name="IsDefaultPolicy" 
+                                        [(ngModel)]="timesheetPolicy.isDefaultPolicy"
+                                        type="checkbox"
+                                        class="form-check-input"
+                                    />
+                                    <span class="form-check-label">
+                                        {{l("IsDefaultPolicy")}}
+                                    </span>
+                                </label>
+                                <validation-messages [formCtrl]="TimesheetPolicy_IsDefaultPolicy"></validation-messages>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!timesheetPolicyForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>

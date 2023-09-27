@@ -100,6 +100,12 @@ export class AppNavigationService {
                     new AppMenuItem('My Task List', 'Pages.TaskEvents', 'flaticon2-list-2', '/app/main/taskManagement/myTaskEvents'),
                     new AppMenuItem('Task Template', 'Pages.TaskEvents', 'flaticon2-list-2', '/app/main/taskManagement/taskLibrary'),
                     new AppMenuItem('Timesheet', 'Pages.TaskEvents', 'fas fa-calendar', '/app/main/taskManagement/timesheets'),
+                    new AppMenuItem('Employee Activity Trackers', 'Pages.EmployeeTimesheetActivityTrackers', 'fas fa-calendar', '/app/main/taskManagement/employeeTimesheetActivityTrackers'),
+                    new AppMenuItem('Timesheet Policy Mapping', 'Pages.EmployeeTimesheetPolicyMappings', 'fas fa-calendar', '/app/main/taskManagement/employeeTimesheetPolicyMappings'),
+                    new AppMenuItem('Order Tasks', 'Pages.OrderTaskMaps', 'fas fa-calendar', '/app/main/taskManagement/orderTaskMaps'),
+                    new AppMenuItem('Task Manager Ratings', 'Pages.TaskManagerRatings', 'fas fa-calendar', '/app/main/taskManagement/taskManagerRatings'),
+                    new AppMenuItem('Timesheet Policies', 'Pages.TimesheetPolicies', 'fas fa-calendar', '/app/main/taskManagement/timesheetPolicies'),
+                    new AppMenuItem('Timesheet Task Maps', 'Pages.TimesheetTaskMaps', 'fas fa-calendar', '/app/main/taskManagement/timesheetTaskMaps'),
                 ]
             ),
 
