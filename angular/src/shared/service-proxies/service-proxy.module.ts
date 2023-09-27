@@ -130,6 +130,7 @@ import { ZeroTemplateHttpConfigurationService } from './zero-template-http-confi
         ApiServiceProxies.BusinessContactMapsServiceProxy,        
         ApiServiceProxies.TaskTagsServiceProxy,        
         ApiServiceProxies.TaskEventsServiceProxy,  
+        ApiServiceProxies.TimesheetsServiceProxy,  
         ApiServiceProxies.TaskNotesServiceProxy,      
         ApiServiceProxies.TaskStatusesServiceProxy,        
         ApiServiceProxies.EmployeesServiceProxy,        

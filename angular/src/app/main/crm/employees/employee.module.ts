@@ -13,6 +13,8 @@ import { StoreModule } from '@app/main/shop/stores/store.module';
 import { MyEmployeesComponent } from './my-employees/my-employees.component';
 import { MainModule } from '@app/main/main.module';
 import { TaskEventModule } from '@app/main/taskManagement/taskEvents/taskEvent.module';
+import { OrderModule } from '@app/main/orderManagement/orders/order.module';
+import { ProductModule } from '@app/main/shop/products/product.module';
 
 @NgModule({
     declarations: [
@@ -26,6 +28,6 @@ import { TaskEventModule } from '@app/main/taskManagement/taskEvents/taskEvent.m
         EmployeeDashboardComponent,
         MyEmployeesComponent,
     ],
-    imports: [AppSharedModule, EmployeeRoutingModule, AdminSharedModule, StoreModule, MainModule, TaskEventModule],
+    imports: [AppSharedModule, EmployeeRoutingModule, AdminSharedModule, StoreModule, MainModule, TaskEventModule,OrderModule,ProductModule],
 })
 export class EmployeeModule {}

@@ -1,0 +1,215 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #timesheetForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="timesheet.id">{{l("EditTimesheet")}}</span>
+                        <span *ngIf="!timesheet.id">{{l("CreateNewTimesheet")}}</span>
+                    </h4>
+                    <button type="button" class="btn-close" (click)="close()" aria-label="Close"
+                        [disabled]="saving"></button>
+                </div>
+                <div class="modal-body">
+
+
+
+                    <div class="my-3">
+                        <label class="form-label" for="EmployeeName">{{l("Employee")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="EmployeeName" name="employeeName" [(ngModel)]="employeeName"
+                                type="text" disabled>
+                            <button class="btn btn-primary blue" (click)="openSelectEmployeeModal()" type="button"><i
+                                    class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setEmployeeIdNull()"><i
+                                    class="fa fa-times"></i></button>
+                        </div>
+                    </div>
+                    <input class="form-control" name="timesheet.employeeId" [(ngModel)]="timesheet.employeeId"
+                        type="text" hidden>
+
+                    <!-- <div class="my-3">
+                        <label class="form-label" for="StoreName">{{l("Store")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="StoreName" name="storeName" [(ngModel)]="storeName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectStoreModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setStoreIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="timesheet.storeId" [(ngModel)]="timesheet.storeId" type="text"  hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="BusinessName">{{l("Business")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="BusinessName" name="businessName" [(ngModel)]="businessName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectBusinessModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setBusinessIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="timesheet.businessId" [(ngModel)]="timesheet.businessId" type="text"  hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="JobTitle">{{l("Job")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="JobTitle" name="jobTitle" [(ngModel)]="jobTitle" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectJobModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setJobIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="timesheet.jobId" [(ngModel)]="timesheet.jobId" type="text"  hidden>
+                         -->
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="my-3">
+                                <label class="form-label" for="Timesheet_TimeSheetDate">{{l("TimeSheetDate")}}</label>
+                                <input class="form-control m-input" #Timesheet_TimeSheetDate type="datetime"
+                                    bsDatepicker datePickerLuxonModifier [(date)]="timesheet.timeSheetDate"
+                                    id="Timesheet_TimeSheetDate" name="Timesheet_TimeSheetDate">
+                                <validation-messages [formCtrl]="Timesheet_TimeSheetDate"></validation-messages>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="my-3">
+                                <label class="form-label" for="Timesheet_StartTime">{{l("StartTime")}}</label>
+
+                                <input type="text" id="Timesheet_StartTime" class="form-control"
+                                    [(ngModel)]="timesheet.startTime" name="StartTime" [ngxTimepicker]="startTime"
+                                    aria-label="12hr format" type="text" readonly>
+                                <ngx-material-timepicker #startTime (timeSet)="startTimeValue($event)">
+                                </ngx-material-timepicker>
+                                <!-- <validation-messages [formCtrl]="Timesheet_StartTime"></validation-messages> -->
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="my-3">
+
+                                <label class="form-label" for="Timesheet_EndTime">{{l("EndTime")}}</label>
+                                <input [ngxTimepicker]="endTime" aria-label="12hr format" class="form-control"
+                                    id="Timesheet_EndTime" [(ngModel)]="timesheet.endTime" name="EndTime" type="text"
+                                    readonly />
+                                <ngx-material-timepicker #endTime (timeSet)="endTimeValue($event)">
+                                </ngx-material-timepicker>
+                                <!-- <validation-messages [formCtrl]="Timesheet_EndTime"></validation-messages> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="my5">
+                                <label class="form-label" for="Timesheet_TotalWorkHours">{{l("TotalWorkHours")}}</label>
+                                <input type="number" #Timesheet_TotalWorkHours="ngModel" id="Timesheet_TotalWorkHours"
+                                    class="form-control" [(ngModel)]="timesheet.totalWorkHours" name="TotalWorkHours" />
+                                <validation-messages [formCtrl]="Timesheet_TotalWorkHours"></validation-messages>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+
+                            <div class="my5">
+                                <label class="form-label"
+                                    for="Timesheet_TimeOffOrBreakTimeHours">{{l("TimeOffOrBreakTimeHours")}}</label>
+                                <input type="number" #Timesheet_TimeOffOrBreakTimeHours="ngModel"
+                                    id="Timesheet_TimeOffOrBreakTimeHours" class="form-control"
+                                    [(ngModel)]="timesheet.timeOffOrBreakTimeHours" name="TimeOffOrBreakTimeHours" />
+                                <validation-messages
+                                    [formCtrl]="Timesheet_TimeOffOrBreakTimeHours"></validation-messages>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="my-3">
+                        <label class="form-label" for="Timesheet_WorkDetails">{{l("WorkDetails")}}</label>
+                        <p-editor id="Timesheet_WorkDetails" [(ngModel)]="timesheet.workDetails" name="WorkDetails"
+                            ngDefaultControl [style]="{ height: '300px' }" placeholder="' '"></p-editor>
+                        <!-- <input type="text" #Timesheet_WorkDetails="ngModel" id="Timesheet_WorkDetails" class="form-control" [(ngModel)]="timesheet.workDetails" name="WorkDetails"    /> -->
+                        <!-- <validation-messages [formCtrl]="Timesheet_WorkDetails"></validation-messages> -->
+                    </div>
+                    <div class="my-3">
+                        <label class="form-label" for="EmployeeName2">{{l("Manager")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="EmployeeName2" name="employeeName2"
+                                [(ngModel)]="employeeName2" type="text" disabled>
+                            <button class="btn btn-primary blue" (click)="openSelectEmployeeModal2()" type="button"><i
+                                    class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button"
+                                (click)="setTimesheetApprovalManagerEmployeeIdNull()"><i
+                                    class="fa fa-times"></i></button>
+                        </div>
+                    </div>
+                    <input class="form-control" name="timesheet.timesheetApprovalManagerEmployeeId"
+                        [(ngModel)]="timesheet.timesheetApprovalManagerEmployeeId" type="text" hidden>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Timesheet_ManagerRemarks">{{l("ManagerRemarks")}}</label>
+                        <input type="text" #Timesheet_ManagerRemarks="ngModel" id="Timesheet_ManagerRemarks"
+                            class="form-control" [(ngModel)]="timesheet.managerRemarks" name="ManagerRemarks" />
+                        <validation-messages [formCtrl]="Timesheet_ManagerRemarks"></validation-messages>
+                    </div>
+
+                    <br />
+                    <label class="form-check form-check-custom form-check-solid">
+                        <input id="Timesheet_PaymentPaid" #Timesheet_PaymentPaid="ngModel" name="PaymentPaid"
+                            [(ngModel)]="timesheet.paymentPaid" type="checkbox" class="form-check-input" />
+                        <span class="form-check-label">
+                            {{l("PaymentPaid")}}
+                        </span>
+                    </label>
+                    <validation-messages [formCtrl]="Timesheet_PaymentPaid"></validation-messages>
+
+                    <!-- <div class="my-3">
+                        <label class="form-label" for="Timesheet_ClockInIpAddress">{{l("ClockInIpAddress")}}</label>
+                        <input type="text" #Timesheet_ClockInIpAddress="ngModel" id="Timesheet_ClockInIpAddress"
+                            class="form-control" [(ngModel)]="timesheet.clockInIpAddress" name="ClockInIpAddress"
+                            minlength="1" maxlength="50" />
+                        <validation-messages [formCtrl]="Timesheet_ClockInIpAddress"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Timesheet_ClockOutIpAddress">{{l("ClockOutIpAddress")}}</label>
+                        <input type="text" #Timesheet_ClockOutIpAddress="ngModel" id="Timesheet_ClockOutIpAddress"
+                            class="form-control" [(ngModel)]="timesheet.clockOutIpAddress" name="ClockOutIpAddress"
+                            minlength="1" maxlength="50" />
+                        <validation-messages [formCtrl]="Timesheet_ClockOutIpAddress"></validation-messages>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="form-label" for="Timesheet_MacAddress">{{l("MacAddress")}}</label>
+                        <input type="text" #Timesheet_MacAddress="ngModel" id="Timesheet_MacAddress"
+                            class="form-control" [(ngModel)]="timesheet.macAddress" name="MacAddress" minlength="1"
+                            maxlength="50" />
+                        <validation-messages [formCtrl]="Timesheet_MacAddress"></validation-messages>
+                    </div> -->
+
+                    <div class="my5">
+                        <label class="form-label" for="Timesheet_WorkDayStatusId">{{l("WorkDayStatusId")}}</label>
+                        <input type="number" #Timesheet_WorkDayStatusId="ngModel" id="Timesheet_WorkDayStatusId"
+                            class="form-control" [(ngModel)]="timesheet.workDayStatusId" name="WorkDayStatusId" />
+                        <validation-messages [formCtrl]="Timesheet_WorkDayStatusId"></validation-messages>
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default"
+                        (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!timesheetForm.form.valid"
+                        [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i>
+                        <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <timesheetEmployeeLookupTableModal #timesheetEmployeeLookupTableModal (modalSave)="getNewEmployeeId()">
+    </timesheetEmployeeLookupTableModal>
+    <timesheetStoreLookupTableModal #timesheetStoreLookupTableModal (modalSave)="getNewStoreId()">
+    </timesheetStoreLookupTableModal>
+    <timesheetBusinessLookupTableModal #timesheetBusinessLookupTableModal (modalSave)="getNewBusinessId()">
+    </timesheetBusinessLookupTableModal>
+    <timesheetJobLookupTableModal #timesheetJobLookupTableModal (modalSave)="getNewJobId()">
+    </timesheetJobLookupTableModal>
+    <timesheetEmployeeLookupTableModal #timesheetEmployeeLookupTableModal2
+        (modalSave)="getNewTimesheetApprovalManagerEmployeeId()"></timesheetEmployeeLookupTableModal>
+
+</div>

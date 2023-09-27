@@ -1,0 +1,96 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span>{{l("Details")}}</span>
+                </h4>               
+                
+                
+                 <button type="button" class="btn-close" (click)="close()" aria-label="Close" [disabled]="saving"></button>
+             
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="col-6 mb-3">
+                        <h6>{{l("TimeSheetDate")}} :</h6>
+                        {{ item.timesheet.timeSheetDate |  luxonFormat:'yyyy-LL-dd HH:mm:ss'  }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("StartTime")}} :</h6>
+                        {{ item.timesheet.startTime }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("EndTime")}} :</h6>
+                        {{ item.timesheet.endTime }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("TotalWorkHours")}} :</h6>
+                        {{ item.timesheet.totalWorkHours }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("TimeOffOrBreakTimeHours")}} :</h6>
+                        {{ item.timesheet.timeOffOrBreakTimeHours }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("WorkDetails")}} :</h6>
+                        {{ item.timesheet.workDetails }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("ManagerRemarks")}} :</h6>
+                        {{ item.timesheet.managerRemarks }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("PaymentPaid")}} :</h6>
+                        <div *ngIf="item.timesheet.paymentPaid" class="text-left"><i class="fa fa-check-circle text-success"
+                                title="True"></i></div>
+                        <div *ngIf="!item.timesheet.paymentPaid" class="text-left"><i class="fa fa-times-circle" title="False"></i></div>
+                    </div>                    <div class="col-6 mb-3">
+                        <h6>{{l("ClockInIpAddress")}} :</h6>
+                        {{ item.timesheet.clockInIpAddress }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("ClockOutIpAddress")}} :</h6>
+                        {{ item.timesheet.clockOutIpAddress }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("MacAddress")}} :</h6>
+                        {{ item.timesheet.macAddress }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("WorkDayStatusId")}} :</h6>
+                        {{ item.timesheet.workDayStatusId }}
+                    </div>
+
+                    <div class="col-6 mb-3">
+                        <h6>({{l("Employee")}}) {{l("Name")}} :</h6>
+                        {{item.employeeName}}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{l("Store")}}) {{l("Name")}} :</h6>
+                        {{item.storeName}}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{l("Business")}}) {{l("Name")}} :</h6>
+                        {{item.businessName}}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{l("Job")}}) {{l("Title")}} :</h6>
+                        {{item.jobTitle}}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{l("Employee")}}) {{l("Name")}} :</h6>
+                        {{item.employeeName2}}
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button [disabled]="saving" type="button" class="btn btn-primary blue" (click)="close()">{{l("Close")}}</button>
+            </div>
+        </div>
+    </div>
+
+</div>
