@@ -70,8 +70,8 @@
                         <div class="d-flex flex-wrap flex-sm-nowrap mb-6">
                             <div
                                 class="d-flex flex-center flex-shrink-0 bg-light rounded w-100px h-100px w-lg-150px h-lg-150px me-7 mb-4">
-                                <img *ngIf="picture!=null" class="dashboard_header_image" src="{{picture}}" alt="image">
-                                <span *ngIf="picture==null && store.name" class="dashboard_header_name">
+                                <img *ngIf="storeLogo!=null" class="dashboard_header_image" src="{{storeLogo}}" alt="image">
+                                <span *ngIf="storeLogo==null && store.name" class="dashboard_header_name">
                                     {{store.name | nameSplit}}
                                 </span>
                             </div>
@@ -92,7 +92,7 @@
                                                 class="badge badge-primary text-center ms-2" title="Primary Category">
                                                 {{primaryCategoryName}}
                                             </span>
-                                            <span class="badge badge-info text-white ms-2">
+                                            <span class="badge badge-info text-white cursor-pointer ms-2" (click)="onConnectClick(storeId)">
                                                 <i class="fas fa-comment-alt text-white me-1"></i> Connect
                                             </span>
                                         </div>
@@ -684,22 +684,6 @@
                                                             <!--begin::Item-->
                                                             <div class="d-flex flex-stack">
                                                                 <div class="d-flex w-100 align-items-center">
-                                                                    <i class="fab fa-linkedin-in fs-3x me-3"></i>
-                                                                    <div class="w-100">
-                                                                        <div class="d-flex flex-column">
-                                                                            <input type="text" name="linkedIn"
-                                                                                class="form-control form-control-md form-control-solid"
-                                                                                placeholder="LinkedIn"
-                                                                                [(ngModel)]="store.linkedIn">
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <!--end::Item-->
-                                                            <div class="separator separator-dashed my-5"></div>
-                                                            <!--begin::Item-->
-                                                            <div class="d-flex flex-stack">
-                                                                <div class="d-flex w-100 align-items-center">
                                                                     <i class="fab fa-instagram-square fs-3x me-3"></i>
                                                                     <div class="w-100">
                                                                         <div class="d-flex flex-column">
@@ -711,23 +695,6 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <!--end::Item-->
-                                                            <div class="separator separator-dashed my-5"></div>
-                                                            <!--begin::Item-->
-                                                            <div class="d-flex flex-stack">
-                                                                <div class="d-flex w-100 align-items-center">
-                                                                    <i class="fab fa-youtube-square fs-3x me-3"></i>
-                                                                    <div class="w-100">
-                                                                        <div class="d-flex flex-column">
-                                                                            <input type="text" name="Youtube"
-                                                                                class="form-control form-control-md form-control-solid"
-                                                                                placeholder="Youtube"
-                                                                                [(ngModel)]="store.youtube">
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <!--end::Item-->
                                                         </div>
                                                         <!--end::Items-->
                                                     </div>
@@ -3893,4 +3860,5 @@
     <createOrEditStoreNoteModal #createOrEditStoreNoteModal (modalSave)="getAllStoreNotes()">
     </createOrEditStoreNoteModal>
     <createOrEditStoreAccountTeamModal #createOrEditStoreAccountTeamModal></createOrEditStoreAccountTeamModal>
+    <oneToOneConnectModal #oneToOneConnectModal></oneToOneConnectModal>
 </div>

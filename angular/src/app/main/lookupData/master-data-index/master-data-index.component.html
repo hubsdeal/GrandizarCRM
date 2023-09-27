@@ -35,6 +35,225 @@
                             <div class="card-body">
                                 <div class="w-100 sitemap_accr">
                                     <div class="m-0">
+                                        <h4 class="fs-3 text-gray-700 mb-1">
+                                            Master Data
+                                        </h4>
+                                    </div>
+
+                                    <div class="m-0">
+                                        <div class="d-flex align-items-center collapsible py-2 pb-0 toggle mb-0"
+                                            data-bs-toggle="collapse" data-bs-target="#master____data"
+                                            aria-expanded="false">
+                                            <div class="btn btn-sm btn-icon mw-20px btn-active-color-primary me-5">
+                                                <span class="svg-icon toggle-on svg-icon-primary svg-icon-1">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path opacity="0.5"
+                                                            d="M12.5657 9.63427L16.75 5.44995C17.1642 5.03574 17.8358 5.03574 18.25 5.44995C18.6642 5.86416 18.6642 6.53574 18.25 6.94995L12.7071 12.4928C12.3166 12.8834 11.6834 12.8834 11.2929 12.4928L5.75 6.94995C5.33579 6.53574 5.33579 5.86416 5.75 5.44995C6.16421 5.03574 6.83579 5.03574 7.25 5.44995L11.4343 9.63427C11.7467 9.94669 12.2533 9.94668 12.5657 9.63427Z"
+                                                            fill="currentColor" />
+                                                        <path
+                                                            d="M12.5657 15.6343L16.75 11.45C17.1642 11.0357 17.8358 11.0357 18.25 11.45C18.6642 11.8642 18.6642 12.5357 18.25 12.95L12.7071 18.4928C12.3166 18.8834 11.6834 18.8834 11.2929 18.4928L5.75 12.95C5.33579 12.5357 5.33579 11.8642 5.75 11.45C6.16421 11.0357 6.83579 11.0357 7.25 11.45L11.4343 15.6343C11.7467 15.9467 12.2533 15.9467 12.5657 15.6343Z"
+                                                            fill="currentColor" />
+                                                    </svg>
+                                                </span>
+
+                                                <span class="svg-icon toggle-off svg-icon-1">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path opacity="0.5"
+                                                            d="M9.63433 11.4343L5.45001 7.25C5.0358 6.83579 5.0358 6.16421 5.45001 5.75C5.86423 5.33579 6.5358 5.33579 6.95001 5.75L12.4929 11.2929C12.8834 11.6834 12.8834 12.3166 12.4929 12.7071L6.95001 18.25C6.5358 18.6642 5.86423 18.6642 5.45001 18.25C5.0358 17.8358 5.0358 17.1642 5.45001 16.75L9.63433 12.5657C9.94675 12.2533 9.94675 11.7467 9.63433 11.4343Z"
+                                                            fill="currentColor" />
+                                                        <path
+                                                            d="M15.6343 11.4343L11.45 7.25C11.0358 6.83579 11.0358 6.16421 11.45 5.75C11.8642 5.33579 12.5358 5.33579 12.95 5.75L18.4929 11.2929C18.8834 11.6834 18.8834 12.3166 18.4929 12.7071L12.95 18.25C12.5358 18.6642 11.8642 18.6642 11.45 18.25C11.0358 17.8358 11.0358 17.1642 11.45 16.75L15.6343 12.5657C15.9467 12.2533 15.9467 11.7467 15.6343 11.4343Z"
+                                                            fill="currentColor" />
+                                                    </svg>
+                                                </span>
+                                            </div>
+                                            <h4 class="text-gray-700 fs-5 cursor-pointer mb-0"> Master Data</h4>
+                                        </div>
+                                        <div id="master____data" class="fs-6 ms-1 collapse show">
+                                            <div class="mb-4">
+
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/lookupData/cities']"
+                                                    routerLinkActive="router-link-active">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Cities
+                                                        </div>
+                                                    </div>
+                                                </a>
+
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/lookupData/contractTypes']"
+                                                    routerLinkActive="router-link-active">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Contract Types
+                                                        </div>
+                                                    </div>
+                                                </a>
+
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/lookupData/counties']"
+                                                    routerLinkActive="router-link-active">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Counties
+                                                        </div>
+                                                    </div>
+                                                </a>
+
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/lookupData/countries']"
+                                                    routerLinkActive="router-link-active">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Countries
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/lookupData/currencies']"
+                                                    routerLinkActive="router-link-active">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Currencies
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/lookupData/documentTypes']"
+                                                    routerLinkActive="router-link-active">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Document Types
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/lookupData/hubTypes']"
+                                                    routerLinkActive="router-link-active">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Hub Types
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/lookupData/masterTagCategories']"
+                                                    routerLinkActive="router-link-active">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Master Tag Categories
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/lookupData/membershipTypes']"
+                                                    routerLinkActive="router-link-active">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Membership Types
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/lookupData/paymentTypes']"
+                                                    routerLinkActive="router-link-active">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Payment Types
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/lookupData/productWholeSaleQuantityTypes']"
+                                                    routerLinkActive="router-link-active">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Product Whole Sale Quantity Types
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/lookupData/ratingLikes']"
+                                                    routerLinkActive="router-link-active">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Rating Likes
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/lookupData/socialMedias']"
+                                                    routerLinkActive="router-link-active">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Social Medias
+                                                        </div>
+                                                    </div>
+                                                </a>
+
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/lookupData/states']"
+                                                    routerLinkActive="router-link-active">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            States
+                                                        </div>
+                                                    </div>
+                                                </a>
+
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/lookupData/subscriptionTypes']"
+                                                    routerLinkActive="router-link-active">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Subscription Types
+                                                        </div>
+                                                    </div>
+                                                </a>
+
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/lookupData/zipCodes']"
+                                                    routerLinkActive="router-link-active">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Zip Codes
+                                                        </div>
+                                                    </div>
+                                                </a>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4">
+                        <div class="card mb-6 mb-xl-9 height_fluid">
+                            <div class="card-body">
+                                <div class="w-100 sitemap_accr">
+                                    <div class="m-0">
                                         <h4 class="fs-3 text-gray-700 mb-1">Tag Settings</h4>
                                     </div>
 
@@ -187,7 +406,8 @@
                                         </div>
                                         <div id="kt_job_2_1" class="fs-6 ms-1 collapse show">
                                             <div class="mb-4">
-                                                <a href="javascript:;" class="mb-n1">
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/orderManagement/myOrders']">
                                                     <div class="d-flex align-items-center ps-10">
                                                         <span class="bullet me-3"></span>
                                                         <div class="text-gray-600 fw-semibold fs-6">
@@ -196,7 +416,8 @@
                                                     </div>
                                                 </a>
 
-                                                <a href="javascript:;" class="mb-n1">
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/orderManagement/orders']">
                                                     <div class="d-flex align-items-center ps-10">
                                                         <span class="bullet me-3"></span>
                                                         <div class="text-gray-600 fw-semibold fs-6">
@@ -205,7 +426,8 @@
                                                     </div>
                                                 </a>
 
-                                                <a href="javascript:;" class="mb-n1">
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/orderManagement/abandonedCart']">
                                                     <div class="d-flex align-items-center ps-10">
                                                         <span class="bullet me-3"></span>
                                                         <div class="text-gray-600 fw-semibold fs-6">
@@ -214,14 +436,52 @@
                                                     </div>
                                                 </a>
 
-                                                <a href="javascript:;" class="mb-n1">
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/orderManagement/orderDeliveryInfos']">
                                                     <div class="d-flex align-items-center ps-10">
                                                         <span class="bullet me-3"></span>
                                                         <div class="text-gray-600 fw-semibold fs-6">
-                                                            Wish List
+                                                            Order Delivery Infos
                                                         </div>
                                                     </div>
                                                 </a>
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/orderManagement/orderfulfillmentTeams']">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Order Fulfillment Teams
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/orderManagement/orderPaymentInfos']">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Order Payment Infos
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/orderManagement/orderProductInfos']">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Order Product Infos
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/orderManagement/orderProductVariants']">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Order Product Variants
+                                                        </div>
+                                                    </div>
+                                                </a>
+
                                             </div>
                                         </div>
                                         <div class="separator separator-dashed"></div>
@@ -260,52 +520,8 @@
                                         </div>
                                         <div id="kt_job_2_2" class="fs-6 ms-1 collapse show">
                                             <div class="mb-4">
-                                                <a href="javascript:;" class="mb-n1">
-                                                    <div class="d-flex align-items-center ps-10">
-                                                        <span class="bullet me-3"></span>
-                                                        <div class="text-gray-600 fw-semibold fs-6">
-                                                            Order Channels
-                                                        </div>
-                                                    </div>
-                                                </a>
-
-                                                <a href="javascript:;" class="mb-n1">
-                                                    <div class="d-flex align-items-center ps-10">
-                                                        <span class="bullet me-3"></span>
-                                                        <div class="text-gray-600 fw-semibold fs-6">
-                                                            Pickup Status Steps
-                                                        </div>
-                                                    </div>
-                                                </a>
-
-                                                <a href="javascript:;" class="mb-n1">
-                                                    <div class="d-flex align-items-center ps-10">
-                                                        <span class="bullet me-3"></span>
-                                                        <div class="text-gray-600 fw-semibold fs-6">
-                                                            Delivery Status Steps
-                                                        </div>
-                                                    </div>
-                                                </a>
-
-                                                <a href="javascript:;" class="mb-n1">
-                                                    <div class="d-flex align-items-center ps-10">
-                                                        <span class="bullet me-3"></span>
-                                                        <div class="text-gray-600 fw-semibold fs-6">
-                                                            Delivery Types
-                                                        </div>
-                                                    </div>
-                                                </a>
-
-                                                <a href="javascript:;" class="mb-n1">
-                                                    <div class="d-flex align-items-center ps-10">
-                                                        <span class="bullet me-3"></span>
-                                                        <div class="text-gray-600 fw-semibold fs-6">
-                                                            Payment Types
-                                                        </div>
-                                                    </div>
-                                                </a>
-
-                                                <a href="javascript:;" class="mb-n1">
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/lookupData/returnTypes']">
                                                     <div class="d-flex align-items-center ps-10">
                                                         <span class="bullet me-3"></span>
                                                         <div class="text-gray-600 fw-semibold fs-6">
@@ -314,14 +530,26 @@
                                                     </div>
                                                 </a>
 
-                                                <a href="javascript:;" class="mb-n1">
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/lookupData/returnStatuses']">
                                                     <div class="d-flex align-items-center ps-10">
                                                         <span class="bullet me-3"></span>
                                                         <div class="text-gray-600 fw-semibold fs-6">
-                                                            Return Status
+                                                            Return Statuses
                                                         </div>
                                                     </div>
                                                 </a>
+
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/orderManagement/orderPaymentInfos']">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Payment Types
+                                                        </div>
+                                                    </div>
+                                                </a>
+
 
                                             </div>
                                         </div>
@@ -373,7 +601,8 @@
                                         <div id="kt_job_2_3" class="fs-6 ms-1 collapse show">
                                             <div class="mb-4">
                                                 <a href="javascript:;" class="mb-n1">
-                                                    <div class="d-flex align-items-center ps-10">
+                                                    <div class="d-flex align-items-center ps-10"
+                                                        [routerLink]="['/app/main/shop/myProducts']">
                                                         <span class="bullet me-3"></span>
                                                         <div class="text-gray-600 fw-semibold fs-6">
                                                             My Product List
@@ -381,7 +610,8 @@
                                                     </div>
                                                 </a>
 
-                                                <a href="javascript:;" class="mb-n1">
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/shop/products']">
                                                     <div class="d-flex align-items-center ps-10">
                                                         <span class="bullet me-3"></span>
                                                         <div class="text-gray-600 fw-semibold fs-6">
@@ -390,7 +620,8 @@
                                                     </div>
                                                 </a>
 
-                                                <a href="javascript:;" class="mb-n1">
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/shop/productCategories']">
                                                     <div class="d-flex align-items-center ps-10">
                                                         <span class="bullet me-3"></span>
                                                         <div class="text-gray-600 fw-semibold fs-6">
@@ -399,7 +630,8 @@
                                                     </div>
                                                 </a>
 
-                                                <a href="javascript:;" class="mb-n1">
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/shop/productLibraries']">
                                                     <div class="d-flex align-items-center ps-10">
                                                         <span class="bullet me-3"></span>
                                                         <div class="text-gray-600 fw-semibold fs-6">
@@ -408,7 +640,8 @@
                                                     </div>
                                                 </a>
 
-                                                <a href="javascript:;" class="mb-n1">
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/shop/mediaLibraries']">
                                                     <div class="d-flex align-items-center ps-10">
                                                         <span class="bullet me-3"></span>
                                                         <div class="text-gray-600 fw-semibold fs-6">
@@ -417,16 +650,8 @@
                                                     </div>
                                                 </a>
 
-                                                <a href="javascript:;" class="mb-n1">
-                                                    <div class="d-flex align-items-center ps-10">
-                                                        <span class="bullet me-3"></span>
-                                                        <div class="text-gray-600 fw-semibold fs-6">
-                                                            Whole Sale Catalog
-                                                        </div>
-                                                    </div>
-                                                </a>
-
-                                                <a href="javascript:;" class="mb-n1">
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/shop/productByVariants']">
                                                     <div class="d-flex align-items-center ps-10">
                                                         <span class="bullet me-3"></span>
                                                         <div class="text-gray-600 fw-semibold fs-6">
@@ -435,20 +660,52 @@
                                                     </div>
                                                 </a>
 
-                                                <a href="javascript:;" class="mb-n1">
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/shop/productCustomerQueries']">
                                                     <div class="d-flex align-items-center ps-10">
                                                         <span class="bullet me-3"></span>
                                                         <div class="text-gray-600 fw-semibold fs-6">
-                                                            Product Subscriptions
+                                                            Product Customer Quries
                                                         </div>
                                                     </div>
                                                 </a>
 
-                                                <a href="javascript:;" class="mb-n1">
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/shop/productFaqs']">
                                                     <div class="d-flex align-items-center ps-10">
                                                         <span class="bullet me-3"></span>
                                                         <div class="text-gray-600 fw-semibold fs-6">
                                                             Product FAQ Templates
+                                                        </div>
+                                                    </div>
+                                                </a>
+
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/shop/productOwnerPublicContactInfos']">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Product Owner Public Contact Info
+                                                        </div>
+                                                    </div>
+                                                </a>
+
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/shop/productReturnInfos']">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Product Return Infos
+                                                        </div>
+                                                    </div>
+                                                </a>
+
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/shop/productReviewFeedbacks']">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Product Review Feedback
                                                         </div>
                                                     </div>
                                                 </a>
@@ -490,7 +747,8 @@
                                         </div>
                                         <div id="kt_job_2_4" class="fs-6 ms-1 collapse show">
                                             <div class="mb-4">
-                                                <a href="javascript:;" class="mb-n1">
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/shop/productVariantCategories']">
                                                     <div class="d-flex align-items-center ps-10">
                                                         <span class="bullet me-3"></span>
                                                         <div class="text-gray-600 fw-semibold fs-6">
@@ -499,7 +757,8 @@
                                                     </div>
                                                 </a>
 
-                                                <a href="javascript:;" class="mb-n1">
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/shop/productVariants']">
                                                     <div class="d-flex align-items-center ps-10">
                                                         <span class="bullet me-3"></span>
                                                         <div class="text-gray-600 fw-semibold fs-6">
@@ -508,7 +767,8 @@
                                                     </div>
                                                 </a>
 
-                                                <a href="javascript:;" class="mb-n1">
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/lookupData/measurementUnits']">
                                                     <div class="d-flex align-items-center ps-10">
                                                         <span class="bullet me-3"></span>
                                                         <div class="text-gray-600 fw-semibold fs-6">
@@ -517,7 +777,8 @@
                                                     </div>
                                                 </a>
 
-                                                <a href="javascript:;" class="mb-n1">
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/lookupData/productWholeSaleQuantityTypes']">
                                                     <div class="d-flex align-items-center ps-10">
                                                         <span class="bullet me-3"></span>
                                                         <div class="text-gray-600 fw-semibold fs-6">
@@ -526,11 +787,169 @@
                                                     </div>
                                                 </a>
 
-                                                <a href="javascript:;" class="mb-n1">
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/lookupData/subscriptionTypes']">
                                                     <div class="d-flex align-items-center ps-10">
                                                         <span class="bullet me-3"></span>
                                                         <div class="text-gray-600 fw-semibold fs-6">
                                                             Subscription Types
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-4">
+                        <div class="card mb-6 mb-xl-9 height_fluid">
+                            <div class="card-body">
+                                <div class="w-100 sitemap_accr">
+                                    <div class="m-0">
+                                        <h4 class="fs-3 text-gray-700 mb-1">Hub/Territory Management</h4>
+                                    </div>
+
+                                    <div class="m-0">
+                                        <div class="d-flex align-items-center collapsible py-2 pb-0 toggle mb-0"
+                                            data-bs-toggle="collapse" data-bs-target="#kt_job_2_3_hub"
+                                            aria-expanded="false">
+                                            <div class="btn btn-sm btn-icon mw-20px btn-active-color-primary me-5">
+                                                <span class="svg-icon toggle-on svg-icon-primary svg-icon-1">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path opacity="0.5"
+                                                            d="M12.5657 9.63427L16.75 5.44995C17.1642 5.03574 17.8358 5.03574 18.25 5.44995C18.6642 5.86416 18.6642 6.53574 18.25 6.94995L12.7071 12.4928C12.3166 12.8834 11.6834 12.8834 11.2929 12.4928L5.75 6.94995C5.33579 6.53574 5.33579 5.86416 5.75 5.44995C6.16421 5.03574 6.83579 5.03574 7.25 5.44995L11.4343 9.63427C11.7467 9.94669 12.2533 9.94668 12.5657 9.63427Z"
+                                                            fill="currentColor" />
+                                                        <path
+                                                            d="M12.5657 15.6343L16.75 11.45C17.1642 11.0357 17.8358 11.0357 18.25 11.45C18.6642 11.8642 18.6642 12.5357 18.25 12.95L12.7071 18.4928C12.3166 18.8834 11.6834 18.8834 11.2929 18.4928L5.75 12.95C5.33579 12.5357 5.33579 11.8642 5.75 11.45C6.16421 11.0357 6.83579 11.0357 7.25 11.45L11.4343 15.6343C11.7467 15.9467 12.2533 15.9467 12.5657 15.6343Z"
+                                                            fill="currentColor" />
+                                                    </svg>
+                                                </span>
+
+                                                <span class="svg-icon toggle-off svg-icon-1">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path opacity="0.5"
+                                                            d="M9.63433 11.4343L5.45001 7.25C5.0358 6.83579 5.0358 6.16421 5.45001 5.75C5.86423 5.33579 6.5358 5.33579 6.95001 5.75L12.4929 11.2929C12.8834 11.6834 12.8834 12.3166 12.4929 12.7071L6.95001 18.25C6.5358 18.6642 5.86423 18.6642 5.45001 18.25C5.0358 17.8358 5.0358 17.1642 5.45001 16.75L9.63433 12.5657C9.94675 12.2533 9.94675 11.7467 9.63433 11.4343Z"
+                                                            fill="currentColor" />
+                                                        <path
+                                                            d="M15.6343 11.4343L11.45 7.25C11.0358 6.83579 11.0358 6.16421 11.45 5.75C11.8642 5.33579 12.5358 5.33579 12.95 5.75L18.4929 11.2929C18.8834 11.6834 18.8834 12.3166 18.4929 12.7071L12.95 18.25C12.5358 18.6642 11.8642 18.6642 11.45 18.25C11.0358 17.8358 11.0358 17.1642 11.45 16.75L15.6343 12.5657C15.9467 12.2533 15.9467 11.7467 15.6343 11.4343Z"
+                                                            fill="currentColor" />
+                                                    </svg>
+                                                </span>
+                                            </div>
+                                            <h4 class="text-gray-700 fs-5 cursor-pointer mb-0">Hub/Territory Management
+                                            </h4>
+                                        </div>
+                                        <div id="kt_job_2_3_hub" class="fs-6 ms-1 collapse show">
+                                            <div class="mb-4">
+                                                <a href="javascript:;" [routerLink]="['/app/main/territory/hubs']"
+                                                    routerLinkActive="router-link-active" class="mb-n1">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            My Hub List
+                                                        </div>
+                                                    </div>
+                                                </a>
+
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/territory/myHubs']">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Master Hub List
+                                                        </div>
+                                                    </div>
+                                                </a>
+
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/territory/hubBusinesses']">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Hub Business
+                                                        </div>
+                                                    </div>
+                                                </a>
+
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/territory/hubNavigationMenus']">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Hub Navigation Menu
+                                                        </div>
+                                                    </div>
+                                                </a>
+
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/territory/hubSalesProjections']">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Hub Sales Projection
+                                                        </div>
+                                                    </div>
+                                                </a>
+
+                                                <a href="javascript:;"
+                                                    [routerLink]="['/app/main/territory/masterNavigationMenus']"
+                                                    class="mb-n1">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Master Navigation menu
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="separator separator-dashed"></div>
+                                    </div>
+
+                                    <div class="m-0">
+                                        <div class="d-flex align-items-center collapsible py-2 pb-0 toggle mb-0"
+                                            data-bs-toggle="collapse" data-bs-target="#kt_job_2_4_hub1"
+                                            aria-expanded="false">
+                                            <div class="btn btn-sm btn-icon mw-20px btn-active-color-primary me-5">
+                                                <span class="svg-icon toggle-on svg-icon-primary svg-icon-1">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path opacity="0.5"
+                                                            d="M12.5657 9.63427L16.75 5.44995C17.1642 5.03574 17.8358 5.03574 18.25 5.44995C18.6642 5.86416 18.6642 6.53574 18.25 6.94995L12.7071 12.4928C12.3166 12.8834 11.6834 12.8834 11.2929 12.4928L5.75 6.94995C5.33579 6.53574 5.33579 5.86416 5.75 5.44995C6.16421 5.03574 6.83579 5.03574 7.25 5.44995L11.4343 9.63427C11.7467 9.94669 12.2533 9.94668 12.5657 9.63427Z"
+                                                            fill="currentColor" />
+                                                        <path
+                                                            d="M12.5657 15.6343L16.75 11.45C17.1642 11.0357 17.8358 11.0357 18.25 11.45C18.6642 11.8642 18.6642 12.5357 18.25 12.95L12.7071 18.4928C12.3166 18.8834 11.6834 18.8834 11.2929 18.4928L5.75 12.95C5.33579 12.5357 5.33579 11.8642 5.75 11.45C6.16421 11.0357 6.83579 11.0357 7.25 11.45L11.4343 15.6343C11.7467 15.9467 12.2533 15.9467 12.5657 15.6343Z"
+                                                            fill="currentColor" />
+                                                    </svg>
+                                                </span>
+
+                                                <span class="svg-icon toggle-off svg-icon-1">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path opacity="0.5"
+                                                            d="M9.63433 11.4343L5.45001 7.25C5.0358 6.83579 5.0358 6.16421 5.45001 5.75C5.86423 5.33579 6.5358 5.33579 6.95001 5.75L12.4929 11.2929C12.8834 11.6834 12.8834 12.3166 12.4929 12.7071L6.95001 18.25C6.5358 18.6642 5.86423 18.6642 5.45001 18.25C5.0358 17.8358 5.0358 17.1642 5.45001 16.75L9.63433 12.5657C9.94675 12.2533 9.94675 11.7467 9.63433 11.4343Z"
+                                                            fill="currentColor" />
+                                                        <path
+                                                            d="M15.6343 11.4343L11.45 7.25C11.0358 6.83579 11.0358 6.16421 11.45 5.75C11.8642 5.33579 12.5358 5.33579 12.95 5.75L18.4929 11.2929C18.8834 11.6834 18.8834 12.3166 18.4929 12.7071L12.95 18.25C12.5358 18.6642 11.8642 18.6642 11.45 18.25C11.0358 17.8358 11.0358 17.1642 11.45 16.75L15.6343 12.5657C15.9467 12.2533 15.9467 11.7467 15.6343 11.4343Z"
+                                                            fill="currentColor" />
+                                                    </svg>
+                                                </span>
+                                            </div>
+                                            <h4 class="text-gray-700 fs-5 cursor-pointer mb-0">Hub Master Data</h4>
+                                        </div>
+                                        <div id="kt_job_2_4_hub1" class="fs-6 ms-1 collapse show">
+                                            <div class="mb-4">
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/lookupData/hubTypes']">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Hub Types
                                                         </div>
                                                     </div>
                                                 </a>
@@ -606,7 +1025,7 @@
                                                     </div>
                                                 </a>
 
-                                                <a href="javascript:;" class="mb-n1"
+                                                <!-- <a href="javascript:;" class="mb-n1"
                                                     [routerLink]="['/app/main/shop/myStores']"
                                                     routerLinkActive="router-link-active">
                                                     <div class="d-flex align-items-center ps-10">
@@ -615,7 +1034,7 @@
                                                             Store Library
                                                         </div>
                                                     </div>
-                                                </a>
+                                                </a> -->
 
                                                 <a href="javascript:;" class="mb-n1"
                                                     [routerLink]="['/app/main/widgetManagement/storeWidgetMaps']"
@@ -624,6 +1043,28 @@
                                                         <span class="bullet me-3"></span>
                                                         <div class="text-gray-600 fw-semibold fs-6">
                                                             Store Widget List
+                                                        </div>
+                                                    </div>
+                                                </a>
+
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/shop/storeSalesAlerts']"
+                                                    routerLinkActive="router-link-active">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Store Sales Alert
+                                                        </div>
+                                                    </div>
+                                                </a>
+
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/shop/storeTaxes']"
+                                                    routerLinkActive="router-link-active">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Store Taxes
                                                         </div>
                                                     </div>
                                                 </a>
@@ -666,11 +1107,30 @@
                                         </div>
                                         <div id="kt_job_2_6" class="fs-6 ms-1 collapse show">
                                             <div class="mb-4">
-                                                <a href="javascript:;" class="mb-n1">
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/shop/storeMarketplaceCommissionSettings']">
                                                     <div class="d-flex align-items-center ps-10">
                                                         <span class="bullet me-3"></span>
                                                         <div class="text-gray-600 fw-semibold fs-6">
-                                                            Store Builder Widgets
+                                                            Store Marketplace Commission Settings
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/shop/storeMasterTagSettings']">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Store Master Tag Settings
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/shop/storeTagSettingCategories']">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Store Tag Setting Categories
                                                         </div>
                                                     </div>
                                                 </a>
@@ -879,7 +1339,8 @@
                                                     </svg>
                                                 </span>
                                             </div>
-                                            <h4 class="text-gray-700 fs-5 cursor-pointer mb-0">Connects (Email and SMS)</h4>
+                                            <h4 class="text-gray-700 fs-5 cursor-pointer mb-0">Connects (Email and SMS)
+                                            </h4>
                                         </div>
                                         <div id="kt_job_2_71" class="fs-6 ms-1 collapse show">
                                             <div class="mb-4">
@@ -915,6 +1376,1280 @@
                                                         </div>
                                                     </div>
                                                 </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-xl-4">
+                        <div class="card mb-6 mb-xl-9 height_fluid">
+                            <div class="card-body">
+                                <div class="w-100 sitemap_accr">
+                                    <div class="m-0">
+                                        <h4 class="fs-3 text-gray-700 mb-1">Discount Management</h4>
+                                    </div>
+
+                                    <div class="m-0">
+                                        <div class="d-flex align-items-center collapsible py-2 pb-0 toggle mb-0"
+                                            data-bs-toggle="collapse" data-bs-target="#Discount_m"
+                                            aria-expanded="false">
+                                            <div class="btn btn-sm btn-icon mw-20px btn-active-color-primary me-5">
+                                                <span class="svg-icon toggle-on svg-icon-primary svg-icon-1">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path opacity="0.5"
+                                                            d="M12.5657 9.63427L16.75 5.44995C17.1642 5.03574 17.8358 5.03574 18.25 5.44995C18.6642 5.86416 18.6642 6.53574 18.25 6.94995L12.7071 12.4928C12.3166 12.8834 11.6834 12.8834 11.2929 12.4928L5.75 6.94995C5.33579 6.53574 5.33579 5.86416 5.75 5.44995C6.16421 5.03574 6.83579 5.03574 7.25 5.44995L11.4343 9.63427C11.7467 9.94669 12.2533 9.94668 12.5657 9.63427Z"
+                                                            fill="currentColor" />
+                                                        <path
+                                                            d="M12.5657 15.6343L16.75 11.45C17.1642 11.0357 17.8358 11.0357 18.25 11.45C18.6642 11.8642 18.6642 12.5357 18.25 12.95L12.7071 18.4928C12.3166 18.8834 11.6834 18.8834 11.2929 18.4928L5.75 12.95C5.33579 12.5357 5.33579 11.8642 5.75 11.45C6.16421 11.0357 6.83579 11.0357 7.25 11.45L11.4343 15.6343C11.7467 15.9467 12.2533 15.9467 12.5657 15.6343Z"
+                                                            fill="currentColor" />
+                                                    </svg>
+                                                </span>
+
+                                                <span class="svg-icon toggle-off svg-icon-1">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path opacity="0.5"
+                                                            d="M9.63433 11.4343L5.45001 7.25C5.0358 6.83579 5.0358 6.16421 5.45001 5.75C5.86423 5.33579 6.5358 5.33579 6.95001 5.75L12.4929 11.2929C12.8834 11.6834 12.8834 12.3166 12.4929 12.7071L6.95001 18.25C6.5358 18.6642 5.86423 18.6642 5.45001 18.25C5.0358 17.8358 5.0358 17.1642 5.45001 16.75L9.63433 12.5657C9.94675 12.2533 9.94675 11.7467 9.63433 11.4343Z"
+                                                            fill="currentColor" />
+                                                        <path
+                                                            d="M15.6343 11.4343L11.45 7.25C11.0358 6.83579 11.0358 6.16421 11.45 5.75C11.8642 5.33579 12.5358 5.33579 12.95 5.75L18.4929 11.2929C18.8834 11.6834 18.8834 12.3166 18.4929 12.7071L12.95 18.25C12.5358 18.6642 11.8642 18.6642 11.45 18.25C11.0358 17.8358 11.0358 17.1642 11.45 16.75L15.6343 12.5657C15.9467 12.2533 15.9467 11.7467 15.6343 11.4343Z"
+                                                            fill="currentColor" />
+                                                    </svg>
+                                                </span>
+                                            </div>
+                                            <h4 class="text-gray-700 fs-5 cursor-pointer mb-0">Discount Management</h4>
+                                        </div>
+                                        <div id="Discount_m" class="fs-6 ms-1 collapse show">
+                                            <div class="mb-4">
+                                                <a href="javascript:;"
+                                                    [routerLink]="['/app/main/discountManagement/customerWallets']"
+                                                    routerLinkActive="router-link-active" class="mb-n1">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Customer Wallet
+                                                        </div>
+                                                    </div>
+                                                </a>
+
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/discountManagement/discountCodeByCustomers']">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Discount Code By Customers
+                                                        </div>
+                                                    </div>
+                                                </a>
+
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/discountManagement/discountCodeGenerators']">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Discount Code Generators
+                                                        </div>
+                                                    </div>
+                                                </a>
+
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/discountManagement/discountCodeMaps']">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Discount Code Maps
+                                                        </div>
+                                                    </div>
+                                                </a>
+
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/discountManagement/discountCodeUserHistories']">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Discount Code User Histories
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-4">
+                        <div class="card mb-6 mb-xl-9 height_fluid">
+                            <div class="card-body">
+                                <div class="w-100 sitemap_accr">
+                                    <div class="m-0">
+                                        <h4 class="fs-3 text-gray-700 mb-1">CRM (Customer and Company/Business)
+                                            Management</h4>
+                                    </div>
+
+                                    <div class="m-0">
+                                        <div class="d-flex align-items-center collapsible py-2 pb-0 toggle mb-0"
+                                            data-bs-toggle="collapse" data-bs-target="#kt_job_2_5_crm"
+                                            aria-expanded="false">
+                                            <div class="btn btn-sm btn-icon mw-20px btn-active-color-primary me-5">
+                                                <span class="svg-icon toggle-on svg-icon-primary svg-icon-1">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path opacity="0.5"
+                                                            d="M12.5657 9.63427L16.75 5.44995C17.1642 5.03574 17.8358 5.03574 18.25 5.44995C18.6642 5.86416 18.6642 6.53574 18.25 6.94995L12.7071 12.4928C12.3166 12.8834 11.6834 12.8834 11.2929 12.4928L5.75 6.94995C5.33579 6.53574 5.33579 5.86416 5.75 5.44995C6.16421 5.03574 6.83579 5.03574 7.25 5.44995L11.4343 9.63427C11.7467 9.94669 12.2533 9.94668 12.5657 9.63427Z"
+                                                            fill="currentColor" />
+                                                        <path
+                                                            d="M12.5657 15.6343L16.75 11.45C17.1642 11.0357 17.8358 11.0357 18.25 11.45C18.6642 11.8642 18.6642 12.5357 18.25 12.95L12.7071 18.4928C12.3166 18.8834 11.6834 18.8834 11.2929 18.4928L5.75 12.95C5.33579 12.5357 5.33579 11.8642 5.75 11.45C6.16421 11.0357 6.83579 11.0357 7.25 11.45L11.4343 15.6343C11.7467 15.9467 12.2533 15.9467 12.5657 15.6343Z"
+                                                            fill="currentColor" />
+                                                    </svg>
+                                                </span>
+
+                                                <span class="svg-icon toggle-off svg-icon-1">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path opacity="0.5"
+                                                            d="M9.63433 11.4343L5.45001 7.25C5.0358 6.83579 5.0358 6.16421 5.45001 5.75C5.86423 5.33579 6.5358 5.33579 6.95001 5.75L12.4929 11.2929C12.8834 11.6834 12.8834 12.3166 12.4929 12.7071L6.95001 18.25C6.5358 18.6642 5.86423 18.6642 5.45001 18.25C5.0358 17.8358 5.0358 17.1642 5.45001 16.75L9.63433 12.5657C9.94675 12.2533 9.94675 11.7467 9.63433 11.4343Z"
+                                                            fill="currentColor" />
+                                                        <path
+                                                            d="M15.6343 11.4343L11.45 7.25C11.0358 6.83579 11.0358 6.16421 11.45 5.75C11.8642 5.33579 12.5358 5.33579 12.95 5.75L18.4929 11.2929C18.8834 11.6834 18.8834 12.3166 18.4929 12.7071L12.95 18.25C12.5358 18.6642 11.8642 18.6642 11.45 18.25C11.0358 17.8358 11.0358 17.1642 11.45 16.75L15.6343 12.5657C15.9467 12.2533 15.9467 11.7467 15.6343 11.4343Z"
+                                                            fill="currentColor" />
+                                                    </svg>
+                                                </span>
+                                            </div>
+                                            <h4 class="text-gray-700 fs-5 cursor-pointer mb-0"> Customer Management</h4>
+                                        </div>
+                                        <div id="kt_job_2_5_crm" class="fs-6 ms-1 collapse show">
+                                            <div class="mb-4">
+
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/crm/contacts']"
+                                                    routerLinkActive="router-link-active">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            My Customer List
+                                                        </div>
+                                                    </div>
+                                                </a>
+
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/crm/contacts']"
+                                                    routerLinkActive="router-link-active">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Master Customer List
+                                                        </div>
+                                                    </div>
+                                                </a>
+
+                                                <!-- <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/shop/myStores']"
+                                                    routerLinkActive="router-link-active">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Store Library
+                                                        </div>
+                                                    </div>
+                                                </a> -->
+
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/crm/contacts']"
+                                                    routerLinkActive="router-link-active">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Premium Customer List
+                                                        </div>
+                                                    </div>
+                                                </a>
+
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/crm/contactTags']"
+                                                    routerLinkActive="router-link-active">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Contacts Tag
+                                                        </div>
+                                                    </div>
+                                                </a>
+
+                                            </div>
+                                        </div>
+                                        <div class="separator separator-dashed"></div>
+                                    </div>
+
+                                    <div class="m-0">
+                                        <div class="d-flex align-items-center collapsible py-2 pb-0 toggle mb-0"
+                                            data-bs-toggle="collapse" data-bs-target="#kt_job_2_5_crm"
+                                            aria-expanded="false">
+                                            <div class="btn btn-sm btn-icon mw-20px btn-active-color-primary me-5">
+                                                <span class="svg-icon toggle-on svg-icon-primary svg-icon-1">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path opacity="0.5"
+                                                            d="M12.5657 9.63427L16.75 5.44995C17.1642 5.03574 17.8358 5.03574 18.25 5.44995C18.6642 5.86416 18.6642 6.53574 18.25 6.94995L12.7071 12.4928C12.3166 12.8834 11.6834 12.8834 11.2929 12.4928L5.75 6.94995C5.33579 6.53574 5.33579 5.86416 5.75 5.44995C6.16421 5.03574 6.83579 5.03574 7.25 5.44995L11.4343 9.63427C11.7467 9.94669 12.2533 9.94668 12.5657 9.63427Z"
+                                                            fill="currentColor" />
+                                                        <path
+                                                            d="M12.5657 15.6343L16.75 11.45C17.1642 11.0357 17.8358 11.0357 18.25 11.45C18.6642 11.8642 18.6642 12.5357 18.25 12.95L12.7071 18.4928C12.3166 18.8834 11.6834 18.8834 11.2929 18.4928L5.75 12.95C5.33579 12.5357 5.33579 11.8642 5.75 11.45C6.16421 11.0357 6.83579 11.0357 7.25 11.45L11.4343 15.6343C11.7467 15.9467 12.2533 15.9467 12.5657 15.6343Z"
+                                                            fill="currentColor" />
+                                                    </svg>
+                                                </span>
+
+                                                <span class="svg-icon toggle-off svg-icon-1">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path opacity="0.5"
+                                                            d="M9.63433 11.4343L5.45001 7.25C5.0358 6.83579 5.0358 6.16421 5.45001 5.75C5.86423 5.33579 6.5358 5.33579 6.95001 5.75L12.4929 11.2929C12.8834 11.6834 12.8834 12.3166 12.4929 12.7071L6.95001 18.25C6.5358 18.6642 5.86423 18.6642 5.45001 18.25C5.0358 17.8358 5.0358 17.1642 5.45001 16.75L9.63433 12.5657C9.94675 12.2533 9.94675 11.7467 9.63433 11.4343Z"
+                                                            fill="currentColor" />
+                                                        <path
+                                                            d="M15.6343 11.4343L11.45 7.25C11.0358 6.83579 11.0358 6.16421 11.45 5.75C11.8642 5.33579 12.5358 5.33579 12.95 5.75L18.4929 11.2929C18.8834 11.6834 18.8834 12.3166 18.4929 12.7071L12.95 18.25C12.5358 18.6642 11.8642 18.6642 11.45 18.25C11.0358 17.8358 11.0358 17.1642 11.45 16.75L15.6343 12.5657C15.9467 12.2533 15.9467 11.7467 15.6343 11.4343Z"
+                                                            fill="currentColor" />
+                                                    </svg>
+                                                </span>
+                                            </div>
+                                            <h4 class="text-gray-700 fs-5 cursor-pointer mb-0"> Business/Company
+                                                Management</h4>
+                                        </div>
+                                        <div id="kt_job_2_5_crm" class="fs-6 ms-1 collapse show">
+                                            <div class="mb-4">
+
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/crm/businesses']"
+                                                    routerLinkActive="router-link-active">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Business List
+                                                        </div>
+                                                    </div>
+                                                </a>
+
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/crm/businessAccountTeams']"
+                                                    routerLinkActive="router-link-active">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Business Account Teams
+                                                        </div>
+                                                    </div>
+                                                </a>
+
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/crm/businessContactMaps']"
+                                                    routerLinkActive="router-link-active">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Business Contact Maps
+                                                        </div>
+                                                    </div>
+                                                </a>
+
+                                                <!-- <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/shop/myStores']"
+                                                    routerLinkActive="router-link-active">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Store Library
+                                                        </div>
+                                                    </div>
+                                                </a> -->
+
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/crm/businessDocuments']"
+                                                    routerLinkActive="router-link-active">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Business Documents
+                                                        </div>
+                                                    </div>
+                                                </a>
+
+
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/crm/businessJobMaps']"
+                                                    routerLinkActive="router-link-active">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Business Job Maps
+                                                        </div>
+                                                    </div>
+                                                </a>
+
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/crm/businessNotes']"
+                                                    routerLinkActive="router-link-active">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Business Notes
+                                                        </div>
+                                                    </div>
+                                                </a>
+
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/crm/businessUsers']"
+                                                    routerLinkActive="router-link-active">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Business Users
+                                                        </div>
+                                                    </div>
+                                                </a>
+
+
+                                            </div>
+                                        </div>
+                                        <div class="separator separator-dashed"></div>
+                                    </div>
+
+                                    <div class="m-0">
+                                        <div class="d-flex align-items-center collapsible py-2 pb-0 toggle mb-0"
+                                            data-bs-toggle="collapse" data-bs-target="#kt_job_2_6_bbbc"
+                                            aria-expanded="false">
+                                            <div class="btn btn-sm btn-icon mw-20px btn-active-color-primary me-5">
+                                                <span class="svg-icon toggle-on svg-icon-primary svg-icon-1">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path opacity="0.5"
+                                                            d="M12.5657 9.63427L16.75 5.44995C17.1642 5.03574 17.8358 5.03574 18.25 5.44995C18.6642 5.86416 18.6642 6.53574 18.25 6.94995L12.7071 12.4928C12.3166 12.8834 11.6834 12.8834 11.2929 12.4928L5.75 6.94995C5.33579 6.53574 5.33579 5.86416 5.75 5.44995C6.16421 5.03574 6.83579 5.03574 7.25 5.44995L11.4343 9.63427C11.7467 9.94669 12.2533 9.94668 12.5657 9.63427Z"
+                                                            fill="currentColor" />
+                                                        <path
+                                                            d="M12.5657 15.6343L16.75 11.45C17.1642 11.0357 17.8358 11.0357 18.25 11.45C18.6642 11.8642 18.6642 12.5357 18.25 12.95L12.7071 18.4928C12.3166 18.8834 11.6834 18.8834 11.2929 18.4928L5.75 12.95C5.33579 12.5357 5.33579 11.8642 5.75 11.45C6.16421 11.0357 6.83579 11.0357 7.25 11.45L11.4343 15.6343C11.7467 15.9467 12.2533 15.9467 12.5657 15.6343Z"
+                                                            fill="currentColor" />
+                                                    </svg>
+                                                </span>
+
+                                                <span class="svg-icon toggle-off svg-icon-1">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path opacity="0.5"
+                                                            d="M9.63433 11.4343L5.45001 7.25C5.0358 6.83579 5.0358 6.16421 5.45001 5.75C5.86423 5.33579 6.5358 5.33579 6.95001 5.75L12.4929 11.2929C12.8834 11.6834 12.8834 12.3166 12.4929 12.7071L6.95001 18.25C6.5358 18.6642 5.86423 18.6642 5.45001 18.25C5.0358 17.8358 5.0358 17.1642 5.45001 16.75L9.63433 12.5657C9.94675 12.2533 9.94675 11.7467 9.63433 11.4343Z"
+                                                            fill="currentColor" />
+                                                        <path
+                                                            d="M15.6343 11.4343L11.45 7.25C11.0358 6.83579 11.0358 6.16421 11.45 5.75C11.8642 5.33579 12.5358 5.33579 12.95 5.75L18.4929 11.2929C18.8834 11.6834 18.8834 12.3166 18.4929 12.7071L12.95 18.25C12.5358 18.6642 11.8642 18.6642 11.45 18.25C11.0358 17.8358 11.0358 17.1642 11.45 16.75L15.6343 12.5657C15.9467 12.2533 15.9467 11.7467 15.6343 11.4343Z"
+                                                            fill="currentColor" />
+                                                    </svg>
+                                                </span>
+                                            </div>
+                                            <h4 class="text-gray-700 fs-5 cursor-pointer mb-0">CRM Master Data</h4>
+                                        </div>
+                                        <div id="kt_job_2_6_bbbc" class="fs-6 ms-1 collapse show">
+                                            <div class="mb-4">
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/crm/businessMasterTagSettings']">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Business Master Tag Settings
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/crm/contactMasterTagSettings']">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Contact Master Tag Settings
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/crm/contactTags']">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Contact Tags
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-xl-4">
+                        <div class="card mb-6 mb-xl-9 height_fluid">
+                            <div class="card-body">
+                                <div class="w-100 sitemap_accr">
+                                    <div class="m-0">
+                                        <h4 class="fs-3 text-gray-700 mb-1">
+                                            Employee Management
+                                        </h4>
+                                    </div>
+
+                                    <div class="m-0">
+                                        <div class="d-flex align-items-center collapsible py-2 pb-0 toggle mb-0"
+                                            data-bs-toggle="collapse" data-bs-target="#kt_job_2_5_emp"
+                                            aria-expanded="false">
+                                            <div class="btn btn-sm btn-icon mw-20px btn-active-color-primary me-5">
+                                                <span class="svg-icon toggle-on svg-icon-primary svg-icon-1">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path opacity="0.5"
+                                                            d="M12.5657 9.63427L16.75 5.44995C17.1642 5.03574 17.8358 5.03574 18.25 5.44995C18.6642 5.86416 18.6642 6.53574 18.25 6.94995L12.7071 12.4928C12.3166 12.8834 11.6834 12.8834 11.2929 12.4928L5.75 6.94995C5.33579 6.53574 5.33579 5.86416 5.75 5.44995C6.16421 5.03574 6.83579 5.03574 7.25 5.44995L11.4343 9.63427C11.7467 9.94669 12.2533 9.94668 12.5657 9.63427Z"
+                                                            fill="currentColor" />
+                                                        <path
+                                                            d="M12.5657 15.6343L16.75 11.45C17.1642 11.0357 17.8358 11.0357 18.25 11.45C18.6642 11.8642 18.6642 12.5357 18.25 12.95L12.7071 18.4928C12.3166 18.8834 11.6834 18.8834 11.2929 18.4928L5.75 12.95C5.33579 12.5357 5.33579 11.8642 5.75 11.45C6.16421 11.0357 6.83579 11.0357 7.25 11.45L11.4343 15.6343C11.7467 15.9467 12.2533 15.9467 12.5657 15.6343Z"
+                                                            fill="currentColor" />
+                                                    </svg>
+                                                </span>
+
+                                                <span class="svg-icon toggle-off svg-icon-1">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path opacity="0.5"
+                                                            d="M9.63433 11.4343L5.45001 7.25C5.0358 6.83579 5.0358 6.16421 5.45001 5.75C5.86423 5.33579 6.5358 5.33579 6.95001 5.75L12.4929 11.2929C12.8834 11.6834 12.8834 12.3166 12.4929 12.7071L6.95001 18.25C6.5358 18.6642 5.86423 18.6642 5.45001 18.25C5.0358 17.8358 5.0358 17.1642 5.45001 16.75L9.63433 12.5657C9.94675 12.2533 9.94675 11.7467 9.63433 11.4343Z"
+                                                            fill="currentColor" />
+                                                        <path
+                                                            d="M15.6343 11.4343L11.45 7.25C11.0358 6.83579 11.0358 6.16421 11.45 5.75C11.8642 5.33579 12.5358 5.33579 12.95 5.75L18.4929 11.2929C18.8834 11.6834 18.8834 12.3166 18.4929 12.7071L12.95 18.25C12.5358 18.6642 11.8642 18.6642 11.45 18.25C11.0358 17.8358 11.0358 17.1642 11.45 16.75L15.6343 12.5657C15.9467 12.2533 15.9467 11.7467 15.6343 11.4343Z"
+                                                            fill="currentColor" />
+                                                    </svg>
+                                                </span>
+                                            </div>
+                                            <h4 class="text-gray-700 fs-5 cursor-pointer mb-0">Employee Management</h4>
+                                        </div>
+                                        <div id="kt_job_2_5_emp" class="fs-6 ms-1 collapse show">
+                                            <div class="mb-4">
+
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/crm/employees']"
+                                                    routerLinkActive="router-link-active">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Master Employee List
+                                                        </div>
+                                                    </div>
+                                                </a>
+
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/crm/myEmployees']"
+                                                    routerLinkActive="router-link-active">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            My Employee List
+                                                        </div>
+                                                    </div>
+                                                </a>
+
+                                            </div>
+                                        </div>
+                                        <div class="separator separator-dashed"></div>
+                                    </div>
+
+                                    <div class="m-0">
+                                        <div class="d-flex align-items-center collapsible py-2 pb-0 toggle mb-0"
+                                            data-bs-toggle="collapse" data-bs-target="#kt_job_2_5_crm"
+                                            aria-expanded="false">
+                                            <div class="btn btn-sm btn-icon mw-20px btn-active-color-primary me-5">
+                                                <span class="svg-icon toggle-on svg-icon-primary svg-icon-1">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path opacity="0.5"
+                                                            d="M12.5657 9.63427L16.75 5.44995C17.1642 5.03574 17.8358 5.03574 18.25 5.44995C18.6642 5.86416 18.6642 6.53574 18.25 6.94995L12.7071 12.4928C12.3166 12.8834 11.6834 12.8834 11.2929 12.4928L5.75 6.94995C5.33579 6.53574 5.33579 5.86416 5.75 5.44995C6.16421 5.03574 6.83579 5.03574 7.25 5.44995L11.4343 9.63427C11.7467 9.94669 12.2533 9.94668 12.5657 9.63427Z"
+                                                            fill="currentColor" />
+                                                        <path
+                                                            d="M12.5657 15.6343L16.75 11.45C17.1642 11.0357 17.8358 11.0357 18.25 11.45C18.6642 11.8642 18.6642 12.5357 18.25 12.95L12.7071 18.4928C12.3166 18.8834 11.6834 18.8834 11.2929 18.4928L5.75 12.95C5.33579 12.5357 5.33579 11.8642 5.75 11.45C6.16421 11.0357 6.83579 11.0357 7.25 11.45L11.4343 15.6343C11.7467 15.9467 12.2533 15.9467 12.5657 15.6343Z"
+                                                            fill="currentColor" />
+                                                    </svg>
+                                                </span>
+
+                                                <span class="svg-icon toggle-off svg-icon-1">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path opacity="0.5"
+                                                            d="M9.63433 11.4343L5.45001 7.25C5.0358 6.83579 5.0358 6.16421 5.45001 5.75C5.86423 5.33579 6.5358 5.33579 6.95001 5.75L12.4929 11.2929C12.8834 11.6834 12.8834 12.3166 12.4929 12.7071L6.95001 18.25C6.5358 18.6642 5.86423 18.6642 5.45001 18.25C5.0358 17.8358 5.0358 17.1642 5.45001 16.75L9.63433 12.5657C9.94675 12.2533 9.94675 11.7467 9.63433 11.4343Z"
+                                                            fill="currentColor" />
+                                                        <path
+                                                            d="M15.6343 11.4343L11.45 7.25C11.0358 6.83579 11.0358 6.16421 11.45 5.75C11.8642 5.33579 12.5358 5.33579 12.95 5.75L18.4929 11.2929C18.8834 11.6834 18.8834 12.3166 18.4929 12.7071L12.95 18.25C12.5358 18.6642 11.8642 18.6642 11.45 18.25C11.0358 17.8358 11.0358 17.1642 11.45 16.75L15.6343 12.5657C15.9467 12.2533 15.9467 11.7467 15.6343 11.4343Z"
+                                                            fill="currentColor" />
+                                                    </svg>
+                                                </span>
+                                            </div>
+                                            <h4 class="text-gray-700 fs-5 cursor-pointer mb-0"> Employee Master Data
+                                            </h4>
+                                        </div>
+                                        <div id="kt_job_2_5_crm" class="fs-6 ms-1 collapse show">
+                                            <div class="mb-4">
+
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/crm/employeeTags']"
+                                                    routerLinkActive="router-link-active">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Employee Tags
+                                                        </div>
+                                                    </div>
+                                                </a>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-xl-4">
+                        <div class="card mb-6 mb-xl-9 height_fluid">
+                            <div class="card-body">
+                                <div class="w-100 sitemap_accr">
+                                    <div class="m-0">
+                                        <h4 class="fs-3 text-gray-700 mb-1">
+                                            Blog & CMS Management
+                                        </h4>
+                                    </div>
+
+                                    <div class="m-0">
+                                        <div class="d-flex align-items-center collapsible py-2 pb-0 toggle mb-0"
+                                            data-bs-toggle="collapse" data-bs-target="#kt_job_2_5_emp"
+                                            aria-expanded="false">
+                                            <div class="btn btn-sm btn-icon mw-20px btn-active-color-primary me-5">
+                                                <span class="svg-icon toggle-on svg-icon-primary svg-icon-1">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path opacity="0.5"
+                                                            d="M12.5657 9.63427L16.75 5.44995C17.1642 5.03574 17.8358 5.03574 18.25 5.44995C18.6642 5.86416 18.6642 6.53574 18.25 6.94995L12.7071 12.4928C12.3166 12.8834 11.6834 12.8834 11.2929 12.4928L5.75 6.94995C5.33579 6.53574 5.33579 5.86416 5.75 5.44995C6.16421 5.03574 6.83579 5.03574 7.25 5.44995L11.4343 9.63427C11.7467 9.94669 12.2533 9.94668 12.5657 9.63427Z"
+                                                            fill="currentColor" />
+                                                        <path
+                                                            d="M12.5657 15.6343L16.75 11.45C17.1642 11.0357 17.8358 11.0357 18.25 11.45C18.6642 11.8642 18.6642 12.5357 18.25 12.95L12.7071 18.4928C12.3166 18.8834 11.6834 18.8834 11.2929 18.4928L5.75 12.95C5.33579 12.5357 5.33579 11.8642 5.75 11.45C6.16421 11.0357 6.83579 11.0357 7.25 11.45L11.4343 15.6343C11.7467 15.9467 12.2533 15.9467 12.5657 15.6343Z"
+                                                            fill="currentColor" />
+                                                    </svg>
+                                                </span>
+
+                                                <span class="svg-icon toggle-off svg-icon-1">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path opacity="0.5"
+                                                            d="M9.63433 11.4343L5.45001 7.25C5.0358 6.83579 5.0358 6.16421 5.45001 5.75C5.86423 5.33579 6.5358 5.33579 6.95001 5.75L12.4929 11.2929C12.8834 11.6834 12.8834 12.3166 12.4929 12.7071L6.95001 18.25C6.5358 18.6642 5.86423 18.6642 5.45001 18.25C5.0358 17.8358 5.0358 17.1642 5.45001 16.75L9.63433 12.5657C9.94675 12.2533 9.94675 11.7467 9.63433 11.4343Z"
+                                                            fill="currentColor" />
+                                                        <path
+                                                            d="M15.6343 11.4343L11.45 7.25C11.0358 6.83579 11.0358 6.16421 11.45 5.75C11.8642 5.33579 12.5358 5.33579 12.95 5.75L18.4929 11.2929C18.8834 11.6834 18.8834 12.3166 18.4929 12.7071L12.95 18.25C12.5358 18.6642 11.8642 18.6642 11.45 18.25C11.0358 17.8358 11.0358 17.1642 11.45 16.75L15.6343 12.5657C15.9467 12.2533 15.9467 11.7467 15.6343 11.4343Z"
+                                                            fill="currentColor" />
+                                                    </svg>
+                                                </span>
+                                            </div>
+                                            <h4 class="text-gray-700 fs-5 cursor-pointer mb-0">Blog & CMS Management
+                                            </h4>
+                                        </div>
+                                        <div id="kt_job_2_5_emp" class="fs-6 ms-1 collapse show">
+                                            <div class="mb-4">
+
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/cms/siteDefaultContents']"
+                                                    routerLinkActive="router-link-active">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Site Default Contents
+                                                        </div>
+                                                    </div>
+                                                </a>
+
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/cms/contents']"
+                                                    routerLinkActive="router-link-active">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Contents
+                                                        </div>
+                                                    </div>
+                                                </a>
+
+                                            </div>
+                                        </div>
+                                        <div class="separator separator-dashed"></div>
+                                    </div>
+
+                                    <div class="m-0">
+                                        <div class="d-flex align-items-center collapsible py-2 pb-0 toggle mb-0"
+                                            data-bs-toggle="collapse" data-bs-target="#kt_job_2_5_crm"
+                                            aria-expanded="false">
+                                            <div class="btn btn-sm btn-icon mw-20px btn-active-color-primary me-5">
+                                                <span class="svg-icon toggle-on svg-icon-primary svg-icon-1">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path opacity="0.5"
+                                                            d="M12.5657 9.63427L16.75 5.44995C17.1642 5.03574 17.8358 5.03574 18.25 5.44995C18.6642 5.86416 18.6642 6.53574 18.25 6.94995L12.7071 12.4928C12.3166 12.8834 11.6834 12.8834 11.2929 12.4928L5.75 6.94995C5.33579 6.53574 5.33579 5.86416 5.75 5.44995C6.16421 5.03574 6.83579 5.03574 7.25 5.44995L11.4343 9.63427C11.7467 9.94669 12.2533 9.94668 12.5657 9.63427Z"
+                                                            fill="currentColor" />
+                                                        <path
+                                                            d="M12.5657 15.6343L16.75 11.45C17.1642 11.0357 17.8358 11.0357 18.25 11.45C18.6642 11.8642 18.6642 12.5357 18.25 12.95L12.7071 18.4928C12.3166 18.8834 11.6834 18.8834 11.2929 18.4928L5.75 12.95C5.33579 12.5357 5.33579 11.8642 5.75 11.45C6.16421 11.0357 6.83579 11.0357 7.25 11.45L11.4343 15.6343C11.7467 15.9467 12.2533 15.9467 12.5657 15.6343Z"
+                                                            fill="currentColor" />
+                                                    </svg>
+                                                </span>
+
+                                                <span class="svg-icon toggle-off svg-icon-1">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path opacity="0.5"
+                                                            d="M9.63433 11.4343L5.45001 7.25C5.0358 6.83579 5.0358 6.16421 5.45001 5.75C5.86423 5.33579 6.5358 5.33579 6.95001 5.75L12.4929 11.2929C12.8834 11.6834 12.8834 12.3166 12.4929 12.7071L6.95001 18.25C6.5358 18.6642 5.86423 18.6642 5.45001 18.25C5.0358 17.8358 5.0358 17.1642 5.45001 16.75L9.63433 12.5657C9.94675 12.2533 9.94675 11.7467 9.63433 11.4343Z"
+                                                            fill="currentColor" />
+                                                        <path
+                                                            d="M15.6343 11.4343L11.45 7.25C11.0358 6.83579 11.0358 6.16421 11.45 5.75C11.8642 5.33579 12.5358 5.33579 12.95 5.75L18.4929 11.2929C18.8834 11.6834 18.8834 12.3166 18.4929 12.7071L12.95 18.25C12.5358 18.6642 11.8642 18.6642 11.45 18.25C11.0358 17.8358 11.0358 17.1642 11.45 16.75L15.6343 12.5657C15.9467 12.2533 15.9467 11.7467 15.6343 11.4343Z"
+                                                            fill="currentColor" />
+                                                    </svg>
+                                                </span>
+                                            </div>
+                                            <h4 class="text-gray-700 fs-5 cursor-pointer mb-0"> CMS Master Data</h4>
+                                        </div>
+                                        <div id="kt_job_2_5_crm" class="fs-6 ms-1 collapse show">
+                                            <div class="mb-4">
+
+                                                <a href="javascript:;" class="mb-n1"
+                                                    routerLinkActive="router-link-active">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Content Types
+                                                        </div>
+                                                    </div>
+                                                </a>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-4">
+                        <div class="card mb-6 mb-xl-9 height_fluid">
+                            <div class="card-body">
+                                <div class="w-100 sitemap_accr">
+                                    <div class="m-0">
+                                        <h4 class="fs-3 text-gray-700 mb-1">
+                                            Job Management
+                                        </h4>
+                                    </div>
+
+                                    <div class="m-0">
+                                        <div class="d-flex align-items-center collapsible py-2 pb-0 toggle mb-0"
+                                            data-bs-toggle="collapse" data-bs-target="#kt_job_2_5_job"
+                                            aria-expanded="false">
+                                            <div class="btn btn-sm btn-icon mw-20px btn-active-color-primary me-5">
+                                                <span class="svg-icon toggle-on svg-icon-primary svg-icon-1">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path opacity="0.5"
+                                                            d="M12.5657 9.63427L16.75 5.44995C17.1642 5.03574 17.8358 5.03574 18.25 5.44995C18.6642 5.86416 18.6642 6.53574 18.25 6.94995L12.7071 12.4928C12.3166 12.8834 11.6834 12.8834 11.2929 12.4928L5.75 6.94995C5.33579 6.53574 5.33579 5.86416 5.75 5.44995C6.16421 5.03574 6.83579 5.03574 7.25 5.44995L11.4343 9.63427C11.7467 9.94669 12.2533 9.94668 12.5657 9.63427Z"
+                                                            fill="currentColor" />
+                                                        <path
+                                                            d="M12.5657 15.6343L16.75 11.45C17.1642 11.0357 17.8358 11.0357 18.25 11.45C18.6642 11.8642 18.6642 12.5357 18.25 12.95L12.7071 18.4928C12.3166 18.8834 11.6834 18.8834 11.2929 18.4928L5.75 12.95C5.33579 12.5357 5.33579 11.8642 5.75 11.45C6.16421 11.0357 6.83579 11.0357 7.25 11.45L11.4343 15.6343C11.7467 15.9467 12.2533 15.9467 12.5657 15.6343Z"
+                                                            fill="currentColor" />
+                                                    </svg>
+                                                </span>
+
+                                                <span class="svg-icon toggle-off svg-icon-1">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path opacity="0.5"
+                                                            d="M9.63433 11.4343L5.45001 7.25C5.0358 6.83579 5.0358 6.16421 5.45001 5.75C5.86423 5.33579 6.5358 5.33579 6.95001 5.75L12.4929 11.2929C12.8834 11.6834 12.8834 12.3166 12.4929 12.7071L6.95001 18.25C6.5358 18.6642 5.86423 18.6642 5.45001 18.25C5.0358 17.8358 5.0358 17.1642 5.45001 16.75L9.63433 12.5657C9.94675 12.2533 9.94675 11.7467 9.63433 11.4343Z"
+                                                            fill="currentColor" />
+                                                        <path
+                                                            d="M15.6343 11.4343L11.45 7.25C11.0358 6.83579 11.0358 6.16421 11.45 5.75C11.8642 5.33579 12.5358 5.33579 12.95 5.75L18.4929 11.2929C18.8834 11.6834 18.8834 12.3166 18.4929 12.7071L12.95 18.25C12.5358 18.6642 11.8642 18.6642 11.45 18.25C11.0358 17.8358 11.0358 17.1642 11.45 16.75L15.6343 12.5657C15.9467 12.2533 15.9467 11.7467 15.6343 11.4343Z"
+                                                            fill="currentColor" />
+                                                    </svg>
+                                                </span>
+                                            </div>
+                                            <h4 class="text-gray-700 fs-5 cursor-pointer mb-0">Job Management</h4>
+                                        </div>
+                                        <div id="kt_job_2_5_job" class="fs-6 ms-1 collapse show">
+                                            <div class="mb-4">
+
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/jobManagement/jobs']"
+                                                    routerLinkActive="router-link-active">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Jobs
+                                                        </div>
+                                                    </div>
+                                                </a>
+
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/jobManagement/jobTaskMaps']"
+                                                    routerLinkActive="router-link-active">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Job Task Maps
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="separator separator-dashed"></div>
+                                    </div>
+
+                                    <div class="m-0">
+                                        <div class="d-flex align-items-center collapsible py-2 pb-0 toggle mb-0"
+                                            data-bs-toggle="collapse" data-bs-target="#kt_job_2_5_crmjob"
+                                            aria-expanded="false">
+                                            <div class="btn btn-sm btn-icon mw-20px btn-active-color-primary me-5">
+                                                <span class="svg-icon toggle-on svg-icon-primary svg-icon-1">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path opacity="0.5"
+                                                            d="M12.5657 9.63427L16.75 5.44995C17.1642 5.03574 17.8358 5.03574 18.25 5.44995C18.6642 5.86416 18.6642 6.53574 18.25 6.94995L12.7071 12.4928C12.3166 12.8834 11.6834 12.8834 11.2929 12.4928L5.75 6.94995C5.33579 6.53574 5.33579 5.86416 5.75 5.44995C6.16421 5.03574 6.83579 5.03574 7.25 5.44995L11.4343 9.63427C11.7467 9.94669 12.2533 9.94668 12.5657 9.63427Z"
+                                                            fill="currentColor" />
+                                                        <path
+                                                            d="M12.5657 15.6343L16.75 11.45C17.1642 11.0357 17.8358 11.0357 18.25 11.45C18.6642 11.8642 18.6642 12.5357 18.25 12.95L12.7071 18.4928C12.3166 18.8834 11.6834 18.8834 11.2929 18.4928L5.75 12.95C5.33579 12.5357 5.33579 11.8642 5.75 11.45C6.16421 11.0357 6.83579 11.0357 7.25 11.45L11.4343 15.6343C11.7467 15.9467 12.2533 15.9467 12.5657 15.6343Z"
+                                                            fill="currentColor" />
+                                                    </svg>
+                                                </span>
+
+                                                <span class="svg-icon toggle-off svg-icon-1">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path opacity="0.5"
+                                                            d="M9.63433 11.4343L5.45001 7.25C5.0358 6.83579 5.0358 6.16421 5.45001 5.75C5.86423 5.33579 6.5358 5.33579 6.95001 5.75L12.4929 11.2929C12.8834 11.6834 12.8834 12.3166 12.4929 12.7071L6.95001 18.25C6.5358 18.6642 5.86423 18.6642 5.45001 18.25C5.0358 17.8358 5.0358 17.1642 5.45001 16.75L9.63433 12.5657C9.94675 12.2533 9.94675 11.7467 9.63433 11.4343Z"
+                                                            fill="currentColor" />
+                                                        <path
+                                                            d="M15.6343 11.4343L11.45 7.25C11.0358 6.83579 11.0358 6.16421 11.45 5.75C11.8642 5.33579 12.5358 5.33579 12.95 5.75L18.4929 11.2929C18.8834 11.6834 18.8834 12.3166 18.4929 12.7071L12.95 18.25C12.5358 18.6642 11.8642 18.6642 11.45 18.25C11.0358 17.8358 11.0358 17.1642 11.45 16.75L15.6343 12.5657C15.9467 12.2533 15.9467 11.7467 15.6343 11.4343Z"
+                                                            fill="currentColor" />
+                                                    </svg>
+                                                </span>
+                                            </div>
+                                            <h4 class="text-gray-700 fs-5 cursor-pointer mb-0"> Job Master Data</h4>
+                                        </div>
+                                        <div id="kt_job_2_5_crmjob" class="fs-6 ms-1 collapse show">
+                                            <div class="mb-4">
+
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/jobManagement/jobMasterTagSettings']"
+                                                    routerLinkActive="router-link-active">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Job Master Tag Settings
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/jobManagement/jobStatusTypes']"
+                                                    routerLinkActive="router-link-active">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Job Status Types
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/jobManagement/jobTags']"
+                                                    routerLinkActive="router-link-active">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Job Tags
+                                                        </div>
+                                                    </div>
+                                                </a>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-4">
+                        <div class="card mb-6 mb-xl-9 height_fluid">
+                            <div class="card-body">
+                                <div class="w-100 sitemap_accr">
+                                    <div class="m-0">
+                                        <h4 class="fs-3 text-gray-700 mb-1">
+                                            Applicant Management
+                                        </h4>
+                                    </div>
+
+                                    <div class="m-0">
+                                        <div class="d-flex align-items-center collapsible py-2 pb-0 toggle mb-0"
+                                            data-bs-toggle="collapse" data-bs-target="#kt_job_2_5_job"
+                                            aria-expanded="false">
+                                            <div class="btn btn-sm btn-icon mw-20px btn-active-color-primary me-5">
+                                                <span class="svg-icon toggle-on svg-icon-primary svg-icon-1">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path opacity="0.5"
+                                                            d="M12.5657 9.63427L16.75 5.44995C17.1642 5.03574 17.8358 5.03574 18.25 5.44995C18.6642 5.86416 18.6642 6.53574 18.25 6.94995L12.7071 12.4928C12.3166 12.8834 11.6834 12.8834 11.2929 12.4928L5.75 6.94995C5.33579 6.53574 5.33579 5.86416 5.75 5.44995C6.16421 5.03574 6.83579 5.03574 7.25 5.44995L11.4343 9.63427C11.7467 9.94669 12.2533 9.94668 12.5657 9.63427Z"
+                                                            fill="currentColor" />
+                                                        <path
+                                                            d="M12.5657 15.6343L16.75 11.45C17.1642 11.0357 17.8358 11.0357 18.25 11.45C18.6642 11.8642 18.6642 12.5357 18.25 12.95L12.7071 18.4928C12.3166 18.8834 11.6834 18.8834 11.2929 18.4928L5.75 12.95C5.33579 12.5357 5.33579 11.8642 5.75 11.45C6.16421 11.0357 6.83579 11.0357 7.25 11.45L11.4343 15.6343C11.7467 15.9467 12.2533 15.9467 12.5657 15.6343Z"
+                                                            fill="currentColor" />
+                                                    </svg>
+                                                </span>
+
+                                                <span class="svg-icon toggle-off svg-icon-1">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path opacity="0.5"
+                                                            d="M9.63433 11.4343L5.45001 7.25C5.0358 6.83579 5.0358 6.16421 5.45001 5.75C5.86423 5.33579 6.5358 5.33579 6.95001 5.75L12.4929 11.2929C12.8834 11.6834 12.8834 12.3166 12.4929 12.7071L6.95001 18.25C6.5358 18.6642 5.86423 18.6642 5.45001 18.25C5.0358 17.8358 5.0358 17.1642 5.45001 16.75L9.63433 12.5657C9.94675 12.2533 9.94675 11.7467 9.63433 11.4343Z"
+                                                            fill="currentColor" />
+                                                        <path
+                                                            d="M15.6343 11.4343L11.45 7.25C11.0358 6.83579 11.0358 6.16421 11.45 5.75C11.8642 5.33579 12.5358 5.33579 12.95 5.75L18.4929 11.2929C18.8834 11.6834 18.8834 12.3166 18.4929 12.7071L12.95 18.25C12.5358 18.6642 11.8642 18.6642 11.45 18.25C11.0358 17.8358 11.0358 17.1642 11.45 16.75L15.6343 12.5657C15.9467 12.2533 15.9467 11.7467 15.6343 11.4343Z"
+                                                            fill="currentColor" />
+                                                    </svg>
+                                                </span>
+                                            </div>
+                                            <h4 class="text-gray-700 fs-5 cursor-pointer mb-0">Applicant Management</h4>
+                                        </div>
+                                        <div id="kt_job_2_5_job" class="fs-6 ms-1 collapse show">
+                                            <div class="mb-4">
+
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/jobManagement/ApplicantsList']"
+                                                    routerLinkActive="router-link-active">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Applicants List
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-xl-4">
+                        <div class="card mb-6 mb-xl-9 height_fluid">
+                            <div class="card-body">
+                                <div class="w-100 sitemap_accr">
+                                    <div class="m-0">
+                                        <h4 class="fs-3 text-gray-700 mb-1">
+                                            Sales Lead Management
+                                        </h4>
+                                    </div>
+
+                                    <div class="m-0">
+                                        <div class="d-flex align-items-center collapsible py-2 pb-0 toggle mb-0"
+                                            data-bs-toggle="collapse" data-bs-target="#kt_job_2_5_jsalesLeadManagement"
+                                            aria-expanded="false">
+                                            <div class="btn btn-sm btn-icon mw-20px btn-active-color-primary me-5">
+                                                <span class="svg-icon toggle-on svg-icon-primary svg-icon-1">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path opacity="0.5"
+                                                            d="M12.5657 9.63427L16.75 5.44995C17.1642 5.03574 17.8358 5.03574 18.25 5.44995C18.6642 5.86416 18.6642 6.53574 18.25 6.94995L12.7071 12.4928C12.3166 12.8834 11.6834 12.8834 11.2929 12.4928L5.75 6.94995C5.33579 6.53574 5.33579 5.86416 5.75 5.44995C6.16421 5.03574 6.83579 5.03574 7.25 5.44995L11.4343 9.63427C11.7467 9.94669 12.2533 9.94668 12.5657 9.63427Z"
+                                                            fill="currentColor" />
+                                                        <path
+                                                            d="M12.5657 15.6343L16.75 11.45C17.1642 11.0357 17.8358 11.0357 18.25 11.45C18.6642 11.8642 18.6642 12.5357 18.25 12.95L12.7071 18.4928C12.3166 18.8834 11.6834 18.8834 11.2929 18.4928L5.75 12.95C5.33579 12.5357 5.33579 11.8642 5.75 11.45C6.16421 11.0357 6.83579 11.0357 7.25 11.45L11.4343 15.6343C11.7467 15.9467 12.2533 15.9467 12.5657 15.6343Z"
+                                                            fill="currentColor" />
+                                                    </svg>
+                                                </span>
+
+                                                <span class="svg-icon toggle-off svg-icon-1">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path opacity="0.5"
+                                                            d="M9.63433 11.4343L5.45001 7.25C5.0358 6.83579 5.0358 6.16421 5.45001 5.75C5.86423 5.33579 6.5358 5.33579 6.95001 5.75L12.4929 11.2929C12.8834 11.6834 12.8834 12.3166 12.4929 12.7071L6.95001 18.25C6.5358 18.6642 5.86423 18.6642 5.45001 18.25C5.0358 17.8358 5.0358 17.1642 5.45001 16.75L9.63433 12.5657C9.94675 12.2533 9.94675 11.7467 9.63433 11.4343Z"
+                                                            fill="currentColor" />
+                                                        <path
+                                                            d="M15.6343 11.4343L11.45 7.25C11.0358 6.83579 11.0358 6.16421 11.45 5.75C11.8642 5.33579 12.5358 5.33579 12.95 5.75L18.4929 11.2929C18.8834 11.6834 18.8834 12.3166 18.4929 12.7071L12.95 18.25C12.5358 18.6642 11.8642 18.6642 11.45 18.25C11.0358 17.8358 11.0358 17.1642 11.45 16.75L15.6343 12.5657C15.9467 12.2533 15.9467 11.7467 15.6343 11.4343Z"
+                                                            fill="currentColor" />
+                                                    </svg>
+                                                </span>
+                                            </div>
+                                            <h4 class="text-gray-700 fs-5 cursor-pointer mb-0"> Sales Lead Management
+                                            </h4>
+                                        </div>
+                                        <div id="kt_job_2_5_jsalesLeadManagement" class="fs-6 ms-1 collapse show">
+                                            <div class="mb-4">
+
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/salesLeadManagement/leadContacts']"
+                                                    routerLinkActive="router-link-active">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Lead Contacts
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/salesLeadManagement/leadNotes']"
+                                                    routerLinkActive="router-link-active">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Lead Notes
+                                                        </div>
+                                                    </div>
+                                                </a>
+
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/salesLeadManagement/leadReferralRewards']"
+                                                    routerLinkActive="router-link-active">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Lead Referral Rewards
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/salesLeadManagement/leads']"
+                                                    routerLinkActive="router-link-active">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Leads
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/salesLeadManagement/leadSalesTeams']"
+                                                    routerLinkActive="router-link-active">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Lead Sales Teams
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/salesLeadManagement/leadSources']"
+                                                    routerLinkActive="router-link-active">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Lead Sources
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/salesLeadManagement/leadTasks']"
+                                                    routerLinkActive="router-link-active">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Lead Tasks
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="separator separator-dashed"></div>
+                                    </div>
+
+                                    <div class="m-0">
+                                        <div class="d-flex align-items-center collapsible py-2 pb-0 toggle mb-0"
+                                            data-bs-toggle="collapse" data-bs-target="#kt_job_2_5_crmjobcfsdfsd"
+                                            aria-expanded="false">
+                                            <div class="btn btn-sm btn-icon mw-20px btn-active-color-primary me-5">
+                                                <span class="svg-icon toggle-on svg-icon-primary svg-icon-1">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path opacity="0.5"
+                                                            d="M12.5657 9.63427L16.75 5.44995C17.1642 5.03574 17.8358 5.03574 18.25 5.44995C18.6642 5.86416 18.6642 6.53574 18.25 6.94995L12.7071 12.4928C12.3166 12.8834 11.6834 12.8834 11.2929 12.4928L5.75 6.94995C5.33579 6.53574 5.33579 5.86416 5.75 5.44995C6.16421 5.03574 6.83579 5.03574 7.25 5.44995L11.4343 9.63427C11.7467 9.94669 12.2533 9.94668 12.5657 9.63427Z"
+                                                            fill="currentColor" />
+                                                        <path
+                                                            d="M12.5657 15.6343L16.75 11.45C17.1642 11.0357 17.8358 11.0357 18.25 11.45C18.6642 11.8642 18.6642 12.5357 18.25 12.95L12.7071 18.4928C12.3166 18.8834 11.6834 18.8834 11.2929 18.4928L5.75 12.95C5.33579 12.5357 5.33579 11.8642 5.75 11.45C6.16421 11.0357 6.83579 11.0357 7.25 11.45L11.4343 15.6343C11.7467 15.9467 12.2533 15.9467 12.5657 15.6343Z"
+                                                            fill="currentColor" />
+                                                    </svg>
+                                                </span>
+
+                                                <span class="svg-icon toggle-off svg-icon-1">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path opacity="0.5"
+                                                            d="M9.63433 11.4343L5.45001 7.25C5.0358 6.83579 5.0358 6.16421 5.45001 5.75C5.86423 5.33579 6.5358 5.33579 6.95001 5.75L12.4929 11.2929C12.8834 11.6834 12.8834 12.3166 12.4929 12.7071L6.95001 18.25C6.5358 18.6642 5.86423 18.6642 5.45001 18.25C5.0358 17.8358 5.0358 17.1642 5.45001 16.75L9.63433 12.5657C9.94675 12.2533 9.94675 11.7467 9.63433 11.4343Z"
+                                                            fill="currentColor" />
+                                                        <path
+                                                            d="M15.6343 11.4343L11.45 7.25C11.0358 6.83579 11.0358 6.16421 11.45 5.75C11.8642 5.33579 12.5358 5.33579 12.95 5.75L18.4929 11.2929C18.8834 11.6834 18.8834 12.3166 18.4929 12.7071L12.95 18.25C12.5358 18.6642 11.8642 18.6642 11.45 18.25C11.0358 17.8358 11.0358 17.1642 11.45 16.75L15.6343 12.5657C15.9467 12.2533 15.9467 11.7467 15.6343 11.4343Z"
+                                                            fill="currentColor" />
+                                                    </svg>
+                                                </span>
+                                            </div>
+                                            <h4 class="text-gray-700 fs-5 cursor-pointer mb-0"> Sales Lead Management
+                                                Master Data</h4>
+                                        </div>
+                                        <div id="kt_job_2_5_crmjobcfsdfsd" class="fs-6 ms-1 collapse show">
+                                            <div class="mb-4">
+
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/salesLeadManagement/leadPipelineStages']"
+                                                    routerLinkActive="router-link-active">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Lead Pipeline Stages
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/salesLeadManagement/leadPipelineStatuses']"
+                                                    routerLinkActive="router-link-active">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Lead Pipeline Statuses
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-4">
+                        <div class="card mb-6 mb-xl-9 height_fluid">
+                            <div class="card-body">
+                                <div class="w-100 sitemap_accr">
+                                    <div class="m-0">
+                                        <h4 class="fs-3 text-gray-700 mb-1">
+                                            Task Management
+                                        </h4>
+                                    </div>
+
+                                    <div class="m-0">
+                                        <div class="d-flex align-items-center collapsible py-2 pb-0 toggle mb-0"
+                                            data-bs-toggle="collapse" data-bs-target="#task_____mmm"
+                                            aria-expanded="false">
+                                            <div class="btn btn-sm btn-icon mw-20px btn-active-color-primary me-5">
+                                                <span class="svg-icon toggle-on svg-icon-primary svg-icon-1">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path opacity="0.5"
+                                                            d="M12.5657 9.63427L16.75 5.44995C17.1642 5.03574 17.8358 5.03574 18.25 5.44995C18.6642 5.86416 18.6642 6.53574 18.25 6.94995L12.7071 12.4928C12.3166 12.8834 11.6834 12.8834 11.2929 12.4928L5.75 6.94995C5.33579 6.53574 5.33579 5.86416 5.75 5.44995C6.16421 5.03574 6.83579 5.03574 7.25 5.44995L11.4343 9.63427C11.7467 9.94669 12.2533 9.94668 12.5657 9.63427Z"
+                                                            fill="currentColor" />
+                                                        <path
+                                                            d="M12.5657 15.6343L16.75 11.45C17.1642 11.0357 17.8358 11.0357 18.25 11.45C18.6642 11.8642 18.6642 12.5357 18.25 12.95L12.7071 18.4928C12.3166 18.8834 11.6834 18.8834 11.2929 18.4928L5.75 12.95C5.33579 12.5357 5.33579 11.8642 5.75 11.45C6.16421 11.0357 6.83579 11.0357 7.25 11.45L11.4343 15.6343C11.7467 15.9467 12.2533 15.9467 12.5657 15.6343Z"
+                                                            fill="currentColor" />
+                                                    </svg>
+                                                </span>
+
+                                                <span class="svg-icon toggle-off svg-icon-1">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path opacity="0.5"
+                                                            d="M9.63433 11.4343L5.45001 7.25C5.0358 6.83579 5.0358 6.16421 5.45001 5.75C5.86423 5.33579 6.5358 5.33579 6.95001 5.75L12.4929 11.2929C12.8834 11.6834 12.8834 12.3166 12.4929 12.7071L6.95001 18.25C6.5358 18.6642 5.86423 18.6642 5.45001 18.25C5.0358 17.8358 5.0358 17.1642 5.45001 16.75L9.63433 12.5657C9.94675 12.2533 9.94675 11.7467 9.63433 11.4343Z"
+                                                            fill="currentColor" />
+                                                        <path
+                                                            d="M15.6343 11.4343L11.45 7.25C11.0358 6.83579 11.0358 6.16421 11.45 5.75C11.8642 5.33579 12.5358 5.33579 12.95 5.75L18.4929 11.2929C18.8834 11.6834 18.8834 12.3166 18.4929 12.7071L12.95 18.25C12.5358 18.6642 11.8642 18.6642 11.45 18.25C11.0358 17.8358 11.0358 17.1642 11.45 16.75L15.6343 12.5657C15.9467 12.2533 15.9467 11.7467 15.6343 11.4343Z"
+                                                            fill="currentColor" />
+                                                    </svg>
+                                                </span>
+                                            </div>
+                                            <h4 class="text-gray-700 fs-5 cursor-pointer mb-0"> Task Management</h4>
+                                        </div>
+                                        <div id="task_____mmm" class="fs-6 ms-1 collapse show">
+                                            <div class="mb-4">
+
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/taskManagement/taskEvents']"
+                                                    routerLinkActive="router-link-active">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Master Task List
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/taskManagement/myTaskEvents']"
+                                                    routerLinkActive="router-link-active">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            My Task List
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/taskManagement/taskLibrary']"
+                                                    routerLinkActive="router-link-active">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Task Templates
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="separator separator-dashed"></div>
+                                    </div>
+
+                                    <div class="m-0">
+                                        <div class="d-flex align-items-center collapsible py-2 pb-0 toggle mb-0"
+                                            data-bs-toggle="collapse" data-bs-target="#task___mm" aria-expanded="false">
+                                            <div class="btn btn-sm btn-icon mw-20px btn-active-color-primary me-5">
+                                                <span class="svg-icon toggle-on svg-icon-primary svg-icon-1">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path opacity="0.5"
+                                                            d="M12.5657 9.63427L16.75 5.44995C17.1642 5.03574 17.8358 5.03574 18.25 5.44995C18.6642 5.86416 18.6642 6.53574 18.25 6.94995L12.7071 12.4928C12.3166 12.8834 11.6834 12.8834 11.2929 12.4928L5.75 6.94995C5.33579 6.53574 5.33579 5.86416 5.75 5.44995C6.16421 5.03574 6.83579 5.03574 7.25 5.44995L11.4343 9.63427C11.7467 9.94669 12.2533 9.94668 12.5657 9.63427Z"
+                                                            fill="currentColor" />
+                                                        <path
+                                                            d="M12.5657 15.6343L16.75 11.45C17.1642 11.0357 17.8358 11.0357 18.25 11.45C18.6642 11.8642 18.6642 12.5357 18.25 12.95L12.7071 18.4928C12.3166 18.8834 11.6834 18.8834 11.2929 18.4928L5.75 12.95C5.33579 12.5357 5.33579 11.8642 5.75 11.45C6.16421 11.0357 6.83579 11.0357 7.25 11.45L11.4343 15.6343C11.7467 15.9467 12.2533 15.9467 12.5657 15.6343Z"
+                                                            fill="currentColor" />
+                                                    </svg>
+                                                </span>
+
+                                                <span class="svg-icon toggle-off svg-icon-1">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path opacity="0.5"
+                                                            d="M9.63433 11.4343L5.45001 7.25C5.0358 6.83579 5.0358 6.16421 5.45001 5.75C5.86423 5.33579 6.5358 5.33579 6.95001 5.75L12.4929 11.2929C12.8834 11.6834 12.8834 12.3166 12.4929 12.7071L6.95001 18.25C6.5358 18.6642 5.86423 18.6642 5.45001 18.25C5.0358 17.8358 5.0358 17.1642 5.45001 16.75L9.63433 12.5657C9.94675 12.2533 9.94675 11.7467 9.63433 11.4343Z"
+                                                            fill="currentColor" />
+                                                        <path
+                                                            d="M15.6343 11.4343L11.45 7.25C11.0358 6.83579 11.0358 6.16421 11.45 5.75C11.8642 5.33579 12.5358 5.33579 12.95 5.75L18.4929 11.2929C18.8834 11.6834 18.8834 12.3166 18.4929 12.7071L12.95 18.25C12.5358 18.6642 11.8642 18.6642 11.45 18.25C11.0358 17.8358 11.0358 17.1642 11.45 16.75L15.6343 12.5657C15.9467 12.2533 15.9467 11.7467 15.6343 11.4343Z"
+                                                            fill="currentColor" />
+                                                    </svg>
+                                                </span>
+                                            </div>
+                                            <h4 class="text-gray-700 fs-5 cursor-pointer mb-0"> Task Management Master
+                                                Data</h4>
+                                        </div>
+                                        <div id="task___mm" class="fs-6 ms-1 collapse show">
+                                            <div class="mb-4">
+
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/main/taskManagement/taskStatuses']"
+                                                    routerLinkActive="router-link-active">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Task Statues
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-4">
+                        <div class="card mb-6 mb-xl-9 height_fluid">
+                            <div class="card-body">
+                                <div class="w-100 sitemap_accr">
+                                    <div class="m-0">
+                                        <h4 class="fs-3 text-gray-700 mb-1">
+                                            Administration
+                                        </h4>
+                                    </div>
+
+                                    <div class="m-0">
+                                        <div class="d-flex align-items-center collapsible py-2 pb-0 toggle mb-0"
+                                            data-bs-toggle="collapse" data-bs-target="#adminstrationm____d"
+                                            aria-expanded="false">
+                                            <div class="btn btn-sm btn-icon mw-20px btn-active-color-primary me-5">
+                                                <span class="svg-icon toggle-on svg-icon-primary svg-icon-1">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path opacity="0.5"
+                                                            d="M12.5657 9.63427L16.75 5.44995C17.1642 5.03574 17.8358 5.03574 18.25 5.44995C18.6642 5.86416 18.6642 6.53574 18.25 6.94995L12.7071 12.4928C12.3166 12.8834 11.6834 12.8834 11.2929 12.4928L5.75 6.94995C5.33579 6.53574 5.33579 5.86416 5.75 5.44995C6.16421 5.03574 6.83579 5.03574 7.25 5.44995L11.4343 9.63427C11.7467 9.94669 12.2533 9.94668 12.5657 9.63427Z"
+                                                            fill="currentColor" />
+                                                        <path
+                                                            d="M12.5657 15.6343L16.75 11.45C17.1642 11.0357 17.8358 11.0357 18.25 11.45C18.6642 11.8642 18.6642 12.5357 18.25 12.95L12.7071 18.4928C12.3166 18.8834 11.6834 18.8834 11.2929 18.4928L5.75 12.95C5.33579 12.5357 5.33579 11.8642 5.75 11.45C6.16421 11.0357 6.83579 11.0357 7.25 11.45L11.4343 15.6343C11.7467 15.9467 12.2533 15.9467 12.5657 15.6343Z"
+                                                            fill="currentColor" />
+                                                    </svg>
+                                                </span>
+
+                                                <span class="svg-icon toggle-off svg-icon-1">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path opacity="0.5"
+                                                            d="M9.63433 11.4343L5.45001 7.25C5.0358 6.83579 5.0358 6.16421 5.45001 5.75C5.86423 5.33579 6.5358 5.33579 6.95001 5.75L12.4929 11.2929C12.8834 11.6834 12.8834 12.3166 12.4929 12.7071L6.95001 18.25C6.5358 18.6642 5.86423 18.6642 5.45001 18.25C5.0358 17.8358 5.0358 17.1642 5.45001 16.75L9.63433 12.5657C9.94675 12.2533 9.94675 11.7467 9.63433 11.4343Z"
+                                                            fill="currentColor" />
+                                                        <path
+                                                            d="M15.6343 11.4343L11.45 7.25C11.0358 6.83579 11.0358 6.16421 11.45 5.75C11.8642 5.33579 12.5358 5.33579 12.95 5.75L18.4929 11.2929C18.8834 11.6834 18.8834 12.3166 18.4929 12.7071L12.95 18.25C12.5358 18.6642 11.8642 18.6642 11.45 18.25C11.0358 17.8358 11.0358 17.1642 11.45 16.75L15.6343 12.5657C15.9467 12.2533 15.9467 11.7467 15.6343 11.4343Z"
+                                                            fill="currentColor" />
+                                                    </svg>
+                                                </span>
+                                            </div>
+                                            <h4 class="text-gray-700 fs-5 cursor-pointer mb-0"> Administration</h4>
+                                        </div>
+                                        <div id="adminstrationm____d" class="fs-6 ms-1 collapse show">
+                                            <div class="mb-4">
+
+                                                <a href="javascript:;" class="mb-n1" [routerLink]="['/app/admin/roles']"
+                                                    routerLinkActive="router-link-active">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Roles
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                <a href="javascript:;" class="mb-n1" [routerLink]="['/app/admin/users']"
+                                                    routerLinkActive="router-link-active">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Users
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/admin/languages']"
+                                                    routerLinkActive="router-link-active">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Languages
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/admin/auditLogs']"
+                                                    routerLinkActive="router-link-active">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            Audit Logs
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                <a href="javascript:;" class="mb-n1"
+                                                    [routerLink]="['/app/admin/ui-customization']"
+                                                    routerLinkActive="router-link-active">
+                                                    <div class="d-flex align-items-center ps-10">
+                                                        <span class="bullet me-3"></span>
+                                                        <div class="text-gray-600 fw-semibold fs-6">
+                                                            UI-Customization
+                                                        </div>
+                                                    </div>
+                                                </a>
+
                                             </div>
                                         </div>
                                     </div>

@@ -17,6 +17,7 @@ import { StoreMasterTagSettingsServiceProxy } from '@shared/service-proxies/serv
 import { CreateOrEditStoreTaskMapModalComponent } from '@app/main/taskManagement/storeTaskMaps/create-or-edit-storeTaskMap-modal.component';
 import { CreateOrEditStoreNoteModalComponent } from '../../storeNotes/create-or-edit-storeNote-modal.component';
 import { CreateOrEditStoreAccountTeamModalComponent } from '../../storeAccountTeams/create-or-edit-storeAccountTeam-modal.component';
+import { OneToOneConnectModalComponent } from '@app/shared/one-to-one-connect-modal/one-to-one-connect-modal.component';
 
 @Component({
   selector: 'app-store-dashboard',
@@ -32,6 +33,7 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
   createOrEditStoreTaskMapModal: CreateOrEditStoreTaskMapModalComponent;
   @ViewChild('createOrEditStoreAccountTeamModal', { static: true })
   createOrEditStoreAccountTeamModal: CreateOrEditStoreAccountTeamModalComponent;
+  @ViewChild('oneToOneConnectModal', { static: true }) oneToOneConnectModal: OneToOneConnectModalComponent;
   saving = false;
   storeId: number;
   productShortDesc: string;
@@ -53,6 +55,7 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
   teams: any[] = [];
   taxOptions: any[] = [];
   video: string;
+  storeLogo: string;
 
   publishOptions: SelectItem[];
   publish: Boolean = false;
@@ -192,6 +195,7 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
       }
       this.stateName = result.stateName;
       this.countryName = result.countryName;
+      this.storeLogo = result.picture;
       this.picture = result.picture;
       this.tags = result.storeTags;
       this.publish = result.store.isPublished ? true : false;
@@ -201,9 +205,9 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
       this.ratingScore = result.ratingScore;
       this.primaryCategoryName = result.primaryCategoryName;
       this.storeTagSettingCategoryId = result.store.storeTagSettingCategoryId;
-      if (result.picture != null) {
-        this.imageSrc = result.picture;
-      }
+      // if (result.picture != null) {
+      //   this.imageSrc = result.picture;
+      // }
       console.log(result)
       this.getStoreMedia();
     });
@@ -518,7 +522,7 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
     console.log(cleanText);
     try {
       const response = JSON.parse(cleanText);
-  
+
       if (response.Name && response['Full Address'] && response.Address && response.Description && response['Phone Number'] && response['Mobile Number'] && response.Email && response.Web) {
         const Name = response.Name;
         const FullAddress = response['Full Address'];
@@ -536,7 +540,7 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
     }
     throw new Error('Unable to extract data from the response');
   }
-  
+
 
 
   drop(event: CdkDragDrop<string[]>) {
@@ -579,5 +583,9 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
   onListView() {
     this.showListView = !this.showListView;
     this.showCalendarView = !this.showCalendarView;
+  }
+  onConnectClick(id: number) {
+    this.oneToOneConnectModal.storeId = id;
+    this.oneToOneConnectModal.show();
   }
 }
