@@ -13,6 +13,7 @@ import { AbandonedCartComponent } from './orderManagement/orders/abandoned-cart/
 import { SiteDefaultContentComponent } from './cms/contents/site-default-content/site-default-content.component';
 import { MyProductsComponent } from './shop/products/my-products/my-products.component';
 import { TaskEventsLibraryComponent } from './taskManagement/taskEvents/task-events-library/task-events-library.component';
+import { TimesheetsComponent } from './taskManagement/timesheets/timesheets.component';
 
 @NgModule({
     imports: [
@@ -935,7 +936,11 @@ import { TaskEventsLibraryComponent } from './taskManagement/taskEvents/task-eve
                         component: MyTaskEventsComponent,
                         data: { permission: 'Pages.TaskEvents' }
                     },
-
+                    {
+                        path: 'taskManagement/timesheets',
+                        loadChildren: () => import('./taskManagement/timesheets/timesheet.module').then(m => m.TimesheetModule),
+                        data: { permission: 'Pages.TaskEvents' }
+                    },
                     {
                         path: 'taskManagement/taskLibrary',
                         data: { permission: 'Pages.TaskEvents' },

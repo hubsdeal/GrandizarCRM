@@ -131,6 +131,7 @@ import { AppSessionService } from '@shared/common/session/app-session.service';
         ApiServiceProxies.BusinessContactMapsServiceProxy,        
         ApiServiceProxies.TaskTagsServiceProxy,        
         ApiServiceProxies.TaskEventsServiceProxy,  
+        ApiServiceProxies.TimesheetsServiceProxy,  
         ApiServiceProxies.TaskNotesServiceProxy,      
         ApiServiceProxies.TaskStatusesServiceProxy,        
         ApiServiceProxies.EmployeesServiceProxy,        
