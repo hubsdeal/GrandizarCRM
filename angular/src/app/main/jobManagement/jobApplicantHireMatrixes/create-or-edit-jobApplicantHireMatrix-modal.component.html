@@ -1,0 +1,131 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #jobApplicantHireMatrixForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="jobApplicantHireMatrix.id">{{l("EditJobApplicantHireMatrix")}}</span>
+                        <span *ngIf="!jobApplicantHireMatrix.id">{{l("CreateNewJobApplicantHireMatrix")}}</span>
+                    </h4>                    
+                    
+                    
+                 <button type="button" class="btn-close" (click)="close()" aria-label="Close" [disabled]="saving"></button>
+             
+                </div>
+                <div class="modal-body">
+                 
+
+
+					<div class="my-3">
+                        <label class="form-label" for="JobTitle">{{l("Job")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="JobTitle" name="jobTitle" [(ngModel)]="jobTitle" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectJobModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setJobIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="jobApplicantHireMatrix.jobId" [(ngModel)]="jobApplicantHireMatrix.jobId" type="text" required hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="ContactFullName">{{l("Contact")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="ContactFullName" name="contactFullName" [(ngModel)]="contactFullName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectContactModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setContactIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="jobApplicantHireMatrix.contactId" [(ngModel)]="jobApplicantHireMatrix.contactId" type="text"  hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="JobHiringTeamFirstName">{{l("JobHiringTeam")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="JobHiringTeamFirstName" name="jobHiringTeamFirstName" [(ngModel)]="jobHiringTeamFirstName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectJobHiringTeamModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setJobHiringTeamIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="jobApplicantHireMatrix.jobHiringTeamId" [(ngModel)]="jobApplicantHireMatrix.jobHiringTeamId" type="text"  hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="JobApplicantHireStatusTypeName">{{l("JobApplicantHireStatusType")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="JobApplicantHireStatusTypeName" name="jobApplicantHireStatusTypeName" [(ngModel)]="jobApplicantHireStatusTypeName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectJobApplicantHireStatusTypeModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setJobApplicantHireStatusTypeIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="jobApplicantHireMatrix.jobApplicantHireStatusTypeId" [(ngModel)]="jobApplicantHireMatrix.jobApplicantHireStatusTypeId" type="text"  hidden>
+                        
+
+
+								<br/>
+								<label class="form-check form-check-custom form-check-solid">
+                                    <input
+                                        id="JobApplicantHireMatrix_Matched" 
+                                        #JobApplicantHireMatrix_Matched="ngModel"
+                                        name="Matched" 
+                                        [(ngModel)]="jobApplicantHireMatrix.matched"
+                                        type="checkbox"
+                                        class="form-check-input"
+                                    />
+                                    <span class="form-check-label">
+                                        {{l("Matched")}}
+                                    </span>
+                                </label>
+                                <validation-messages [formCtrl]="JobApplicantHireMatrix_Matched"></validation-messages>
+					
+								<br/>
+								<label class="form-check form-check-custom form-check-solid">
+                                    <input
+                                        id="JobApplicantHireMatrix_ThumbsUpOrDown" 
+                                        #JobApplicantHireMatrix_ThumbsUpOrDown="ngModel"
+                                        name="ThumbsUpOrDown" 
+                                        [(ngModel)]="jobApplicantHireMatrix.thumbsUpOrDown"
+                                        type="checkbox"
+                                        class="form-check-input"
+                                    />
+                                    <span class="form-check-label">
+                                        {{l("ThumbsUpOrDown")}}
+                                    </span>
+                                </label>
+                                <validation-messages [formCtrl]="JobApplicantHireMatrix_ThumbsUpOrDown"></validation-messages>
+					
+								<div class="my-3">
+									<label class="form-label" for="JobApplicantHireMatrix_ManagerRemarks">{{l("ManagerRemarks")}}</label>
+									<input type="text" #JobApplicantHireMatrix_ManagerRemarks="ngModel" id="JobApplicantHireMatrix_ManagerRemarks" class="form-control" [(ngModel)]="jobApplicantHireMatrix.managerRemarks" name="ManagerRemarks"    />
+								    <validation-messages [formCtrl]="JobApplicantHireMatrix_ManagerRemarks"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="JobApplicantHireMatrix_ContactCoverLetterId">{{l("ContactCoverLetterId")}}</label>
+									<input type="text" #JobApplicantHireMatrix_ContactCoverLetterId="ngModel" id="JobApplicantHireMatrix_ContactCoverLetterId" class="form-control" [(ngModel)]="jobApplicantHireMatrix.contactCoverLetterId" name="ContactCoverLetterId"    />
+								    <validation-messages [formCtrl]="JobApplicantHireMatrix_ContactCoverLetterId"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="JobApplicantHireMatrix_ContactResumeId">{{l("ContactResumeId")}}</label>
+									<input type="text" #JobApplicantHireMatrix_ContactResumeId="ngModel" id="JobApplicantHireMatrix_ContactResumeId" class="form-control" [(ngModel)]="jobApplicantHireMatrix.contactResumeId" name="ContactResumeId"    />
+								    <validation-messages [formCtrl]="JobApplicantHireMatrix_ContactResumeId"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="JobApplicantHireMatrix_ContactCoverLetterName">{{l("ContactCoverLetterName")}}</label>
+									<input type="text" #JobApplicantHireMatrix_ContactCoverLetterName="ngModel" id="JobApplicantHireMatrix_ContactCoverLetterName" class="form-control" [(ngModel)]="jobApplicantHireMatrix.contactCoverLetterName" name="ContactCoverLetterName"   minlength="1"  maxlength="1024" />
+								    <validation-messages [formCtrl]="JobApplicantHireMatrix_ContactCoverLetterName"></validation-messages>
+								</div>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!jobApplicantHireMatrixForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+<jobApplicantHireMatrixJobLookupTableModal #jobApplicantHireMatrixJobLookupTableModal (modalSave)="getNewJobId()"></jobApplicantHireMatrixJobLookupTableModal>
+		 <jobApplicantHireMatrixContactLookupTableModal #jobApplicantHireMatrixContactLookupTableModal (modalSave)="getNewContactId()"></jobApplicantHireMatrixContactLookupTableModal>
+		 <jobApplicantHireMatrixJobHiringTeamLookupTableModal #jobApplicantHireMatrixJobHiringTeamLookupTableModal (modalSave)="getNewJobHiringTeamId()"></jobApplicantHireMatrixJobHiringTeamLookupTableModal>
+		 <jobApplicantHireMatrixJobApplicantHireStatusTypeLookupTableModal #jobApplicantHireMatrixJobApplicantHireStatusTypeLookupTableModal (modalSave)="getNewJobApplicantHireStatusTypeId()"></jobApplicantHireMatrixJobApplicantHireStatusTypeLookupTableModal>
+		 
+</div>

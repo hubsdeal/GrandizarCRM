@@ -1,0 +1,76 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span>{{l("Details")}}</span>
+                </h4>               
+                
+                
+                 <button type="button" class="btn-close" (click)="close()" aria-label="Close" [disabled]="saving"></button>
+             
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="col-6 mb-3">
+                        <h6>{{l("Title")}} :</h6>
+                        {{ item.contactAddress.title }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("FullAddress")}} :</h6>
+                        {{ item.contactAddress.fullAddress }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("Address")}} :</h6>
+                        {{ item.contactAddress.address }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("ZipCode")}} :</h6>
+                        {{ item.contactAddress.zipCode }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("Latitude")}} :</h6>
+                        {{ item.contactAddress.latitude }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("Longitude")}} :</h6>
+                        {{ item.contactAddress.longitude }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("Active")}} :</h6>
+                        <div *ngIf="item.contactAddress.active" class="text-left"><i class="fa fa-check-circle text-success"
+                                title="True"></i></div>
+                        <div *ngIf="!item.contactAddress.active" class="text-left"><i class="fa fa-times-circle" title="False"></i></div>
+                    </div>                    <div class="col-6 mb-3">
+                        <h6>{{l("City")}} :</h6>
+                        {{ item.contactAddress.city }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("NoteForDelivery")}} :</h6>
+                        {{ item.contactAddress.noteForDelivery }}
+                    </div>
+
+                    <div class="col-6 mb-3">
+                        <h6>({{l("Contact")}}) {{l("FullName")}} :</h6>
+                        {{item.contactFullName}}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{l("Country")}}) {{l("Name")}} :</h6>
+                        {{item.countryName}}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{l("State")}}) {{l("Name")}} :</h6>
+                        {{item.stateName}}
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button [disabled]="saving" type="button" class="btn btn-primary blue" (click)="close()">{{l("Close")}}</button>
+            </div>
+        </div>
+    </div>
+
+</div>

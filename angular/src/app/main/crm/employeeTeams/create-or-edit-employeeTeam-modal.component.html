@@ -1,0 +1,69 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #employeeTeamForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="employeeTeam.id">{{l("EditEmployeeTeam")}}</span>
+                        <span *ngIf="!employeeTeam.id">{{l("CreateNewEmployeeTeam")}}</span>
+                    </h4>                    
+                    
+                    
+                 <button type="button" class="btn-close" (click)="close()" aria-label="Close" [disabled]="saving"></button>
+             
+                </div>
+                <div class="modal-body">
+                 
+
+
+					<div class="my-3">
+                        <label class="form-label" for="EmployeeName">{{l("Employee")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="EmployeeName" name="employeeName" [(ngModel)]="employeeName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectEmployeeModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setPrimaryEmployeeIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="employeeTeam.primaryEmployeeId" [(ngModel)]="employeeTeam.primaryEmployeeId" type="text"  hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="EmployeeName2">{{l("Employee")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="EmployeeName2" name="employeeName2" [(ngModel)]="employeeName2" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectEmployeeModal2()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setEmployeeIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="employeeTeam.employeeId" [(ngModel)]="employeeTeam.employeeId" type="text"  hidden>
+                        
+
+
+								<br/>
+								<label class="form-check form-check-custom form-check-solid">
+                                    <input
+                                        id="EmployeeTeam_Manager" 
+                                        #EmployeeTeam_Manager="ngModel"
+                                        name="Manager" 
+                                        [(ngModel)]="employeeTeam.manager"
+                                        type="checkbox"
+                                        class="form-check-input"
+                                    />
+                                    <span class="form-check-label">
+                                        {{l("Manager")}}
+                                    </span>
+                                </label>
+                                <validation-messages [formCtrl]="EmployeeTeam_Manager"></validation-messages>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!employeeTeamForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+<employeeTeamEmployeeLookupTableModal #employeeTeamEmployeeLookupTableModal (modalSave)="getNewPrimaryEmployeeId()"></employeeTeamEmployeeLookupTableModal>
+		 <employeeTeamEmployeeLookupTableModal #employeeTeamEmployeeLookupTableModal2 (modalSave)="getNewEmployeeId()"></employeeTeamEmployeeLookupTableModal>
+		 
+</div>

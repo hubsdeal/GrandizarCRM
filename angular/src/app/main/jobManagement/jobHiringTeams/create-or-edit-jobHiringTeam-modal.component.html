@@ -1,0 +1,121 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #jobHiringTeamForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="jobHiringTeam.id">{{l("EditJobHiringTeam")}}</span>
+                        <span *ngIf="!jobHiringTeam.id">{{l("CreateNewJobHiringTeam")}}</span>
+                    </h4>                    
+                    
+                    
+                 <button type="button" class="btn-close" (click)="close()" aria-label="Close" [disabled]="saving"></button>
+             
+                </div>
+                <div class="modal-body">
+                 
+
+
+					<div class="my-3">
+                        <label class="form-label" for="BusinessName">{{l("Business")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="BusinessName" name="businessName" [(ngModel)]="businessName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectBusinessModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setBusinessIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="jobHiringTeam.businessId" [(ngModel)]="jobHiringTeam.businessId" type="text"  hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="ContactFullName">{{l("Contact")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="ContactFullName" name="contactFullName" [(ngModel)]="contactFullName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectContactModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setContactIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="jobHiringTeam.contactId" [(ngModel)]="jobHiringTeam.contactId" type="text"  hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="EmployeeName">{{l("Employee")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="EmployeeName" name="employeeName" [(ngModel)]="employeeName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectEmployeeModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setEmployeeIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="jobHiringTeam.employeeId" [(ngModel)]="jobHiringTeam.employeeId" type="text"  hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="JobTitle">{{l("Job")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="JobTitle" name="jobTitle" [(ngModel)]="jobTitle" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectJobModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setJobIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="jobHiringTeam.jobId" [(ngModel)]="jobHiringTeam.jobId" type="text"  hidden>
+                        
+
+
+								<div class="my-3">
+									<label class="form-label" for="JobHiringTeam_FirstName">{{l("FirstName")}}</label>
+									<input type="text" #JobHiringTeam_FirstName="ngModel" id="JobHiringTeam_FirstName" class="form-control" [(ngModel)]="jobHiringTeam.firstName" name="FirstName"   minlength="1"  maxlength="256" />
+								    <validation-messages [formCtrl]="JobHiringTeam_FirstName"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="JobHiringTeam_LastName">{{l("LastName")}}</label>
+									<input type="text" #JobHiringTeam_LastName="ngModel" id="JobHiringTeam_LastName" class="form-control" [(ngModel)]="jobHiringTeam.lastName" name="LastName"   minlength="1"  maxlength="256" />
+								    <validation-messages [formCtrl]="JobHiringTeam_LastName"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="JobHiringTeam_JobTitle">{{l("JobTitle")}}</label>
+									<input type="text" #JobHiringTeam_JobTitle="ngModel" id="JobHiringTeam_JobTitle" class="form-control" [(ngModel)]="jobHiringTeam.jobTitle" name="JobTitle"   minlength="1"  maxlength="256" />
+								    <validation-messages [formCtrl]="JobHiringTeam_JobTitle"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="JobHiringTeam_Phone">{{l("Phone")}}</label>
+									<input type="text" #JobHiringTeam_Phone="ngModel" id="JobHiringTeam_Phone" class="form-control" [(ngModel)]="jobHiringTeam.phone" name="Phone"   minlength="1"  maxlength="50" />
+								    <validation-messages [formCtrl]="JobHiringTeam_Phone"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="JobHiringTeam_Email">{{l("Email")}}</label>
+									<input type="text" #JobHiringTeam_Email="ngModel" id="JobHiringTeam_Email" class="form-control" [(ngModel)]="jobHiringTeam.email" name="Email"   minlength="1"  maxlength="256" />
+								    <validation-messages [formCtrl]="JobHiringTeam_Email"></validation-messages>
+								</div>
+					
+								<br/>
+								<label class="form-check form-check-custom form-check-solid">
+                                    <input
+                                        id="JobHiringTeam_HiringManager" 
+                                        #JobHiringTeam_HiringManager="ngModel"
+                                        name="HiringManager" 
+                                        [(ngModel)]="jobHiringTeam.hiringManager"
+                                        type="checkbox"
+                                        class="form-check-input"
+                                    />
+                                    <span class="form-check-label">
+                                        {{l("HiringManager")}}
+                                    </span>
+                                </label>
+                                <validation-messages [formCtrl]="JobHiringTeam_HiringManager"></validation-messages>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!jobHiringTeamForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+<jobHiringTeamBusinessLookupTableModal #jobHiringTeamBusinessLookupTableModal (modalSave)="getNewBusinessId()"></jobHiringTeamBusinessLookupTableModal>
+		 <jobHiringTeamContactLookupTableModal #jobHiringTeamContactLookupTableModal (modalSave)="getNewContactId()"></jobHiringTeamContactLookupTableModal>
+		 <jobHiringTeamEmployeeLookupTableModal #jobHiringTeamEmployeeLookupTableModal (modalSave)="getNewEmployeeId()"></jobHiringTeamEmployeeLookupTableModal>
+		 <jobHiringTeamJobLookupTableModal #jobHiringTeamJobLookupTableModal (modalSave)="getNewJobId()"></jobHiringTeamJobLookupTableModal>
+		 
+</div>

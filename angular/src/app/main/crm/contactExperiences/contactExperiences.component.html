@@ -1,0 +1,400 @@
+﻿<div [@routerTransition]>
+  
+  
+   <sub-header [title]="'ContactExperiences' | localize" [description]="'ContactExperiencesHeaderInfo' | localize">
+             <div role="actions">
+                 <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1"><i class="fa fa-file-excel"></i> {{l("ExportToExcel")}}</button>
+                
+                 <button *ngIf="isGranted('Pages.ContactExperiences.Create')" (click)="createContactExperience()" 
+                                        class="btn btn-primary blue"><i class="fa fa-plus"></i> {{l("CreateNewContactExperience")}}</button>
+             </div>
+            </sub-header>
+    
+    <div [class]="containerClass">
+        <div class="card card-custom gutter-b">
+            <div class="card-body">
+                <form class="form" autocomplete="off">
+                    <div>
+                        <div class="row align-items-center">
+                            <div class="col-xl-12">
+                                
+                                
+        	<div class="my-3">                
+                <div class="input-group mb-3">
+                  <input [(ngModel)]="filterText" (ngModelChange)="getContactExperiences()" name="filterText" autoFocus type="text" class="form-control" [placeholder]="l('SearchWithThreeDot')">
+                  <button class="btn btn-primary" type="submit" (click)="getContactExperiences()"><i class="flaticon-search-1"></i></button>
+                </div>
+            </div>
+        	
+                            </div>
+                        </div>
+						 <div class="row" [hidden]="!advancedFiltersAreShown">
+						 	<div class="col-md-12">
+						         
+						     </div>
+
+
+
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="JobTitleFilter">{{l("JobTitle")}}</label>
+									<input type="text" class="form-control" id="JobTitleFilter" name="jobTitleFilter" [(ngModel)]="jobTitleFilter" (ngModelChange)="getContactExperiences()">
+								</div>
+                            </div>	
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="CurrentFilterSelect">{{l("Current")}}</label>
+									<select class="form-select" name="CurrentFilter" id="CurrentFilterSelect" [(ngModel)]="currentFilter" (ngModelChange)="getContactExperiences()">
+									<option value="-1">{{l("All")}}</option>
+									<option value="0">{{l("False")}}</option>
+									<option value="1">{{l("True")}}</option>
+									</select>
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="EmployerNameFilter">{{l("EmployerName")}}</label>
+									<input type="text" class="form-control" id="EmployerNameFilter" name="employerNameFilter" [(ngModel)]="employerNameFilter" (ngModelChange)="getContactExperiences()">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="EmployerWebsiteFilter">{{l("EmployerWebsite")}}</label>
+									<input type="text" class="form-control" id="EmployerWebsiteFilter" name="employerWebsiteFilter" [(ngModel)]="employerWebsiteFilter" (ngModelChange)="getContactExperiences()">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="LocationFilter">{{l("Location")}}</label>
+									<input type="text" class="form-control" id="LocationFilter" name="locationFilter" [(ngModel)]="locationFilter" (ngModelChange)="getContactExperiences()">
+								</div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+									<label class="form-label" for="MinStartDateFilter">{{l("StartDateRange")}}</label>
+									<div class="input-group">
+                                        
+                                        <input class="form-control m-input" id="MinStartDateFilter" name="MinStartDateFilter" type="datetime" bsDatepicker  placeholder="{{l('MinValue')}}" [(ngModel)]="minStartDateFilter" (ngModelChange)="getContactExperiences()">
+			                            <span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
+                                        <input class="form-control m-input" id="MaxStartDateFilter" name="MaxStartDateFilter" type="datetime" bsDatepicker  placeholder="{{l('MaxValue')}}" [(ngModel)]="maxStartDateFilter" (ngModelChange)="getContactExperiences()">
+									</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+									<label class="form-label" for="MinEndDateFilter">{{l("EndDateRange")}}</label>
+									<div class="input-group">
+                                        
+                                        <input class="form-control m-input" id="MinEndDateFilter" name="MinEndDateFilter" type="datetime" bsDatepicker  placeholder="{{l('MinValue')}}" [(ngModel)]="minEndDateFilter" (ngModelChange)="getContactExperiences()">
+			                            <span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
+                                        <input class="form-control m-input" id="MaxEndDateFilter" name="MaxEndDateFilter" type="datetime" bsDatepicker  placeholder="{{l('MaxValue')}}" [(ngModel)]="maxEndDateFilter" (ngModelChange)="getContactExperiences()">
+									</div>
+                                </div>
+                            </div>
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="JobDescriptionFilter">{{l("JobDescription")}}</label>
+									<input type="text" class="form-control" id="JobDescriptionFilter" name="jobDescriptionFilter" [(ngModel)]="jobDescriptionFilter" (ngModelChange)="getContactExperiences()">
+								</div>
+                            </div>	
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="VerifiedFilterSelect">{{l("Verified")}}</label>
+									<select class="form-select" name="VerifiedFilter" id="VerifiedFilterSelect" [(ngModel)]="verifiedFilter" (ngModelChange)="getContactExperiences()">
+									<option value="-1">{{l("All")}}</option>
+									<option value="0">{{l("False")}}</option>
+									<option value="1">{{l("True")}}</option>
+									</select>
+								</div>
+                            </div>	
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="ThumbsUpDownFilterSelect">{{l("ThumbsUpDown")}}</label>
+									<select class="form-select" name="ThumbsUpDownFilter" id="ThumbsUpDownFilterSelect" [(ngModel)]="thumbsUpDownFilter" (ngModelChange)="getContactExperiences()">
+									<option value="-1">{{l("All")}}</option>
+									<option value="0">{{l("False")}}</option>
+									<option value="1">{{l("True")}}</option>
+									</select>
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="InternalNotesFilter">{{l("InternalNotes")}}</label>
+									<input type="text" class="form-control" id="InternalNotesFilter" name="internalNotesFilter" [(ngModel)]="internalNotesFilter" (ngModelChange)="getContactExperiences()">
+								</div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+									<label class="form-label" for="MinGrossSalaryFilter">{{l("MinMax")}} {{l("GrossSalary")}}</label>
+									<div class="input-group">
+                                        <input type="number" class="form-control" id="MinGrossSalaryFilter" [(ngModel)]="minGrossSalaryFilter" placeholder="{{l('MinValue')}}" name="minGrossSalaryFilter" (ngModelChange)="getContactExperiences()"/>
+                                        <input type="number" class="form-control" [(ngModel)]="maxGrossSalaryFilter" placeholder="{{l('MaxValue')}}" name="maxGrossSalaryFilter" (ngModelChange)="getContactExperiences()"/>
+									</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+									<label class="form-label" for="MinDisplaySequenceFilter">{{l("MinMax")}} {{l("DisplaySequence")}}</label>
+									<div class="input-group">
+                                        <input type="number" class="form-control" id="MinDisplaySequenceFilter" [(ngModel)]="minDisplaySequenceFilter" placeholder="{{l('MinValue')}}" name="minDisplaySequenceFilter" (ngModelChange)="getContactExperiences()"/>
+                                        <input type="number" class="form-control" [(ngModel)]="maxDisplaySequenceFilter" placeholder="{{l('MaxValue')}}" name="maxDisplaySequenceFilter" (ngModelChange)="getContactExperiences()"/>
+									</div>
+                                </div>
+                            </div>
+
+
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="ContactFullNameFilter">({{l("Contact")}}) {{l("FullName")}}</label>
+									<input type="text" class="form-control" id="ContactFullNameFilter" name="contactFullNameFilter" [(ngModel)]="contactFullNameFilter">
+                                </div>
+                            </div>
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="EmployeeNameFilter">({{l("Employee")}}) {{l("Name")}}</label>
+									<input type="text" class="form-control" id="EmployeeNameFilter" name="employeeNameFilter" [(ngModel)]="employeeNameFilter">
+                                </div>
+                            </div>
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="BusinessNameFilter">({{l("Business")}}) {{l("Name")}}</label>
+									<input type="text" class="form-control" id="BusinessNameFilter" name="businessNameFilter" [(ngModel)]="businessNameFilter">
+                                </div>
+                            </div>
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="CurrencyNameFilter">({{l("Currency")}}) {{l("Name")}}</label>
+									<input type="text" class="form-control" id="CurrencyNameFilter" name="currencyNameFilter" [(ngModel)]="currencyNameFilter">
+                                </div>
+                            </div>
+                            <div class="col-md-12 mt-5">
+                                <button (click)="resetFilters()" class="btn btn-secondary btn-sm" id="btn-reset-filters">Reset</button>
+                            </div>
+                        </div>
+                        <div class="row my-4">
+                            <div class="col-sm-12">
+                                <span class="clickable-item text-muted" *ngIf="!advancedFiltersAreShown" (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i class="fa fa-angle-down"></i> {{l("ShowAdvancedFilters")}}</span>
+                                <span class="clickable-item text-muted" *ngIf="advancedFiltersAreShown" (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i class="fa fa-angle-up"></i> {{l("HideAdvancedFilters")}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="row align-items-center">
+                    <!--<Primeng-Datatable-Start>-->
+                    <div class="primeng-datatable-container col-12"
+                         [busyIf]="primengTableHelper.isLoading">
+                        <p-table #dataTable
+                                     (onLazyLoad)="getContactExperiences($event)"
+                                     [value]="primengTableHelper.records"
+                                     rows="{{primengTableHelper.defaultRecordsCountPerPage}}"
+                                     [paginator]="false"
+                                     [lazy]="true"
+                                     [scrollable]="true"
+                                     ScrollWidth="100%"
+                                     [responsive]="primengTableHelper.isResponsive"
+                                     [resizableColumns]="primengTableHelper.resizableColumns">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th style="width: 130px" [hidden]="!isGrantedAny('Pages.ContactExperiences.Edit', 'Pages.ContactExperiences.Delete')">{{l('Actions')}}</th>
+                                    <th style="width: 150px" pSortableColumn="contactFk.fullName">
+                                        {{l('FullName')}}
+                                        <p-sortIcon field="contactFullName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="verifiedByEmployeeFk.name">
+                                        {{l('Name')}}
+                                        <p-sortIcon field="employeeName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="businessFk.name">
+                                        {{l('Name')}}
+                                        <p-sortIcon field="businessName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="currencyFk.name">
+                                        {{l('Name')}}
+                                        <p-sortIcon field="currencyName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="jobTitle">
+                                        {{l('JobTitle')}}
+                                        <p-sortIcon field="contactExperience.jobTitle"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="current">
+                                        {{l('Current')}}
+                                        <p-sortIcon field="contactExperience.current"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="employerName">
+                                        {{l('EmployerName')}}
+                                        <p-sortIcon field="contactExperience.employerName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="employerWebsite">
+                                        {{l('EmployerWebsite')}}
+                                        <p-sortIcon field="contactExperience.employerWebsite"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="location">
+                                        {{l('Location')}}
+                                        <p-sortIcon field="contactExperience.location"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="startDate">
+                                        {{l('StartDate')}}
+                                        <p-sortIcon field="contactExperience.startDate"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="endDate">
+                                        {{l('EndDate')}}
+                                        <p-sortIcon field="contactExperience.endDate"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="jobDescription">
+                                        {{l('JobDescription')}}
+                                        <p-sortIcon field="contactExperience.jobDescription"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="verified">
+                                        {{l('Verified')}}
+                                        <p-sortIcon field="contactExperience.verified"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="thumbsUpDown">
+                                        {{l('ThumbsUpDown')}}
+                                        <p-sortIcon field="contactExperience.thumbsUpDown"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="internalNotes">
+                                        {{l('InternalNotes')}}
+                                        <p-sortIcon field="contactExperience.internalNotes"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="grossSalary">
+                                        {{l('GrossSalary')}}
+                                        <p-sortIcon field="contactExperience.grossSalary"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="displaySequence">
+                                        {{l('DisplaySequence')}}
+                                        <p-sortIcon field="contactExperience.displaySequence"></p-sortIcon>
+                                    </th>
+
+                                </tr>
+                            </ng-template>                           
+							<ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
+                                <tr>
+                                    <td style="width: 130px"
+                                        [hidden]="!isGrantedAny('Pages.ContactExperiences.Edit', 'Pages.ContactExperiences.Delete')">
+                                       <div class="btn-group dropdown" dropdown container="body">
+                                            <button class="dropdown-toggle btn btn-sm btn-primary" dropdownToggle>
+                                                <i class="fa fa-cog"></i><span class="caret"></span> {{l("Actions")}}
+                                            </button>
+												<ul class="dropdown-menu"  *dropdownMenu>
+												<li>
+													<a href="javascript:;" class="dropdown-item"
+														(click)="viewContactExperienceModal.show(record)">{{l('View')}}</a>
+												</li>
+												<li>
+                                                <a href="javascript:;" *ngIf="permission.isGranted('Pages.ContactExperiences.Edit')" class="dropdown-item"
+														(click)="createOrEditContactExperienceModal.show(record.contactExperience.id)">{{l('Edit')}}</a>												
+                                                </li>
+												<li>
+											        <a class="dropdown-item" href="javascript:;" *ngIf="permission.isGranted('Pages.ContactExperiences.Delete')"
+														(click)="deleteContactExperience(record.contactExperience)">{{l('Delete')}}</a>
+												</li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                    <td style="width:150px">
+												<span class="p-column-title"> {{l('FullName')}}</span>
+												{{record.contactFullName}}
+											</td>
+                                    <td style="width:150px">
+												<span class="p-column-title"> {{l('Name')}}</span>
+												{{record.employeeName}}
+											</td>
+                                    <td style="width:150px">
+												<span class="p-column-title"> {{l('Name')}}</span>
+												{{record.businessName}}
+											</td>
+                                    <td style="width:150px">
+												<span class="p-column-title"> {{l('Name')}}</span>
+												{{record.currencyName}}
+											</td>
+                                    <td style="width:150px">
+											<span class="p-column-title"> {{l('JobTitle')}}</span>
+											{{record.contactExperience.jobTitle}}
+										</td>
+                                    <td style="width:150px">
+										<span class="p-column-title"> {{l('Current')}}</span>
+                                        <div *ngIf="record.contactExperience.current" class="text-center"><i class="fa fa-check-circle text-success" title="True"></i></div>
+										<div *ngIf="!record.contactExperience.current" class="text-center"><i class="fa fa-times-circle" title="False"></i></div>
+                                    </td>
+                                    <td style="width:150px">
+											<span class="p-column-title"> {{l('EmployerName')}}</span>
+											{{record.contactExperience.employerName}}
+										</td>
+                                    <td style="width:150px">
+											<span class="p-column-title"> {{l('EmployerWebsite')}}</span>
+											{{record.contactExperience.employerWebsite}}
+										</td>
+                                    <td style="width:150px">
+											<span class="p-column-title"> {{l('Location')}}</span>
+											{{record.contactExperience.location}}
+										</td>
+                                    <td style="width:150px">
+										<span class="p-column-title"> {{l('StartDate')}}</span>
+                                        <span *ngIf="record.contactExperience.startDate">
+											{{record.contactExperience.startDate |  luxonFormat:'F' }}
+                                        </span>
+                                        <span *ngIf="!record.contactExperience.startDate">-</span>
+                                    </td>
+                                    <td style="width:150px">
+										<span class="p-column-title"> {{l('EndDate')}}</span>
+                                        <span *ngIf="record.contactExperience.endDate">
+											{{record.contactExperience.endDate |  luxonFormat:'F' }}
+                                        </span>
+                                        <span *ngIf="!record.contactExperience.endDate">-</span>
+                                    </td>
+                                    <td style="width:150px">
+											<span class="p-column-title"> {{l('JobDescription')}}</span>
+											{{record.contactExperience.jobDescription}}
+										</td>
+                                    <td style="width:150px">
+										<span class="p-column-title"> {{l('Verified')}}</span>
+                                        <div *ngIf="record.contactExperience.verified" class="text-center"><i class="fa fa-check-circle text-success" title="True"></i></div>
+										<div *ngIf="!record.contactExperience.verified" class="text-center"><i class="fa fa-times-circle" title="False"></i></div>
+                                    </td>
+                                    <td style="width:150px">
+										<span class="p-column-title"> {{l('ThumbsUpDown')}}</span>
+                                        <div *ngIf="record.contactExperience.thumbsUpDown" class="text-center"><i class="fa fa-check-circle text-success" title="True"></i></div>
+										<div *ngIf="!record.contactExperience.thumbsUpDown" class="text-center"><i class="fa fa-times-circle" title="False"></i></div>
+                                    </td>
+                                    <td style="width:150px">
+											<span class="p-column-title"> {{l('InternalNotes')}}</span>
+											{{record.contactExperience.internalNotes}}
+										</td>
+                                    <td style="width:150px">
+											<span class="p-column-title"> {{l('GrossSalary')}}</span>
+											{{record.contactExperience.grossSalary}}
+										</td>
+                                    <td style="width:150px">
+											<span class="p-column-title"> {{l('DisplaySequence')}}</span>
+											{{record.contactExperience.displaySequence}}
+										</td>
+
+                                </tr>
+                               
+                            </ng-template>
+                        </p-table>
+						<div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
+                            {{l('NoData')}}
+                        </div>
+                        <div class="primeng-paging-container">
+                            <p-paginator [rows]="primengTableHelper.defaultRecordsCountPerPage"
+                                         #paginator
+                                         (onPageChange)="getContactExperiences($event)"
+                                         [totalRecords]="primengTableHelper.totalRecordsCount"
+                                         [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
+                                         [showCurrentPageReport]="true"
+                                         [currentPageReportTemplate]="'TotalRecordsCount' | localize:primengTableHelper.totalRecordsCount"    
+                            >
+                            </p-paginator>
+                        </div>
+                    </div>
+                    <!--<Primeng-Datatable-End>-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <createOrEditContactExperienceModal #createOrEditContactExperienceModal (modalSave)="getContactExperiences()"></createOrEditContactExperienceModal>    
+    <viewContactExperienceModal #viewContactExperienceModal></viewContactExperienceModal>
+    
+  </div>

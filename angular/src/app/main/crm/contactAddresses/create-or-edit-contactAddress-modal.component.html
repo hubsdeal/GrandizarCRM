@@ -1,0 +1,128 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #contactAddressForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="contactAddress.id">{{l("EditContactAddress")}}</span>
+                        <span *ngIf="!contactAddress.id">{{l("CreateNewContactAddress")}}</span>
+                    </h4>                    
+                    
+                    
+                 <button type="button" class="btn-close" (click)="close()" aria-label="Close" [disabled]="saving"></button>
+             
+                </div>
+                <div class="modal-body">
+                 
+
+
+					<div class="my-3">
+                        <label class="form-label" for="ContactFullName">{{l("Contact")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="ContactFullName" name="contactFullName" [(ngModel)]="contactFullName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectContactModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setContactIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="contactAddress.contactId" [(ngModel)]="contactAddress.contactId" type="text" required hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="CountryName">{{l("Country")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="CountryName" name="countryName" [(ngModel)]="countryName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectCountryModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setCountryIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="contactAddress.countryId" [(ngModel)]="contactAddress.countryId" type="text"  hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="StateName">{{l("State")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="StateName" name="stateName" [(ngModel)]="stateName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectStateModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setStateIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="contactAddress.stateId" [(ngModel)]="contactAddress.stateId" type="text"  hidden>
+                        
+
+
+								<div class="my-3">
+									<label class="form-label" for="ContactAddress_Title">{{l("Title")}} *</label>
+									<input type="text" #ContactAddress_Title="ngModel" id="ContactAddress_Title" class="form-control" [(ngModel)]="contactAddress.title" name="Title"   minlength="1"  maxlength="256"  required/>
+								    <validation-messages [formCtrl]="ContactAddress_Title"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="ContactAddress_FullAddress">{{l("FullAddress")}}</label>
+									<input type="text" #ContactAddress_FullAddress="ngModel" id="ContactAddress_FullAddress" class="form-control" [(ngModel)]="contactAddress.fullAddress" name="FullAddress"   minlength="1"  maxlength="2048" />
+								    <validation-messages [formCtrl]="ContactAddress_FullAddress"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="ContactAddress_Address">{{l("Address")}}</label>
+									<input type="text" #ContactAddress_Address="ngModel" id="ContactAddress_Address" class="form-control" [(ngModel)]="contactAddress.address" name="Address"   minlength="1"  maxlength="1024" />
+								    <validation-messages [formCtrl]="ContactAddress_Address"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="ContactAddress_ZipCode">{{l("ZipCode")}}</label>
+									<input type="text" #ContactAddress_ZipCode="ngModel" id="ContactAddress_ZipCode" class="form-control" [(ngModel)]="contactAddress.zipCode" name="ZipCode"   minlength="1"  maxlength="20" />
+								    <validation-messages [formCtrl]="ContactAddress_ZipCode"></validation-messages>
+								</div>
+					
+								<div class="my5">
+									<label class="form-label" for="ContactAddress_Latitude">{{l("Latitude")}}</label>
+									<input type="number" #ContactAddress_Latitude="ngModel" id="ContactAddress_Latitude" class="form-control" [(ngModel)]="contactAddress.latitude" name="Latitude"    />
+									<validation-messages [formCtrl]="ContactAddress_Latitude"></validation-messages>
+								</div>
+					
+								<div class="my5">
+									<label class="form-label" for="ContactAddress_Longitude">{{l("Longitude")}}</label>
+									<input type="number" #ContactAddress_Longitude="ngModel" id="ContactAddress_Longitude" class="form-control" [(ngModel)]="contactAddress.longitude" name="Longitude"    />
+									<validation-messages [formCtrl]="ContactAddress_Longitude"></validation-messages>
+								</div>
+					
+								<br/>
+								<label class="form-check form-check-custom form-check-solid">
+                                    <input
+                                        id="ContactAddress_Active" 
+                                        #ContactAddress_Active="ngModel"
+                                        name="Active" 
+                                        [(ngModel)]="contactAddress.active"
+                                        type="checkbox"
+                                        class="form-check-input"
+                                    />
+                                    <span class="form-check-label">
+                                        {{l("Active")}}
+                                    </span>
+                                </label>
+                                <validation-messages [formCtrl]="ContactAddress_Active"></validation-messages>
+					
+								<div class="my-3">
+									<label class="form-label" for="ContactAddress_City">{{l("City")}}</label>
+									<input type="text" #ContactAddress_City="ngModel" id="ContactAddress_City" class="form-control" [(ngModel)]="contactAddress.city" name="City"   minlength="1"  maxlength="128" />
+								    <validation-messages [formCtrl]="ContactAddress_City"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="ContactAddress_NoteForDelivery">{{l("NoteForDelivery")}}</label>
+									<input type="text" #ContactAddress_NoteForDelivery="ngModel" id="ContactAddress_NoteForDelivery" class="form-control" [(ngModel)]="contactAddress.noteForDelivery" name="NoteForDelivery"   minlength="1"  maxlength="512" />
+								    <validation-messages [formCtrl]="ContactAddress_NoteForDelivery"></validation-messages>
+								</div>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!contactAddressForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+<contactAddressContactLookupTableModal #contactAddressContactLookupTableModal (modalSave)="getNewContactId()"></contactAddressContactLookupTableModal>
+		 <contactAddressCountryLookupTableModal #contactAddressCountryLookupTableModal (modalSave)="getNewCountryId()"></contactAddressCountryLookupTableModal>
+		 <contactAddressStateLookupTableModal #contactAddressStateLookupTableModal (modalSave)="getNewStateId()"></contactAddressStateLookupTableModal>
+		 
+</div>

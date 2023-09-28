@@ -1,0 +1,104 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span>{{l("Details")}}</span>
+                </h4>               
+                
+                
+                 <button type="button" class="btn-close" (click)="close()" aria-label="Close" [disabled]="saving"></button>
+             
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="col-6 mb-3">
+                        <h6>{{l("CaptainSelectionAutoOrManual")}} :</h6>
+                        <div *ngIf="item.orderDeliveryByCaptain.captainSelectionAutoOrManual" class="text-left"><i class="fa fa-check-circle text-success"
+                                title="True"></i></div>
+                        <div *ngIf="!item.orderDeliveryByCaptain.captainSelectionAutoOrManual" class="text-left"><i class="fa fa-times-circle" title="False"></i></div>
+                    </div>                    <div class="col-6 mb-3">
+                        <h6>{{l("CaptainOrderAcceptedDateTime")}} :</h6>
+                        {{ item.orderDeliveryByCaptain.captainOrderAcceptedDateTime |  luxonFormat:'yyyy-LL-dd HH:mm:ss'  }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("CaptainOrderPickedupDateTime")}} :</h6>
+                        {{ item.orderDeliveryByCaptain.captainOrderPickedupDateTime |  luxonFormat:'yyyy-LL-dd HH:mm:ss'  }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("OrderDeliveryEstimatedTime")}} :</h6>
+                        {{ item.orderDeliveryByCaptain.orderDeliveryEstimatedTime }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("CaptainOrderDeliveredToCustomerDateTime")}} :</h6>
+                        {{ item.orderDeliveryByCaptain.captainOrderDeliveredToCustomerDateTime |  luxonFormat:'yyyy-LL-dd HH:mm:ss'  }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("OrderDeliveryActualTime")}} :</h6>
+                        {{ item.orderDeliveryByCaptain.orderDeliveryActualTime }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("OrderDeliveryRouteData")}} :</h6>
+                        {{ item.orderDeliveryByCaptain.orderDeliveryRouteData }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("DeliveryNotes")}} :</h6>
+                        {{ item.orderDeliveryByCaptain.deliveryNotes }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("DeliveryPointPhoto")}} :</h6>
+                        {{ item.orderDeliveryByCaptain.deliveryPointPhoto }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("CustomerSignature")}} :</h6>
+                        {{ item.orderDeliveryByCaptain.customerSignature }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("CaptainRatingByCustomer")}} :</h6>
+                        {{ item.orderDeliveryByCaptain.captainRatingByCustomer }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("CustomerNotes")}} :</h6>
+                        {{ item.orderDeliveryByCaptain.customerNotes }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("DeliveryStages")}} :</h6>
+                        {{ item.orderDeliveryByCaptain.deliveryStages }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("DeliveryCostToDriver")}} :</h6>
+                        {{ item.orderDeliveryByCaptain.deliveryCostToDriver }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("DeliveryCostToCustomer")}} :</h6>
+                        {{ item.orderDeliveryByCaptain.deliveryCostToCustomer }}
+                    </div>
+
+                    <div class="col-6 mb-3">
+                        <h6>({{l("Order")}}) {{l("InvoiceNumber")}} :</h6>
+                        {{item.orderInvoiceNumber}}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{l("Store")}}) {{l("Name")}} :</h6>
+                        {{item.storeName}}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{l("Contact")}}) {{l("FullName")}} :</h6>
+                        {{item.contactFullName}}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{l("Employee")}}) {{l("Name")}} :</h6>
+                        {{item.employeeName}}
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button [disabled]="saving" type="button" class="btn btn-primary blue" (click)="close()">{{l("Close")}}</button>
+            </div>
+        </div>
+    </div>
+
+</div>

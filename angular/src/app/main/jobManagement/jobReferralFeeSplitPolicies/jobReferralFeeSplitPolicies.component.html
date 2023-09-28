@@ -1,0 +1,243 @@
+﻿<div [@routerTransition]>
+  
+  
+   <sub-header [title]="'JobReferralFeeSplitPolicies' | localize" [description]="'JobReferralFeeSplitPoliciesHeaderInfo' | localize">
+             <div role="actions">
+                 <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1"><i class="fa fa-file-excel"></i> {{l("ExportToExcel")}}</button>
+                
+                 <button *ngIf="isGranted('Pages.JobReferralFeeSplitPolicies.Create')" (click)="createJobReferralFeeSplitPolicy()" 
+                                        class="btn btn-primary blue"><i class="fa fa-plus"></i> {{l("CreateNewJobReferralFeeSplitPolicy")}}</button>
+             </div>
+            </sub-header>
+    
+    <div [class]="containerClass">
+        <div class="card card-custom gutter-b">
+            <div class="card-body">
+                <form class="form" autocomplete="off">
+                    <div>
+                        <div class="row align-items-center">
+                            <div class="col-xl-12">
+                                
+                                
+        	<div class="my-3">                
+                <div class="input-group mb-3">
+                  <input [(ngModel)]="filterText" (ngModelChange)="getJobReferralFeeSplitPolicies()" name="filterText" autoFocus type="text" class="form-control" [placeholder]="l('SearchWithThreeDot')">
+                  <button class="btn btn-primary" type="submit" (click)="getJobReferralFeeSplitPolicies()"><i class="flaticon-search-1"></i></button>
+                </div>
+            </div>
+        	
+                            </div>
+                        </div>
+						 <div class="row" [hidden]="!advancedFiltersAreShown">
+						 	<div class="col-md-12">
+						         
+						     </div>
+
+
+
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="TitleNameFilter">{{l("TitleName")}}</label>
+									<input type="text" class="form-control" id="TitleNameFilter" name="titleNameFilter" [(ngModel)]="titleNameFilter" (ngModelChange)="getJobReferralFeeSplitPolicies()">
+								</div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+									<label class="form-label" for="MinApplicantAmountPercentageFilter">{{l("MinMax")}} {{l("ApplicantAmountPercentage")}}</label>
+									<div class="input-group">
+                                        <input type="number" class="form-control" id="MinApplicantAmountPercentageFilter" [(ngModel)]="minApplicantAmountPercentageFilter" placeholder="{{l('MinValue')}}" name="minApplicantAmountPercentageFilter" (ngModelChange)="getJobReferralFeeSplitPolicies()"/>
+                                        <input type="number" class="form-control" [(ngModel)]="maxApplicantAmountPercentageFilter" placeholder="{{l('MaxValue')}}" name="maxApplicantAmountPercentageFilter" (ngModelChange)="getJobReferralFeeSplitPolicies()"/>
+									</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+									<label class="form-label" for="MinReferrerPercentageFilter">{{l("MinMax")}} {{l("ReferrerPercentage")}}</label>
+									<div class="input-group">
+                                        <input type="number" class="form-control" id="MinReferrerPercentageFilter" [(ngModel)]="minReferrerPercentageFilter" placeholder="{{l('MinValue')}}" name="minReferrerPercentageFilter" (ngModelChange)="getJobReferralFeeSplitPolicies()"/>
+                                        <input type="number" class="form-control" [(ngModel)]="maxReferrerPercentageFilter" placeholder="{{l('MaxValue')}}" name="maxReferrerPercentageFilter" (ngModelChange)="getJobReferralFeeSplitPolicies()"/>
+									</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+									<label class="form-label" for="MinHubPartnerPercentageFilter">{{l("MinMax")}} {{l("HubPartnerPercentage")}}</label>
+									<div class="input-group">
+                                        <input type="number" class="form-control" id="MinHubPartnerPercentageFilter" [(ngModel)]="minHubPartnerPercentageFilter" placeholder="{{l('MinValue')}}" name="minHubPartnerPercentageFilter" (ngModelChange)="getJobReferralFeeSplitPolicies()"/>
+                                        <input type="number" class="form-control" [(ngModel)]="maxHubPartnerPercentageFilter" placeholder="{{l('MaxValue')}}" name="maxHubPartnerPercentageFilter" (ngModelChange)="getJobReferralFeeSplitPolicies()"/>
+									</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+									<label class="form-label" for="MinEmployeePercentageFilter">{{l("MinMax")}} {{l("EmployeePercentage")}}</label>
+									<div class="input-group">
+                                        <input type="number" class="form-control" id="MinEmployeePercentageFilter" [(ngModel)]="minEmployeePercentageFilter" placeholder="{{l('MinValue')}}" name="minEmployeePercentageFilter" (ngModelChange)="getJobReferralFeeSplitPolicies()"/>
+                                        <input type="number" class="form-control" [(ngModel)]="maxEmployeePercentageFilter" placeholder="{{l('MaxValue')}}" name="maxEmployeePercentageFilter" (ngModelChange)="getJobReferralFeeSplitPolicies()"/>
+									</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+									<label class="form-label" for="MinPlatformPercentageFilter">{{l("MinMax")}} {{l("PlatformPercentage")}}</label>
+									<div class="input-group">
+                                        <input type="number" class="form-control" id="MinPlatformPercentageFilter" [(ngModel)]="minPlatformPercentageFilter" placeholder="{{l('MinValue')}}" name="minPlatformPercentageFilter" (ngModelChange)="getJobReferralFeeSplitPolicies()"/>
+                                        <input type="number" class="form-control" [(ngModel)]="maxPlatformPercentageFilter" placeholder="{{l('MaxValue')}}" name="maxPlatformPercentageFilter" (ngModelChange)="getJobReferralFeeSplitPolicies()"/>
+									</div>
+                                </div>
+                            </div>	
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="IsActiveFilterSelect">{{l("IsActive")}}</label>
+									<select class="form-select" name="IsActiveFilter" id="IsActiveFilterSelect" [(ngModel)]="isActiveFilter" (ngModelChange)="getJobReferralFeeSplitPolicies()">
+									<option value="-1">{{l("All")}}</option>
+									<option value="0">{{l("False")}}</option>
+									<option value="1">{{l("True")}}</option>
+									</select>
+								</div>
+                            </div>
+
+
+                            <div class="col-md-12 mt-5">
+                                <button (click)="resetFilters()" class="btn btn-secondary btn-sm" id="btn-reset-filters">Reset</button>
+                            </div>
+                        </div>
+                        <div class="row my-4">
+                            <div class="col-sm-12">
+                                <span class="clickable-item text-muted" *ngIf="!advancedFiltersAreShown" (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i class="fa fa-angle-down"></i> {{l("ShowAdvancedFilters")}}</span>
+                                <span class="clickable-item text-muted" *ngIf="advancedFiltersAreShown" (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i class="fa fa-angle-up"></i> {{l("HideAdvancedFilters")}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="row align-items-center">
+                    <!--<Primeng-Datatable-Start>-->
+                    <div class="primeng-datatable-container col-12"
+                         [busyIf]="primengTableHelper.isLoading">
+                        <p-table #dataTable
+                                     (onLazyLoad)="getJobReferralFeeSplitPolicies($event)"
+                                     [value]="primengTableHelper.records"
+                                     rows="{{primengTableHelper.defaultRecordsCountPerPage}}"
+                                     [paginator]="false"
+                                     [lazy]="true"
+                                     [scrollable]="true"
+                                     ScrollWidth="100%"
+                                     [responsive]="primengTableHelper.isResponsive"
+                                     [resizableColumns]="primengTableHelper.resizableColumns">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th style="width: 130px" [hidden]="!isGrantedAny('Pages.JobReferralFeeSplitPolicies.Edit', 'Pages.JobReferralFeeSplitPolicies.Delete')">{{l('Actions')}}</th>
+                                    <th style="width: 150px" pSortableColumn="titleName">
+                                        {{l('TitleName')}}
+                                        <p-sortIcon field="jobReferralFeeSplitPolicy.titleName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="applicantAmountPercentage">
+                                        {{l('ApplicantAmountPercentage')}}
+                                        <p-sortIcon field="jobReferralFeeSplitPolicy.applicantAmountPercentage"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="referrerPercentage">
+                                        {{l('ReferrerPercentage')}}
+                                        <p-sortIcon field="jobReferralFeeSplitPolicy.referrerPercentage"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="hubPartnerPercentage">
+                                        {{l('HubPartnerPercentage')}}
+                                        <p-sortIcon field="jobReferralFeeSplitPolicy.hubPartnerPercentage"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="employeePercentage">
+                                        {{l('EmployeePercentage')}}
+                                        <p-sortIcon field="jobReferralFeeSplitPolicy.employeePercentage"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="platformPercentage">
+                                        {{l('PlatformPercentage')}}
+                                        <p-sortIcon field="jobReferralFeeSplitPolicy.platformPercentage"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="isActive">
+                                        {{l('IsActive')}}
+                                        <p-sortIcon field="jobReferralFeeSplitPolicy.isActive"></p-sortIcon>
+                                    </th>
+
+                                </tr>
+                            </ng-template>                           
+							<ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
+                                <tr>
+                                    <td style="width: 130px"
+                                        [hidden]="!isGrantedAny('Pages.JobReferralFeeSplitPolicies.Edit', 'Pages.JobReferralFeeSplitPolicies.Delete')">
+                                       <div class="btn-group dropdown" dropdown container="body">
+                                            <button class="dropdown-toggle btn btn-sm btn-primary" dropdownToggle>
+                                                <i class="fa fa-cog"></i><span class="caret"></span> {{l("Actions")}}
+                                            </button>
+												<ul class="dropdown-menu"  *dropdownMenu>
+												<li>
+													<a href="javascript:;" class="dropdown-item"
+														(click)="viewJobReferralFeeSplitPolicyModal.show(record)">{{l('View')}}</a>
+												</li>
+												<li>
+                                                <a href="javascript:;" *ngIf="permission.isGranted('Pages.JobReferralFeeSplitPolicies.Edit')" class="dropdown-item"
+														(click)="createOrEditJobReferralFeeSplitPolicyModal.show(record.jobReferralFeeSplitPolicy.id)">{{l('Edit')}}</a>												
+                                                </li>
+												<li>
+											        <a class="dropdown-item" href="javascript:;" *ngIf="permission.isGranted('Pages.JobReferralFeeSplitPolicies.Delete')"
+														(click)="deleteJobReferralFeeSplitPolicy(record.jobReferralFeeSplitPolicy)">{{l('Delete')}}</a>
+												</li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                    <td style="width:150px">
+											<span class="p-column-title"> {{l('TitleName')}}</span>
+											{{record.jobReferralFeeSplitPolicy.titleName}}
+										</td>
+                                    <td style="width:150px">
+											<span class="p-column-title"> {{l('ApplicantAmountPercentage')}}</span>
+											{{record.jobReferralFeeSplitPolicy.applicantAmountPercentage}}
+										</td>
+                                    <td style="width:150px">
+											<span class="p-column-title"> {{l('ReferrerPercentage')}}</span>
+											{{record.jobReferralFeeSplitPolicy.referrerPercentage}}
+										</td>
+                                    <td style="width:150px">
+											<span class="p-column-title"> {{l('HubPartnerPercentage')}}</span>
+											{{record.jobReferralFeeSplitPolicy.hubPartnerPercentage}}
+										</td>
+                                    <td style="width:150px">
+											<span class="p-column-title"> {{l('EmployeePercentage')}}</span>
+											{{record.jobReferralFeeSplitPolicy.employeePercentage}}
+										</td>
+                                    <td style="width:150px">
+											<span class="p-column-title"> {{l('PlatformPercentage')}}</span>
+											{{record.jobReferralFeeSplitPolicy.platformPercentage}}
+										</td>
+                                    <td style="width:150px">
+										<span class="p-column-title"> {{l('IsActive')}}</span>
+                                        <div *ngIf="record.jobReferralFeeSplitPolicy.isActive" class="text-center"><i class="fa fa-check-circle text-success" title="True"></i></div>
+										<div *ngIf="!record.jobReferralFeeSplitPolicy.isActive" class="text-center"><i class="fa fa-times-circle" title="False"></i></div>
+                                    </td>
+
+                                </tr>
+                               
+                            </ng-template>
+                        </p-table>
+						<div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
+                            {{l('NoData')}}
+                        </div>
+                        <div class="primeng-paging-container">
+                            <p-paginator [rows]="primengTableHelper.defaultRecordsCountPerPage"
+                                         #paginator
+                                         (onPageChange)="getJobReferralFeeSplitPolicies($event)"
+                                         [totalRecords]="primengTableHelper.totalRecordsCount"
+                                         [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
+                                         [showCurrentPageReport]="true"
+                                         [currentPageReportTemplate]="'TotalRecordsCount' | localize:primengTableHelper.totalRecordsCount"    
+                            >
+                            </p-paginator>
+                        </div>
+                    </div>
+                    <!--<Primeng-Datatable-End>-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <createOrEditJobReferralFeeSplitPolicyModal #createOrEditJobReferralFeeSplitPolicyModal (modalSave)="getJobReferralFeeSplitPolicies()"></createOrEditJobReferralFeeSplitPolicyModal>    
+    <viewJobReferralFeeSplitPolicyModal #viewJobReferralFeeSplitPolicyModal></viewJobReferralFeeSplitPolicyModal>
+    
+  </div>

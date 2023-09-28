@@ -1,0 +1,163 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #bookingForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="booking.id">{{l("EditBooking")}}</span>
+                        <span *ngIf="!booking.id">{{l("CreateNewBooking")}}</span>
+                    </h4>                    
+                    
+                    
+                 <button type="button" class="btn-close" (click)="close()" aria-label="Close" [disabled]="saving"></button>
+             
+                </div>
+                <div class="modal-body">
+                 
+
+
+					<div class="my-3">
+                        <label class="form-label" for="BookingTypeName">{{l("BookingType")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="BookingTypeName" name="bookingTypeName" [(ngModel)]="bookingTypeName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectBookingTypeModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setBookingTypeIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="booking.bookingTypeId" [(ngModel)]="booking.bookingTypeId" type="text"  hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="BookingStatusName">{{l("BookingStatus")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="BookingStatusName" name="bookingStatusName" [(ngModel)]="bookingStatusName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectBookingStatusModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setBookingStatusIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="booking.bookingStatusId" [(ngModel)]="booking.bookingStatusId" type="text"  hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="ContactFullName">{{l("Contact")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="ContactFullName" name="contactFullName" [(ngModel)]="contactFullName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectContactModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setContactIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="booking.contactId" [(ngModel)]="booking.contactId" type="text"  hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="StoreName">{{l("Store")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="StoreName" name="storeName" [(ngModel)]="storeName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectStoreModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setStoreIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="booking.storeId" [(ngModel)]="booking.storeId" type="text"  hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="ProductName">{{l("Product")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="ProductName" name="productName" [(ngModel)]="productName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectProductModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setProductIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="booking.productId" [(ngModel)]="booking.productId" type="text"  hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="OrderInvoiceNumber">{{l("Order")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="OrderInvoiceNumber" name="orderInvoiceNumber" [(ngModel)]="orderInvoiceNumber" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectOrderModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setOrderIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="booking.orderId" [(ngModel)]="booking.orderId" type="text"  hidden>
+                        
+
+
+								<div class="my-3">
+									<label class="form-label" for="Booking_Title">{{l("Title")}}</label>
+									<input type="text" #Booking_Title="ngModel" id="Booking_Title" class="form-control" [(ngModel)]="booking.title" name="Title"   minlength="1"  maxlength="1024" />
+								    <validation-messages [formCtrl]="Booking_Title"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="Booking_BookingReferenceNumber">{{l("BookingReferenceNumber")}}</label>
+									<input type="text" #Booking_BookingReferenceNumber="ngModel" id="Booking_BookingReferenceNumber" class="form-control" [(ngModel)]="booking.bookingReferenceNumber" name="BookingReferenceNumber"   minlength="1"  maxlength="128" />
+								    <validation-messages [formCtrl]="Booking_BookingReferenceNumber"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="Booking_StartDate">{{l("StartDate")}}</label>
+									 <input class="form-control m-input" #Booking_StartDate type="datetime" bsDatepicker  datePickerLuxonModifier  [(date)]="booking.startDate" id="Booking_StartDate" name="Booking_StartDate">
+									<validation-messages [formCtrl]="Booking_StartDate"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="Booking_EndDate">{{l("EndDate")}}</label>
+									 <input class="form-control m-input" #Booking_EndDate type="datetime" bsDatepicker  datePickerLuxonModifier  [(date)]="booking.endDate" id="Booking_EndDate" name="Booking_EndDate">
+									<validation-messages [formCtrl]="Booking_EndDate"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="Booking_StartTime">{{l("StartTime")}}</label>
+									<input type="text" #Booking_StartTime="ngModel" id="Booking_StartTime" class="form-control" [(ngModel)]="booking.startTime" name="StartTime"   minlength="1"  maxlength="50" />
+								    <validation-messages [formCtrl]="Booking_StartTime"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="Booking_EndTime">{{l("EndTime")}}</label>
+									<input type="text" #Booking_EndTime="ngModel" id="Booking_EndTime" class="form-control" [(ngModel)]="booking.endTime" name="EndTime"   minlength="1"  maxlength="50" />
+								    <validation-messages [formCtrl]="Booking_EndTime"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="Booking_TimeZoneId">{{l("TimeZoneId")}}</label>
+									<input type="text" #Booking_TimeZoneId="ngModel" id="Booking_TimeZoneId" class="form-control" [(ngModel)]="booking.timeZoneId" name="TimeZoneId"   minlength="1"  maxlength="128" />
+								    <validation-messages [formCtrl]="Booking_TimeZoneId"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="Booking_Description">{{l("Description")}}</label>
+									<input type="text" #Booking_Description="ngModel" id="Booking_Description" class="form-control" [(ngModel)]="booking.description" name="Description"    />
+								    <validation-messages [formCtrl]="Booking_Description"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="Booking_CustomerRemarks">{{l("CustomerRemarks")}}</label>
+									<input type="text" #Booking_CustomerRemarks="ngModel" id="Booking_CustomerRemarks" class="form-control" [(ngModel)]="booking.customerRemarks" name="CustomerRemarks"    />
+								    <validation-messages [formCtrl]="Booking_CustomerRemarks"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="Booking_CheckInDateTime">{{l("CheckInDateTime")}}</label>
+									 <input class="form-control m-input" #Booking_CheckInDateTime type="datetime" bsDatepicker  datePickerLuxonModifier  [(date)]="booking.checkInDateTime" id="Booking_CheckInDateTime" name="Booking_CheckInDateTime">
+									<validation-messages [formCtrl]="Booking_CheckInDateTime"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="Booking_CheckOutDateTime">{{l("CheckOutDateTime")}}</label>
+									 <input class="form-control m-input" #Booking_CheckOutDateTime type="datetime" bsDatepicker  datePickerLuxonModifier  [(date)]="booking.checkOutDateTime" id="Booking_CheckOutDateTime" name="Booking_CheckOutDateTime">
+									<validation-messages [formCtrl]="Booking_CheckOutDateTime"></validation-messages>
+								</div>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!bookingForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+<bookingBookingTypeLookupTableModal #bookingBookingTypeLookupTableModal (modalSave)="getNewBookingTypeId()"></bookingBookingTypeLookupTableModal>
+		 <bookingBookingStatusLookupTableModal #bookingBookingStatusLookupTableModal (modalSave)="getNewBookingStatusId()"></bookingBookingStatusLookupTableModal>
+		 <bookingContactLookupTableModal #bookingContactLookupTableModal (modalSave)="getNewContactId()"></bookingContactLookupTableModal>
+		 <bookingStoreLookupTableModal #bookingStoreLookupTableModal (modalSave)="getNewStoreId()"></bookingStoreLookupTableModal>
+		 <bookingProductLookupTableModal #bookingProductLookupTableModal (modalSave)="getNewProductId()"></bookingProductLookupTableModal>
+		 <bookingOrderLookupTableModal #bookingOrderLookupTableModal (modalSave)="getNewOrderId()"></bookingOrderLookupTableModal>
+		 
+</div>

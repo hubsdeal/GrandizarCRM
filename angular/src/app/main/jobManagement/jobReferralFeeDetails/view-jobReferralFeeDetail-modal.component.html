@@ -1,0 +1,135 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span>{{l("Details")}}</span>
+                </h4>               
+                
+                
+                 <button type="button" class="btn-close" (click)="close()" aria-label="Close" [disabled]="saving"></button>
+             
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="col-6 mb-3">
+                        <h6>{{l("TotalReferralAmount")}} :</h6>
+                        {{ item.jobReferralFeeDetail.totalReferralAmount }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("PlatformPercentage")}} :</h6>
+                        {{ item.jobReferralFeeDetail.platformPercentage }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("PlatformAmount")}} :</h6>
+                        {{ item.jobReferralFeeDetail.platformAmount }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("ApplicantAmount")}} :</h6>
+                        {{ item.jobReferralFeeDetail.applicantAmount }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("ApplicantAmountPercentage")}} :</h6>
+                        {{ item.jobReferralFeeDetail.applicantAmountPercentage }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("ApplicantPaid")}} :</h6>
+                        <div *ngIf="item.jobReferralFeeDetail.applicantPaid" class="text-left"><i class="fa fa-check-circle text-success"
+                                title="True"></i></div>
+                        <div *ngIf="!item.jobReferralFeeDetail.applicantPaid" class="text-left"><i class="fa fa-times-circle" title="False"></i></div>
+                    </div>                    <div class="col-6 mb-3">
+                        <h6>{{l("ReferralContactPercentage")}} :</h6>
+                        {{ item.jobReferralFeeDetail.referralContactPercentage }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("ReferrerAmount")}} :</h6>
+                        {{ item.jobReferralFeeDetail.referrerAmount }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("ReferrerPaid")}} :</h6>
+                        <div *ngIf="item.jobReferralFeeDetail.referrerPaid" class="text-left"><i class="fa fa-check-circle text-success"
+                                title="True"></i></div>
+                        <div *ngIf="!item.jobReferralFeeDetail.referrerPaid" class="text-left"><i class="fa fa-times-circle" title="False"></i></div>
+                    </div>                    <div class="col-6 mb-3">
+                        <h6>{{l("HubPartnerPercentage")}} :</h6>
+                        {{ item.jobReferralFeeDetail.hubPartnerPercentage }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("HubPartnerAmount")}} :</h6>
+                        {{ item.jobReferralFeeDetail.hubPartnerAmount }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("HubPartnerPaid")}} :</h6>
+                        <div *ngIf="item.jobReferralFeeDetail.hubPartnerPaid" class="text-left"><i class="fa fa-check-circle text-success"
+                                title="True"></i></div>
+                        <div *ngIf="!item.jobReferralFeeDetail.hubPartnerPaid" class="text-left"><i class="fa fa-times-circle" title="False"></i></div>
+                    </div>                    <div class="col-6 mb-3">
+                        <h6>{{l("EmployeePercentage")}} :</h6>
+                        {{ item.jobReferralFeeDetail.employeePercentage }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("EmployeeAmount")}} :</h6>
+                        {{ item.jobReferralFeeDetail.employeeAmount }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("EmployeePaid")}} :</h6>
+                        <div *ngIf="item.jobReferralFeeDetail.employeePaid" class="text-left"><i class="fa fa-check-circle text-success"
+                                title="True"></i></div>
+                        <div *ngIf="!item.jobReferralFeeDetail.employeePaid" class="text-left"><i class="fa fa-times-circle" title="False"></i></div>
+                    </div>                    <div class="col-6 mb-3">
+                        <h6>{{l("Remarks")}} :</h6>
+                        {{ item.jobReferralFeeDetail.remarks }}
+                    </div>
+
+                    <div class="col-6 mb-3">
+                        <h6>({{l("Job")}}) {{l("Title")}} :</h6>
+                        {{item.jobTitle}}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{l("Store")}}) {{l("Name")}} :</h6>
+                        {{item.storeName}}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{l("Business")}}) {{l("Name")}} :</h6>
+                        {{item.businessName}}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{l("Order")}}) {{l("InvoiceNumber")}} :</h6>
+                        {{item.orderInvoiceNumber}}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{l("JobReferralFeeSplitPolicy")}}) {{l("TitleName")}} :</h6>
+                        {{item.jobReferralFeeSplitPolicyTitleName}}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{l("Currency")}}) {{l("Name")}} :</h6>
+                        {{item.currencyName}}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{l("Contact")}}) {{l("FullName")}} :</h6>
+                        {{item.contactFullName}}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{l("Contact")}}) {{l("FullName")}} :</h6>
+                        {{item.contactFullName2}}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{l("Employee")}}) {{l("Name")}} :</h6>
+                        {{item.employeeName}}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{l("Employee")}}) {{l("Name")}} :</h6>
+                        {{item.employeeName2}}
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button [disabled]="saving" type="button" class="btn btn-primary blue" (click)="close()">{{l("Close")}}</button>
+            </div>
+        </div>
+    </div>
+
+</div>

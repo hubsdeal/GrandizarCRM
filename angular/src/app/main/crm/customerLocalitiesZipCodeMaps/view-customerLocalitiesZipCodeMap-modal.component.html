@@ -1,0 +1,67 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span>{{l("Details")}}</span>
+                </h4>               
+                
+                
+                 <button type="button" class="btn-close" (click)="close()" aria-label="Close" [disabled]="saving"></button>
+             
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="col-6 mb-3">
+                        <h6>{{l("LocalityName")}} :</h6>
+                        {{ item.customerLocalitiesZipCodeMap.localityName }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("ZipCode")}} :</h6>
+                        {{ item.customerLocalitiesZipCodeMap.zipCode }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("Latitude")}} :</h6>
+                        {{ item.customerLocalitiesZipCodeMap.latitude }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("Longitude")}} :</h6>
+                        {{ item.customerLocalitiesZipCodeMap.longitude }}
+                    </div>
+
+                    <div class="col-6 mb-3">
+                        <h6>({{l("Contact")}}) {{l("FullName")}} :</h6>
+                        {{item.contactFullName}}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{l("ZipCode")}}) {{l("Name")}} :</h6>
+                        {{item.zipCodeName}}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{l("City")}}) {{l("Name")}} :</h6>
+                        {{item.cityName}}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{l("State")}}) {{l("Name")}} :</h6>
+                        {{item.stateName}}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{l("Country")}}) {{l("Name")}} :</h6>
+                        {{item.countryName}}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{l("Hub")}}) {{l("Name")}} :</h6>
+                        {{item.hubName}}
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button [disabled]="saving" type="button" class="btn btn-primary blue" (click)="close()">{{l("Close")}}</button>
+            </div>
+        </div>
+    </div>
+
+</div>

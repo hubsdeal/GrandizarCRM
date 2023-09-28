@@ -1,0 +1,69 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #contactOrApplicantTeamForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="contactOrApplicantTeam.id">{{l("EditContactOrApplicantTeam")}}</span>
+                        <span *ngIf="!contactOrApplicantTeam.id">{{l("CreateNewContactOrApplicantTeam")}}</span>
+                    </h4>                    
+                    
+                    
+                 <button type="button" class="btn-close" (click)="close()" aria-label="Close" [disabled]="saving"></button>
+             
+                </div>
+                <div class="modal-body">
+                 
+
+
+					<div class="my-3">
+                        <label class="form-label" for="ContactFullName">{{l("Contact")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="ContactFullName" name="contactFullName" [(ngModel)]="contactFullName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectContactModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setContactIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="contactOrApplicantTeam.contactId" [(ngModel)]="contactOrApplicantTeam.contactId" type="text" required hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="EmployeeName">{{l("Employee")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="EmployeeName" name="employeeName" [(ngModel)]="employeeName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectEmployeeModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setEmployeeIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="contactOrApplicantTeam.employeeId" [(ngModel)]="contactOrApplicantTeam.employeeId" type="text"  hidden>
+                        
+
+
+								<br/>
+								<label class="form-check form-check-custom form-check-solid">
+                                    <input
+                                        id="ContactOrApplicantTeam_Primary" 
+                                        #ContactOrApplicantTeam_Primary="ngModel"
+                                        name="Primary" 
+                                        [(ngModel)]="contactOrApplicantTeam.primary"
+                                        type="checkbox"
+                                        class="form-check-input"
+                                    />
+                                    <span class="form-check-label">
+                                        {{l("Primary")}}
+                                    </span>
+                                </label>
+                                <validation-messages [formCtrl]="ContactOrApplicantTeam_Primary"></validation-messages>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!contactOrApplicantTeamForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+<contactOrApplicantTeamContactLookupTableModal #contactOrApplicantTeamContactLookupTableModal (modalSave)="getNewContactId()"></contactOrApplicantTeamContactLookupTableModal>
+		 <contactOrApplicantTeamEmployeeLookupTableModal #contactOrApplicantTeamEmployeeLookupTableModal (modalSave)="getNewEmployeeId()"></contactOrApplicantTeamEmployeeLookupTableModal>
+		 
+</div>

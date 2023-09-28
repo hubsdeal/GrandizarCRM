@@ -1,0 +1,209 @@
+﻿<div [@routerTransition]>
+  
+  
+   <sub-header [title]="'EmployeeTimesheetActivityTrackers' | localize" [description]="'EmployeeTimesheetActivityTrackersHeaderInfo' | localize">
+             <div role="actions">
+                 <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1"><i class="fa fa-file-excel"></i> {{l("ExportToExcel")}}</button>
+                
+                 <button *ngIf="isGranted('Pages.EmployeeTimesheetActivityTrackers.Create')" (click)="createEmployeeTimesheetActivityTracker()" 
+                                        class="btn btn-primary blue"><i class="fa fa-plus"></i> {{l("CreateNewEmployeeTimesheetActivityTracker")}}</button>
+             </div>
+            </sub-header>
+    
+    <div [class]="containerClass">
+        <div class="card card-custom gutter-b">
+            <div class="card-body">
+                <form class="form" autocomplete="off">
+                    <div>
+                        <div class="row align-items-center">
+                            <div class="col-xl-12">
+                                
+                                
+        	<div class="my-3">                
+                <div class="input-group mb-3">
+                  <input [(ngModel)]="filterText" (ngModelChange)="getEmployeeTimesheetActivityTrackers()" name="filterText" autoFocus type="text" class="form-control" [placeholder]="l('SearchWithThreeDot')">
+                  <button class="btn btn-primary" type="submit" (click)="getEmployeeTimesheetActivityTrackers()"><i class="flaticon-search-1"></i></button>
+                </div>
+            </div>
+        	
+                            </div>
+                        </div>
+						 <div class="row" [hidden]="!advancedFiltersAreShown">
+						 	<div class="col-md-12">
+						         
+						     </div>
+
+
+
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="WorkNotesFilter">{{l("WorkNotes")}}</label>
+									<input type="text" class="form-control" id="WorkNotesFilter" name="workNotesFilter" [(ngModel)]="workNotesFilter" (ngModelChange)="getEmployeeTimesheetActivityTrackers()">
+								</div>
+                            </div>
+
+
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="TimesheetWorkDetailsFilter">({{l("Timesheet")}}) {{l("WorkDetails")}}</label>
+									<input type="text" class="form-control" id="TimesheetWorkDetailsFilter" name="timesheetWorkDetailsFilter" [(ngModel)]="timesheetWorkDetailsFilter">
+                                </div>
+                            </div>
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="TaskEventNameFilter">({{l("TaskEvent")}}) {{l("Name")}}</label>
+									<input type="text" class="form-control" id="TaskEventNameFilter" name="taskEventNameFilter" [(ngModel)]="taskEventNameFilter">
+                                </div>
+                            </div>
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="EmployeeNameFilter">({{l("Employee")}}) {{l("Name")}}</label>
+									<input type="text" class="form-control" id="EmployeeNameFilter" name="employeeNameFilter" [(ngModel)]="employeeNameFilter">
+                                </div>
+                            </div>
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="TimesheetPolicyPolicyNameFilter">({{l("TimesheetPolicy")}}) {{l("PolicyName")}}</label>
+									<input type="text" class="form-control" id="TimesheetPolicyPolicyNameFilter" name="timesheetPolicyPolicyNameFilter" [(ngModel)]="timesheetPolicyPolicyNameFilter">
+                                </div>
+                            </div>
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="TaskWorkItemNameFilter">({{l("TaskWorkItem")}}) {{l("Name")}}</label>
+									<input type="text" class="form-control" id="TaskWorkItemNameFilter" name="taskWorkItemNameFilter" [(ngModel)]="taskWorkItemNameFilter">
+                                </div>
+                            </div>
+                            <div class="col-md-12 mt-5">
+                                <button (click)="resetFilters()" class="btn btn-secondary btn-sm" id="btn-reset-filters">Reset</button>
+                            </div>
+                        </div>
+                        <div class="row my-4">
+                            <div class="col-sm-12">
+                                <span class="clickable-item text-muted" *ngIf="!advancedFiltersAreShown" (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i class="fa fa-angle-down"></i> {{l("ShowAdvancedFilters")}}</span>
+                                <span class="clickable-item text-muted" *ngIf="advancedFiltersAreShown" (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i class="fa fa-angle-up"></i> {{l("HideAdvancedFilters")}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="row align-items-center">
+                    <!--<Primeng-Datatable-Start>-->
+                    <div class="primeng-datatable-container col-12"
+                         [busyIf]="primengTableHelper.isLoading">
+                        <p-table #dataTable
+                                     (onLazyLoad)="getEmployeeTimesheetActivityTrackers($event)"
+                                     [value]="primengTableHelper.records"
+                                     rows="{{primengTableHelper.defaultRecordsCountPerPage}}"
+                                     [paginator]="false"
+                                     [lazy]="true"
+                                     [scrollable]="true"
+                                     ScrollWidth="100%"
+                                     [responsive]="primengTableHelper.isResponsive"
+                                     [resizableColumns]="primengTableHelper.resizableColumns">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th style="width: 130px" [hidden]="!isGrantedAny('Pages.EmployeeTimesheetActivityTrackers.Edit', 'Pages.EmployeeTimesheetActivityTrackers.Delete')">{{l('Actions')}}</th>
+                                    <th style="width: 150px" pSortableColumn="timesheetFk.workDetails">
+                                        {{l('WorkDetails')}}
+                                        <p-sortIcon field="timesheetWorkDetails"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="taskEventFk.name">
+                                        {{l('Name')}}
+                                        <p-sortIcon field="taskEventName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="employeeFk.name">
+                                        {{l('Name')}}
+                                        <p-sortIcon field="employeeName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="timesheetPolicyFk.policyName">
+                                        {{l('PolicyName')}}
+                                        <p-sortIcon field="timesheetPolicyPolicyName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="taskWorkItemFk.name">
+                                        {{l('Name')}}
+                                        <p-sortIcon field="taskWorkItemName"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="workNotes">
+                                        {{l('WorkNotes')}}
+                                        <p-sortIcon field="employeeTimesheetActivityTracker.workNotes"></p-sortIcon>
+                                    </th>
+
+                                </tr>
+                            </ng-template>                           
+							<ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
+                                <tr>
+                                    <td style="width: 130px"
+                                        [hidden]="!isGrantedAny('Pages.EmployeeTimesheetActivityTrackers.Edit', 'Pages.EmployeeTimesheetActivityTrackers.Delete')">
+                                       <div class="btn-group dropdown" dropdown container="body">
+                                            <button class="dropdown-toggle btn btn-sm btn-primary" dropdownToggle>
+                                                <i class="fa fa-cog"></i><span class="caret"></span> {{l("Actions")}}
+                                            </button>
+												<ul class="dropdown-menu"  *dropdownMenu>
+												<li>
+													<a href="javascript:;" class="dropdown-item"
+														(click)="viewEmployeeTimesheetActivityTrackerModal.show(record)">{{l('View')}}</a>
+												</li>
+												<li>
+                                                <a href="javascript:;" *ngIf="permission.isGranted('Pages.EmployeeTimesheetActivityTrackers.Edit')" class="dropdown-item"
+														(click)="createOrEditEmployeeTimesheetActivityTrackerModal.show(record.employeeTimesheetActivityTracker.id)">{{l('Edit')}}</a>												
+                                                </li>
+												<li>
+											        <a class="dropdown-item" href="javascript:;" *ngIf="permission.isGranted('Pages.EmployeeTimesheetActivityTrackers.Delete')"
+														(click)="deleteEmployeeTimesheetActivityTracker(record.employeeTimesheetActivityTracker)">{{l('Delete')}}</a>
+												</li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                    <td style="width:150px">
+												<span class="p-column-title"> {{l('WorkDetails')}}</span>
+												{{record.timesheetWorkDetails}}
+											</td>
+                                    <td style="width:150px">
+												<span class="p-column-title"> {{l('Name')}}</span>
+												{{record.taskEventName}}
+											</td>
+                                    <td style="width:150px">
+												<span class="p-column-title"> {{l('Name')}}</span>
+												{{record.employeeName}}
+											</td>
+                                    <td style="width:150px">
+												<span class="p-column-title"> {{l('PolicyName')}}</span>
+												{{record.timesheetPolicyPolicyName}}
+											</td>
+                                    <td style="width:150px">
+												<span class="p-column-title"> {{l('Name')}}</span>
+												{{record.taskWorkItemName}}
+											</td>
+                                    <td style="width:150px">
+											<span class="p-column-title"> {{l('WorkNotes')}}</span>
+											{{record.employeeTimesheetActivityTracker.workNotes}}
+										</td>
+
+                                </tr>
+                               
+                            </ng-template>
+                        </p-table>
+						<div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
+                            {{l('NoData')}}
+                        </div>
+                        <div class="primeng-paging-container">
+                            <p-paginator [rows]="primengTableHelper.defaultRecordsCountPerPage"
+                                         #paginator
+                                         (onPageChange)="getEmployeeTimesheetActivityTrackers($event)"
+                                         [totalRecords]="primengTableHelper.totalRecordsCount"
+                                         [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
+                                         [showCurrentPageReport]="true"
+                                         [currentPageReportTemplate]="'TotalRecordsCount' | localize:primengTableHelper.totalRecordsCount"    
+                            >
+                            </p-paginator>
+                        </div>
+                    </div>
+                    <!--<Primeng-Datatable-End>-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <createOrEditEmployeeTimesheetActivityTrackerModal #createOrEditEmployeeTimesheetActivityTrackerModal (modalSave)="getEmployeeTimesheetActivityTrackers()"></createOrEditEmployeeTimesheetActivityTrackerModal>    
+    <viewEmployeeTimesheetActivityTrackerModal #viewEmployeeTimesheetActivityTrackerModal></viewEmployeeTimesheetActivityTrackerModal>
+    
+  </div>

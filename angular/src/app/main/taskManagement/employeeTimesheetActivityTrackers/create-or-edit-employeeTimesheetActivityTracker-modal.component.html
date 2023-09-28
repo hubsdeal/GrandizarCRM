@@ -1,0 +1,92 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #employeeTimesheetActivityTrackerForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="employeeTimesheetActivityTracker.id">{{l("EditEmployeeTimesheetActivityTracker")}}</span>
+                        <span *ngIf="!employeeTimesheetActivityTracker.id">{{l("CreateNewEmployeeTimesheetActivityTracker")}}</span>
+                    </h4>                    
+                    
+                    
+                 <button type="button" class="btn-close" (click)="close()" aria-label="Close" [disabled]="saving"></button>
+             
+                </div>
+                <div class="modal-body">
+                 
+
+
+					<div class="my-3">
+                        <label class="form-label" for="TimesheetWorkDetails">{{l("Timesheet")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="TimesheetWorkDetails" name="timesheetWorkDetails" [(ngModel)]="timesheetWorkDetails" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectTimesheetModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setTimesheetIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="employeeTimesheetActivityTracker.timesheetId" [(ngModel)]="employeeTimesheetActivityTracker.timesheetId" type="text"  hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="TaskEventName">{{l("TaskEvent")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="TaskEventName" name="taskEventName" [(ngModel)]="taskEventName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectTaskEventModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setTaskEventIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="employeeTimesheetActivityTracker.taskEventId" [(ngModel)]="employeeTimesheetActivityTracker.taskEventId" type="text"  hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="EmployeeName">{{l("Employee")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="EmployeeName" name="employeeName" [(ngModel)]="employeeName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectEmployeeModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setEmployeeIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="employeeTimesheetActivityTracker.employeeId" [(ngModel)]="employeeTimesheetActivityTracker.employeeId" type="text"  hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="TimesheetPolicyPolicyName">{{l("TimesheetPolicy")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="TimesheetPolicyPolicyName" name="timesheetPolicyPolicyName" [(ngModel)]="timesheetPolicyPolicyName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectTimesheetPolicyModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setTimesheetPolicyIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="employeeTimesheetActivityTracker.timesheetPolicyId" [(ngModel)]="employeeTimesheetActivityTracker.timesheetPolicyId" type="text"  hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="TaskWorkItemName">{{l("TaskWorkItem")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="TaskWorkItemName" name="taskWorkItemName" [(ngModel)]="taskWorkItemName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectTaskWorkItemModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setTaskWorkItemIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="employeeTimesheetActivityTracker.taskWorkItemId" [(ngModel)]="employeeTimesheetActivityTracker.taskWorkItemId" type="text"  hidden>
+                        
+
+
+								<div class="my-3">
+									<label class="form-label" for="EmployeeTimesheetActivityTracker_WorkNotes">{{l("WorkNotes")}}</label>
+									<input type="text" #EmployeeTimesheetActivityTracker_WorkNotes="ngModel" id="EmployeeTimesheetActivityTracker_WorkNotes" class="form-control" [(ngModel)]="employeeTimesheetActivityTracker.workNotes" name="WorkNotes"    />
+								    <validation-messages [formCtrl]="EmployeeTimesheetActivityTracker_WorkNotes"></validation-messages>
+								</div>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!employeeTimesheetActivityTrackerForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+<employeeTimesheetActivityTrackerTimesheetLookupTableModal #employeeTimesheetActivityTrackerTimesheetLookupTableModal (modalSave)="getNewTimesheetId()"></employeeTimesheetActivityTrackerTimesheetLookupTableModal>
+		 <employeeTimesheetActivityTrackerTaskEventLookupTableModal #employeeTimesheetActivityTrackerTaskEventLookupTableModal (modalSave)="getNewTaskEventId()"></employeeTimesheetActivityTrackerTaskEventLookupTableModal>
+		 <employeeTimesheetActivityTrackerEmployeeLookupTableModal #employeeTimesheetActivityTrackerEmployeeLookupTableModal (modalSave)="getNewEmployeeId()"></employeeTimesheetActivityTrackerEmployeeLookupTableModal>
+		 <employeeTimesheetActivityTrackerTimesheetPolicyLookupTableModal #employeeTimesheetActivityTrackerTimesheetPolicyLookupTableModal (modalSave)="getNewTimesheetPolicyId()"></employeeTimesheetActivityTrackerTimesheetPolicyLookupTableModal>
+		 <employeeTimesheetActivityTrackerTaskWorkItemLookupTableModal #employeeTimesheetActivityTrackerTaskWorkItemLookupTableModal (modalSave)="getNewTaskWorkItemId()"></employeeTimesheetActivityTrackerTaskWorkItemLookupTableModal>
+		 
+</div>

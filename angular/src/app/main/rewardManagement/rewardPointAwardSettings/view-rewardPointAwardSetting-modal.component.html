@@ -1,0 +1,64 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span>{{l("Details")}}</span>
+                </h4>               
+                
+                
+                 <button type="button" class="btn-close" (click)="close()" aria-label="Close" [disabled]="saving"></button>
+             
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="col-6 mb-3">
+                        <h6>{{l("BaseAmount")}} :</h6>
+                        {{ item.rewardPointAwardSetting.baseAmount }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("RewardPoint")}} :</h6>
+                        {{ item.rewardPointAwardSetting.rewardPoint }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("PremiumMemberBonusPercentage")}} :</h6>
+                        {{ item.rewardPointAwardSetting.premiumMemberBonusPercentage }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("DeductPointForReturn")}} :</h6>
+                        <div *ngIf="item.rewardPointAwardSetting.deductPointForReturn" class="text-left"><i class="fa fa-check-circle text-success"
+                                title="True"></i></div>
+                        <div *ngIf="!item.rewardPointAwardSetting.deductPointForReturn" class="text-left"><i class="fa fa-times-circle" title="False"></i></div>
+                    </div>                    <div class="col-6 mb-3">
+                        <h6>{{l("AddPointsAfterDays")}} :</h6>
+                        {{ item.rewardPointAwardSetting.addPointsAfterDays }}
+                    </div>
+
+                    <div class="col-6 mb-3">
+                        <h6>({{l("RewardPointType")}}) {{l("Name")}} :</h6>
+                        {{item.rewardPointTypeName}}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{l("Store")}}) {{l("Name")}} :</h6>
+                        {{item.storeName}}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{l("Product")}}) {{l("Name")}} :</h6>
+                        {{item.productName}}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{l("MembershipType")}}) {{l("Name")}} :</h6>
+                        {{item.membershipTypeName}}
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button [disabled]="saving" type="button" class="btn btn-primary blue" (click)="close()">{{l("Close")}}</button>
+            </div>
+        </div>
+    </div>
+
+</div>

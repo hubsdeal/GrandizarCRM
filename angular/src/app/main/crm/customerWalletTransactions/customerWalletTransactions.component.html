@@ -1,0 +1,281 @@
+﻿<div [@routerTransition]>
+  
+  
+   <sub-header [title]="'CustomerWalletTransactions' | localize" [description]="'CustomerWalletTransactionsHeaderInfo' | localize">
+             <div role="actions">
+                 <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1"><i class="fa fa-file-excel"></i> {{l("ExportToExcel")}}</button>
+                
+                 <button *ngIf="isGranted('Pages.CustomerWalletTransactions.Create')" (click)="createCustomerWalletTransaction()" 
+                                        class="btn btn-primary blue"><i class="fa fa-plus"></i> {{l("CreateNewCustomerWalletTransaction")}}</button>
+             </div>
+            </sub-header>
+    
+    <div [class]="containerClass">
+        <div class="card card-custom gutter-b">
+            <div class="card-body">
+                <form class="form" autocomplete="off">
+                    <div>
+                        <div class="row align-items-center">
+                            <div class="col-xl-12">
+                                
+                                
+        	<div class="my-3">                
+                <div class="input-group mb-3">
+                  <input [(ngModel)]="filterText" (ngModelChange)="getCustomerWalletTransactions()" name="filterText" autoFocus type="text" class="form-control" [placeholder]="l('SearchWithThreeDot')">
+                  <button class="btn btn-primary" type="submit" (click)="getCustomerWalletTransactions()"><i class="flaticon-search-1"></i></button>
+                </div>
+            </div>
+        	
+                            </div>
+                        </div>
+						 <div class="row" [hidden]="!advancedFiltersAreShown">
+						 	<div class="col-md-12">
+						         
+						     </div>
+
+
+
+                            <div class="col-md-3">
+                                <div class="my-3">
+									<label class="form-label" for="MinBalanceBeforeTransactionFilter">{{l("MinMax")}} {{l("BalanceBeforeTransaction")}}</label>
+									<div class="input-group">
+                                        <input type="number" class="form-control" id="MinBalanceBeforeTransactionFilter" [(ngModel)]="minBalanceBeforeTransactionFilter" placeholder="{{l('MinValue')}}" name="minBalanceBeforeTransactionFilter" (ngModelChange)="getCustomerWalletTransactions()"/>
+                                        <input type="number" class="form-control" [(ngModel)]="maxBalanceBeforeTransactionFilter" placeholder="{{l('MaxValue')}}" name="maxBalanceBeforeTransactionFilter" (ngModelChange)="getCustomerWalletTransactions()"/>
+									</div>
+                                </div>
+                            </div>	
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="AddOrDeductFilterSelect">{{l("AddOrDeduct")}}</label>
+									<select class="form-select" name="AddOrDeductFilter" id="AddOrDeductFilterSelect" [(ngModel)]="addOrDeductFilter" (ngModelChange)="getCustomerWalletTransactions()">
+									<option value="-1">{{l("All")}}</option>
+									<option value="0">{{l("False")}}</option>
+									<option value="1">{{l("True")}}</option>
+									</select>
+								</div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+									<label class="form-label" for="MinAmountFilter">{{l("MinMax")}} {{l("Amount")}}</label>
+									<div class="input-group">
+                                        <input type="number" class="form-control" id="MinAmountFilter" [(ngModel)]="minAmountFilter" placeholder="{{l('MinValue')}}" name="minAmountFilter" (ngModelChange)="getCustomerWalletTransactions()"/>
+                                        <input type="number" class="form-control" [(ngModel)]="maxAmountFilter" placeholder="{{l('MaxValue')}}" name="maxAmountFilter" (ngModelChange)="getCustomerWalletTransactions()"/>
+									</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+									<label class="form-label" for="MinTransactionDateFilter">{{l("TransactionDateRange")}}</label>
+									<div class="input-group">
+                                        
+                                        <input class="form-control m-input" id="MinTransactionDateFilter" name="MinTransactionDateFilter" type="datetime" bsDatepicker  placeholder="{{l('MinValue')}}" [(ngModel)]="minTransactionDateFilter" (ngModelChange)="getCustomerWalletTransactions()">
+			                            <span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
+                                        <input class="form-control m-input" id="MaxTransactionDateFilter" name="MaxTransactionDateFilter" type="datetime" bsDatepicker  placeholder="{{l('MaxValue')}}" [(ngModel)]="maxTransactionDateFilter" (ngModelChange)="getCustomerWalletTransactions()">
+									</div>
+                                </div>
+                            </div>
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="TransactionTimeFilter">{{l("TransactionTime")}}</label>
+									<input type="text" class="form-control" id="TransactionTimeFilter" name="transactionTimeFilter" [(ngModel)]="transactionTimeFilter" (ngModelChange)="getCustomerWalletTransactions()">
+								</div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+									<label class="form-label" for="MinCurrentBalanceAfterTransactionFilter">{{l("MinMax")}} {{l("CurrentBalanceAfterTransaction")}}</label>
+									<div class="input-group">
+                                        <input type="number" class="form-control" id="MinCurrentBalanceAfterTransactionFilter" [(ngModel)]="minCurrentBalanceAfterTransactionFilter" placeholder="{{l('MinValue')}}" name="minCurrentBalanceAfterTransactionFilter" (ngModelChange)="getCustomerWalletTransactions()"/>
+                                        <input type="number" class="form-control" [(ngModel)]="maxCurrentBalanceAfterTransactionFilter" placeholder="{{l('MaxValue')}}" name="maxCurrentBalanceAfterTransactionFilter" (ngModelChange)="getCustomerWalletTransactions()"/>
+									</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+									<label class="form-label" for="MinCustomerWalletIdFilter">{{l("MinMax")}} {{l("CustomerWalletId")}}</label>
+									<div class="input-group">
+                                        <input type="number" class="form-control" id="MinCustomerWalletIdFilter" [(ngModel)]="minCustomerWalletIdFilter" placeholder="{{l('MinValue')}}" name="minCustomerWalletIdFilter" (ngModelChange)="getCustomerWalletTransactions()"/>
+                                        <input type="number" class="form-control" [(ngModel)]="maxCustomerWalletIdFilter" placeholder="{{l('MaxValue')}}" name="maxCustomerWalletIdFilter" (ngModelChange)="getCustomerWalletTransactions()"/>
+									</div>
+                                </div>
+                            </div>
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="WalletTransactionTypeIdFilterSelect">{{l("WalletTransactionTypeId")}}</label>
+									<select class="form-select" name="WalletTransactionTypeIdFilter" id="WalletTransactionTypeIdFilterSelect" [(ngModel)]="walletTransactionTypeIdFilter" (ngModelChange)="getCustomerWalletTransactions()">
+									<option value="-1">{{l("All")}}</option>
+																				<option value="1">{{l('Order')}}</option>
+
+
+									</select>
+								</div>
+                            </div>
+
+
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="OrderInvoiceNumberFilter">({{l("Order")}}) {{l("InvoiceNumber")}}</label>
+									<input type="text" class="form-control" id="OrderInvoiceNumberFilter" name="orderInvoiceNumberFilter" [(ngModel)]="orderInvoiceNumberFilter">
+                                </div>
+                            </div>
+                            <div class="col-md-12 mt-5">
+                                <button (click)="resetFilters()" class="btn btn-secondary btn-sm" id="btn-reset-filters">Reset</button>
+                            </div>
+                        </div>
+                        <div class="row my-4">
+                            <div class="col-sm-12">
+                                <span class="clickable-item text-muted" *ngIf="!advancedFiltersAreShown" (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i class="fa fa-angle-down"></i> {{l("ShowAdvancedFilters")}}</span>
+                                <span class="clickable-item text-muted" *ngIf="advancedFiltersAreShown" (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i class="fa fa-angle-up"></i> {{l("HideAdvancedFilters")}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="row align-items-center">
+                    <!--<Primeng-Datatable-Start>-->
+                    <div class="primeng-datatable-container col-12"
+                         [busyIf]="primengTableHelper.isLoading">
+                        <p-table #dataTable
+                                     (onLazyLoad)="getCustomerWalletTransactions($event)"
+                                     [value]="primengTableHelper.records"
+                                     rows="{{primengTableHelper.defaultRecordsCountPerPage}}"
+                                     [paginator]="false"
+                                     [lazy]="true"
+                                     [scrollable]="true"
+                                     ScrollWidth="100%"
+                                     [responsive]="primengTableHelper.isResponsive"
+                                     [resizableColumns]="primengTableHelper.resizableColumns">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th style="width: 130px" [hidden]="!isGrantedAny('Pages.CustomerWalletTransactions.Edit', 'Pages.CustomerWalletTransactions.Delete')">{{l('Actions')}}</th>
+                                    <th style="width: 150px" pSortableColumn="orderFk.invoiceNumber">
+                                        {{l('InvoiceNumber')}}
+                                        <p-sortIcon field="orderInvoiceNumber"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="balanceBeforeTransaction">
+                                        {{l('BalanceBeforeTransaction')}}
+                                        <p-sortIcon field="customerWalletTransaction.balanceBeforeTransaction"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="addOrDeduct">
+                                        {{l('AddOrDeduct')}}
+                                        <p-sortIcon field="customerWalletTransaction.addOrDeduct"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="amount">
+                                        {{l('Amount')}}
+                                        <p-sortIcon field="customerWalletTransaction.amount"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="transactionDate">
+                                        {{l('TransactionDate')}}
+                                        <p-sortIcon field="customerWalletTransaction.transactionDate"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="transactionTime">
+                                        {{l('TransactionTime')}}
+                                        <p-sortIcon field="customerWalletTransaction.transactionTime"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="currentBalanceAfterTransaction">
+                                        {{l('CurrentBalanceAfterTransaction')}}
+                                        <p-sortIcon field="customerWalletTransaction.currentBalanceAfterTransaction"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="customerWalletId">
+                                        {{l('CustomerWalletId')}}
+                                        <p-sortIcon field="customerWalletTransaction.customerWalletId"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="walletTransactionTypeId">
+                                        {{l('WalletTransactionTypeId')}}
+                                        <p-sortIcon field="customerWalletTransaction.walletTransactionTypeId"></p-sortIcon>
+                                    </th>
+
+                                </tr>
+                            </ng-template>                           
+							<ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
+                                <tr>
+                                    <td style="width: 130px"
+                                        [hidden]="!isGrantedAny('Pages.CustomerWalletTransactions.Edit', 'Pages.CustomerWalletTransactions.Delete')">
+                                       <div class="btn-group dropdown" dropdown container="body">
+                                            <button class="dropdown-toggle btn btn-sm btn-primary" dropdownToggle>
+                                                <i class="fa fa-cog"></i><span class="caret"></span> {{l("Actions")}}
+                                            </button>
+												<ul class="dropdown-menu"  *dropdownMenu>
+												<li>
+													<a href="javascript:;" class="dropdown-item"
+														(click)="viewCustomerWalletTransactionModal.show(record)">{{l('View')}}</a>
+												</li>
+												<li>
+                                                <a href="javascript:;" *ngIf="permission.isGranted('Pages.CustomerWalletTransactions.Edit')" class="dropdown-item"
+														(click)="createOrEditCustomerWalletTransactionModal.show(record.customerWalletTransaction.id)">{{l('Edit')}}</a>												
+                                                </li>
+												<li>
+											        <a class="dropdown-item" href="javascript:;" *ngIf="permission.isGranted('Pages.CustomerWalletTransactions.Delete')"
+														(click)="deleteCustomerWalletTransaction(record.customerWalletTransaction)">{{l('Delete')}}</a>
+												</li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                    <td style="width:150px">
+												<span class="p-column-title"> {{l('InvoiceNumber')}}</span>
+												{{record.orderInvoiceNumber}}
+											</td>
+                                    <td style="width:150px">
+											<span class="p-column-title"> {{l('BalanceBeforeTransaction')}}</span>
+											{{record.customerWalletTransaction.balanceBeforeTransaction}}
+										</td>
+                                    <td style="width:150px">
+										<span class="p-column-title"> {{l('AddOrDeduct')}}</span>
+                                        <div *ngIf="record.customerWalletTransaction.addOrDeduct" class="text-center"><i class="fa fa-check-circle text-success" title="True"></i></div>
+										<div *ngIf="!record.customerWalletTransaction.addOrDeduct" class="text-center"><i class="fa fa-times-circle" title="False"></i></div>
+                                    </td>
+                                    <td style="width:150px">
+											<span class="p-column-title"> {{l('Amount')}}</span>
+											{{record.customerWalletTransaction.amount}}
+										</td>
+                                    <td style="width:150px">
+										<span class="p-column-title"> {{l('TransactionDate')}}</span>
+                                        <span *ngIf="record.customerWalletTransaction.transactionDate">
+											{{record.customerWalletTransaction.transactionDate |  luxonFormat:'F' }}
+                                        </span>
+                                        <span *ngIf="!record.customerWalletTransaction.transactionDate">-</span>
+                                    </td>
+                                    <td style="width:150px">
+											<span class="p-column-title"> {{l('TransactionTime')}}</span>
+											{{record.customerWalletTransaction.transactionTime}}
+										</td>
+                                    <td style="width:150px">
+											<span class="p-column-title"> {{l('CurrentBalanceAfterTransaction')}}</span>
+											{{record.customerWalletTransaction.currentBalanceAfterTransaction}}
+										</td>
+                                    <td style="width:150px">
+											<span class="p-column-title"> {{l('CustomerWalletId')}}</span>
+											{{record.customerWalletTransaction.customerWalletId}}
+										</td>
+                                    <td style="width:150px">
+										<span class="p-column-title"> {{l('WalletTransactionTypeId')}}</span>
+										{{l( walletTransactionType[record.customerWalletTransaction.walletTransactionTypeId])}}
+                                    </td>
+
+                                </tr>
+                               
+                            </ng-template>
+                        </p-table>
+						<div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
+                            {{l('NoData')}}
+                        </div>
+                        <div class="primeng-paging-container">
+                            <p-paginator [rows]="primengTableHelper.defaultRecordsCountPerPage"
+                                         #paginator
+                                         (onPageChange)="getCustomerWalletTransactions($event)"
+                                         [totalRecords]="primengTableHelper.totalRecordsCount"
+                                         [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
+                                         [showCurrentPageReport]="true"
+                                         [currentPageReportTemplate]="'TotalRecordsCount' | localize:primengTableHelper.totalRecordsCount"    
+                            >
+                            </p-paginator>
+                        </div>
+                    </div>
+                    <!--<Primeng-Datatable-End>-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <createOrEditCustomerWalletTransactionModal #createOrEditCustomerWalletTransactionModal (modalSave)="getCustomerWalletTransactions()"></createOrEditCustomerWalletTransactionModal>    
+    <viewCustomerWalletTransactionModal #viewCustomerWalletTransactionModal></viewCustomerWalletTransactionModal>
+    
+  </div>

@@ -1,0 +1,68 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span>{{l("Details")}}</span>
+                </h4>               
+                
+                
+                 <button type="button" class="btn-close" (click)="close()" aria-label="Close" [disabled]="saving"></button>
+             
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="col-6 mb-3">
+                        <h6>{{l("EarnedOrRedeemed")}} :</h6>
+                        <div *ngIf="item.rewardPointHistory.earnedOrRedeemed" class="text-left"><i class="fa fa-check-circle text-success"
+                                title="True"></i></div>
+                        <div *ngIf="!item.rewardPointHistory.earnedOrRedeemed" class="text-left"><i class="fa fa-times-circle" title="False"></i></div>
+                    </div>                    <div class="col-6 mb-3">
+                        <h6>{{l("Date")}} :</h6>
+                        {{ item.rewardPointHistory.date |  luxonFormat:'yyyy-LL-dd HH:mm:ss'  }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("PurchaseAmount")}} :</h6>
+                        {{ item.rewardPointHistory.purchaseAmount }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("PointsEarned")}} :</h6>
+                        {{ item.rewardPointHistory.pointsEarned }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("PointsBalance")}} :</h6>
+                        {{ item.rewardPointHistory.pointsBalance }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("PointsDeducted")}} :</h6>
+                        {{ item.rewardPointHistory.pointsDeducted }}
+                    </div>
+
+                    <div class="col-6 mb-3">
+                        <h6>({{l("RewardPointType")}}) {{l("Name")}} :</h6>
+                        {{item.rewardPointTypeName}}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{l("Order")}}) {{l("InvoiceNumber")}} :</h6>
+                        {{item.orderInvoiceNumber}}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{l("Contact")}}) {{l("FullName")}} :</h6>
+                        {{item.contactFullName}}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{l("Job")}}) {{l("Title")}} :</h6>
+                        {{item.jobTitle}}
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button [disabled]="saving" type="button" class="btn btn-primary blue" (click)="close()">{{l("Close")}}</button>
+            </div>
+        </div>
+    </div>
+
+</div>

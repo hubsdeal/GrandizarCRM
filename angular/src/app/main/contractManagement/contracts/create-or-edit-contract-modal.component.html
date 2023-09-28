@@ -1,0 +1,284 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #contractForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="contract.id">{{l("EditContract")}}</span>
+                        <span *ngIf="!contract.id">{{l("CreateNewContract")}}</span>
+                    </h4>                    
+                    
+                    
+                 <button type="button" class="btn-close" (click)="close()" aria-label="Close" [disabled]="saving"></button>
+             
+                </div>
+                <div class="modal-body">
+                 
+
+
+					<div class="my-3">
+                        <label class="form-label" for="ContractTypeName">{{l("ContractType")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="ContractTypeName" name="contractTypeName" [(ngModel)]="contractTypeName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectContractTypeModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setContractTypeIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="contract.contractTypeId" [(ngModel)]="contract.contractTypeId" type="text"  hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="StoreName">{{l("Store")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="StoreName" name="storeName" [(ngModel)]="storeName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectStoreModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setStoreIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="contract.storeId" [(ngModel)]="contract.storeId" type="text"  hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="BusinessName">{{l("Business")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="BusinessName" name="businessName" [(ngModel)]="businessName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectBusinessModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setBusinessIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="contract.businessId" [(ngModel)]="contract.businessId" type="text"  hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="EmployeeName">{{l("Employee")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="EmployeeName" name="employeeName" [(ngModel)]="employeeName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectEmployeeModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setEmployeeIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="contract.employeeId" [(ngModel)]="contract.employeeId" type="text"  hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="JobTitle">{{l("Job")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="JobTitle" name="jobTitle" [(ngModel)]="jobTitle" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectJobModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setJobIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="contract.jobId" [(ngModel)]="contract.jobId" type="text"  hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="ProductName">{{l("Product")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="ProductName" name="productName" [(ngModel)]="productName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectProductModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setProductIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="contract.productId" [(ngModel)]="contract.productId" type="text"  hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="HubName">{{l("Hub")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="HubName" name="hubName" [(ngModel)]="hubName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectHubModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setHubIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="contract.hubId" [(ngModel)]="contract.hubId" type="text"  hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="ContactFullName">{{l("Contact")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="ContactFullName" name="contactFullName" [(ngModel)]="contactFullName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectContactModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setFirstPartyContactIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="contract.firstPartyContactId" [(ngModel)]="contract.firstPartyContactId" type="text"  hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="ContactFullName2">{{l("Contact")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="ContactFullName2" name="contactFullName2" [(ngModel)]="contactFullName2" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectContactModal2()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setSecondPartyContactIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="contract.secondPartyContactId" [(ngModel)]="contract.secondPartyContactId" type="text"  hidden>
+                        
+
+
+								<div class="my-3">
+									<label class="form-label" for="Contract_Title">{{l("Title")}} *</label>
+									<input type="text" #Contract_Title="ngModel" id="Contract_Title" class="form-control" [(ngModel)]="contract.title" name="Title"   minlength="1"  maxlength="1024"  required/>
+								    <validation-messages [formCtrl]="Contract_Title"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="Contract_ReferenceNumber">{{l("ReferenceNumber")}}</label>
+									<input type="text" #Contract_ReferenceNumber="ngModel" id="Contract_ReferenceNumber" class="form-control" [(ngModel)]="contract.referenceNumber" name="ReferenceNumber"   minlength="1"  maxlength="128" />
+								    <validation-messages [formCtrl]="Contract_ReferenceNumber"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="Contract_StartDate">{{l("StartDate")}}</label>
+									 <input class="form-control m-input" #Contract_StartDate type="datetime" bsDatepicker  datePickerLuxonModifier  [(date)]="contract.startDate" id="Contract_StartDate" name="Contract_StartDate">
+									<validation-messages [formCtrl]="Contract_StartDate"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="Contract_EndDate">{{l("EndDate")}}</label>
+									 <input class="form-control m-input" #Contract_EndDate type="datetime" bsDatepicker  datePickerLuxonModifier  [(date)]="contract.endDate" id="Contract_EndDate" name="Contract_EndDate">
+									<validation-messages [formCtrl]="Contract_EndDate"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="Contract_Description">{{l("Description")}}</label>
+									<input type="text" #Contract_Description="ngModel" id="Contract_Description" class="form-control" [(ngModel)]="contract.description" name="Description"    />
+								    <validation-messages [formCtrl]="Contract_Description"></validation-messages>
+								</div>
+					
+								<br/>
+								<label class="form-check form-check-custom form-check-solid">
+                                    <input
+                                        id="Contract_Template" 
+                                        #Contract_Template="ngModel"
+                                        name="Template" 
+                                        [(ngModel)]="contract.template"
+                                        type="checkbox"
+                                        class="form-check-input"
+                                    />
+                                    <span class="form-check-label">
+                                        {{l("Template")}}
+                                    </span>
+                                </label>
+                                <validation-messages [formCtrl]="Contract_Template"></validation-messages>
+					
+								<div class="my-3">
+									<label class="form-label" for="Contract_Remarks">{{l("Remarks")}}</label>
+									<input type="text" #Contract_Remarks="ngModel" id="Contract_Remarks" class="form-control" [(ngModel)]="contract.remarks" name="Remarks"    />
+								    <validation-messages [formCtrl]="Contract_Remarks"></validation-messages>
+								</div>
+					
+								<div class="my5">
+									<label class="form-label" for="Contract_StoreMarketplaceCommissionSettingId">{{l("StoreMarketplaceCommissionSettingId")}}</label>
+									<input type="number" #Contract_StoreMarketplaceCommissionSettingId="ngModel" id="Contract_StoreMarketplaceCommissionSettingId" class="form-control" [(ngModel)]="contract.storeMarketplaceCommissionSettingId" name="StoreMarketplaceCommissionSettingId"    />
+									<validation-messages [formCtrl]="Contract_StoreMarketplaceCommissionSettingId"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="Contract_FirstPartyFullName">{{l("FirstPartyFullName")}}</label>
+									<input type="text" #Contract_FirstPartyFullName="ngModel" id="Contract_FirstPartyFullName" class="form-control" [(ngModel)]="contract.firstPartyFullName" name="FirstPartyFullName"   minlength="1"  maxlength="256" />
+								    <validation-messages [formCtrl]="Contract_FirstPartyFullName"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="Contract_FirstPartyAddress">{{l("FirstPartyAddress")}}</label>
+									<input type="text" #Contract_FirstPartyAddress="ngModel" id="Contract_FirstPartyAddress" class="form-control" [(ngModel)]="contract.firstPartyAddress" name="FirstPartyAddress"   minlength="1"  maxlength="1024" />
+								    <validation-messages [formCtrl]="Contract_FirstPartyAddress"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="Contract_FirstPartyPhone">{{l("FirstPartyPhone")}}</label>
+									<input type="text" #Contract_FirstPartyPhone="ngModel" id="Contract_FirstPartyPhone" class="form-control" [(ngModel)]="contract.firstPartyPhone" name="FirstPartyPhone"   minlength="1"  maxlength="50" />
+								    <validation-messages [formCtrl]="Contract_FirstPartyPhone"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="Contract_FirstPartyEmailAddress">{{l("FirstPartyEmailAddress")}}</label>
+									<input type="text" #Contract_FirstPartyEmailAddress="ngModel" id="Contract_FirstPartyEmailAddress" class="form-control" [(ngModel)]="contract.firstPartyEmailAddress" name="FirstPartyEmailAddress"   minlength="1"  maxlength="128" />
+								    <validation-messages [formCtrl]="Contract_FirstPartyEmailAddress"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="Contract_FirstPartyIdTypeAndNumber">{{l("FirstPartyIdTypeAndNumber")}}</label>
+									<input type="text" #Contract_FirstPartyIdTypeAndNumber="ngModel" id="Contract_FirstPartyIdTypeAndNumber" class="form-control" [(ngModel)]="contract.firstPartyIdTypeAndNumber" name="FirstPartyIdTypeAndNumber"   minlength="1"  maxlength="256" />
+								    <validation-messages [formCtrl]="Contract_FirstPartyIdTypeAndNumber"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="Contract_FirstPartySignDate">{{l("FirstPartySignDate")}}</label>
+									 <input class="form-control m-input" #Contract_FirstPartySignDate type="datetime" bsDatepicker  datePickerLuxonModifier  [(date)]="contract.firstPartySignDate" id="Contract_FirstPartySignDate" name="Contract_FirstPartySignDate">
+									<validation-messages [formCtrl]="Contract_FirstPartySignDate"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="Contract_FirstPartySignBinaryId">{{l("FirstPartySignBinaryId")}}</label>
+									<input type="text" #Contract_FirstPartySignBinaryId="ngModel" id="Contract_FirstPartySignBinaryId" class="form-control" [(ngModel)]="contract.firstPartySignBinaryId" name="FirstPartySignBinaryId"    />
+								    <validation-messages [formCtrl]="Contract_FirstPartySignBinaryId"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="Contract_FirstPartyIpAddress">{{l("FirstPartyIpAddress")}}</label>
+									<input type="text" #Contract_FirstPartyIpAddress="ngModel" id="Contract_FirstPartyIpAddress" class="form-control" [(ngModel)]="contract.firstPartyIpAddress" name="FirstPartyIpAddress"   minlength="1"  maxlength="128" />
+								    <validation-messages [formCtrl]="Contract_FirstPartyIpAddress"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="Contract_SecondPartyFullName">{{l("SecondPartyFullName")}}</label>
+									<input type="text" #Contract_SecondPartyFullName="ngModel" id="Contract_SecondPartyFullName" class="form-control" [(ngModel)]="contract.secondPartyFullName" name="SecondPartyFullName"   minlength="1"  maxlength="256" />
+								    <validation-messages [formCtrl]="Contract_SecondPartyFullName"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="Contract_SecondPartyAddress">{{l("SecondPartyAddress")}}</label>
+									<input type="text" #Contract_SecondPartyAddress="ngModel" id="Contract_SecondPartyAddress" class="form-control" [(ngModel)]="contract.secondPartyAddress" name="SecondPartyAddress"   minlength="1"  maxlength="1024" />
+								    <validation-messages [formCtrl]="Contract_SecondPartyAddress"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="Contract_SecondPartyPhone">{{l("SecondPartyPhone")}}</label>
+									<input type="text" #Contract_SecondPartyPhone="ngModel" id="Contract_SecondPartyPhone" class="form-control" [(ngModel)]="contract.secondPartyPhone" name="SecondPartyPhone"   minlength="1"  maxlength="50" />
+								    <validation-messages [formCtrl]="Contract_SecondPartyPhone"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="Contract_SecondPartyEmailAddress">{{l("SecondPartyEmailAddress")}}</label>
+									<input type="text" #Contract_SecondPartyEmailAddress="ngModel" id="Contract_SecondPartyEmailAddress" class="form-control" [(ngModel)]="contract.secondPartyEmailAddress" name="SecondPartyEmailAddress"   minlength="1"  maxlength="128" />
+								    <validation-messages [formCtrl]="Contract_SecondPartyEmailAddress"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="Contract_SecondPartyIdTypeAndNumber">{{l("SecondPartyIdTypeAndNumber")}}</label>
+									<input type="text" #Contract_SecondPartyIdTypeAndNumber="ngModel" id="Contract_SecondPartyIdTypeAndNumber" class="form-control" [(ngModel)]="contract.secondPartyIdTypeAndNumber" name="SecondPartyIdTypeAndNumber"   minlength="1"  maxlength="128" />
+								    <validation-messages [formCtrl]="Contract_SecondPartyIdTypeAndNumber"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="Contract_SecondPartySignDate">{{l("SecondPartySignDate")}}</label>
+									 <input class="form-control m-input" #Contract_SecondPartySignDate type="datetime" bsDatepicker  datePickerLuxonModifier  [(date)]="contract.secondPartySignDate" id="Contract_SecondPartySignDate" name="Contract_SecondPartySignDate">
+									<validation-messages [formCtrl]="Contract_SecondPartySignDate"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="Contract_SecondPartySignBinaryId">{{l("SecondPartySignBinaryId")}}</label>
+									<input type="text" #Contract_SecondPartySignBinaryId="ngModel" id="Contract_SecondPartySignBinaryId" class="form-control" [(ngModel)]="contract.secondPartySignBinaryId" name="SecondPartySignBinaryId"    />
+								    <validation-messages [formCtrl]="Contract_SecondPartySignBinaryId"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="Contract_SecondPartyIpAddress">{{l("SecondPartyIpAddress")}}</label>
+									<input type="text" #Contract_SecondPartyIpAddress="ngModel" id="Contract_SecondPartyIpAddress" class="form-control" [(ngModel)]="contract.secondPartyIpAddress" name="SecondPartyIpAddress"   minlength="1"  maxlength="128" />
+								    <validation-messages [formCtrl]="Contract_SecondPartyIpAddress"></validation-messages>
+								</div>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!contractForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+<contractContractTypeLookupTableModal #contractContractTypeLookupTableModal (modalSave)="getNewContractTypeId()"></contractContractTypeLookupTableModal>
+		 <contractStoreLookupTableModal #contractStoreLookupTableModal (modalSave)="getNewStoreId()"></contractStoreLookupTableModal>
+		 <contractBusinessLookupTableModal #contractBusinessLookupTableModal (modalSave)="getNewBusinessId()"></contractBusinessLookupTableModal>
+		 <contractEmployeeLookupTableModal #contractEmployeeLookupTableModal (modalSave)="getNewEmployeeId()"></contractEmployeeLookupTableModal>
+		 <contractJobLookupTableModal #contractJobLookupTableModal (modalSave)="getNewJobId()"></contractJobLookupTableModal>
+		 <contractProductLookupTableModal #contractProductLookupTableModal (modalSave)="getNewProductId()"></contractProductLookupTableModal>
+		 <contractHubLookupTableModal #contractHubLookupTableModal (modalSave)="getNewHubId()"></contractHubLookupTableModal>
+		 <contractContactLookupTableModal #contractContactLookupTableModal (modalSave)="getNewFirstPartyContactId()"></contractContactLookupTableModal>
+		 <contractContactLookupTableModal #contractContactLookupTableModal2 (modalSave)="getNewSecondPartyContactId()"></contractContactLookupTableModal>
+		 
+</div>

@@ -1,0 +1,138 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #contactProductRecommendationForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="contactProductRecommendation.id">{{l("EditContactProductRecommendation")}}</span>
+                        <span *ngIf="!contactProductRecommendation.id">{{l("CreateNewContactProductRecommendation")}}</span>
+                    </h4>                    
+                    
+                    
+                 <button type="button" class="btn-close" (click)="close()" aria-label="Close" [disabled]="saving"></button>
+             
+                </div>
+                <div class="modal-body">
+                 
+
+
+					<div class="my-3">
+                        <label class="form-label" for="UserName">{{l("User")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="UserName" name="userName" [(ngModel)]="userName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectUserModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setUserIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="contactProductRecommendation.userId" [(ngModel)]="contactProductRecommendation.userId" type="text"  hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="ContactFullName">{{l("Contact")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="ContactFullName" name="contactFullName" [(ngModel)]="contactFullName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectContactModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setContactIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="contactProductRecommendation.contactId" [(ngModel)]="contactProductRecommendation.contactId" type="text"  hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="HubName">{{l("Hub")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="HubName" name="hubName" [(ngModel)]="hubName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectHubModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setHubIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="contactProductRecommendation.hubId" [(ngModel)]="contactProductRecommendation.hubId" type="text"  hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="StoreName">{{l("Store")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="StoreName" name="storeName" [(ngModel)]="storeName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectStoreModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setStoreIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="contactProductRecommendation.storeId" [(ngModel)]="contactProductRecommendation.storeId" type="text"  hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="ProductName">{{l("Product")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="ProductName" name="productName" [(ngModel)]="productName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectProductModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setProductIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="contactProductRecommendation.productId" [(ngModel)]="contactProductRecommendation.productId" type="text"  hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="ProductCategoryName">{{l("ProductCategory")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="ProductCategoryName" name="productCategoryName" [(ngModel)]="productCategoryName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectProductCategoryModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setProductCategoryIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="contactProductRecommendation.productCategoryId" [(ngModel)]="contactProductRecommendation.productCategoryId" type="text"  hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="JobTitle">{{l("Job")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="JobTitle" name="jobTitle" [(ngModel)]="jobTitle" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectJobModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setJobIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="contactProductRecommendation.jobId" [(ngModel)]="contactProductRecommendation.jobId" type="text"  hidden>
+                        
+
+
+								<div class="my5">
+									<label class="form-label" for="ContactProductRecommendation_HubRecommendationScore">{{l("HubRecommendationScore")}}</label>
+									<input type="number" #ContactProductRecommendation_HubRecommendationScore="ngModel" id="ContactProductRecommendation_HubRecommendationScore" class="form-control" [(ngModel)]="contactProductRecommendation.hubRecommendationScore" name="HubRecommendationScore"    />
+									<validation-messages [formCtrl]="ContactProductRecommendation_HubRecommendationScore"></validation-messages>
+								</div>
+					
+								<div class="my5">
+									<label class="form-label" for="ContactProductRecommendation_StoreRecommendationScore">{{l("StoreRecommendationScore")}}</label>
+									<input type="number" #ContactProductRecommendation_StoreRecommendationScore="ngModel" id="ContactProductRecommendation_StoreRecommendationScore" class="form-control" [(ngModel)]="contactProductRecommendation.storeRecommendationScore" name="StoreRecommendationScore"    />
+									<validation-messages [formCtrl]="ContactProductRecommendation_StoreRecommendationScore"></validation-messages>
+								</div>
+					
+								<div class="my5">
+									<label class="form-label" for="ContactProductRecommendation_ProductRecommendationScore">{{l("ProductRecommendationScore")}}</label>
+									<input type="number" #ContactProductRecommendation_ProductRecommendationScore="ngModel" id="ContactProductRecommendation_ProductRecommendationScore" class="form-control" [(ngModel)]="contactProductRecommendation.productRecommendationScore" name="ProductRecommendationScore"    />
+									<validation-messages [formCtrl]="ContactProductRecommendation_ProductRecommendationScore"></validation-messages>
+								</div>
+					
+								<div class="my5">
+									<label class="form-label" for="ContactProductRecommendation_ProductCategoryRecommendationScore">{{l("ProductCategoryRecommendationScore")}}</label>
+									<input type="number" #ContactProductRecommendation_ProductCategoryRecommendationScore="ngModel" id="ContactProductRecommendation_ProductCategoryRecommendationScore" class="form-control" [(ngModel)]="contactProductRecommendation.productCategoryRecommendationScore" name="ProductCategoryRecommendationScore"    />
+									<validation-messages [formCtrl]="ContactProductRecommendation_ProductCategoryRecommendationScore"></validation-messages>
+								</div>
+					
+								<div class="my5">
+									<label class="form-label" for="ContactProductRecommendation_JobRecommendationScore">{{l("JobRecommendationScore")}}</label>
+									<input type="number" #ContactProductRecommendation_JobRecommendationScore="ngModel" id="ContactProductRecommendation_JobRecommendationScore" class="form-control" [(ngModel)]="contactProductRecommendation.jobRecommendationScore" name="JobRecommendationScore"    />
+									<validation-messages [formCtrl]="ContactProductRecommendation_JobRecommendationScore"></validation-messages>
+								</div>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!contactProductRecommendationForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+<contactProductRecommendationUserLookupTableModal #contactProductRecommendationUserLookupTableModal (modalSave)="getNewUserId()"></contactProductRecommendationUserLookupTableModal>
+		 <contactProductRecommendationContactLookupTableModal #contactProductRecommendationContactLookupTableModal (modalSave)="getNewContactId()"></contactProductRecommendationContactLookupTableModal>
+		 <contactProductRecommendationHubLookupTableModal #contactProductRecommendationHubLookupTableModal (modalSave)="getNewHubId()"></contactProductRecommendationHubLookupTableModal>
+		 <contactProductRecommendationStoreLookupTableModal #contactProductRecommendationStoreLookupTableModal (modalSave)="getNewStoreId()"></contactProductRecommendationStoreLookupTableModal>
+		 <contactProductRecommendationProductLookupTableModal #contactProductRecommendationProductLookupTableModal (modalSave)="getNewProductId()"></contactProductRecommendationProductLookupTableModal>
+		 <contactProductRecommendationProductCategoryLookupTableModal #contactProductRecommendationProductCategoryLookupTableModal (modalSave)="getNewProductCategoryId()"></contactProductRecommendationProductCategoryLookupTableModal>
+		 <contactProductRecommendationJobLookupTableModal #contactProductRecommendationJobLookupTableModal (modalSave)="getNewJobId()"></contactProductRecommendationJobLookupTableModal>
+		 
+</div>

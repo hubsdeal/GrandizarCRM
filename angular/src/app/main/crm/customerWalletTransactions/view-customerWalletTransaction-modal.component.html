@@ -1,0 +1,64 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span>{{l("Details")}}</span>
+                </h4>               
+                
+                
+                 <button type="button" class="btn-close" (click)="close()" aria-label="Close" [disabled]="saving"></button>
+             
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="col-6 mb-3">
+                        <h6>{{l("BalanceBeforeTransaction")}} :</h6>
+                        {{ item.customerWalletTransaction.balanceBeforeTransaction }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("AddOrDeduct")}} :</h6>
+                        <div *ngIf="item.customerWalletTransaction.addOrDeduct" class="text-left"><i class="fa fa-check-circle text-success"
+                                title="True"></i></div>
+                        <div *ngIf="!item.customerWalletTransaction.addOrDeduct" class="text-left"><i class="fa fa-times-circle" title="False"></i></div>
+                    </div>                    <div class="col-6 mb-3">
+                        <h6>{{l("Amount")}} :</h6>
+                        {{ item.customerWalletTransaction.amount }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("TransactionDate")}} :</h6>
+                        {{ item.customerWalletTransaction.transactionDate |  luxonFormat:'yyyy-LL-dd HH:mm:ss'  }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("TransactionTime")}} :</h6>
+                        {{ item.customerWalletTransaction.transactionTime }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("CurrentBalanceAfterTransaction")}} :</h6>
+                        {{ item.customerWalletTransaction.currentBalanceAfterTransaction }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("CustomerWalletId")}} :</h6>
+                        {{ item.customerWalletTransaction.customerWalletId }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("WalletTransactionTypeId")}} :</h6>
+                        {{l( walletTransactionType[item.customerWalletTransaction.walletTransactionTypeId])}}
+                    </div>
+
+                    <div class="col-6 mb-3">
+                        <h6>({{l("Order")}}) {{l("InvoiceNumber")}} :</h6>
+                        {{item.orderInvoiceNumber}}
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button [disabled]="saving" type="button" class="btn btn-primary blue" (click)="close()">{{l("Close")}}</button>
+            </div>
+        </div>
+    </div>
+
+</div>

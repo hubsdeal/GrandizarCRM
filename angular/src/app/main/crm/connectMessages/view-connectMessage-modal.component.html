@@ -1,0 +1,99 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span>{{l("Details")}}</span>
+                </h4>               
+                
+                
+                 <button type="button" class="btn-close" (click)="close()" aria-label="Close" [disabled]="saving"></button>
+             
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="col-6 mb-3">
+                        <h6>{{l("From")}} :</h6>
+                        {{ item.connectMessage.from }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("To")}} :</h6>
+                        {{ item.connectMessage.to }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("Subject")}} :</h6>
+                        {{ item.connectMessage.subject }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("Body")}} :</h6>
+                        {{ item.connectMessage.body }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("SendOrReceive")}} :</h6>
+                        <div *ngIf="item.connectMessage.sendOrReceive" class="text-left"><i class="fa fa-check-circle text-success"
+                                title="True"></i></div>
+                        <div *ngIf="!item.connectMessage.sendOrReceive" class="text-left"><i class="fa fa-times-circle" title="False"></i></div>
+                    </div>                    <div class="col-6 mb-3">
+                        <h6>{{l("SendDate")}} :</h6>
+                        {{ item.connectMessage.sendDate |  luxonFormat:'yyyy-LL-dd HH:mm:ss'  }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("SendTime")}} :</h6>
+                        {{ item.connectMessage.sendTime }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("ViewDate")}} :</h6>
+                        {{ item.connectMessage.viewDate |  luxonFormat:'yyyy-LL-dd HH:mm:ss'  }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("ViewTime")}} :</h6>
+                        {{ item.connectMessage.viewTime }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("Viewed")}} :</h6>
+                        <div *ngIf="item.connectMessage.viewed" class="text-left"><i class="fa fa-check-circle text-success"
+                                title="True"></i></div>
+                        <div *ngIf="!item.connectMessage.viewed" class="text-left"><i class="fa fa-times-circle" title="False"></i></div>
+                    </div>                    <div class="col-6 mb-3">
+                        <h6>{{l("Clicked")}} :</h6>
+                        <div *ngIf="item.connectMessage.clicked" class="text-left"><i class="fa fa-check-circle text-success"
+                                title="True"></i></div>
+                        <div *ngIf="!item.connectMessage.clicked" class="text-left"><i class="fa fa-times-circle" title="False"></i></div>
+                    </div>                    <div class="col-6 mb-3">
+                        <h6>{{l("Notes")}} :</h6>
+                        {{ item.connectMessage.notes }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("SendNowOrScheduled")}} :</h6>
+                        <div *ngIf="item.connectMessage.sendNowOrScheduled" class="text-left"><i class="fa fa-check-circle text-success"
+                                title="True"></i></div>
+                        <div *ngIf="!item.connectMessage.sendNowOrScheduled" class="text-left"><i class="fa fa-times-circle" title="False"></i></div>
+                    </div>                    <div class="col-6 mb-3">
+                        <h6>{{l("ScheduleSendDateTime")}} :</h6>
+                        {{ item.connectMessage.scheduleSendDateTime |  luxonFormat:'yyyy-LL-dd HH:mm:ss'  }}
+                    </div>
+
+                    <div class="col-6 mb-3">
+                        <h6>({{l("ConnectChannel")}}) {{l("Name")}} :</h6>
+                        {{item.connectChannelName}}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{l("User")}}) {{l("Name")}} :</h6>
+                        {{item.userName}}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>({{l("Contact")}}) {{l("FullName")}} :</h6>
+                        {{item.contactFullName}}
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button [disabled]="saving" type="button" class="btn btn-primary blue" (click)="close()">{{l("Close")}}</button>
+            </div>
+        </div>
+    </div>
+
+</div>

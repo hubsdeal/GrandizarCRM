@@ -1,0 +1,82 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #orderDeliveryChangeCaptainForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="orderDeliveryChangeCaptain.id">{{l("EditOrderDeliveryChangeCaptain")}}</span>
+                        <span *ngIf="!orderDeliveryChangeCaptain.id">{{l("CreateNewOrderDeliveryChangeCaptain")}}</span>
+                    </h4>                    
+                    
+                    
+                 <button type="button" class="btn-close" (click)="close()" aria-label="Close" [disabled]="saving"></button>
+             
+                </div>
+                <div class="modal-body">
+                 
+
+
+					<div class="my-3">
+                        <label class="form-label" for="OrderDeliveryByCaptainOrderDeliveryRouteData">{{l("OrderDeliveryByCaptain")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="OrderDeliveryByCaptainOrderDeliveryRouteData" name="orderDeliveryByCaptainOrderDeliveryRouteData" [(ngModel)]="orderDeliveryByCaptainOrderDeliveryRouteData" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectOrderDeliveryByCaptainModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setOrderDeliveryByCaptainIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="orderDeliveryChangeCaptain.orderDeliveryByCaptainId" [(ngModel)]="orderDeliveryChangeCaptain.orderDeliveryByCaptainId" type="text"  hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="EmployeeName">{{l("Employee")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="EmployeeName" name="employeeName" [(ngModel)]="employeeName" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectEmployeeModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setNewDriverEmployeeCaptainIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="orderDeliveryChangeCaptain.newDriverEmployeeCaptainId" [(ngModel)]="orderDeliveryChangeCaptain.newDriverEmployeeCaptainId" type="text"  hidden>
+                        
+					<div class="my-3">
+                        <label class="form-label" for="EmployeeName2">{{l("Employee")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="EmployeeName2" name="employeeName2" [(ngModel)]="employeeName2" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectEmployeeModal2()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setFirstEmployeeCaptainIDNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="orderDeliveryChangeCaptain.firstEmployeeCaptainID " [(ngModel)]="orderDeliveryChangeCaptain.firstEmployeeCaptainID " type="text"  hidden>
+                        
+
+
+								<div class="my-3">
+									<label class="form-label" for="OrderDeliveryChangeCaptain_AcceptedOrderDateTime">{{l("AcceptedOrderDateTime")}}</label>
+									 <input class="form-control m-input" #OrderDeliveryChangeCaptain_AcceptedOrderDateTime type="datetime" bsDatepicker  datePickerLuxonModifier  [(date)]="orderDeliveryChangeCaptain.acceptedOrderDateTime" id="OrderDeliveryChangeCaptain_AcceptedOrderDateTime" name="OrderDeliveryChangeCaptain_AcceptedOrderDateTime">
+									<validation-messages [formCtrl]="OrderDeliveryChangeCaptain_AcceptedOrderDateTime"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="OrderDeliveryChangeCaptain_RejectedOrderDateTime">{{l("RejectedOrderDateTime")}}</label>
+									 <input class="form-control m-input" #OrderDeliveryChangeCaptain_RejectedOrderDateTime type="datetime" bsDatepicker  datePickerLuxonModifier  [(date)]="orderDeliveryChangeCaptain.rejectedOrderDateTime" id="OrderDeliveryChangeCaptain_RejectedOrderDateTime" name="OrderDeliveryChangeCaptain_RejectedOrderDateTime">
+									<validation-messages [formCtrl]="OrderDeliveryChangeCaptain_RejectedOrderDateTime"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="OrderDeliveryChangeCaptain_ReasonForChangeCaptain">{{l("ReasonForChangeCaptain")}}</label>
+									<input type="text" #OrderDeliveryChangeCaptain_ReasonForChangeCaptain="ngModel" id="OrderDeliveryChangeCaptain_ReasonForChangeCaptain" class="form-control" [(ngModel)]="orderDeliveryChangeCaptain.reasonForChangeCaptain" name="ReasonForChangeCaptain"    />
+								    <validation-messages [formCtrl]="OrderDeliveryChangeCaptain_ReasonForChangeCaptain"></validation-messages>
+								</div>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!orderDeliveryChangeCaptainForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+<orderDeliveryChangeCaptainOrderDeliveryByCaptainLookupTableModal #orderDeliveryChangeCaptainOrderDeliveryByCaptainLookupTableModal (modalSave)="getNewOrderDeliveryByCaptainId()"></orderDeliveryChangeCaptainOrderDeliveryByCaptainLookupTableModal>
+		 <orderDeliveryChangeCaptainEmployeeLookupTableModal #orderDeliveryChangeCaptainEmployeeLookupTableModal (modalSave)="getNewNewDriverEmployeeCaptainId()"></orderDeliveryChangeCaptainEmployeeLookupTableModal>
+		 <orderDeliveryChangeCaptainEmployeeLookupTableModal #orderDeliveryChangeCaptainEmployeeLookupTableModal2 (modalSave)="getNewFirstEmployeeCaptainID ()"></orderDeliveryChangeCaptainEmployeeLookupTableModal>
+		 
+</div>

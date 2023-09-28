@@ -1,0 +1,83 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #jobReferralFeeSplitPolicyForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="jobReferralFeeSplitPolicy.id">{{l("EditJobReferralFeeSplitPolicy")}}</span>
+                        <span *ngIf="!jobReferralFeeSplitPolicy.id">{{l("CreateNewJobReferralFeeSplitPolicy")}}</span>
+                    </h4>                    
+                    
+                    
+                 <button type="button" class="btn-close" (click)="close()" aria-label="Close" [disabled]="saving"></button>
+             
+                </div>
+                <div class="modal-body">
+                 
+
+
+
+
+								<div class="my-3">
+									<label class="form-label" for="JobReferralFeeSplitPolicy_TitleName">{{l("TitleName")}}</label>
+									<input type="text" #JobReferralFeeSplitPolicy_TitleName="ngModel" id="JobReferralFeeSplitPolicy_TitleName" class="form-control" [(ngModel)]="jobReferralFeeSplitPolicy.titleName" name="TitleName"   minlength="1"  maxlength="256" />
+								    <validation-messages [formCtrl]="JobReferralFeeSplitPolicy_TitleName"></validation-messages>
+								</div>
+					
+								<div class="my5">
+									<label class="form-label" for="JobReferralFeeSplitPolicy_ApplicantAmountPercentage">{{l("ApplicantAmountPercentage")}}</label>
+									<input type="number" #JobReferralFeeSplitPolicy_ApplicantAmountPercentage="ngModel" id="JobReferralFeeSplitPolicy_ApplicantAmountPercentage" class="form-control" [(ngModel)]="jobReferralFeeSplitPolicy.applicantAmountPercentage" name="ApplicantAmountPercentage"    />
+									<validation-messages [formCtrl]="JobReferralFeeSplitPolicy_ApplicantAmountPercentage"></validation-messages>
+								</div>
+					
+								<div class="my5">
+									<label class="form-label" for="JobReferralFeeSplitPolicy_ReferrerPercentage">{{l("ReferrerPercentage")}}</label>
+									<input type="number" #JobReferralFeeSplitPolicy_ReferrerPercentage="ngModel" id="JobReferralFeeSplitPolicy_ReferrerPercentage" class="form-control" [(ngModel)]="jobReferralFeeSplitPolicy.referrerPercentage" name="ReferrerPercentage"    />
+									<validation-messages [formCtrl]="JobReferralFeeSplitPolicy_ReferrerPercentage"></validation-messages>
+								</div>
+					
+								<div class="my5">
+									<label class="form-label" for="JobReferralFeeSplitPolicy_HubPartnerPercentage">{{l("HubPartnerPercentage")}}</label>
+									<input type="number" #JobReferralFeeSplitPolicy_HubPartnerPercentage="ngModel" id="JobReferralFeeSplitPolicy_HubPartnerPercentage" class="form-control" [(ngModel)]="jobReferralFeeSplitPolicy.hubPartnerPercentage" name="HubPartnerPercentage"    />
+									<validation-messages [formCtrl]="JobReferralFeeSplitPolicy_HubPartnerPercentage"></validation-messages>
+								</div>
+					
+								<div class="my5">
+									<label class="form-label" for="JobReferralFeeSplitPolicy_EmployeePercentage">{{l("EmployeePercentage")}}</label>
+									<input type="number" #JobReferralFeeSplitPolicy_EmployeePercentage="ngModel" id="JobReferralFeeSplitPolicy_EmployeePercentage" class="form-control" [(ngModel)]="jobReferralFeeSplitPolicy.employeePercentage" name="EmployeePercentage"    />
+									<validation-messages [formCtrl]="JobReferralFeeSplitPolicy_EmployeePercentage"></validation-messages>
+								</div>
+					
+								<div class="my5">
+									<label class="form-label" for="JobReferralFeeSplitPolicy_PlatformPercentage">{{l("PlatformPercentage")}}</label>
+									<input type="number" #JobReferralFeeSplitPolicy_PlatformPercentage="ngModel" id="JobReferralFeeSplitPolicy_PlatformPercentage" class="form-control" [(ngModel)]="jobReferralFeeSplitPolicy.platformPercentage" name="PlatformPercentage"    />
+									<validation-messages [formCtrl]="JobReferralFeeSplitPolicy_PlatformPercentage"></validation-messages>
+								</div>
+					
+								<br/>
+								<label class="form-check form-check-custom form-check-solid">
+                                    <input
+                                        id="JobReferralFeeSplitPolicy_IsActive" 
+                                        #JobReferralFeeSplitPolicy_IsActive="ngModel"
+                                        name="IsActive" 
+                                        [(ngModel)]="jobReferralFeeSplitPolicy.isActive"
+                                        type="checkbox"
+                                        class="form-check-input"
+                                    />
+                                    <span class="form-check-label">
+                                        {{l("IsActive")}}
+                                    </span>
+                                </label>
+                                <validation-messages [formCtrl]="JobReferralFeeSplitPolicy_IsActive"></validation-messages>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!jobReferralFeeSplitPolicyForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
