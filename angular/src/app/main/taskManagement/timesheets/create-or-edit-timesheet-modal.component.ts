@@ -1,11 +1,11 @@
-﻿import { Component, ViewChild, Injector, Output, EventEmitter, OnInit, ElementRef} from '@angular/core';
+﻿import { Component, ViewChild, Injector, Output, EventEmitter, OnInit, ElementRef } from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs/operators';
-import { TimesheetsServiceProxy, CreateOrEditTimesheetDto } from '@shared/service-proxies/service-proxies';
+import { TimesheetsServiceProxy, CreateOrEditTimesheetDto, MasterTagsServiceProxy } from '@shared/service-proxies/service-proxies';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { DateTime } from 'luxon';
 
-             import { DateTimeService } from '@app/shared/common/timing/date-time.service';
+import { DateTimeService } from '@app/shared/common/timing/date-time.service';
 import { TimesheetEmployeeLookupTableModalComponent } from './timesheet-employee-lookup-table-modal.component';
 import { TimesheetStoreLookupTableModalComponent } from './timesheet-store-lookup-table-modal.component';
 import { TimesheetBusinessLookupTableModalComponent } from './timesheet-business-lookup-table-modal.component';
@@ -17,8 +17,8 @@ import { TimesheetJobLookupTableModalComponent } from './timesheet-job-lookup-ta
     selector: 'createOrEditTimesheetModal',
     templateUrl: './create-or-edit-timesheet-modal.component.html'
 })
-export class CreateOrEditTimesheetModalComponent extends AppComponentBase implements OnInit{
-   
+export class CreateOrEditTimesheetModalComponent extends AppComponentBase implements OnInit {
+
     @ViewChild('createOrEditModal', { static: true }) modal: ModalDirective;
     @ViewChild('timesheetEmployeeLookupTableModal', { static: true }) timesheetEmployeeLookupTableModal: TimesheetEmployeeLookupTableModalComponent;
     @ViewChild('timesheetStoreLookupTableModal', { static: true }) timesheetStoreLookupTableModal: TimesheetStoreLookupTableModalComponent;
@@ -38,19 +38,22 @@ export class CreateOrEditTimesheetModalComponent extends AppComponentBase implem
     businessName = '';
     jobTitle = '';
     employeeName2 = '';
-
-
-
+    PaymentOptions: any = [];
+    workDayStatus:any =[];
+    selectedStatus:any=[];
     constructor(
         injector: Injector,
         private _timesheetsServiceProxy: TimesheetsServiceProxy,
-             private _dateTimeService: DateTimeService
+        private _dateTimeService: DateTimeService,
+        private _masterTag: MasterTagsServiceProxy
     ) {
         super(injector);
     }
-    
+
     show(timesheetId?: number): void {
-    
+        this._masterTag.getAll('', '','','',undefined,undefined,'WorkDayStatus',undefined,'', 0, 1000).subscribe(result => {
+            this.workDayStatus = result.items;
+        });
 
         if (!timesheetId) {
             this.timesheet = new CreateOrEditTimesheetDto();
@@ -61,7 +64,7 @@ export class CreateOrEditTimesheetModalComponent extends AppComponentBase implem
             this.businessName = '';
             this.jobTitle = '';
             this.employeeName2 = '';
-
+            this.timesheet.paymentPaid = true;
 
             this.active = true;
             this.modal.show();
@@ -80,22 +83,22 @@ export class CreateOrEditTimesheetModalComponent extends AppComponentBase implem
                 this.modal.show();
             });
         }
-        
-        
+        this.PaymentOptions = [{ label: 'Paid', value: true }, { label: 'Unpaid', value: false }];
+
     }
 
     save(): void {
-            this.saving = true;
-            
-			
-			
-            this._timesheetsServiceProxy.createOrEdit(this.timesheet)
-             .pipe(finalize(() => { this.saving = false;}))
-             .subscribe(() => {
+        this.saving = true;
+
+
+
+        this._timesheetsServiceProxy.createOrEdit(this.timesheet)
+            .pipe(finalize(() => { this.saving = false; }))
+            .subscribe(() => {
                 this.notify.info(this.l('SavedSuccessfully'));
                 this.close();
                 this.modalSave.emit(null);
-             });
+            });
     }
 
     openSelectEmployeeModal() {
@@ -178,15 +181,27 @@ export class CreateOrEditTimesheetModalComponent extends AppComponentBase implem
 
 
 
+    onChangeStatus(event: any) {
+debugger;
+        this.selectedStatus = event.value;
+        if (event.value) {
+            this.timesheet.workDayStatusId = event.value.masterTag.id;
+        }
+        else {
+            this.timesheet.workDayStatusId = 0;
+        }
 
+        // this.getTaskEvents();
+
+    }
 
 
     close(): void {
         this.active = false;
         this.modal.hide();
     }
-    
-     ngOnInit(): void {
-        
-     }    
+
+    ngOnInit(): void {
+
+    }
 }

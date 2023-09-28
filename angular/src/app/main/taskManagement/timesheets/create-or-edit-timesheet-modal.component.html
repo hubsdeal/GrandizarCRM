@@ -148,15 +148,21 @@
                         <validation-messages [formCtrl]="Timesheet_ManagerRemarks"></validation-messages>
                     </div>
 
-                    <br />
-                    <label class="form-check form-check-custom form-check-solid">
-                        <input id="Timesheet_PaymentPaid" #Timesheet_PaymentPaid="ngModel" name="PaymentPaid"
+                    <div class="my-3 select_button_custom">
+                        <label class="form-label" for="Timesheet_ManagerRemarks">{{l("Is Paid?")}}</label>
+                        <p-selectButton [options]="PaymentOptions" name="PaymentPaid" id="PaymentPaid"
+                            [(ngModel)]="timesheet.paymentPaid" optionLabel="label" optionValue="value"></p-selectButton>
+                    <!-- <validation-messages [formCtrl]="Timesheet_PaymentPaid"></validation-messages> -->
+                    </div>
+                    <!-- <label class="form-check form-check-custom form-check-solid">
+                       <input id="Timesheet_PaymentPaid" #Timesheet_PaymentPaid="ngModel" name="PaymentPaid"
                             [(ngModel)]="timesheet.paymentPaid" type="checkbox" class="form-check-input" />
                         <span class="form-check-label">
                             {{l("PaymentPaid")}}
                         </span>
-                    </label>
-                    <validation-messages [formCtrl]="Timesheet_PaymentPaid"></validation-messages>
+
+                    </label> -->
+                   
 
                     <!-- <div class="my-3">
                         <label class="form-label" for="Timesheet_ClockInIpAddress">{{l("ClockInIpAddress")}}</label>
@@ -184,8 +190,18 @@
 
                     <div class="my5">
                         <label class="form-label" for="Timesheet_WorkDayStatusId">{{l("WorkDayStatusId")}}</label>
-                        <input type="number" #Timesheet_WorkDayStatusId="ngModel" id="Timesheet_WorkDayStatusId"
-                            class="form-control" [(ngModel)]="timesheet.workDayStatusId" name="WorkDayStatusId" />
+                        <!-- <input type="number" #Timesheet_WorkDayStatusId="ngModel" id="Timesheet_WorkDayStatusId"
+                            class="form-control" [(ngModel)]="timesheet.workDayStatusId" name="WorkDayStatusId" /> -->
+                            <!-- <p-multiSelect #Timesheet_WorkDayStatusId name="Timesheet_WorkDayStatusId" id="Timesheet_WorkDayStatusId" [options]="workDayStatus"
+                            [(ngModel)]="timesheet.workDayStatusId" optionLabel="masterTag.name" [virtualScroll]="true"
+                            [filter]="true" [itemSize]="34" [maxSelectedLabels]="2"
+                            class="multiselect-custom-virtual-scroll" (onChange)="onChangeStatus($event)">
+                        </p-multiSelect> -->
+
+                        <p-dropdown #Timesheet_WorkDayStatusId="ngModel" [options]="workDayStatus" [filter]="true" [virtualScroll]="true"
+                        placeholder="Select Day Status" [itemSize]="30" name="WorkDayStatusId"
+                        optionLabel="masterTag.name" optionId="masterTag.id" [(ngModel)]="selectedStatus" filterBy="masterTag.name"
+                        [style]="{ width: '100%' }" (onChange)="onChangeStatus($event)"></p-dropdown>
                         <validation-messages [formCtrl]="Timesheet_WorkDayStatusId"></validation-messages>
                     </div>
 

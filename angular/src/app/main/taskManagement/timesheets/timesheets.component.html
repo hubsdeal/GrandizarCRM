@@ -314,31 +314,7 @@
                             </ng-template>
                             <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
                                 <tr>
-                                    <td style="width: 130px"
-                                        [hidden]="!isGrantedAny('Pages.Timesheets.Edit', 'Pages.Timesheets.Delete')">
-                                        <div class="btn-group dropdown" dropdown container="body">
-                                            <button class="dropdown-toggle btn btn-sm btn-primary" dropdownToggle>
-                                                <i class="fa fa-cog"></i><span class="caret"></span> {{l("Actions")}}
-                                            </button>
-                                            <ul class="dropdown-menu" *dropdownMenu>
-                                                <li>
-                                                    <a href="javascript:;" class="dropdown-item"
-                                                        (click)="viewTimesheetModal.show(record)">{{l('View')}}</a>
-                                                </li>
-                                                <li>
-                                                    <a href="javascript:;"
-                                                        *ngIf="permission.isGranted('Pages.Timesheets.Edit')"
-                                                        class="dropdown-item"
-                                                        (click)="createOrEditTimesheetModal.show(record.timesheet.id)">{{l('Edit')}}</a>
-                                                </li>
-                                                <li>
-                                                    <a class="dropdown-item" href="javascript:;"
-                                                        *ngIf="permission.isGranted('Pages.Timesheets.Delete')"
-                                                        (click)="deleteTimesheet(record.timesheet)">{{l('Delete')}}</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </td>
+                                   
                                     <td style="width:150px">
                                         <span class="p-column-title"> {{l('Name')}}</span>
                                         {{record.employeeName}}
@@ -393,10 +369,16 @@
                                     </td> -->
                                     <td style="width:150px">
                                         <span class="p-column-title"> {{l('PaymentPaid')}}</span>
-                                        <div *ngIf="record.timesheet.paymentPaid" class="text-center"><i
+                                        <!-- <div *ngIf="record.timesheet.paymentPaid" class="text-center"><i
                                                 class="fa fa-check-circle text-success" title="True"></i></div>
                                         <div *ngIf="!record.timesheet.paymentPaid" class="text-center"><i
-                                                class="fa fa-times-circle" title="False"></i></div>
+                                                class="fa fa-times-circle" title="False"></i></div> -->
+                                                <div *ngIf="record.timesheet.paymentPaid" class="text-center">
+                                                    <span class="badge badge-success badge-sm">High</span>
+                                                </div>
+                                                <div *ngIf="!record.timesheet.paymentPaid" class="text-center">
+                                                    <span class="badge badge-warning badge-sm">Unpaid</span>
+                                                </div>
                                     </td>
                                     <!-- <td style="width:150px">
                                         <span class="p-column-title"> {{l('ClockInIpAddress')}}</span>
@@ -412,9 +394,39 @@
                                     </td> -->
                                     <td style="width:150px">
                                         <span class="p-column-title"> {{l('WorkDayStatusId')}}</span>
-                                        {{record.timesheet.workDayStatusId}}
+                                        <!-- {{record.timesheet.workDayStatusId}} -->
+                                        <div *ngIf="record.masterTagName" class="text-center">
+                                            <span class="badge badge-primary badge-sm">{{record.masterTagName}}</span>
+                                        </div>
+                                        <div *ngIf="!record.masterTagName" class="text-center">
+                                            <!-- <span class="badge badge-warning badge-sm">-</span> -->
+                                        </div>
                                     </td>
-
+                                    <td style="width: 130px"
+                                    [hidden]="!isGrantedAny('Pages.Timesheets.Edit', 'Pages.Timesheets.Delete')">
+                                    <div class="btn-group dropdown" dropdown container="body">
+                                        <button class="dropdown-toggle btn btn-sm btn-primary" dropdownToggle>
+                                            <i class="fa fa-cog"></i><span class="caret"></span> {{l("Actions")}}
+                                        </button>
+                                        <ul class="dropdown-menu" *dropdownMenu>
+                                            <li>
+                                                <a href="javascript:;" class="dropdown-item"
+                                                    (click)="viewTimesheetModal.show(record)">{{l('View')}}</a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:;"
+                                                    *ngIf="permission.isGranted('Pages.Timesheets.Edit')"
+                                                    class="dropdown-item"
+                                                    (click)="createOrEditTimesheetModal.show(record.timesheet.id)">{{l('Edit')}}</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="javascript:;"
+                                                    *ngIf="permission.isGranted('Pages.Timesheets.Delete')"
+                                                    (click)="deleteTimesheet(record.timesheet)">{{l('Delete')}}</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </td>
                                 </tr>
 
                             </ng-template>
