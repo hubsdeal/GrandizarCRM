@@ -367,14 +367,14 @@
                                         <span class="p-column-title"> {{l('ManagerRemarks')}}</span>
                                         {{record.timesheet.managerRemarks}}
                                     </td> -->
-                                    <td style="width:150px">
+                                    <td style="width:80px" style="text-align: left;">
                                         <span class="p-column-title"> {{l('PaymentPaid')}}</span>
                                         <!-- <div *ngIf="record.timesheet.paymentPaid" class="text-center"><i
                                                 class="fa fa-check-circle text-success" title="True"></i></div>
                                         <div *ngIf="!record.timesheet.paymentPaid" class="text-center"><i
                                                 class="fa fa-times-circle" title="False"></i></div> -->
                                                 <div *ngIf="record.timesheet.paymentPaid" class="text-center">
-                                                    <span class="badge badge-success badge-sm">High</span>
+                                                    <span class="badge badge-success badge-sm">Paid</span>
                                                 </div>
                                                 <div *ngIf="!record.timesheet.paymentPaid" class="text-center">
                                                     <span class="badge badge-warning badge-sm">Unpaid</span>

@@ -18,7 +18,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="my-5 p_filter" *ngIf="!isFromTaskLibrary">
-                        <label class="form-label" for="team">{{ l('Select from Template') }}</label>
+                        <label class="form-label" for="team">{{ l('Task Library') }}</label>
                         <p-dropdown [options]="allTemplate" [filter]="true" [virtualScroll]="true"
                             placeholder="Select from Template" [itemSize]="30" name="displayName"
                             optionLabel="displayName" optionId="id" [(ngModel)]="selectedTemplate" filterBy="displayName"
@@ -33,7 +33,7 @@
                     <div class="my-5">
                         <label class="form-label" for="TaskEvent_Description">{{ l('Description') }}</label>
                         <p-editor id="description" name="description" [(ngModel)]="taskEvent.description"
-                            ngDefaultControl [style]="{ height: '300px' }" placeholder="'Type here...'"></p-editor>
+                            ngDefaultControl [style]="{ height: '300px' }" placeholder=""></p-editor>
                     </div>
 
                     <div class="my-5">
@@ -74,12 +74,23 @@
                             [(ngModel)]="taskEvent.status" optionLabel="label" optionValue="value"></p-selectButton>
                     </div> -->
 
+<div class="row">
+    <div class="col-md-6">
+        <div class="my-5 select_button_custom">
+            <label class="form-label" for="TaskStatusName">{{ l('Priority') }}</label>
+            <p-selectButton [options]="priorityOptions" name="priorityOptions" id="priorityOptions"
+                [(ngModel)]="taskEvent.priority" optionLabel="label" optionValue="value"></p-selectButton>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="my-5 select_button_custom">
+            <label class="form-label" for="TaskStatusName">{{ l('Task Or Event') }}</label>
+            <p-selectButton [options]="taskOptions" name="taskOrEvent" id="taskOrEvent"
+                [(ngModel)]="taskEvent.taskOrEvent" optionLabel="label" optionValue="value"></p-selectButton>
+        </div>
+    </div>
+</div>
 
-                    <div class="my-5 select_button_custom">
-                        <label class="form-label" for="TaskStatusName">{{ l('Priority') }}</label>
-                        <p-selectButton [options]="priorityOptions" name="priorityOptions" id="priorityOptions"
-                            [(ngModel)]="taskEvent.priority" optionLabel="label" optionValue="value"></p-selectButton>
-                    </div>
 
                     <!-- <br />
                     <label class="form-check form-check-custom form-check-solid">

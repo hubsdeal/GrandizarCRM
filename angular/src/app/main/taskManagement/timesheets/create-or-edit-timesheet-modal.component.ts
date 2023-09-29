@@ -182,7 +182,6 @@ export class CreateOrEditTimesheetModalComponent extends AppComponentBase implem
 
 
     onChangeStatus(event: any) {
-debugger;
         this.selectedStatus = event.value;
         if (event.value) {
             this.timesheet.workDayStatusId = event.value.masterTag.id;

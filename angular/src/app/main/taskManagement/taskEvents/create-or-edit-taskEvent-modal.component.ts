@@ -42,7 +42,7 @@ export class CreateOrEditTaskEventModalComponent extends AppComponentBase implem
 
     taskStatusOptions: SelectItem[];
     priorityOptions: SelectItem[];
-
+    taskOptions: SelectItem[];
     selectedTemplate:any;
     allTemplate:any[]=[]
     //[{id:1,displayName:"template 1"},{id:2,displayName:"template 2"},{id:3,displayName:"template 3"}]
@@ -83,6 +83,7 @@ export class CreateOrEditTaskEventModalComponent extends AppComponentBase implem
             //this.taskEvent.status = false;
             this.taskEvent.priority = false;
             this.active = true;
+            this.taskEvent.taskOrEvent = true
             this.taskEvent.template=this.isFromTaskLibrary;
             this.modal.show();
         } else {
@@ -100,6 +101,7 @@ export class CreateOrEditTaskEventModalComponent extends AppComponentBase implem
         });
         this.taskStatusOptions = [{ label: 'Completed', value: true }, { label: 'Open', value: false }];
         this.priorityOptions = [{ label: 'High', value: true }, { label: 'Low', value: false }];
+        this.taskOptions = [{ label: 'Task', value: true }, { label: 'Event', value: false }];
         this.getTempleteList()
     }
 
