@@ -285,7 +285,6 @@ export class HubDashboardComponent extends AppComponentBase implements OnInit, A
     // } catch (error) {
     //   console.error('Error:', error);
     // }
-    const storeName = this.hub.name;
     if (this.selectedCountry && this.selectedState && this.selectedCity && this.selectedCounty) {
       this.chatGPTPromt = `Give me only the Latitude and longitude for 
     Country: ${this.selectedCountry.displayName}, 
@@ -310,7 +309,7 @@ export class HubDashboardComponent extends AppComponentBase implements OnInit, A
     as json format as Key latitude and longitude`;
     }
 
-    var modalTitle = `AI Text Generator - Store ${fieldName}`;
+    var modalTitle = `AI Text Generator - Hub ${fieldName}`;
     const dialogRef = this.dialog.open(ChatGptResponseModalComponent, {
       data: { promtFromAnotherComponent: this.chatGPTPromt, feildName: fieldName, modalTitle: modalTitle },
       width: '1100px',

@@ -15,6 +15,8 @@ import { DateTimeService } from '@app/shared/common/timing/date-time.service';
 import { SelectItem } from 'primeng/api';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
 import { TaskEventsLookupTableModalComponent } from './task-events-lookup-table-modal/task-events-lookup-table-modal.component';
+import { MatDialog } from '@angular/material/dialog';
+import { ChatGptResponseModalComponent } from '@app/shared/chat-gpt-response-modal/chat-gpt-response-modal.component';
 
 
 @Component({
@@ -37,40 +39,45 @@ export class CreateOrEditTaskEventModalComponent extends AppComponentBase implem
     taskEvent: CreateOrEditTaskEventDto = new CreateOrEditTaskEventDto();
 
     taskStatusName = '';
-    isFromTaskLibrary:boolean=false
+    isFromTaskLibrary: boolean = false
     allTaskStatuss: TaskEventTaskStatusLookupTableDto[];
 
     taskStatusOptions: SelectItem[];
     priorityOptions: SelectItem[];
     taskOptions: SelectItem[];
-    selectedTemplate:any;
-    allTemplate:any[]=[]
+    selectedTemplate: any;
+    allTemplate: any[] = []
     //[{id:1,displayName:"template 1"},{id:2,displayName:"template 2"},{id:3,displayName:"template 3"}]
 
-    selectedTeam:any;
-    allTeams:any[];
+    selectedTeam: any;
+    allTeams: any[];
     //=[{id:1,displayName:"Team 1"},{id:2,displayName:"Team 2"},{id:3,displayName:"Team 3"}]
 
-    selectedTag:any;
-    allTags:any[]=[{id:1,displayName:"Tag 1"},{id:2,displayName:"Tag 2"},{id:3,displayName:"Tag 3"}]
+    selectedTag: any;
+    allTags: any[] = [{ id: 1, displayName: "Tag 1" }, { id: 2, displayName: "Tag 2" }, { id: 3, displayName: "Tag 3" }]
 
     employeeList: TaskTeamEmployeeLookupTableDto[] = [];
     selectedEmployees: TaskTeamEmployeeLookupTableDto[] = [];
 
-    taskEventId:number;
-    taskEventName:string;
+    taskEventId: number;
+    taskEventName: string;
+    taskDescription: any;
+    isSidebarVisible = false;
+    modalTitle: string;
+    fieldName: string;
 
     constructor(
         injector: Injector,
         private _taskEventsServiceProxy: TaskEventsServiceProxy,
         private _taskTeamsServiceProxy: TaskTeamsServiceProxy,
+        private dialog: MatDialog,
         private _dateTimeService: DateTimeService
     ) {
         super(injector);
     }
 
     show(taskEventId?: number): void {
-        this._taskTeamsServiceProxy.getAllEmployeeForLookupTable('','',0,1000).subscribe(result => {
+        this._taskTeamsServiceProxy.getAllEmployeeForLookupTable('', '', 0, 1000).subscribe(result => {
             this.employeeList = result.items;
         });
         if (!taskEventId) {
@@ -79,12 +86,12 @@ export class CreateOrEditTaskEventModalComponent extends AppComponentBase implem
             this.taskEvent.eventDate = this._dateTimeService.getStartOfDay();
             this.taskEvent.endDate = this._dateTimeService.getStartOfDay();
             this.taskStatusName = '';
-            this.taskEvent.completionPercentage =0;
+            this.taskEvent.completionPercentage = 0;
             //this.taskEvent.status = false;
             this.taskEvent.priority = false;
             this.active = true;
             this.taskEvent.taskOrEvent = true
-            this.taskEvent.template=this.isFromTaskLibrary;
+            this.taskEvent.template = this.isFromTaskLibrary;
             this.modal.show();
         } else {
             this._taskEventsServiceProxy.getTaskEventForEdit(taskEventId).subscribe((result) => {
@@ -122,7 +129,7 @@ export class CreateOrEditTaskEventModalComponent extends AppComponentBase implem
             });
     }
 
-   
+
     close(): void {
         this.active = false;
         this.modal.hide();
@@ -141,14 +148,14 @@ export class CreateOrEditTaskEventModalComponent extends AppComponentBase implem
         this.taskEvent.endTime = value;
     }
     getTempleteList() {
-        this._taskEventsServiceProxy.getAllTaskTemplateForDropdown().subscribe(result=>{
+        this._taskEventsServiceProxy.getAllTaskTemplateForDropdown().subscribe(result => {
             this.allTemplate = result;
-       });
+        });
     }
     getTeamList() {
-        this._taskTeamsServiceProxy.getTaskTeamForDropdown().subscribe(result=>{
+        this._taskTeamsServiceProxy.getTaskTeamForDropdown().subscribe(result => {
             this.allTeams = result;
-       });
+        });
     }
     onTemplateSelect(event) {
         // console.log(event);
@@ -161,10 +168,10 @@ export class CreateOrEditTaskEventModalComponent extends AppComponentBase implem
     }
     onEmployeeSelect(event: any) {
         if (event) {
-            let index =this.taskEvent.teams?this.taskEvent.teams.findIndex(x => x.id == event.itemValue.id):-1;
-            if(index<0){
+            let index = this.taskEvent.teams ? this.taskEvent.teams.findIndex(x => x.id == event.itemValue.id) : -1;
+            if (index < 0) {
                 this.taskEvent.teams = event.value;
-            }else if(index>=0 && this.taskEvent.id){
+            } else if (index >= 0 && this.taskEvent.id) {
                 // this._taskTeamsServiceProxy.deleteByTask(this.taskEvent.id,event.itemValue.id).subscribe(result=>{
                 //     this.taskEvent.teams.splice(index, 1);
                 // });
@@ -176,10 +183,10 @@ export class CreateOrEditTaskEventModalComponent extends AppComponentBase implem
 
         // }
     }
-    saveAsLibararyEvent(){
+    saveAsLibararyEvent() {
         this.taskEvent.template = !this.taskEvent.template
     }
-    getcompletionPercentage(event){
+    getcompletionPercentage(event) {
         console.log(event);
     }
 
@@ -197,5 +204,24 @@ export class CreateOrEditTaskEventModalComponent extends AppComponentBase implem
     setTaskEventIdNull() {
         this.taskEventId = null;
         this.taskEventName = '';
+    }
+
+
+    toggleSidebar(fieldName: string) {
+        if (this.taskEvent.name) {
+            const taskName = this.taskEvent.name;
+            this.fieldName = fieldName;
+            this.taskDescription = `Write a ${fieldName} for a task where task title is ${taskName}`;
+            this.modalTitle = `AI Task Description Generator`;
+            this.isSidebarVisible = !this.isSidebarVisible;
+
+        } else {
+            this.notify.warn(this.l('Please Enter task name to Generate the description'));
+        }
+    }
+    onResponseTextInserted(responseText: string) {
+        if(responseText){
+            this.taskEvent.description=responseText;
+        }
     }
 }

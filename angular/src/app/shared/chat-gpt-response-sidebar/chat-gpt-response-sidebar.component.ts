@@ -1,47 +1,39 @@
-import { Component, Inject, Injector, OnInit } from '@angular/core';
-import { ResponseModel } from './models/gpt-response';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Component, EventEmitter, Injector, Input, OnInit, Output } from '@angular/core';
+import { AppComponentBase } from '@shared/common/app-component-base';
+import { ResponseModel } from '../chat-gpt-response-modal/models/gpt-response';
 import { Configuration, OpenAIApi } from 'openai';
 import { environment } from 'environments/environment';
-import { AppComponentBase } from '@shared/common/app-component-base';
 
 @Component({
-  selector: 'app-chat-gpt-response-modal',
-  templateUrl: './chat-gpt-response-modal.component.html',
-  styleUrls: ['./chat-gpt-response-modal.component.scss']
+  selector: 'app-chat-gpt-response-sidebar',
+  templateUrl: './chat-gpt-response-sidebar.component.html',
+  styleUrls: ['./chat-gpt-response-sidebar.component.scss']
 })
-export class ChatGptResponseModalComponent extends AppComponentBase implements OnInit {
+export class ChatGptResponseSidebarComponent extends AppComponentBase implements OnInit {
 
   response!: ResponseModel | undefined;
   showSpinner = false;
-  promptText: any;
+  @Input() sidebarVisible: boolean;
+  @Input() taskName: any;
+  @Input() promt: any;
+  @Input() fieldName: any;
+  @Input() modalTitle: any;
   responseText: any;
-  feildName: any;
-  modalTitle: any;
+  @Output() sidebarVisibleChange = new EventEmitter<boolean>();
+
+
+  @Output() responseTextInserted = new EventEmitter<string>();
   constructor(
     injector: Injector,
-    public dialogRef: MatDialogRef<ChatGptResponseModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { promtFromAnotherComponent: string, feildName: string, modalTitle: string }) {
+  ) {
     super(injector);
-    if (this.data.promtFromAnotherComponent) {
-      this.promptText = this.data.promtFromAnotherComponent;
-    }
-    if (this.data.feildName) {
-      this.feildName = this.data.feildName
-    }
-    if (this.data.modalTitle) {
-      this.modalTitle = this.data.modalTitle
-    }
   }
-
   ngOnInit(): void {
     // this.editor = new Editor();
 
   }
-
   checkResponse() {
-    const promptText: string = this.promptText;
+    const promptText: string = this.promt;
     this.invokeGPT(promptText);
   }
 
@@ -97,16 +89,21 @@ export class ChatGptResponseModalComponent extends AppComponentBase implements O
       // Consider adjusting the error handling logic for your use case
       if (error.response) {
         console.error(error.response.status, error.response.data);
-        this.notify.error(`Error with ChatGpt Request, Please contact our customer support with this data: ${ error.response.status}, ${error.response.data}`);
+        this.notify.error(`Error with ChatGpt Request, Please contact our customer support with this data: ${error.response.status}, ${error.response.data}`);
       } else {
         console.error(`Error with OpenAI API request: ${error.message}`);
-        this.notify.error(`Error with ChatGpt Request, Please contact our customer support with this data: ${ error.message}`);
+        this.notify.error(`Error with ChatGpt Request, Please contact our customer support with this data: ${error.message}`);
       }
     }
   }
 
   onInsert(): void {
-    this.dialogRef.close({ data: this.responseText });
+    this.sidebarVisible = false;
+    this.sidebarVisibleChange.emit(this.sidebarVisible);
+    this.responseTextInserted.emit(this.responseText);
   }
-
+  closeSidebar() {
+    this.sidebarVisible = false;
+    this.sidebarVisibleChange.emit(this.sidebarVisible);
+  }
 }

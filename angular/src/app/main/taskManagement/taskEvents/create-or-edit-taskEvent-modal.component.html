@@ -21,8 +21,9 @@
                         <label class="form-label" for="team">{{ l('Task Library') }}</label>
                         <p-dropdown [options]="allTemplate" [filter]="true" [virtualScroll]="true"
                             placeholder="Select from Template" [itemSize]="30" name="displayName"
-                            optionLabel="displayName" optionId="id" [(ngModel)]="selectedTemplate" filterBy="displayName"
-                            [style]="{ width: '100%' }" (onChange)="onTemplateSelect($event)"></p-dropdown>
+                            optionLabel="displayName" optionId="id" [(ngModel)]="selectedTemplate"
+                            filterBy="displayName" [style]="{ width: '100%' }"
+                            (onChange)="onTemplateSelect($event)"></p-dropdown>
                     </div>
                     <div class="my-5">
                         <label class="form-label" for="TaskEvent_Name">{{ l('Task Title') }} *</label>
@@ -31,16 +32,24 @@
                         <validation-messages [formCtrl]="TaskEvent_Name"></validation-messages>
                     </div>
                     <div class="my-5">
-                        <label class="form-label" for="TaskEvent_Description">{{ l('Description') }}</label>
+                        <label class="fs-6 fw-semibold form-label mt-3 w-100 mb-5" for="TaskEvent_Description">
+                            <div class="d-flex align-items-end justify-content-between">
+                                <span class="required">Description</span>
+                                <a href="javascript:;" class="btn btn-sm btn-light-primary"
+                                    (click)="toggleSidebar('Task Description')">
+                                    <i class="fa-file-signature fas me-2"></i>
+                                    Generate Description
+                                </a>
+                            </div>
+                        </label>
                         <p-editor id="description" name="description" [(ngModel)]="taskEvent.description"
                             ngDefaultControl [style]="{ height: '300px' }" placeholder=""></p-editor>
                     </div>
 
                     <div class="my-5">
                         <label class="form-check form-check-custom form-check-solid">
-                            <input id="TaskEvent_hasDependency" #TaskEvent_hasDependency="ngModel"
-                                name="hasDependency" [(ngModel)]="taskEvent.hasDependency" type="checkbox"
-                                class="form-check-input" />
+                            <input id="TaskEvent_hasDependency" #TaskEvent_hasDependency="ngModel" name="hasDependency"
+                                [(ngModel)]="taskEvent.hasDependency" type="checkbox" class="form-check-input" />
                             <span class="form-check-label">
                                 {{ l('Has Dependency?') }}
                             </span>
@@ -50,23 +59,23 @@
 
                     <div class="my-5" *ngIf="taskEvent?.hasDependency">
                         <div class="my-3">
-                        <label class="form-label" for="TaskEventName">{{ l('Task Event') }}</label>
-                        <div class="input-group">
-                            <input class="form-control" id="TaskEventName" name="taskEventName"
-                                [(ngModel)]="taskEventName" type="text" disabled />
-                            <button class="btn btn-primary blue" (click)="openSelectTaskEventModal()" type="button">
-                                <i class="fa fa-search"></i>
-                                {{ l('Pick') }}
-                            </button>
-                            <button class="btn btn-danger btn-icon" type="button" (click)="setTaskEventIdNull()">
-                                <i class="fa fa-times"></i>
-                            </button>
+                            <label class="form-label" for="TaskEventName">{{ l('Task Event') }}</label>
+                            <div class="input-group">
+                                <input class="form-control" id="TaskEventName" name="taskEventName"
+                                    [(ngModel)]="taskEventName" type="text" disabled />
+                                <button class="btn btn-primary blue" (click)="openSelectTaskEventModal()" type="button">
+                                    <i class="fa fa-search"></i>
+                                    {{ l('Pick') }}
+                                </button>
+                                <button class="btn btn-danger btn-icon" type="button" (click)="setTaskEventIdNull()">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                       
+
                     </div>
 
-                    
+
 
                     <!-- <div class="my-5 select_button_custom">
                         <label class="form-label" for="TaskStatusName">{{ l('Status') }}</label>
@@ -74,22 +83,24 @@
                             [(ngModel)]="taskEvent.status" optionLabel="label" optionValue="value"></p-selectButton>
                     </div> -->
 
-<div class="row">
-    <div class="col-md-6">
-        <div class="my-5 select_button_custom">
-            <label class="form-label" for="TaskStatusName">{{ l('Priority') }}</label>
-            <p-selectButton [options]="priorityOptions" name="priorityOptions" id="priorityOptions"
-                [(ngModel)]="taskEvent.priority" optionLabel="label" optionValue="value"></p-selectButton>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="my-5 select_button_custom">
-            <label class="form-label" for="TaskStatusName">{{ l('Task Or Event') }}</label>
-            <p-selectButton [options]="taskOptions" name="taskOrEvent" id="taskOrEvent"
-                [(ngModel)]="taskEvent.taskOrEvent" optionLabel="label" optionValue="value"></p-selectButton>
-        </div>
-    </div>
-</div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="my-5 select_button_custom">
+                                <label class="form-label" for="TaskStatusName">{{ l('Priority') }}</label>
+                                <p-selectButton [options]="priorityOptions" name="priorityOptions" id="priorityOptions"
+                                    [(ngModel)]="taskEvent.priority" optionLabel="label"
+                                    optionValue="value"></p-selectButton>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="my-5 select_button_custom">
+                                <label class="form-label" for="TaskStatusName">{{ l('Task Or Event') }}</label>
+                                <p-selectButton [options]="taskOptions" name="taskOrEvent" id="taskOrEvent"
+                                    [(ngModel)]="taskEvent.taskOrEvent" optionLabel="label"
+                                    optionValue="value"></p-selectButton>
+                            </div>
+                        </div>
+                    </div>
 
 
                     <!-- <br />
@@ -178,7 +189,8 @@
                         <div class="col-xl-6 col-md-6">
                             <div class="my-5" *ngIf="!isFromTaskLibrary">
                                 <label class="form-label" for="TaskStatusName">{{ l('Task Status') }}</label>
-                                <select name="taskEvent.taskStatusId" [(ngModel)]="taskEvent.taskStatusId" class="form-select">
+                                <select name="taskEvent.taskStatusId" [(ngModel)]="taskEvent.taskStatusId"
+                                    class="form-select">
                                     <option value="">{{ l('SelectATaskStatus') }}</option>
                                     <option *ngFor="let item of allTaskStatuss" value="{{ item.id }}">
                                         {{ item.displayName }}
@@ -188,21 +200,25 @@
                         </div>
                         <div class="col-xl-6 col-md-6" *ngIf="!isFromTaskLibrary">
                             <div class="my-5">
-                                <label class="form-label" for="TaskEvent_completionPercentage">{{ l('Completion Percentage') }}</label>
+                                <label class="form-label" for="TaskEvent_completionPercentage">{{ l('Completion
+                                    Percentage') }}</label>
                                 <!-- <input type="text" #TaskEvent_completionPercentage="ngModel" id="TaskEvent_completionPercentage"
                                     class="form-control" type="number" [(ngModel)]="taskEvent.completionPercentage" name="completionPercentage"
                                     minlength="0" maxlength="100" /> -->
-                                    <input type="text" pInputText [(ngModel)]="taskEvent.completionPercentage" name="completionPercentage" class="w-full form-control"/>
-                                    <p-slider [(ngModel)]="taskEvent.completionPercentage" name="completionPercentageSlider" class="w-full"></p-slider>
+                                <input type="text" pInputText [(ngModel)]="taskEvent.completionPercentage"
+                                    name="completionPercentage" class="w-full form-control" />
+                                <p-slider [(ngModel)]="taskEvent.completionPercentage" name="completionPercentageSlider"
+                                    class="w-full"></p-slider>
                                 <!-- <validation-messages [formCtrl]="TaskEvent_completionPercentage"></validation-messages> -->
                             </div>
                         </div>
                         <div class="col-md-6" *ngIf="!isFromTaskLibrary">
                             <div class="my-5">
-                                <label class="form-label" for="TaskEvent_billingAmount">{{ l('Billing Amount') }}</label>
+                                <label class="form-label" for="TaskEvent_billingAmount">{{ l('Billing Amount')
+                                    }}</label>
                                 <input type="text" #TaskEvent_billingAmount="ngModel" id="TaskEvent_billingAmount"
-                                    class="form-control" type="number" [(ngModel)]="taskEvent.billingAmount" name="billingAmount"
-                                    minlength="0"  />
+                                    class="form-control" type="number" [(ngModel)]="taskEvent.billingAmount"
+                                    name="billingAmount" minlength="0" />
                                 <validation-messages [formCtrl]="TaskEvent_billingAmount"></validation-messages>
                             </div>
                         </div>
@@ -210,8 +226,8 @@
                             <div class="my-5">
                                 <label class="form-label" for="TaskEvent_costAmount">{{ l('Cost Amount') }}</label>
                                 <input type="text" #TaskEvent_costAmount="ngModel" id="TaskEvent_costAmount"
-                                    class="form-control" type="number" [(ngModel)]="taskEvent.costAmount" name="costAmount"
-                                    minlength="0"  />
+                                    class="form-control" type="number" [(ngModel)]="taskEvent.costAmount"
+                                    name="costAmount" minlength="0" />
                                 <validation-messages [formCtrl]="TaskEvent_costAmount"></validation-messages>
                             </div>
                         </div>
@@ -278,14 +294,13 @@
                         </div>
                         <div class="form-check form-check-solid form-switch form-check-custom fv-row">
                             <input class="form-check-input w-45px h-30px" type="checkbox" id="allowmarketing"
-                                 [(ngModel)]="taskEvent.template" (change)="saveAsLibararyEvent()">
+                                [(ngModel)]="taskEvent.template" (change)="saveAsLibararyEvent()">
                             <label class="form-check-label" for="allowmarketing"></label>
                         </div>
                     </div>
 
-                    
-                    <input class="form-control" name="taskEventId"
-                        [(ngModel)]="taskEventId" type="text" hidden />
+
+                    <input class="form-control" name="taskEventId" [(ngModel)]="taskEventId" type="text" hidden />
                 </div>
                 <div class="modal-footer">
                     <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
@@ -303,4 +318,7 @@
 
     <taskEventLookupTableModal #taskEventLookupTableModal (modalSave)="getNewTaskEventId()">
     </taskEventLookupTableModal>
+    <app-chat-gpt-response-sidebar [(sidebarVisible)]="isSidebarVisible" (responseTextInserted)="onResponseTextInserted($event)" [(taskName)]="taskEvent.name"
+        [(promt)]="taskDescription" [(fieldName)]="fieldName"
+        [(modalTitle)]="modalTitle"></app-chat-gpt-response-sidebar>
 </div>

@@ -26,7 +26,7 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class TaskEventsDashboardComponent extends AppComponentBase implements OnInit, AfterViewInit {
   @ViewChild('createOrEditTaskEventModal', { static: true })
-    createOrEditTaskEventModal: CreateOrEditTaskEventModalComponent;
+  createOrEditTaskEventModal: CreateOrEditTaskEventModalComponent;
   taskEventId: number;
   taskEvent: GetTaskEventForViewDto = new GetTaskEventForViewDto();
   docTypes: GetDocumentTypeForViewDto[];
@@ -34,7 +34,7 @@ export class TaskEventsDashboardComponent extends AppComponentBase implements On
   private _uploaderOptions: FileUploaderOptions = {};
   public uploader: FileUploader;
   fileName: string;
-  taskDocuments:any;
+  taskDocuments: any;
   advancedFiltersAreShown = false;
   filterText = '';
   nameFilter = '';
@@ -44,7 +44,8 @@ export class TaskEventsDashboardComponent extends AppComponentBase implements On
 
   @ViewChild('dataTable', { static: true }) dataTable: Table;
   @ViewChild('paginator', { static: true }) paginator: Paginator;
-  taskDescription:any;
+  taskDescription: any;
+  sidebarVisible: boolean = false;
   constructor(
     injector: Injector,
     private route: ActivatedRoute,
@@ -94,7 +95,7 @@ export class TaskEventsDashboardComponent extends AppComponentBase implements On
 
     //this.primengTableHelper.showLoadingIndicator();
 
-   
+
 
     this._taskDocumentsServiceProxy.getAllByTaskEventId(
       this.taskEventId,
@@ -108,7 +109,7 @@ export class TaskEventsDashboardComponent extends AppComponentBase implements On
       100
     ).subscribe(result => {
       //this.primengTableHelper.totalRecordsCount = result.totalCount;
-      this.taskDocuments= result.items;
+      this.taskDocuments = result.items;
       // this.totalCount.emit(this.primengTableHelper.totalRecordsCount);
       //this.primengTableHelper.hideLoadingIndicator();
     });
@@ -172,31 +173,31 @@ export class TaskEventsDashboardComponent extends AppComponentBase implements On
   }
   getFileExtension(filename) {
     return filename.split('.').pop();
-}
-deleteTaskDocuments(id:number){
-  this._taskDocumentsServiceProxy.delete(id).subscribe(result => {
-    this.getTaskDocuments();
-    this.notify.info(this.l('DeletedSuccessfully'));
-  });
-}
-createTaskEvent(): void {
-  this.createOrEditTaskEventModal.show();
-}
+  }
+  deleteTaskDocuments(id: number) {
+    this._taskDocumentsServiceProxy.delete(id).subscribe(result => {
+      this.getTaskDocuments();
+      this.notify.info(this.l('DeletedSuccessfully'));
+    });
+  }
+  createTaskEvent(): void {
+    this.createOrEditTaskEventModal.show();
+  }
 
 
-openAiModalPr(fieldName: string): void {
-  const taskName = this.taskEvent.taskEvent.name;
-  this.taskDescription = `Write a ${fieldName} for a task where task title is ${taskName}`;
-  var modalTitle = `AI Task Description Generator`;
-  const dialogRef = this.dialog.open(ChatGptResponseModalComponent, {
-    data: { promtFromAnotherComponent: this.taskDescription, feildName: fieldName, modalTitle: modalTitle },
-    width: '1100px',
-  });
+  openAiModalPr(fieldName: string): void {
+    const taskName = this.taskEvent.taskEvent.name;
+    this.taskDescription = `Write a ${fieldName} for a task where task title is ${taskName}`;
+    var modalTitle = `AI Task Description Generator`;
+    const dialogRef = this.dialog.open(ChatGptResponseModalComponent, {
+      data: { promtFromAnotherComponent: this.taskDescription, feildName: fieldName, modalTitle: modalTitle },
+      width: '1100px',
+    });
 
-  dialogRef.afterClosed().subscribe(result => {
-    if (result.data != null) {
-      this.taskEvent.taskEvent.description = result.data;
-    }
-  });
-}
+    dialogRef.afterClosed().subscribe(result => {
+      if (result.data != null) {
+        this.taskEvent.taskEvent.description = result.data;
+      }
+    });
+  }
 }

@@ -1,0 +1,63 @@
+<p-sidebar [(visible)]="sidebarVisible" styleClass="w-30rem" position="right">
+    <h1 class="text-primary mb-4">{{modalTitle}}</h1>
+    <div class="w-100">
+        <div class="notice d-flex bg-white rounded border-primary border border-dashed mb-9 p-6 w-100">
+            <span class="svg-icon svg-icon-2tx svg-icon-primary me-4">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path opacity="0.3"
+                        d="M22 19V17C22 16.4 21.6 16 21 16H8V3C8 2.4 7.6 2 7 2H5C4.4 2 4 2.4 4 3V19C4 19.6 4.4 20 5 20H21C21.6 20 22 19.6 22 19Z"
+                        fill="currentColor"></path>
+                    <path
+                        d="M20 5V21C20 21.6 19.6 22 19 22H17C16.4 22 16 21.6 16 21V8H8V4H19C19.6 4 20 4.4 20 5ZM3 8H4V4H3C2.4 4 2 4.4 2 5V7C2 7.6 2.4 8 3 8Z"
+                        fill="currentColor"></path>
+                </svg>
+            </span>
+            <div class="w-100">
+                <h4 class="text-gray-900 fw-bold mb-2 fs-5">Command to the AI for generating {{fieldName}}</h4>
+                <div class="fs-6 text-gray-700">
+                    <textarea rows="10" name="promt" id="promt" placeholder="Enter your prompt here"
+                        class="form-control form-control-solid" cols="3" [(ngModel)]="promt"></textarea>
+                </div>
+                <div class="d-flex justify-content-end mt-6">
+                    <button class="btn btn-sm btn-primary" (click)="checkResponse()">
+                        Check Response
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="py-2">
+            <div class="d-flex flex-stack">
+                <div class="d-flex">
+                    <span class="svg-icon svg-icon-2tx svg-icon-primary me-4">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path opacity="0.3" d="M10 4H21C21.6 4 22 4.4 22 5V7H10V4Z" fill="currentColor" />
+                            <path opacity="0.3" d="M13 14.4V9C13 8.4 12.6 8 12 8C11.4 8 11 8.4 11 9V14.4H13Z"
+                                fill="currentColor" />
+                            <path
+                                d="M10.4 3.60001L12 6H21C21.6 6 22 6.4 22 7V19C22 19.6 21.6 20 21 20H3C2.4 20 2 19.6 2 19V4C2 3.4 2.4 3 3 3H9.20001C9.70001 3 10.2 3.20001 10.4 3.60001ZM13 14.4V9C13 8.4 12.6 8 12 8C11.4 8 11 8.4 11 9V14.4H8L11.3 17.7C11.7 18.1 12.3 18.1 12.7 17.7L16 14.4H13Z"
+                                fill="currentColor" />
+                        </svg>
+                    </span>
+                    <div class="d-flex flex-column">
+                        <a href="#" class="fs-5 text-dark text-hover-primary fw-bold">Generated Response</a>
+                        <div class="fs-6 fw-semibold text-gray-400">You can also edit it and click on insert to insert
+                            the response!</div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-end">
+                    <button class="btn btn-sm btn-success" (click)="onInsert()">
+                        Insert
+                    </button>
+                </div>
+            </div>
+            <div class="separator separator-dashed my-5"></div>
+            <div class="w-100 mt-4">
+                <div class="fs-6 text-gray-700">
+                    <h4 *ngIf="showSpinner" class="text-danger">Processing, please wait...</h4>
+                    <p-editor id="responseText" name="responseText" [(ngModel)]="responseText" ngDefaultControl
+                        [style]="{ height: '300px' }" placeholder="'Type here...'"></p-editor>
+                </div>
+            </div>
+        </div>
+    </div>
+</p-sidebar>
