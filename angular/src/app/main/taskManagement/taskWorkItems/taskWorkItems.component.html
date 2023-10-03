@@ -19,11 +19,19 @@
                 Work Items
             </h1>
         </div>
-        <button *ngIf="isGranted('Pages.TaskWorkItems.Create')" (click)="createTaskWorkItem()"
+        <div class="left">
+            <button *ngIf="isGranted('Pages.TaskWorkItems.Create')" (click)="createTaskWorkItem(false)"
             class="btn btn-primary blue">
             <i class="fa fa-plus"></i>
             Work Items
         </button>
+        <button *ngIf="isGranted('Pages.TaskWorkItems.Create')" (click)="createTaskWorkItem(true)"
+        class="btn btn-primary blue">
+        <i class="fa fa-plus"></i>
+        Bulk Work Items
+    </button>
+        </div>
+       
     </div>
 
     <div [class]="containerClass">

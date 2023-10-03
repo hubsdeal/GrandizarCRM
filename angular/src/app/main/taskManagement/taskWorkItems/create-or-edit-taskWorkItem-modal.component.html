@@ -55,7 +55,7 @@
                         hidden
                     />
 
-                    <div class="my-3">
+                    <div class="my-3" *ngIf="!isBulkItem">
                         <label class="form-label" for="EmployeeName">{{ l('Employee') }}</label>
                         <div class="input-group">
                             <input
@@ -100,9 +100,7 @@
                         [(ngModel)]="taskWorkItem.name" name="Name" required cols="30" rows="10"></textarea>
                         <validation-messages [formCtrl]="TaskWorkItem_Name"></validation-messages>
                     </div>
-                    <div class="row">
-
-
+                    <div class="row" *ngIf="!isBulkItem">
                         <div class="col-md-6 col-xl-6">
                             <div class="my-3">
                                 <label class="form-label" for="TaskWorkItem_EstimatedHours">{{ l('EstimatedHours') }}</label>
@@ -255,12 +253,12 @@
                         </span>
                     </label>
                     <validation-messages [formCtrl]="TaskWorkItem_OpenOrClosed"></validation-messages> -->
-                    <div class="my-5 select_button_custom">
+                    <div class="my-5 select_button_custom" *ngIf="!isBulkItem">
                         <label class="form-label" for="TaskWorkItem_OpenOrClosed">{{ l('OpenOrClosed') }}</label>
                         <p-selectButton [options]="OpenOrClosedOptions" name="OpenOrClosedOptions" id="TaskWorkItem_OpenOrClosed"
                             [(ngModel)]="taskWorkItem.openOrClosed" optionLabel="label" optionValue="value"></p-selectButton>
                     </div>
-                    <div class="my-5">
+                    <div class="my-5" *ngIf="!isBulkItem">
                         <label class="form-label" for="TaskWorkItem_CompletionPercentage">
                             {{ l('CompletionPercentage') }}
                         </label>

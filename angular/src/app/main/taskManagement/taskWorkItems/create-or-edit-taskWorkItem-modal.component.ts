@@ -25,6 +25,7 @@ export class CreateOrEditTaskWorkItemModalComponent extends AppComponentBase imp
 
     active = false;
     saving = false;
+    isBulkItem = false;
     taskEventId: number;
     taskWorkItem: CreateOrEditTaskWorkItemDto = new CreateOrEditTaskWorkItemDto();
     OpenOrClosedOptions:any;
@@ -90,19 +91,52 @@ export class CreateOrEditTaskWorkItemModalComponent extends AppComponentBase imp
 
     save(): void {
         this.saving = true;
-        if (this.taskEventId) {
+        if(this.isBulkItem){
             this.taskWorkItem.taskEventId = this.taskEventId;
+            
+            // for (let i = 0; i < this.lineItems.length; i++) {
+            //     const value = this.lineItems[i];
+                this.parseInputData(this.taskWorkItem.name).forEach(element => {
+                    this.taskWorkItem.name = element.Name;
+                    this.taskWorkItem.estimatedHours = element.EstimatedHours;
+                    this.taskWorkItem.sequenceNumber = element.SequenceNumber;
+                    this.taskWorkItem.description = element.Description;
+                    this._taskWorkItemsServiceProxy.createOrEdit(this.taskWorkItem)
+                    .pipe(finalize(() => { this.saving = false; }))
+                    .subscribe(() => {
+                        this.notify.info(this.l('SavedSuccessfully'));
+                        this.lineItems = [];
+                        this.close();
+                        this.modalSave.emit(null);
+                    });
+                })
+                
+            //}
         }
-        this.taskWorkItem.openOrClosed = this.status === 'completed' ? true : false;
-        if (this.lineItems.length > 1) {
-            this.message.confirm(
-                `You have entered ${this.lineItems.length} items.`,
-                this.l('Do you want to save multiple tasks items?'),
-                (isConfirmed) => {
-                    if (isConfirmed) {
-                        for (let i = 0; i < this.lineItems.length; i++) {
-                            const value = this.lineItems[i];
-                            this.taskWorkItem.name = value;
+        else{
+            if (this.taskEventId) {
+                this.taskWorkItem.taskEventId = this.taskEventId;
+            }
+            this.taskWorkItem.openOrClosed = this.status === 'completed' ? true : false;
+            if (this.lineItems.length > 1) {
+                this.message.confirm(
+                    `You have entered ${this.lineItems.length} items.`,
+                    this.l('Do you want to save multiple tasks items?'),
+                    (isConfirmed) => {
+                        if (isConfirmed) {
+                            for (let i = 0; i < this.lineItems.length; i++) {
+                                const value = this.lineItems[i];
+                                this.taskWorkItem.name = value;
+                                this._taskWorkItemsServiceProxy.createOrEdit(this.taskWorkItem)
+                                    .pipe(finalize(() => { this.saving = false; }))
+                                    .subscribe(() => {
+                                        this.notify.info(this.l('SavedSuccessfully'));
+                                        this.lineItems = [];
+                                        this.close();
+                                        this.modalSave.emit(null);
+                                    });
+                            }
+                        } else {
                             this._taskWorkItemsServiceProxy.createOrEdit(this.taskWorkItem)
                                 .pipe(finalize(() => { this.saving = false; }))
                                 .subscribe(() => {
@@ -112,47 +146,49 @@ export class CreateOrEditTaskWorkItemModalComponent extends AppComponentBase imp
                                     this.modalSave.emit(null);
                                 });
                         }
-                    } else {
-                        this._taskWorkItemsServiceProxy.createOrEdit(this.taskWorkItem)
-                            .pipe(finalize(() => { this.saving = false; }))
-                            .subscribe(() => {
-                                this.notify.info(this.l('SavedSuccessfully'));
-                                this.lineItems = [];
-                                this.close();
-                                this.modalSave.emit(null);
-                            });
                     }
-                }
-            );
-        } else {
-            this._taskWorkItemsServiceProxy.createOrEdit(this.taskWorkItem)
-                .pipe(finalize(() => { this.saving = false; }))
-                .subscribe(() => {
-                    this.notify.info(this.l('SavedSuccessfully'));
-                    this.lineItems = [];
-                    this.close();
-                    this.modalSave.emit(null);
-                });
+                );
+            } else {
+                this._taskWorkItemsServiceProxy.createOrEdit(this.taskWorkItem)
+                    .pipe(finalize(() => { this.saving = false; }))
+                    .subscribe(() => {
+                        this.notify.info(this.l('SavedSuccessfully'));
+                        this.lineItems = [];
+                        this.close();
+                        this.modalSave.emit(null);
+                    });
+            }
+    
+    
+            // if (this.lineItems.length > 0) {
+            //     for (let i = 0; i < this.lineItems.length; i++) {
+            //         const value = this.lineItems[i];
+            //         this.taskWorkItem.name = value;
+            //         this._taskWorkItemsServiceProxy.createOrEdit(this.taskWorkItem)
+            //         .pipe(finalize(() => { this.saving = false; }))
+            //         .subscribe(() => {
+            //             this.notify.info(this.l('SavedSuccessfully'));
+            //             this.close();
+            //             this.modalSave.emit(null);
+            //         });
+            //     }
+            // } else {
+    
+            // }
         }
-
-
-        // if (this.lineItems.length > 0) {
-        //     for (let i = 0; i < this.lineItems.length; i++) {
-        //         const value = this.lineItems[i];
-        //         this.taskWorkItem.name = value;
-        //         this._taskWorkItemsServiceProxy.createOrEdit(this.taskWorkItem)
-        //         .pipe(finalize(() => { this.saving = false; }))
-        //         .subscribe(() => {
-        //             this.notify.info(this.l('SavedSuccessfully'));
-        //             this.close();
-        //             this.modalSave.emit(null);
-        //         });
-        //     }
-        // } else {
-
-        // }
+        
     }
-
+    parseInputData(data: string): any[] {
+        return data.split('\n').map(item => {
+            let parts = item.split(';').map(part => part.trim());
+            return {
+                Name: parts[0],
+                EstimatedHours: parts[1],
+                SequenceNumber: parseInt(parts[2]),
+                Description: parts[3]
+            };
+        });
+    }
     onInput(event: any) {
         const value = event.target.value;
         this.lineItems = value.split('\n');
