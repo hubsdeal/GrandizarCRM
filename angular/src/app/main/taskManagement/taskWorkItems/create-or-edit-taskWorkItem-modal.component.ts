@@ -35,6 +35,7 @@ export class CreateOrEditTaskWorkItemModalComponent extends AppComponentBase imp
     statusOptions: SelectItem[];
     status: string = 'incomplete';
     lineItems: string[] = [];
+    workItems:any
     constructor(
         injector: Injector,
         private _taskWorkItemsServiceProxy: TaskWorkItemsServiceProxy,
@@ -43,9 +44,13 @@ export class CreateOrEditTaskWorkItemModalComponent extends AppComponentBase imp
         super(injector);
     }
     show(taskWorkItemId?: number): void {
+
         if (!taskWorkItemId) {
+
             this.taskWorkItem = new CreateOrEditTaskWorkItemDto();
             this.taskWorkItem.id = taskWorkItemId;
+            this.taskWorkItem.completionPercentage=0;
+            this.taskWorkItem.sequenceNumber=1;
             this.taskEventName = '';
             this.employeeName = '';
             this.taskWorkItem.startDate = this._dateTimeService.getStartOfDay();
@@ -235,4 +240,46 @@ export class CreateOrEditTaskWorkItemModalComponent extends AppComponentBase imp
     endTimeValue(value: any) {
         this.taskWorkItem.endTime = value;
     }
+    getTaskWorkItems() {
+        // if (this.primengTableHelper.shouldResetPaging(event)) {
+        //   this.paginator.changePage(0);
+        //   return;
+        // }
+    
+        // this.primengTableHelper.showLoadingIndicator();
+
+        this._taskWorkItemsServiceProxy.getAllByTaskEventId(
+          this.taskEventId,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+                0,
+                '',
+                0,
+                50
+                // this.primengTableHelper.getSorting(this.dataTable),
+                // this.primengTableHelper.getSkipCount(this.paginator, event),
+                // this.primengTableHelper.getMaxResultCount(this.paginator, event)
+        ).subscribe(result => {
+        //   this.primengTableHelper.totalRecordsCount = result.totalCount;
+        //   this.primengTableHelper.records = result.items;
+        //   this.totalCount.emit(this.primengTableHelper.totalRecordsCount);
+          //this.isReload.emit(true);
+          //this.primengTableHelper.hideLoadingIndicator();
+          this.workItems = result.items
+         
+        });
+      }
 }
