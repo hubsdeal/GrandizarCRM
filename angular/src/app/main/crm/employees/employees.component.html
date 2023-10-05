@@ -42,7 +42,7 @@
                                         [(ngModel)]="nameFilter" (ngModelChange)="getEmployees()" />
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <!-- <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="FirstNameFilter">{{ l('FirstName') }}</label>
                                     <input type="text" class="form-control" id="FirstNameFilter" name="firstNameFilter"
@@ -102,7 +102,7 @@
                                             (ngModelChange)="getEmployees()" />
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="MobileFilter">{{ l('Mobile') }}</label>
@@ -110,7 +110,7 @@
                                         [(ngModel)]="mobileFilter" (ngModelChange)="getEmployees()" />
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <!-- <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="OfficePhoneFilter">{{ l('OfficePhone') }}</label>
                                     <input type="text" class="form-control" id="OfficePhoneFilter"
@@ -133,7 +133,7 @@
                                         name="businessEmailFilter" [(ngModel)]="businessEmailFilter"
                                         (ngModelChange)="getEmployees()" />
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="JobTitleFilter">{{ l('JobTitle') }}</label>
@@ -141,7 +141,7 @@
                                         [(ngModel)]="jobTitleFilter" (ngModelChange)="getEmployees()" />
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <!-- <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="CompanyNameFilter">{{ l('CompanyName') }}</label>
                                     <input type="text" class="form-control" id="CompanyNameFilter"
@@ -243,7 +243,7 @@
                                     <input type="text" class="form-control" id="ContactFullNameFilter"
                                         name="contactFullNameFilter" [(ngModel)]="contactFullNameFilter" />
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="col-md-12 mt-5">
                                 <button (click)="resetFilters()" class="btn btn-secondary btn-sm"
                                     id="btn-reset-filters">
@@ -549,7 +549,7 @@
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('HireDate') }}</span>
                                         <span *ngIf="record.employee.hireDate">
-                                            {{ record.employee.hireDate | luxonFormat : 'F' }}
+                                            {{ record.employee.hireDate | luxonFormat : 'dd-MM-yyyy'  }}
                                         </span>
                                         <span *ngIf="!record.employee.hireDate">-</span>
                                     </td>

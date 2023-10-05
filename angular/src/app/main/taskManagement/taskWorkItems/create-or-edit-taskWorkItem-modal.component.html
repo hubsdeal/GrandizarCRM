@@ -85,15 +85,15 @@
                     </div>
 
                     <div class="my-5" *ngIf="taskWorkItem?.hasDependency && !isBulkItem" >
-                        <div class="my-3">
+                        <div class="my-3 p_filter">
                             <!-- <label class="form-label" for="TaskEventName">{{ l('Task Event') }}</label> (onChange)="onCountryChange($event)" -->
                             <label class="form-label" for="CountryName">{{ l('Select Work Item') }}</label>
                             
-                            <p-dropdown [options]="workItems" [(ngModel)]="workItems.id" optionLabel="workItems.name"></p-dropdown>
-                            <!-- <p-dropdown [options]="workItems"  [virtualScroll]="true"
-                                placeholder="Select" [itemSize]="30" name="name" optionLabel="workItems.name"
-                                optionId="workItems.id" [(ngModel)]="workItems.id"
-                                [style]="{ width: '100%' }"></p-dropdown> -->
+                            <!-- <p-dropdown [options]="workItems" [(ngModel)]="workItems.id" optionLabel="workItems.name"></p-dropdown> -->
+                             <p-dropdown [options]="workItems"  [virtualScroll]="true"
+                                placeholder="Select" [itemSize]="30" name="name" optionLabel="workItems.taskWorkItem.name"
+                                optionId="workItems.taskWorkItem.id" [(ngModel)]="taskWorkItem.id"
+                                [style]="{ width: '100%' }" ></p-dropdown> 
                             <!-- <div class="input-group">
 
                             <input class="form-control" id="TaskEventName" name="taskEventName"
@@ -233,11 +233,13 @@
                                     <p-slider [(ngModel)]="taskWorkItem.completionPercentage"></p-slider>
                                 </div>
                             </div> -->
-                            <label class="form-label" for="TaskWorkItem_CompletionPercentage">
-                                {{ l('CompletionPercentage') }}
-                            </label>
-                            <input type="text" pInputText [(ngModel)]="taskWorkItem.completionPercentage" name="completionPercentage" class="w-full form-control"/>
-                            <p-slider [(ngModel)]="taskWorkItem.completionPercentage" name="completionPercentageSlider" class="w-full"></p-slider>
+                            <div class=" mt-5">
+                                <label class="form-label" for="TaskWorkItem_CompletionPercentage">
+                                    {{ l('CompletionPercentage') }}
+                                </label>
+                                <input type="text" pInputText [(ngModel)]="taskWorkItem.completionPercentage" name="completionPercentage" class="w-full form-control"/>
+                                <p-slider [(ngModel)]="taskWorkItem.completionPercentage" name="completionPercentageSlider" class="w-full"></p-slider>
+                            </div>
                         </div>
                         <!-- <div class="my-5" *ngIf="!isBulkItem">
                                 <label class="form-label" for="TaskWorkItem_CompletionPercentage">

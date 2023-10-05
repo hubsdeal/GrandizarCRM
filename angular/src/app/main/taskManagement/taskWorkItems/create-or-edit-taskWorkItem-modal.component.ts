@@ -44,7 +44,7 @@ export class CreateOrEditTaskWorkItemModalComponent extends AppComponentBase imp
         super(injector);
     }
     show(taskWorkItemId?: number): void {
-
+        this.getTaskWorkItems()
         if (!taskWorkItemId) {
 
             this.taskWorkItem = new CreateOrEditTaskWorkItemDto();
@@ -279,7 +279,8 @@ export class CreateOrEditTaskWorkItemModalComponent extends AppComponentBase imp
           //this.isReload.emit(true);
           //this.primengTableHelper.hideLoadingIndicator();
           this.workItems = result.items
-         
+          debugger
+         console.log(this.workItems);
         });
       }
 }
