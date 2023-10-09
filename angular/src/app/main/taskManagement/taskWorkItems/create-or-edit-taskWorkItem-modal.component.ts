@@ -279,8 +279,6 @@ export class CreateOrEditTaskWorkItemModalComponent extends AppComponentBase imp
           //this.isReload.emit(true);
           //this.primengTableHelper.hideLoadingIndicator();
           this.workItems = result.items
-          debugger
-         console.log(this.workItems);
         });
       }
 }

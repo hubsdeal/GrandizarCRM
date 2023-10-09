@@ -51,6 +51,7 @@ export class TaskTagMasterTagLookupTableModalComponent extends AppComponentBase 
 
         this._taskTagsServiceProxy
             .getAllMasterTagForLookupTable(
+                0,
                 this.filterText,
                 this.primengTableHelper.getSorting(this.dataTable),
                 this.primengTableHelper.getSkipCount(this.paginator, event),
