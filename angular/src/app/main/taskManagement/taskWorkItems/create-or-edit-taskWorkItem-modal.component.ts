@@ -25,6 +25,7 @@ export class CreateOrEditTaskWorkItemModalComponent extends AppComponentBase imp
 
     active = false;
     saving = false;
+    isBulkItem = false;
     taskEventId: number;
     taskWorkItem: CreateOrEditTaskWorkItemDto = new CreateOrEditTaskWorkItemDto();
     OpenOrClosedOptions:any;
@@ -34,6 +35,7 @@ export class CreateOrEditTaskWorkItemModalComponent extends AppComponentBase imp
     statusOptions: SelectItem[];
     status: string = 'incomplete';
     lineItems: string[] = [];
+    workItems:any
     constructor(
         injector: Injector,
         private _taskWorkItemsServiceProxy: TaskWorkItemsServiceProxy,
@@ -42,9 +44,13 @@ export class CreateOrEditTaskWorkItemModalComponent extends AppComponentBase imp
         super(injector);
     }
     show(taskWorkItemId?: number): void {
+        this.getTaskWorkItems()
         if (!taskWorkItemId) {
+
             this.taskWorkItem = new CreateOrEditTaskWorkItemDto();
             this.taskWorkItem.id = taskWorkItemId;
+            this.taskWorkItem.completionPercentage=0;
+            this.taskWorkItem.sequenceNumber=1;
             this.taskEventName = '';
             this.employeeName = '';
             this.taskWorkItem.startDate = this._dateTimeService.getStartOfDay();
@@ -90,19 +96,52 @@ export class CreateOrEditTaskWorkItemModalComponent extends AppComponentBase imp
 
     save(): void {
         this.saving = true;
-        if (this.taskEventId) {
+        if(this.isBulkItem){
             this.taskWorkItem.taskEventId = this.taskEventId;
+            
+            // for (let i = 0; i < this.lineItems.length; i++) {
+            //     const value = this.lineItems[i];
+                this.parseInputData(this.taskWorkItem.name).forEach(element => {
+                    this.taskWorkItem.name = element.Name;
+                    this.taskWorkItem.estimatedHours = element.EstimatedHours;
+                    this.taskWorkItem.sequenceNumber = element.SequenceNumber;
+                    this.taskWorkItem.description = element.Description;
+                    this._taskWorkItemsServiceProxy.createOrEdit(this.taskWorkItem)
+                    .pipe(finalize(() => { this.saving = false; }))
+                    .subscribe(() => {
+                        this.notify.info(this.l('SavedSuccessfully'));
+                        this.lineItems = [];
+                        this.close();
+                        this.modalSave.emit(null);
+                    });
+                })
+                
+            //}
         }
-        this.taskWorkItem.openOrClosed = this.status === 'completed' ? true : false;
-        if (this.lineItems.length > 1) {
-            this.message.confirm(
-                `You have entered ${this.lineItems.length} items.`,
-                this.l('Do you want to save multiple tasks items?'),
-                (isConfirmed) => {
-                    if (isConfirmed) {
-                        for (let i = 0; i < this.lineItems.length; i++) {
-                            const value = this.lineItems[i];
-                            this.taskWorkItem.name = value;
+        else{
+            if (this.taskEventId) {
+                this.taskWorkItem.taskEventId = this.taskEventId;
+            }
+            this.taskWorkItem.openOrClosed = this.status === 'completed' ? true : false;
+            if (this.lineItems.length > 1) {
+                this.message.confirm(
+                    `You have entered ${this.lineItems.length} items.`,
+                    this.l('Do you want to save multiple tasks items?'),
+                    (isConfirmed) => {
+                        if (isConfirmed) {
+                            for (let i = 0; i < this.lineItems.length; i++) {
+                                const value = this.lineItems[i];
+                                this.taskWorkItem.name = value;
+                                this._taskWorkItemsServiceProxy.createOrEdit(this.taskWorkItem)
+                                    .pipe(finalize(() => { this.saving = false; }))
+                                    .subscribe(() => {
+                                        this.notify.info(this.l('SavedSuccessfully'));
+                                        this.lineItems = [];
+                                        this.close();
+                                        this.modalSave.emit(null);
+                                    });
+                            }
+                        } else {
                             this._taskWorkItemsServiceProxy.createOrEdit(this.taskWorkItem)
                                 .pipe(finalize(() => { this.saving = false; }))
                                 .subscribe(() => {
@@ -112,47 +151,49 @@ export class CreateOrEditTaskWorkItemModalComponent extends AppComponentBase imp
                                     this.modalSave.emit(null);
                                 });
                         }
-                    } else {
-                        this._taskWorkItemsServiceProxy.createOrEdit(this.taskWorkItem)
-                            .pipe(finalize(() => { this.saving = false; }))
-                            .subscribe(() => {
-                                this.notify.info(this.l('SavedSuccessfully'));
-                                this.lineItems = [];
-                                this.close();
-                                this.modalSave.emit(null);
-                            });
                     }
-                }
-            );
-        } else {
-            this._taskWorkItemsServiceProxy.createOrEdit(this.taskWorkItem)
-                .pipe(finalize(() => { this.saving = false; }))
-                .subscribe(() => {
-                    this.notify.info(this.l('SavedSuccessfully'));
-                    this.lineItems = [];
-                    this.close();
-                    this.modalSave.emit(null);
-                });
+                );
+            } else {
+                this._taskWorkItemsServiceProxy.createOrEdit(this.taskWorkItem)
+                    .pipe(finalize(() => { this.saving = false; }))
+                    .subscribe(() => {
+                        this.notify.info(this.l('SavedSuccessfully'));
+                        this.lineItems = [];
+                        this.close();
+                        this.modalSave.emit(null);
+                    });
+            }
+    
+    
+            // if (this.lineItems.length > 0) {
+            //     for (let i = 0; i < this.lineItems.length; i++) {
+            //         const value = this.lineItems[i];
+            //         this.taskWorkItem.name = value;
+            //         this._taskWorkItemsServiceProxy.createOrEdit(this.taskWorkItem)
+            //         .pipe(finalize(() => { this.saving = false; }))
+            //         .subscribe(() => {
+            //             this.notify.info(this.l('SavedSuccessfully'));
+            //             this.close();
+            //             this.modalSave.emit(null);
+            //         });
+            //     }
+            // } else {
+    
+            // }
         }
-
-
-        // if (this.lineItems.length > 0) {
-        //     for (let i = 0; i < this.lineItems.length; i++) {
-        //         const value = this.lineItems[i];
-        //         this.taskWorkItem.name = value;
-        //         this._taskWorkItemsServiceProxy.createOrEdit(this.taskWorkItem)
-        //         .pipe(finalize(() => { this.saving = false; }))
-        //         .subscribe(() => {
-        //             this.notify.info(this.l('SavedSuccessfully'));
-        //             this.close();
-        //             this.modalSave.emit(null);
-        //         });
-        //     }
-        // } else {
-
-        // }
+        
     }
-
+    parseInputData(data: string): any[] {
+        return data.split('\n').map(item => {
+            let parts = item.split(';').map(part => part.trim());
+            return {
+                Name: parts[0],
+                EstimatedHours: parts[1],
+                SequenceNumber: parseInt(parts[2]),
+                Description: parts[3]
+            };
+        });
+    }
     onInput(event: any) {
         const value = event.target.value;
         this.lineItems = value.split('\n');
@@ -199,4 +240,47 @@ export class CreateOrEditTaskWorkItemModalComponent extends AppComponentBase imp
     endTimeValue(value: any) {
         this.taskWorkItem.endTime = value;
     }
+    getTaskWorkItems() {
+        // if (this.primengTableHelper.shouldResetPaging(event)) {
+        //   this.paginator.changePage(0);
+        //   return;
+        // }
+    
+        // this.primengTableHelper.showLoadingIndicator();
+
+        this._taskWorkItemsServiceProxy.getAllByTaskEventId(
+          this.taskEventId,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+                0,
+                '',
+                0,
+                50
+                // this.primengTableHelper.getSorting(this.dataTable),
+                // this.primengTableHelper.getSkipCount(this.paginator, event),
+                // this.primengTableHelper.getMaxResultCount(this.paginator, event)
+        ).subscribe(result => {
+        //   this.primengTableHelper.totalRecordsCount = result.totalCount;
+        //   this.primengTableHelper.records = result.items;
+        //   this.totalCount.emit(this.primengTableHelper.totalRecordsCount);
+          //this.isReload.emit(true);
+          //this.primengTableHelper.hideLoadingIndicator();
+          this.workItems = result.items
+          debugger
+         console.log(this.workItems);
+        });
+      }
 }
