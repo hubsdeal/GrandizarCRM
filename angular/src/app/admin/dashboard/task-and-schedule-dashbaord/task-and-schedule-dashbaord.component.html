@@ -1,0 +1,245 @@
+<div class="accordion card_accordion" id="kt_accordion_1">
+    <div class="card mb-6">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="kt_accordion_1_header_3">
+                <button class="accordion-button fs-4 fw-bold collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#kt_accordion_1_body_3" aria-expanded="true" aria-controls="kt_accordion_1_body_3">
+                    <i class="fas fa-list-alt fa-1x me-2"></i>
+                    My Task & Schedule
+                    <span class="badge ms-6 badge-primary badge">
+                        <i class="fa fa-arrow-right text-white me-2"></i> View All
+                    </span>
+                </button>
+            </h2>
+            <div id="kt_accordion_1_body_3" class="accordion-collapse collapse show"
+                aria-labelledby="kt_accordion_1_header_3" data-bs-parent="#kt_accordion_1">
+                <div class="content">
+                    <div class="row">
+                        <div class="col-xl-4">
+                            <div class="w-100 border rounded p-5 bg-light-primary shadow-sm">
+                                <ul class="nav nav-custom nav-tabs nav-line-tabs nav-line-tabs-2x border-0 fs-4 fw-semibold mb-8"
+                                    style="border-bottom: 2px solid #dbdbdb !important;" role="tablist">
+                                    <!--begin:::Tab item-->
+                                    <li class="nav-item" role="presentation">
+                                        <a class="nav-link text-active-primary pb-4 active" data-bs-toggle="tab"
+                                            href="#emp_tasks_tasks" aria-selected="true" role="tab">
+                                            <i class="fas fa-tasks me-1"></i> Tasks
+                                        </a>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <a class="nav-link text-active-primary pb-4" data-kt-countup-tabs="true"
+                                            data-bs-toggle="tab" href="#emp_work_items" data-kt-initialized="1"
+                                            aria-selected="false" role="tab" tabindex="-1">
+                                            <i class="fas fa-list-check me-1"></i> Work Items
+                                        </a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content" id="myTabContent">
+                                    <!--begin:::Tab pane-->
+                                    <div class="tab-pane fade active show" id="emp_tasks_tasks" role="tabpanel">
+                                        <div class="d-flex flex-wrap flex-stack mb-6">
+                                            <!--begin::Heading-->
+                                            <h3 class="fw-bold my-2">My Tasks
+                                            </h3>
+                                            <!--end::Heading-->
+                                        </div>
+                                        <div class="row g-6 g-xl-9">
+                                            <div class="col-md-12 col-xl-12" *ngFor="let record of taskEventList">
+                                                <a href="javascript:;" class="card border-hover-primary">
+                                                    <div class="card-header border-0 pt-9">
+                                                        <div class="card-title m-0">
+                                                            <div class="fs-3 fw-bold text-dark">{{
+                                                                record.taskEvent.name }}
+                                                            </div>
+                                                        </div>
+                                                        <div class="card-toolbar">
+                                                            <span
+                                                                class="badge badge-primary fw-bold me-auto px-4 py-3">{{record.taskStatusName}}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-body p-9 pt-0">
+                                                        <div class="d-flex flex-wrap mb-0">
+                                                            <div class="d-flex flex-wrap fw-semibold fs-6 mb-1 pe-2">
+                                                                <a href="javascript:;"
+                                                                    class="d-flex align-items-center text-gray-400 text-hover-primary me-5 mb-2">
+                                                                    <!--begin::Svg Icon | path: icons/duotune/communication/com006.svg-->
+                                                                    <i class="fas fa-calendar-day fs-3 me-3"></i>
+                                                                    {{record.taskEvent?.eventDate |
+                                                                    luxonFormat : 'dd MMM, yyyy' }} -
+                                                                    {{record.taskEvent?.endDate |
+                                                                    luxonFormat : 'dd MMM, yyyy'}}
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="d-flex flex-wrap mb-0">
+                                                            <div class="d-flex flex-wrap fw-semibold fs-6">
+                                                                <a href="javascript:;"
+                                                                    class="d-flex align-items-center text-gray-400 text-primary me-5 mb-2">
+                                                                    <i class="fas fa-clock fs-3 me-3  text-primary"></i>
+                                                                    Est. Time:
+                                                                    {{record.taskEvent?.estimatedTime}}
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="d-flex align-items-center flex-column mt-2">
+                                                            <div
+                                                                class="d-flex justify-content-between w-100 mt-auto mb-2">
+                                                                <span class="fw-semibold fs-6 text-gray-400">
+                                                                    Compleation Percentage</span>
+                                                                <span
+                                                                    class="fw-bold fs-6">{{record.taskEvent?.completionPercentage}}%</span>
+
+                                                            </div>
+                                                            <div class="h-5px mx-3 w-100 bg-light mb-3">
+                                                                <p-slider
+                                                                    [(ngModel)]="record.taskEvent.completionPercentage"></p-slider>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="d-flex flex-wrap mb-5">
+                                                            <div
+                                                                class="symbol-group symbol-hover flex-nowrap d-flex justify-content-center">
+                                                                <div *ngFor="let team of record.team"
+                                                                    class="symbol symbol-35px symbol-circle"
+                                                                    data-bs-toggle="tooltip"
+                                                                    data-bs-original-title="Alan Warden"
+                                                                    data-kt-initialized="1">
+
+                                                                    <span *ngIf="!team.picture"
+                                                                        title="{{team.employeeName}}"
+                                                                        class="symbol-label bg-warning text-inverse-warning fw-bold">{{team.employeeName
+                                                                        | nameSplit}}</span>
+                                                                    <img *ngIf="team.picture" alt="Pic"
+                                                                        src="{{team.picture}}">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="tab-pane fade" id="emp_work_items" role="tabpanel">
+                                        <div class="card mb-9" *ngFor="let item of workItems">
+                                            <div class="card-body">
+                                                <div class="d-flex flex-wrap flex-sm-nowrap">
+                                                    <div class="flex-grow-1">
+                                                        <div
+                                                            class="d-flex justify-content-between align-items-start flex-wrap">
+                                                            <div class="d-grid flex-column">
+                                                                <div class="d-flex align-items-center mb-2">
+                                                                    <a href="javascript:;"
+                                                                        class="text-gray-900 text-hover-primary fs-4 fw-bold me-1">{{item.taskEventName}}</a>
+                                                                </div>
+                                                                <div
+                                                                    class="d-flex flex-wrap fw-semibold fs-6 mb-0 pe-2">
+                                                                    <a href="javascript:;"
+                                                                        class="d-flex align-items-center text-gray-400 text-hover-primary me-5 mb-2">
+                                                                        <i class="fas fa-tasks-alt fs-3 me-3"></i>
+                                                                        {{item.taskWorkItem?.name}}
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                            <div class="d-flex my-4">
+                                                                <a href="javascript:;"
+                                                                    *ngIf="!item.taskWorkItem.openOrClosed"
+                                                                    class="btn btn-sm btn-primary me-2">
+                                                                    Open
+                                                                </a>
+                                                                <a href="javascript:;"
+                                                                    *ngIf="item.taskWorkItem.openOrClosed"
+                                                                    class="btn btn-sm btn-success me-2">
+                                                                    Closed
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="d-grid">
+                                                            <div class="d-flex flex-wrap fw-semibold fs-6 mb-1 pe-2">
+                                                                <a href="javascript:;"
+                                                                    class="d-flex align-items-center text-gray-400 text-hover-primary me-5 mb-2">
+                                                                    <i class="fas fa-calendar-day fs-3 me-3"></i>
+                                                                    {{item.taskWorkItem?.startDate |
+                                                                    luxonFormat : 'dd MMM, yyyy' }} -
+                                                                    {{item.taskWorkItem?.endDate |
+                                                                    luxonFormat : 'dd MMM, yyyy'}}
+                                                                </a>
+                                                            </div>
+                                                            <div class="d-flex justify-content-between align-items-end">
+
+                                                                <div class="d-flex flex-wrap fw-semibold fs-6">
+                                                                    <a href="javascript:;"
+                                                                        class="d-flex align-items-center text-gray-400 text-gray-600 me-5 mb-2">
+                                                                        <i
+                                                                            class="fas fa-clock fs-3 me-3 text-danger"></i>
+                                                                        Est. Time: {{item.taskWorkItem?.actualHours}}
+                                                                        Hours
+                                                                    </a>
+                                                                </div>
+
+                                                                <div class="symbol-group symbol-hover">
+                                                                    <div class="symbol symbol-30px w-30px bg-light">
+                                                                        <img alt="Pic" *ngIf="item?.picture" alt="Pic"
+                                                                            src="{{item?.picture}}">
+                                                                        <span *ngIf="!item?.picture"
+                                                                            title="{{item?.employeeName}}"
+                                                                            class="symbol-label bg-warning text-inverse-warning fw-bold">{{item?.employeeName
+                                                                            | nameSplit}}</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="d-flex align-items-center flex-column mt-5">
+                                                                <div
+                                                                    class="d-flex justify-content-between w-100 mt-auto mb-2">
+                                                                    <span class="fw-semibold fs-6 text-gray-400">
+                                                                        Compleation Percentage</span>
+                                                                    <span
+                                                                        class="fw-bold fs-6">{{item.taskWorkItem?.completionPercentage}}%</span>
+
+                                                                </div>
+                                                                <div class="h-5px mx-3 w-100 bg-light mb-3">
+                                                                    <p-slider
+                                                                        [(ngModel)]="item.taskWorkItem.completionPercentage"></p-slider>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-8">
+                            <div class="text-right d-flex justify-content-end mb-3 mt-4 mr-4 pr-2">
+                                <div class="btn-group" role="group" aria-label="...">
+                                    <button (click)="onCalenderView()" [class.active]="!showCalendarView"
+                                        title="Calendar View" type="button" class="btn btn-secondary">
+                                        <i class="fas fa-calendar-day"></i>
+                                    </button>
+                                    <button (click)="onListView()" [class.active]="showListView" title="List View"
+                                        type="button" class="btn btn-secondary">
+                                        <i class="fas fa-list"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div *ngIf="!showCalendarView" class="w-100">
+                                <app-task-schedule-calendar *ngIf="employeeId"
+                                    [employeeId]="employeeId"></app-task-schedule-calendar>
+                            </div>
+                            <div *ngIf="showListView" class="w-100">
+                                <app-admin-dashboard-recent-task></app-admin-dashboard-recent-task>
+                            </div>
+                        </div>
+                    </div>
+                    <!--begin::content-->
+
+                    <!--end::content-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

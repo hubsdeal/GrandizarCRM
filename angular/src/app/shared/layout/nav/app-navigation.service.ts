@@ -28,10 +28,22 @@ export class AppNavigationService {
                 [],
                 [
                     new AppMenuItem(
+                        'Task & Schedule Dashboard',
+                        'Pages.Administration.Host.Dashboard',
+                        'fa fa-list',
+                        '/app/admin/dashboard/taskAndScheduleDashboard'
+                    ),
+                    new AppMenuItem(
                         'Admin Dashboard',
                         'Pages.Administration.Host.Dashboard',
                         'flaticon-line-graph',
                         '/app/admin/hostDashboard'
+                    ),
+                    new AppMenuItem(
+                        'New Orders',
+                        'Pages.Administration.Host.Dashboard',
+                        'fas fa-shopping-cart',
+                        '/app/admin/dashboard/newOrders'
                     ),
                 ]
             ),

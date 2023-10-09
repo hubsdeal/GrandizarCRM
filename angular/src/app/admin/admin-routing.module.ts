@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
+import { TaskAndScheduleDashbaordComponent } from './dashboard/task-and-schedule-dashbaord/task-and-schedule-dashbaord.component';
+import { AdminDashboardRecentOrdersComponent } from './dashboard/admin-dashboard-recent-orders/admin-dashboard-recent-orders.component';
 
 @NgModule({
     imports: [
@@ -86,6 +88,14 @@ import { NavigationEnd, Router, RouterModule } from '@angular/router';
                         loadChildren: () =>
                             import('./dashboard/host-dashboard.module').then((m) => m.HostDashboardModule),
                         data: { permission: 'Pages.Administration.Host.Dashboard' },
+                    },
+                    {
+                        path: 'dashboard/taskAndScheduleDashboard',
+                        component: TaskAndScheduleDashbaordComponent,
+                    },
+                    {
+                        path: 'dashboard/newOrders',
+                        component: AdminDashboardRecentOrdersComponent,
                     },
                     {
                         path: 'demo-ui-components',

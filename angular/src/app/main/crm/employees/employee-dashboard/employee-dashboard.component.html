@@ -264,9 +264,8 @@
                                                                         </div>
                                                                         <!--end::Name-->
                                                                         <!--begin::Description-->
-                                                                        <div class="text-gray-400 fw-semibold fs-5 mt-1 mb-7"
-                                                                            *ngIf="sanitizeHtml(record.taskEvent.description)">
-                                                                            <div [innerHTML]="sanitizedHtml"></div>
+                                                                        <div class="text-gray-400 fw-semibold fs-5 mt-1 mb-7">
+                                                                            <div [innerHTML]="record.taskEvent.description"></div>
                                                                         </div>
                                                                         <!-- <p
                                                                             class="text-gray-400 fw-semibold fs-5 mt-1 mb-7">
@@ -566,7 +565,7 @@
                                                 </div>
                                             </div>
                                             <div *ngIf="!showCalendarView" class="w-100">
-                                                <app-task-schedule-calendar></app-task-schedule-calendar>
+                                                <app-task-schedule-calendar *ngIf="employeeId" [employeeId]="employeeId"></app-task-schedule-calendar>
                                             </div>
                                             <div *ngIf="showListView" class="w-100">
                                                 <app-my-task-events></app-my-task-events>
