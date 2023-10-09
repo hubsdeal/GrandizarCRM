@@ -45,7 +45,7 @@
                         <!--begin::Card Title-->
                         <div class="card-title m-0">
                             <!--begin::Avatar-->
-                            <div class="d-flex align-items-center">
+                            <div class="d-flex align-items-center" *ngIf="workItem?.employeeName">
                                 <div class="symbol-group symbol-hover">
                                     <div data-bs-toggle="tooltip" aria-label="workItem?.employeeName"
                                         data-bs-original-title="workItem?.employeeName" data-kt-initialized="1"
@@ -75,7 +75,7 @@
                                     <li>
                                         <a href="javascript:;" *ngIf="permission.isGranted('Pages.TaskWorkItems.Edit')"
                                             class="dropdown-item" (click)="
-                                                createOrEditTaskWorkItemModal.show(workItem.taskWorkItem.id)
+                                                EditTaskWorkItemModal(false,workItem.taskWorkItem.id)
                                             ">
                                             {{ l('Edit') }}
                                         </a>

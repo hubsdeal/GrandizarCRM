@@ -143,6 +143,11 @@ export class TaskWorkItemsComponent extends AppComponentBase implements OnInit{
         this.createOrEditTaskWorkItemModal.isBulkItem = status;
         this.createOrEditTaskWorkItemModal.show();
     }
+    EditTaskWorkItemModal(status:boolean,workItemId:number): void {
+        this.createOrEditTaskWorkItemModal.taskEventId = this.taskEventId;
+        this.createOrEditTaskWorkItemModal.isBulkItem = status;
+        this.createOrEditTaskWorkItemModal.show(workItemId);
+    }
 
     deleteTaskWorkItem(id:number): void {
         this.message.confirm('', this.l('AreYouSure'), (isConfirmed) => {

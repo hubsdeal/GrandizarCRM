@@ -9,6 +9,7 @@ import { DateTimeService } from '@app/shared/common/timing/date-time.service';
 import { TaskTagTaskEventLookupTableModalComponent } from './taskTag-taskEvent-lookup-table-modal.component';
 import { TaskTagMasterTagCategoryLookupTableModalComponent } from './taskTag-masterTagCategory-lookup-table-modal.component';
 import { TaskTagMasterTagLookupTableModalComponent } from './taskTag-masterTag-lookup-table-modal.component';
+import { SelectItem } from 'primeng/api';
 
 @Component({
     selector: 'createOrEditTaskTagModal',
@@ -33,7 +34,11 @@ export class CreateOrEditTaskTagModalComponent extends AppComponentBase implemen
     taskEventName = '';
     masterTagCategoryName = '';
     masterTagName = '';
-
+    masterTags:any;
+    masterTagCategory:any;
+    verifyOptions: SelectItem[];
+    seletedTagCategory:any;
+    selctedTag:any;
     constructor(
         injector: Injector,
         private _taskTagsServiceProxy: TaskTagsServiceProxy,
@@ -49,7 +54,7 @@ export class CreateOrEditTaskTagModalComponent extends AppComponentBase implemen
             this.taskEventName = '';
             this.masterTagCategoryName = '';
             this.masterTagName = '';
-
+            this.taskTag.verfied=true;
             this.active = true;
             this.modal.show();
         } else {
@@ -64,11 +69,61 @@ export class CreateOrEditTaskTagModalComponent extends AppComponentBase implemen
                 this.modal.show();
             });
         }
+        this.verifyOptions = [{ label: 'Verified', value: true }, { label: 'Not Verified', value: false }];
     }
+    showWithTaskId(taskEcventId?: number): void {
 
+            this.taskTag = new CreateOrEditTaskTagDto();
+           // this.taskTag.id = taskTagId;
+            this.taskEventName = '';
+            this.masterTagCategoryName = '';
+            this.masterTagName = '';
+            this.taskTag.taskEventId = taskEcventId;
+            this.taskTag.verfied=true;
+            this.verifyOptions = [{ label: 'Verified', value: true }, { label: 'Not Verified', value: false }];
+            this.active = true;
+            this.modal.show();
+            this.getAllMasterTag(taskEcventId);
+            this.getAllMasterTagCategory();
+        
+    }
+    getAllMasterTag(taskEcventId) {
+
+
+        this._taskTagsServiceProxy
+            .getAllMasterTagForLookupTable(
+                taskEcventId,
+                '',
+                '',
+                0,
+                2000
+            )
+            .subscribe((result) => {
+
+                this.masterTags = result.items;
+            });
+
+            //this._taskTagsServiceProxy.g
+    }
+    getAllMasterTagCategory() {
+        this._taskTagsServiceProxy
+            .getAllMasterTagCategoryForLookupTable(
+                '',
+                '',
+                0,
+                2000
+            )
+            .subscribe((result) => {
+                //this.primengTableHelper.totalRecordsCount = result.totalCount;
+                this.masterTagCategory = result.items;
+                //this.primengTableHelper.hideLoadingIndicator();
+            });
+    }
     save(): void {
         this.saving = true;
-
+        debugger
+        this.taskTag.masterTagId = this.selctedTag.id;
+        this.taskTag.masterTagCategoryId = this.seletedTagCategory.id;
         this._taskTagsServiceProxy
             .createOrEdit(this.taskTag)
             .pipe(

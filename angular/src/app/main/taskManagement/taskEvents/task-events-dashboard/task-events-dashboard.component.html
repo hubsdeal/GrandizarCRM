@@ -88,8 +88,8 @@
                                 High</a>
                             <a href="javascript:;" *ngIf="!taskEvent?.taskEvent?.priority" class="btn btn-sm btn-warning">
                                 Low</a>
-
-                            <a href="javascript:;" class="btn btn-sm btn-secondary"><i
+                                <app-taskTags [taskEventId]="taskEventId"></app-taskTags>
+                            <a href="javascript:;" class="btn btn-sm btn-secondary" (click)="createOrEditTaskTagModal.showWithTaskId(this.taskEventId)"><i
                                     class="fas fa-plus-circle fs-5 me-2"></i>
                                 Tags
                             </a>
@@ -335,5 +335,7 @@
         <createOrEditTaskEventModal #createOrEditTaskEventModal (modalSave)="getTaskById()">
         </createOrEditTaskEventModal>
         <viewTaskEventModal #viewTaskEventModal></viewTaskEventModal>
+        <createOrEditTaskTagModal #createOrEditTaskTagModal (modalSave)="getTaskTags()"></createOrEditTaskTagModal>
+        <viewTaskTagModal #viewTaskTagModal></viewTaskTagModal>
     </div>
 </div>

@@ -26,7 +26,7 @@
                     ></button>
                 </div>
                 <div class="modal-body">
-                    <div class="my-3">
+                    <div class="my-3" *ngIf="false">
                         <label class="form-label" for="TaskEventName">{{ l('TaskEvent') }}</label>
                         <div class="input-group">
                             <input
@@ -55,9 +55,15 @@
                         hidden
                     />
 
-                    <div class="my-3">
+                    <div class="my-3 p_filter">
                         <label class="form-label" for="MasterTagCategoryName">{{ l('MasterTagCategory') }}</label>
-                        <div class="input-group">
+
+                                <p-dropdown [options]="masterTagCategory" [filter]="true" [virtualScroll]="true"
+                                placeholder="Select Master Tag Category" [itemSize]="30" name="displayName"
+                                optionLabel="displayName" optionId="id" [(ngModel)]="seletedTagCategory"
+                                filterBy="displayName" [style]="{ width: '100%' }"
+                                ></p-dropdown>
+                        <!-- <div class="input-group">
                             <input
                                 class="form-control"
                                 id="MasterTagCategoryName"
@@ -81,19 +87,19 @@
                             >
                                 <i class="fa fa-times"></i>
                             </button>
-                        </div>
+                        </div> -->
                     </div>
-                    <input
+                    <!-- <input
                         class="form-control"
                         name="taskTag.masterTagCategoryId"
                         [(ngModel)]="taskTag.masterTagCategoryId"
                         type="text"
                         hidden
-                    />
+                    /> -->
 
-                    <div class="my-3">
+                    <div class="my-3 p_filter">
                         <label class="form-label" for="MasterTagName">{{ l('MasterTag') }}</label>
-                        <div class="input-group">
+                        <!-- <div class="input-group">
                             <input
                                 class="form-control"
                                 id="MasterTagName"
@@ -109,17 +115,26 @@
                             <button class="btn btn-danger btn-icon" type="button" (click)="setMasterTagIdNull()">
                                 <i class="fa fa-times"></i>
                             </button>
-                        </div>
+                        </div> -->
+                        <!-- <p-dropdown [options]="masterTags"  [virtualScroll]="true"
+                                placeholder="Select" [itemSize]="30" name="name" optionLabel="displayName"
+                                optionId="id" [(ngModel)]="taskTag.masterTagId"
+                                [style]="{ width: '100%' }" ></p-dropdown>  -->
+                                <p-dropdown [options]="masterTags" [filter]="true" [virtualScroll]="true"
+                            placeholder="Select Master Tag" [itemSize]="30" name="displayName"
+                            optionLabel="displayName" optionId="id" [(ngModel)]="selctedTag"
+                            filterBy="displayName" [style]="{ width: '100%' }"
+                            ></p-dropdown>
                     </div>
-                    <input
+                    <!-- <input
                         class="form-control"
                         name="taskTag.masterTagId"
                         [(ngModel)]="taskTag.masterTagId"
                         type="text"
                         hidden
-                    />
+                    /> -->
 
-                    <div class="my-3">
+                    <div class="my-3" *ngIf="false">
                         <label class="form-label" for="TaskTag_CustomTag">{{ l('CustomTag') }}</label>
                         <input
                             type="text"
@@ -134,7 +149,7 @@
                         <validation-messages [formCtrl]="TaskTag_CustomTag"></validation-messages>
                     </div>
 
-                    <div class="my-3">
+                    <div class="my-3" *ngIf="false">
                         <label class="form-label" for="TaskTag_TagValue">{{ l('TagValue') }}</label>
                         <input
                             type="text"
@@ -149,9 +164,15 @@
                         <validation-messages [formCtrl]="TaskTag_TagValue"></validation-messages>
                     </div>
 
-                    <br />
-                    <label class="form-check form-check-custom form-check-solid">
-                        <input
+                    <div class="my-3 select_button_custom" >
+                        <label class="form-label" for="TaskTag_TagValue">{{ l('Is Verfied') }}</label>
+                        <p-selectButton [options]="verifyOptions" name="verifyOptions" id="verifyOptions"
+                        [(ngModel)]="taskTag.verfied" optionLabel="label"
+                        optionValue="value"></p-selectButton>
+                        
+                    </div>
+                    <!--<label class="form-check form-check-custom form-check-solid" >
+                         <input
                             id="TaskTag_Verfied"
                             #TaskTag_Verfied="ngModel"
                             name="Verfied"
@@ -161,9 +182,10 @@
                         />
                         <span class="form-check-label">
                             {{ l('Verfied') }}
-                        </span>
-                    </label>
-                    <validation-messages [formCtrl]="TaskTag_Verfied"></validation-messages>
+                        </span> 
+                        
+                    </label>-->
+                    <!-- <validation-messages [formCtrl]="TaskTag_Verfied" ></validation-messages> -->
 
                     <div class="my5">
                         <label class="form-label" for="TaskTag_Sequence">{{ l('Sequence') }}</label>
