@@ -344,10 +344,11 @@
     <createOrEditTaskTagModal #createOrEditTaskTagModal (modalSave)="getTaskTags()"></createOrEditTaskTagModal>
     <viewTaskTagModal #viewTaskTagModal></viewTaskTagModal>
 </div> -->
-<div  *ngFor="let record of taskTags">
-    <!--begin::Symbol-->
-    <a href="javascript:;" *ngIf="record?.masterTagName" class="btn btn-sm btn-primary">
-        {{record?.masterTagName | truncate:20}}</a>
-
-    <!--end::Text-->
+<div class="d-flex ms-4">
+    <span class="task_tag_hover_menu d-block me-3" *ngFor="let record of taskTags">
+        <a href="javascript:;" *ngIf="record?.masterTagName" class="btn btn-sm btn-primary" (click)="deleteTaskTag(record.taskTag)">
+            {{record?.masterTagName | truncate:20}}
+            <i class="fas fa-times fs-2 task_del"></i>
+        </a>
+    </span>
 </div>
