@@ -14,6 +14,8 @@ import { SiteDefaultContentComponent } from './cms/contents/site-default-content
 import { MyProductsComponent } from './shop/products/my-products/my-products.component';
 import { TaskEventsLibraryComponent } from './taskManagement/taskEvents/task-events-library/task-events-library.component';
 import { TimesheetsComponent } from './taskManagement/timesheets/timesheets.component';
+import { ProjectsComponent } from './jobManagement/jobs/projects/projects.component';
+import { ProjectDashboardComponent } from './jobManagement/jobs/projects/project-dashboard/project-dashboard.component';
 
 @NgModule({
     imports: [
@@ -979,6 +981,17 @@ import { TimesheetsComponent } from './taskManagement/timesheets/timesheets.comp
                         path: 'jobManagement/jobs',
                         loadChildren: () => import('./jobManagement/jobs/job.module').then(m => m.JobModule),
                         data: { permission: 'Pages.Jobs' }
+                    },
+
+                    {
+                        path: 'jobManagement/projects',
+                        component: ProjectsComponent,
+                        data: { permission: 'Pages.Jobs' }
+                    },
+
+                    {
+                        path: 'jobManagement/projects/dashboard/:jobId',
+                        component: ProjectDashboardComponent,
                     },
 
 
