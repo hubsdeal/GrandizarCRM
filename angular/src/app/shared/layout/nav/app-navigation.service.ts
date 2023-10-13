@@ -57,8 +57,8 @@ export class AppNavigationService {
                     new AppMenuItem('Master Order List', 'Pages.Orders', 'fas fa-list', '/app/main/orderManagement/orders'),
                     new AppMenuItem('My Order List', 'Pages.Orders', 'fas fa-list-alt', '/app/main/orderManagement/myOrders'),
                     new AppMenuItem('Abandoned Cart', 'Pages.Orders', 'fas fa-shopping-cart', '/app/main/orderManagement/abandonedCart'),
-                    new AppMenuItem('Wish List', 'Pages.WishLists', 'fas fa-heart', '/app/main/shop/wishLists'),
-                    new AppMenuItem('Shopping Cart', 'Pages.ShoppingCarts', 'fas fa-shopping-cart', '/app/main/shop/shoppingCarts'),
+                    // new AppMenuItem('Wish List', 'Pages.WishLists', 'fas fa-heart', '/app/main/shop/wishLists'),
+                    // new AppMenuItem('Shopping Cart', 'Pages.ShoppingCarts', 'fas fa-shopping-cart', '/app/main/shop/shoppingCarts'),
                     new AppMenuItem('Sales Lead', 'Pages.Leads', 'flaticon-more', '/app/main/salesLeadManagement/leads'),
                 ]
             ),
@@ -71,7 +71,7 @@ export class AppNavigationService {
                 [
                     new AppMenuItem('Delivery Dispatch Board', 'Pages.OrderDeliveryByCaptains', 'fas fa-users', '/app/main/orderManagement/orderDeliveryByCaptains'),
                     new AppMenuItem('Delivery Disruption', 'Pages.OrderDeliveryChangeCaptains', 'fas fa-users', '/app/main/orderManagement/orderDeliveryChangeCaptains'),
-                    new AppMenuItem('Delivery Captain List', 'Pages.OrderDeliveryChangeCaptains', 'fas fa-users', '/app/main/orderManagement/orderDeliveryChangeCaptains'),
+                    new AppMenuItem('Delivery Captain List', 'Pages.OrderDeliveryChangeCaptains', 'fas fa-users', '/app/main/orderManagement/deliveryCaptains'),
                 ]
             ),
             new AppMenuItem(
@@ -132,7 +132,7 @@ export class AppNavigationService {
                 [
                     new AppMenuItem('Master Job List', 'Pages.Jobs', 'fas fa-briefcase', '/app/main/jobManagement/jobs'),
                     new AppMenuItem('My Job List', 'Pages.Jobs', 'fas fa-briefcase', '/app/main/jobManagement/jobs'),
-                    new AppMenuItem('Projects', 'Pages.Jobs', 'fas fa-briefcase', '/app/main/jobManagement/projects'),
+                    new AppMenuItem('Projects', 'Pages.Jobs', 'fas fa-briefcase', '/app/main/ppm/projects'),
                     new AppMenuItem('Applicant List', 'Pages.Jobs', 'fas fa-briefcase', '/app/main/jobManagement/ApplicantsList'),
                     new AppMenuItem('Job Applicant Hire Matrixes', 'Pages.JobApplicantHireMatrixes', 'fas fa-briefcase', '/app/main/jobManagement/jobApplicantHireMatrixes'),
                     new AppMenuItem('Job Applicant Hire Status Typess', 'Pages.JobApplicantHireStatusTypes', 'fas fa-briefcase', '/app/main/jobManagement/jobApplicantHireStatusTypes'),

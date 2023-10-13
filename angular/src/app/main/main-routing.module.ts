@@ -16,6 +16,7 @@ import { TaskEventsLibraryComponent } from './taskManagement/taskEvents/task-eve
 import { TimesheetsComponent } from './taskManagement/timesheets/timesheets.component';
 import { ProjectsComponent } from './jobManagement/jobs/projects/projects.component';
 import { ProjectDashboardComponent } from './jobManagement/jobs/projects/project-dashboard/project-dashboard.component';
+import { OrderDeliveryCaptainListComponent } from './crm/employees/order-delivery-captain-list/order-delivery-captain-list.component';
 
 @NgModule({
     imports: [
@@ -281,6 +282,13 @@ import { ProjectDashboardComponent } from './jobManagement/jobs/projects/project
                         loadChildren: () => import('./orderManagement/orderTeams/orderTeam.module').then(m => m.OrderTeamModule),
                         data: { permission: 'Pages.OrderTeams' }
                     },
+
+                    {
+                        path: 'orderManagement/deliveryCaptains',
+                        component: OrderDeliveryCaptainListComponent,
+                        data: { permission: 'Pages.OrderTeams' }
+                    },
+
 
 
                     {
@@ -984,13 +992,13 @@ import { ProjectDashboardComponent } from './jobManagement/jobs/projects/project
                     },
 
                     {
-                        path: 'jobManagement/projects',
+                        path: 'ppm/projects',
                         component: ProjectsComponent,
                         data: { permission: 'Pages.Jobs' }
                     },
 
                     {
-                        path: 'jobManagement/projects/dashboard/:jobId',
+                        path: 'ppm/projects/dashboard/:jobId',
                         component: ProjectDashboardComponent,
                     },
 

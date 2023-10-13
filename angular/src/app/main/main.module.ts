@@ -41,12 +41,12 @@ NgxBootstrapDatePickerConfigService.registerNgxBootstrapDatePickerLocales();
         SubheaderModule,
         NgMultiSelectDropDownModule.forRoot(),
         MultiSelectModule,
-        SwiperModule
+        SwiperModule,
     ],
     declarations: [
         MasterDataIndexComponent,
         TaskLibrariesComponent,
-        TaskScheduleCalendarComponent
+        TaskScheduleCalendarComponent,
     ],
     providers: [
         { provide: BsDatepickerConfig, useFactory: NgxBootstrapDatePickerConfigService.getDatepickerConfig },

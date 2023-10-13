@@ -1,7 +1,7 @@
 ﻿import { Component, ViewChild, Injector, Output, EventEmitter, OnInit, ElementRef } from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs/operators';
-import { LeadsServiceProxy, CreateOrEditLeadDto } from '@shared/service-proxies/service-proxies';
+import { LeadsServiceProxy, CreateOrEditLeadDto, ContactsServiceProxy } from '@shared/service-proxies/service-proxies';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { DateTime } from 'luxon';
 
@@ -60,7 +60,8 @@ export class CreateOrEditLeadModalComponent extends AppComponentBase implements 
     constructor(
         injector: Injector,
         private _leadsServiceProxy: LeadsServiceProxy,
-        private _dateTimeService: DateTimeService
+        private _dateTimeService: DateTimeService,
+        private _contactServiceProxy: ContactsServiceProxy,
     ) {
         super(injector);
     }
@@ -206,6 +207,14 @@ export class CreateOrEditLeadModalComponent extends AppComponentBase implements 
     getNewContactId() {
         this.lead.contactId = this.leadContactLookupTableModal.id;
         this.contactFullName = this.leadContactLookupTableModal.displayName;
+        this._contactServiceProxy.getContactForEdit(this.lead.contactId).subscribe((result) => {
+            this.lead.firstName = result.contact.firstName;
+            this.lead.lastName = result.contact.lastName;
+            this.lead.email = result.contact.businessEmail;
+            this.lead.phone = result.contact.officePhone;
+            this.lead.jobTitle = result.contact.jobTitle;
+            this.lead.company = result.contact.companyName;
+        });
     }
     getNewBusinessId() {
         this.lead.businessId = this.leadBusinessLookupTableModal.id;

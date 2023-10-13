@@ -1,14 +1,14 @@
 <div [@routerTransition]>
-    <sub-header [title]="'Jobs' | localize" [description]="">
+    <sub-header [title]="'Project List' | localize" [description]="">
         <div role="actions">
-            <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1">
+            <!-- <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1">
                 <i class="fa fa-file-excel"></i>
                 {{ l('ExportToExcel') }}
-            </button>
+            </button> -->
 
             <button *ngIf="isGranted('Pages.Jobs.Create')" (click)="createJob()" class="btn btn-primary blue">
                 <i class="fa fa-plus"></i>
-                {{ l('Job') }}
+                {{ l('Projects') }}
             </button>
         </div>
     </sub-header>
@@ -632,7 +632,7 @@
                                         <div class="d-flex flex-wrap flex-grow-1 mt-n2 mt-lg-n1">
                                             <div class="d-flex flex-column flex-grow-1 my-lg-0 my-2 pe-3">
                                                 <a href="javascript:;" title="{{ record.job.title }}"
-                                                    [routerLink]="['/app/main/jobManagement/projects/dashboard',record.job.id]"
+                                                    [routerLink]="['/app/main/ppm/projects/dashboard',record.job.id]"
                                                     class="fs-5 text-gray-800 text-hover-primary fw-bold mb-1">
                                                     {{ record.job.title }}
                                                     <i *ngIf="record.job.published"

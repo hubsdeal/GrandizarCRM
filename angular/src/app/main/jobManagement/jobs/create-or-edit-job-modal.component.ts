@@ -61,6 +61,7 @@ export class CreateOrEditJobModalComponent extends AppComponentBase implements O
     jobStatusTypeName = '';
     storeName = '';
 
+    isFromProject:boolean = false;
     constructor(
         injector: Injector,
         private _jobsServiceProxy: JobsServiceProxy,
