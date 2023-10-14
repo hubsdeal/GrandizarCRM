@@ -77,6 +77,7 @@ export class TaskTagsComponent extends AppComponentBase {
                 this.taskEventNameFilter,
                 this.masterTagCategoryNameFilter,
                 this.masterTagNameFilter,
+                undefined,
                 this.primengTableHelper.getSorting(this.dataTable),
                 this.primengTableHelper.getSkipCount(this.paginator, event),
                 this.primengTableHelper.getMaxResultCount(this.paginator, event)
