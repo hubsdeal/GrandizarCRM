@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { CalendarComponent } from 'ng-fullcalendar';
 import { Options } from 'fullcalendar';
 import { EventService } from './event.service';
@@ -34,6 +34,8 @@ export class TaskScheduleCalendarComponent implements OnInit  {
   minCompletionPercentageFilterEmpty: number;
   taskEventNameFilter = '';
   employeeNameFilter = '';
+
+  @Input() employeeId: number;
   constructor(protected eventService: EventService,
     private _taskEventsServiceProxy: TaskEventsServiceProxy,
     private _dateTimeService: DateTimeService) { }
@@ -63,7 +65,7 @@ export class TaskScheduleCalendarComponent implements OnInit  {
         undefined,
         undefined,
         undefined,
-        1,//this.employeeId,
+        this.employeeId,
         '',
         0,
         100

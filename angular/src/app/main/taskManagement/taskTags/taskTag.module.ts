@@ -20,5 +20,12 @@ import { TaskTagMasterTagLookupTableModalComponent } from './taskTag-masterTag-l
         TaskTagMasterTagLookupTableModalComponent,
     ],
     imports: [AppSharedModule, TaskTagRoutingModule, AdminSharedModule],
+    exports:[TaskTagsComponent,
+        CreateOrEditTaskTagModalComponent,
+        ViewTaskTagModalComponent,
+
+        TaskTagTaskEventLookupTableModalComponent,
+        TaskTagMasterTagCategoryLookupTableModalComponent,
+        TaskTagMasterTagLookupTableModalComponent,]
 })
 export class TaskTagModule {}

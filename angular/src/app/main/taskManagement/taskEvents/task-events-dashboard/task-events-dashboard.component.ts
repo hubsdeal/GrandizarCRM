@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AppConsts } from '@shared/AppConsts';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
 import { AppComponentBase } from '@shared/common/app-component-base';
-import { CreateOrEditTaskDocumentDto, DocumentTypesServiceProxy, GetDocumentTypeForViewDto, GetTaskEventForViewDto, TaskDocumentsServiceProxy, TaskEventsServiceProxy } from '@shared/service-proxies/service-proxies';
+import { CreateOrEditTaskDocumentDto, DocumentTypesServiceProxy, GetDocumentTypeForViewDto, GetTaskEventForViewDto, TaskDocumentsServiceProxy, TaskEventsServiceProxy, TaskTagsServiceProxy } from '@shared/service-proxies/service-proxies';
 import { FileDownloadService } from '@shared/utils/file-download.service';
 import { IAjaxResponse, TokenService } from 'abp-ng2-module';
 import { FileItem, FileUploader, FileUploaderOptions } from 'ng2-file-upload';
@@ -14,6 +14,8 @@ import { finalize } from 'rxjs/operators';
 import { CreateOrEditTaskEventModalComponent } from '../create-or-edit-taskEvent-modal.component';
 import { ChatGptResponseModalComponent } from '@app/shared/chat-gpt-response-modal/chat-gpt-response-modal.component';
 import { MatDialog } from '@angular/material/dialog';
+import { CreateOrEditTaskTagModalComponent } from '../../taskTags/create-or-edit-taskTag-modal.component';
+import { ViewTaskTagModalComponent } from '../../taskTags/view-taskTag-modal.component';
 
 
 
@@ -27,6 +29,11 @@ import { MatDialog } from '@angular/material/dialog';
 export class TaskEventsDashboardComponent extends AppComponentBase implements OnInit, AfterViewInit {
   @ViewChild('createOrEditTaskEventModal', { static: true })
   createOrEditTaskEventModal: CreateOrEditTaskEventModalComponent;
+
+   @ViewChild('createOrEditTaskTagModal', { static: true })
+    createOrEditTaskTagModal: CreateOrEditTaskTagModalComponent;
+    @ViewChild('viewTaskTagModal', { static: true }) viewTaskTagModal: ViewTaskTagModalComponent;
+    
   taskEventId: number;
   taskEvent: GetTaskEventForViewDto = new GetTaskEventForViewDto();
   docTypes: GetDocumentTypeForViewDto[];
@@ -46,8 +53,22 @@ export class TaskEventsDashboardComponent extends AppComponentBase implements On
   @ViewChild('paginator', { static: true }) paginator: Paginator;
   taskDescription: any;
   sidebarVisible: boolean = false;
+  
+  customTagFilter = '';
+  tagValueFilter = '';
+  verfiedFilter = -1;
+  maxSequenceFilter: number;
+  maxSequenceFilterEmpty: number;
+  minSequenceFilter: number;
+  minSequenceFilterEmpty: number;
+  masterTagCategoryNameFilter = '';
+  masterTagNameFilter = '';
+
+taskTags:any;
+
   constructor(
-    injector: Injector,
+      injector: Injector,
+      private _taskTagsServiceProxy: TaskTagsServiceProxy,
     private route: ActivatedRoute,
     private _tokenService: TokenService,
     private _taskEventsServiceProxy: TaskEventsServiceProxy,
@@ -67,6 +88,7 @@ export class TaskEventsDashboardComponent extends AppComponentBase implements On
     this.getDocTypes();
     this.getTaskDocuments();
     this.initFileUploader();
+    this.getTaskTags();
   }
   ngAfterViewInit() {
 
@@ -76,6 +98,7 @@ export class TaskEventsDashboardComponent extends AppComponentBase implements On
       this.taskEvent = result
     })
   }
+ 
   getDocTypes() {
     this._documentTypes.getAll('', '', '', 0, 50).subscribe((result) => {
       this.docTypes = result.items
@@ -184,6 +207,41 @@ export class TaskEventsDashboardComponent extends AppComponentBase implements On
     this.createOrEditTaskEventModal.show();
   }
 
+  createTaskTag(): void {
+    this.createOrEditTaskTagModal.show(null);
+}
+getTaskTags() {
+  // if (this.primengTableHelper.shouldResetPaging(event)) {
+  //     this.paginator.changePage(0);
+  //     if (this.primengTableHelper.records && this.primengTableHelper.records.length > 0) {
+  //         return;
+  //     }
+  // }
+
+  // this.primengTableHelper.showLoadingIndicator();
+
+  this._taskTagsServiceProxy
+      .getAll(
+          undefined,
+          this.customTagFilter,
+          this.tagValueFilter,
+          this.verfiedFilter,
+          this.maxSequenceFilter == null ? this.maxSequenceFilterEmpty : this.maxSequenceFilter,
+          this.minSequenceFilter == null ? this.minSequenceFilterEmpty : this.minSequenceFilter,
+          this.taskEventNameFilter,
+          this.masterTagCategoryNameFilter,
+          this.masterTagNameFilter,
+          this.taskEventId,
+          '',
+          0,
+          100
+      )
+      .subscribe((result) => {
+          //this.primengTableHelper.totalRecordsCount = result.totalCount;
+          this.taskTags = result.items;
+          //this.primengTableHelper.hideLoadingIndicator();
+      });
+}
 
   openAiModalPr(fieldName: string): void {
     const taskName = this.taskEvent.taskEvent.name;

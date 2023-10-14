@@ -15,6 +15,7 @@ import { MainModule } from '@app/main/main.module';
 import { TaskEventModule } from '@app/main/taskManagement/taskEvents/taskEvent.module';
 import { OrderModule } from '@app/main/orderManagement/orders/order.module';
 import { ProductModule } from '@app/main/shop/products/product.module';
+import { OrderDeliveryCaptainListComponent } from './order-delivery-captain-list/order-delivery-captain-list.component';
 
 @NgModule({
     declarations: [
@@ -27,7 +28,19 @@ import { ProductModule } from '@app/main/shop/products/product.module';
         EmployeeContactLookupTableModalComponent,
         EmployeeDashboardComponent,
         MyEmployeesComponent,
+        OrderDeliveryCaptainListComponent,
     ],
     imports: [AppSharedModule, EmployeeRoutingModule, AdminSharedModule, StoreModule, MainModule, TaskEventModule,OrderModule,ProductModule],
+    exports: [
+        EmployeesComponent,
+        CreateOrEditEmployeeModalComponent,
+        ViewEmployeeModalComponent,
+
+        EmployeeStateLookupTableModalComponent,
+        EmployeeCountryLookupTableModalComponent,
+        EmployeeContactLookupTableModalComponent,
+        EmployeeDashboardComponent,
+        MyEmployeesComponent,
+    ]
 })
 export class EmployeeModule {}

@@ -9,8 +9,10 @@ import { AdminDashboardRecentTaskComponent } from './admin-dashboard-recent-task
 import { AdminDashboardRecentOrdersComponent } from './admin-dashboard-recent-orders/admin-dashboard-recent-orders.component';
 import { AccordionModule } from 'primeng/accordion';
 import { AdminDashboardStatisticsComponent } from './admin-dashboard-statistics/admin-dashboard-statistics.component';
+import { MainModule } from '@app/main/main.module';
+import { TaskAndScheduleDashbaordComponent } from './task-and-schedule-dashbaord/task-and-schedule-dashbaord.component';
 @NgModule({
-    declarations: [HostDashboardComponent, AdminDashboardRecentStoreComponent, AdminDashboardRecentTaskComponent, AdminDashboardRecentOrdersComponent, AdminDashboardStatisticsComponent],
-    imports: [AppSharedModule, AdminSharedModule, HostDashboardRoutingModule, CustomizableDashboardModule,AccordionModule],
+    declarations: [HostDashboardComponent, AdminDashboardRecentStoreComponent, AdminDashboardRecentTaskComponent, AdminDashboardRecentOrdersComponent, AdminDashboardStatisticsComponent, TaskAndScheduleDashbaordComponent],
+    imports: [AppSharedModule, AdminSharedModule, HostDashboardRoutingModule, CustomizableDashboardModule,AccordionModule, MainModule],
 })
 export class HostDashboardModule {}

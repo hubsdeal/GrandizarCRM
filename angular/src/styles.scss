@@ -1539,3 +1539,24 @@ bs-days-calendar-view {
     height: 100%;
     object-fit: contain;
 }
+
+//task tag
+.task_tag_hover_menu{
+    transition: all 0.4s;
+    a{
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        i{
+            margin-left: 10px;
+        }
+    }
+    .task_del{
+        display: none;
+    }
+    &:hover{
+        .task_del{
+            display: block;
+        }
+    }
+}

@@ -1,26 +1,26 @@
 <!-- <customizable-dashboard [dashboardName]="dashboardName"></customizable-dashboard> -->
 <div [@routerTransition]>
-    <sub-header [title]="'Admin Dashboard' | localize" [description]="">
+    <sub-header [title]="'My Dashboard' | localize" [description]="">
 
     </sub-header>
-    
-    <div class="app-container container-xxl">
-        <app-admin-dashboard-statistics></app-admin-dashboard-statistics>
+
+    <div class="app-container">
+
         <div class="accordion card_accordion" id="kt_accordion_1">
             <div class="card mb-6">
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="kt_accordion_1_header_1">
-                        <button class="accordion-button fs-4 fw-bold" type="button"
-                            data-bs-toggle="collapse" data-bs-target="#kt_accordion_1_body_1"
-                            aria-expanded="true" aria-controls="kt_accordion_1_body_1">
+                        <button class="accordion-button show fs-4 fw-bold" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#kt_accordion_1_body_1" aria-expanded="true"
+                            aria-controls="kt_accordion_1_body_1">
                             <i class="fas fa-store-alt fa-1x me-2"></i>
-                            Recent Stores
+                            Newly added Stores
                             <span class="badge ms-6 badge-primary badge">
                                 <i class="fa fa-arrow-right text-white me-2"></i> View All
                             </span>
                         </button>
                     </h2>
-                    <div id="kt_accordion_1_body_1" class="accordion-collapse collapse show"
+                    <div id="kt_accordion_1_body_1" class="accordion-collapse collapse"
                         aria-labelledby="kt_accordion_1_header_1" data-bs-parent="#kt_accordion_1">
                         <div class="content">
                             <!--begin::content-->
@@ -30,12 +30,12 @@
                     </div>
                 </div>
             </div>
-            <div class="card mb-6">
+            <!-- <div class="card mb-6">
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="kt_accordion_1_header_2">
-                        <button class="accordion-button fs-4 fw-bold collapsed" type="button"
-                            data-bs-toggle="collapse" data-bs-target="#kt_accordion_1_body_2"
-                            aria-expanded="false" aria-controls="kt_accordion_1_body_2">
+                        <button class="accordion-button fs-4 fw-bold collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#kt_accordion_1_body_2" aria-expanded="false"
+                            aria-controls="kt_accordion_1_body_2">
                             <i class="fas fa-cart-arrow-down fa-1x me-2"></i>
                             Recent Orders
                             <span class="badge ms-6 badge-primary badge">
@@ -46,36 +46,13 @@
                     <div id="kt_accordion_1_body_2" class="accordion-collapse collapse"
                         aria-labelledby="kt_accordion_1_header_2" data-bs-parent="#kt_accordion_1">
                         <div class="content">
-                            <!--begin::content-->
                             <app-admin-dashboard-recent-orders></app-admin-dashboard-recent-orders>
-                            <!--end::content-->
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="card mb-6">
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="kt_accordion_1_header_3">
-                        <button class="accordion-button fs-4 fw-bold collapsed" type="button"
-                            data-bs-toggle="collapse" data-bs-target="#kt_accordion_1_body_3"
-                            aria-expanded="false" aria-controls="kt_accordion_1_body_3">
-                            <i class="fas fa-list-alt fa-1x me-2"></i>
-                            Recent Tasks
-                            <span class="badge ms-6 badge-primary badge">
-                                <i class="fa fa-arrow-right text-white me-2"></i> View All
-                            </span>
-                        </button>
-                    </h2>
-                    <div id="kt_accordion_1_body_3" class="accordion-collapse collapse"
-                        aria-labelledby="kt_accordion_1_header_3" data-bs-parent="#kt_accordion_1">
-                        <div class="content">
-                            <!--begin::content-->
-                            <app-admin-dashboard-recent-task></app-admin-dashboard-recent-task>
-                            <!--end::content-->
-                        </div>
-                    </div>
-                </div>
-            </div>
+            </div> -->
+
+            <app-admin-dashboard-statistics></app-admin-dashboard-statistics>
         </div>
 
     </div>

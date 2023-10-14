@@ -11,10 +11,11 @@ import { TaskEventsLibraryComponent } from './task-events-library/task-events-li
 import { TaskWorkItemModule } from '../taskWorkItems/taskWorkItem.module';
 import { TaskEventsLookupTableModalComponent } from './task-events-lookup-table-modal/task-events-lookup-table-modal.component';
 import { TaskNoteModule } from '../taskNotes/taskNote.module';
+import { TaskTagModule } from '../taskTags/taskTag.module';
 
 @NgModule({
     declarations: [TaskEventsComponent, CreateOrEditTaskEventModalComponent, ViewTaskEventModalComponent, TaskEventsDashboardComponent, MyTaskEventsComponent, TaskEventsLibraryComponent, TaskEventsLookupTableModalComponent],
-    imports: [AppSharedModule, TaskEventRoutingModule, AdminSharedModule, TaskWorkItemModule,TaskNoteModule],
+    imports: [AppSharedModule, TaskEventRoutingModule, AdminSharedModule, TaskWorkItemModule,TaskNoteModule,TaskTagModule],
     exports: [TaskEventsComponent, CreateOrEditTaskEventModalComponent, ViewTaskEventModalComponent, TaskEventsDashboardComponent, MyTaskEventsComponent],
 })
 export class TaskEventModule {}

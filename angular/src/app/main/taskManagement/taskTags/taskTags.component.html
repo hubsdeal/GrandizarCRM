@@ -1,4 +1,4 @@
-﻿<div [@routerTransition]>
+﻿<!-- <div [@routerTransition]>
     <sub-header [title]="'TaskTags' | localize" [description]="'TaskTagsHeaderInfo' | localize">
         <div role="actions">
             <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1">
@@ -186,7 +186,7 @@
                 </form>
 
                 <div class="row align-items-center">
-                    <!--<Primeng-Datatable-Start>-->
+                   
                     <div class="primeng-datatable-container col-12" [busyIf]="primengTableHelper.isLoading">
                         <p-table
                             #dataTable
@@ -336,11 +336,19 @@
                             ></p-paginator>
                         </div>
                     </div>
-                    <!--<Primeng-Datatable-End>-->
+               
                 </div>
             </div>
         </div>
     </div>
     <createOrEditTaskTagModal #createOrEditTaskTagModal (modalSave)="getTaskTags()"></createOrEditTaskTagModal>
     <viewTaskTagModal #viewTaskTagModal></viewTaskTagModal>
+</div> -->
+<div class="d-flex ms-4">
+    <span class="task_tag_hover_menu d-block me-3" *ngFor="let record of taskTags">
+        <a href="javascript:;" *ngIf="record?.masterTagName" class="btn btn-sm btn-primary" (click)="deleteTaskTag(record.taskTag)">
+            {{record?.masterTagName | truncate:20}}
+            <i class="fas fa-times fs-2 task_del"></i>
+        </a>
+    </span>
 </div>

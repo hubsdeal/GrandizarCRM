@@ -1,5 +1,5 @@
 ﻿import { AppConsts } from '@shared/AppConsts';
-import { Component, Injector, ViewEncapsulation, ViewChild } from '@angular/core';
+import { Component, Injector, ViewEncapsulation, ViewChild, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TaskTagsServiceProxy, TaskTagDto } from '@shared/service-proxies/service-proxies';
 import { NotifyService } from 'abp-ng2-module';
@@ -20,8 +20,10 @@ import { DateTimeService } from '@app/shared/common/timing/date-time.service';
 
 @Component({
     templateUrl: './taskTags.component.html',
+
     encapsulation: ViewEncapsulation.None,
     animations: [appModuleAnimation()],
+    selector: 'app-taskTags',
 })
 export class TaskTagsComponent extends AppComponentBase {
     @ViewChild('createOrEditTaskTagModal', { static: true })
@@ -43,7 +45,8 @@ export class TaskTagsComponent extends AppComponentBase {
     taskEventNameFilter = '';
     masterTagCategoryNameFilter = '';
     masterTagNameFilter = '';
-
+    taskTags:any;
+    @Input() taskEventId: number;
     constructor(
         injector: Injector,
         private _taskTagsServiceProxy: TaskTagsServiceProxy,
@@ -54,17 +57,18 @@ export class TaskTagsComponent extends AppComponentBase {
         private _dateTimeService: DateTimeService
     ) {
         super(injector);
+        this.getTaskTags();
     }
 
-    getTaskTags(event?: LazyLoadEvent) {
-        if (this.primengTableHelper.shouldResetPaging(event)) {
-            this.paginator.changePage(0);
-            if (this.primengTableHelper.records && this.primengTableHelper.records.length > 0) {
-                return;
-            }
-        }
+    getTaskTags() {
+        // if (this.primengTableHelper.shouldResetPaging(event)) {
+        //     this.paginator.changePage(0);
+        //     if (this.primengTableHelper.records && this.primengTableHelper.records.length > 0) {
+        //         return;
+        //     }
+        // }
 
-        this.primengTableHelper.showLoadingIndicator();
+        //this.primengTableHelper.showLoadingIndicator();
 
         this._taskTagsServiceProxy
             .getAll(
@@ -77,15 +81,15 @@ export class TaskTagsComponent extends AppComponentBase {
                 this.taskEventNameFilter,
                 this.masterTagCategoryNameFilter,
                 this.masterTagNameFilter,
-                undefined,
-                this.primengTableHelper.getSorting(this.dataTable),
-                this.primengTableHelper.getSkipCount(this.paginator, event),
-                this.primengTableHelper.getMaxResultCount(this.paginator, event)
+                this.taskEventId !=null ? this.taskEventId:undefined,
+                '',
+                0,
+                100
             )
             .subscribe((result) => {
-                this.primengTableHelper.totalRecordsCount = result.totalCount;
-                this.primengTableHelper.records = result.items;
-                this.primengTableHelper.hideLoadingIndicator();
+                //this.primengTableHelper.totalRecordsCount = result.totalCount;
+                this.taskTags = result.items;
+                //this.primengTableHelper.hideLoadingIndicator();
             });
     }
 

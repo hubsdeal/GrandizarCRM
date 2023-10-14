@@ -1,5 +1,5 @@
-﻿<div [@routerTransition]>
-    <sub-header [title]="'Master Employees' | localize" [description]="">
+<div [@routerTransition]>
+    <sub-header [title]="'Captain List' | localize" [description]="">
         <div role="actions">
             <!-- <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1">
                 <i class="fa fa-file-excel"></i>
@@ -8,7 +8,7 @@
 
             <button *ngIf="isGranted('Pages.Employees.Create')" (click)="createEmployee()" class="btn btn-primary blue">
                 <i class="fa fa-plus"></i>
-                {{ l('Employee') }}
+                {{ l('Captain') }}
             </button>
         </div>
     </sub-header>
