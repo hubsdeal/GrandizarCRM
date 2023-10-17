@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ChatGptResponseModalComponent } from '@app/shared/chat-gpt-response-modal/chat-gpt-response-modal.component';
 import { AppConsts } from '@shared/AppConsts';
 import { AppComponentBase } from '@shared/common/app-component-base';
-import { CreateOrEditStoreDto, CreateOrEditStoreMediaDto, GetStoreMediaForViewDto, StatesServiceProxy, StoreCountryLookupTableDto, StoreMediasServiceProxy, StoreTopStatsForViewDto, StoresServiceProxy } from '@shared/service-proxies/service-proxies';
+import { CreateOrEditStoreDto, CreateOrEditStoreMediaDto, GetStoreMediaForViewDto, RatingLikesServiceProxy, StatesServiceProxy, StoreCountryLookupTableDto, StoreMediasServiceProxy, StoreTopStatsForViewDto, StoresServiceProxy } from '@shared/service-proxies/service-proxies';
 import { IAjaxResponse, TokenService } from 'abp-ng2-module';
 import { FileItem, FileUploader, FileUploaderOptions } from 'ng2-file-upload';
 import { SelectItem } from 'primeng/api';
@@ -118,6 +118,7 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
     private _sanitizer: DomSanitizer,
     private geocodingService: GeocodingService,
     private _storeMasterTagSettingsServiceProxy: StoreMasterTagSettingsServiceProxy,
+    private _ratingLikesServiceProxy: RatingLikesServiceProxy,
     private dialog: MatDialog
   ) {
     super(injector);
