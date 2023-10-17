@@ -506,13 +506,15 @@
                                                             {{ record.employee.zipCode }}
                                                         </span>
                                                     </span>
-                                                    <span class="mt-2" *ngIf="record.employee.facebook" title="{{record.employee.facebook}}">
-                                                        <a class="text-primary me-2 fa-1x" href="{{record.employee.facebook}}"
-                                                            target="_blank"><i class="fab fa-2x fa-facebook-f"></i></a>
-                                                    </span>
-                                                    <span class="mt-2" *ngIf="record.employee.linkedIn" title="{{record.employee.linkedIn}}">
-                                                        <a class="text-primary fa-1x" href="{{record.employee.linkedIn}}"
-                                                            target="_blank"><i class="fab fa-2x fa-linkedin-in"></i></a>
+                                                    <span class="d-flex">
+                                                        <span class="me-2" *ngIf="record.employee.facebook" title="{{record.employee.facebook}}">
+                                                            <a class="text-primary me-2 fa-1x" href="{{record.employee.facebook}}"
+                                                                target="_blank"><i class="fab fa-1x fa-facebook-f"></i></a>
+                                                        </span>
+                                                        <span *ngIf="record.employee.linkedIn" title="{{record.employee.linkedIn}}">
+                                                            <a class="text-primary fa-1x" href="{{record.employee.linkedIn}}"
+                                                                target="_blank"><i class="fab fa-1x fa-linkedin-in"></i></a>
+                                                        </span>
                                                     </span>
                                                 </div>
                                             </div>
