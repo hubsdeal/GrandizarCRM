@@ -348,12 +348,10 @@
                                                     </label>
                                                     <p-dropdown [options]="storeTagSettingCategoryOptions"
                                                         [filter]="true" [virtualScroll]="true"
-                                                        (onChange)="onStoreTagSettingCategoryClick($event)"
                                                         placeholder="Select Store Category" [itemSize]="30"
-                                                        name="displayName" optionLabel="displayName" optionId="id"
-                                                        [(ngModel)]="selectedStoreTagSettingCategory"
-                                                        filterBy="displayName" required [style]="{ width: '100%' }"
-                                                        disbled></p-dropdown>
+                                                        name="typeName" optionLabel="displayName" optionValue="id" optionId="storeTagSettingCategoryId"
+                                                        [(ngModel)]="store.storeTagSettingCategoryId"
+                                                        filterBy="displayName" required [style]="{ width: '100%' }"></p-dropdown>
                                                 </div>
                                                 <!--end::Row-->
                                                 <div class="fv-row mb-7 fv-plugins-icon-container">
@@ -391,21 +389,12 @@
                                                             <label class="fs-6 fw-semibold form-label mt-3">
                                                                 <span>Country</span>
                                                             </label>
-                                                            <!-- <select class="form-control form-control-solid"
-                                                                [(ngModel)]="store.countryId" name="state"
-                                                                id="countryId">
-                                                                <option value="">Select Country</option>
-                                                                <option *ngFor="let item of countryOptions"
-                                                                    value="{{item.id}}">
-                                                                    {{item.displayName}}
-                                                                </option>
-                                                            </select> -->
                                                             <p-dropdown [options]="countryOptions" [filter]="true"
                                                                 [virtualScroll]="true"
                                                                 (onChange)="onCountryChange($event)"
                                                                 placeholder="Select Country" [itemSize]="30"
-                                                                name="displayName" optionLabel="displayName"
-                                                                optionId="id" [(ngModel)]="selectedCountry"
+                                                                name="countryName" optionId="countryId" optionLabel="displayName" 
+                                                                optionId="id" optionValue="id" [(ngModel)]="store.countryId"
                                                                 filterBy="displayName"
                                                                 [style]="{ width: '100%' }"></p-dropdown>
                                                         </div>
@@ -425,10 +414,9 @@
                                                             </select> -->
                                                             <p-dropdown [options]="stateOptions" [filter]="true"
                                                                 [virtualScroll]="true"
-                                                                (onChange)="onStateChange($event)"
                                                                 placeholder="Select State" [itemSize]="30"
-                                                                name="displayName" optionLabel="displayName"
-                                                                optionId="id" [(ngModel)]="selectedState"
+                                                                name="stateName" optionId="stateId" optionLabel="displayName"
+                                                                optionId="id" optionValue="id" [(ngModel)]="store.stateId"
                                                                 filterBy="displayName"
                                                                 [style]="{ width: '100%' }"></p-dropdown>
                                                         </div>
@@ -599,7 +587,7 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="fv-row mb-7 fv-plugins-icon-container">
+                                                <!-- <div class="fv-row mb-7 fv-plugins-icon-container">
                                                     <div class="d-flex align-items-center">
                                                         <label
                                                             class="form-check form-check-custom form-check-inline form-check-solid">
@@ -608,6 +596,27 @@
                                                                 [(ngModel)]="store.isVerified">
                                                             <span class="fw-semibold ps-2 fs-6">Verified Store</span>
                                                         </label>
+                                                    </div>
+                                                </div> -->
+                                                <div class="row row-cols-1 row-cols-sm-2 rol-cols-md-1 row-cols-lg-2">
+                                                    <div class="col">
+                                                        <div class="fv-row mb-7 fv-plugins-icon-container">
+                                                            <label class="fs-6 fw-semibold form-label mt-3">
+                                                                <span>Tax ID or EIN Number</span>
+                                                            </label>
+                                                            <input type="text" class="form-control form-control-solid"
+                                                                id="taxId" name="taxId"
+                                                                [(ngModel)]="store.taxId">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="fv-row mb-7">
+                                                            <label class="fs-6 fw-semibold form-label mt-3">
+                                                                <span>Govt Registration or Rating Link </span>
+                                                            </label>
+                                                            <input type="text" class="form-control form-control-solid"
+                                                                name="publicRegistrationLink" [(ngModel)]="store.publicRegistrationLink" id="publicRegistrationLink">
+                                                        </div>
                                                     </div>
                                                 </div>
 
@@ -630,7 +639,7 @@
                                                     <p-editor id="description" name="description"
                                                         [(ngModel)]="store.description" ngDefaultControl
                                                         [style]="{ height: '300px' }"
-                                                        placeholder="'Type here...'"></p-editor>
+                                                        placeholder="Write brief information about your store"></p-editor>
                                                 </div>
                                                 <!--end::Input group-->
 
@@ -639,38 +648,17 @@
 
                                                 <div class="card mb-5">
                                                     <div class="card-body pt-10">
-                                                        <div
-                                                            class="notice d-flex bg-light-primary rounded border-primary border border-dashed mb-9 p-6">
-                                                            <span class="svg-icon svg-icon-2tx svg-icon-primary me-4">
-                                                                <svg width="24" height="24" viewBox="0 0 24 24"
-                                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                    <path opacity="0.3"
-                                                                        d="M22 19V17C22 16.4 21.6 16 21 16H8V3C8 2.4 7.6 2 7 2H5C4.4 2 4 2.4 4 3V19C4 19.6 4.4 20 5 20H21C21.6 20 22 19.6 22 19Z"
-                                                                        fill="currentColor"></path>
-                                                                    <path
-                                                                        d="M20 5V21C20 21.6 19.6 22 19 22H17C16.4 22 16 21.6 16 21V8H8V4H19C19.6 4 20 4.4 20 5ZM3 8H4V4H3C2.4 4 2 4.4 2 5V7C2 7.6 2.4 8 3 8Z"
-                                                                        fill="currentColor"></path>
-                                                                </svg>
-                                                            </span>
-                                                            <div class="d-flex flex-stack flex-grow-1">
-                                                                <div class="fw-semibold">
-                                                                    <div class="fs-6 text-gray-700">By connecting your
-                                                                        social
-                                                                        accounts, you can easily share your products and
-                                                                        services with your followers.
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
                                                         <!--end::Notice-->
                                                         <!--begin::Items-->
                                                         <div class="py-2">
                                                             <!--begin::Item-->
                                                             <div class="d-flex flex-stack">
                                                                 <div class="d-flex w-100 align-items-center">
-                                                                    <i class="fab fa-facebook-square fs-3x me-3"></i>
                                                                     <div class="w-100">
                                                                         <div class="d-flex flex-column">
+                                                                            <label class="fs-6 fw-semibold form-label mt-3">
+                                                                                <span>Facebook</span>
+                                                                            </label>
                                                                             <input type="text" name="facebook"
                                                                                 class="form-control form-control-md form-control-solid"
                                                                                 placeholder="Facebook"
@@ -684,9 +672,11 @@
                                                             <!--begin::Item-->
                                                             <div class="d-flex flex-stack">
                                                                 <div class="d-flex w-100 align-items-center">
-                                                                    <i class="fab fa-instagram-square fs-3x me-3"></i>
                                                                     <div class="w-100">
                                                                         <div class="d-flex flex-column">
+                                                                            <label class="fs-6 fw-semibold form-label mt-3">
+                                                                                <span>Instagram</span>
+                                                                            </label>
                                                                             <input type="text" name="instagram"
                                                                                 class="form-control form-control-md form-control-solid"
                                                                                 placeholder="Instagram"
@@ -708,6 +698,9 @@
                                                             <div class="d-flex w-100 align-items-center">
                                                                 <div class="w-100">
                                                                     <div class="d-flex flex-column">
+                                                                        <label class="fs-6 fw-semibold form-label mt-3">
+                                                                            <span>Meta Tag</span>
+                                                                        </label>
                                                                         <input type="text" name="metaTag"
                                                                             class="form-control form-control-md form-control-solid"
                                                                             placeholder="Meta Tag"
@@ -722,6 +715,9 @@
                                                             <div class="d-flex w-100 align-items-center">
                                                                 <div class="w-100">
                                                                     <div class="d-flex flex-column">
+                                                                        <label class="fs-6 fw-semibold form-label mt-3">
+                                                                            <span>Meta Description</span>
+                                                                        </label>
                                                                         <textarea name="metaDescription"
                                                                             id="metaDescription" cols="30" rows="10"
                                                                             class="form-control form-control-md form-control-solid"
@@ -3703,80 +3699,25 @@
                                                             name="store.name" id="store.name">
                                                     </div>
 
-                                                    <!--begin::Row-->
-                                                    <div class="row">
-                                                        <div class="col-md-4">
-                                                            <div class="fv-row mb-7 fv-plugins-icon-container">
-                                                                <label class="fs-6 fw-semibold form-label mt-3">
-                                                                    <span>Latitude</span>
-                                                                </label>
-                                                                <input type="text"
-                                                                    class="form-control form-control-solid"
-                                                                    [(ngModel)]="store.latitude" name="latitude"
-                                                                    id="latitude">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <div class="fv-row mb-7">
-                                                                <label class="fs-6 fw-semibold form-label mt-3">
-                                                                    <span>Longitude</span>
-                                                                </label>
-                                                                <input type="text"
-                                                                    class="form-control form-control-solid"
-                                                                    [(ngModel)]="store.longitude" name="longitude"
-                                                                    id="longitude">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4 d-flex align-items-center pt-3">
-                                                            <div class="fv-row mb-0 mt-2 fv-plugins-icon-container">
-                                                                <a href="javascript:;"
-                                                                    (click)="openAiModalForLatLongForOperator('Latitude and Longitude')"
-                                                                    class="btn btn-outline btn-outline-dashed btn-outline-primary btn-active-light-primary">
-                                                                    <i class="fa fa-map-marker"></i> Get Lat. Long. Data
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <!--end::Row-->
-
-                                                    <!--begin::Row-->
-                                                    <div
-                                                        class="row row-cols-1 row-cols-sm-2 rol-cols-md-1 row-cols-lg-2">
-                                                        <div class="col">
-                                                            <div class="fv-row mb-7">
-                                                                <label class="fs-6 fw-semibold form-label mt-3">
-                                                                    <span class="required">Store URL</span>
-                                                                </label>
-                                                                <input type="text"
-                                                                    class="form-control form-control-solid" name="url"
-                                                                    id="url" [(ngModel)]="store.storeUrl"
-                                                                    placeholder="Enter URL" required>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col d-flex align-items-center pt-3">
-                                                            <div class="fv-row mb-0 mt-2 fv-plugins-icon-container">
-                                                                <a href="javascript:;"
-                                                                    (click)="checkUrlAvailability(store.id,store.storeUrl)"
-                                                                    class="btn btn-outline btn-outline-dashed btn-outline-primary btn-active-light-primary">
-                                                                    <i class="fas fa-eye"></i> Check Availability
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
                                                     <div class="fv-row mb-7 fv-plugins-icon-container">
                                                         <label class="fs-6 fw-semibold form-label mt-3">
-                                                            <span>Public Site Rating</span>
+                                                            <span>Internal Rating</span>
                                                         </label>
-                                                        <select class="form-control form-control-solid" name="state"
+                                                        <select class="form-control form-control-solid" name="state" [(ngModel)]="store.ratingLikeId"
                                                             id="state">
-                                                            <option value="1">Select Rating</option>
+                                                            <option value="-1">Select Rating</option>
+                                                            <option value="1">*</option>
+                                                            <option value="2">**</option>
+                                                            <option value="3">***</option>
+                                                            <option value="4">****</option>
+                                                            <option value="5">*****</option>
                                                         </select>
                                                     </div>
                                                     <!--end::Input group-->
                                                     <!--begin::Separator-->
                                                     <div class="separator mb-6"></div>
                                                     <!--begin::Input group-->
-                                                    <div class="fv-row mb-7 fv-plugins-icon-container">
+                                                    <div class="fv-row mb-7 fv-plugins-icon-container d-flex">
                                                         <div class="select_button_custom me-4">
                                                             <p-selectButton [options]="storePublishedOptions"
                                                                 name="storePublishedOptions" id="storePublishedOptions"

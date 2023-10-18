@@ -75,8 +75,12 @@ export class CreateOrEditStoreProductMapModalComponent extends AppComponentBase 
                 this.modal.show();
             });
         }
+        this._productsServiceProxy.getAllProductCategoryForLookupTable('', '', 0, 10000).subscribe(result => {
+            this.productCategoryOptions = result.items;
+        });
     }
 
+   
     // save(): void {
     //     this.saving = true;
     //     this.storeProductMap.storeId = this.storeId

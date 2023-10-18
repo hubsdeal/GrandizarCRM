@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ChatGptResponseModalComponent } from '@app/shared/chat-gpt-response-modal/chat-gpt-response-modal.component';
 import { AppConsts } from '@shared/AppConsts';
 import { AppComponentBase } from '@shared/common/app-component-base';
-import { CreateOrEditStoreDto, CreateOrEditStoreMediaDto, GetStoreMediaForViewDto, StatesServiceProxy, StoreMediasServiceProxy, StoreTopStatsForViewDto, StoresServiceProxy } from '@shared/service-proxies/service-proxies';
+import { CreateOrEditStoreDto, CreateOrEditStoreMediaDto, GetStoreMediaForViewDto, RatingLikesServiceProxy, StatesServiceProxy, StoreCountryLookupTableDto, StoreMediasServiceProxy, StoreTopStatsForViewDto, StoresServiceProxy } from '@shared/service-proxies/service-proxies';
 import { IAjaxResponse, TokenService } from 'abp-ng2-module';
 import { FileItem, FileUploader, FileUploaderOptions } from 'ng2-file-upload';
 import { SelectItem } from 'primeng/api';
@@ -68,14 +68,14 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
   numberOfNotes: number;
   primaryCategoryName: string;
 
-  imageSrc: any = 'assets/common/images/c_logo.png';
+  imageSrc: any;
   public uploader: FileUploader;
   public temporaryPictureUrl: string;
   private _uploaderOptions: FileUploaderOptions = {};
 
   allPrimaryCategories: any[];
   stateOptions: any = [];
-  countryOptions: any = [];
+  countryOptions: StoreCountryLookupTableDto[];
 
   isUrlAvailble: boolean = false;
   isUrlNotAvailble: boolean = false;
@@ -83,7 +83,6 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
   images: GetStoreMediaForViewDto[] = [];
   videos: any[] = [];
 
-  selectedCountry: any;
   selectedState: any;
 
   selectedStoreTagSettingCategory: any;
@@ -119,6 +118,7 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
     private _sanitizer: DomSanitizer,
     private geocodingService: GeocodingService,
     private _storeMasterTagSettingsServiceProxy: StoreMasterTagSettingsServiceProxy,
+    private _ratingLikesServiceProxy: RatingLikesServiceProxy,
     private dialog: MatDialog
   ) {
     super(injector);
@@ -160,18 +160,13 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
 
   onCountryChange(event: any) {
     if (event.value != null) {
-      this.store.countryId = event.value.id;
-      this._stateServiceProxy.getAllStateForTableDropdown(event.value.id).subscribe((result) => {
+      this._stateServiceProxy.getAllStateForTableDropdown(event.value).subscribe((result) => {
         this.stateOptions = result;
       });
     }
   }
 
-  onStateChange(event: any) {
-    if (event.value != null) {
-      this.store.stateId = event.value.id;
-    }
-  }
+
 
   openAiModal(feildName: string): void {
     this.productShortDesc = "Write Store About where store name is Saffola"
@@ -205,11 +200,16 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
       this.ratingScore = result.ratingScore;
       this.primaryCategoryName = result.primaryCategoryName;
       this.storeTagSettingCategoryId = result.store.storeTagSettingCategoryId;
-      // if (result.picture != null) {
-      //   this.imageSrc = result.picture;
-      // }
+      if (result.picture) {
+        this.imageSrc = result.picture;
+      }
       console.log(result)
       this.getStoreMedia();
+      if(this.store.stateId && this.store.countryId){
+        this._stateServiceProxy.getAllStateForTableDropdown(this.store.countryId).subscribe((result) => {
+          this.stateOptions = result;
+        });
+      }
     });
     this._storeServiceProxy.getStoreTopStats(id).subscribe(result => {
       this.countView = result;
@@ -362,14 +362,14 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
 
   // async getCoordinates() {
   //   try {
-  //     if (this.selectedCountry && this.selectedState && this.store.city && this.store.zipCode) {
-  //       this.chatGPTPromt = 'Give me only the Latitude and longitude for ' + this.selectedCountry.displayName + ', ' + this.selectedState.displayName + ', ' + this.store.city + ', ' + this.store.zipCode + ' as json format as Key latitude and longitude';
-  //     } else if (this.selectedCountry && this.selectedState && this.store.city) {
-  //       this.chatGPTPromt = 'Give me only the Latitude and longitude for ' + this.selectedCountry.displayName + ', ' + this.selectedState.displayName + ', ' + this.store.city + ' as json format as Key latitude and longitude';
-  //     } else if (this.selectedCountry && this.selectedState) {
-  //       this.chatGPTPromt = 'Give me only the Latitude and longitude for ' + this.selectedCountry.displayName + ', ' + this.selectedState.displayName + ' as json format as Key latitude and longitude';
-  //     } else if (this.selectedCountry) {
-  //       this.chatGPTPromt = 'Give me only the Latitude and longitude for ' + this.selectedCountry.displayName + ' as json format as Key latitude and longitude';
+  //     if (this.store && this.selectedState && this.store.city && this.store.zipCode) {
+  //       this.chatGPTPromt = 'Give me only the Latitude and longitude for ' + this.store.displayName + ', ' + this.selectedState.displayName + ', ' + this.store.city + ', ' + this.store.zipCode + ' as json format as Key latitude and longitude';
+  //     } else if (this.store && this.selectedState && this.store.city) {
+  //       this.chatGPTPromt = 'Give me only the Latitude and longitude for ' + this.store.displayName + ', ' + this.selectedState.displayName + ', ' + this.store.city + ' as json format as Key latitude and longitude';
+  //     } else if (this.store && this.selectedState) {
+  //       this.chatGPTPromt = 'Give me only the Latitude and longitude for ' + this.store.displayName + ', ' + this.selectedState.displayName + ' as json format as Key latitude and longitude';
+  //     } else if (this.store) {
+  //       this.chatGPTPromt = 'Give me only the Latitude and longitude for ' + this.store.displayName + ' as json format as Key latitude and longitude';
   //     }
   //     console.log(this.chatGPTPromt);
   //     const coordinates = await this.geocodingService.invokeGPT(this.chatGPTPromt);
@@ -385,29 +385,12 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
 
   openAiModalForLatLong(fieldName: string): void {
     const storeName = this.store.name;
-    if (this.selectedCountry && this.selectedState && this.store.city && this.store.zipCode) {
-      this.chatGPTPromt = `Give me only the Latitude and longitude for 
-    Country: ${this.selectedCountry.displayName}, 
-    State: ${this.selectedState.displayName}, 
+    this.chatGPTPromt = `Give me only the Latitude and longitude for 
+    Country: ${this.countryName}, 
+    State: ${this.stateName}, 
     City: ${this.store.city}, 
     Zipcode: ${this.store.zipCode} 
     as json format as Key latitude and longitude`;
-    } else if (this.selectedCountry && this.selectedState && this.store.city) {
-      this.chatGPTPromt = `Give me only the Latitude and longitude for 
-    Country: ${this.selectedCountry.displayName}, 
-    State: ${this.selectedState.displayName}, 
-    City: ${this.store.city} 
-    as json format as Key latitude and longitude`;
-    } else if (this.selectedCountry && this.selectedState) {
-      this.chatGPTPromt = `Give me only the Latitude and longitude for 
-    Country: ${this.selectedCountry.displayName}, 
-    State: ${this.selectedState.displayName} 
-    as json format as Key latitude and longitude`;
-    } else if (this.selectedCountry) {
-      this.chatGPTPromt = `Give me only the Latitude and longitude for 
-    Country: ${this.selectedCountry.displayName} 
-    as json format as Key latitude and longitude`;
-    }
 
     var modalTitle = `AI Text Generator - Store ${fieldName}`;
     const dialogRef = this.dialog.open(ChatGptResponseModalComponent, {
@@ -548,11 +531,11 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
     moveItemInArray(this.storeTags, event.previousIndex, event.currentIndex);
   }
 
-  onStoreTagSettingCategoryClick(event: any) {
-    if (event.value != null) {
-      this.store.storeTagSettingCategoryId = event.value.id;
-    }
-  }
+  // onStoreTagSettingCategoryClick(event: any) {
+  //   if (event.value != null) {
+  //     this.store.storeTagSettingCategoryId = event.value.id;
+  //   }
+  // }
 
   createStoreTaskMap(): void {
     this.createOrEditStoreTaskMapModal.storeId = this.storeId;
