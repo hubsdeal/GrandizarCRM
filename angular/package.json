@@ -25,6 +25,7 @@
     "@angular/cdk": "^15.0.2",
     "@angular/common": "^15.0.3",
     "@angular/compiler": "^15.0.3",
+    "@agm/core": "1.0.0",
     "@angular/core": "^15.0.3",
     "@angular/forms": "^15.0.3",
     "@angular/platform-browser": "^15.0.3",
@@ -81,7 +82,8 @@
     "openai": "^3.1.0",
     "ngx-material-timepicker": "^5.5.3",
     "swiper": "^6",
-    "ng-fullcalendar": "1.7.1"
+    "ng-fullcalendar": "1.7.1",
+    "agm-overlays": "^2.0.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^15.0.3",

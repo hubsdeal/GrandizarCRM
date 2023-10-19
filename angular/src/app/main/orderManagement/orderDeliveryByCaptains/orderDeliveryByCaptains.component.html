@@ -114,7 +114,26 @@
                         </div>
 
                         <div class="tab-pane fade" id="delivery_cap_map" role="tabpanel">
-                            fasfsfs
+                            <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" [disableDefaultUI]="false"
+                                [zoomControl]="true" [scaleControl]="true" (mapClick)="mapClicked($event)">
+                                <agm-marker *ngFor="let m of markers; let i = index"
+                                    (markerClick)="clickedMarker(m.label, i)" [latitude]="m.lat" [longitude]="m.lng"
+                                    [label]="m.label" [markerDraggable]="m.draggable" [iconUrl]="m.iconUrl"
+                                    [animation]="'BOUNCE'" (dragEnd)="markerDragEnd(m, $event)">
+                                    <!-- [animation]="'DROP'"  -->
+
+                                    <agm-info-window>
+                                        <strong>{{m.content}}</strong>
+                                    </agm-info-window>
+
+                                    <agm-overlay [visible]="false" [draggable]="true" [latitude]="m.lat"
+                                        [longitude]="m.lng">
+                                        <i class="fas fa-map-marker-alt" [style.color]="m.color"
+                                            style="font-size: 25px"></i>
+                                    </agm-overlay>
+                                </agm-marker>
+                            </agm-map>
+
                         </div>
                     </div>
                 </div>

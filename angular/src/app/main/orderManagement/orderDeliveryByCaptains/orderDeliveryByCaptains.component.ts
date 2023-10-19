@@ -17,6 +17,7 @@ import { filter as _filter } from 'lodash-es';
 import { DateTime } from 'luxon';
 
 import { DateTimeService } from '@app/shared/common/timing/date-time.service';
+import { MouseEvent } from '@agm/core';
 
 @Component({
   templateUrl: './orderDeliveryByCaptains.component.html',
@@ -105,6 +106,13 @@ export class OrderDeliveryByCaptainsComponent extends AppComponentBase {
 
   allDeliveryCaptains: any = [];
   totalCaptainCount: number;
+
+  // google maps zoom level
+  zoom: number = 8;
+
+  // initial center position for the map
+  lat: number = 51.673858;
+  lng: number = 7.815982;
   constructor(
     injector: Injector,
     private _orderDeliveryByCaptainsServiceProxy: OrderDeliveryByCaptainsServiceProxy,
@@ -288,4 +296,64 @@ export class OrderDeliveryByCaptainsComponent extends AppComponentBase {
 
     this.getOrderDeliveryByCaptains();
   }
+
+  clickedMarker(label: string, index: number) {
+    console.log(`clicked the marker: ${label || index}`);
+  }
+
+  mapClicked($event: MouseEvent) {
+    this.markers.push({
+      lat: $event['coords'].lat,
+      lng: $event['coords'].lng,
+      draggable: true,
+      content: "InfoWindow content",
+      color: "blue",
+      iconUrl: "/assets/common/images/dddddd.png"
+    });
+  }
+
+  markerDragEnd(m: marker, $event: MouseEvent) {
+    console.log("dragEnd", m, $event);
+  }
+
+  markers: marker[] = [
+    {
+      lat: 51.673858,
+      lng: 7.815982,
+      label: "Rashedur",
+      draggable: true,
+      content: "InfoWindow content",
+      color: "#FFFFFF",
+      iconUrl: "/assets/common/images/dddddd.png"
+    },
+    {
+      lat: 51.373858,
+      lng: 7.215982,
+      label: "Zillur",
+      draggable: false,
+      content: "InfoWindow content",
+      color: "blue",
+      iconUrl: "/assets/common/images/dddddd.png"
+    },
+    {
+      lat: 51.723858,
+      lng: 7.495982,
+      label: "Tofael",
+      draggable: true,
+      content: "InfoWindow content",
+      color: "red",
+      iconUrl: "/assets/common/images/dddddd.png"
+    }
+  ];
+}
+
+// just an interface for type safety.
+interface marker {
+  lat: number;
+  lng: number;
+  label?: string;
+  draggable: boolean;
+  content: string;
+  color: string;
+  iconUrl: string;
 }
