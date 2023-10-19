@@ -42,7 +42,7 @@ export class CreateOrEditProductTaskMapModalComponent extends AppComponentBase i
 
     allTaskStatuss: TaskEventTaskStatusLookupTableDto[];
 
-    taskStatusOptions: SelectItem[];
+    taskStatusOptions: SelectItem[]; 
     priorityOptions: SelectItem[];
 
     selectedTemplate: any;

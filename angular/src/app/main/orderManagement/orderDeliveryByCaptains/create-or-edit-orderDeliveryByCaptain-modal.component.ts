@@ -10,6 +10,7 @@ import { OrderDeliveryByCaptainOrderLookupTableModalComponent } from './orderDel
 import { OrderDeliveryByCaptainStoreLookupTableModalComponent } from './orderDeliveryByCaptain-store-lookup-table-modal.component';
 import { OrderDeliveryByCaptainContactLookupTableModalComponent } from './orderDeliveryByCaptain-contact-lookup-table-modal.component';
 import { OrderDeliveryByCaptainEmployeeLookupTableModalComponent } from './orderDeliveryByCaptain-employee-lookup-table-modal.component';
+import { SelectItem } from 'primeng/api';
 
 
 
@@ -37,7 +38,7 @@ export class CreateOrEditOrderDeliveryByCaptainModalComponent extends AppCompone
     contactFullName = '';
     employeeName = '';
 
-
+    captainSelectionOptions: SelectItem[];
 
     constructor(
         injector: Injector,
@@ -52,6 +53,7 @@ export class CreateOrEditOrderDeliveryByCaptainModalComponent extends AppCompone
 
         if (!orderDeliveryByCaptainId) {
             this.orderDeliveryByCaptain = new CreateOrEditOrderDeliveryByCaptainDto();
+            this.orderDeliveryByCaptain.captainSelectionAutoOrManual=true;
             this.orderDeliveryByCaptain.id = orderDeliveryByCaptainId;
             this.orderDeliveryByCaptain.captainOrderAcceptedDateTime = this._dateTimeService.getStartOfDay();
             this.orderDeliveryByCaptain.captainOrderPickedupDateTime = this._dateTimeService.getStartOfDay();
@@ -79,7 +81,7 @@ export class CreateOrEditOrderDeliveryByCaptainModalComponent extends AppCompone
             });
         }
         
-        
+        this.captainSelectionOptions = [{ label: 'Auto Select Delivery Captain', value: true }, { label: 'Manual Select Delivery Captain', value: false }];
     }
 
     save(): void {

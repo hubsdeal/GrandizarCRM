@@ -1,223 +1,432 @@
 ﻿<div [@routerTransition]>
-  
-  
-   <sub-header [title]="'OrderDeliveryByCaptains' | localize" [description]="'OrderDeliveryByCaptainsHeaderInfo' | localize">
-             <div role="actions">
-                 <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1"><i class="fa fa-file-excel"></i> {{l("ExportToExcel")}}</button>
-                
-                 <button *ngIf="isGranted('Pages.OrderDeliveryByCaptains.Create')" (click)="createOrderDeliveryByCaptain()" 
-                                        class="btn btn-primary blue"><i class="fa fa-plus"></i> {{l("CreateNewOrderDeliveryByCaptain")}}</button>
-             </div>
-            </sub-header>
-    
+
+
+    <sub-header [title]="'Delivery Dispatch Board' | localize" [description]="">
+        <div role="actions">
+            <!-- <button (click)="exportToExcel()"
+                class="btn btn-outline btn-outline-success btn-active-light-success me-1"><i
+                    class="fa fa-file-excel"></i> {{l("ExportToExcel")}}</button> -->
+
+            <button *ngIf="isGranted('Pages.OrderDeliveryByCaptains.Create')" (click)="createOrderDeliveryByCaptain()"
+                class="btn btn-primary blue"><i class="fa fa-plus"></i>
+                {{l("Delivery Dispatch")}}</button>
+        </div>
+    </sub-header>
+
     <div [class]="containerClass">
+        <div class="row">
+            <div class="col-xl-6">
+                <div class="w-100 border rounded p-5 bg-light-primary shadow-sm">
+                    <div class="d-flex flex-wrap flex-stack mb-6">
+                        <h3 class="fw-bold my-2">
+                            Delivery Captain List
+                        </h3>
+                    </div>
+                    <ul class="nav nav-custom nav-tabs nav-line-tabs nav-line-tabs-2x border-0 fs-4 fw-semibold mb-8"
+                        style="border-bottom: 2px solid #dbdbdb !important;" role="tablist">
+                        <!--begin:::Tab item-->
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link text-active-primary pb-4 active" data-bs-toggle="tab"
+                                href="#delivery_cap_list" aria-selected="true" role="tab">
+                                <i class="fas fa-tasks me-1"></i> List View
+                            </a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link text-active-primary pb-4" data-kt-countup-tabs="true"
+                                data-bs-toggle="tab" href="#delivery_cap_map" data-kt-initialized="1"
+                                aria-selected="false" role="tab" tabindex="-1">
+                                <i class="fas fa-list-check me-1"></i> Map View
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="myTabContent">
+                        <!--begin:::Tab pane-->
+                        <div class="tab-pane fade active show" id="delivery_cap_list" role="tabpanel">
+                            <div class="card mb-9" *ngFor="let record of allDeliveryCaptains">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-start">
+                                        <div class="square_logo_box shadow-sm">
+                                            <img *ngIf="record.picture" src="{{record.picture}}" class="mw-100" alt="">
+                                            <span *ngIf="!record.picture">{{ record?.employee?.name | nameSplit}}</span>
+                                        </div>
+                                        <div class="d-flex flex-wrap flex-grow-1 mt-n2 mt-lg-n1">
+                                            <div class="d-flex flex-column flex-grow-1 my-lg-0 my-2 pe-3">
+                                                <a href="javascript:;" title="{{  record?.employee?.name }}"
+                                                    [routerLink]="['/app/main/crm/employees/dashboard',record.employee.id]"
+                                                    class="fs-5 text-gray-800 text-hover-primary fw-bold">
+                                                    {{ record?.employee?.name }}
+                                                    <i *ngIf="record.employee.currentEmployee"
+                                                        class="fas fa-check-circle ms-1 mr-0 text-success"
+                                                        title="Active"></i>
+                                                </a>
+                                                <span class="text-gray-400 fw-lighter fs-7 mt-2 my-0">
+                                                    <i class="fas fa-briefcase me-1"></i>
+                                                    {{ record?.employee?.jobTitle }} <span
+                                                        *ngIf="record.employee.companyName">at {{
+                                                        record?.employee?.companyName }}</span>
+                                                </span>
+                                                <span class="text-gray-400 fw-lighter fs-7 mt-2 my-0">
+                                                    <i class="fas fa-network-wired me-1"></i>
+                                                    Department: <span> Sales and Marketing</span>
+                                                </span>
+                                                <span class="text-gray-400 fw-lighter fs-7 my-1">
+                                                    <i class="fas fa-map-marked-alt me-1"></i>
+                                                    <span>
+                                                        {{ record?.employee?.city }}
+                                                    </span>
+                                                    <span
+                                                        *ngIf="record.employee.city && (record.stateName || record.countryName || record.employee.zipCode)">,
+                                                    </span>
+                                                    <span>
+                                                        {{ record?.stateName }}
+                                                    </span>
+                                                    <span
+                                                        *ngIf="record.stateName && (record.countryName || record.employee.zipCode)">,
+                                                    </span>
+                                                    <span>
+                                                        {{ record?.countryName }}
+                                                    </span>
+                                                    <span *ngIf=" record.countryName && record.employee.zipCode">,
+                                                    </span>
+                                                    <span>
+                                                        {{ record?.employee?.zipCode }}
+                                                    </span>
+                                                </span>
+                                                <span class="d-flex">
+                                                    <span class="me-2" *ngIf="record.employee.facebook"
+                                                        title="{{record.employee.facebook}}">
+                                                        <a class="text-primary me-2 fa-1x"
+                                                            href="{{record?.employee?.facebook}}" target="_blank"><i
+                                                                class="fab fa-1x fa-facebook-f"></i></a>
+                                                    </span>
+                                                    <span *ngIf="record.employee.linkedIn"
+                                                        title="{{record?.employee?.linkedIn}}">
+                                                        <a class="text-primary fa-1x"
+                                                            href="{{record.employee.linkedIn}}" target="_blank"><i
+                                                                class="fab fa-1x fa-linkedin-in"></i></a>
+                                                    </span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="delivery_cap_map" role="tabpanel">
+                            fasfsfs
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="card card-custom gutter-b">
             <div class="card-body">
                 <form class="form" autocomplete="off">
                     <div>
                         <div class="row align-items-center">
                             <div class="col-xl-12">
-                                
-                                
-        	<div class="my-3">                
-                <div class="input-group mb-3">
-                  <input [(ngModel)]="filterText" (ngModelChange)="getOrderDeliveryByCaptains()" name="filterText" autoFocus type="text" class="form-control" [placeholder]="l('SearchWithThreeDot')">
-                  <button class="btn btn-primary" type="submit" (click)="getOrderDeliveryByCaptains()"><i class="flaticon-search-1"></i></button>
-                </div>
-            </div>
-        	
+
+
+                                <div class="my-3">
+                                    <div class="input-group mb-3">
+                                        <input [(ngModel)]="filterText" (ngModelChange)="getOrderDeliveryByCaptains()"
+                                            name="filterText" autoFocus type="text" class="form-control"
+                                            [placeholder]="l('SearchWithThreeDot')">
+                                        <button class="btn btn-primary" type="submit"
+                                            (click)="getOrderDeliveryByCaptains()"><i
+                                                class="flaticon-search-1"></i></button>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
-						 <div class="row" [hidden]="!advancedFiltersAreShown">
-						 	<div class="col-md-12">
-						         
-						     </div>
+                        <div class="row" [hidden]="!advancedFiltersAreShown">
+                            <div class="col-md-12">
 
-
-	
-							<div class="col-md-3">
-								<div class="my-3">
-									<label class="form-label" for="CaptainSelectionAutoOrManualFilterSelect">{{l("CaptainSelectionAutoOrManual")}}</label>
-									<select class="form-select" name="CaptainSelectionAutoOrManualFilter" id="CaptainSelectionAutoOrManualFilterSelect" [(ngModel)]="captainSelectionAutoOrManualFilter" (ngModelChange)="getOrderDeliveryByCaptains()">
-									<option value="-1">{{l("All")}}</option>
-									<option value="0">{{l("False")}}</option>
-									<option value="1">{{l("True")}}</option>
-									</select>
-								</div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="my-3">
-									<label class="form-label" for="MinCaptainOrderAcceptedDateTimeFilter">{{l("CaptainOrderAcceptedDateTimeRange")}}</label>
-									<div class="input-group">
-                                        
-                                        <input class="form-control m-input" id="MinCaptainOrderAcceptedDateTimeFilter" name="MinCaptainOrderAcceptedDateTimeFilter" type="datetime" bsDatepicker  placeholder="{{l('MinValue')}}" [(ngModel)]="minCaptainOrderAcceptedDateTimeFilter" (ngModelChange)="getOrderDeliveryByCaptains()">
-			                            <span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
-                                        <input class="form-control m-input" id="MaxCaptainOrderAcceptedDateTimeFilter" name="MaxCaptainOrderAcceptedDateTimeFilter" type="datetime" bsDatepicker  placeholder="{{l('MaxValue')}}" [(ngModel)]="maxCaptainOrderAcceptedDateTimeFilter" (ngModelChange)="getOrderDeliveryByCaptains()">
-									</div>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="my-3">
-									<label class="form-label" for="MinCaptainOrderPickedupDateTimeFilter">{{l("CaptainOrderPickedupDateTimeRange")}}</label>
-									<div class="input-group">
-                                        
-                                        <input class="form-control m-input" id="MinCaptainOrderPickedupDateTimeFilter" name="MinCaptainOrderPickedupDateTimeFilter" type="datetime" bsDatepicker  placeholder="{{l('MinValue')}}" [(ngModel)]="minCaptainOrderPickedupDateTimeFilter" (ngModelChange)="getOrderDeliveryByCaptains()">
-			                            <span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
-                                        <input class="form-control m-input" id="MaxCaptainOrderPickedupDateTimeFilter" name="MaxCaptainOrderPickedupDateTimeFilter" type="datetime" bsDatepicker  placeholder="{{l('MaxValue')}}" [(ngModel)]="maxCaptainOrderPickedupDateTimeFilter" (ngModelChange)="getOrderDeliveryByCaptains()">
-									</div>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="my-3">
-									<label class="form-label" for="MinOrderDeliveryEstimatedTimeFilter">{{l("MinMax")}} {{l("OrderDeliveryEstimatedTime")}}</label>
-									<div class="input-group">
-                                        <input type="number" class="form-control" id="MinOrderDeliveryEstimatedTimeFilter" [(ngModel)]="minOrderDeliveryEstimatedTimeFilter" placeholder="{{l('MinValue')}}" name="minOrderDeliveryEstimatedTimeFilter" (ngModelChange)="getOrderDeliveryByCaptains()"/>
-                                        <input type="number" class="form-control" [(ngModel)]="maxOrderDeliveryEstimatedTimeFilter" placeholder="{{l('MaxValue')}}" name="maxOrderDeliveryEstimatedTimeFilter" (ngModelChange)="getOrderDeliveryByCaptains()"/>
-									</div>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="my-3">
-									<label class="form-label" for="MinCaptainOrderDeliveredToCustomerDateTimeFilter">{{l("CaptainOrderDeliveredToCustomerDateTimeRange")}}</label>
-									<div class="input-group">
-                                        
-                                        <input class="form-control m-input" id="MinCaptainOrderDeliveredToCustomerDateTimeFilter" name="MinCaptainOrderDeliveredToCustomerDateTimeFilter" type="datetime" bsDatepicker  placeholder="{{l('MinValue')}}" [(ngModel)]="minCaptainOrderDeliveredToCustomerDateTimeFilter" (ngModelChange)="getOrderDeliveryByCaptains()">
-			                            <span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
-                                        <input class="form-control m-input" id="MaxCaptainOrderDeliveredToCustomerDateTimeFilter" name="MaxCaptainOrderDeliveredToCustomerDateTimeFilter" type="datetime" bsDatepicker  placeholder="{{l('MaxValue')}}" [(ngModel)]="maxCaptainOrderDeliveredToCustomerDateTimeFilter" (ngModelChange)="getOrderDeliveryByCaptains()">
-									</div>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="my-3">
-									<label class="form-label" for="MinOrderDeliveryActualTimeFilter">{{l("MinMax")}} {{l("OrderDeliveryActualTime")}}</label>
-									<div class="input-group">
-                                        <input type="number" class="form-control" id="MinOrderDeliveryActualTimeFilter" [(ngModel)]="minOrderDeliveryActualTimeFilter" placeholder="{{l('MinValue')}}" name="minOrderDeliveryActualTimeFilter" (ngModelChange)="getOrderDeliveryByCaptains()"/>
-                                        <input type="number" class="form-control" [(ngModel)]="maxOrderDeliveryActualTimeFilter" placeholder="{{l('MaxValue')}}" name="maxOrderDeliveryActualTimeFilter" (ngModelChange)="getOrderDeliveryByCaptains()"/>
-									</div>
-                                </div>
-                            </div>
-							<div class="col-md-3">
-								<div class="my-3">
-									<label class="form-label" for="OrderDeliveryRouteDataFilter">{{l("OrderDeliveryRouteData")}}</label>
-									<input type="text" class="form-control" id="OrderDeliveryRouteDataFilter" name="orderDeliveryRouteDataFilter" [(ngModel)]="orderDeliveryRouteDataFilter" (ngModelChange)="getOrderDeliveryByCaptains()">
-								</div>
-                            </div>
-							<div class="col-md-3">
-								<div class="my-3">
-									<label class="form-label" for="DeliveryNotesFilter">{{l("DeliveryNotes")}}</label>
-									<input type="text" class="form-control" id="DeliveryNotesFilter" name="deliveryNotesFilter" [(ngModel)]="deliveryNotesFilter" (ngModelChange)="getOrderDeliveryByCaptains()">
-								</div>
-                            </div>
-							<div class="col-md-3">
-								<div class="my-3">
-									<label class="form-label" for="DeliveryPointPhotoFilter">{{l("DeliveryPointPhoto")}}</label>
-									<input type="text" class="form-control" id="DeliveryPointPhotoFilter" name="deliveryPointPhotoFilter" [(ngModel)]="deliveryPointPhotoFilter" (ngModelChange)="getOrderDeliveryByCaptains()">
-								</div>
-                            </div>
-							<div class="col-md-3">
-								<div class="my-3">
-									<label class="form-label" for="CustomerSignatureFilter">{{l("CustomerSignature")}}</label>
-									<input type="text" class="form-control" id="CustomerSignatureFilter" name="customerSignatureFilter" [(ngModel)]="customerSignatureFilter" (ngModelChange)="getOrderDeliveryByCaptains()">
-								</div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="my-3">
-									<label class="form-label" for="MinCaptainRatingByCustomerFilter">{{l("MinMax")}} {{l("CaptainRatingByCustomer")}}</label>
-									<div class="input-group">
-                                        <input type="number" class="form-control" id="MinCaptainRatingByCustomerFilter" [(ngModel)]="minCaptainRatingByCustomerFilter" placeholder="{{l('MinValue')}}" name="minCaptainRatingByCustomerFilter" (ngModelChange)="getOrderDeliveryByCaptains()"/>
-                                        <input type="number" class="form-control" [(ngModel)]="maxCaptainRatingByCustomerFilter" placeholder="{{l('MaxValue')}}" name="maxCaptainRatingByCustomerFilter" (ngModelChange)="getOrderDeliveryByCaptains()"/>
-									</div>
-                                </div>
-                            </div>
-							<div class="col-md-3">
-								<div class="my-3">
-									<label class="form-label" for="CustomerNotesFilter">{{l("CustomerNotes")}}</label>
-									<input type="text" class="form-control" id="CustomerNotesFilter" name="customerNotesFilter" [(ngModel)]="customerNotesFilter" (ngModelChange)="getOrderDeliveryByCaptains()">
-								</div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="my-3">
-									<label class="form-label" for="MinDeliveryStagesFilter">{{l("MinMax")}} {{l("DeliveryStages")}}</label>
-									<div class="input-group">
-                                        <input type="number" class="form-control" id="MinDeliveryStagesFilter" [(ngModel)]="minDeliveryStagesFilter" placeholder="{{l('MinValue')}}" name="minDeliveryStagesFilter" (ngModelChange)="getOrderDeliveryByCaptains()"/>
-                                        <input type="number" class="form-control" [(ngModel)]="maxDeliveryStagesFilter" placeholder="{{l('MaxValue')}}" name="maxDeliveryStagesFilter" (ngModelChange)="getOrderDeliveryByCaptains()"/>
-									</div>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="my-3">
-									<label class="form-label" for="MinDeliveryCostToDriverFilter">{{l("MinMax")}} {{l("DeliveryCostToDriver")}}</label>
-									<div class="input-group">
-                                        <input type="number" class="form-control" id="MinDeliveryCostToDriverFilter" [(ngModel)]="minDeliveryCostToDriverFilter" placeholder="{{l('MinValue')}}" name="minDeliveryCostToDriverFilter" (ngModelChange)="getOrderDeliveryByCaptains()"/>
-                                        <input type="number" class="form-control" [(ngModel)]="maxDeliveryCostToDriverFilter" placeholder="{{l('MaxValue')}}" name="maxDeliveryCostToDriverFilter" (ngModelChange)="getOrderDeliveryByCaptains()"/>
-									</div>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="my-3">
-									<label class="form-label" for="MinDeliveryCostToCustomerFilter">{{l("MinMax")}} {{l("DeliveryCostToCustomer")}}</label>
-									<div class="input-group">
-                                        <input type="number" class="form-control" id="MinDeliveryCostToCustomerFilter" [(ngModel)]="minDeliveryCostToCustomerFilter" placeholder="{{l('MinValue')}}" name="minDeliveryCostToCustomerFilter" (ngModelChange)="getOrderDeliveryByCaptains()"/>
-                                        <input type="number" class="form-control" [(ngModel)]="maxDeliveryCostToCustomerFilter" placeholder="{{l('MaxValue')}}" name="maxDeliveryCostToCustomerFilter" (ngModelChange)="getOrderDeliveryByCaptains()"/>
-									</div>
-                                </div>
                             </div>
 
 
-							<div class="col-md-3">
-								<div class="my-3">
-									<label class="form-label" for="OrderInvoiceNumberFilter">({{l("Order")}}) {{l("InvoiceNumber")}}</label>
-									<input type="text" class="form-control" id="OrderInvoiceNumberFilter" name="orderInvoiceNumberFilter" [(ngModel)]="orderInvoiceNumberFilter">
+
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label"
+                                        for="CaptainSelectionAutoOrManualFilterSelect">{{l("CaptainSelectionAutoOrManual")}}</label>
+                                    <select class="form-select" name="CaptainSelectionAutoOrManualFilter"
+                                        id="CaptainSelectionAutoOrManualFilterSelect"
+                                        [(ngModel)]="captainSelectionAutoOrManualFilter"
+                                        (ngModelChange)="getOrderDeliveryByCaptains()">
+                                        <option value="-1">{{l("All")}}</option>
+                                        <option value="0">{{l("False")}}</option>
+                                        <option value="1">{{l("True")}}</option>
+                                    </select>
                                 </div>
                             </div>
-							<div class="col-md-3">
-								<div class="my-3">
-									<label class="form-label" for="StoreNameFilter">({{l("Store")}}) {{l("Name")}}</label>
-									<input type="text" class="form-control" id="StoreNameFilter" name="storeNameFilter" [(ngModel)]="storeNameFilter">
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label"
+                                        for="MinCaptainOrderAcceptedDateTimeFilter">{{l("CaptainOrderAcceptedDateTimeRange")}}</label>
+                                    <div class="input-group">
+
+                                        <input class="form-control m-input" id="MinCaptainOrderAcceptedDateTimeFilter"
+                                            name="MinCaptainOrderAcceptedDateTimeFilter" type="datetime" bsDatepicker
+                                            placeholder="{{l('MinValue')}}"
+                                            [(ngModel)]="minCaptainOrderAcceptedDateTimeFilter"
+                                            (ngModelChange)="getOrderDeliveryByCaptains()">
+                                        <span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
+                                        <input class="form-control m-input" id="MaxCaptainOrderAcceptedDateTimeFilter"
+                                            name="MaxCaptainOrderAcceptedDateTimeFilter" type="datetime" bsDatepicker
+                                            placeholder="{{l('MaxValue')}}"
+                                            [(ngModel)]="maxCaptainOrderAcceptedDateTimeFilter"
+                                            (ngModelChange)="getOrderDeliveryByCaptains()">
+                                    </div>
                                 </div>
                             </div>
-							<div class="col-md-3">
-								<div class="my-3">
-									<label class="form-label" for="ContactFullNameFilter">({{l("Contact")}}) {{l("FullName")}}</label>
-									<input type="text" class="form-control" id="ContactFullNameFilter" name="contactFullNameFilter" [(ngModel)]="contactFullNameFilter">
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label"
+                                        for="MinCaptainOrderPickedupDateTimeFilter">{{l("CaptainOrderPickedupDateTimeRange")}}</label>
+                                    <div class="input-group">
+
+                                        <input class="form-control m-input" id="MinCaptainOrderPickedupDateTimeFilter"
+                                            name="MinCaptainOrderPickedupDateTimeFilter" type="datetime" bsDatepicker
+                                            placeholder="{{l('MinValue')}}"
+                                            [(ngModel)]="minCaptainOrderPickedupDateTimeFilter"
+                                            (ngModelChange)="getOrderDeliveryByCaptains()">
+                                        <span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
+                                        <input class="form-control m-input" id="MaxCaptainOrderPickedupDateTimeFilter"
+                                            name="MaxCaptainOrderPickedupDateTimeFilter" type="datetime" bsDatepicker
+                                            placeholder="{{l('MaxValue')}}"
+                                            [(ngModel)]="maxCaptainOrderPickedupDateTimeFilter"
+                                            (ngModelChange)="getOrderDeliveryByCaptains()">
+                                    </div>
                                 </div>
                             </div>
-							<div class="col-md-3">
-								<div class="my-3">
-									<label class="form-label" for="EmployeeNameFilter">({{l("Employee")}}) {{l("Name")}}</label>
-									<input type="text" class="form-control" id="EmployeeNameFilter" name="employeeNameFilter" [(ngModel)]="employeeNameFilter">
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="MinOrderDeliveryEstimatedTimeFilter">{{l("MinMax")}}
+                                        {{l("OrderDeliveryEstimatedTime")}}</label>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control"
+                                            id="MinOrderDeliveryEstimatedTimeFilter"
+                                            [(ngModel)]="minOrderDeliveryEstimatedTimeFilter"
+                                            placeholder="{{l('MinValue')}}" name="minOrderDeliveryEstimatedTimeFilter"
+                                            (ngModelChange)="getOrderDeliveryByCaptains()" />
+                                        <input type="number" class="form-control"
+                                            [(ngModel)]="maxOrderDeliveryEstimatedTimeFilter"
+                                            placeholder="{{l('MaxValue')}}" name="maxOrderDeliveryEstimatedTimeFilter"
+                                            (ngModelChange)="getOrderDeliveryByCaptains()" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label"
+                                        for="MinCaptainOrderDeliveredToCustomerDateTimeFilter">{{l("CaptainOrderDeliveredToCustomerDateTimeRange")}}</label>
+                                    <div class="input-group">
+
+                                        <input class="form-control m-input"
+                                            id="MinCaptainOrderDeliveredToCustomerDateTimeFilter"
+                                            name="MinCaptainOrderDeliveredToCustomerDateTimeFilter" type="datetime"
+                                            bsDatepicker placeholder="{{l('MinValue')}}"
+                                            [(ngModel)]="minCaptainOrderDeliveredToCustomerDateTimeFilter"
+                                            (ngModelChange)="getOrderDeliveryByCaptains()">
+                                        <span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
+                                        <input class="form-control m-input"
+                                            id="MaxCaptainOrderDeliveredToCustomerDateTimeFilter"
+                                            name="MaxCaptainOrderDeliveredToCustomerDateTimeFilter" type="datetime"
+                                            bsDatepicker placeholder="{{l('MaxValue')}}"
+                                            [(ngModel)]="maxCaptainOrderDeliveredToCustomerDateTimeFilter"
+                                            (ngModelChange)="getOrderDeliveryByCaptains()">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="MinOrderDeliveryActualTimeFilter">{{l("MinMax")}}
+                                        {{l("OrderDeliveryActualTime")}}</label>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" id="MinOrderDeliveryActualTimeFilter"
+                                            [(ngModel)]="minOrderDeliveryActualTimeFilter"
+                                            placeholder="{{l('MinValue')}}" name="minOrderDeliveryActualTimeFilter"
+                                            (ngModelChange)="getOrderDeliveryByCaptains()" />
+                                        <input type="number" class="form-control"
+                                            [(ngModel)]="maxOrderDeliveryActualTimeFilter"
+                                            placeholder="{{l('MaxValue')}}" name="maxOrderDeliveryActualTimeFilter"
+                                            (ngModelChange)="getOrderDeliveryByCaptains()" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label"
+                                        for="OrderDeliveryRouteDataFilter">{{l("OrderDeliveryRouteData")}}</label>
+                                    <input type="text" class="form-control" id="OrderDeliveryRouteDataFilter"
+                                        name="orderDeliveryRouteDataFilter" [(ngModel)]="orderDeliveryRouteDataFilter"
+                                        (ngModelChange)="getOrderDeliveryByCaptains()">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="DeliveryNotesFilter">{{l("DeliveryNotes")}}</label>
+                                    <input type="text" class="form-control" id="DeliveryNotesFilter"
+                                        name="deliveryNotesFilter" [(ngModel)]="deliveryNotesFilter"
+                                        (ngModelChange)="getOrderDeliveryByCaptains()">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label"
+                                        for="DeliveryPointPhotoFilter">{{l("DeliveryPointPhoto")}}</label>
+                                    <input type="text" class="form-control" id="DeliveryPointPhotoFilter"
+                                        name="deliveryPointPhotoFilter" [(ngModel)]="deliveryPointPhotoFilter"
+                                        (ngModelChange)="getOrderDeliveryByCaptains()">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label"
+                                        for="CustomerSignatureFilter">{{l("CustomerSignature")}}</label>
+                                    <input type="text" class="form-control" id="CustomerSignatureFilter"
+                                        name="customerSignatureFilter" [(ngModel)]="customerSignatureFilter"
+                                        (ngModelChange)="getOrderDeliveryByCaptains()">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="MinCaptainRatingByCustomerFilter">{{l("MinMax")}}
+                                        {{l("CaptainRatingByCustomer")}}</label>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" id="MinCaptainRatingByCustomerFilter"
+                                            [(ngModel)]="minCaptainRatingByCustomerFilter"
+                                            placeholder="{{l('MinValue')}}" name="minCaptainRatingByCustomerFilter"
+                                            (ngModelChange)="getOrderDeliveryByCaptains()" />
+                                        <input type="number" class="form-control"
+                                            [(ngModel)]="maxCaptainRatingByCustomerFilter"
+                                            placeholder="{{l('MaxValue')}}" name="maxCaptainRatingByCustomerFilter"
+                                            (ngModelChange)="getOrderDeliveryByCaptains()" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="CustomerNotesFilter">{{l("CustomerNotes")}}</label>
+                                    <input type="text" class="form-control" id="CustomerNotesFilter"
+                                        name="customerNotesFilter" [(ngModel)]="customerNotesFilter"
+                                        (ngModelChange)="getOrderDeliveryByCaptains()">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="MinDeliveryStagesFilter">{{l("MinMax")}}
+                                        {{l("DeliveryStages")}}</label>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" id="MinDeliveryStagesFilter"
+                                            [(ngModel)]="minDeliveryStagesFilter" placeholder="{{l('MinValue')}}"
+                                            name="minDeliveryStagesFilter"
+                                            (ngModelChange)="getOrderDeliveryByCaptains()" />
+                                        <input type="number" class="form-control" [(ngModel)]="maxDeliveryStagesFilter"
+                                            placeholder="{{l('MaxValue')}}" name="maxDeliveryStagesFilter"
+                                            (ngModelChange)="getOrderDeliveryByCaptains()" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="MinDeliveryCostToDriverFilter">{{l("MinMax")}}
+                                        {{l("DeliveryCostToDriver")}}</label>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" id="MinDeliveryCostToDriverFilter"
+                                            [(ngModel)]="minDeliveryCostToDriverFilter" placeholder="{{l('MinValue')}}"
+                                            name="minDeliveryCostToDriverFilter"
+                                            (ngModelChange)="getOrderDeliveryByCaptains()" />
+                                        <input type="number" class="form-control"
+                                            [(ngModel)]="maxDeliveryCostToDriverFilter" placeholder="{{l('MaxValue')}}"
+                                            name="maxDeliveryCostToDriverFilter"
+                                            (ngModelChange)="getOrderDeliveryByCaptains()" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="MinDeliveryCostToCustomerFilter">{{l("MinMax")}}
+                                        {{l("DeliveryCostToCustomer")}}</label>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" id="MinDeliveryCostToCustomerFilter"
+                                            [(ngModel)]="minDeliveryCostToCustomerFilter"
+                                            placeholder="{{l('MinValue')}}" name="minDeliveryCostToCustomerFilter"
+                                            (ngModelChange)="getOrderDeliveryByCaptains()" />
+                                        <input type="number" class="form-control"
+                                            [(ngModel)]="maxDeliveryCostToCustomerFilter"
+                                            placeholder="{{l('MaxValue')}}" name="maxDeliveryCostToCustomerFilter"
+                                            (ngModelChange)="getOrderDeliveryByCaptains()" />
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="OrderInvoiceNumberFilter">({{l("Order")}})
+                                        {{l("InvoiceNumber")}}</label>
+                                    <input type="text" class="form-control" id="OrderInvoiceNumberFilter"
+                                        name="orderInvoiceNumberFilter" [(ngModel)]="orderInvoiceNumberFilter">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="StoreNameFilter">({{l("Store")}})
+                                        {{l("Name")}}</label>
+                                    <input type="text" class="form-control" id="StoreNameFilter" name="storeNameFilter"
+                                        [(ngModel)]="storeNameFilter">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="ContactFullNameFilter">({{l("Contact")}})
+                                        {{l("FullName")}}</label>
+                                    <input type="text" class="form-control" id="ContactFullNameFilter"
+                                        name="contactFullNameFilter" [(ngModel)]="contactFullNameFilter">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+                                    <label class="form-label" for="EmployeeNameFilter">({{l("Employee")}})
+                                        {{l("Name")}}</label>
+                                    <input type="text" class="form-control" id="EmployeeNameFilter"
+                                        name="employeeNameFilter" [(ngModel)]="employeeNameFilter">
                                 </div>
                             </div>
                             <div class="col-md-12 mt-5">
-                                <button (click)="resetFilters()" class="btn btn-secondary btn-sm" id="btn-reset-filters">Reset</button>
+                                <button (click)="resetFilters()" class="btn btn-secondary btn-sm"
+                                    id="btn-reset-filters">Reset</button>
                             </div>
                         </div>
                         <div class="row my-4">
                             <div class="col-sm-12">
-                                <span class="clickable-item text-muted" *ngIf="!advancedFiltersAreShown" (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i class="fa fa-angle-down"></i> {{l("ShowAdvancedFilters")}}</span>
-                                <span class="clickable-item text-muted" *ngIf="advancedFiltersAreShown" (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i class="fa fa-angle-up"></i> {{l("HideAdvancedFilters")}}</span>
+                                <span class="clickable-item text-muted" *ngIf="!advancedFiltersAreShown"
+                                    (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i
+                                        class="fa fa-angle-down"></i> {{l("ShowAdvancedFilters")}}</span>
+                                <span class="clickable-item text-muted" *ngIf="advancedFiltersAreShown"
+                                    (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i
+                                        class="fa fa-angle-up"></i> {{l("HideAdvancedFilters")}}</span>
                             </div>
                         </div>
                     </div>
                 </form>
 
                 <div class="row align-items-center">
-                    <!--<Primeng-Datatable-Start>-->
-                    <div class="primeng-datatable-container col-12"
-                         [busyIf]="primengTableHelper.isLoading">
-                        <p-table #dataTable
-                                     (onLazyLoad)="getOrderDeliveryByCaptains($event)"
-                                     [value]="primengTableHelper.records"
-                                     rows="{{primengTableHelper.defaultRecordsCountPerPage}}"
-                                     [paginator]="false"
-                                     [lazy]="true"
-                                     [scrollable]="true"
-                                     ScrollWidth="100%"
-                                     [responsive]="primengTableHelper.isResponsive"
-                                     [resizableColumns]="primengTableHelper.resizableColumns">
+                    <div class="primeng-datatable-container col-12" [busyIf]="primengTableHelper.isLoading">
+                        <p-table #dataTable (onLazyLoad)="getOrderDeliveryByCaptains($event)"
+                            [value]="primengTableHelper.records"
+                            rows="{{primengTableHelper.defaultRecordsCountPerPage}}" [paginator]="false" [lazy]="true"
+                            [scrollable]="true" ScrollWidth="100%" [responsive]="primengTableHelper.isResponsive"
+                            [resizableColumns]="primengTableHelper.resizableColumns">
                             <ng-template pTemplate="header">
                                 <tr>
-                                    <th style="width: 130px" [hidden]="!isGrantedAny('Pages.OrderDeliveryByCaptains.Edit', 'Pages.OrderDeliveryByCaptains.Delete')">{{l('Actions')}}</th>
+                                    <th style="width: 130px"
+                                        [hidden]="!isGrantedAny('Pages.OrderDeliveryByCaptains.Edit', 'Pages.OrderDeliveryByCaptains.Delete')">
+                                        {{l('Actions')}}</th>
                                     <th style="width: 150px" pSortableColumn="orderFk.invoiceNumber">
                                         {{l('InvoiceNumber')}}
                                         <p-sortIcon field="orderInvoiceNumber"></p-sortIcon>
@@ -236,23 +445,28 @@
                                     </th>
                                     <th style="width: 150px" pSortableColumn="captainSelectionAutoOrManual">
                                         {{l('CaptainSelectionAutoOrManual')}}
-                                        <p-sortIcon field="orderDeliveryByCaptain.captainSelectionAutoOrManual"></p-sortIcon>
+                                        <p-sortIcon
+                                            field="orderDeliveryByCaptain.captainSelectionAutoOrManual"></p-sortIcon>
                                     </th>
                                     <th style="width: 150px" pSortableColumn="captainOrderAcceptedDateTime">
                                         {{l('CaptainOrderAcceptedDateTime')}}
-                                        <p-sortIcon field="orderDeliveryByCaptain.captainOrderAcceptedDateTime"></p-sortIcon>
+                                        <p-sortIcon
+                                            field="orderDeliveryByCaptain.captainOrderAcceptedDateTime"></p-sortIcon>
                                     </th>
                                     <th style="width: 150px" pSortableColumn="captainOrderPickedupDateTime">
                                         {{l('CaptainOrderPickedupDateTime')}}
-                                        <p-sortIcon field="orderDeliveryByCaptain.captainOrderPickedupDateTime"></p-sortIcon>
+                                        <p-sortIcon
+                                            field="orderDeliveryByCaptain.captainOrderPickedupDateTime"></p-sortIcon>
                                     </th>
                                     <th style="width: 150px" pSortableColumn="orderDeliveryEstimatedTime">
                                         {{l('OrderDeliveryEstimatedTime')}}
-                                        <p-sortIcon field="orderDeliveryByCaptain.orderDeliveryEstimatedTime"></p-sortIcon>
+                                        <p-sortIcon
+                                            field="orderDeliveryByCaptain.orderDeliveryEstimatedTime"></p-sortIcon>
                                     </th>
                                     <th style="width: 150px" pSortableColumn="captainOrderDeliveredToCustomerDateTime">
                                         {{l('CaptainOrderDeliveredToCustomerDateTime')}}
-                                        <p-sortIcon field="orderDeliveryByCaptain.captainOrderDeliveredToCustomerDateTime"></p-sortIcon>
+                                        <p-sortIcon
+                                            field="orderDeliveryByCaptain.captainOrderDeliveredToCustomerDateTime"></p-sortIcon>
                                     </th>
                                     <th style="width: 150px" pSortableColumn="orderDeliveryActualTime">
                                         {{l('OrderDeliveryActualTime')}}
@@ -296,143 +510,155 @@
                                     </th>
 
                                 </tr>
-                            </ng-template>                           
-							<ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
+                            </ng-template>
+                            <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
                                 <tr>
                                     <td style="width: 130px"
                                         [hidden]="!isGrantedAny('Pages.OrderDeliveryByCaptains.Edit', 'Pages.OrderDeliveryByCaptains.Delete')">
-                                       <div class="btn-group dropdown" dropdown container="body">
+                                        <div class="btn-group dropdown" dropdown container="body">
                                             <button class="dropdown-toggle btn btn-sm btn-primary" dropdownToggle>
                                                 <i class="fa fa-cog"></i><span class="caret"></span> {{l("Actions")}}
                                             </button>
-												<ul class="dropdown-menu"  *dropdownMenu>
-												<li>
-													<a href="javascript:;" class="dropdown-item"
-														(click)="viewOrderDeliveryByCaptainModal.show(record)">{{l('View')}}</a>
-												</li>
-												<li>
-                                                <a href="javascript:;" *ngIf="permission.isGranted('Pages.OrderDeliveryByCaptains.Edit')" class="dropdown-item"
-														(click)="createOrEditOrderDeliveryByCaptainModal.show(record.orderDeliveryByCaptain.id)">{{l('Edit')}}</a>												
+                                            <ul class="dropdown-menu" *dropdownMenu>
+                                                <li>
+                                                    <a href="javascript:;" class="dropdown-item"
+                                                        (click)="viewOrderDeliveryByCaptainModal.show(record)">{{l('View')}}</a>
                                                 </li>
-												<li>
-											        <a class="dropdown-item" href="javascript:;" *ngIf="permission.isGranted('Pages.OrderDeliveryByCaptains.Delete')"
-														(click)="deleteOrderDeliveryByCaptain(record.orderDeliveryByCaptain)">{{l('Delete')}}</a>
-												</li>
+                                                <li>
+                                                    <a href="javascript:;"
+                                                        *ngIf="permission.isGranted('Pages.OrderDeliveryByCaptains.Edit')"
+                                                        class="dropdown-item"
+                                                        (click)="createOrEditOrderDeliveryByCaptainModal.show(record.orderDeliveryByCaptain.id)">{{l('Edit')}}</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="javascript:;"
+                                                        *ngIf="permission.isGranted('Pages.OrderDeliveryByCaptains.Delete')"
+                                                        (click)="deleteOrderDeliveryByCaptain(record.orderDeliveryByCaptain)">{{l('Delete')}}</a>
+                                                </li>
                                             </ul>
                                         </div>
                                     </td>
                                     <td style="width:150px">
-												<span class="p-column-title"> {{l('InvoiceNumber')}}</span>
-												{{record.orderInvoiceNumber}}
-											</td>
-                                    <td style="width:150px">
-												<span class="p-column-title"> {{l('Name')}}</span>
-												{{record.storeName}}
-											</td>
-                                    <td style="width:150px">
-												<span class="p-column-title"> {{l('FullName')}}</span>
-												{{record.contactFullName}}
-											</td>
-                                    <td style="width:150px">
-												<span class="p-column-title"> {{l('Name')}}</span>
-												{{record.employeeName}}
-											</td>
-                                    <td style="width:150px">
-										<span class="p-column-title"> {{l('CaptainSelectionAutoOrManual')}}</span>
-                                        <div *ngIf="record.orderDeliveryByCaptain.captainSelectionAutoOrManual" class="text-center"><i class="fa fa-check-circle text-success" title="True"></i></div>
-										<div *ngIf="!record.orderDeliveryByCaptain.captainSelectionAutoOrManual" class="text-center"><i class="fa fa-times-circle" title="False"></i></div>
+                                        <span class="p-column-title"> {{l('InvoiceNumber')}}</span>
+                                        {{record.orderInvoiceNumber}}
                                     </td>
                                     <td style="width:150px">
-										<span class="p-column-title"> {{l('CaptainOrderAcceptedDateTime')}}</span>
+                                        <span class="p-column-title"> {{l('Name')}}</span>
+                                        {{record.storeName}}
+                                    </td>
+                                    <td style="width:150px">
+                                        <span class="p-column-title"> {{l('FullName')}}</span>
+                                        {{record.contactFullName}}
+                                    </td>
+                                    <td style="width:150px">
+                                        <span class="p-column-title"> {{l('Name')}}</span>
+                                        {{record.employeeName}}
+                                    </td>
+                                    <td style="width:150px">
+                                        <span class="p-column-title"> {{l('CaptainSelectionAutoOrManual')}}</span>
+                                        <div *ngIf="record.orderDeliveryByCaptain.captainSelectionAutoOrManual"
+                                            class="text-center"><i class="fa fa-check-circle text-success"
+                                                title="True"></i></div>
+                                        <div *ngIf="!record.orderDeliveryByCaptain.captainSelectionAutoOrManual"
+                                            class="text-center"><i class="fa fa-times-circle" title="False"></i></div>
+                                    </td>
+                                    <td style="width:150px">
+                                        <span class="p-column-title"> {{l('CaptainOrderAcceptedDateTime')}}</span>
                                         <span *ngIf="record.orderDeliveryByCaptain.captainOrderAcceptedDateTime">
-											{{record.orderDeliveryByCaptain.captainOrderAcceptedDateTime |  luxonFormat:'F' }}
+                                            {{record.orderDeliveryByCaptain.captainOrderAcceptedDateTime |
+                                            luxonFormat:'F' }}
                                         </span>
-                                        <span *ngIf="!record.orderDeliveryByCaptain.captainOrderAcceptedDateTime">-</span>
+                                        <span
+                                            *ngIf="!record.orderDeliveryByCaptain.captainOrderAcceptedDateTime">-</span>
                                     </td>
                                     <td style="width:150px">
-										<span class="p-column-title"> {{l('CaptainOrderPickedupDateTime')}}</span>
+                                        <span class="p-column-title"> {{l('CaptainOrderPickedupDateTime')}}</span>
                                         <span *ngIf="record.orderDeliveryByCaptain.captainOrderPickedupDateTime">
-											{{record.orderDeliveryByCaptain.captainOrderPickedupDateTime |  luxonFormat:'F' }}
+                                            {{record.orderDeliveryByCaptain.captainOrderPickedupDateTime |
+                                            luxonFormat:'F' }}
                                         </span>
-                                        <span *ngIf="!record.orderDeliveryByCaptain.captainOrderPickedupDateTime">-</span>
+                                        <span
+                                            *ngIf="!record.orderDeliveryByCaptain.captainOrderPickedupDateTime">-</span>
                                     </td>
                                     <td style="width:150px">
-											<span class="p-column-title"> {{l('OrderDeliveryEstimatedTime')}}</span>
-											{{record.orderDeliveryByCaptain.orderDeliveryEstimatedTime}}
-										</td>
-                                    <td style="width:150px">
-										<span class="p-column-title"> {{l('CaptainOrderDeliveredToCustomerDateTime')}}</span>
-                                        <span *ngIf="record.orderDeliveryByCaptain.captainOrderDeliveredToCustomerDateTime">
-											{{record.orderDeliveryByCaptain.captainOrderDeliveredToCustomerDateTime |  luxonFormat:'F' }}
-                                        </span>
-                                        <span *ngIf="!record.orderDeliveryByCaptain.captainOrderDeliveredToCustomerDateTime">-</span>
+                                        <span class="p-column-title"> {{l('OrderDeliveryEstimatedTime')}}</span>
+                                        {{record.orderDeliveryByCaptain.orderDeliveryEstimatedTime}}
                                     </td>
                                     <td style="width:150px">
-											<span class="p-column-title"> {{l('OrderDeliveryActualTime')}}</span>
-											{{record.orderDeliveryByCaptain.orderDeliveryActualTime}}
-										</td>
+                                        <span class="p-column-title">
+                                            {{l('CaptainOrderDeliveredToCustomerDateTime')}}</span>
+                                        <span
+                                            *ngIf="record.orderDeliveryByCaptain.captainOrderDeliveredToCustomerDateTime">
+                                            {{record.orderDeliveryByCaptain.captainOrderDeliveredToCustomerDateTime |
+                                            luxonFormat:'F' }}
+                                        </span>
+                                        <span
+                                            *ngIf="!record.orderDeliveryByCaptain.captainOrderDeliveredToCustomerDateTime">-</span>
+                                    </td>
                                     <td style="width:150px">
-											<span class="p-column-title"> {{l('OrderDeliveryRouteData')}}</span>
-											{{record.orderDeliveryByCaptain.orderDeliveryRouteData}}
-										</td>
+                                        <span class="p-column-title"> {{l('OrderDeliveryActualTime')}}</span>
+                                        {{record.orderDeliveryByCaptain.orderDeliveryActualTime}}
+                                    </td>
                                     <td style="width:150px">
-											<span class="p-column-title"> {{l('DeliveryNotes')}}</span>
-											{{record.orderDeliveryByCaptain.deliveryNotes}}
-										</td>
+                                        <span class="p-column-title"> {{l('OrderDeliveryRouteData')}}</span>
+                                        {{record.orderDeliveryByCaptain.orderDeliveryRouteData}}
+                                    </td>
                                     <td style="width:150px">
-											<span class="p-column-title"> {{l('DeliveryPointPhoto')}}</span>
-											{{record.orderDeliveryByCaptain.deliveryPointPhoto}}
-										</td>
+                                        <span class="p-column-title"> {{l('DeliveryNotes')}}</span>
+                                        {{record.orderDeliveryByCaptain.deliveryNotes}}
+                                    </td>
                                     <td style="width:150px">
-											<span class="p-column-title"> {{l('CustomerSignature')}}</span>
-											{{record.orderDeliveryByCaptain.customerSignature}}
-										</td>
+                                        <span class="p-column-title"> {{l('DeliveryPointPhoto')}}</span>
+                                        {{record.orderDeliveryByCaptain.deliveryPointPhoto}}
+                                    </td>
                                     <td style="width:150px">
-											<span class="p-column-title"> {{l('CaptainRatingByCustomer')}}</span>
-											{{record.orderDeliveryByCaptain.captainRatingByCustomer}}
-										</td>
+                                        <span class="p-column-title"> {{l('CustomerSignature')}}</span>
+                                        {{record.orderDeliveryByCaptain.customerSignature}}
+                                    </td>
                                     <td style="width:150px">
-											<span class="p-column-title"> {{l('CustomerNotes')}}</span>
-											{{record.orderDeliveryByCaptain.customerNotes}}
-										</td>
+                                        <span class="p-column-title"> {{l('CaptainRatingByCustomer')}}</span>
+                                        {{record.orderDeliveryByCaptain.captainRatingByCustomer}}
+                                    </td>
                                     <td style="width:150px">
-											<span class="p-column-title"> {{l('DeliveryStages')}}</span>
-											{{record.orderDeliveryByCaptain.deliveryStages}}
-										</td>
+                                        <span class="p-column-title"> {{l('CustomerNotes')}}</span>
+                                        {{record.orderDeliveryByCaptain.customerNotes}}
+                                    </td>
                                     <td style="width:150px">
-											<span class="p-column-title"> {{l('DeliveryCostToDriver')}}</span>
-											{{record.orderDeliveryByCaptain.deliveryCostToDriver}}
-										</td>
+                                        <span class="p-column-title"> {{l('DeliveryStages')}}</span>
+                                        {{record.orderDeliveryByCaptain.deliveryStages}}
+                                    </td>
                                     <td style="width:150px">
-											<span class="p-column-title"> {{l('DeliveryCostToCustomer')}}</span>
-											{{record.orderDeliveryByCaptain.deliveryCostToCustomer}}
-										</td>
+                                        <span class="p-column-title"> {{l('DeliveryCostToDriver')}}</span>
+                                        {{record.orderDeliveryByCaptain.deliveryCostToDriver}}
+                                    </td>
+                                    <td style="width:150px">
+                                        <span class="p-column-title"> {{l('DeliveryCostToCustomer')}}</span>
+                                        {{record.orderDeliveryByCaptain.deliveryCostToCustomer}}
+                                    </td>
 
                                 </tr>
-                               
+
                             </ng-template>
                         </p-table>
-						<div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
+                        <div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
                             {{l('NoData')}}
                         </div>
                         <div class="primeng-paging-container">
-                            <p-paginator [rows]="primengTableHelper.defaultRecordsCountPerPage"
-                                         #paginator
-                                         (onPageChange)="getOrderDeliveryByCaptains($event)"
-                                         [totalRecords]="primengTableHelper.totalRecordsCount"
-                                         [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
-                                         [showCurrentPageReport]="true"
-                                         [currentPageReportTemplate]="'TotalRecordsCount' | localize:primengTableHelper.totalRecordsCount"    
-                            >
+                            <p-paginator [rows]="primengTableHelper.defaultRecordsCountPerPage" #paginator
+                                (onPageChange)="getOrderDeliveryByCaptains($event)"
+                                [totalRecords]="primengTableHelper.totalRecordsCount"
+                                [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
+                                [showCurrentPageReport]="true"
+                                [currentPageReportTemplate]="'TotalRecordsCount' | localize:primengTableHelper.totalRecordsCount">
                             </p-paginator>
                         </div>
                     </div>
-                    <!--<Primeng-Datatable-End>-->
                 </div>
             </div>
         </div>
     </div>
-    <createOrEditOrderDeliveryByCaptainModal #createOrEditOrderDeliveryByCaptainModal (modalSave)="getOrderDeliveryByCaptains()"></createOrEditOrderDeliveryByCaptainModal>    
+    <createOrEditOrderDeliveryByCaptainModal #createOrEditOrderDeliveryByCaptainModal
+        (modalSave)="getOrderDeliveryByCaptains()"></createOrEditOrderDeliveryByCaptainModal>
     <viewOrderDeliveryByCaptainModal #viewOrderDeliveryByCaptainModal></viewOrderDeliveryByCaptainModal>
-    
-  </div>
+
+</div>
