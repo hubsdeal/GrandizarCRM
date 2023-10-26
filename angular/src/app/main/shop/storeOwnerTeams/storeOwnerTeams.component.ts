@@ -1,7 +1,7 @@
 ﻿import { AppConsts } from '@shared/AppConsts';
-import { Component, Injector, ViewEncapsulation, ViewChild } from '@angular/core';
+import { Component, Injector, ViewEncapsulation, ViewChild, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { StoreOwnerTeamsServiceProxy, StoreOwnerTeamDto } from '@shared/service-proxies/service-proxies';
+import { StoreOwnerTeamsServiceProxy, StoreOwnerTeamDto, GetStoreOwnerTeamForViewDto } from '@shared/service-proxies/service-proxies';
 import { NotifyService } from 'abp-ng2-module';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { TokenAuthServiceProxy } from '@shared/service-proxies/service-proxies';
@@ -19,11 +19,12 @@ import { DateTime } from 'luxon';
 import { DateTimeService } from '@app/shared/common/timing/date-time.service';
 
 @Component({
+    selector: 'app-storeOwnerTeams',
     templateUrl: './storeOwnerTeams.component.html',
     encapsulation: ViewEncapsulation.None,
     animations: [appModuleAnimation()],
 })
-export class StoreOwnerTeamsComponent extends AppComponentBase {
+export class StoreOwnerTeamsComponent extends AppComponentBase implements OnInit {
     @ViewChild('createOrEditStoreOwnerTeamModal', { static: true })
     createOrEditStoreOwnerTeamModal: CreateOrEditStoreOwnerTeamModalComponent;
     @ViewChild('viewStoreOwnerTeamModal', { static: true }) viewStoreOwnerTeamModal: ViewStoreOwnerTeamModalComponent;
@@ -40,6 +41,10 @@ export class StoreOwnerTeamsComponent extends AppComponentBase {
     storeNameFilter = '';
     userNameFilter = '';
 
+    @Input() storeId: number;
+    totalRecordsCount: number;
+    allEmployee: GetStoreOwnerTeamForViewDto[] = [];
+
     constructor(
         injector: Injector,
         private _storeOwnerTeamsServiceProxy: StoreOwnerTeamsServiceProxy,
@@ -50,44 +55,30 @@ export class StoreOwnerTeamsComponent extends AppComponentBase {
         private _dateTimeService: DateTimeService
     ) {
         super(injector);
+        
     }
 
-    getStoreOwnerTeams(event?: LazyLoadEvent) {
-        if (this.primengTableHelper.shouldResetPaging(event)) {
-            this.paginator.changePage(0);
-            if (this.primengTableHelper.records && this.primengTableHelper.records.length > 0) {
-                return;
-            }
-        }
-
-        this.primengTableHelper.showLoadingIndicator();
-
+    ngOnInit(): void {
+        this.getStoreOwnerTeams();
+    }
+    getStoreOwnerTeams() {
         this._storeOwnerTeamsServiceProxy
-            .getAll(
-                this.filterText,
-                this.activeFilter,
-                this.primaryFilter,
-                this.orderEmailNotificationFilter,
-                this.orderSmsNotificationFilter,
-                this.storeNameFilter,
-                this.userNameFilter,
-                this.primengTableHelper.getSorting(this.dataTable),
-                this.primengTableHelper.getSkipCount(this.paginator, event),
-                this.primengTableHelper.getMaxResultCount(this.paginator, event)
+            .getAllByStoreId(
+                this.storeId,
             )
             .subscribe((result) => {
-                this.primengTableHelper.totalRecordsCount = result.totalCount;
-                this.primengTableHelper.records = result.items;
-                this.primengTableHelper.hideLoadingIndicator();
+                this.totalRecordsCount = result.totalCount;
+                this.allEmployee = result.items;
             });
     }
 
     reloadPage(): void {
-        this.paginator.changePage(this.paginator.getPage());
+        this.getStoreOwnerTeams();
     }
 
     createStoreOwnerTeam(): void {
         this.createOrEditStoreOwnerTeamModal.show();
+        this.createOrEditStoreOwnerTeamModal.storeId = this.storeId;
     }
 
     deleteStoreOwnerTeam(storeOwnerTeam: StoreOwnerTeamDto): void {

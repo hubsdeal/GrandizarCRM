@@ -138,6 +138,79 @@
                     </div>
                 </div>
             </div>
+
+            <div class="col-xl-6">
+                <div class="w-100 border rounded p-5 bg-light-primary shadow-sm">
+                    <div class="d-flex flex-wrap flex-stack mb-6">
+                        <h3 class="fw-bold my-2">
+                            Order List
+                        </h3>
+                    </div>
+                    <ul class="nav nav-custom nav-tabs nav-line-tabs nav-line-tabs-2x border-0 fs-4 fw-semibold mb-8"
+                        style="border-bottom: 2px solid #dbdbdb !important;" role="tablist">
+                        <!--begin:::Tab item-->
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link text-active-primary pb-4 active" data-bs-toggle="tab"
+                                href="#order_list" aria-selected="true" role="tab">
+                                <i class="fas fa-tasks me-1"></i> List View
+                            </a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link text-active-primary pb-4" data-kt-countup-tabs="true"
+                                data-bs-toggle="tab" href="#order_map" data-kt-initialized="1"
+                                aria-selected="false" role="tab" tabindex="-1">
+                                <i class="fas fa-list-check me-1"></i> Map View
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="myTabContent">
+                        <!--begin:::Tab pane-->
+                        <div class="tab-pane fade active show" id="order_list" role="tabpanel">
+                            <div class="card mb-9">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-start">
+                                        <div class="d-flex flex-wrap flex-grow-1 mt-n2 mt-lg-n1">
+                                            <div class="d-flex flex-column flex-grow-1 my-lg-0 my-2 pe-3">
+                                                <a href="javascript:;" 
+                                                    class="fs-5 text-gray-800 text-hover-primary fw-bold">
+                                                    Inv-2345454
+                                                </a>
+                                                <span class="text-gray-400 fw-lighter fs-7 mt-2 my-0">
+                                                    <i class="fas fa-map me-1"></i>
+                                                    Nikunja 02 dhaka
+                                                </span>
+                                                
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="order_map" role="tabpanel">
+                            <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" [disableDefaultUI]="false"
+                                [zoomControl]="true" [scaleControl]="true" (mapClick)="mapClicked($event)">
+                                <agm-marker *ngFor="let m of markers; let i = index"
+                                    (markerClick)="clickedMarker(m.label, i)" [latitude]="m.lat" [longitude]="m.lng"
+                                    [label]="m.label" [markerDraggable]="m.draggable" [iconUrl]="m.iconUrl"
+                                    [animation]="'BOUNCE'" (dragEnd)="markerDragEnd(m, $event)">
+                                    <!-- [animation]="'DROP'"  -->
+
+                                    <agm-info-window>
+                                        <strong>{{m.content}}</strong>
+                                    </agm-info-window>
+
+                                    <agm-overlay [visible]="false" [draggable]="true" [latitude]="m.lat"
+                                        [longitude]="m.lng">
+                                        <i class="fas fa-map-marker-alt" [style.color]="m.color"
+                                            style="font-size: 25px"></i>
+                                    </agm-overlay>
+                                </agm-marker>
+                            </agm-map>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="card card-custom gutter-b">
             <div class="card-body">

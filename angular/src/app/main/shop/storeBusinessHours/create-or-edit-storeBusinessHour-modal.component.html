@@ -1,42 +1,23 @@
-﻿<div
-    bsModal
-    #createOrEditModal="bs-modal"
-    class="modal fade"
-    tabindex="-1"
-    role="dialog"
-    aria-labelledby="createOrEditModal"
-    aria-hidden="true"
-    [config]="{ backdrop: 'static' }"
->
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{ backdrop: 'static' }">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <form *ngIf="active" #storeBusinessHourForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
                 <div class="modal-header">
                     <h4 class="modal-title">
-                        <span *ngIf="storeBusinessHour.id">{{ l('EditStoreBusinessHour') }}</span>
-                        <span *ngIf="!storeBusinessHour.id">{{ l('CreateNewStoreBusinessHour') }}</span>
+                        <span *ngIf="storeBusinessHour.id">{{ l('Edit Store Business Hour') }}</span>
+                        <span *ngIf="!storeBusinessHour.id">{{ l('Create New Store Business Hour') }}</span>
                     </h4>
 
-                    <button
-                        type="button"
-                        class="btn-close"
-                        (click)="close()"
-                        aria-label="Close"
-                        [disabled]="saving"
-                    ></button>
+                    <button type="button" class="btn-close" (click)="close()" aria-label="Close"
+                        [disabled]="saving"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="my-3">
+                    <!-- <div class="my-3" *ngIf="!storeId">
                         <label class="form-label" for="StoreName">{{ l('Store') }}</label>
                         <div class="input-group">
-                            <input
-                                class="form-control"
-                                id="StoreName"
-                                name="storeName"
-                                [(ngModel)]="storeName"
-                                type="text"
-                                disabled
-                            />
+                            <input class="form-control" id="StoreName" name="storeName" [(ngModel)]="storeName"
+                                type="text" disabled />
                             <button class="btn btn-primary blue" (click)="openSelectStoreModal()" type="button">
                                 <i class="fa fa-search"></i>
                                 {{ l('Pick') }}
@@ -46,62 +27,245 @@
                             </button>
                         </div>
                     </div>
-                    <input
-                        class="form-control"
-                        name="storeBusinessHour.storeId"
-                        [(ngModel)]="storeBusinessHour.storeId"
-                        type="text"
-                        required
-                        hidden
-                    />
+                    <input class="form-control" name="storeBusinessHour.storeId" [(ngModel)]="storeBusinessHour.storeId"
+                        type="text" required hidden /> -->
+                    <div *ngIf="!storeBusinessHour.isOpen24Hours">
+                        <div class="row my-5">
+                            <div class="col-md-2 mt-2">
+                                <label for="storeBusinessHour_MondayStartTime">{{l("Monday")}}</label>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <input class="form-control" name="mondayStartTime"
+                                        [(ngModel)]="storeBusinessHour.mondayStartTime" [ngxTimepicker]="mondayStartTimePicker"
+                                        aria-label="12hr format" type="text" placeholder="Start Time">
+                                    <ngx-material-timepicker #mondayStartTimePicker
+                                        (timeSet)="mondayStartTimeValue($event)">
+                                    </ngx-material-timepicker>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <input class="form-control" name="mondayEndTime"
+                                        [(ngModel)]="storeBusinessHour.mondayEndTime" [ngxTimepicker]="mondayEndTimePicker"
+                                        aria-label="12hr format" type="text" placeholder="End Time">
+                                    <ngx-material-timepicker #mondayEndTimePicker
+                                        (timeSet)="mondayEndTimeValue($event)">
+                                    </ngx-material-timepicker>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row my-5">
+                            <div class="col-md-2 mt-2">
+                                <label for="storeBusinessHour_TuesdayStartTime">{{l("Tuesday")}}</label>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="form-group">
 
-                    <div class="my-3">
+                                    <input class="form-control" name="TuesdayStartTime"
+                                        [(ngModel)]="storeBusinessHour.tuesdayStartTime"
+                                        [ngxTimepicker]="tuesdayStartTimePicker" aria-label="12hr format" type="text"
+                                        placeholder="Start Time">
+                                    <ngx-material-timepicker #tuesdayStartTimePicker
+                                        (timeSet)="tuesdayStartTimeValue($event)">
+                                    </ngx-material-timepicker>
+
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="form-group">
+
+                                    <input class="form-control" name="TuesdayEndTime"
+                                        [(ngModel)]="storeBusinessHour.tuesdayEndTime" [ngxTimepicker]="tuesdayEndTimePicker"
+                                        aria-label="12hr format" type="text" placeholder="End Time">
+                                    <ngx-material-timepicker #tuesdayEndTimePicker
+                                        (timeSet)="tuesdayEndTimeValue($event)">
+                                    </ngx-material-timepicker>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row my-5">
+                            <div class="col-md-2 mt-2">
+                                <label for="storeBusinessHour_WednesdayStartTime">{{l("Wednesday")}}</label>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <input class="form-control" name="WednesdayStartTime"
+                                        [(ngModel)]="storeBusinessHour.wednesdayStartTime"
+                                        [ngxTimepicker]="wednesdayStartTimePicker" aria-label="12hr format" type="text"
+                                        placeholder="Start Time">
+                                    <ngx-material-timepicker #wednesdayStartTimePicker
+                                        (timeSet)="wednesdayStartTimeValue($event)">
+                                    </ngx-material-timepicker>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <input class="form-control" name="WednesdayEndTime"
+                                        [(ngModel)]="storeBusinessHour.wednesdayEndTime"
+                                        [ngxTimepicker]="wednesdayEndTimePicker" aria-label="12hr format" type="text"
+                                        placeholder="End Time">
+                                    <ngx-material-timepicker #wednesdayEndTimePicker
+                                        (timeSet)="wednesdayEndTimeValue($event)">
+                                    </ngx-material-timepicker>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row my-5">
+                            <div class="col-md-2 mt-2">
+                                <label for="storeBusinessHour_ThursdayStartTime">{{l("Thursday")}}</label>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <input class="form-control" name="ThursdayStartTime"
+                                        [(ngModel)]="storeBusinessHour.thursdayStartTime"
+                                        [ngxTimepicker]="thursdayStartTimePicker" aria-label="12hr format" type="text"
+                                        placeholder="Start Time">
+                                    <ngx-material-timepicker #thursdayStartTimePicker
+                                        (timeSet)="thursdayStartTimeValue($event)">
+                                    </ngx-material-timepicker>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <input class="form-control" name="ThursdayEndTime"
+                                        [(ngModel)]="storeBusinessHour.thursdayEndTime" [ngxTimepicker]="thursdayEndTimePicker"
+                                        aria-label="12hr format" type="text" placeholder="End Time">
+                                    <ngx-material-timepicker #thursdayEndTimePicker
+                                        (timeSet)="thursdayEndTimeValue($event)">
+                                    </ngx-material-timepicker>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row my-5">
+                            <div class="col-md-2 mt-2">
+                                <label for="storeBusinessHour_FridayStartTime">{{l("Friday")}}</label>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <input class="form-control" name="FridayStartTime"
+                                        [(ngModel)]="storeBusinessHour.fridayStartTime" [ngxTimepicker]="fridayStartTimePicker"
+                                        aria-label="12hr format" type="text" placeholder="Start Time">
+                                    <ngx-material-timepicker #fridayStartTimePicker
+                                        (timeSet)="fridayStartTimeValue($event)">
+                                    </ngx-material-timepicker>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <input class="form-control" name="FridayEndTime"
+                                        [(ngModel)]="storeBusinessHour.fridayEndTime" [ngxTimepicker]="fridayEndTimePicker"
+                                        aria-label="12hr format" type="text" placeholder="End Time">
+                                    <ngx-material-timepicker #fridayEndTimePicker
+                                        (timeSet)="fridayEndTimeValue($event)">
+                                    </ngx-material-timepicker>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row my-5">
+                            <div class="col-md-2 mt-2">
+                                <label for="storeBusinessHour_SaturdayStartTime">{{l("Saturday")}}</label>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <input class="form-control" name="SaturdayStartTime"
+                                        [(ngModel)]="storeBusinessHour.saturdayStartTime"
+                                        [ngxTimepicker]="saturdayStartTimePicker" aria-label="12hr format" type="text"
+                                        placeholder="Start Time">
+                                    <ngx-material-timepicker #saturdayStartTimePicker
+                                        (timeSet)="saturdayStartTimeValue($event)">
+                                    </ngx-material-timepicker>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <input class="form-control" name="SaturdayEndTime"
+                                        [(ngModel)]="storeBusinessHour.saturdayEndTime" [ngxTimepicker]="saturdayEndTimePicker"
+                                        aria-label="12hr format" type="text" placeholder="End Time">
+                                    <ngx-material-timepicker #saturdayEndTimePicker
+                                        (timeSet)="saturdayEndTimeValue($event)">
+                                    </ngx-material-timepicker>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row my-5">
+                            <div class="col-md-2 mt-2">
+                                <label for="storeBusinessHour_SundayStartTime">{{l("Sunday")}}</label>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="form-group">
+
+                                    <input class="form-control" name="SundayStartTime"
+                                        [(ngModel)]="storeBusinessHour.sundayStartTime" [ngxTimepicker]="sundayStartTimePicker"
+                                        aria-label="12hr format" type="text" placeholder="Start Time">
+                                    <ngx-material-timepicker #sundayStartTimePicker
+                                        (timeSet)="sundayStartTimeValue($event)">
+                                    </ngx-material-timepicker>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <input class="form-control" name="SundayEndTime"
+                                        [(ngModel)]="storeBusinessHour.sundayEndTime" [ngxTimepicker]="sundayEndTimePicker"
+                                        aria-label="12hr format" type="text" placeholder="End Time">
+                                    <ngx-material-timepicker #sundayEndTimePicker
+                                        (timeSet)="sundayEndTimeValue($event)">
+                                    </ngx-material-timepicker>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="my-5">
+                            <label class="form-check form-check-custom form-check-solid">
+                                <input id="StoreBusinessHour_NowOpenOrClosed" #StoreBusinessHour_NowOpenOrClosed="ngModel"
+                                    name="NowOpenOrClosed" [(ngModel)]="storeBusinessHour.nowOpenOrClosed" type="checkbox"
+                                    class="form-check-input" />
+                                <span class="form-check-label">
+                                    {{ l('NowOpenOrClosed') }}
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="my-5">
+                        <label class="form-check form-check-custom form-check-solid">
+                            <input id="StoreBusinessHour_IsOpen24Hours" #StoreBusinessHour_IsOpen24Hours="ngModel"
+                                name="IsOpen24Hours" [(ngModel)]="storeBusinessHour.isOpen24Hours" type="checkbox"
+                                class="form-check-input" />
+                            <span class="form-check-label">
+                                {{ l('Open 24 Hours') }}
+                            </span>
+                        </label>
+                    </div>
+
+                    <!-- <div class="my-3">
                         <label class="form-label" for="MasterTagCategoryName">{{ l('MasterTagCategory') }}</label>
                         <div class="input-group">
-                            <input
-                                class="form-control"
-                                id="MasterTagCategoryName"
-                                name="masterTagCategoryName"
-                                [(ngModel)]="masterTagCategoryName"
-                                type="text"
-                                disabled
-                            />
-                            <button
-                                class="btn btn-primary blue"
-                                (click)="openSelectMasterTagCategoryModal()"
-                                type="button"
-                            >
+                            <input class="form-control" id="MasterTagCategoryName" name="masterTagCategoryName"
+                                [(ngModel)]="masterTagCategoryName" type="text" disabled />
+                            <button class="btn btn-primary blue" (click)="openSelectMasterTagCategoryModal()"
+                                type="button">
                                 <i class="fa fa-search"></i>
                                 {{ l('Pick') }}
                             </button>
-                            <button
-                                class="btn btn-danger btn-icon"
-                                type="button"
-                                (click)="setMasterTagCategoryIdNull()"
-                            >
+                            <button class="btn btn-danger btn-icon" type="button"
+                                (click)="setMasterTagCategoryIdNull()">
                                 <i class="fa fa-times"></i>
                             </button>
                         </div>
                     </div>
-                    <input
-                        class="form-control"
-                        name="storeBusinessHour.masterTagCategoryId"
-                        [(ngModel)]="storeBusinessHour.masterTagCategoryId"
-                        type="text"
-                        hidden
-                    />
+                    <input class="form-control" name="storeBusinessHour.masterTagCategoryId"
+                        [(ngModel)]="storeBusinessHour.masterTagCategoryId" type="text" hidden />
 
                     <div class="my-3">
                         <label class="form-label" for="MasterTagName">{{ l('MasterTag') }}</label>
                         <div class="input-group">
-                            <input
-                                class="form-control"
-                                id="MasterTagName"
-                                name="masterTagName"
-                                [(ngModel)]="masterTagName"
-                                type="text"
-                                disabled
-                            />
+                            <input class="form-control" id="MasterTagName" name="masterTagName"
+                                [(ngModel)]="masterTagName" type="text" disabled />
                             <button class="btn btn-primary blue" (click)="openSelectMasterTagModal()" type="button">
                                 <i class="fa fa-search"></i>
                                 {{ l('Pick') }}
@@ -111,24 +275,14 @@
                             </button>
                         </div>
                     </div>
-                    <input
-                        class="form-control"
-                        name="storeBusinessHour.masterTagId"
-                        [(ngModel)]="storeBusinessHour.masterTagId"
-                        type="text"
-                        hidden
-                    />
+                    <input class="form-control" name="storeBusinessHour.masterTagId"
+                        [(ngModel)]="storeBusinessHour.masterTagId" type="text" hidden />
 
-                    <br />
-                    <label class="form-check form-check-custom form-check-solid">
-                        <input
-                            id="StoreBusinessHour_NowOpenOrClosed"
-                            #StoreBusinessHour_NowOpenOrClosed="ngModel"
-                            name="NowOpenOrClosed"
-                            [(ngModel)]="storeBusinessHour.nowOpenOrClosed"
-                            type="checkbox"
-                            class="form-check-input"
-                        />
+                    <br /> -->
+                    <!-- <label class="form-check form-check-custom form-check-solid">
+                        <input id="StoreBusinessHour_NowOpenOrClosed" #StoreBusinessHour_NowOpenOrClosed="ngModel"
+                            name="NowOpenOrClosed" [(ngModel)]="storeBusinessHour.nowOpenOrClosed" type="checkbox"
+                            class="form-check-input" />
                         <span class="form-check-label">
                             {{ l('NowOpenOrClosed') }}
                         </span>
@@ -137,14 +291,9 @@
 
                     <br />
                     <label class="form-check form-check-custom form-check-solid">
-                        <input
-                            id="StoreBusinessHour_IsOpen24Hours"
-                            #StoreBusinessHour_IsOpen24Hours="ngModel"
-                            name="IsOpen24Hours"
-                            [(ngModel)]="storeBusinessHour.isOpen24Hours"
-                            type="checkbox"
-                            class="form-check-input"
-                        />
+                        <input id="StoreBusinessHour_IsOpen24Hours" #StoreBusinessHour_IsOpen24Hours="ngModel"
+                            name="IsOpen24Hours" [(ngModel)]="storeBusinessHour.isOpen24Hours" type="checkbox"
+                            class="form-check-input" />
                         <span class="form-check-label">
                             {{ l('IsOpen24Hours') }}
                         </span>
@@ -155,31 +304,19 @@
                         <label class="form-label" for="StoreBusinessHour_MondayStartTime">
                             {{ l('MondayStartTime') }}
                         </label>
-                        <input
-                            type="text"
-                            #StoreBusinessHour_MondayStartTime="ngModel"
-                            id="StoreBusinessHour_MondayStartTime"
-                            class="form-control"
-                            [(ngModel)]="storeBusinessHour.mondayStartTime"
-                            name="MondayStartTime"
-                            minlength="1"
-                            maxlength="50"
-                        />
+                        <input type="text" #StoreBusinessHour_MondayStartTime="ngModel"
+                            id="StoreBusinessHour_MondayStartTime" class="form-control"
+                            [(ngModel)]="storeBusinessHour.mondayStartTime" name="MondayStartTime" minlength="1"
+                            maxlength="50" />
                         <validation-messages [formCtrl]="StoreBusinessHour_MondayStartTime"></validation-messages>
                     </div>
 
                     <div class="my-3">
                         <label class="form-label" for="StoreBusinessHour_MondayEndTime">{{ l('MondayEndTime') }}</label>
-                        <input
-                            type="text"
-                            #StoreBusinessHour_MondayEndTime="ngModel"
-                            id="StoreBusinessHour_MondayEndTime"
-                            class="form-control"
-                            [(ngModel)]="storeBusinessHour.mondayEndTime"
-                            name="MondayEndTime"
-                            minlength="1"
-                            maxlength="50"
-                        />
+                        <input type="text" #StoreBusinessHour_MondayEndTime="ngModel"
+                            id="StoreBusinessHour_MondayEndTime" class="form-control"
+                            [(ngModel)]="storeBusinessHour.mondayEndTime" name="MondayEndTime" minlength="1"
+                            maxlength="50" />
                         <validation-messages [formCtrl]="StoreBusinessHour_MondayEndTime"></validation-messages>
                     </div>
 
@@ -187,16 +324,10 @@
                         <label class="form-label" for="StoreBusinessHour_TuesdayStartTime">
                             {{ l('TuesdayStartTime') }}
                         </label>
-                        <input
-                            type="text"
-                            #StoreBusinessHour_TuesdayStartTime="ngModel"
-                            id="StoreBusinessHour_TuesdayStartTime"
-                            class="form-control"
-                            [(ngModel)]="storeBusinessHour.tuesdayStartTime"
-                            name="TuesdayStartTime"
-                            minlength="1"
-                            maxlength="50"
-                        />
+                        <input type="text" #StoreBusinessHour_TuesdayStartTime="ngModel"
+                            id="StoreBusinessHour_TuesdayStartTime" class="form-control"
+                            [(ngModel)]="storeBusinessHour.tuesdayStartTime" name="TuesdayStartTime" minlength="1"
+                            maxlength="50" />
                         <validation-messages [formCtrl]="StoreBusinessHour_TuesdayStartTime"></validation-messages>
                     </div>
 
@@ -204,16 +335,10 @@
                         <label class="form-label" for="StoreBusinessHour_TuesdayEndTime">
                             {{ l('TuesdayEndTime') }}
                         </label>
-                        <input
-                            type="text"
-                            #StoreBusinessHour_TuesdayEndTime="ngModel"
-                            id="StoreBusinessHour_TuesdayEndTime"
-                            class="form-control"
-                            [(ngModel)]="storeBusinessHour.tuesdayEndTime"
-                            name="TuesdayEndTime"
-                            minlength="1"
-                            maxlength="50"
-                        />
+                        <input type="text" #StoreBusinessHour_TuesdayEndTime="ngModel"
+                            id="StoreBusinessHour_TuesdayEndTime" class="form-control"
+                            [(ngModel)]="storeBusinessHour.tuesdayEndTime" name="TuesdayEndTime" minlength="1"
+                            maxlength="50" />
                         <validation-messages [formCtrl]="StoreBusinessHour_TuesdayEndTime"></validation-messages>
                     </div>
 
@@ -221,16 +346,10 @@
                         <label class="form-label" for="StoreBusinessHour_WednesdayStartTime">
                             {{ l('WednesdayStartTime') }}
                         </label>
-                        <input
-                            type="text"
-                            #StoreBusinessHour_WednesdayStartTime="ngModel"
-                            id="StoreBusinessHour_WednesdayStartTime"
-                            class="form-control"
-                            [(ngModel)]="storeBusinessHour.wednesdayStartTime"
-                            name="WednesdayStartTime"
-                            minlength="1"
-                            maxlength="50"
-                        />
+                        <input type="text" #StoreBusinessHour_WednesdayStartTime="ngModel"
+                            id="StoreBusinessHour_WednesdayStartTime" class="form-control"
+                            [(ngModel)]="storeBusinessHour.wednesdayStartTime" name="WednesdayStartTime" minlength="1"
+                            maxlength="50" />
                         <validation-messages [formCtrl]="StoreBusinessHour_WednesdayStartTime"></validation-messages>
                     </div>
 
@@ -238,16 +357,10 @@
                         <label class="form-label" for="StoreBusinessHour_WednesdayEndTime">
                             {{ l('WednesdayEndTime') }}
                         </label>
-                        <input
-                            type="text"
-                            #StoreBusinessHour_WednesdayEndTime="ngModel"
-                            id="StoreBusinessHour_WednesdayEndTime"
-                            class="form-control"
-                            [(ngModel)]="storeBusinessHour.wednesdayEndTime"
-                            name="WednesdayEndTime"
-                            minlength="1"
-                            maxlength="50"
-                        />
+                        <input type="text" #StoreBusinessHour_WednesdayEndTime="ngModel"
+                            id="StoreBusinessHour_WednesdayEndTime" class="form-control"
+                            [(ngModel)]="storeBusinessHour.wednesdayEndTime" name="WednesdayEndTime" minlength="1"
+                            maxlength="50" />
                         <validation-messages [formCtrl]="StoreBusinessHour_WednesdayEndTime"></validation-messages>
                     </div>
 
@@ -255,16 +368,10 @@
                         <label class="form-label" for="StoreBusinessHour_ThursdayStartTime">
                             {{ l('ThursdayStartTime') }}
                         </label>
-                        <input
-                            type="text"
-                            #StoreBusinessHour_ThursdayStartTime="ngModel"
-                            id="StoreBusinessHour_ThursdayStartTime"
-                            class="form-control"
-                            [(ngModel)]="storeBusinessHour.thursdayStartTime"
-                            name="ThursdayStartTime"
-                            minlength="1"
-                            maxlength="50"
-                        />
+                        <input type="text" #StoreBusinessHour_ThursdayStartTime="ngModel"
+                            id="StoreBusinessHour_ThursdayStartTime" class="form-control"
+                            [(ngModel)]="storeBusinessHour.thursdayStartTime" name="ThursdayStartTime" minlength="1"
+                            maxlength="50" />
                         <validation-messages [formCtrl]="StoreBusinessHour_ThursdayStartTime"></validation-messages>
                     </div>
 
@@ -272,16 +379,10 @@
                         <label class="form-label" for="StoreBusinessHour_ThursdayEndTime">
                             {{ l('ThursdayEndTime') }}
                         </label>
-                        <input
-                            type="text"
-                            #StoreBusinessHour_ThursdayEndTime="ngModel"
-                            id="StoreBusinessHour_ThursdayEndTime"
-                            class="form-control"
-                            [(ngModel)]="storeBusinessHour.thursdayEndTime"
-                            name="ThursdayEndTime"
-                            minlength="1"
-                            maxlength="50"
-                        />
+                        <input type="text" #StoreBusinessHour_ThursdayEndTime="ngModel"
+                            id="StoreBusinessHour_ThursdayEndTime" class="form-control"
+                            [(ngModel)]="storeBusinessHour.thursdayEndTime" name="ThursdayEndTime" minlength="1"
+                            maxlength="50" />
                         <validation-messages [formCtrl]="StoreBusinessHour_ThursdayEndTime"></validation-messages>
                     </div>
 
@@ -289,31 +390,19 @@
                         <label class="form-label" for="StoreBusinessHour_FridayStartTime">
                             {{ l('FridayStartTime') }}
                         </label>
-                        <input
-                            type="text"
-                            #StoreBusinessHour_FridayStartTime="ngModel"
-                            id="StoreBusinessHour_FridayStartTime"
-                            class="form-control"
-                            [(ngModel)]="storeBusinessHour.fridayStartTime"
-                            name="FridayStartTime"
-                            minlength="1"
-                            maxlength="50"
-                        />
+                        <input type="text" #StoreBusinessHour_FridayStartTime="ngModel"
+                            id="StoreBusinessHour_FridayStartTime" class="form-control"
+                            [(ngModel)]="storeBusinessHour.fridayStartTime" name="FridayStartTime" minlength="1"
+                            maxlength="50" />
                         <validation-messages [formCtrl]="StoreBusinessHour_FridayStartTime"></validation-messages>
                     </div>
 
                     <div class="my-3">
                         <label class="form-label" for="StoreBusinessHour_FridayEndTime">{{ l('FridayEndTime') }}</label>
-                        <input
-                            type="text"
-                            #StoreBusinessHour_FridayEndTime="ngModel"
-                            id="StoreBusinessHour_FridayEndTime"
-                            class="form-control"
-                            [(ngModel)]="storeBusinessHour.fridayEndTime"
-                            name="FridayEndTime"
-                            minlength="1"
-                            maxlength="50"
-                        />
+                        <input type="text" #StoreBusinessHour_FridayEndTime="ngModel"
+                            id="StoreBusinessHour_FridayEndTime" class="form-control"
+                            [(ngModel)]="storeBusinessHour.fridayEndTime" name="FridayEndTime" minlength="1"
+                            maxlength="50" />
                         <validation-messages [formCtrl]="StoreBusinessHour_FridayEndTime"></validation-messages>
                     </div>
 
@@ -321,16 +410,10 @@
                         <label class="form-label" for="StoreBusinessHour_SaturdayStartTime">
                             {{ l('SaturdayStartTime') }}
                         </label>
-                        <input
-                            type="text"
-                            #StoreBusinessHour_SaturdayStartTime="ngModel"
-                            id="StoreBusinessHour_SaturdayStartTime"
-                            class="form-control"
-                            [(ngModel)]="storeBusinessHour.saturdayStartTime"
-                            name="SaturdayStartTime"
-                            minlength="1"
-                            maxlength="50"
-                        />
+                        <input type="text" #StoreBusinessHour_SaturdayStartTime="ngModel"
+                            id="StoreBusinessHour_SaturdayStartTime" class="form-control"
+                            [(ngModel)]="storeBusinessHour.saturdayStartTime" name="SaturdayStartTime" minlength="1"
+                            maxlength="50" />
                         <validation-messages [formCtrl]="StoreBusinessHour_SaturdayStartTime"></validation-messages>
                     </div>
 
@@ -338,16 +421,10 @@
                         <label class="form-label" for="StoreBusinessHour_SaturdayEndTime">
                             {{ l('SaturdayEndTime') }}
                         </label>
-                        <input
-                            type="text"
-                            #StoreBusinessHour_SaturdayEndTime="ngModel"
-                            id="StoreBusinessHour_SaturdayEndTime"
-                            class="form-control"
-                            [(ngModel)]="storeBusinessHour.saturdayEndTime"
-                            name="SaturdayEndTime"
-                            minlength="1"
-                            maxlength="50"
-                        />
+                        <input type="text" #StoreBusinessHour_SaturdayEndTime="ngModel"
+                            id="StoreBusinessHour_SaturdayEndTime" class="form-control"
+                            [(ngModel)]="storeBusinessHour.saturdayEndTime" name="SaturdayEndTime" minlength="1"
+                            maxlength="50" />
                         <validation-messages [formCtrl]="StoreBusinessHour_SaturdayEndTime"></validation-messages>
                     </div>
 
@@ -355,61 +432,40 @@
                         <label class="form-label" for="StoreBusinessHour_SundayStartTime">
                             {{ l('SundayStartTime') }}
                         </label>
-                        <input
-                            type="text"
-                            #StoreBusinessHour_SundayStartTime="ngModel"
-                            id="StoreBusinessHour_SundayStartTime"
-                            class="form-control"
-                            [(ngModel)]="storeBusinessHour.sundayStartTime"
-                            name="SundayStartTime"
-                            minlength="1"
-                            maxlength="50"
-                        />
+                        <input type="text" #StoreBusinessHour_SundayStartTime="ngModel"
+                            id="StoreBusinessHour_SundayStartTime" class="form-control"
+                            [(ngModel)]="storeBusinessHour.sundayStartTime" name="SundayStartTime" minlength="1"
+                            maxlength="50" />
                         <validation-messages [formCtrl]="StoreBusinessHour_SundayStartTime"></validation-messages>
                     </div>
 
                     <div class="my-3">
                         <label class="form-label" for="StoreBusinessHour_SundayEndTime">{{ l('SundayEndTime') }}</label>
-                        <input
-                            type="text"
-                            #StoreBusinessHour_SundayEndTime="ngModel"
-                            id="StoreBusinessHour_SundayEndTime"
-                            class="form-control"
-                            [(ngModel)]="storeBusinessHour.sundayEndTime"
-                            name="SundayEndTime"
-                            minlength="1"
-                            maxlength="50"
-                        />
+                        <input type="text" #StoreBusinessHour_SundayEndTime="ngModel"
+                            id="StoreBusinessHour_SundayEndTime" class="form-control"
+                            [(ngModel)]="storeBusinessHour.sundayEndTime" name="SundayEndTime" minlength="1"
+                            maxlength="50" />
                         <validation-messages [formCtrl]="StoreBusinessHour_SundayEndTime"></validation-messages>
                     </div>
 
                     <br />
                     <label class="form-check form-check-custom form-check-solid">
-                        <input
-                            id="StoreBusinessHour_IsAcceptOnlyBusinessHour"
-                            #StoreBusinessHour_IsAcceptOnlyBusinessHour="ngModel"
-                            name="IsAcceptOnlyBusinessHour"
-                            [(ngModel)]="storeBusinessHour.isAcceptOnlyBusinessHour"
-                            type="checkbox"
-                            class="form-check-input"
-                        />
+                        <input id="StoreBusinessHour_IsAcceptOnlyBusinessHour"
+                            #StoreBusinessHour_IsAcceptOnlyBusinessHour="ngModel" name="IsAcceptOnlyBusinessHour"
+                            [(ngModel)]="storeBusinessHour.isAcceptOnlyBusinessHour" type="checkbox"
+                            class="form-check-input" />
                         <span class="form-check-label">
                             {{ l('IsAcceptOnlyBusinessHour') }}
                         </span>
                     </label>
-                    <validation-messages [formCtrl]="StoreBusinessHour_IsAcceptOnlyBusinessHour"></validation-messages>
+                    <validation-messages [formCtrl]="StoreBusinessHour_IsAcceptOnlyBusinessHour"></validation-messages> -->
                 </div>
                 <div class="modal-footer">
                     <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
                         {{ l('Cancel') }}
                     </button>
-                    <button
-                        type="submit"
-                        class="btn btn-primary blue"
-                        [disabled]="!storeBusinessHourForm.form.valid"
-                        [buttonBusy]="saving"
-                        [busyText]="l('SavingWithThreeDot')"
-                    >
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!storeBusinessHourForm.form.valid"
+                        [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')">
                         <i class="fa fa-save"></i>
                         <span>{{ l('Save') }}</span>
                     </button>
@@ -417,16 +473,10 @@
             </form>
         </div>
     </div>
-    <storeBusinessHourStoreLookupTableModal
-        #storeBusinessHourStoreLookupTableModal
-        (modalSave)="getNewStoreId()"
-    ></storeBusinessHourStoreLookupTableModal>
-    <storeBusinessHourMasterTagCategoryLookupTableModal
-        #storeBusinessHourMasterTagCategoryLookupTableModal
-        (modalSave)="getNewMasterTagCategoryId()"
-    ></storeBusinessHourMasterTagCategoryLookupTableModal>
-    <storeBusinessHourMasterTagLookupTableModal
-        #storeBusinessHourMasterTagLookupTableModal
-        (modalSave)="getNewMasterTagId()"
-    ></storeBusinessHourMasterTagLookupTableModal>
+    <storeBusinessHourStoreLookupTableModal #storeBusinessHourStoreLookupTableModal (modalSave)="getNewStoreId()">
+    </storeBusinessHourStoreLookupTableModal>
+    <storeBusinessHourMasterTagCategoryLookupTableModal #storeBusinessHourMasterTagCategoryLookupTableModal
+        (modalSave)="getNewMasterTagCategoryId()"></storeBusinessHourMasterTagCategoryLookupTableModal>
+    <storeBusinessHourMasterTagLookupTableModal #storeBusinessHourMasterTagLookupTableModal
+        (modalSave)="getNewMasterTagId()"></storeBusinessHourMasterTagLookupTableModal>
 </div>
