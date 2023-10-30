@@ -18,6 +18,8 @@ import { JobStoreLookupTableModalComponent } from './job-store-lookup-table-moda
 import { JobDashboardComponent } from './job-dashboard/job-dashboard.component';
 import { MainModule } from '@app/main/main.module';
 import { TaskEventModule } from '@app/main/taskManagement/taskEvents/taskEvent.module';
+import { ProjectsComponent } from './projects/projects.component';
+import { ProjectDashboardComponent } from './projects/project-dashboard/project-dashboard.component';
 
 @NgModule({
     declarations: [
@@ -36,6 +38,8 @@ import { TaskEventModule } from '@app/main/taskManagement/taskEvents/taskEvent.m
         JobJobStatusTypeLookupTableModalComponent,
         JobStoreLookupTableModalComponent,
         JobDashboardComponent,
+        ProjectsComponent,
+        ProjectDashboardComponent,
     ],
     imports: [AppSharedModule, JobRoutingModule, AdminSharedModule, MainModule, 
         TaskEventModule],

@@ -18,5 +18,13 @@ import { StoreOwnerTeamUserLookupTableModalComponent } from './storeOwnerTeam-us
         StoreOwnerTeamUserLookupTableModalComponent,
     ],
     imports: [AppSharedModule, StoreOwnerTeamRoutingModule, AdminSharedModule],
+    exports:[
+        StoreOwnerTeamsComponent,
+        CreateOrEditStoreOwnerTeamModalComponent,
+        ViewStoreOwnerTeamModalComponent,
+
+        StoreOwnerTeamStoreLookupTableModalComponent,
+        StoreOwnerTeamUserLookupTableModalComponent,
+    ]
 })
 export class StoreOwnerTeamModule {}

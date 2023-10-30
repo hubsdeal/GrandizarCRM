@@ -20,5 +20,14 @@ import { StoreBusinessHourMasterTagLookupTableModalComponent } from './storeBusi
         StoreBusinessHourMasterTagLookupTableModalComponent,
     ],
     imports: [AppSharedModule, StoreBusinessHourRoutingModule, AdminSharedModule],
+    exports: [
+        StoreBusinessHoursComponent,
+        CreateOrEditStoreBusinessHourModalComponent,
+        ViewStoreBusinessHourModalComponent,
+
+        StoreBusinessHourStoreLookupTableModalComponent,
+        StoreBusinessHourMasterTagCategoryLookupTableModalComponent,
+        StoreBusinessHourMasterTagLookupTableModalComponent,
+    ]
 })
-export class StoreBusinessHourModule {}
+export class StoreBusinessHourModule { }

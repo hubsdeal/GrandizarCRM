@@ -33,6 +33,8 @@ export class CreateOrEditStoreAccountTeamModalComponent extends AppComponentBase
     storeName = '';
     employeeName = '';
 
+    storeId:number;
+
     constructor(
         injector: Injector,
         private _storeAccountTeamsServiceProxy: StoreAccountTeamsServiceProxy,
@@ -53,7 +55,7 @@ export class CreateOrEditStoreAccountTeamModalComponent extends AppComponentBase
         } else {
             this._storeAccountTeamsServiceProxy.getStoreAccountTeamForEdit(storeAccountTeamId).subscribe((result) => {
                 this.storeAccountTeam = result.storeAccountTeam;
-
+                this.storeId = result.storeAccountTeam.storeId;
                 this.storeName = result.storeName;
                 this.employeeName = result.employeeName;
 
@@ -65,7 +67,7 @@ export class CreateOrEditStoreAccountTeamModalComponent extends AppComponentBase
 
     save(): void {
         this.saving = true;
-
+        this.storeAccountTeam.storeId = this.storeId;
         this._storeAccountTeamsServiceProxy
             .createOrEdit(this.storeAccountTeam)
             .pipe(

@@ -1,17 +1,31 @@
 ﻿<div [@routerTransition]>
-    <sub-header [title]="'Leads' | localize" [description]="'LeadsHeaderInfo' | localize">
+    <!-- <sub-header [title]="'Lead List' | localize" [description]="">
         <div role="actions">
-            <!-- <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1">
-                <i class="fa fa-file-excel"></i>
-                {{ l('ExportToExcel') }}
-            </button> -->
 
             <button *ngIf="isGranted('Pages.Leads.Create')" (click)="createLead()" class="btn btn-primary blue">
                 <i class="fa fa-plus"></i>
                 {{ l('Lead') }}
             </button>
         </div>
-    </sub-header>
+    </sub-header> -->
+    <div class="w-100 d-flex mb-6 ps-9 pe-9 mt-6 justify-content-between align-items-center ng-tns-c282-7">
+        <div class="d-flex">
+            <h1 class="fs-3 fw-bold  my-0 page-heading text-dark">
+                Lead List
+            </h1>
+            <span style="cursor: pointer;" class="badge badge-primary badge ms-2">
+                Total: {{primengTableHelper.totalRecordsCount}}
+            </span>
+            <span style="cursor: pointer;" class="badge badge-success badge ms-2">
+                Total Revenue: $454
+            </span>
+        </div>
+        <button *ngIf="isGranted('Pages.Leads.Create')" (click)="createLead()" class="btn btn-primary blue">
+            <i class="fa fa-plus"></i>
+            {{ l('Lead') }}
+        </button>
+    </div>
+
 
     <div [class]="containerClass">
         <div class="card card-custom gutter-b">
@@ -44,14 +58,14 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="my-3">
-                                    <label class="form-label" for="FirstNameFilter">{{ l('FirstName') }}</label>
+                                    <label class="form-label" for="FirstNameFilter">{{ l('First Name') }}</label>
                                     <input type="text" class="form-control" id="FirstNameFilter" name="firstNameFilter"
                                         [(ngModel)]="firstNameFilter" (ngModelChange)="getLeads()" />
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="my-3">
-                                    <label class="form-label" for="LastNameFilter">{{ l('LastName') }}</label>
+                                    <label class="form-label" for="LastNameFilter">{{ l('Last Name') }}</label>
                                     <input type="text" class="form-control" id="LastNameFilter" name="lastNameFilter"
                                         [(ngModel)]="lastNameFilter" (ngModelChange)="getLeads()" />
                                 </div>
@@ -79,7 +93,7 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="my-3">
-                                    <label class="form-label" for="JobTitleFilter">{{ l('JobTitle') }}</label>
+                                    <label class="form-label" for="JobTitleFilter">{{ l('Job Title') }}</label>
                                     <input type="text" class="form-control" id="JobTitleFilter" name="jobTitleFilter"
                                         [(ngModel)]="jobTitleFilter" (ngModelChange)="getLeads()" />
                                 </div>
@@ -91,7 +105,7 @@
                                         [(ngModel)]="industryFilter" (ngModelChange)="getLeads()" />
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <!-- <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="MinLeadScoreFilter">
                                         {{ l('MinMax') }} {{ l('LeadScore') }}
@@ -238,7 +252,7 @@
                                     <input type="text" class="form-control" id="HubNameFilter" name="hubNameFilter"
                                         [(ngModel)]="hubNameFilter" />
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="col-md-12 mt-5">
                                 <button (click)="resetFilters()" class="btn btn-secondary btn-sm"
                                     id="btn-reset-filters">
@@ -272,46 +286,32 @@
                             [resizableColumns]="primengTableHelper.resizableColumns">
                             <ng-template pTemplate="header">
                                 <tr>
-                                    <th style="width: 150px" pSortableColumn="contactFk.fullName">
-                                        {{ l('FullName') }}
-                                        <p-sortIcon field="contactFullName"></p-sortIcon>
-                                    </th>
-                                    <th style="width: 150px" pSortableColumn="businessFk.name">
-                                        {{ l('Name') }}
-                                        <p-sortIcon field="businessName"></p-sortIcon>
-                                    </th>
-                                    <th style="width: 150px" pSortableColumn="productFk.name">
-                                        {{ l('Name') }}
-                                        <p-sortIcon field="productName"></p-sortIcon>
-                                    </th>
-                                    <th style="width: 150px" pSortableColumn="productCategoryFk.name">
-                                        {{ l('Name') }}
-                                        <p-sortIcon field="productCategoryName"></p-sortIcon>
-                                    </th>
-                                    <th style="width: 150px" pSortableColumn="storeFk.name">
-                                        {{ l('Name') }}
-                                        <p-sortIcon field="storeName"></p-sortIcon>
-                                    </th>
-                                    <th style="width: 150px" pSortableColumn="employeeFk.name">
-                                        {{ l('Name') }}
-                                        <p-sortIcon field="employeeName"></p-sortIcon>
-                                    </th>
-                                    <th style="width: 150px" pSortableColumn="leadSourceFk.name">
-                                        {{ l('Name') }}
-                                        <p-sortIcon field="leadSourceName"></p-sortIcon>
-                                    </th>
-                                    <th style="width: 150px" pSortableColumn="leadPipelineStageFk.name">
-                                        {{ l('Name') }}
-                                        <p-sortIcon field="leadPipelineStageName"></p-sortIcon>
-                                    </th>
-                                    <th style="width: 150px" pSortableColumn="hubFk.name">
-                                        {{ l('Name') }}
-                                        <p-sortIcon field="hubName"></p-sortIcon>
-                                    </th>
-                                    <th style="width: 150px" pSortableColumn="title">
+                                    <th style="min-width: 220px">
                                         {{ l('Title') }}
-                                        <p-sortIcon field="lead.title"></p-sortIcon>
                                     </th>
+                                    <th style="min-width: 220px">
+                                        {{ l('Contact') }}
+                                    </th>
+                                    <th style="min-width: 180px">
+                                        {{ l('Lead Owner') }}
+                                    </th>
+                                    <!-- <th style="min-width: 180px">
+                                        {{ l('Business') }}
+                                    </th>
+                                    <th style="min-width: 180px">
+                                        {{ l('Product') }}
+                                    </th>
+                                    <th style="min-width: 180px">
+                                        {{ l('Product Category') }}
+                                    </th>
+                                    <th style="min-width: 180px">
+                                        {{ l('Store') }}
+                                    </th>
+                                   
+                                    <th style="width: 150px">
+                                        {{ l('Hub') }}
+                                    </th> -->
+                                    <!-- 
                                     <th style="width: 150px" pSortableColumn="firstName">
                                         {{ l('FirstName') }}
                                         <p-sortIcon field="lead.firstName"></p-sortIcon>
@@ -339,22 +339,15 @@
                                     <th style="width: 150px" pSortableColumn="industry">
                                         {{ l('Industry') }}
                                         <p-sortIcon field="lead.industry"></p-sortIcon>
+                                    </th> -->
+                                    <th style="width: 150px">
+                                        {{ l('Lead Score') }}
                                     </th>
-                                    <th style="width: 150px" pSortableColumn="leadScore">
-                                        {{ l('LeadScore') }}
-                                        <p-sortIcon field="lead.leadScore"></p-sortIcon>
+                                    <th style="min-width: 150px">
+                                        {{ l('Expected Revenue') }}
                                     </th>
-                                    <th style="width: 150px" pSortableColumn="expectedSalesAmount">
-                                        {{ l('ExpectedSalesAmount') }}
-                                        <p-sortIcon field="lead.expectedSalesAmount"></p-sortIcon>
-                                    </th>
-                                    <th style="width: 150px" pSortableColumn="createdDate">
-                                        {{ l('CreatedDate') }}
-                                        <p-sortIcon field="lead.createdDate"></p-sortIcon>
-                                    </th>
-                                    <th style="width: 150px" pSortableColumn="expectedClosingDate">
-                                        {{ l('ExpectedClosingDate') }}
-                                        <p-sortIcon field="lead.expectedClosingDate"></p-sortIcon>
+                                    <th style="width: 150px">
+                                        {{ l('Status') }}
                                     </th>
                                     <th style="width: 130px"
                                         [hidden]="!isGrantedAny('Pages.Leads.Edit', 'Pages.Leads.Delete')">
@@ -364,46 +357,81 @@
                             </ng-template>
                             <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
                                 <tr>
-                                    
-                                    <td style="width: 150px">
+
+                                    <td style="width: 220px">
                                         <span class="p-column-title">{{ l('FullName') }}</span>
-                                        {{ record.contactFullName }}
+                                        <div class="kt-widget1">
+                                            <div class="kt-widget1__item border-0">
+                                                <div class="kt-widget1__info d-grid">
+                                                    <a href="javascript:;">
+                                                        <h3 class="kt-widget1__title fs-6">{{ record.lead.title }}</h3>
+                                                    </a>
+                                                    <span class="kt-widget1__desc" *ngIf="record.productName">
+                                                        Product: {{ record.productName }}
+                                                    </span>
+                                                    <span *ngIf="record.productCategoryName" class="kt-widget1__desc">
+                                                        Category: {{ record.productCategoryName }}
+                                                    </span>
+                                                    <span *ngIf="record.storeName" class="kt-widget1__desc">
+                                                        Store: {{ record.storeName }}
+                                                    </span>
+                                                    <span *ngIf="record.hubName " class="kt-widget1__desc">
+                                                        Hub: {{ record.hubName }}
+                                                    </span>
+                                                    <span *ngIf="record.businessName " class="kt-widget1__desc">
+                                                        Business: {{ record.businessName }}
+                                                    </span>
+                                                    <span *ngIf="record.leadSourceName " class="kt-widget1__desc">
+                                                        Source: {{ record.leadSourceName }}
+                                                    </span>
+                                                    <span *ngIf="record.lead.createdDate" class="kt-widget1__desc">
+                                                        Date: {{ record.lead.createdDate | luxonFormat : 'dd-MM-yyyy' }}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </td>
-                                    <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('Name') }}</span>
-                                        {{ record.businessName }}
+                                    <td style="width: 220px">
+                                        <span class="p-column-title">{{ l('Contact') }}</span>
+                                        <div class="kt-widget1">
+                                            <div class="kt-widget1__item border-0">
+                                                <div class="kt-widget1__info d-grid">
+                                                    <a href="javascript:;">
+                                                        <h3 class="kt-widget1__title fs-6"> {{ record.contactFullName }}
+                                                        </h3>
+                                                    </a>
+                                                    <span class="kt-widget1__desc" *ngIf="record.lead.email">
+                                                        Email: {{ record.lead.email }}
+                                                    </span>
+                                                    <span *ngIf="record.lead.phone" class="kt-widget1__desc">
+                                                        Phone: {{ record.lead.phone }}
+                                                    </span>
+                                                    <span *ngIf="record.lead.company" class="kt-widget1__desc">
+                                                        Company: {{ record.lead.company }}
+                                                    </span>
+                                                    <span *ngIf="record.lead.jobTitle " class="kt-widget1__desc">
+                                                        Job Title: {{ record.lead.jobTitle }}
+                                                    </span>
+                                                    <!-- <span *ngIf="record.businessName " class="kt-widget1__desc">
+                                                        Business: {{ record.businessName }}
+                                                    </span> -->
+                                                </div>
+                                            </div>
+                                        </div>
                                     </td>
-                                    <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('Name') }}</span>
-                                        {{ record.productName }}
-                                    </td>
-                                    <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('Name') }}</span>
-                                        {{ record.productCategoryName }}
-                                    </td>
-                                    <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('Name') }}</span>
-                                        {{ record.storeName }}
-                                    </td>
-                                    <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('Name') }}</span>
+                                    <td style="width: 180px">
                                         {{ record.employeeName }}
                                     </td>
                                     <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('Name') }}</span>
-                                        {{ record.leadSourceName }}
+                                        {{ record.lead.leadScore }}
                                     </td>
-                                    <td style="width: 150px">
+                                    <!-- <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('Name') }}</span>
+                                        {{ record.employeeName }}
+                                    </td> -->
+                                    <!-- <td style="width: 150px">
                                         <span class="p-column-title">{{ l('Name') }}</span>
                                         {{ record.leadPipelineStageName }}
-                                    </td>
-                                    <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('Name') }}</span>
-                                        {{ record.hubName }}
-                                    </td>
-                                    <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('Title') }}</span>
-                                        {{ record.lead.title }}
                                     </td>
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('FirstName') }}</span>
@@ -412,16 +440,16 @@
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('LastName') }}</span>
                                         {{ record.lead.lastName }}
-                                    </td>
-                                    <td style="width: 150px">
+                                    </td> -->
+                                    <!-- <td style="width: 150px">
                                         <span class="p-column-title">{{ l('Email') }}</span>
                                         {{ record.lead.email }}
                                     </td>
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('Phone') }}</span>
                                         {{ record.lead.phone }}
-                                    </td>
-                                    <td style="width: 150px">
+                                    </td> -->
+                                    <!-- <td style="width: 150px">
                                         <span class="p-column-title">{{ l('Company') }}</span>
                                         {{ record.lead.company }}
                                     </td>
@@ -432,29 +460,22 @@
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('Industry') }}</span>
                                         {{ record.lead.industry }}
-                                    </td>
-                                    <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('LeadScore') }}</span>
-                                        {{ record.lead.leadScore }}
-                                    </td>
+                                    </td> -->
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('ExpectedSalesAmount') }}</span>
                                         {{ record.lead.expectedSalesAmount }}
                                     </td>
                                     <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('CreatedDate') }}</span>
-                                        <span *ngIf="record.lead.createdDate">
-                                            {{ record.lead.createdDate | luxonFormat : 'F' }}
-                                        </span>
-                                        <span *ngIf="!record.lead.createdDate">-</span>
+                                        {{record.leadPipelineStageName}}
+                                        
                                     </td>
-                                    <td style="width: 150px">
+                                    <!-- <td style="width: 150px">
                                         <span class="p-column-title">{{ l('ExpectedClosingDate') }}</span>
                                         <span *ngIf="record.lead.expectedClosingDate">
                                             {{ record.lead.expectedClosingDate | luxonFormat : 'F' }}
                                         </span>
                                         <span *ngIf="!record.lead.expectedClosingDate">-</span>
-                                    </td>
+                                    </td> -->
                                     <td style="width: 130px"
                                         [hidden]="!isGrantedAny('Pages.Leads.Edit', 'Pages.Leads.Delete')">
                                         <div class="btn-group dropdown" dropdown container="body">
@@ -463,12 +484,12 @@
                                                 <span class="caret"></span>
                                             </button>
                                             <ul class="dropdown-menu" *dropdownMenu>
-                                                <!-- <li>
+                                                <li>
                                                     <a href="javascript:;" class="dropdown-item"
                                                         (click)="viewLeadModal.show(record)">
                                                         {{ l('View') }}
                                                     </a>
-                                                </li> -->
+                                                </li>
                                                 <li>
                                                     <a href="javascript:;"
                                                         *ngIf="permission.isGranted('Pages.Leads.Edit')"

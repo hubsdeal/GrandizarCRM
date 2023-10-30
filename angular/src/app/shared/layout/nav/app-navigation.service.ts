@@ -28,13 +28,13 @@ export class AppNavigationService {
                 [],
                 [
                     new AppMenuItem(
-                        'Task & Schedule Dashboard',
+                        'Task & Schedule',
                         'Pages.Administration.Host.Dashboard',
                         'fa fa-list',
                         '/app/admin/dashboard/taskAndScheduleDashboard'
                     ),
                     new AppMenuItem(
-                        'Admin Dashboard',
+                        'Admin Stats',
                         'Pages.Administration.Host.Dashboard',
                         'flaticon-line-graph',
                         '/app/admin/hostDashboard'
@@ -57,8 +57,8 @@ export class AppNavigationService {
                     new AppMenuItem('Master Order List', 'Pages.Orders', 'fas fa-list', '/app/main/orderManagement/orders'),
                     new AppMenuItem('My Order List', 'Pages.Orders', 'fas fa-list-alt', '/app/main/orderManagement/myOrders'),
                     new AppMenuItem('Abandoned Cart', 'Pages.Orders', 'fas fa-shopping-cart', '/app/main/orderManagement/abandonedCart'),
-                    new AppMenuItem('Wish List', 'Pages.WishLists', 'fas fa-heart', '/app/main/shop/wishLists'),
-                    new AppMenuItem('Shopping Cart', 'Pages.ShoppingCarts', 'fas fa-shopping-cart', '/app/main/shop/shoppingCarts'),
+                    // new AppMenuItem('Wish List', 'Pages.WishLists', 'fas fa-heart', '/app/main/shop/wishLists'),
+                    // new AppMenuItem('Shopping Cart', 'Pages.ShoppingCarts', 'fas fa-shopping-cart', '/app/main/shop/shoppingCarts'),
                     new AppMenuItem('Sales Lead', 'Pages.Leads', 'flaticon-more', '/app/main/salesLeadManagement/leads'),
                 ]
             ),
@@ -69,8 +69,9 @@ export class AppNavigationService {
                 '',
                 [],
                 [
-                    new AppMenuItem('Order Delivery Captains', 'Pages.OrderDeliveryByCaptains', 'fas fa-users', '/app/main/orderManagement/orderDeliveryByCaptains'),
-                    new AppMenuItem('Order Delivery Change Captains', 'Pages.OrderDeliveryChangeCaptains', 'fas fa-users', '/app/main/orderManagement/orderDeliveryChangeCaptains'),
+                    new AppMenuItem('Delivery Dispatch Board', 'Pages.OrderDeliveryByCaptains', 'fas fa-users', '/app/main/orderManagement/orderDeliveryByCaptains'),
+                    new AppMenuItem('Delivery Disruption', 'Pages.OrderDeliveryChangeCaptains', 'fas fa-users', '/app/main/orderManagement/orderDeliveryChangeCaptains'),
+                    new AppMenuItem('Delivery Captain List', 'Pages.OrderDeliveryChangeCaptains', 'fas fa-users', '/app/main/orderManagement/deliveryCaptains'),
                 ]
             ),
             new AppMenuItem(
@@ -82,8 +83,8 @@ export class AppNavigationService {
                 [
                     new AppMenuItem('Master Store List', 'Pages.Stores', 'flaticon2-list-1', '/app/main/shop/stores'),
                     new AppMenuItem('My Store List', 'Pages.Stores', 'flaticon2-list-2', '/app/main/shop/myStores'),
-                    new AppMenuItem('Store Data Settings', 'Pages.Stores', 'fas fa-database', '/app/main/shop/storeMasterTagSettings'),
-                    new AppMenuItem('Store Product Service Locality', 'Pages.StoreProductServiceLocalityMaps', 'fas fa-database', '/app/main/shop/storeProductServiceLocalityMaps'),
+                    //Master Data settigns-Site map//new AppMenuItem('Store Data Settings', 'Pages.Stores', 'fas fa-database', '/app/main/shop/storeMasterTagSettings'),
+                    //Product Dashboard//new AppMenuItem('Store Product Service Locality', 'Pages.StoreProductServiceLocalityMaps', 'fas fa-database', '/app/main/shop/storeProductServiceLocalityMaps'),
                 ]
             ),
             new AppMenuItem(
@@ -100,6 +101,7 @@ export class AppNavigationService {
                     new AppMenuItem('Media Library', 'Pages.MediaLibraries', 'fas fa-photo-video', '/app/main/lookupData/mediaLibraries'),
                     new AppMenuItem('Product Gig Worker Portfolios', 'Pages.ProductGigWorkerPortfolios', 'flaticon-map', '/app/main/shop/productGigWorkerPortfolios'),
                     new AppMenuItem('Product Data Settings', 'Pages.Products', 'fas fa-database', '/app/main/shop/productMasterTagSettings'),
+                    //Contact Dashbaord//Applicant Dashboard//Employee Dashboard//new AppMenuItem('Product Gig Worker Portfolios', 'Pages.ProductGigWorkerPortfolios', 'flaticon-map', '/app/main/shop/productGigWorkerPortfolios'),
                 ]
             ),
             new AppMenuItem(
@@ -110,8 +112,8 @@ export class AppNavigationService {
                 [],
                 [
                     new AppMenuItem('Master Task List', 'Pages.TaskEvents', 'flaticon2-list-2', '/app/main/taskManagement/taskEvents'),
-                    new AppMenuItem('My Task List', 'Pages.TaskEvents', 'flaticon2-list-2', '/app/main/taskManagement/myTaskEvents'),
-                    new AppMenuItem('Task Template', 'Pages.TaskEvents', 'flaticon2-list-2', '/app/main/taskManagement/taskLibrary'),
+                    //new AppMenuItem('My Task List', 'Pages.TaskEvents', 'flaticon2-list-2', '/app/main/taskManagement/myTaskEvents'),
+                    //Site map/new AppMenuItem('Task Template', 'Pages.TaskEvents', 'flaticon2-list-2', '/app/main/taskManagement/taskLibrary'),
                     new AppMenuItem('Timesheet', 'Pages.TaskEvents', 'fas fa-calendar', '/app/main/taskManagement/timesheets'),
                     new AppMenuItem('Employee Activity Trackers', 'Pages.EmployeeTimesheetActivityTrackers', 'fas fa-calendar', '/app/main/taskManagement/employeeTimesheetActivityTrackers'),
                     new AppMenuItem('Timesheet Policy Mapping', 'Pages.EmployeeTimesheetPolicyMappings', 'fas fa-calendar', '/app/main/taskManagement/employeeTimesheetPolicyMappings'),
@@ -132,6 +134,7 @@ export class AppNavigationService {
                 [
                     new AppMenuItem('Master Job List', 'Pages.Jobs', 'fas fa-briefcase', '/app/main/jobManagement/jobs'),
                     new AppMenuItem('My Job List', 'Pages.Jobs', 'fas fa-briefcase', '/app/main/jobManagement/jobs'),
+                    new AppMenuItem('Projects', 'Pages.Jobs', 'fas fa-briefcase', '/app/main/ppm/projects'),
                     new AppMenuItem('Applicant List', 'Pages.Jobs', 'fas fa-briefcase', '/app/main/jobManagement/ApplicantsList'),
                     new AppMenuItem('Job Applicant Hire Matrixes', 'Pages.JobApplicantHireMatrixes', 'fas fa-briefcase', '/app/main/jobManagement/jobApplicantHireMatrixes'),
                     new AppMenuItem('Job Applicant Hire Status Typess', 'Pages.JobApplicantHireStatusTypes', 'fas fa-briefcase', '/app/main/jobManagement/jobApplicantHireStatusTypes'),

@@ -212,7 +212,7 @@ import { GeocodingService } from './shared/chat-gpt-response-modal/services/chat
         ChangeProfilePictureModalModule
     ]
 })
-export class AppModule {}
+export class AppModule { }
 
 function appInitializerFactory() {
     return () => {

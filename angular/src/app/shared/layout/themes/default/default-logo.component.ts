@@ -32,6 +32,6 @@ export class DefaultLogoComponent extends AppComponentBase implements OnInit {
     setLogoUrl(): void{
         //this.defaultLogo = AppConsts.appBaseUrl + '/assets/common/images/app-logo-on-' + this.skin + '.svg';
         this.defaultLogo = AppConsts.appBaseUrl + '/assets/common/images/hubsdeal_logo.png';
-        this.defaultSmallLogo = AppConsts.appBaseUrl + '/assets/common/images/app-logo-on-' + this.skin + '-sm.svg';
+        this.defaultSmallLogo = AppConsts.appBaseUrl + '/assets/common/images/grandizarlogo.png';
     }
 }

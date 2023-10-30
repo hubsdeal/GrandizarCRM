@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ChatGptResponseModalComponent } from '@app/shared/chat-gpt-response-modal/chat-gpt-response-modal.component';
 import { AppConsts } from '@shared/AppConsts';
 import { AppComponentBase } from '@shared/common/app-component-base';
-import { CreateOrEditStoreDto, CreateOrEditStoreMediaDto, GetStoreMediaForViewDto, StatesServiceProxy, StoreMediasServiceProxy, StoreTopStatsForViewDto, StoresServiceProxy } from '@shared/service-proxies/service-proxies';
+import { CreateOrEditStoreDto, CreateOrEditStoreMediaDto, GetStoreAccountTeamForViewDto, GetStoreBusinessHourForViewDto, GetStoreMediaForViewDto, RatingLikesServiceProxy, StatesServiceProxy, StoreAccountTeamDto, StoreAccountTeamsServiceProxy, StoreBusinessHoursServiceProxy, StoreCountryLookupTableDto, StoreMediasServiceProxy, StoreTopStatsForViewDto, StoresServiceProxy } from '@shared/service-proxies/service-proxies';
 import { IAjaxResponse, TokenService } from 'abp-ng2-module';
 import { FileItem, FileUploader, FileUploaderOptions } from 'ng2-file-upload';
 import { SelectItem } from 'primeng/api';
@@ -18,6 +18,7 @@ import { CreateOrEditStoreTaskMapModalComponent } from '@app/main/taskManagement
 import { CreateOrEditStoreNoteModalComponent } from '../../storeNotes/create-or-edit-storeNote-modal.component';
 import { CreateOrEditStoreAccountTeamModalComponent } from '../../storeAccountTeams/create-or-edit-storeAccountTeam-modal.component';
 import { OneToOneConnectModalComponent } from '@app/shared/one-to-one-connect-modal/one-to-one-connect-modal.component';
+import { CreateOrEditStoreBusinessHourModalComponent } from '../../storeBusinessHours/create-or-edit-storeBusinessHour-modal.component';
 
 @Component({
   selector: 'app-store-dashboard',
@@ -34,6 +35,9 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
   @ViewChild('createOrEditStoreAccountTeamModal', { static: true })
   createOrEditStoreAccountTeamModal: CreateOrEditStoreAccountTeamModalComponent;
   @ViewChild('oneToOneConnectModal', { static: true }) oneToOneConnectModal: OneToOneConnectModalComponent;
+  @ViewChild('createOrEditStoreBusinessHourModal', { static: true })
+  createOrEditStoreBusinessHourModal: CreateOrEditStoreBusinessHourModalComponent;
+
   saving = false;
   storeId: number;
   productShortDesc: string;
@@ -68,14 +72,14 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
   numberOfNotes: number;
   primaryCategoryName: string;
 
-  imageSrc: any = 'assets/common/images/c_logo.png';
+  imageSrc: any;
   public uploader: FileUploader;
   public temporaryPictureUrl: string;
   private _uploaderOptions: FileUploaderOptions = {};
 
   allPrimaryCategories: any[];
   stateOptions: any = [];
-  countryOptions: any = [];
+  countryOptions: StoreCountryLookupTableDto[];
 
   isUrlAvailble: boolean = false;
   isUrlNotAvailble: boolean = false;
@@ -83,7 +87,6 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
   images: GetStoreMediaForViewDto[] = [];
   videos: any[] = [];
 
-  selectedCountry: any;
   selectedState: any;
 
   selectedStoreTagSettingCategory: any;
@@ -109,6 +112,11 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
   showCalendarView: boolean;
   showListView: boolean;
 
+  storeHour: GetStoreBusinessHourForViewDto = new GetStoreBusinessHourForViewDto();
+
+
+  totalRecordsCount: number;
+  allEmployee: GetStoreAccountTeamForViewDto[] = [];
   constructor(
     injector: Injector,
     private route: ActivatedRoute,
@@ -119,6 +127,9 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
     private _sanitizer: DomSanitizer,
     private geocodingService: GeocodingService,
     private _storeMasterTagSettingsServiceProxy: StoreMasterTagSettingsServiceProxy,
+    private _ratingLikesServiceProxy: RatingLikesServiceProxy,
+    private _storeAccountTeamsServiceProxy: StoreAccountTeamsServiceProxy,
+    private _storeHoursServiceProxy: StoreBusinessHoursServiceProxy,
     private dialog: MatDialog
   ) {
     super(injector);
@@ -129,6 +140,8 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
     let storeId = this.route.snapshot.paramMap.get('storeId')
     this.storeId = parseInt(storeId);
     this.getStoreDetails(this.storeId);
+    this.getStoreHour(this.storeId);
+    this.getAllStoreAccountTeams();
     this.initFileUploader();
     this.localOrVirtualStoreOptions = [{ label: 'Local Store', value: false }, { label: 'Virtual Store', value: true }];
     this.storeVerifiedOptions = [{ label: 'Verified', value: true }, { label: 'Not Verified', value: false }];
@@ -138,21 +151,11 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
 
   }
 
+
   loadAllDropdown() {
     this._storeServiceProxy.getAllCountryForTableDropdown().subscribe(result => {
       this.countryOptions = result;
     });
-
-    // this._storeServiceProxy.getAllStateForTableDropdown().subscribe(result => {
-    //   this.stateOptions = result;
-    // });
-
-    // this._storeServiceProxy.getAllRatingLikeForTableDropdown().subscribe(result => {
-    //   this.ratingLikeOptions = result;
-    // });
-    // this._storeServiceProxy.getAllTaxRateForTableDropdown().subscribe(result => {
-    //   this.taxOptions = result;
-    // });
     this._storeMasterTagSettingsServiceProxy.getAllStoreTagSettingCategoryForLookupTable('', '', 0, 1000).subscribe(result => {
       this.storeTagSettingCategoryOptions = result.items;
     });
@@ -160,18 +163,13 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
 
   onCountryChange(event: any) {
     if (event.value != null) {
-      this.store.countryId = event.value.id;
-      this._stateServiceProxy.getAllStateForTableDropdown(event.value.id).subscribe((result) => {
+      this._stateServiceProxy.getAllStateForTableDropdown(event.value).subscribe((result) => {
         this.stateOptions = result;
       });
     }
   }
 
-  onStateChange(event: any) {
-    if (event.value != null) {
-      this.store.stateId = event.value.id;
-    }
-  }
+
 
   openAiModal(feildName: string): void {
     this.productShortDesc = "Write Store About where store name is Saffola"
@@ -205,17 +203,20 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
       this.ratingScore = result.ratingScore;
       this.primaryCategoryName = result.primaryCategoryName;
       this.storeTagSettingCategoryId = result.store.storeTagSettingCategoryId;
-      // if (result.picture != null) {
-      //   this.imageSrc = result.picture;
-      // }
+      if (result.picture) {
+        this.imageSrc = result.picture;
+      }
       console.log(result)
       this.getStoreMedia();
+      if (this.store.stateId && this.store.countryId) {
+        this._stateServiceProxy.getAllStateForTableDropdown(this.store.countryId).subscribe((result) => {
+          this.stateOptions = result;
+        });
+      }
     });
     this._storeServiceProxy.getStoreTopStats(id).subscribe(result => {
       this.countView = result;
     });
-    // console.log("db"+this.storeTagSettingCategoryId);
-    // console.log("db"+this.storeId);
   }
 
   checkUrlAvailability(id: number, url: string) {
@@ -360,54 +361,15 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
     }
   }
 
-  // async getCoordinates() {
-  //   try {
-  //     if (this.selectedCountry && this.selectedState && this.store.city && this.store.zipCode) {
-  //       this.chatGPTPromt = 'Give me only the Latitude and longitude for ' + this.selectedCountry.displayName + ', ' + this.selectedState.displayName + ', ' + this.store.city + ', ' + this.store.zipCode + ' as json format as Key latitude and longitude';
-  //     } else if (this.selectedCountry && this.selectedState && this.store.city) {
-  //       this.chatGPTPromt = 'Give me only the Latitude and longitude for ' + this.selectedCountry.displayName + ', ' + this.selectedState.displayName + ', ' + this.store.city + ' as json format as Key latitude and longitude';
-  //     } else if (this.selectedCountry && this.selectedState) {
-  //       this.chatGPTPromt = 'Give me only the Latitude and longitude for ' + this.selectedCountry.displayName + ', ' + this.selectedState.displayName + ' as json format as Key latitude and longitude';
-  //     } else if (this.selectedCountry) {
-  //       this.chatGPTPromt = 'Give me only the Latitude and longitude for ' + this.selectedCountry.displayName + ' as json format as Key latitude and longitude';
-  //     }
-  //     console.log(this.chatGPTPromt);
-  //     const coordinates = await this.geocodingService.invokeGPT(this.chatGPTPromt);
-  //     console.log('Coordinates:', coordinates);
-  //     if (coordinates) {
-  //       this.store.latitude = coordinates.latitude;
-  //       this.store.longitude = coordinates.longitude;
-  //     }
-  //   } catch (error) {
-  //     console.error('Error:', error);
-  //   }
-  // }
 
   openAiModalForLatLong(fieldName: string): void {
     const storeName = this.store.name;
-    if (this.selectedCountry && this.selectedState && this.store.city && this.store.zipCode) {
-      this.chatGPTPromt = `Give me only the Latitude and longitude for 
-    Country: ${this.selectedCountry.displayName}, 
-    State: ${this.selectedState.displayName}, 
+    this.chatGPTPromt = `Give me only the Latitude and longitude for 
+    Country: ${this.countryName}, 
+    State: ${this.stateName}, 
     City: ${this.store.city}, 
     Zipcode: ${this.store.zipCode} 
     as json format as Key latitude and longitude`;
-    } else if (this.selectedCountry && this.selectedState && this.store.city) {
-      this.chatGPTPromt = `Give me only the Latitude and longitude for 
-    Country: ${this.selectedCountry.displayName}, 
-    State: ${this.selectedState.displayName}, 
-    City: ${this.store.city} 
-    as json format as Key latitude and longitude`;
-    } else if (this.selectedCountry && this.selectedState) {
-      this.chatGPTPromt = `Give me only the Latitude and longitude for 
-    Country: ${this.selectedCountry.displayName}, 
-    State: ${this.selectedState.displayName} 
-    as json format as Key latitude and longitude`;
-    } else if (this.selectedCountry) {
-      this.chatGPTPromt = `Give me only the Latitude and longitude for 
-    Country: ${this.selectedCountry.displayName} 
-    as json format as Key latitude and longitude`;
-    }
 
     var modalTitle = `AI Text Generator - Store ${fieldName}`;
     const dialogRef = this.dialog.open(ChatGptResponseModalComponent, {
@@ -548,11 +510,6 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
     moveItemInArray(this.storeTags, event.previousIndex, event.currentIndex);
   }
 
-  onStoreTagSettingCategoryClick(event: any) {
-    if (event.value != null) {
-      this.store.storeTagSettingCategoryId = event.value.id;
-    }
-  }
 
   createStoreTaskMap(): void {
     this.createOrEditStoreTaskMapModal.storeId = this.storeId;
@@ -571,9 +528,7 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
     window.location.reload();
   }
 
-  createStoreAccountTeam(): void {
-    this.createOrEditStoreAccountTeamModal.show();
-  }
+
 
   onCalenderView() {
     this.showCalendarView = !this.showCalendarView;
@@ -588,4 +543,49 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
     this.oneToOneConnectModal.storeId = id;
     this.oneToOneConnectModal.show();
   }
+
+  createStoreBusinessHour(): void {
+    this.createOrEditStoreBusinessHourModal.storeId = this.storeId;
+    if (this.storeHour.storeBusinessHour) {
+      this.createOrEditStoreBusinessHourModal.show(this.storeHour.storeBusinessHour.id);
+    } else {
+      this.createOrEditStoreBusinessHourModal.show();
+    }
+  }
+  getStoreHour(storeId: number) {
+    this._storeHoursServiceProxy.getStoreHourByStore(storeId).subscribe(result => {
+      this.storeHour = result;
+    });
+  }
+  isOpen24Hours() {
+    this.storeHour.storeBusinessHour.isOpen24Hours = !this.storeHour.storeBusinessHour.isOpen24Hours;
+    this._storeHoursServiceProxy.createOrEdit(this.storeHour.storeBusinessHour).subscribe(result => { this.getStoreHour(this.storeId) })
+  }
+  isAcceptInBusinessHours() {
+    this.storeHour.storeBusinessHour.isAcceptOnlyBusinessHour = !this.storeHour.storeBusinessHour.isAcceptOnlyBusinessHour;
+    this._storeHoursServiceProxy.createOrEdit(this.storeHour.storeBusinessHour).subscribe(result => { this.getStoreHour(this.storeId) })
+  }
+
+
+  createStoreAccountTeam(): void {
+    this.createOrEditStoreAccountTeamModal.storeId = this.storeId;
+    this.createOrEditStoreAccountTeamModal.show();
+  }
+  getAllStoreAccountTeams() {
+    this._storeAccountTeamsServiceProxy.getAllByStoreId(this.storeId).subscribe(result => {
+      this.totalRecordsCount = result.totalCount;
+      this.allEmployee = result.items;
+    });
+  }
+  deleteStoreAccountTeam(storeAccountTeam: StoreAccountTeamDto): void {
+    this.message.confirm('', this.l('AreYouSure'), (isConfirmed) => {
+      if (isConfirmed) {
+        this._storeAccountTeamsServiceProxy.delete(storeAccountTeam.id).subscribe(() => {
+          this.getAllStoreAccountTeams();
+          this.notify.success(this.l('SuccessfullyDeleted'));
+        });
+      }
+    });
+  }
+
 }

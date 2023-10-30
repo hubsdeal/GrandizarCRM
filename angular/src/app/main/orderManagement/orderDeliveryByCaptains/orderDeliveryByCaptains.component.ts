@@ -1,7 +1,7 @@
-﻿import {AppConsts} from '@shared/AppConsts';
+﻿import { AppConsts } from '@shared/AppConsts';
 import { Component, Injector, ViewEncapsulation, ViewChild } from '@angular/core';
-import { ActivatedRoute , Router} from '@angular/router';
-import { OrderDeliveryByCaptainsServiceProxy, OrderDeliveryByCaptainDto  } from '@shared/service-proxies/service-proxies';
+import { ActivatedRoute, Router } from '@angular/router';
+import { OrderDeliveryByCaptainsServiceProxy, OrderDeliveryByCaptainDto, EmployeesServiceProxy } from '@shared/service-proxies/service-proxies';
 import { NotifyService } from 'abp-ng2-module';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { TokenAuthServiceProxy } from '@shared/service-proxies/service-proxies';
@@ -16,231 +16,344 @@ import { FileDownloadService } from '@shared/utils/file-download.service';
 import { filter as _filter } from 'lodash-es';
 import { DateTime } from 'luxon';
 
-             import { DateTimeService } from '@app/shared/common/timing/date-time.service';
+import { DateTimeService } from '@app/shared/common/timing/date-time.service';
+import { MouseEvent } from '@agm/core';
 
 @Component({
-    templateUrl: './orderDeliveryByCaptains.component.html',
-    encapsulation: ViewEncapsulation.None,
-    animations: [appModuleAnimation()]
+  templateUrl: './orderDeliveryByCaptains.component.html',
+  encapsulation: ViewEncapsulation.None,
+  animations: [appModuleAnimation()]
 })
 export class OrderDeliveryByCaptainsComponent extends AppComponentBase {
-    
-    
-    @ViewChild('createOrEditOrderDeliveryByCaptainModal', { static: true }) createOrEditOrderDeliveryByCaptainModal: CreateOrEditOrderDeliveryByCaptainModalComponent;
-    @ViewChild('viewOrderDeliveryByCaptainModal', { static: true }) viewOrderDeliveryByCaptainModal: ViewOrderDeliveryByCaptainModalComponent;   
-    
-    @ViewChild('dataTable', { static: true }) dataTable: Table;
-    @ViewChild('paginator', { static: true }) paginator: Paginator;
-
-    advancedFiltersAreShown = false;
-    filterText = '';
-    captainSelectionAutoOrManualFilter = -1;
-    maxCaptainOrderAcceptedDateTimeFilter : DateTime;
-		minCaptainOrderAcceptedDateTimeFilter : DateTime;
-    maxCaptainOrderPickedupDateTimeFilter : DateTime;
-		minCaptainOrderPickedupDateTimeFilter : DateTime;
-    maxOrderDeliveryEstimatedTimeFilter : number;
-		maxOrderDeliveryEstimatedTimeFilterEmpty : number;
-		minOrderDeliveryEstimatedTimeFilter : number;
-		minOrderDeliveryEstimatedTimeFilterEmpty : number;
-    maxCaptainOrderDeliveredToCustomerDateTimeFilter : DateTime;
-		minCaptainOrderDeliveredToCustomerDateTimeFilter : DateTime;
-    maxOrderDeliveryActualTimeFilter : number;
-		maxOrderDeliveryActualTimeFilterEmpty : number;
-		minOrderDeliveryActualTimeFilter : number;
-		minOrderDeliveryActualTimeFilterEmpty : number;
-    orderDeliveryRouteDataFilter = '';
-    deliveryNotesFilter = '';
-    deliveryPointPhotoFilter = '';
-    customerSignatureFilter = '';
-    maxCaptainRatingByCustomerFilter : number;
-		maxCaptainRatingByCustomerFilterEmpty : number;
-		minCaptainRatingByCustomerFilter : number;
-		minCaptainRatingByCustomerFilterEmpty : number;
-    customerNotesFilter = '';
-    maxDeliveryStagesFilter : number;
-		maxDeliveryStagesFilterEmpty : number;
-		minDeliveryStagesFilter : number;
-		minDeliveryStagesFilterEmpty : number;
-    maxDeliveryCostToDriverFilter : number;
-		maxDeliveryCostToDriverFilterEmpty : number;
-		minDeliveryCostToDriverFilter : number;
-		minDeliveryCostToDriverFilterEmpty : number;
-    maxDeliveryCostToCustomerFilter : number;
-		maxDeliveryCostToCustomerFilterEmpty : number;
-		minDeliveryCostToCustomerFilter : number;
-		minDeliveryCostToCustomerFilterEmpty : number;
-        orderInvoiceNumberFilter = '';
-        storeNameFilter = '';
-        contactFullNameFilter = '';
-        employeeNameFilter = '';
 
 
+  @ViewChild('createOrEditOrderDeliveryByCaptainModal', { static: true }) createOrEditOrderDeliveryByCaptainModal: CreateOrEditOrderDeliveryByCaptainModalComponent;
+  @ViewChild('viewOrderDeliveryByCaptainModal', { static: true }) viewOrderDeliveryByCaptainModal: ViewOrderDeliveryByCaptainModalComponent;
+
+  @ViewChild('dataTable', { static: true }) dataTable: Table;
+  @ViewChild('paginator', { static: true }) paginator: Paginator;
+
+  advancedFiltersAreShown = false;
+  filterText = '';
+  captainSelectionAutoOrManualFilter = -1;
+  maxCaptainOrderAcceptedDateTimeFilter: DateTime;
+  minCaptainOrderAcceptedDateTimeFilter: DateTime;
+  maxCaptainOrderPickedupDateTimeFilter: DateTime;
+  minCaptainOrderPickedupDateTimeFilter: DateTime;
+  maxOrderDeliveryEstimatedTimeFilter: number;
+  maxOrderDeliveryEstimatedTimeFilterEmpty: number;
+  minOrderDeliveryEstimatedTimeFilter: number;
+  minOrderDeliveryEstimatedTimeFilterEmpty: number;
+  maxCaptainOrderDeliveredToCustomerDateTimeFilter: DateTime;
+  minCaptainOrderDeliveredToCustomerDateTimeFilter: DateTime;
+  maxOrderDeliveryActualTimeFilter: number;
+  maxOrderDeliveryActualTimeFilterEmpty: number;
+  minOrderDeliveryActualTimeFilter: number;
+  minOrderDeliveryActualTimeFilterEmpty: number;
+  orderDeliveryRouteDataFilter = '';
+  deliveryNotesFilter = '';
+  deliveryPointPhotoFilter = '';
+  customerSignatureFilter = '';
+  maxCaptainRatingByCustomerFilter: number;
+  maxCaptainRatingByCustomerFilterEmpty: number;
+  minCaptainRatingByCustomerFilter: number;
+  minCaptainRatingByCustomerFilterEmpty: number;
+  customerNotesFilter = '';
+  maxDeliveryStagesFilter: number;
+  maxDeliveryStagesFilterEmpty: number;
+  minDeliveryStagesFilter: number;
+  minDeliveryStagesFilterEmpty: number;
+  maxDeliveryCostToDriverFilter: number;
+  maxDeliveryCostToDriverFilterEmpty: number;
+  minDeliveryCostToDriverFilter: number;
+  minDeliveryCostToDriverFilterEmpty: number;
+  maxDeliveryCostToCustomerFilter: number;
+  maxDeliveryCostToCustomerFilterEmpty: number;
+  minDeliveryCostToCustomerFilter: number;
+  minDeliveryCostToCustomerFilterEmpty: number;
+  orderInvoiceNumberFilter = '';
+  storeNameFilter = '';
+  contactFullNameFilter = '';
+  employeeNameFilter = '';
 
 
 
+  nameFilter = '';
+  firstNameFilter = '';
+  lastNameFilter = '';
+  fullAddressFilter = '';
+  addressFilter = '';
+  zipCodeFilter = '';
+  cityFilter = '';
+  maxDateOfBirthFilter: DateTime;
+  minDateOfBirthFilter: DateTime;
+  mobileFilter = '';
+  officePhoneFilter = '';
+  personalEmailFilter = '';
+  businessEmailFilter = '';
+  jobTitleFilter = '';
+  companyNameFilter = '';
+  profileFilter = '';
+  maxHireDateFilter: DateTime;
+  minHireDateFilter: DateTime;
+  facebookFilter = '';
+  linkedInFilter = '';
+  faxFilter = '';
+  profilePictureIdFilter = '';
+  currentEmployeeFilter = -1;
+  stateNameFilter = '';
+  countryNameFilter = '';
 
-    constructor(
-        injector: Injector,
-        private _orderDeliveryByCaptainsServiceProxy: OrderDeliveryByCaptainsServiceProxy,
-        private _notifyService: NotifyService,
-        private _tokenAuth: TokenAuthServiceProxy,
-        private _activatedRoute: ActivatedRoute,
-        private _fileDownloadService: FileDownloadService,
-             private _dateTimeService: DateTimeService
-    ) {
-        super(injector);
+  allDeliveryCaptains: any = [];
+  totalCaptainCount: number;
+
+  // google maps zoom level
+  zoom: number = 8;
+
+  // initial center position for the map
+  lat: number = 51.673858;
+  lng: number = 7.815982;
+  constructor(
+    injector: Injector,
+    private _orderDeliveryByCaptainsServiceProxy: OrderDeliveryByCaptainsServiceProxy,
+    private _notifyService: NotifyService,
+    private _tokenAuth: TokenAuthServiceProxy,
+    private _activatedRoute: ActivatedRoute,
+    private _fileDownloadService: FileDownloadService,
+    private _employeesServiceProxy: EmployeesServiceProxy,
+    private _dateTimeService: DateTimeService
+  ) {
+    super(injector);
+    this.getDeliveryCaptains();
+  }
+
+  getOrderDeliveryByCaptains(event?: LazyLoadEvent) {
+    if (this.primengTableHelper.shouldResetPaging(event)) {
+      this.paginator.changePage(0);
+      if (this.primengTableHelper.records &&
+        this.primengTableHelper.records.length > 0) {
+        return;
+      }
     }
 
-    getOrderDeliveryByCaptains(event?: LazyLoadEvent) {
-        if (this.primengTableHelper.shouldResetPaging(event)) {
-            this.paginator.changePage(0);
-            if (this.primengTableHelper.records &&
-                this.primengTableHelper.records.length > 0) {
-                return;
-            }
+    this.primengTableHelper.showLoadingIndicator();
+
+    this._orderDeliveryByCaptainsServiceProxy.getAll(
+      this.filterText,
+      this.captainSelectionAutoOrManualFilter,
+      this.maxCaptainOrderAcceptedDateTimeFilter === undefined ? this.maxCaptainOrderAcceptedDateTimeFilter : this._dateTimeService.getEndOfDayForDate(this.maxCaptainOrderAcceptedDateTimeFilter),
+      this.minCaptainOrderAcceptedDateTimeFilter === undefined ? this.minCaptainOrderAcceptedDateTimeFilter : this._dateTimeService.getStartOfDayForDate(this.minCaptainOrderAcceptedDateTimeFilter),
+      this.maxCaptainOrderPickedupDateTimeFilter === undefined ? this.maxCaptainOrderPickedupDateTimeFilter : this._dateTimeService.getEndOfDayForDate(this.maxCaptainOrderPickedupDateTimeFilter),
+      this.minCaptainOrderPickedupDateTimeFilter === undefined ? this.minCaptainOrderPickedupDateTimeFilter : this._dateTimeService.getStartOfDayForDate(this.minCaptainOrderPickedupDateTimeFilter),
+      this.maxOrderDeliveryEstimatedTimeFilter == null ? this.maxOrderDeliveryEstimatedTimeFilterEmpty : this.maxOrderDeliveryEstimatedTimeFilter,
+      this.minOrderDeliveryEstimatedTimeFilter == null ? this.minOrderDeliveryEstimatedTimeFilterEmpty : this.minOrderDeliveryEstimatedTimeFilter,
+      this.maxCaptainOrderDeliveredToCustomerDateTimeFilter === undefined ? this.maxCaptainOrderDeliveredToCustomerDateTimeFilter : this._dateTimeService.getEndOfDayForDate(this.maxCaptainOrderDeliveredToCustomerDateTimeFilter),
+      this.minCaptainOrderDeliveredToCustomerDateTimeFilter === undefined ? this.minCaptainOrderDeliveredToCustomerDateTimeFilter : this._dateTimeService.getStartOfDayForDate(this.minCaptainOrderDeliveredToCustomerDateTimeFilter),
+      this.maxOrderDeliveryActualTimeFilter == null ? this.maxOrderDeliveryActualTimeFilterEmpty : this.maxOrderDeliveryActualTimeFilter,
+      this.minOrderDeliveryActualTimeFilter == null ? this.minOrderDeliveryActualTimeFilterEmpty : this.minOrderDeliveryActualTimeFilter,
+      this.orderDeliveryRouteDataFilter,
+      this.deliveryNotesFilter,
+      this.deliveryPointPhotoFilter,
+      this.customerSignatureFilter,
+      this.maxCaptainRatingByCustomerFilter == null ? this.maxCaptainRatingByCustomerFilterEmpty : this.maxCaptainRatingByCustomerFilter,
+      this.minCaptainRatingByCustomerFilter == null ? this.minCaptainRatingByCustomerFilterEmpty : this.minCaptainRatingByCustomerFilter,
+      this.customerNotesFilter,
+      this.maxDeliveryStagesFilter == null ? this.maxDeliveryStagesFilterEmpty : this.maxDeliveryStagesFilter,
+      this.minDeliveryStagesFilter == null ? this.minDeliveryStagesFilterEmpty : this.minDeliveryStagesFilter,
+      this.maxDeliveryCostToDriverFilter == null ? this.maxDeliveryCostToDriverFilterEmpty : this.maxDeliveryCostToDriverFilter,
+      this.minDeliveryCostToDriverFilter == null ? this.minDeliveryCostToDriverFilterEmpty : this.minDeliveryCostToDriverFilter,
+      this.maxDeliveryCostToCustomerFilter == null ? this.maxDeliveryCostToCustomerFilterEmpty : this.maxDeliveryCostToCustomerFilter,
+      this.minDeliveryCostToCustomerFilter == null ? this.minDeliveryCostToCustomerFilterEmpty : this.minDeliveryCostToCustomerFilter,
+      this.orderInvoiceNumberFilter,
+      this.storeNameFilter,
+      this.contactFullNameFilter,
+      this.employeeNameFilter,
+      this.primengTableHelper.getSorting(this.dataTable),
+      this.primengTableHelper.getSkipCount(this.paginator, event),
+      this.primengTableHelper.getMaxResultCount(this.paginator, event)
+    ).subscribe(result => {
+      this.primengTableHelper.totalRecordsCount = result.totalCount;
+      this.primengTableHelper.records = result.items;
+      this.primengTableHelper.hideLoadingIndicator();
+    });
+  }
+
+
+  getDeliveryCaptains() {
+    this._employeesServiceProxy
+      .getAll(
+        undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined,
+        undefined,//organizationUnitDisplayNameFilter
+        undefined, //contactNameFilter
+        -1, //currentEmployee
+        undefined, //departmentIdFilter
+        '',
+        0,
+        10000
+      )
+      .subscribe((result) => {
+        this.totalCaptainCount = result.totalCount;
+        this.allDeliveryCaptains = result.items;
+      });
+  }
+  reloadPage(): void {
+    this.paginator.changePage(this.paginator.getPage());
+  }
+
+  createOrderDeliveryByCaptain(): void {
+    this.createOrEditOrderDeliveryByCaptainModal.show();
+  }
+
+
+  deleteOrderDeliveryByCaptain(orderDeliveryByCaptain: OrderDeliveryByCaptainDto): void {
+    this.message.confirm(
+      '',
+      this.l('AreYouSure'),
+      (isConfirmed) => {
+        if (isConfirmed) {
+          this._orderDeliveryByCaptainsServiceProxy.delete(orderDeliveryByCaptain.id)
+            .subscribe(() => {
+              this.reloadPage();
+              this.notify.success(this.l('SuccessfullyDeleted'));
+            });
         }
+      }
+    );
+  }
 
-        this.primengTableHelper.showLoadingIndicator();
-
-        this._orderDeliveryByCaptainsServiceProxy.getAll(
-            this.filterText,
-            this.captainSelectionAutoOrManualFilter,
-            this.maxCaptainOrderAcceptedDateTimeFilter === undefined ? this.maxCaptainOrderAcceptedDateTimeFilter : this._dateTimeService.getEndOfDayForDate(this.maxCaptainOrderAcceptedDateTimeFilter),
-            this.minCaptainOrderAcceptedDateTimeFilter === undefined ? this.minCaptainOrderAcceptedDateTimeFilter : this._dateTimeService.getStartOfDayForDate(this.minCaptainOrderAcceptedDateTimeFilter),
-            this.maxCaptainOrderPickedupDateTimeFilter === undefined ? this.maxCaptainOrderPickedupDateTimeFilter : this._dateTimeService.getEndOfDayForDate(this.maxCaptainOrderPickedupDateTimeFilter),
-            this.minCaptainOrderPickedupDateTimeFilter === undefined ? this.minCaptainOrderPickedupDateTimeFilter : this._dateTimeService.getStartOfDayForDate(this.minCaptainOrderPickedupDateTimeFilter),
-            this.maxOrderDeliveryEstimatedTimeFilter == null ? this.maxOrderDeliveryEstimatedTimeFilterEmpty: this.maxOrderDeliveryEstimatedTimeFilter,
-            this.minOrderDeliveryEstimatedTimeFilter == null ? this.minOrderDeliveryEstimatedTimeFilterEmpty: this.minOrderDeliveryEstimatedTimeFilter,
-            this.maxCaptainOrderDeliveredToCustomerDateTimeFilter === undefined ? this.maxCaptainOrderDeliveredToCustomerDateTimeFilter : this._dateTimeService.getEndOfDayForDate(this.maxCaptainOrderDeliveredToCustomerDateTimeFilter),
-            this.minCaptainOrderDeliveredToCustomerDateTimeFilter === undefined ? this.minCaptainOrderDeliveredToCustomerDateTimeFilter : this._dateTimeService.getStartOfDayForDate(this.minCaptainOrderDeliveredToCustomerDateTimeFilter),
-            this.maxOrderDeliveryActualTimeFilter == null ? this.maxOrderDeliveryActualTimeFilterEmpty: this.maxOrderDeliveryActualTimeFilter,
-            this.minOrderDeliveryActualTimeFilter == null ? this.minOrderDeliveryActualTimeFilterEmpty: this.minOrderDeliveryActualTimeFilter,
-            this.orderDeliveryRouteDataFilter,
-            this.deliveryNotesFilter,
-            this.deliveryPointPhotoFilter,
-            this.customerSignatureFilter,
-            this.maxCaptainRatingByCustomerFilter == null ? this.maxCaptainRatingByCustomerFilterEmpty: this.maxCaptainRatingByCustomerFilter,
-            this.minCaptainRatingByCustomerFilter == null ? this.minCaptainRatingByCustomerFilterEmpty: this.minCaptainRatingByCustomerFilter,
-            this.customerNotesFilter,
-            this.maxDeliveryStagesFilter == null ? this.maxDeliveryStagesFilterEmpty: this.maxDeliveryStagesFilter,
-            this.minDeliveryStagesFilter == null ? this.minDeliveryStagesFilterEmpty: this.minDeliveryStagesFilter,
-            this.maxDeliveryCostToDriverFilter == null ? this.maxDeliveryCostToDriverFilterEmpty: this.maxDeliveryCostToDriverFilter,
-            this.minDeliveryCostToDriverFilter == null ? this.minDeliveryCostToDriverFilterEmpty: this.minDeliveryCostToDriverFilter,
-            this.maxDeliveryCostToCustomerFilter == null ? this.maxDeliveryCostToCustomerFilterEmpty: this.maxDeliveryCostToCustomerFilter,
-            this.minDeliveryCostToCustomerFilter == null ? this.minDeliveryCostToCustomerFilterEmpty: this.minDeliveryCostToCustomerFilter,
-            this.orderInvoiceNumberFilter,
-            this.storeNameFilter,
-            this.contactFullNameFilter,
-            this.employeeNameFilter,
-            this.primengTableHelper.getSorting(this.dataTable),
-            this.primengTableHelper.getSkipCount(this.paginator, event),
-            this.primengTableHelper.getMaxResultCount(this.paginator, event)
-        ).subscribe(result => {
-            this.primengTableHelper.totalRecordsCount = result.totalCount;
-            this.primengTableHelper.records = result.items;
-            this.primengTableHelper.hideLoadingIndicator();
-        });
-    }
-
-    reloadPage(): void {
-        this.paginator.changePage(this.paginator.getPage());
-    }
-
-    createOrderDeliveryByCaptain(): void {
-        this.createOrEditOrderDeliveryByCaptainModal.show();        
-    }
+  exportToExcel(): void {
+    this._orderDeliveryByCaptainsServiceProxy.getOrderDeliveryByCaptainsToExcel(
+      this.filterText,
+      this.captainSelectionAutoOrManualFilter,
+      this.maxCaptainOrderAcceptedDateTimeFilter === undefined ? this.maxCaptainOrderAcceptedDateTimeFilter : this._dateTimeService.getEndOfDayForDate(this.maxCaptainOrderAcceptedDateTimeFilter),
+      this.minCaptainOrderAcceptedDateTimeFilter === undefined ? this.minCaptainOrderAcceptedDateTimeFilter : this._dateTimeService.getStartOfDayForDate(this.minCaptainOrderAcceptedDateTimeFilter),
+      this.maxCaptainOrderPickedupDateTimeFilter === undefined ? this.maxCaptainOrderPickedupDateTimeFilter : this._dateTimeService.getEndOfDayForDate(this.maxCaptainOrderPickedupDateTimeFilter),
+      this.minCaptainOrderPickedupDateTimeFilter === undefined ? this.minCaptainOrderPickedupDateTimeFilter : this._dateTimeService.getStartOfDayForDate(this.minCaptainOrderPickedupDateTimeFilter),
+      this.maxOrderDeliveryEstimatedTimeFilter == null ? this.maxOrderDeliveryEstimatedTimeFilterEmpty : this.maxOrderDeliveryEstimatedTimeFilter,
+      this.minOrderDeliveryEstimatedTimeFilter == null ? this.minOrderDeliveryEstimatedTimeFilterEmpty : this.minOrderDeliveryEstimatedTimeFilter,
+      this.maxCaptainOrderDeliveredToCustomerDateTimeFilter === undefined ? this.maxCaptainOrderDeliveredToCustomerDateTimeFilter : this._dateTimeService.getEndOfDayForDate(this.maxCaptainOrderDeliveredToCustomerDateTimeFilter),
+      this.minCaptainOrderDeliveredToCustomerDateTimeFilter === undefined ? this.minCaptainOrderDeliveredToCustomerDateTimeFilter : this._dateTimeService.getStartOfDayForDate(this.minCaptainOrderDeliveredToCustomerDateTimeFilter),
+      this.maxOrderDeliveryActualTimeFilter == null ? this.maxOrderDeliveryActualTimeFilterEmpty : this.maxOrderDeliveryActualTimeFilter,
+      this.minOrderDeliveryActualTimeFilter == null ? this.minOrderDeliveryActualTimeFilterEmpty : this.minOrderDeliveryActualTimeFilter,
+      this.orderDeliveryRouteDataFilter,
+      this.deliveryNotesFilter,
+      this.deliveryPointPhotoFilter,
+      this.customerSignatureFilter,
+      this.maxCaptainRatingByCustomerFilter == null ? this.maxCaptainRatingByCustomerFilterEmpty : this.maxCaptainRatingByCustomerFilter,
+      this.minCaptainRatingByCustomerFilter == null ? this.minCaptainRatingByCustomerFilterEmpty : this.minCaptainRatingByCustomerFilter,
+      this.customerNotesFilter,
+      this.maxDeliveryStagesFilter == null ? this.maxDeliveryStagesFilterEmpty : this.maxDeliveryStagesFilter,
+      this.minDeliveryStagesFilter == null ? this.minDeliveryStagesFilterEmpty : this.minDeliveryStagesFilter,
+      this.maxDeliveryCostToDriverFilter == null ? this.maxDeliveryCostToDriverFilterEmpty : this.maxDeliveryCostToDriverFilter,
+      this.minDeliveryCostToDriverFilter == null ? this.minDeliveryCostToDriverFilterEmpty : this.minDeliveryCostToDriverFilter,
+      this.maxDeliveryCostToCustomerFilter == null ? this.maxDeliveryCostToCustomerFilterEmpty : this.maxDeliveryCostToCustomerFilter,
+      this.minDeliveryCostToCustomerFilter == null ? this.minDeliveryCostToCustomerFilterEmpty : this.minDeliveryCostToCustomerFilter,
+      this.orderInvoiceNumberFilter,
+      this.storeNameFilter,
+      this.contactFullNameFilter,
+      this.employeeNameFilter,
+    )
+      .subscribe(result => {
+        this._fileDownloadService.downloadTempFile(result);
+      });
+  }
 
 
-    deleteOrderDeliveryByCaptain(orderDeliveryByCaptain: OrderDeliveryByCaptainDto): void {
-        this.message.confirm(
-            '',
-            this.l('AreYouSure'),
-            (isConfirmed) => {
-                if (isConfirmed) {
-                    this._orderDeliveryByCaptainsServiceProxy.delete(orderDeliveryByCaptain.id)
-                        .subscribe(() => {
-                            this.reloadPage();
-                            this.notify.success(this.l('SuccessfullyDeleted'));
-                        });
-                }
-            }
-        );
-    }
 
-    exportToExcel(): void {
-        this._orderDeliveryByCaptainsServiceProxy.getOrderDeliveryByCaptainsToExcel(
-        this.filterText,
-            this.captainSelectionAutoOrManualFilter,
-            this.maxCaptainOrderAcceptedDateTimeFilter === undefined ? this.maxCaptainOrderAcceptedDateTimeFilter : this._dateTimeService.getEndOfDayForDate(this.maxCaptainOrderAcceptedDateTimeFilter),
-            this.minCaptainOrderAcceptedDateTimeFilter === undefined ? this.minCaptainOrderAcceptedDateTimeFilter : this._dateTimeService.getStartOfDayForDate(this.minCaptainOrderAcceptedDateTimeFilter),
-            this.maxCaptainOrderPickedupDateTimeFilter === undefined ? this.maxCaptainOrderPickedupDateTimeFilter : this._dateTimeService.getEndOfDayForDate(this.maxCaptainOrderPickedupDateTimeFilter),
-            this.minCaptainOrderPickedupDateTimeFilter === undefined ? this.minCaptainOrderPickedupDateTimeFilter : this._dateTimeService.getStartOfDayForDate(this.minCaptainOrderPickedupDateTimeFilter),
-            this.maxOrderDeliveryEstimatedTimeFilter == null ? this.maxOrderDeliveryEstimatedTimeFilterEmpty: this.maxOrderDeliveryEstimatedTimeFilter,
-            this.minOrderDeliveryEstimatedTimeFilter == null ? this.minOrderDeliveryEstimatedTimeFilterEmpty: this.minOrderDeliveryEstimatedTimeFilter,
-            this.maxCaptainOrderDeliveredToCustomerDateTimeFilter === undefined ? this.maxCaptainOrderDeliveredToCustomerDateTimeFilter : this._dateTimeService.getEndOfDayForDate(this.maxCaptainOrderDeliveredToCustomerDateTimeFilter),
-            this.minCaptainOrderDeliveredToCustomerDateTimeFilter === undefined ? this.minCaptainOrderDeliveredToCustomerDateTimeFilter : this._dateTimeService.getStartOfDayForDate(this.minCaptainOrderDeliveredToCustomerDateTimeFilter),
-            this.maxOrderDeliveryActualTimeFilter == null ? this.maxOrderDeliveryActualTimeFilterEmpty: this.maxOrderDeliveryActualTimeFilter,
-            this.minOrderDeliveryActualTimeFilter == null ? this.minOrderDeliveryActualTimeFilterEmpty: this.minOrderDeliveryActualTimeFilter,
-            this.orderDeliveryRouteDataFilter,
-            this.deliveryNotesFilter,
-            this.deliveryPointPhotoFilter,
-            this.customerSignatureFilter,
-            this.maxCaptainRatingByCustomerFilter == null ? this.maxCaptainRatingByCustomerFilterEmpty: this.maxCaptainRatingByCustomerFilter,
-            this.minCaptainRatingByCustomerFilter == null ? this.minCaptainRatingByCustomerFilterEmpty: this.minCaptainRatingByCustomerFilter,
-            this.customerNotesFilter,
-            this.maxDeliveryStagesFilter == null ? this.maxDeliveryStagesFilterEmpty: this.maxDeliveryStagesFilter,
-            this.minDeliveryStagesFilter == null ? this.minDeliveryStagesFilterEmpty: this.minDeliveryStagesFilter,
-            this.maxDeliveryCostToDriverFilter == null ? this.maxDeliveryCostToDriverFilterEmpty: this.maxDeliveryCostToDriverFilter,
-            this.minDeliveryCostToDriverFilter == null ? this.minDeliveryCostToDriverFilterEmpty: this.minDeliveryCostToDriverFilter,
-            this.maxDeliveryCostToCustomerFilter == null ? this.maxDeliveryCostToCustomerFilterEmpty: this.maxDeliveryCostToCustomerFilter,
-            this.minDeliveryCostToCustomerFilter == null ? this.minDeliveryCostToCustomerFilterEmpty: this.minDeliveryCostToCustomerFilter,
-            this.orderInvoiceNumberFilter,
-            this.storeNameFilter,
-            this.contactFullNameFilter,
-            this.employeeNameFilter,
-        )
-        .subscribe(result => {
-            this._fileDownloadService.downloadTempFile(result);
-         });
-    }
-    
-    
-    
-    
-    
 
-    resetFilters(): void {
-        this.filterText = '';
-            this.captainSelectionAutoOrManualFilter = -1;
+
+
+  resetFilters(): void {
+    this.filterText = '';
+    this.captainSelectionAutoOrManualFilter = -1;
     this.maxCaptainOrderAcceptedDateTimeFilter = undefined;
-		this.minCaptainOrderAcceptedDateTimeFilter = undefined;
+    this.minCaptainOrderAcceptedDateTimeFilter = undefined;
     this.maxCaptainOrderPickedupDateTimeFilter = undefined;
-		this.minCaptainOrderPickedupDateTimeFilter = undefined;
+    this.minCaptainOrderPickedupDateTimeFilter = undefined;
     this.maxOrderDeliveryEstimatedTimeFilter = this.maxOrderDeliveryEstimatedTimeFilterEmpty;
-		this.minOrderDeliveryEstimatedTimeFilter = this.maxOrderDeliveryEstimatedTimeFilterEmpty;
+    this.minOrderDeliveryEstimatedTimeFilter = this.maxOrderDeliveryEstimatedTimeFilterEmpty;
     this.maxCaptainOrderDeliveredToCustomerDateTimeFilter = undefined;
-		this.minCaptainOrderDeliveredToCustomerDateTimeFilter = undefined;
+    this.minCaptainOrderDeliveredToCustomerDateTimeFilter = undefined;
     this.maxOrderDeliveryActualTimeFilter = this.maxOrderDeliveryActualTimeFilterEmpty;
-		this.minOrderDeliveryActualTimeFilter = this.maxOrderDeliveryActualTimeFilterEmpty;
+    this.minOrderDeliveryActualTimeFilter = this.maxOrderDeliveryActualTimeFilterEmpty;
     this.orderDeliveryRouteDataFilter = '';
     this.deliveryNotesFilter = '';
     this.deliveryPointPhotoFilter = '';
     this.customerSignatureFilter = '';
     this.maxCaptainRatingByCustomerFilter = this.maxCaptainRatingByCustomerFilterEmpty;
-		this.minCaptainRatingByCustomerFilter = this.maxCaptainRatingByCustomerFilterEmpty;
+    this.minCaptainRatingByCustomerFilter = this.maxCaptainRatingByCustomerFilterEmpty;
     this.customerNotesFilter = '';
     this.maxDeliveryStagesFilter = this.maxDeliveryStagesFilterEmpty;
-		this.minDeliveryStagesFilter = this.maxDeliveryStagesFilterEmpty;
+    this.minDeliveryStagesFilter = this.maxDeliveryStagesFilterEmpty;
     this.maxDeliveryCostToDriverFilter = this.maxDeliveryCostToDriverFilterEmpty;
-		this.minDeliveryCostToDriverFilter = this.maxDeliveryCostToDriverFilterEmpty;
+    this.minDeliveryCostToDriverFilter = this.maxDeliveryCostToDriverFilterEmpty;
     this.maxDeliveryCostToCustomerFilter = this.maxDeliveryCostToCustomerFilterEmpty;
-		this.minDeliveryCostToCustomerFilter = this.maxDeliveryCostToCustomerFilterEmpty;
-		this.orderInvoiceNumberFilter = '';
-							this.storeNameFilter = '';
-							this.contactFullNameFilter = '';
-							this.employeeNameFilter = '';
-					
-        this.getOrderDeliveryByCaptains();
+    this.minDeliveryCostToCustomerFilter = this.maxDeliveryCostToCustomerFilterEmpty;
+    this.orderInvoiceNumberFilter = '';
+    this.storeNameFilter = '';
+    this.contactFullNameFilter = '';
+    this.employeeNameFilter = '';
+
+    this.getOrderDeliveryByCaptains();
+  }
+
+  clickedMarker(label: string, index: number) {
+    console.log(`clicked the marker: ${label || index}`);
+  }
+
+  mapClicked($event: MouseEvent) {
+    this.markers.push({
+      lat: $event['coords'].lat,
+      lng: $event['coords'].lng,
+      draggable: true,
+      content: "InfoWindow content",
+      color: "blue",
+      iconUrl: "/assets/common/images/dddddd.png"
+    });
+  }
+
+  markerDragEnd(m: marker, $event: MouseEvent) {
+    console.log("dragEnd", m, $event);
+  }
+
+  markers: marker[] = [
+    {
+      lat: 51.673858,
+      lng: 7.815982,
+      label: "Rashedur",
+      draggable: true,
+      content: "InfoWindow content",
+      color: "#FFFFFF",
+      iconUrl: "/assets/common/images/dddddd.png"
+    },
+    {
+      lat: 51.373858,
+      lng: 7.215982,
+      label: "Zillur",
+      draggable: false,
+      content: "InfoWindow content",
+      color: "blue",
+      iconUrl: "/assets/common/images/dddddd.png"
+    },
+    {
+      lat: 51.723858,
+      lng: 7.495982,
+      label: "Tofael",
+      draggable: true,
+      content: "InfoWindow content",
+      color: "red",
+      iconUrl: "/assets/common/images/dddddd.png"
     }
+  ];
+}
+
+// just an interface for type safety.
+interface marker {
+  lat: number;
+  lng: number;
+  label?: string;
+  draggable: boolean;
+  content: string;
+  color: string;
+  iconUrl: string;
 }

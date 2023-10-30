@@ -515,20 +515,20 @@
                                                 class="fs-5 text-gray-800 text-hover-primary fw-bold">
                                                 {{ record.order.fullName }}
                                             </a>
-                                            <span class="text-gray-400 fw-semibold fs-7 my-0">
+                                            <span *ngIf="record.order.deliveryAddress" class="text-gray-400 fw-semibold fs-7 my-0">
                                                 <i class="fas fa-map-location mr-1"></i>
-                                                Dhaka, Bangladesh
+                                                {{record.order.deliveryAddress}}
                                             </span>
-                                            <span class="text-gray-400 fw-semibold fs-7 my-0">
+                                            <span *ngIf="record.order.phone" class="text-gray-400 fw-semibold fs-7 my-0">
                                                 <i class="fas fa-phone-alt mr-1"></i>
-                                                +880 17772212192
+                                                {{record.order.phone}}
                                             </span>
                                         </div>
                                     </td>
                                     <td style="width: 90px; text-align: center;" title="Number of Items">
                                         <span class="ui-column-title"> {{l('items')}}</span>
                                         <a href="javascript:;" class="fw-semibold text-gray-400">
-                                            5
+                                            {{record.numberOfItems}}
                                         </a>
                                     </td>
                                     <td style="width:150px; text-align: center;">

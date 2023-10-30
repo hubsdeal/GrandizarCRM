@@ -1,42 +1,23 @@
-﻿<div
-    bsModal
-    #createOrEditModal="bs-modal"
-    class="modal fade"
-    tabindex="-1"
-    role="dialog"
-    aria-labelledby="createOrEditModal"
-    aria-hidden="true"
-    [config]="{ backdrop: 'static' }"
->
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{ backdrop: 'static' }">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <form *ngIf="active" #storeOwnerTeamForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
                 <div class="modal-header">
                     <h4 class="modal-title">
-                        <span *ngIf="storeOwnerTeam.id">{{ l('EditStoreOwnerTeam') }}</span>
-                        <span *ngIf="!storeOwnerTeam.id">{{ l('CreateNewStoreOwnerTeam') }}</span>
+                        <span *ngIf="storeOwnerTeam.id">{{ l('Edit Store Owner Team') }}</span>
+                        <span *ngIf="!storeOwnerTeam.id">{{ l('Create New Store Owner Team') }}</span>
                     </h4>
 
-                    <button
-                        type="button"
-                        class="btn-close"
-                        (click)="close()"
-                        aria-label="Close"
-                        [disabled]="saving"
-                    ></button>
+                    <button type="button" class="btn-close" (click)="close()" aria-label="Close"
+                        [disabled]="saving"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="my-3">
+                    <div class="my-3" *ngIf="!storeId">
                         <label class="form-label" for="StoreName">{{ l('Store') }}</label>
                         <div class="input-group">
-                            <input
-                                class="form-control"
-                                id="StoreName"
-                                name="storeName"
-                                [(ngModel)]="storeName"
-                                type="text"
-                                disabled
-                            />
+                            <input class="form-control" id="StoreName" name="storeName" [(ngModel)]="storeName"
+                                type="text" disabled />
                             <button class="btn btn-primary blue" (click)="openSelectStoreModal()" type="button">
                                 <i class="fa fa-search"></i>
                                 {{ l('Pick') }}
@@ -46,26 +27,14 @@
                             </button>
                         </div>
                     </div>
-                    <input
-                        class="form-control"
-                        name="storeOwnerTeam.storeId"
-                        [(ngModel)]="storeOwnerTeam.storeId"
-                        type="text"
-                        required
-                        hidden
-                    />
+                    <input class="form-control" name="storeOwnerTeam.storeId" [(ngModel)]="storeOwnerTeam.storeId"
+                        type="text" hidden />
 
                     <div class="my-3">
                         <label class="form-label" for="UserName">{{ l('User') }}</label>
                         <div class="input-group">
-                            <input
-                                class="form-control"
-                                id="UserName"
-                                name="userName"
-                                [(ngModel)]="userName"
-                                type="text"
-                                disabled
-                            />
+                            <input class="form-control" id="UserName" name="userName" [(ngModel)]="userName" type="text"
+                                disabled />
                             <button class="btn btn-primary blue" (click)="openSelectUserModal()" type="button">
                                 <i class="fa fa-search"></i>
                                 {{ l('Pick') }}
@@ -75,25 +44,13 @@
                             </button>
                         </div>
                     </div>
-                    <input
-                        class="form-control"
-                        name="storeOwnerTeam.userId"
-                        [(ngModel)]="storeOwnerTeam.userId"
-                        type="text"
-                        required
-                        hidden
-                    />
+                    <input class="form-control" name="storeOwnerTeam.userId" [(ngModel)]="storeOwnerTeam.userId"
+                        type="text" required hidden />
 
                     <br />
                     <label class="form-check form-check-custom form-check-solid">
-                        <input
-                            id="StoreOwnerTeam_Active"
-                            #StoreOwnerTeam_Active="ngModel"
-                            name="Active"
-                            [(ngModel)]="storeOwnerTeam.active"
-                            type="checkbox"
-                            class="form-check-input"
-                        />
+                        <input id="StoreOwnerTeam_Active" #StoreOwnerTeam_Active="ngModel" name="Active"
+                            [(ngModel)]="storeOwnerTeam.active" type="checkbox" class="form-check-input" />
                         <span class="form-check-label">
                             {{ l('Active') }}
                         </span>
@@ -102,14 +59,8 @@
 
                     <br />
                     <label class="form-check form-check-custom form-check-solid">
-                        <input
-                            id="StoreOwnerTeam_Primary"
-                            #StoreOwnerTeam_Primary="ngModel"
-                            name="Primary"
-                            [(ngModel)]="storeOwnerTeam.primary"
-                            type="checkbox"
-                            class="form-check-input"
-                        />
+                        <input id="StoreOwnerTeam_Primary" #StoreOwnerTeam_Primary="ngModel" name="Primary"
+                            [(ngModel)]="storeOwnerTeam.primary" type="checkbox" class="form-check-input" />
                         <span class="form-check-label">
                             {{ l('Primary') }}
                         </span>
@@ -118,32 +69,23 @@
 
                     <br />
                     <label class="form-check form-check-custom form-check-solid">
-                        <input
-                            id="StoreOwnerTeam_OrderEmailNotification"
-                            #StoreOwnerTeam_OrderEmailNotification="ngModel"
-                            name="OrderEmailNotification"
-                            [(ngModel)]="storeOwnerTeam.orderEmailNotification"
-                            type="checkbox"
-                            class="form-check-input"
-                        />
+                        <input id="StoreOwnerTeam_OrderEmailNotification"
+                            #StoreOwnerTeam_OrderEmailNotification="ngModel" name="OrderEmailNotification"
+                            [(ngModel)]="storeOwnerTeam.orderEmailNotification" type="checkbox"
+                            class="form-check-input" />
                         <span class="form-check-label">
-                            {{ l('OrderEmailNotification') }}
+                            {{ l('Order Email Notification') }}
                         </span>
                     </label>
                     <validation-messages [formCtrl]="StoreOwnerTeam_OrderEmailNotification"></validation-messages>
 
                     <br />
                     <label class="form-check form-check-custom form-check-solid">
-                        <input
-                            id="StoreOwnerTeam_OrderSmsNotification"
-                            #StoreOwnerTeam_OrderSmsNotification="ngModel"
-                            name="OrderSmsNotification"
-                            [(ngModel)]="storeOwnerTeam.orderSmsNotification"
-                            type="checkbox"
-                            class="form-check-input"
-                        />
+                        <input id="StoreOwnerTeam_OrderSmsNotification" #StoreOwnerTeam_OrderSmsNotification="ngModel"
+                            name="OrderSmsNotification" [(ngModel)]="storeOwnerTeam.orderSmsNotification"
+                            type="checkbox" class="form-check-input" />
                         <span class="form-check-label">
-                            {{ l('OrderSmsNotification') }}
+                            {{ l('Order Sms Notification') }}
                         </span>
                     </label>
                     <validation-messages [formCtrl]="StoreOwnerTeam_OrderSmsNotification"></validation-messages>
@@ -152,13 +94,8 @@
                     <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
                         {{ l('Cancel') }}
                     </button>
-                    <button
-                        type="submit"
-                        class="btn btn-primary blue"
-                        [disabled]="!storeOwnerTeamForm.form.valid"
-                        [buttonBusy]="saving"
-                        [busyText]="l('SavingWithThreeDot')"
-                    >
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!storeOwnerTeamForm.form.valid"
+                        [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')">
                         <i class="fa fa-save"></i>
                         <span>{{ l('Save') }}</span>
                     </button>
@@ -166,12 +103,8 @@
             </form>
         </div>
     </div>
-    <storeOwnerTeamStoreLookupTableModal
-        #storeOwnerTeamStoreLookupTableModal
-        (modalSave)="getNewStoreId()"
-    ></storeOwnerTeamStoreLookupTableModal>
-    <storeOwnerTeamUserLookupTableModal
-        #storeOwnerTeamUserLookupTableModal
-        (modalSave)="getNewUserId()"
-    ></storeOwnerTeamUserLookupTableModal>
+    <storeOwnerTeamStoreLookupTableModal #storeOwnerTeamStoreLookupTableModal (modalSave)="getNewStoreId()">
+    </storeOwnerTeamStoreLookupTableModal>
+    <storeOwnerTeamUserLookupTableModal #storeOwnerTeamUserLookupTableModal (modalSave)="getNewUserId()">
+    </storeOwnerTeamUserLookupTableModal>
 </div>

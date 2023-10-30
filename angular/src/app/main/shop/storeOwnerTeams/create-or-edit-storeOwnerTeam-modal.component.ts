@@ -30,6 +30,8 @@ export class CreateOrEditStoreOwnerTeamModalComponent extends AppComponentBase i
     storeName = '';
     userName = '';
 
+    storeId:number;
+
     constructor(
         injector: Injector,
         private _storeOwnerTeamsServiceProxy: StoreOwnerTeamsServiceProxy,
@@ -50,7 +52,7 @@ export class CreateOrEditStoreOwnerTeamModalComponent extends AppComponentBase i
         } else {
             this._storeOwnerTeamsServiceProxy.getStoreOwnerTeamForEdit(storeOwnerTeamId).subscribe((result) => {
                 this.storeOwnerTeam = result.storeOwnerTeam;
-
+                this.storeId = result.storeOwnerTeam.storeId;
                 this.storeName = result.storeName;
                 this.userName = result.userName;
 
@@ -62,7 +64,7 @@ export class CreateOrEditStoreOwnerTeamModalComponent extends AppComponentBase i
 
     save(): void {
         this.saving = true;
-
+        this.storeOwnerTeam.storeId = this.storeId;
         this._storeOwnerTeamsServiceProxy
             .createOrEdit(this.storeOwnerTeam)
             .pipe(

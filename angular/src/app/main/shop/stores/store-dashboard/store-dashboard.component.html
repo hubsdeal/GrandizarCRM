@@ -46,14 +46,12 @@
                                 Sales Status
                             </a> -->
                             <div class="symbol-group symbol-hover">
-                                <div class="symbol symbol-35px symbol-circle">
-                                    <span class="symbol-label bg-warning text-inverse-warning fw-bold">A</span>
-                                </div>
-                                <div class="symbol symbol-35px symbol-circle">
-                                    <span class="symbol-label bg-primary text-inverse-primary fw-bold">S</span>
-                                </div>
-                                <div class="symbol symbol-35px symbol-circle">
-                                    <img alt="Pic" src="/assets/common/images/default-profile-picture.png">
+                                <div class="symbol symbol-35px symbol-circle" *ngFor="let record of allEmployee">
+                                    <span title="{{record.employeeName}}" *ngIf="!record.employeePicture"
+                                        class="symbol-label bg-warning text-inverse-warning fw-bold">
+                                        {{record.employeeName | nameSplit}}</span>
+                                    <img title="{{record.employeeName}}" *ngIf="record.employeePicture" alt="Pic"
+                                        src="{{record.employeePicture}}">
                                 </div>
                                 <a href="javascript:;" class="symbol symbol-35px symbol-circle"
                                     (click)="createStoreAccountTeam()">
@@ -70,7 +68,8 @@
                         <div class="d-flex flex-wrap flex-sm-nowrap mb-6">
                             <div
                                 class="d-flex flex-center flex-shrink-0 bg-light rounded w-100px h-100px w-lg-150px h-lg-150px me-7 mb-4">
-                                <img *ngIf="storeLogo!=null" class="dashboard_header_image" src="{{storeLogo}}" alt="image">
+                                <img *ngIf="storeLogo!=null" class="dashboard_header_image" src="{{storeLogo}}"
+                                    alt="image">
                                 <span *ngIf="storeLogo==null && store.name" class="dashboard_header_name">
                                     {{store.name | nameSplit}}
                                 </span>
@@ -92,7 +91,8 @@
                                                 class="badge badge-primary text-center ms-2" title="Primary Category">
                                                 {{primaryCategoryName}}
                                             </span>
-                                            <span class="badge badge-info text-white cursor-pointer ms-2" (click)="onConnectClick(storeId)">
+                                            <span class="badge badge-info text-white cursor-pointer ms-2"
+                                                (click)="onConnectClick(storeId)">
                                                 <i class="fas fa-comment-alt text-white me-1"></i> Connect
                                             </span>
                                         </div>
@@ -348,12 +348,12 @@
                                                     </label>
                                                     <p-dropdown [options]="storeTagSettingCategoryOptions"
                                                         [filter]="true" [virtualScroll]="true"
-                                                        (onChange)="onStoreTagSettingCategoryClick($event)"
                                                         placeholder="Select Store Category" [itemSize]="30"
-                                                        name="displayName" optionLabel="displayName" optionId="id"
-                                                        [(ngModel)]="selectedStoreTagSettingCategory"
-                                                        filterBy="displayName" required [style]="{ width: '100%' }"
-                                                        disbled></p-dropdown>
+                                                        name="typeName" optionLabel="displayName" optionValue="id"
+                                                        optionId="storeTagSettingCategoryId"
+                                                        [(ngModel)]="store.storeTagSettingCategoryId"
+                                                        filterBy="displayName" required
+                                                        [style]="{ width: '100%' }"></p-dropdown>
                                                 </div>
                                                 <!--end::Row-->
                                                 <div class="fv-row mb-7 fv-plugins-icon-container">
@@ -391,22 +391,13 @@
                                                             <label class="fs-6 fw-semibold form-label mt-3">
                                                                 <span>Country</span>
                                                             </label>
-                                                            <!-- <select class="form-control form-control-solid"
-                                                                [(ngModel)]="store.countryId" name="state"
-                                                                id="countryId">
-                                                                <option value="">Select Country</option>
-                                                                <option *ngFor="let item of countryOptions"
-                                                                    value="{{item.id}}">
-                                                                    {{item.displayName}}
-                                                                </option>
-                                                            </select> -->
                                                             <p-dropdown [options]="countryOptions" [filter]="true"
                                                                 [virtualScroll]="true"
                                                                 (onChange)="onCountryChange($event)"
                                                                 placeholder="Select Country" [itemSize]="30"
-                                                                name="displayName" optionLabel="displayName"
-                                                                optionId="id" [(ngModel)]="selectedCountry"
-                                                                filterBy="displayName"
+                                                                name="countryName" optionId="countryId"
+                                                                optionLabel="displayName" optionId="id" optionValue="id"
+                                                                [(ngModel)]="store.countryId" filterBy="displayName"
                                                                 [style]="{ width: '100%' }"></p-dropdown>
                                                         </div>
                                                     </div>
@@ -424,12 +415,10 @@
                                                                 </option>
                                                             </select> -->
                                                             <p-dropdown [options]="stateOptions" [filter]="true"
-                                                                [virtualScroll]="true"
-                                                                (onChange)="onStateChange($event)"
-                                                                placeholder="Select State" [itemSize]="30"
-                                                                name="displayName" optionLabel="displayName"
-                                                                optionId="id" [(ngModel)]="selectedState"
-                                                                filterBy="displayName"
+                                                                [virtualScroll]="true" placeholder="Select State"
+                                                                [itemSize]="30" name="stateName" optionId="stateId"
+                                                                optionLabel="displayName" optionId="id" optionValue="id"
+                                                                [(ngModel)]="store.stateId" filterBy="displayName"
                                                                 [style]="{ width: '100%' }"></p-dropdown>
                                                         </div>
                                                     </div>
@@ -599,7 +588,7 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="fv-row mb-7 fv-plugins-icon-container">
+                                                <!-- <div class="fv-row mb-7 fv-plugins-icon-container">
                                                     <div class="d-flex align-items-center">
                                                         <label
                                                             class="form-check form-check-custom form-check-inline form-check-solid">
@@ -608,6 +597,28 @@
                                                                 [(ngModel)]="store.isVerified">
                                                             <span class="fw-semibold ps-2 fs-6">Verified Store</span>
                                                         </label>
+                                                    </div>
+                                                </div> -->
+                                                <div class="row row-cols-1 row-cols-sm-2 rol-cols-md-1 row-cols-lg-2">
+                                                    <div class="col">
+                                                        <div class="fv-row mb-7 fv-plugins-icon-container">
+                                                            <label class="fs-6 fw-semibold form-label mt-3">
+                                                                <span>Tax ID or EIN Number</span>
+                                                            </label>
+                                                            <input type="text" class="form-control form-control-solid"
+                                                                id="taxId" name="taxId" [(ngModel)]="store.taxId">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="fv-row mb-7">
+                                                            <label class="fs-6 fw-semibold form-label mt-3">
+                                                                <span>Govt Registration or Rating Link </span>
+                                                            </label>
+                                                            <input type="text" class="form-control form-control-solid"
+                                                                name="publicRegistrationLink"
+                                                                [(ngModel)]="store.publicRegistrationLink"
+                                                                id="publicRegistrationLink">
+                                                        </div>
                                                     </div>
                                                 </div>
 
@@ -630,7 +641,7 @@
                                                     <p-editor id="description" name="description"
                                                         [(ngModel)]="store.description" ngDefaultControl
                                                         [style]="{ height: '300px' }"
-                                                        placeholder="'Type here...'"></p-editor>
+                                                        placeholder="Write brief information about your store"></p-editor>
                                                 </div>
                                                 <!--end::Input group-->
 
@@ -639,38 +650,18 @@
 
                                                 <div class="card mb-5">
                                                     <div class="card-body pt-10">
-                                                        <div
-                                                            class="notice d-flex bg-light-primary rounded border-primary border border-dashed mb-9 p-6">
-                                                            <span class="svg-icon svg-icon-2tx svg-icon-primary me-4">
-                                                                <svg width="24" height="24" viewBox="0 0 24 24"
-                                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                    <path opacity="0.3"
-                                                                        d="M22 19V17C22 16.4 21.6 16 21 16H8V3C8 2.4 7.6 2 7 2H5C4.4 2 4 2.4 4 3V19C4 19.6 4.4 20 5 20H21C21.6 20 22 19.6 22 19Z"
-                                                                        fill="currentColor"></path>
-                                                                    <path
-                                                                        d="M20 5V21C20 21.6 19.6 22 19 22H17C16.4 22 16 21.6 16 21V8H8V4H19C19.6 4 20 4.4 20 5ZM3 8H4V4H3C2.4 4 2 4.4 2 5V7C2 7.6 2.4 8 3 8Z"
-                                                                        fill="currentColor"></path>
-                                                                </svg>
-                                                            </span>
-                                                            <div class="d-flex flex-stack flex-grow-1">
-                                                                <div class="fw-semibold">
-                                                                    <div class="fs-6 text-gray-700">By connecting your
-                                                                        social
-                                                                        accounts, you can easily share your products and
-                                                                        services with your followers.
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
                                                         <!--end::Notice-->
                                                         <!--begin::Items-->
                                                         <div class="py-2">
                                                             <!--begin::Item-->
                                                             <div class="d-flex flex-stack">
                                                                 <div class="d-flex w-100 align-items-center">
-                                                                    <i class="fab fa-facebook-square fs-3x me-3"></i>
                                                                     <div class="w-100">
                                                                         <div class="d-flex flex-column">
+                                                                            <label
+                                                                                class="fs-6 fw-semibold form-label mt-3">
+                                                                                <span>Facebook</span>
+                                                                            </label>
                                                                             <input type="text" name="facebook"
                                                                                 class="form-control form-control-md form-control-solid"
                                                                                 placeholder="Facebook"
@@ -684,9 +675,12 @@
                                                             <!--begin::Item-->
                                                             <div class="d-flex flex-stack">
                                                                 <div class="d-flex w-100 align-items-center">
-                                                                    <i class="fab fa-instagram-square fs-3x me-3"></i>
                                                                     <div class="w-100">
                                                                         <div class="d-flex flex-column">
+                                                                            <label
+                                                                                class="fs-6 fw-semibold form-label mt-3">
+                                                                                <span>Instagram</span>
+                                                                            </label>
                                                                             <input type="text" name="instagram"
                                                                                 class="form-control form-control-md form-control-solid"
                                                                                 placeholder="Instagram"
@@ -708,6 +702,9 @@
                                                             <div class="d-flex w-100 align-items-center">
                                                                 <div class="w-100">
                                                                     <div class="d-flex flex-column">
+                                                                        <label class="fs-6 fw-semibold form-label mt-3">
+                                                                            <span>Meta Tag</span>
+                                                                        </label>
                                                                         <input type="text" name="metaTag"
                                                                             class="form-control form-control-md form-control-solid"
                                                                             placeholder="Meta Tag"
@@ -722,6 +719,9 @@
                                                             <div class="d-flex w-100 align-items-center">
                                                                 <div class="w-100">
                                                                     <div class="d-flex flex-column">
+                                                                        <label class="fs-6 fw-semibold form-label mt-3">
+                                                                            <span>Meta Description</span>
+                                                                        </label>
                                                                         <textarea name="metaDescription"
                                                                             id="metaDescription" cols="30" rows="10"
                                                                             class="form-control form-control-md form-control-solid"
@@ -881,28 +881,51 @@
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col-lg-12 mb-6">
-                                                    <a href="javascript:;" class="btn btn-primary btn-sm"><i
-                                                            class="fas fa-clock-four fs-4 me-2"></i>
-                                                        Open 24Hours</a>
-                                                    <a href="javascript:;" class="btn btn-secondary btn-sm"><i
-                                                            class="bi bi-chat-square-text-fill fs-4 me-2"></i>
-                                                        Accept Order only Business Hour</a>
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <div>
+                                                            <button href="javascript:;" class="btn btn-primary btn-sm"
+                                                                (click)="isOpen24Hours()"
+                                                                [class.active]="storeHour?.storeBusinessHour?.isOpen24Hours">
+                                                                <i class="fas fa-clock-four fs-4 me-2"></i>
+                                                                Open 24Hours
+                                                            </button>
+                                                            <button href="javascript:;"
+                                                                (click)="isAcceptInBusinessHours()"
+                                                                [class.active]="storeHour?.storeBusinessHour?.isAcceptOnlyBusinessHour"
+                                                                class="btn btn-secondary btn-sm"><i
+                                                                    class="bi bi-chat-square-text-fill fs-4 me-2"></i>
+                                                                Accept Order only Business Hour
+                                                            </button>
+                                                        </div>
+                                                        <a href="javascript:;"
+                                                            *ngIf="isGranted('Pages.StoreBusinessHours.Create')"
+                                                            (click)="createStoreBusinessHour()"
+                                                            class="btn btn-primary btn-sm"><i
+                                                                class="fas fa-edit fs-4"></i>
+                                                        </a>
+                                                    </div>
                                                 </div>
-                                                <div class="col-lg-6 mb-6">
-                                                    <div class="fv-row mb-0 fv-plugins-icon-container">
+                                                <!-- <div class="col-lg-6 mb-6">
+                                                    <div class="fv-row mb-0 fv-plugins-icon-container"
+                                                        *ngIf="storeHour.storeBusinessHour">
                                                         <label for="emailaddress"
                                                             class="form-label fs-6 fw-semibold mb-3">
                                                             Time Zone
                                                         </label>
-                                                        <select name="" id=""
+                                                        <select name="timezone" id="timezone"
+                                                            [(ngModel)]="storeHour.storeHour.masterTagId"
+                                                            (change)="onTimeZoneClick($event.target.value)"
                                                             class="form-control form-control-lg form-control-solid">
                                                             <option value="">Select Time Zone</option>
+                                                            <option *ngFor="let item of allTimeZone"
+                                                                value="{{item.tagId}}">
+                                                                {{item.tagName}}</option>
                                                         </select>
                                                     </div>
-                                                </div>
+                                                </div> -->
                                             </div>
 
-                                            <div class="row">
+                                            <div class="row" *ngIf="!storeHour?.storeBusinessHour?.isOpen24Hours">
                                                 <div class="col-xl-12">
                                                     <div class="kt-widget6 border-dashed border-gray-300 rounded">
                                                         <div class="kt-widget6__head">
@@ -917,38 +940,38 @@
                                                         <div class="kt-widget6__body">
                                                             <div class="kt-widget6__item">
                                                                 <span class="kt-font-bold">Monday</span>
-                                                                <span>4:00 PM</span>
-                                                                <span>2:00 PM</span>
+                                                                <span>{{storeHour?.storeBusinessHour?.mondayStartTime}}</span>
+                                                                <span>{{storeHour?.storeBusinessHour?.mondayEndTime}}</span>
                                                             </div>
                                                             <div class="kt-widget6__item">
                                                                 <span class="kt-font-bold">Tuesday</span>
-                                                                <span>4:00 PM</span>
-                                                                <span>3:00 PM</span>
+                                                                <span>{{storeHour?.storeBusinessHour?.tuesdayStartTime}}</span>
+                                                                <span>{{storeHour?.storeBusinessHour?.tuesdayEndTime}}</span>
                                                             </div>
                                                             <div class="kt-widget6__item">
                                                                 <span class="kt-font-bold">Wednesday</span>
-                                                                <span>4:00 PM</span>
-                                                                <span>4:00 PM</span>
+                                                                <span>{{storeHour?.storeBusinessHour?.wednesdayStartTime}}</span>
+                                                                <span>{{storeHour?.storeBusinessHour?.wednesdayEndTime}}</span>
                                                             </div>
                                                             <div class="kt-widget6__item">
                                                                 <span class="kt-font-bold">Thursday</span>
-                                                                <span>4:00 PM</span>
-                                                                <span>5:00 PM</span>
+                                                                <span>{{storeHour?.storeBusinessHour?.thursdayStartTime}}</span>
+                                                                <span>{{storeHour?.storeBusinessHour?.thursdayEndTime}}</span>
                                                             </div>
                                                             <div class="kt-widget6__item">
                                                                 <span class="kt-font-bold">Friday</span>
-                                                                <span>4:00 PM</span>
-                                                                <span>6:00 PM</span>
+                                                                <span>{{storeHour?.storeBusinessHour?.fridayStartTime}}</span>
+                                                                <span>{{storeHour?.storeBusinessHour?.fridayEndTime}}</span>
                                                             </div>
                                                             <div class="kt-widget6__item">
                                                                 <span class="kt-font-bold">Saturday</span>
-                                                                <span>4:00 PM</span>
-                                                                <span>7:00 PM</span>
+                                                                <span>{{storeHour?.storeBusinessHour?.saturdayStartTime}}</span>
+                                                                <span>{{storeHour?.storeBusinessHour?.saturdayEndTime}}</span>
                                                             </div>
                                                             <div class="kt-widget6__item border-0">
                                                                 <span class="kt-font-bold">Sunday</span>
-                                                                <span>4:00 PM</span>
-                                                                <span>8:00 PM</span>
+                                                                <span>{{storeHour?.storeBusinessHour?.sundayStartTime}}</span>
+                                                                <span>{{storeHour?.storeBusinessHour?.sundayEndTime}}</span>
                                                             </div>
                                                         </div>
 
@@ -972,484 +995,7 @@
                                     </h2>
                                     <div id="kt_accordion_1_body_team" class="accordion-collapse collapse"
                                         aria-labelledby="kt_accordion_1_header_1" data-bs-parent="#kt_accordion_1">
-                                        <div class="w-100">
-                                            <!--begin::Card header-->
-                                            <div class="card-header cursor-pointer">
-                                                <!--begin::Card title-->
-                                                <div class="card-title m-0">
-                                                    <!-- <h3 class="fw-bold m-0">Store Locations</h3> -->
-                                                </div>
-                                                <!--end::Card title-->
-                                                <!--begin::Action-->
-                                                <a href="#javascript:;"
-                                                    class="btn btn-sm btn-primary align-self-center">
-                                                    <i class="fas fa-plus-circle"></i> Add
-                                                </a>
-                                                <!--end::Action-->
-                                            </div>
-                                            <!--begin::Card header-->
-                                            <!--begin::Card body-->
-                                            <div class="card-body p-9">
-                                                <div class="row">
-                                                    <div class="col-md-6 col-xxl-4 mb-4">
-                                                        <!--begin::Card-->
-                                                        <div class="card shadow-sm rounded">
-                                                            <!--begin::Card body-->
-                                                            <div
-                                                                class="card-body d-flex flex-center flex-column py-9 px-5">
-                                                                <!--begin::Avatar-->
-                                                                <div class="symbol symbol-65px symbol-circle mb-5">
-                                                                    <img src="assets/media//avatars/300-1.jpg"
-                                                                        alt="image">
-                                                                </div>
-                                                                <!--end::Avatar-->
-                                                                <!--begin::Name-->
-                                                                <a href="#"
-                                                                    class="fs-4 text-gray-800 text-hover-primary fw-bold mb-0">Kitona
-                                                                    Johnson</a>
-                                                                <!--end::Name-->
-                                                                <!--begin::Position-->
-                                                                <div class="fw-semibold text-gray-400 mb-6">Web Designer
-                                                                    at Nextop Ltd.</div>
-                                                                <!--end::Position-->
-                                                                <!--begin::Info-->
-                                                                <div class="d-flex flex-center flex-wrap mb-5">
-                                                                    <!--begin::Stats-->
-                                                                    <div
-                                                                        class="border border-dashed rounded min-w-90px py-3 px-4 mx-2 mb-3">
-                                                                        <div class="fs-6 fw-bold text-gray-700">9015458
-                                                                        </div>
-                                                                        <div class="fw-semibold text-gray-400">Mobile
-                                                                        </div>
-                                                                    </div>
-                                                                    <!--end::Stats-->
-                                                                    <!--begin::Stats-->
-                                                                    <div
-                                                                        class="border border-dashed rounded min-w-90px py-3 px-4 mx-2 mb-3">
-                                                                        <div class="fs-6 fw-bold text-gray-700">
-                                                                            rashed@gmail.com
-                                                                        </div>
-                                                                        <div class="fw-semibold text-gray-400">Email
-                                                                        </div>
-                                                                    </div>
-                                                                    <!--end::Stats-->
-                                                                </div>
-                                                                <!--end::Info-->
-                                                                <!--begin::Follow-->
-                                                                <button class="btn btn-sm btn-light-primary"
-                                                                    data-kt-follow-btn="true">
-                                                                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr012.svg-->
-                                                                    <span class="svg-icon following svg-icon-3">
-                                                                        <svg width="24" height="24" viewBox="0 0 24 24"
-                                                                            fill="none"
-                                                                            xmlns="http://www.w3.org/2000/svg">
-                                                                            <path opacity="0.3"
-                                                                                d="M10 18C9.7 18 9.5 17.9 9.3 17.7L2.3 10.7C1.9 10.3 1.9 9.7 2.3 9.3C2.7 8.9 3.29999 8.9 3.69999 9.3L10.7 16.3C11.1 16.7 11.1 17.3 10.7 17.7C10.5 17.9 10.3 18 10 18Z"
-                                                                                fill="currentColor"></path>
-                                                                            <path
-                                                                                d="M10 18C9.7 18 9.5 17.9 9.3 17.7C8.9 17.3 8.9 16.7 9.3 16.3L20.3 5.3C20.7 4.9 21.3 4.9 21.7 5.3C22.1 5.7 22.1 6.30002 21.7 6.70002L10.7 17.7C10.5 17.9 10.3 18 10 18Z"
-                                                                                fill="currentColor"></path>
-                                                                        </svg>
-                                                                    </span>
-                                                                    <!--end::Svg Icon-->
-                                                                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
-                                                                    <span class="svg-icon follow svg-icon-3 d-none">
-                                                                        <svg width="24" height="24" viewBox="0 0 24 24"
-                                                                            fill="none"
-                                                                            xmlns="http://www.w3.org/2000/svg">
-                                                                            <rect opacity="0.5" x="11.364" y="20.364"
-                                                                                width="16" height="2" rx="1"
-                                                                                transform="rotate(-90 11.364 20.364)"
-                                                                                fill="currentColor"></rect>
-                                                                            <rect x="4.36396" y="11.364" width="16"
-                                                                                height="2" rx="1" fill="currentColor">
-                                                                            </rect>
-                                                                        </svg>
-                                                                    </span>
-                                                                    <!--end::Svg Icon-->
-                                                                    <!--begin::Indicator label-->
-                                                                    <span class="indicator-label">Connect</span>
-                                                                    <!--end::Indicator label-->
-                                                                    <!--begin::Indicator progress-->
-                                                                    <span class="indicator-progress">Please wait...
-                                                                        <span
-                                                                            class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-                                                                    <!--end::Indicator progress-->
-                                                                </button>
-                                                                <!--end::Follow-->
-                                                            </div>
-                                                            <!--begin::Card body-->
-                                                        </div>
-                                                        <!--begin::Card-->
-                                                    </div>
-                                                    <div class="col-md-6 col-xxl-4 mb-4">
-                                                        <!--begin::Card-->
-                                                        <div class="card shadow-sm rounded">
-                                                            <!--begin::Card body-->
-                                                            <div
-                                                                class="card-body d-flex flex-center flex-column py-9 px-5">
-                                                                <!--begin::Avatar-->
-                                                                <div class="symbol symbol-65px symbol-circle mb-5">
-                                                                    <img src="assets/media//avatars/300-1.jpg"
-                                                                        alt="image">
-                                                                </div>
-                                                                <!--end::Avatar-->
-                                                                <!--begin::Name-->
-                                                                <a href="#"
-                                                                    class="fs-4 text-gray-800 text-hover-primary fw-bold mb-0">Kitona
-                                                                    Johnson</a>
-                                                                <!--end::Name-->
-                                                                <!--begin::Position-->
-                                                                <div class="fw-semibold text-gray-400 mb-6">Web Designer
-                                                                    at Nextop Ltd.</div>
-                                                                <!--end::Position-->
-                                                                <!--begin::Info-->
-                                                                <div class="d-flex flex-center flex-wrap mb-5">
-                                                                    <!--begin::Stats-->
-                                                                    <div
-                                                                        class="border border-dashed rounded min-w-90px py-3 px-4 mx-2 mb-3">
-                                                                        <div class="fs-6 fw-bold text-gray-700">9015458
-                                                                        </div>
-                                                                        <div class="fw-semibold text-gray-400">Mobile
-                                                                        </div>
-                                                                    </div>
-                                                                    <!--end::Stats-->
-                                                                    <!--begin::Stats-->
-                                                                    <div
-                                                                        class="border border-dashed rounded min-w-90px py-3 px-4 mx-2 mb-3">
-                                                                        <div class="fs-6 fw-bold text-gray-700">
-                                                                            rashed@gmail.com
-                                                                        </div>
-                                                                        <div class="fw-semibold text-gray-400">Email
-                                                                        </div>
-                                                                    </div>
-                                                                    <!--end::Stats-->
-                                                                </div>
-                                                                <!--end::Info-->
-                                                                <!--begin::Follow-->
-                                                                <button class="btn btn-sm btn-light-primary"
-                                                                    data-kt-follow-btn="true">
-                                                                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr012.svg-->
-                                                                    <span class="svg-icon following svg-icon-3">
-                                                                        <svg width="24" height="24" viewBox="0 0 24 24"
-                                                                            fill="none"
-                                                                            xmlns="http://www.w3.org/2000/svg">
-                                                                            <path opacity="0.3"
-                                                                                d="M10 18C9.7 18 9.5 17.9 9.3 17.7L2.3 10.7C1.9 10.3 1.9 9.7 2.3 9.3C2.7 8.9 3.29999 8.9 3.69999 9.3L10.7 16.3C11.1 16.7 11.1 17.3 10.7 17.7C10.5 17.9 10.3 18 10 18Z"
-                                                                                fill="currentColor"></path>
-                                                                            <path
-                                                                                d="M10 18C9.7 18 9.5 17.9 9.3 17.7C8.9 17.3 8.9 16.7 9.3 16.3L20.3 5.3C20.7 4.9 21.3 4.9 21.7 5.3C22.1 5.7 22.1 6.30002 21.7 6.70002L10.7 17.7C10.5 17.9 10.3 18 10 18Z"
-                                                                                fill="currentColor"></path>
-                                                                        </svg>
-                                                                    </span>
-                                                                    <!--end::Svg Icon-->
-                                                                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
-                                                                    <span class="svg-icon follow svg-icon-3 d-none">
-                                                                        <svg width="24" height="24" viewBox="0 0 24 24"
-                                                                            fill="none"
-                                                                            xmlns="http://www.w3.org/2000/svg">
-                                                                            <rect opacity="0.5" x="11.364" y="20.364"
-                                                                                width="16" height="2" rx="1"
-                                                                                transform="rotate(-90 11.364 20.364)"
-                                                                                fill="currentColor"></rect>
-                                                                            <rect x="4.36396" y="11.364" width="16"
-                                                                                height="2" rx="1" fill="currentColor">
-                                                                            </rect>
-                                                                        </svg>
-                                                                    </span>
-                                                                    <!--end::Svg Icon-->
-                                                                    <!--begin::Indicator label-->
-                                                                    <span class="indicator-label">Connect</span>
-                                                                    <!--end::Indicator label-->
-                                                                    <!--begin::Indicator progress-->
-                                                                    <span class="indicator-progress">Please wait...
-                                                                        <span
-                                                                            class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-                                                                    <!--end::Indicator progress-->
-                                                                </button>
-                                                                <!--end::Follow-->
-                                                            </div>
-                                                            <!--begin::Card body-->
-                                                        </div>
-                                                        <!--begin::Card-->
-                                                    </div>
-                                                    <div class="col-md-6 col-xxl-4 mb-4">
-                                                        <!--begin::Card-->
-                                                        <div class="card shadow-sm rounded">
-                                                            <!--begin::Card body-->
-                                                            <div
-                                                                class="card-body d-flex flex-center flex-column py-9 px-5">
-                                                                <!--begin::Avatar-->
-                                                                <div class="symbol symbol-65px symbol-circle mb-5">
-                                                                    <img src="assets/media//avatars/300-1.jpg"
-                                                                        alt="image">
-                                                                </div>
-                                                                <!--end::Avatar-->
-                                                                <!--begin::Name-->
-                                                                <a href="#"
-                                                                    class="fs-4 text-gray-800 text-hover-primary fw-bold mb-0">Kitona
-                                                                    Johnson</a>
-                                                                <!--end::Name-->
-                                                                <!--begin::Position-->
-                                                                <div class="fw-semibold text-gray-400 mb-6">Web Designer
-                                                                    at Nextop Ltd.</div>
-                                                                <!--end::Position-->
-                                                                <!--begin::Info-->
-                                                                <div class="d-flex flex-center flex-wrap mb-5">
-                                                                    <!--begin::Stats-->
-                                                                    <div
-                                                                        class="border border-dashed rounded min-w-90px py-3 px-4 mx-2 mb-3">
-                                                                        <div class="fs-6 fw-bold text-gray-700">9015458
-                                                                        </div>
-                                                                        <div class="fw-semibold text-gray-400">Mobile
-                                                                        </div>
-                                                                    </div>
-                                                                    <!--end::Stats-->
-                                                                    <!--begin::Stats-->
-                                                                    <div
-                                                                        class="border border-dashed rounded min-w-90px py-3 px-4 mx-2 mb-3">
-                                                                        <div class="fs-6 fw-bold text-gray-700">
-                                                                            rashed@gmail.com
-                                                                        </div>
-                                                                        <div class="fw-semibold text-gray-400">Email
-                                                                        </div>
-                                                                    </div>
-                                                                    <!--end::Stats-->
-                                                                </div>
-                                                                <!--end::Info-->
-                                                                <!--begin::Follow-->
-                                                                <button class="btn btn-sm btn-light-primary"
-                                                                    data-kt-follow-btn="true">
-                                                                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr012.svg-->
-                                                                    <span class="svg-icon following svg-icon-3">
-                                                                        <svg width="24" height="24" viewBox="0 0 24 24"
-                                                                            fill="none"
-                                                                            xmlns="http://www.w3.org/2000/svg">
-                                                                            <path opacity="0.3"
-                                                                                d="M10 18C9.7 18 9.5 17.9 9.3 17.7L2.3 10.7C1.9 10.3 1.9 9.7 2.3 9.3C2.7 8.9 3.29999 8.9 3.69999 9.3L10.7 16.3C11.1 16.7 11.1 17.3 10.7 17.7C10.5 17.9 10.3 18 10 18Z"
-                                                                                fill="currentColor"></path>
-                                                                            <path
-                                                                                d="M10 18C9.7 18 9.5 17.9 9.3 17.7C8.9 17.3 8.9 16.7 9.3 16.3L20.3 5.3C20.7 4.9 21.3 4.9 21.7 5.3C22.1 5.7 22.1 6.30002 21.7 6.70002L10.7 17.7C10.5 17.9 10.3 18 10 18Z"
-                                                                                fill="currentColor"></path>
-                                                                        </svg>
-                                                                    </span>
-                                                                    <!--end::Svg Icon-->
-                                                                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
-                                                                    <span class="svg-icon follow svg-icon-3 d-none">
-                                                                        <svg width="24" height="24" viewBox="0 0 24 24"
-                                                                            fill="none"
-                                                                            xmlns="http://www.w3.org/2000/svg">
-                                                                            <rect opacity="0.5" x="11.364" y="20.364"
-                                                                                width="16" height="2" rx="1"
-                                                                                transform="rotate(-90 11.364 20.364)"
-                                                                                fill="currentColor"></rect>
-                                                                            <rect x="4.36396" y="11.364" width="16"
-                                                                                height="2" rx="1" fill="currentColor">
-                                                                            </rect>
-                                                                        </svg>
-                                                                    </span>
-                                                                    <!--end::Svg Icon-->
-                                                                    <!--begin::Indicator label-->
-                                                                    <span class="indicator-label">Connect</span>
-                                                                    <!--end::Indicator label-->
-                                                                    <!--begin::Indicator progress-->
-                                                                    <span class="indicator-progress">Please wait...
-                                                                        <span
-                                                                            class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-                                                                    <!--end::Indicator progress-->
-                                                                </button>
-                                                                <!--end::Follow-->
-                                                            </div>
-                                                            <!--begin::Card body-->
-                                                        </div>
-                                                        <!--begin::Card-->
-                                                    </div>
-                                                    <div class="col-md-6 col-xxl-4 mb-4">
-                                                        <!--begin::Card-->
-                                                        <div class="card shadow-sm rounded">
-                                                            <!--begin::Card body-->
-                                                            <div
-                                                                class="card-body d-flex flex-center flex-column py-9 px-5">
-                                                                <!--begin::Avatar-->
-                                                                <div class="symbol symbol-65px symbol-circle mb-5">
-                                                                    <img src="assets/media//avatars/300-1.jpg"
-                                                                        alt="image">
-                                                                </div>
-                                                                <!--end::Avatar-->
-                                                                <!--begin::Name-->
-                                                                <a href="#"
-                                                                    class="fs-4 text-gray-800 text-hover-primary fw-bold mb-0">Kitona
-                                                                    Johnson</a>
-                                                                <!--end::Name-->
-                                                                <!--begin::Position-->
-                                                                <div class="fw-semibold text-gray-400 mb-6">Web Designer
-                                                                    at Nextop Ltd.</div>
-                                                                <!--end::Position-->
-                                                                <!--begin::Info-->
-                                                                <div class="d-flex flex-center flex-wrap mb-5">
-                                                                    <!--begin::Stats-->
-                                                                    <div
-                                                                        class="border border-dashed rounded min-w-90px py-3 px-4 mx-2 mb-3">
-                                                                        <div class="fs-6 fw-bold text-gray-700">9015458
-                                                                        </div>
-                                                                        <div class="fw-semibold text-gray-400">Mobile
-                                                                        </div>
-                                                                    </div>
-                                                                    <!--end::Stats-->
-                                                                    <!--begin::Stats-->
-                                                                    <div
-                                                                        class="border border-dashed rounded min-w-90px py-3 px-4 mx-2 mb-3">
-                                                                        <div class="fs-6 fw-bold text-gray-700">
-                                                                            rashed@gmail.com
-                                                                        </div>
-                                                                        <div class="fw-semibold text-gray-400">Email
-                                                                        </div>
-                                                                    </div>
-                                                                    <!--end::Stats-->
-                                                                </div>
-                                                                <!--end::Info-->
-                                                                <!--begin::Follow-->
-                                                                <button class="btn btn-sm btn-light-primary"
-                                                                    data-kt-follow-btn="true">
-                                                                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr012.svg-->
-                                                                    <span class="svg-icon following svg-icon-3">
-                                                                        <svg width="24" height="24" viewBox="0 0 24 24"
-                                                                            fill="none"
-                                                                            xmlns="http://www.w3.org/2000/svg">
-                                                                            <path opacity="0.3"
-                                                                                d="M10 18C9.7 18 9.5 17.9 9.3 17.7L2.3 10.7C1.9 10.3 1.9 9.7 2.3 9.3C2.7 8.9 3.29999 8.9 3.69999 9.3L10.7 16.3C11.1 16.7 11.1 17.3 10.7 17.7C10.5 17.9 10.3 18 10 18Z"
-                                                                                fill="currentColor"></path>
-                                                                            <path
-                                                                                d="M10 18C9.7 18 9.5 17.9 9.3 17.7C8.9 17.3 8.9 16.7 9.3 16.3L20.3 5.3C20.7 4.9 21.3 4.9 21.7 5.3C22.1 5.7 22.1 6.30002 21.7 6.70002L10.7 17.7C10.5 17.9 10.3 18 10 18Z"
-                                                                                fill="currentColor"></path>
-                                                                        </svg>
-                                                                    </span>
-                                                                    <!--end::Svg Icon-->
-                                                                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
-                                                                    <span class="svg-icon follow svg-icon-3 d-none">
-                                                                        <svg width="24" height="24" viewBox="0 0 24 24"
-                                                                            fill="none"
-                                                                            xmlns="http://www.w3.org/2000/svg">
-                                                                            <rect opacity="0.5" x="11.364" y="20.364"
-                                                                                width="16" height="2" rx="1"
-                                                                                transform="rotate(-90 11.364 20.364)"
-                                                                                fill="currentColor"></rect>
-                                                                            <rect x="4.36396" y="11.364" width="16"
-                                                                                height="2" rx="1" fill="currentColor">
-                                                                            </rect>
-                                                                        </svg>
-                                                                    </span>
-                                                                    <!--end::Svg Icon-->
-                                                                    <!--begin::Indicator label-->
-                                                                    <span class="indicator-label">Connect</span>
-                                                                    <!--end::Indicator label-->
-                                                                    <!--begin::Indicator progress-->
-                                                                    <span class="indicator-progress">Please wait...
-                                                                        <span
-                                                                            class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-                                                                    <!--end::Indicator progress-->
-                                                                </button>
-                                                                <!--end::Follow-->
-                                                            </div>
-                                                            <!--begin::Card body-->
-                                                        </div>
-                                                        <!--begin::Card-->
-                                                    </div>
-                                                    <div class="col-md-6 col-xxl-4 mb-4">
-                                                        <!--begin::Card-->
-                                                        <div class="card shadow-sm rounded">
-                                                            <!--begin::Card body-->
-                                                            <div
-                                                                class="card-body d-flex flex-center flex-column py-9 px-5">
-                                                                <!--begin::Avatar-->
-                                                                <div class="symbol symbol-65px symbol-circle mb-5">
-                                                                    <img src="assets/media//avatars/300-1.jpg"
-                                                                        alt="image">
-                                                                </div>
-                                                                <!--end::Avatar-->
-                                                                <!--begin::Name-->
-                                                                <a href="#"
-                                                                    class="fs-4 text-gray-800 text-hover-primary fw-bold mb-0">Kitona
-                                                                    Johnson</a>
-                                                                <!--end::Name-->
-                                                                <!--begin::Position-->
-                                                                <div class="fw-semibold text-gray-400 mb-6">Web Designer
-                                                                    at Nextop Ltd.</div>
-                                                                <!--end::Position-->
-                                                                <!--begin::Info-->
-                                                                <div class="d-flex flex-center flex-wrap mb-5">
-                                                                    <!--begin::Stats-->
-                                                                    <div
-                                                                        class="border border-dashed rounded min-w-90px py-3 px-4 mx-2 mb-3">
-                                                                        <div class="fs-6 fw-bold text-gray-700">9015458
-                                                                        </div>
-                                                                        <div class="fw-semibold text-gray-400">Mobile
-                                                                        </div>
-                                                                    </div>
-                                                                    <!--end::Stats-->
-                                                                    <!--begin::Stats-->
-                                                                    <div
-                                                                        class="border border-dashed rounded min-w-90px py-3 px-4 mx-2 mb-3">
-                                                                        <div class="fs-6 fw-bold text-gray-700">
-                                                                            rashed@gmail.com
-                                                                        </div>
-                                                                        <div class="fw-semibold text-gray-400">Email
-                                                                        </div>
-                                                                    </div>
-                                                                    <!--end::Stats-->
-                                                                </div>
-                                                                <!--end::Info-->
-                                                                <!--begin::Follow-->
-                                                                <button class="btn btn-sm btn-light-primary"
-                                                                    data-kt-follow-btn="true">
-                                                                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr012.svg-->
-                                                                    <span class="svg-icon following svg-icon-3">
-                                                                        <svg width="24" height="24" viewBox="0 0 24 24"
-                                                                            fill="none"
-                                                                            xmlns="http://www.w3.org/2000/svg">
-                                                                            <path opacity="0.3"
-                                                                                d="M10 18C9.7 18 9.5 17.9 9.3 17.7L2.3 10.7C1.9 10.3 1.9 9.7 2.3 9.3C2.7 8.9 3.29999 8.9 3.69999 9.3L10.7 16.3C11.1 16.7 11.1 17.3 10.7 17.7C10.5 17.9 10.3 18 10 18Z"
-                                                                                fill="currentColor"></path>
-                                                                            <path
-                                                                                d="M10 18C9.7 18 9.5 17.9 9.3 17.7C8.9 17.3 8.9 16.7 9.3 16.3L20.3 5.3C20.7 4.9 21.3 4.9 21.7 5.3C22.1 5.7 22.1 6.30002 21.7 6.70002L10.7 17.7C10.5 17.9 10.3 18 10 18Z"
-                                                                                fill="currentColor"></path>
-                                                                        </svg>
-                                                                    </span>
-                                                                    <!--end::Svg Icon-->
-                                                                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
-                                                                    <span class="svg-icon follow svg-icon-3 d-none">
-                                                                        <svg width="24" height="24" viewBox="0 0 24 24"
-                                                                            fill="none"
-                                                                            xmlns="http://www.w3.org/2000/svg">
-                                                                            <rect opacity="0.5" x="11.364" y="20.364"
-                                                                                width="16" height="2" rx="1"
-                                                                                transform="rotate(-90 11.364 20.364)"
-                                                                                fill="currentColor"></rect>
-                                                                            <rect x="4.36396" y="11.364" width="16"
-                                                                                height="2" rx="1" fill="currentColor">
-                                                                            </rect>
-                                                                        </svg>
-                                                                    </span>
-                                                                    <!--end::Svg Icon-->
-                                                                    <!--begin::Indicator label-->
-                                                                    <span class="indicator-label">Connect</span>
-                                                                    <!--end::Indicator label-->
-                                                                    <!--begin::Indicator progress-->
-                                                                    <span class="indicator-progress">Please wait...
-                                                                        <span
-                                                                            class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-                                                                    <!--end::Indicator progress-->
-                                                                </button>
-                                                                <!--end::Follow-->
-                                                            </div>
-                                                            <!--begin::Card body-->
-                                                        </div>
-                                                        <!--begin::Card-->
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--end::Card body-->
-                                        </div>
+                                        <app-storeOwnerTeams *ngIf="store" [storeId]="store.id"></app-storeOwnerTeams>
                                     </div>
                                 </div>
                             </div>
@@ -2726,8 +2272,7 @@
                                                                         <!--begin::User-->
                                                                         <div class="d-grid flex-column">
                                                                             <!--begin::Name-->
-                                                                            <div
-                                                                                class="d-flex align-items-center mb-2">
+                                                                            <div class="d-flex align-items-center mb-2">
                                                                                 <a href="javascript:;"
                                                                                     class="text-gray-900 text-hover-primary fs-4 fw-bold me-1">Task
                                                                                     work items</a>
@@ -2774,7 +2319,7 @@
                                                                                     45mins
                                                                                 </a>
                                                                             </div>
-        
+
                                                                             <div
                                                                                 class="d-flex flex-wrap fw-semibold fs-6">
                                                                                 <a href="javascript:;"
@@ -2784,7 +2329,7 @@
                                                                                     45mins
                                                                                 </a>
                                                                             </div>
-        
+
                                                                             <div class="symbol-group symbol-hover">
                                                                                 <div
                                                                                     class="symbol symbol-35px symbol-circle">
@@ -2798,7 +2343,7 @@
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-        
+
                                                                         <!--begin::Progress-->
                                                                         <div
                                                                             class="d-flex align-items-center flex-column mt-5">
@@ -2807,16 +2352,13 @@
                                                                                 <span
                                                                                     class="fw-semibold fs-6 text-gray-400">
                                                                                     Compleation Percentage</span>
-                                                                                <span
-                                                                                    class="fw-bold fs-6">50%</span>
+                                                                                <span class="fw-bold fs-6">50%</span>
                                                                             </div>
-                                                                            <div
-                                                                                class="h-5px mx-3 w-100 bg-light mb-3">
+                                                                            <div class="h-5px mx-3 w-100 bg-light mb-3">
                                                                                 <div class="bg-success rounded h-5px"
                                                                                     role="progressbar"
                                                                                     style="width: 50%;"
-                                                                                    aria-valuenow="50"
-                                                                                    aria-valuemin="0"
+                                                                                    aria-valuenow="50" aria-valuemin="0"
                                                                                     aria-valuemax="100"></div>
                                                                             </div>
                                                                         </div>
@@ -2828,7 +2370,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-        
+
                                                     <div class="card mb-9">
                                                         <div class="card-body">
                                                             <div class="d-flex flex-wrap flex-sm-nowrap">
@@ -2840,8 +2382,7 @@
                                                                         <!--begin::User-->
                                                                         <div class="d-grid flex-column">
                                                                             <!--begin::Name-->
-                                                                            <div
-                                                                                class="d-flex align-items-center mb-2">
+                                                                            <div class="d-flex align-items-center mb-2">
                                                                                 <a href="javascript:;"
                                                                                     class="text-gray-900 text-hover-primary fs-4 fw-bold me-1">Task
                                                                                     work items</a>
@@ -2888,7 +2429,7 @@
                                                                                     45mins
                                                                                 </a>
                                                                             </div>
-        
+
                                                                             <div
                                                                                 class="d-flex flex-wrap fw-semibold fs-6">
                                                                                 <a href="javascript:;"
@@ -2898,7 +2439,7 @@
                                                                                     45mins
                                                                                 </a>
                                                                             </div>
-        
+
                                                                             <div class="symbol-group symbol-hover">
                                                                                 <div
                                                                                     class="symbol symbol-35px symbol-circle">
@@ -2912,7 +2453,7 @@
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-        
+
                                                                         <!--begin::Progress-->
                                                                         <div
                                                                             class="d-flex align-items-center flex-column mt-5">
@@ -2921,16 +2462,13 @@
                                                                                 <span
                                                                                     class="fw-semibold fs-6 text-gray-400">
                                                                                     Compleation Percentage</span>
-                                                                                <span
-                                                                                    class="fw-bold fs-6">50%</span>
+                                                                                <span class="fw-bold fs-6">50%</span>
                                                                             </div>
-                                                                            <div
-                                                                                class="h-5px mx-3 w-100 bg-light mb-3">
+                                                                            <div class="h-5px mx-3 w-100 bg-light mb-3">
                                                                                 <div class="bg-success rounded h-5px"
                                                                                     role="progressbar"
                                                                                     style="width: 50%;"
-                                                                                    aria-valuenow="50"
-                                                                                    aria-valuemin="0"
+                                                                                    aria-valuenow="50" aria-valuemin="0"
                                                                                     aria-valuemax="100"></div>
                                                                             </div>
                                                                         </div>
@@ -2942,7 +2480,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-        
+
                                                     <div class="card mb-9">
                                                         <div class="card-body">
                                                             <div class="d-flex flex-wrap flex-sm-nowrap">
@@ -2954,8 +2492,7 @@
                                                                         <!--begin::User-->
                                                                         <div class="d-grid flex-column">
                                                                             <!--begin::Name-->
-                                                                            <div
-                                                                                class="d-flex align-items-center mb-2">
+                                                                            <div class="d-flex align-items-center mb-2">
                                                                                 <a href="javascript:;"
                                                                                     class="text-gray-900 text-hover-primary fs-4 fw-bold me-1">Task
                                                                                     work items</a>
@@ -3002,7 +2539,7 @@
                                                                                     45mins
                                                                                 </a>
                                                                             </div>
-        
+
                                                                             <div
                                                                                 class="d-flex flex-wrap fw-semibold fs-6">
                                                                                 <a href="javascript:;"
@@ -3012,7 +2549,7 @@
                                                                                     45mins
                                                                                 </a>
                                                                             </div>
-        
+
                                                                             <div class="symbol-group symbol-hover">
                                                                                 <div
                                                                                     class="symbol symbol-35px symbol-circle">
@@ -3026,7 +2563,7 @@
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-        
+
                                                                         <!--begin::Progress-->
                                                                         <div
                                                                             class="d-flex align-items-center flex-column mt-5">
@@ -3035,16 +2572,13 @@
                                                                                 <span
                                                                                     class="fw-semibold fs-6 text-gray-400">
                                                                                     Compleation Percentage</span>
-                                                                                <span
-                                                                                    class="fw-bold fs-6">50%</span>
+                                                                                <span class="fw-bold fs-6">50%</span>
                                                                             </div>
-                                                                            <div
-                                                                                class="h-5px mx-3 w-100 bg-light mb-3">
+                                                                            <div class="h-5px mx-3 w-100 bg-light mb-3">
                                                                                 <div class="bg-success rounded h-5px"
                                                                                     role="progressbar"
                                                                                     style="width: 50%;"
-                                                                                    aria-valuenow="50"
-                                                                                    aria-valuemin="0"
+                                                                                    aria-valuenow="50" aria-valuemin="0"
                                                                                     aria-valuemax="100"></div>
                                                                             </div>
                                                                         </div>
@@ -3056,7 +2590,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-        
+
                                                     <div class="card mb-0">
                                                         <div class="card-body">
                                                             <div class="d-flex flex-wrap flex-sm-nowrap">
@@ -3068,8 +2602,7 @@
                                                                         <!--begin::User-->
                                                                         <div class="d-grid flex-column">
                                                                             <!--begin::Name-->
-                                                                            <div
-                                                                                class="d-flex align-items-center mb-2">
+                                                                            <div class="d-flex align-items-center mb-2">
                                                                                 <a href="javascript:;"
                                                                                     class="text-gray-900 text-hover-primary fs-4 fw-bold me-1">Task
                                                                                     work items</a>
@@ -3116,7 +2649,7 @@
                                                                                     45mins
                                                                                 </a>
                                                                             </div>
-        
+
                                                                             <div
                                                                                 class="d-flex flex-wrap fw-semibold fs-6">
                                                                                 <a href="javascript:;"
@@ -3126,7 +2659,7 @@
                                                                                     45mins
                                                                                 </a>
                                                                             </div>
-        
+
                                                                             <div class="symbol-group symbol-hover">
                                                                                 <div
                                                                                     class="symbol symbol-35px symbol-circle">
@@ -3140,7 +2673,7 @@
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-        
+
                                                                         <!--begin::Progress-->
                                                                         <div
                                                                             class="d-flex align-items-center flex-column mt-5">
@@ -3149,16 +2682,13 @@
                                                                                 <span
                                                                                     class="fw-semibold fs-6 text-gray-400">
                                                                                     Compleation Percentage</span>
-                                                                                <span
-                                                                                    class="fw-bold fs-6">50%</span>
+                                                                                <span class="fw-bold fs-6">50%</span>
                                                                             </div>
-                                                                            <div
-                                                                                class="h-5px mx-3 w-100 bg-light mb-3">
+                                                                            <div class="h-5px mx-3 w-100 bg-light mb-3">
                                                                                 <div class="bg-success rounded h-5px"
                                                                                     role="progressbar"
                                                                                     style="width: 50%;"
-                                                                                    aria-valuenow="50"
-                                                                                    aria-valuemin="0"
+                                                                                    aria-valuenow="50" aria-valuemin="0"
                                                                                     aria-valuemax="100"></div>
                                                                             </div>
                                                                         </div>
@@ -3173,14 +2703,16 @@
                                                 </div>
                                             </div>
                                             <div class="col-xl-8">
-                                                <div class="text-right d-flex justify-content-end mb-5 pb-10 mt-4 mr-4 pr-2">
+                                                <div
+                                                    class="text-right d-flex justify-content-end mb-5 pb-10 mt-4 mr-4 pr-2">
                                                     <div class="btn-group" role="group" aria-label="...">
-                                                        <button (click)="onCalenderView()" [class.active]="!showCalendarView"
-                                                            title="Calendar View" type="button" class="btn btn-secondary">
+                                                        <button (click)="onCalenderView()"
+                                                            [class.active]="!showCalendarView" title="Calendar View"
+                                                            type="button" class="btn btn-secondary">
                                                             <i class="fas fa-calendar-day"></i>
                                                         </button>
-                                                        <button (click)="onListView()" [class.active]="showListView" title="List View"
-                                                            type="button" class="btn btn-secondary">
+                                                        <button (click)="onListView()" [class.active]="showListView"
+                                                            title="List View" type="button" class="btn btn-secondary">
                                                             <i class="fas fa-list"></i>
                                                         </button>
                                                     </div>
@@ -3189,7 +2721,8 @@
                                                     <app-task-schedule-calendar></app-task-schedule-calendar>
                                                 </div>
                                                 <div *ngIf="showListView" class="w-100 shadow">
-                                                    <app-storeTaskMaps *ngIf="store" [storeId]="store.id"></app-storeTaskMaps>
+                                                    <app-storeTaskMaps *ngIf="store"
+                                                        [storeId]="store.id"></app-storeTaskMaps>
                                                 </div>
                                             </div>
                                         </div>
@@ -3198,484 +2731,99 @@
                                         <app-storeNotes *ngIf="store" [storeId]="store.id"></app-storeNotes>
                                     </div>
                                     <div class="tab-pane fade" id="m_teams_m" role="tabpanel">
-                                        <div class="w-100">
-                                            <!--begin::Card header-->
-                                            <div class="card-header cursor-pointer">
-                                                <!--begin::Card title-->
-                                                <div class="card-title m-0">
-                                                    <!-- <h3 class="fw-bold m-0">Store Locations</h3> -->
-                                                </div>
-                                                <!--end::Card title-->
-                                                <!--begin::Action-->
-                                                <a href="#javascript:;"
-                                                    class="btn btn-sm btn-primary align-self-center">
-                                                    <i class="fas fa-plus-circle"></i> Add
-                                                </a>
-                                                <!--end::Action-->
+                                        <div
+                                            class="w-100 d-flex mb-6 ps-9 pe-9 mt-6 justify-content-between align-items-center ng-tns-c282-7">
+                                            <div class="d-flex">
+                                                <h1 class="fs-3 fw-bold  my-0 page-heading text-dark">
+                                                    Store Account Team <span
+                                                        class="badge ms-3 badge-primary">{{totalRecordsCount}}</span>
+                                                </h1>
                                             </div>
-                                            <!--begin::Card header-->
-                                            <!--begin::Card body-->
-                                            <div class="card-body p-9">
-                                                <div class="row">
-                                                    <div class="col-md-6 col-xxl-4 mb-4">
-                                                        <!--begin::Card-->
-                                                        <div class="card shadow-sm rounded">
-                                                            <!--begin::Card body-->
-                                                            <div
-                                                                class="card-body d-flex flex-center flex-column py-9 px-5">
-                                                                <!--begin::Avatar-->
-                                                                <div class="symbol symbol-65px symbol-circle mb-5">
-                                                                    <img src="assets/media//avatars/300-1.jpg"
-                                                                        alt="image">
-                                                                </div>
-                                                                <!--end::Avatar-->
-                                                                <!--begin::Name-->
-                                                                <a href="#"
-                                                                    class="fs-4 text-gray-800 text-hover-primary fw-bold mb-0">Kitona
-                                                                    Johnson</a>
-                                                                <!--end::Name-->
-                                                                <!--begin::Position-->
-                                                                <div class="fw-semibold text-gray-400 mb-6">Web Designer
-                                                                    at Nextop Ltd.</div>
-                                                                <!--end::Position-->
-                                                                <!--begin::Info-->
-                                                                <div class="d-flex flex-center flex-wrap mb-5">
-                                                                    <!--begin::Stats-->
-                                                                    <div
-                                                                        class="border border-dashed rounded min-w-90px py-3 px-4 mx-2 mb-3">
-                                                                        <div class="fs-6 fw-bold text-gray-700">9015458
-                                                                        </div>
-                                                                        <div class="fw-semibold text-gray-400">Mobile
-                                                                        </div>
-                                                                    </div>
-                                                                    <!--end::Stats-->
-                                                                    <!--begin::Stats-->
-                                                                    <div
-                                                                        class="border border-dashed rounded min-w-90px py-3 px-4 mx-2 mb-3">
-                                                                        <div class="fs-6 fw-bold text-gray-700">
-                                                                            rashed@gmail.com
-                                                                        </div>
-                                                                        <div class="fw-semibold text-gray-400">Email
-                                                                        </div>
-                                                                    </div>
-                                                                    <!--end::Stats-->
-                                                                </div>
-                                                                <!--end::Info-->
-                                                                <!--begin::Follow-->
-                                                                <button class="btn btn-sm btn-light-primary"
-                                                                    data-kt-follow-btn="true">
-                                                                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr012.svg-->
-                                                                    <span class="svg-icon following svg-icon-3">
-                                                                        <svg width="24" height="24" viewBox="0 0 24 24"
-                                                                            fill="none"
-                                                                            xmlns="http://www.w3.org/2000/svg">
-                                                                            <path opacity="0.3"
-                                                                                d="M10 18C9.7 18 9.5 17.9 9.3 17.7L2.3 10.7C1.9 10.3 1.9 9.7 2.3 9.3C2.7 8.9 3.29999 8.9 3.69999 9.3L10.7 16.3C11.1 16.7 11.1 17.3 10.7 17.7C10.5 17.9 10.3 18 10 18Z"
-                                                                                fill="currentColor"></path>
-                                                                            <path
-                                                                                d="M10 18C9.7 18 9.5 17.9 9.3 17.7C8.9 17.3 8.9 16.7 9.3 16.3L20.3 5.3C20.7 4.9 21.3 4.9 21.7 5.3C22.1 5.7 22.1 6.30002 21.7 6.70002L10.7 17.7C10.5 17.9 10.3 18 10 18Z"
-                                                                                fill="currentColor"></path>
-                                                                        </svg>
-                                                                    </span>
-                                                                    <!--end::Svg Icon-->
-                                                                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
-                                                                    <span class="svg-icon follow svg-icon-3 d-none">
-                                                                        <svg width="24" height="24" viewBox="0 0 24 24"
-                                                                            fill="none"
-                                                                            xmlns="http://www.w3.org/2000/svg">
-                                                                            <rect opacity="0.5" x="11.364" y="20.364"
-                                                                                width="16" height="2" rx="1"
-                                                                                transform="rotate(-90 11.364 20.364)"
-                                                                                fill="currentColor"></rect>
-                                                                            <rect x="4.36396" y="11.364" width="16"
-                                                                                height="2" rx="1" fill="currentColor">
-                                                                            </rect>
-                                                                        </svg>
-                                                                    </span>
-                                                                    <!--end::Svg Icon-->
-                                                                    <!--begin::Indicator label-->
-                                                                    <span class="indicator-label">Connect</span>
-                                                                    <!--end::Indicator label-->
-                                                                    <!--begin::Indicator progress-->
-                                                                    <span class="indicator-progress">Please wait...
-                                                                        <span
-                                                                            class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-                                                                    <!--end::Indicator progress-->
-                                                                </button>
-                                                                <!--end::Follow-->
-                                                            </div>
-                                                            <!--begin::Card body-->
-                                                        </div>
-                                                        <!--begin::Card-->
-                                                    </div>
-                                                    <div class="col-md-6 col-xxl-4 mb-4">
-                                                        <!--begin::Card-->
-                                                        <div class="card shadow-sm rounded">
-                                                            <!--begin::Card body-->
-                                                            <div
-                                                                class="card-body d-flex flex-center flex-column py-9 px-5">
-                                                                <!--begin::Avatar-->
-                                                                <div class="symbol symbol-65px symbol-circle mb-5">
-                                                                    <img src="assets/media//avatars/300-1.jpg"
-                                                                        alt="image">
-                                                                </div>
-                                                                <!--end::Avatar-->
-                                                                <!--begin::Name-->
-                                                                <a href="#"
-                                                                    class="fs-4 text-gray-800 text-hover-primary fw-bold mb-0">Kitona
-                                                                    Johnson</a>
-                                                                <!--end::Name-->
-                                                                <!--begin::Position-->
-                                                                <div class="fw-semibold text-gray-400 mb-6">Web Designer
-                                                                    at Nextop Ltd.</div>
-                                                                <!--end::Position-->
-                                                                <!--begin::Info-->
-                                                                <div class="d-flex flex-center flex-wrap mb-5">
-                                                                    <!--begin::Stats-->
-                                                                    <div
-                                                                        class="border border-dashed rounded min-w-90px py-3 px-4 mx-2 mb-3">
-                                                                        <div class="fs-6 fw-bold text-gray-700">9015458
-                                                                        </div>
-                                                                        <div class="fw-semibold text-gray-400">Mobile
-                                                                        </div>
-                                                                    </div>
-                                                                    <!--end::Stats-->
-                                                                    <!--begin::Stats-->
-                                                                    <div
-                                                                        class="border border-dashed rounded min-w-90px py-3 px-4 mx-2 mb-3">
-                                                                        <div class="fs-6 fw-bold text-gray-700">
-                                                                            rashed@gmail.com
-                                                                        </div>
-                                                                        <div class="fw-semibold text-gray-400">Email
-                                                                        </div>
-                                                                    </div>
-                                                                    <!--end::Stats-->
-                                                                </div>
-                                                                <!--end::Info-->
-                                                                <!--begin::Follow-->
-                                                                <button class="btn btn-sm btn-light-primary"
-                                                                    data-kt-follow-btn="true">
-                                                                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr012.svg-->
-                                                                    <span class="svg-icon following svg-icon-3">
-                                                                        <svg width="24" height="24" viewBox="0 0 24 24"
-                                                                            fill="none"
-                                                                            xmlns="http://www.w3.org/2000/svg">
-                                                                            <path opacity="0.3"
-                                                                                d="M10 18C9.7 18 9.5 17.9 9.3 17.7L2.3 10.7C1.9 10.3 1.9 9.7 2.3 9.3C2.7 8.9 3.29999 8.9 3.69999 9.3L10.7 16.3C11.1 16.7 11.1 17.3 10.7 17.7C10.5 17.9 10.3 18 10 18Z"
-                                                                                fill="currentColor"></path>
-                                                                            <path
-                                                                                d="M10 18C9.7 18 9.5 17.9 9.3 17.7C8.9 17.3 8.9 16.7 9.3 16.3L20.3 5.3C20.7 4.9 21.3 4.9 21.7 5.3C22.1 5.7 22.1 6.30002 21.7 6.70002L10.7 17.7C10.5 17.9 10.3 18 10 18Z"
-                                                                                fill="currentColor"></path>
-                                                                        </svg>
-                                                                    </span>
-                                                                    <!--end::Svg Icon-->
-                                                                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
-                                                                    <span class="svg-icon follow svg-icon-3 d-none">
-                                                                        <svg width="24" height="24" viewBox="0 0 24 24"
-                                                                            fill="none"
-                                                                            xmlns="http://www.w3.org/2000/svg">
-                                                                            <rect opacity="0.5" x="11.364" y="20.364"
-                                                                                width="16" height="2" rx="1"
-                                                                                transform="rotate(-90 11.364 20.364)"
-                                                                                fill="currentColor"></rect>
-                                                                            <rect x="4.36396" y="11.364" width="16"
-                                                                                height="2" rx="1" fill="currentColor">
-                                                                            </rect>
-                                                                        </svg>
-                                                                    </span>
-                                                                    <!--end::Svg Icon-->
-                                                                    <!--begin::Indicator label-->
-                                                                    <span class="indicator-label">Connect</span>
-                                                                    <!--end::Indicator label-->
-                                                                    <!--begin::Indicator progress-->
-                                                                    <span class="indicator-progress">Please wait...
-                                                                        <span
-                                                                            class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-                                                                    <!--end::Indicator progress-->
-                                                                </button>
-                                                                <!--end::Follow-->
-                                                            </div>
-                                                            <!--begin::Card body-->
-                                                        </div>
-                                                        <!--begin::Card-->
-                                                    </div>
-                                                    <div class="col-md-6 col-xxl-4 mb-4">
-                                                        <!--begin::Card-->
-                                                        <div class="card shadow-sm rounded">
-                                                            <!--begin::Card body-->
-                                                            <div
-                                                                class="card-body d-flex flex-center flex-column py-9 px-5">
-                                                                <!--begin::Avatar-->
-                                                                <div class="symbol symbol-65px symbol-circle mb-5">
-                                                                    <img src="assets/media//avatars/300-1.jpg"
-                                                                        alt="image">
-                                                                </div>
-                                                                <!--end::Avatar-->
-                                                                <!--begin::Name-->
-                                                                <a href="#"
-                                                                    class="fs-4 text-gray-800 text-hover-primary fw-bold mb-0">Kitona
-                                                                    Johnson</a>
-                                                                <!--end::Name-->
-                                                                <!--begin::Position-->
-                                                                <div class="fw-semibold text-gray-400 mb-6">Web Designer
-                                                                    at Nextop Ltd.</div>
-                                                                <!--end::Position-->
-                                                                <!--begin::Info-->
-                                                                <div class="d-flex flex-center flex-wrap mb-5">
-                                                                    <!--begin::Stats-->
-                                                                    <div
-                                                                        class="border border-dashed rounded min-w-90px py-3 px-4 mx-2 mb-3">
-                                                                        <div class="fs-6 fw-bold text-gray-700">9015458
-                                                                        </div>
-                                                                        <div class="fw-semibold text-gray-400">Mobile
-                                                                        </div>
-                                                                    </div>
-                                                                    <!--end::Stats-->
-                                                                    <!--begin::Stats-->
-                                                                    <div
-                                                                        class="border border-dashed rounded min-w-90px py-3 px-4 mx-2 mb-3">
-                                                                        <div class="fs-6 fw-bold text-gray-700">
-                                                                            rashed@gmail.com
-                                                                        </div>
-                                                                        <div class="fw-semibold text-gray-400">Email
-                                                                        </div>
-                                                                    </div>
-                                                                    <!--end::Stats-->
-                                                                </div>
-                                                                <!--end::Info-->
-                                                                <!--begin::Follow-->
-                                                                <button class="btn btn-sm btn-light-primary"
-                                                                    data-kt-follow-btn="true">
-                                                                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr012.svg-->
-                                                                    <span class="svg-icon following svg-icon-3">
-                                                                        <svg width="24" height="24" viewBox="0 0 24 24"
-                                                                            fill="none"
-                                                                            xmlns="http://www.w3.org/2000/svg">
-                                                                            <path opacity="0.3"
-                                                                                d="M10 18C9.7 18 9.5 17.9 9.3 17.7L2.3 10.7C1.9 10.3 1.9 9.7 2.3 9.3C2.7 8.9 3.29999 8.9 3.69999 9.3L10.7 16.3C11.1 16.7 11.1 17.3 10.7 17.7C10.5 17.9 10.3 18 10 18Z"
-                                                                                fill="currentColor"></path>
-                                                                            <path
-                                                                                d="M10 18C9.7 18 9.5 17.9 9.3 17.7C8.9 17.3 8.9 16.7 9.3 16.3L20.3 5.3C20.7 4.9 21.3 4.9 21.7 5.3C22.1 5.7 22.1 6.30002 21.7 6.70002L10.7 17.7C10.5 17.9 10.3 18 10 18Z"
-                                                                                fill="currentColor"></path>
-                                                                        </svg>
-                                                                    </span>
-                                                                    <!--end::Svg Icon-->
-                                                                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
-                                                                    <span class="svg-icon follow svg-icon-3 d-none">
-                                                                        <svg width="24" height="24" viewBox="0 0 24 24"
-                                                                            fill="none"
-                                                                            xmlns="http://www.w3.org/2000/svg">
-                                                                            <rect opacity="0.5" x="11.364" y="20.364"
-                                                                                width="16" height="2" rx="1"
-                                                                                transform="rotate(-90 11.364 20.364)"
-                                                                                fill="currentColor"></rect>
-                                                                            <rect x="4.36396" y="11.364" width="16"
-                                                                                height="2" rx="1" fill="currentColor">
-                                                                            </rect>
-                                                                        </svg>
-                                                                    </span>
-                                                                    <!--end::Svg Icon-->
-                                                                    <!--begin::Indicator label-->
-                                                                    <span class="indicator-label">Connect</span>
-                                                                    <!--end::Indicator label-->
-                                                                    <!--begin::Indicator progress-->
-                                                                    <span class="indicator-progress">Please wait...
-                                                                        <span
-                                                                            class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-                                                                    <!--end::Indicator progress-->
-                                                                </button>
-                                                                <!--end::Follow-->
-                                                            </div>
-                                                            <!--begin::Card body-->
-                                                        </div>
-                                                        <!--begin::Card-->
-                                                    </div>
-                                                    <div class="col-md-6 col-xxl-4 mb-4">
-                                                        <!--begin::Card-->
-                                                        <div class="card shadow-sm rounded">
-                                                            <!--begin::Card body-->
-                                                            <div
-                                                                class="card-body d-flex flex-center flex-column py-9 px-5">
-                                                                <!--begin::Avatar-->
-                                                                <div class="symbol symbol-65px symbol-circle mb-5">
-                                                                    <img src="assets/media//avatars/300-1.jpg"
-                                                                        alt="image">
-                                                                </div>
-                                                                <!--end::Avatar-->
-                                                                <!--begin::Name-->
-                                                                <a href="#"
-                                                                    class="fs-4 text-gray-800 text-hover-primary fw-bold mb-0">Kitona
-                                                                    Johnson</a>
-                                                                <!--end::Name-->
-                                                                <!--begin::Position-->
-                                                                <div class="fw-semibold text-gray-400 mb-6">Web Designer
-                                                                    at Nextop Ltd.</div>
-                                                                <!--end::Position-->
-                                                                <!--begin::Info-->
-                                                                <div class="d-flex flex-center flex-wrap mb-5">
-                                                                    <!--begin::Stats-->
-                                                                    <div
-                                                                        class="border border-dashed rounded min-w-90px py-3 px-4 mx-2 mb-3">
-                                                                        <div class="fs-6 fw-bold text-gray-700">9015458
-                                                                        </div>
-                                                                        <div class="fw-semibold text-gray-400">Mobile
-                                                                        </div>
-                                                                    </div>
-                                                                    <!--end::Stats-->
-                                                                    <!--begin::Stats-->
-                                                                    <div
-                                                                        class="border border-dashed rounded min-w-90px py-3 px-4 mx-2 mb-3">
-                                                                        <div class="fs-6 fw-bold text-gray-700">
-                                                                            rashed@gmail.com
-                                                                        </div>
-                                                                        <div class="fw-semibold text-gray-400">Email
-                                                                        </div>
-                                                                    </div>
-                                                                    <!--end::Stats-->
-                                                                </div>
-                                                                <!--end::Info-->
-                                                                <!--begin::Follow-->
-                                                                <button class="btn btn-sm btn-light-primary"
-                                                                    data-kt-follow-btn="true">
-                                                                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr012.svg-->
-                                                                    <span class="svg-icon following svg-icon-3">
-                                                                        <svg width="24" height="24" viewBox="0 0 24 24"
-                                                                            fill="none"
-                                                                            xmlns="http://www.w3.org/2000/svg">
-                                                                            <path opacity="0.3"
-                                                                                d="M10 18C9.7 18 9.5 17.9 9.3 17.7L2.3 10.7C1.9 10.3 1.9 9.7 2.3 9.3C2.7 8.9 3.29999 8.9 3.69999 9.3L10.7 16.3C11.1 16.7 11.1 17.3 10.7 17.7C10.5 17.9 10.3 18 10 18Z"
-                                                                                fill="currentColor"></path>
-                                                                            <path
-                                                                                d="M10 18C9.7 18 9.5 17.9 9.3 17.7C8.9 17.3 8.9 16.7 9.3 16.3L20.3 5.3C20.7 4.9 21.3 4.9 21.7 5.3C22.1 5.7 22.1 6.30002 21.7 6.70002L10.7 17.7C10.5 17.9 10.3 18 10 18Z"
-                                                                                fill="currentColor"></path>
-                                                                        </svg>
-                                                                    </span>
-                                                                    <!--end::Svg Icon-->
-                                                                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
-                                                                    <span class="svg-icon follow svg-icon-3 d-none">
-                                                                        <svg width="24" height="24" viewBox="0 0 24 24"
-                                                                            fill="none"
-                                                                            xmlns="http://www.w3.org/2000/svg">
-                                                                            <rect opacity="0.5" x="11.364" y="20.364"
-                                                                                width="16" height="2" rx="1"
-                                                                                transform="rotate(-90 11.364 20.364)"
-                                                                                fill="currentColor"></rect>
-                                                                            <rect x="4.36396" y="11.364" width="16"
-                                                                                height="2" rx="1" fill="currentColor">
-                                                                            </rect>
-                                                                        </svg>
-                                                                    </span>
-                                                                    <!--end::Svg Icon-->
-                                                                    <!--begin::Indicator label-->
-                                                                    <span class="indicator-label">Connect</span>
-                                                                    <!--end::Indicator label-->
-                                                                    <!--begin::Indicator progress-->
-                                                                    <span class="indicator-progress">Please wait...
-                                                                        <span
-                                                                            class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-                                                                    <!--end::Indicator progress-->
-                                                                </button>
-                                                                <!--end::Follow-->
-                                                            </div>
-                                                            <!--begin::Card body-->
-                                                        </div>
-                                                        <!--begin::Card-->
-                                                    </div>
-                                                    <div class="col-md-6 col-xxl-4 mb-4">
-                                                        <!--begin::Card-->
-                                                        <div class="card shadow-sm rounded">
-                                                            <!--begin::Card body-->
-                                                            <div
-                                                                class="card-body d-flex flex-center flex-column py-9 px-5">
-                                                                <!--begin::Avatar-->
-                                                                <div class="symbol symbol-65px symbol-circle mb-5">
-                                                                    <img src="assets/media//avatars/300-1.jpg"
-                                                                        alt="image">
-                                                                </div>
-                                                                <!--end::Avatar-->
-                                                                <!--begin::Name-->
-                                                                <a href="#"
-                                                                    class="fs-4 text-gray-800 text-hover-primary fw-bold mb-0">Kitona
-                                                                    Johnson</a>
-                                                                <!--end::Name-->
-                                                                <!--begin::Position-->
-                                                                <div class="fw-semibold text-gray-400 mb-6">Web Designer
-                                                                    at Nextop Ltd.</div>
-                                                                <!--end::Position-->
-                                                                <!--begin::Info-->
-                                                                <div class="d-flex flex-center flex-wrap mb-5">
-                                                                    <!--begin::Stats-->
-                                                                    <div
-                                                                        class="border border-dashed rounded min-w-90px py-3 px-4 mx-2 mb-3">
-                                                                        <div class="fs-6 fw-bold text-gray-700">9015458
-                                                                        </div>
-                                                                        <div class="fw-semibold text-gray-400">Mobile
-                                                                        </div>
-                                                                    </div>
-                                                                    <!--end::Stats-->
-                                                                    <!--begin::Stats-->
-                                                                    <div
-                                                                        class="border border-dashed rounded min-w-90px py-3 px-4 mx-2 mb-3">
-                                                                        <div class="fs-6 fw-bold text-gray-700">
-                                                                            rashed@gmail.com
-                                                                        </div>
-                                                                        <div class="fw-semibold text-gray-400">Email
-                                                                        </div>
-                                                                    </div>
-                                                                    <!--end::Stats-->
-                                                                </div>
-                                                                <!--end::Info-->
-                                                                <!--begin::Follow-->
-                                                                <button class="btn btn-sm btn-light-primary"
-                                                                    data-kt-follow-btn="true">
-                                                                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr012.svg-->
-                                                                    <span class="svg-icon following svg-icon-3">
-                                                                        <svg width="24" height="24" viewBox="0 0 24 24"
-                                                                            fill="none"
-                                                                            xmlns="http://www.w3.org/2000/svg">
-                                                                            <path opacity="0.3"
-                                                                                d="M10 18C9.7 18 9.5 17.9 9.3 17.7L2.3 10.7C1.9 10.3 1.9 9.7 2.3 9.3C2.7 8.9 3.29999 8.9 3.69999 9.3L10.7 16.3C11.1 16.7 11.1 17.3 10.7 17.7C10.5 17.9 10.3 18 10 18Z"
-                                                                                fill="currentColor"></path>
-                                                                            <path
-                                                                                d="M10 18C9.7 18 9.5 17.9 9.3 17.7C8.9 17.3 8.9 16.7 9.3 16.3L20.3 5.3C20.7 4.9 21.3 4.9 21.7 5.3C22.1 5.7 22.1 6.30002 21.7 6.70002L10.7 17.7C10.5 17.9 10.3 18 10 18Z"
-                                                                                fill="currentColor"></path>
-                                                                        </svg>
-                                                                    </span>
-                                                                    <!--end::Svg Icon-->
-                                                                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
-                                                                    <span class="svg-icon follow svg-icon-3 d-none">
-                                                                        <svg width="24" height="24" viewBox="0 0 24 24"
-                                                                            fill="none"
-                                                                            xmlns="http://www.w3.org/2000/svg">
-                                                                            <rect opacity="0.5" x="11.364" y="20.364"
-                                                                                width="16" height="2" rx="1"
-                                                                                transform="rotate(-90 11.364 20.364)"
-                                                                                fill="currentColor"></rect>
-                                                                            <rect x="4.36396" y="11.364" width="16"
-                                                                                height="2" rx="1" fill="currentColor">
-                                                                            </rect>
-                                                                        </svg>
-                                                                    </span>
-                                                                    <!--end::Svg Icon-->
-                                                                    <!--begin::Indicator label-->
-                                                                    <span class="indicator-label">Connect</span>
-                                                                    <!--end::Indicator label-->
-                                                                    <!--begin::Indicator progress-->
-                                                                    <span class="indicator-progress">Please wait...
-                                                                        <span
-                                                                            class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-                                                                    <!--end::Indicator progress-->
-                                                                </button>
-                                                                <!--end::Follow-->
-                                                            </div>
-                                                            <!--begin::Card body-->
-                                                        </div>
-                                                        <!--begin::Card-->
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--end::Card body-->
+                                            <button (click)="createStoreAccountTeam()" class="btn btn-primary blue">
+                                                <i class="fa fa-plus"></i>
+                                                {{ l('Team') }}
+                                            </button>
                                         </div>
+                                        <div class="row">
+                                            <div class="col-md-6 col-xxl-4 mb-4" *ngFor="let record of allEmployee">
+                                                <!--begin::Card-->
+                                                <div class="card shadow-sm rounded">
+                                                    <div class="card-body d-flex flex-center flex-column py-9 px-5">
+                                                        <div class="symbol symbol-65px symbol-circle mb-5"
+                                                            *ngIf="!record.employeePicture">
+                                                            <img src="/assets/common/images/default-profile-picture.png"
+                                                                alt="image">
+                                                        </div>
+                                                        <div class="symbol symbol-65px symbol-circle mb-5"
+                                                            *ngIf="record.employeePicture">
+                                                            <img src="{{record.employeePicture}}" alt="image">
+                                                        </div>
+                                                        <a href="javascript:;"
+                                                            [routerLink]="['/app/main/crm/employees/dashboard',record.storeAccountTeam.employeeId]"
+                                                            class="fs-4 text-gray-800 text-hover-primary fw-bold mb-0">
+                                                            {{record.employeeName}} <i title="Active"
+                                                                *ngIf="record.storeAccountTeam.active"
+                                                                class="fas fa-check-circle ms-3 text-success"></i>
+                                                        </a>
+                                                        <div class="fw-semibold text-gray-400 mb-0">
+                                                            {{record.jobTitle}} <span *ngIf="record.companyName">at
+                                                                {{record.companyName}}</span>
+                                                        </div>
+                                                        <div class="fw-semibold text-gray-400 mb-6 mt-5">
+                                                            <span *ngIf="record.storeAccountTeam.primary"
+                                                                class="badge badge-primary me-2">Primary</span>
+                                                            <span *ngIf="record.storeAccountTeam.orderEmailNotification"
+                                                                class="badge badge-success me-2">Order Email
+                                                                Alert</span>
+                                                            <span *ngIf="record.storeAccountTeam.orderSmsNotification"
+                                                                class="badge badge-info">Order SMS
+                                                                Alert</span>
+                                                        </div>
+                                                        <div class="d-flex flex-center flex-wrap mb-5">
+                                                            <div *ngIf="record.mobile"
+                                                                class="border border-dashed rounded min-w-90px py-3 px-4 mx-2 mb-3">
+                                                                <div class="fs-6 fw-bold text-gray-700">
+                                                                    {{record.mobile}}
+                                                                </div>
+                                                                <div class="fw-semibold text-gray-400">Mobile
+                                                                </div>
+                                                            </div>
+                                                            <div *ngIf="record.businessEmail"
+                                                                class="border border-dashed rounded min-w-90px py-3 px-4 mx-2 mb-3">
+                                                                <div class="fs-6 fw-bold text-gray-700">
+                                                                    {{record.businessEmail}}
+                                                                </div>
+                                                                <div class="fw-semibold text-gray-400">Email
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="d-flex">
+                                                            <a *ngIf="record.facebook" href="{{record.facebook}}"
+                                                                class="btn btn-icon btn-facebook me-3"><i
+                                                                    class="fab fa-facebook-f fs-4"></i></a>
+                                                            <a *ngIf="record.linkedIn" href="{{record.linkedIn}}"
+                                                                class="btn btn-icon btn-linkedin me-3"><i
+                                                                    class="fab fa-linkedin fs-4"></i></a>
+
+                                                            <button (click)="
+                                                                createOrEditStoreAccountTeamModal.show(
+                                                                    record.storeAccountTeam.id
+                                                                )" class="btn btn-sm btn-light-primary btn-icon me-3">
+                                                                <i class="fas fa-edit"></i>
+                                                            </button>
+                                                            <button
+                                                                *ngIf="permission.isGranted('Pages.StoreAccountTeams.Delete')"
+                                                                (click)="deleteStoreAccountTeam(record.storeAccountTeam)"
+                                                                class="btn btn-sm btn-light-primary btn-icon me-3">
+                                                                <i class="fas fa-trash-alt"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
                                     </div>
                                     <div class="tab-pane fade" id="m_plans_m" role="tabpanel">
                                         <appStoreMarketplaceSettings></appStoreMarketplaceSettings>
@@ -3703,80 +2851,25 @@
                                                             name="store.name" id="store.name">
                                                     </div>
 
-                                                    <!--begin::Row-->
-                                                    <div class="row">
-                                                        <div class="col-md-4">
-                                                            <div class="fv-row mb-7 fv-plugins-icon-container">
-                                                                <label class="fs-6 fw-semibold form-label mt-3">
-                                                                    <span>Latitude</span>
-                                                                </label>
-                                                                <input type="text"
-                                                                    class="form-control form-control-solid"
-                                                                    [(ngModel)]="store.latitude" name="latitude"
-                                                                    id="latitude">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <div class="fv-row mb-7">
-                                                                <label class="fs-6 fw-semibold form-label mt-3">
-                                                                    <span>Longitude</span>
-                                                                </label>
-                                                                <input type="text"
-                                                                    class="form-control form-control-solid"
-                                                                    [(ngModel)]="store.longitude" name="longitude"
-                                                                    id="longitude">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4 d-flex align-items-center pt-3">
-                                                            <div class="fv-row mb-0 mt-2 fv-plugins-icon-container">
-                                                                <a href="javascript:;"
-                                                                    (click)="openAiModalForLatLongForOperator('Latitude and Longitude')"
-                                                                    class="btn btn-outline btn-outline-dashed btn-outline-primary btn-active-light-primary">
-                                                                    <i class="fa fa-map-marker"></i> Get Lat. Long. Data
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <!--end::Row-->
-
-                                                    <!--begin::Row-->
-                                                    <div
-                                                        class="row row-cols-1 row-cols-sm-2 rol-cols-md-1 row-cols-lg-2">
-                                                        <div class="col">
-                                                            <div class="fv-row mb-7">
-                                                                <label class="fs-6 fw-semibold form-label mt-3">
-                                                                    <span class="required">Store URL</span>
-                                                                </label>
-                                                                <input type="text"
-                                                                    class="form-control form-control-solid" name="url"
-                                                                    id="url" [(ngModel)]="store.storeUrl"
-                                                                    placeholder="Enter URL" required>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col d-flex align-items-center pt-3">
-                                                            <div class="fv-row mb-0 mt-2 fv-plugins-icon-container">
-                                                                <a href="javascript:;"
-                                                                    (click)="checkUrlAvailability(store.id,store.storeUrl)"
-                                                                    class="btn btn-outline btn-outline-dashed btn-outline-primary btn-active-light-primary">
-                                                                    <i class="fas fa-eye"></i> Check Availability
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
                                                     <div class="fv-row mb-7 fv-plugins-icon-container">
                                                         <label class="fs-6 fw-semibold form-label mt-3">
-                                                            <span>Public Site Rating</span>
+                                                            <span>Internal Rating</span>
                                                         </label>
                                                         <select class="form-control form-control-solid" name="state"
-                                                            id="state">
-                                                            <option value="1">Select Rating</option>
+                                                            [(ngModel)]="store.ratingLikeId" id="state">
+                                                            <option value="-1">Select Rating</option>
+                                                            <option value="1">*</option>
+                                                            <option value="2">**</option>
+                                                            <option value="3">***</option>
+                                                            <option value="4">****</option>
+                                                            <option value="5">*****</option>
                                                         </select>
                                                     </div>
                                                     <!--end::Input group-->
                                                     <!--begin::Separator-->
                                                     <div class="separator mb-6"></div>
                                                     <!--begin::Input group-->
-                                                    <div class="fv-row mb-7 fv-plugins-icon-container">
+                                                    <div class="fv-row mb-7 fv-plugins-icon-container d-flex">
                                                         <div class="select_button_custom me-4">
                                                             <p-selectButton [options]="storePublishedOptions"
                                                                 name="storePublishedOptions" id="storePublishedOptions"
@@ -3793,9 +2886,8 @@
                                                         <div class="select_button_custom">
                                                             <p-selectButton [options]="storeVerifiedOptions"
                                                                 name="isVerified" id="isVerified"
-                                                                [(ngModel)]="store.isVerified"
-                                                                optionLabel="label"
-                                                                optionValue="value"></p-selectButton> 
+                                                                [(ngModel)]="store.isVerified" optionLabel="label"
+                                                                optionValue="value"></p-selectButton>
                                                         </div>
                                                     </div>
 
@@ -3859,6 +2951,10 @@
     </createOrEditStoreTaskMapModal>
     <createOrEditStoreNoteModal #createOrEditStoreNoteModal (modalSave)="getAllStoreNotes()">
     </createOrEditStoreNoteModal>
-    <createOrEditStoreAccountTeamModal #createOrEditStoreAccountTeamModal></createOrEditStoreAccountTeamModal>
+    <createOrEditStoreAccountTeamModal #createOrEditStoreAccountTeamModal (modalSave)="getAllStoreAccountTeams()">
+    </createOrEditStoreAccountTeamModal>
     <oneToOneConnectModal #oneToOneConnectModal></oneToOneConnectModal>
+
+    <createOrEditStoreBusinessHourModal #createOrEditStoreBusinessHourModal (modalSave)="getStoreHour(storeId)">
+    </createOrEditStoreBusinessHourModal>
 </div>

@@ -44,12 +44,19 @@ import { TreeTableModule } from 'primeng/treetable';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { SwiperModule } from "swiper/angular";
 import { FullCalendarModule } from 'ng-fullcalendar';
+import { AgmCoreModule } from '@agm/core';
+
+import { AgmOverlays } from 'agm-overlays';
 @NgModule({
     imports: [
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
         ModalModule.forRoot(),
+        AgmCoreModule.forRoot({
+            apiKey: 'AIzaSyAu2iXDH4HxmyM-Jn_L4sLGhGwAuLoI6bw'
+        }),
+        AgmOverlays,
         UtilsModule,
         SoftGridCommonModule,
         TableModule,
@@ -100,7 +107,9 @@ import { FullCalendarModule } from 'ng-fullcalendar';
         TreeTableModule,
         MultiSelectModule,
         SwiperModule,
-        FullCalendarModule
+        FullCalendarModule,
+        AgmCoreModule,
+        AgmOverlays
     ],
     providers: [
         DateTimeService,
