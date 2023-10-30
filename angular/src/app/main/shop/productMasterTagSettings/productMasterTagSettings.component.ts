@@ -5,6 +5,8 @@ import {
     ProductMasterTagSettingsServiceProxy,
     ProductMasterTagSettingDto,
     AnswerType,
+    GetProductMasterTagSettingForEditOutput,
+    CreateOrEditProductMasterTagSettingDto,
 } from '@shared/service-proxies/service-proxies';
 import { NotifyService } from 'abp-ng2-module';
 import { AppComponentBase } from '@shared/common/app-component-base';
@@ -21,6 +23,7 @@ import { filter as _filter } from 'lodash-es';
 import { DateTime } from 'luxon';
 
 import { DateTimeService } from '@app/shared/common/timing/date-time.service';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
     templateUrl: './productMasterTagSettings.component.html',
@@ -48,9 +51,10 @@ export class ProductMasterTagSettingsComponent extends AppComponentBase {
     answerTypeIdFilter = -1;
     productCategoryNameFilter = '';
     masterTagCategoryNameFilter = '';
-
+    productCategoryOptions:any=[];
     answerType = AnswerType;
-
+    selectedProductCategory:any;
+    productMasterTagList: any= [];
     constructor(
         injector: Injector,
         private _productMasterTagSettingsServiceProxy: ProductMasterTagSettingsServiceProxy,
@@ -61,6 +65,10 @@ export class ProductMasterTagSettingsComponent extends AppComponentBase {
         private _dateTimeService: DateTimeService
     ) {
         super(injector);
+        this._productMasterTagSettingsServiceProxy.getAllProductCategoryForLookupTable('', '', 0, 1000).subscribe(result => {
+            this.productCategoryOptions = result.items;
+            
+        });
     }
 
     getProductMasterTagSettings(event?: LazyLoadEvent) {
@@ -152,5 +160,47 @@ export class ProductMasterTagSettingsComponent extends AppComponentBase {
         this.masterTagCategoryNameFilter = '';
 
         this.getProductMasterTagSettings();
+    }
+    onChangeProductCategoryClick(event: any) {
+        this.productCategoryNameFilter = event.value.displayName;
+        this.getProductMasterTagSettings();
+    }
+    createProductTags(): void {
+        this.createOrEditProductMasterTagSettingModal.isProductTag = true;
+        this.createOrEditProductMasterTagSettingModal.isProductTagQuestion = false;
+        //this.createOrEditProductMasterTagSettingModal.storeMasterTagSetting.storeTagSettingCategoryId = this.storeMasterTagSetting.storeTagSettingCategoryId;
+        this.createOrEditProductMasterTagSettingModal.show();
+    }
+
+    createProductTagQuestions(): void {
+        this.createOrEditProductMasterTagSettingModal.isProductTag = false;
+        this.createOrEditProductMasterTagSettingModal.isProductTagQuestion = true;
+        //this.createOrEditProductMasterTagSettingModal.storeMasterTagSetting.storeTagSettingCategoryId = this.storeMasterTagSetting.storeTagSettingCategoryId;
+        this.createOrEditProductMasterTagSettingModal.show();
+    }
+    getAnswerTypeString(answerTypeId: number): string {
+        switch (answerTypeId) {
+            case AnswerType.True_false:
+                return 'True/False';
+            case AnswerType.Multiple_choice:
+                return 'Multiple Choice';
+            case AnswerType.Write_The_Answer:
+                return 'Write the Answer';
+            default:
+                return 'Unknown';
+        }
+    }
+    drop(event: CdkDragDrop<string[]>) {
+        moveItemInArray(this.primengTableHelper.records, event.previousIndex, event.currentIndex);
+        this.productMasterTagList = this.primengTableHelper.records;
+        this.primengTableHelper.showLoadingIndicator();
+        this._productMasterTagSettingsServiceProxy.updateDisplaySequence(
+            event.previousIndex,
+            event.currentIndex,
+            this.productMasterTagList[event.currentIndex].productMasterTagSetting.id,
+            this.productMasterTagList[event.currentIndex].productMasterTagSetting.productCategoryId).subscribe(result => {
+                this.getProductMasterTagSettings();
+                this.primengTableHelper.hideLoadingIndicator();
+            });
     }
 }
