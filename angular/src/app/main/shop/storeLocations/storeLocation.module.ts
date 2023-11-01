@@ -22,5 +22,15 @@ import { StoreLocationStoreLookupTableModalComponent } from './storeLocation-sto
         StoreLocationStoreLookupTableModalComponent,
     ],
     imports: [AppSharedModule, StoreLocationRoutingModule, AdminSharedModule],
+    exports: [
+        StoreLocationsComponent,
+        CreateOrEditStoreLocationModalComponent,
+        ViewStoreLocationModalComponent,
+
+        StoreLocationCityLookupTableModalComponent,
+        StoreLocationStateLookupTableModalComponent,
+        StoreLocationCountryLookupTableModalComponent,
+        StoreLocationStoreLookupTableModalComponent,
+    ]
 })
 export class StoreLocationModule {}

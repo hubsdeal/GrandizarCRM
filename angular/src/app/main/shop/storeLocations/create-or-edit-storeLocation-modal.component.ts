@@ -37,7 +37,7 @@ export class CreateOrEditStoreLocationModalComponent extends AppComponentBase im
     stateName = '';
     countryName = '';
     storeName = '';
-
+    storeId:number;
     constructor(
         injector: Injector,
         private _storeLocationsServiceProxy: StoreLocationsServiceProxy,
@@ -60,7 +60,7 @@ export class CreateOrEditStoreLocationModalComponent extends AppComponentBase im
         } else {
             this._storeLocationsServiceProxy.getStoreLocationForEdit(storeLocationId).subscribe((result) => {
                 this.storeLocation = result.storeLocation;
-
+                this.storeId = result.storeLocation.storeId;
                 this.cityName = result.cityName;
                 this.stateName = result.stateName;
                 this.countryName = result.countryName;
@@ -74,7 +74,7 @@ export class CreateOrEditStoreLocationModalComponent extends AppComponentBase im
 
     save(): void {
         this.saving = true;
-
+        this.storeLocation.storeId = this.storeId;
         this._storeLocationsServiceProxy
             .createOrEdit(this.storeLocation)
             .pipe(

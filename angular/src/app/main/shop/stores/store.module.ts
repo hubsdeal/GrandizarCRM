@@ -22,6 +22,7 @@ import { StoreAccountTeamModule } from '../storeAccountTeams/storeAccountTeam.mo
 import { MainModule } from '@app/main/main.module';
 import { StoreBusinessHourModule } from '../storeBusinessHours/storeBusinessHour.module';
 import { StoreOwnerTeamModule } from '../storeOwnerTeams/storeOwnerTeam.module';
+import { StoreLocationModule } from '../storeLocations/storeLocation.module';
 
 @NgModule({
     declarations: [
@@ -42,6 +43,7 @@ import { StoreOwnerTeamModule } from '../storeOwnerTeams/storeOwnerTeam.module';
         StoreTaskMapModule,
         StoreAccountTeamModule,
         StoreBusinessHourModule,
+        StoreLocationModule,
         StoreOwnerTeamModule,
         MainModule
     ],

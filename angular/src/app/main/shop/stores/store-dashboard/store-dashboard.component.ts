@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ChatGptResponseModalComponent } from '@app/shared/chat-gpt-response-modal/chat-gpt-response-modal.component';
 import { AppConsts } from '@shared/AppConsts';
 import { AppComponentBase } from '@shared/common/app-component-base';
-import { CreateOrEditStoreDto, CreateOrEditStoreMediaDto, GetStoreAccountTeamForViewDto, GetStoreBusinessHourForViewDto, GetStoreMediaForViewDto, RatingLikesServiceProxy, StatesServiceProxy, StoreAccountTeamDto, StoreAccountTeamsServiceProxy, StoreBusinessHoursServiceProxy, StoreCountryLookupTableDto, StoreMediasServiceProxy, StoreTopStatsForViewDto, StoresServiceProxy } from '@shared/service-proxies/service-proxies';
+import { CreateOrEditStoreDto, CreateOrEditStoreMediaDto, CreateOrEditStoreZipCodeMapDto, GetStoreAccountTeamForViewDto, GetStoreBusinessHourForViewDto, GetStoreLocationForViewDto, GetStoreMediaForViewDto, RatingLikesServiceProxy, StatesServiceProxy, StoreAccountTeamDto, StoreAccountTeamsServiceProxy, StoreBusinessHoursServiceProxy, StoreCountryLookupTableDto, StoreLocationDto, StoreLocationsServiceProxy, StoreMediasServiceProxy, StoreTopStatsForViewDto, StoreZipCodeMapsServiceProxy, StoresServiceProxy } from '@shared/service-proxies/service-proxies';
 import { IAjaxResponse, TokenService } from 'abp-ng2-module';
 import { FileItem, FileUploader, FileUploaderOptions } from 'ng2-file-upload';
 import { SelectItem } from 'primeng/api';
@@ -19,6 +19,8 @@ import { CreateOrEditStoreNoteModalComponent } from '../../storeNotes/create-or-
 import { CreateOrEditStoreAccountTeamModalComponent } from '../../storeAccountTeams/create-or-edit-storeAccountTeam-modal.component';
 import { OneToOneConnectModalComponent } from '@app/shared/one-to-one-connect-modal/one-to-one-connect-modal.component';
 import { CreateOrEditStoreBusinessHourModalComponent } from '../../storeBusinessHours/create-or-edit-storeBusinessHour-modal.component';
+import { StoreZipCodeMapDto } from '@shared/service-proxies/service-proxies';
+import { CreateOrEditStoreLocationModalComponent } from '../../storeLocations/create-or-edit-storeLocation-modal.component';
 
 @Component({
   selector: 'app-store-dashboard',
@@ -117,6 +119,13 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
 
   totalRecordsCount: number;
   allEmployee: GetStoreAccountTeamForViewDto[] = [];
+
+  storeZipCodeMap: CreateOrEditStoreZipCodeMapDto = new CreateOrEditStoreZipCodeMapDto();
+  allStoreZipcodes: any[] = [];
+
+  @ViewChild('createOrEditStoreLocationModal', { static: true }) createOrEditStoreLocationModal: CreateOrEditStoreLocationModalComponent;
+  storeLocations: GetStoreLocationForViewDto[] = [];
+
   constructor(
     injector: Injector,
     private route: ActivatedRoute,
@@ -130,6 +139,8 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
     private _ratingLikesServiceProxy: RatingLikesServiceProxy,
     private _storeAccountTeamsServiceProxy: StoreAccountTeamsServiceProxy,
     private _storeHoursServiceProxy: StoreBusinessHoursServiceProxy,
+    private _storeZipCodeMapsServiceProxy: StoreZipCodeMapsServiceProxy,
+    private _storeLocationServiceProxy: StoreLocationsServiceProxy,
     private dialog: MatDialog
   ) {
     super(injector);
@@ -141,6 +152,8 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
     this.storeId = parseInt(storeId);
     this.getStoreDetails(this.storeId);
     this.getStoreHour(this.storeId);
+    this.getStoreLocations(this.storeId);
+    this.getALllStoreZipCodes(this.storeId);
     this.getAllStoreAccountTeams();
     this.initFileUploader();
     this.localOrVirtualStoreOptions = [{ label: 'Local Store', value: false }, { label: 'Virtual Store', value: true }];
@@ -586,6 +599,61 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
         });
       }
     });
+  }
+
+  //store zip codes
+  getALllStoreZipCodes(storeId: number) {
+    this._storeZipCodeMapsServiceProxy.getAllByStoreId(storeId).subscribe(result => {
+      this.allStoreZipcodes = result.items;
+    })
+  }
+
+  onStoreZipCodeSave() {
+    this.storeZipCodeMap.storeId = this.storeId;
+    this._storeZipCodeMapsServiceProxy.createOrEdit(this.storeZipCodeMap)
+      .pipe(finalize(() => { this.saving = false; }))
+      .subscribe(() => {
+        this.getALllStoreZipCodes(this.storeId);
+        this.storeZipCodeMap = new CreateOrEditStoreZipCodeMapDto();
+        this.notify.info(this.l('SavedSuccessfully'));
+      });
+  }
+
+  deleteStoreZipCodeMap(storeZipCodeMap: StoreZipCodeMapDto): void {
+    this._storeZipCodeMapsServiceProxy.delete(storeZipCodeMap.id)
+      .subscribe(() => {
+        this.getALllStoreZipCodes(this.storeId);
+        this.notify.success(this.l('SuccessfullyDeleted'));
+      });
+  }
+
+  //store location
+  createStoreLocation() {
+    if (this.storeId) {
+      this.createOrEditStoreLocationModal.storeId = this.storeId;
+      this.createOrEditStoreLocationModal.show();
+    }
+  }
+  getStoreLocations(storeId: number) {
+    this._storeLocationServiceProxy.getAllByStoreId(storeId).subscribe(result => {
+      this.storeLocations = result.items;
+    })
+  }
+
+  deleteStoreLocation(storeLocation: StoreLocationDto): void {
+    this.message.confirm(
+      '',
+      this.l('AreYouSure'),
+      (isConfirmed) => {
+        if (isConfirmed) {
+          this._storeLocationServiceProxy.delete(storeLocation.id)
+            .subscribe(() => {
+              this.getStoreLocations(this.storeId);
+              this.notify.success(this.l('SuccessfullyDeleted'));
+            });
+        }
+      }
+    );
   }
 
 }

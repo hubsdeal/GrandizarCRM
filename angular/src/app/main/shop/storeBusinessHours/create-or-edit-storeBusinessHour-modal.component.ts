@@ -50,7 +50,8 @@ export class CreateOrEditStoreBusinessHourModalComponent extends AppComponentBas
     show(storeBusinessHourId?: number): void {
         if (!storeBusinessHourId) {
             this.storeBusinessHour = new CreateOrEditStoreBusinessHourDto();
-            this.storeBusinessHour.id = storeBusinessHourId;
+            //this.storeBusinessHour.id = storeBusinessHourId;
+            this.storeBusinessHour.id = null;
             this.storeName = '';
             this.masterTagCategoryName = '';
             this.masterTagName = '';
@@ -62,7 +63,7 @@ export class CreateOrEditStoreBusinessHourModalComponent extends AppComponentBas
                 .getStoreBusinessHourForEdit(storeBusinessHourId)
                 .subscribe((result) => {
                     this.storeBusinessHour = result.storeBusinessHour;
-                    this.storeId = this.storeBusinessHour.storeId;
+                    this.storeId = result.storeBusinessHour.storeId;
                     this.storeName = result.storeName;
                     this.masterTagCategoryName = result.masterTagCategoryName;
                     this.masterTagName = result.masterTagName;
@@ -84,7 +85,6 @@ export class CreateOrEditStoreBusinessHourModalComponent extends AppComponentBas
                 })
             )
             .subscribe(() => {
-                debugger
                 this.notify.info(this.l('SavedSuccessfully'));
                 this.close();
                 this.modalSave.emit(null);
