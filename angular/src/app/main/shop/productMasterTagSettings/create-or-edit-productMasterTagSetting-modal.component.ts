@@ -41,7 +41,8 @@ export class CreateOrEditProductMasterTagSettingModalComponent extends AppCompon
     selectedTagCategory: any;
     masterTagCategoryOptions: any = []
     answerTypeOptions: { value: any, label: string }[] = [];
-
+    isProductTagQuestion: boolean = false;
+    isProductTag: boolean = false;
     constructor(
         injector: Injector,
         private _productMasterTagSettingsServiceProxy: ProductMasterTagSettingsServiceProxy,
@@ -111,9 +112,11 @@ export class CreateOrEditProductMasterTagSettingModalComponent extends AppCompon
     }
 
     onMasterTagCategoryClick(event: any) {
-        if (event.value != null) {
+        if (event.value != null && this.isProductTag) {
             this.productMasterTagSetting.masterTagCategoryId = event.value.id;
             this.productMasterTagSetting.customTagTitle = event.value.displayName;
+        }
+        if (event.value != null && !this.isProductTag) {
             this.productMasterTagSetting.customTagChatQuestion = 'What is'+ ' ' + event.value.displayName + '?';
         }
     }

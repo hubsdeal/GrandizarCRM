@@ -44,8 +44,8 @@
                             [style]="{ width: '100%' }"></p-dropdown>
                     </div>
 
-                    <div class="my-5 p_filter">
-                        <label class="form-label" for="MasterTagCategoryName">{{ l('Store Tag Category') }}</label>
+                    <div class="my-5 p_filter" *ngIf="isProductTag">
+                        <label class="form-label" for="MasterTagCategoryName">{{ l('Tag Category') }}</label>
                         <p-dropdown [options]="masterTagCategoryOptions" [filter]="true" [virtualScroll]="true"
                             (onChange)="onMasterTagCategoryClick($event)" placeholder="Select Tag Category"
                             [itemSize]="30" name="displayName" optionLabel="displayName" optionId="id"
@@ -82,7 +82,7 @@
                         <validation-messages [formCtrl]="ProductMasterTagSetting_DisplaySequence"></validation-messages>
                     </div> -->
 
-                    <div class="my-3">
+                    <div class="my-3" *ngIf="isProductTag">
                         <label class="form-label" for="ProductMasterTagSetting_CustomTagTitle">
                             Title - (Customize if needed)
                         </label>
@@ -93,7 +93,7 @@
                         <validation-messages [formCtrl]="ProductMasterTagSetting_CustomTagTitle"></validation-messages>
                     </div>
 
-                    <div class="my-3">
+                    <div class="my-3" *ngIf="isProductTagQuestion">
                         <label class="form-label" for="ProductMasterTagSetting_CustomTagChatQuestion">
                             Tag Questions
                         </label>
@@ -116,7 +116,7 @@
                         </span>
                     </label>
                     <validation-messages [formCtrl]="ProductMasterTagSetting_DisplayPublic"></validation-messages> -->
-                    <div class="my-5">
+                    <div class="my-5" *ngIf="isProductTagQuestion">
                         <label class="form-label" for="ProductMasterTagSetting_AnswerTypeId">
                             {{ l('Tag Answer Type') }}
                         </label>
