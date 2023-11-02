@@ -121,7 +121,8 @@ export class CreateOrEditStoreModalComponent extends AppComponentBase implements
                     this.saving = false;
                 })
             )
-            .subscribe(() => {
+            .subscribe(result => {
+                debugger;
                 this.notify.info(this.l('SavedSuccessfully'));
                 this.close();
                 this.modalSave.emit(null);
