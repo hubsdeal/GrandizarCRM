@@ -1577,18 +1577,22 @@ bs-days-calendar-view {
 .store_zipcode_map {
     button {
         border: 1px solid #2c9aee !important;
-        .fas{
+
+        .fas {
             color: gray;
         }
+
         .del_icon_zip {
             display: none;
         }
 
         &:hover {
             color: white;
-            .fas{
+
+            .fas {
                 color: white;
             }
+
             .del_icon_zip {
                 display: inline;
                 font-size: 12px;
@@ -1597,4 +1601,33 @@ bs-days-calendar-view {
             }
         }
     }
+}
+
+::ng-deep {
+    .p-rating .p-rating-icon.pi-star-fill {
+        color: #f5a82d !important;
+    }
+
+    .p-rating .p-rating-icon {
+        color: #f2a73a;
+    }
+    .p-rating .p-rating-icon {
+        font-size: 1.2rem !important;
+    }
+}
+
+.p-rating .p-rating-icon.pi-star-fill {
+    color: #f5a82d !important;
+}
+
+.p-rating .p-rating-icon {
+    color: #f2a73a !important;
+}
+.p-rating .p-rating-icon {
+    font-size: 1.2rem !important;
+}
+.p-selectbutton .p-button.p-highlight {
+    background: #2b9ef3 !important;
+    border-color: #3d9ef1 !important;
+    color: rgb(255 255 255 / 87%) !important;
 }

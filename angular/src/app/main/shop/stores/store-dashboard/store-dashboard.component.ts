@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ChatGptResponseModalComponent } from '@app/shared/chat-gpt-response-modal/chat-gpt-response-modal.component';
 import { AppConsts } from '@shared/AppConsts';
 import { AppComponentBase } from '@shared/common/app-component-base';
-import { CreateOrEditStoreDto, CreateOrEditStoreMediaDto, CreateOrEditStoreZipCodeMapDto, GetStoreAccountTeamForViewDto, GetStoreBusinessHourForViewDto, GetStoreLocationForViewDto, GetStoreMediaForViewDto, RatingLikesServiceProxy, StatesServiceProxy, StoreAccountTeamDto, StoreAccountTeamsServiceProxy, StoreBusinessHoursServiceProxy, StoreCountryLookupTableDto, StoreLocationDto, StoreLocationsServiceProxy, StoreMediasServiceProxy, StoreTopStatsForViewDto, StoreZipCodeMapsServiceProxy, StoresServiceProxy } from '@shared/service-proxies/service-proxies';
+import { CreateOrEditStoreDto, CreateOrEditStoreMediaDto, CreateOrEditStoreReviewDto, CreateOrEditStoreZipCodeMapDto, GetStoreAccountTeamForViewDto, GetStoreBusinessHourForViewDto, GetStoreLocationForViewDto, GetStoreMediaForViewDto, PublicPagesCommonServiceProxy, RatingLikesServiceProxy, ReviewByStoreFromSpDto, StatesServiceProxy, StoreAccountTeamDto, StoreAccountTeamsServiceProxy, StoreBusinessHoursServiceProxy, StoreCountryLookupTableDto, StoreLocationDto, StoreLocationsServiceProxy, StoreMediasServiceProxy, StoreReviewsServiceProxy, StoreTopStatsForViewDto, StoreZipCodeMapsServiceProxy, StoresServiceProxy } from '@shared/service-proxies/service-proxies';
 import { IAjaxResponse, TokenService } from 'abp-ng2-module';
 import { FileItem, FileUploader, FileUploaderOptions } from 'ng2-file-upload';
 import { SelectItem } from 'primeng/api';
@@ -21,11 +21,16 @@ import { OneToOneConnectModalComponent } from '@app/shared/one-to-one-connect-mo
 import { CreateOrEditStoreBusinessHourModalComponent } from '../../storeBusinessHours/create-or-edit-storeBusinessHour-modal.component';
 import { StoreZipCodeMapDto } from '@shared/service-proxies/service-proxies';
 import { CreateOrEditStoreLocationModalComponent } from '../../storeLocations/create-or-edit-storeLocation-modal.component';
+import { AppSessionService } from '@shared/common/session/app-session.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-store-dashboard',
   templateUrl: './store-dashboard.component.html',
-  styleUrls: ['./store-dashboard.component.css']
+  styleUrls: ['./store-dashboard.component.css'],
+  providers: [
+    DatePipe
+  ]
 })
 export class StoreDashboardComponent extends AppComponentBase implements OnInit, AfterViewInit {
   @ViewChild('createOrEditStoreMediaModal', { static: true })
@@ -48,6 +53,7 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
   localOrVirtualStoreOptions: SelectItem[];
   storeVerifiedOptions: SelectItem[];
   storePublishedOptions: SelectItem[];
+  reviewPublishedOptions: SelectItem[];
   store: CreateOrEditStoreDto;
 
   tags: string[] = [];
@@ -126,6 +132,11 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
   @ViewChild('createOrEditStoreLocationModal', { static: true }) createOrEditStoreLocationModal: CreateOrEditStoreLocationModalComponent;
   storeLocations: GetStoreLocationForViewDto[] = [];
 
+
+  storeReview: ReviewByStoreFromSpDto[] = [];
+  ratingValue: any;
+  customerReview: CreateOrEditStoreReviewDto = new CreateOrEditStoreReviewDto();
+
   constructor(
     injector: Injector,
     private route: ActivatedRoute,
@@ -141,6 +152,10 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
     private _storeHoursServiceProxy: StoreBusinessHoursServiceProxy,
     private _storeZipCodeMapsServiceProxy: StoreZipCodeMapsServiceProxy,
     private _storeLocationServiceProxy: StoreLocationsServiceProxy,
+    private _publicPagesCommonServiceProxy: PublicPagesCommonServiceProxy,
+    private datePipe: DatePipe,
+    private _appSessionService: AppSessionService,
+    private _storeReviewsServiceProxy: StoreReviewsServiceProxy,
     private dialog: MatDialog
   ) {
     super(injector);
@@ -154,11 +169,13 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
     this.getStoreHour(this.storeId);
     this.getStoreLocations(this.storeId);
     this.getALllStoreZipCodes(this.storeId);
+    this.getReviews(this.storeId); 
     this.getAllStoreAccountTeams();
     this.initFileUploader();
     this.localOrVirtualStoreOptions = [{ label: 'Local Store', value: false }, { label: 'Virtual Store', value: true }];
     this.storeVerifiedOptions = [{ label: 'Verified', value: true }, { label: 'Not Verified', value: false }];
     this.storePublishedOptions = [{ label: 'Un Published', value: false }, { label: 'Published', value: true }];
+    this.reviewPublishedOptions = [{ label: 'Un Published', value: false }, { label: 'Published', value: true }];
   }
   ngAfterViewInit() {
 
@@ -654,6 +671,44 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
         }
       }
     );
+  }
+
+  //store Review
+  getReviews(storeid: number) {
+    this._publicPagesCommonServiceProxy.getAllStoreReviewsByStore('', storeid, undefined, undefined, '', 0, 50).subscribe(result => {
+      this.storeReview = result.storeReviews;
+    });
+  }
+
+  getFormatDate(date: Date) {
+    return this.datePipe.transform(date, 'MMM d, y')
+  }
+  subMitReview() {
+    this.customerReview.ratingLikeId = this.ratingValue;
+    this.customerReview.contactId = this._appSessionService.contactId;
+    this.customerReview.storeId = this.storeId;
+    this.customerReview.isPublish = true;
+
+    this._publicPagesCommonServiceProxy.createStoreReview(this.customerReview)
+      .pipe(finalize(() => { }))
+      .subscribe(() => {
+        this.getReviews(this.storeId);
+        this.notify.info(this.l('Review Submitted Successfully'));
+        this.customerReview = new CreateOrEditStoreReviewDto();
+        this.ratingValue = null;
+      });
+  }
+
+  onReviewPublishClick(event: any, id: number) {
+    debugger
+    if (event) {
+      this._storeReviewsServiceProxy.getStoreReviewForEdit(id).subscribe(result => {
+        result.storeReview.isPublish = !result.storeReview.isPublish;
+        this._storeReviewsServiceProxy.createOrEdit(result.storeReview).subscribe(r => {
+          this.notify.info(this.l('Successfully Updated'));
+        })
+      });
+    }
   }
 
 }

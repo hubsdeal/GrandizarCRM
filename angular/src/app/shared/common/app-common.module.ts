@@ -45,6 +45,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { SwiperModule } from "swiper/angular";
 import { FullCalendarModule } from 'ng-fullcalendar';
 import { AgmCoreModule } from '@agm/core';
+import { RatingModule } from 'primeng/rating';
 
 import { AgmOverlays } from 'agm-overlays';
 @NgModule({
@@ -75,7 +76,8 @@ import { AgmOverlays } from 'agm-overlays';
         TreeTableModule,
         MultiSelectModule,
         SwiperModule,
-        FullCalendarModule
+        FullCalendarModule,
+        RatingModule
     ], 
     declarations: [
         TimeZoneComboComponent,
@@ -109,7 +111,8 @@ import { AgmOverlays } from 'agm-overlays';
         SwiperModule,
         FullCalendarModule,
         AgmCoreModule,
-        AgmOverlays
+        AgmOverlays,
+        RatingModule 
     ],
     providers: [
         DateTimeService,

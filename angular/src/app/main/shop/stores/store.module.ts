@@ -23,6 +23,7 @@ import { MainModule } from '@app/main/main.module';
 import { StoreBusinessHourModule } from '../storeBusinessHours/storeBusinessHour.module';
 import { StoreOwnerTeamModule } from '../storeOwnerTeams/storeOwnerTeam.module';
 import { StoreLocationModule } from '../storeLocations/storeLocation.module';
+import { StoreDocumentsComponent } from './store-documents/store-documents.component';
 
 @NgModule({
     declarations: [
@@ -34,6 +35,7 @@ import { StoreLocationModule } from '../storeLocations/storeLocation.module';
         StoreMasterTagLookupTableModalComponent,
         StoreDashboardComponent,
         MyStoresComponent,
+        StoreDocumentsComponent,
     ],
     imports: [AppSharedModule, StoreRoutingModule, AdminSharedModule, StoreMediaModule, TaskEventModule, StoreTagModule, StoreNoteModule,
         OrderModule,
