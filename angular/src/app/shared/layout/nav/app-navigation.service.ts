@@ -99,6 +99,8 @@ export class AppNavigationService {
                     new AppMenuItem('Product Library', 'Pages.Products', 'flaticon2-delivery-package', '/app/main/shop/productLibraries'),
                     new AppMenuItem('Product Category', 'Pages.ProductCategories', 'flaticon-map', '/app/main/shop/productCategories'),
                     new AppMenuItem('Media Library', 'Pages.MediaLibraries', 'fas fa-photo-video', '/app/main/lookupData/mediaLibraries'),
+                    new AppMenuItem('Product Gig Worker Portfolios', 'Pages.ProductGigWorkerPortfolios', 'flaticon-map', '/app/main/shop/productGigWorkerPortfolios'),
+                    new AppMenuItem('Product Data Settings', 'Pages.Products', 'fas fa-database', '/app/main/shop/productMasterTagSettings'),
                     //Contact Dashbaord//Applicant Dashboard//Employee Dashboard//new AppMenuItem('Product Gig Worker Portfolios', 'Pages.ProductGigWorkerPortfolios', 'flaticon-map', '/app/main/shop/productGigWorkerPortfolios'),
                 ]
             ),

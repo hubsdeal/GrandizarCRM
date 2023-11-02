@@ -1,24 +1,88 @@
 ﻿<div [@routerTransition]>
-    <sub-header [title]="'StoreOwnerTeams' | localize" [description]="'StoreOwnerTeamsHeaderInfo' | localize">
+    <!-- <sub-header [title]="'StoreOwnerTeams' | localize" [description]="'StoreOwnerTeamsHeaderInfo' | localize">
         <div role="actions">
             <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1">
                 <i class="fa fa-file-excel"></i>
                 {{ l('ExportToExcel') }}
             </button>
 
-            <button
-                *ngIf="isGranted('Pages.StoreOwnerTeams.Create')"
-                (click)="createStoreOwnerTeam()"
-                class="btn btn-primary blue"
-            >
+            <button *ngIf="isGranted('Pages.StoreOwnerTeams.Create')" (click)="createStoreOwnerTeam()"
+                class="btn btn-primary blue">
                 <i class="fa fa-plus"></i>
                 {{ l('CreateNewStoreOwnerTeam') }}
             </button>
         </div>
-    </sub-header>
+    </sub-header> -->
+    <div class="w-100 d-flex mb-6 ps-9 pe-9 mt-6 justify-content-between align-items-center ng-tns-c282-7">
+        <div class="d-flex">
+            <h1 class="fs-3 fw-bold  my-0 page-heading text-dark">
+                Store Owner Team <span class="badge ms-3 badge-primary">{{totalRecordsCount}}</span>
+            </h1>
+        </div>
+        <button *ngIf="isGranted('Pages.StoreOwnerTeams.Create')" (click)="createStoreOwnerTeam()"
+            class="btn btn-primary blue">
+            <i class="fa fa-plus"></i>
+            {{ l('Team') }}
+        </button>
+    </div>
 
     <div [class]="containerClass">
-        <div class="card card-custom gutter-b">
+        <div class="row">
+            <div class="col-md-6 col-xxl-4 mb-4" *ngFor="let record of allEmployee">
+                <!--begin::Card-->
+                <div class="card shadow-sm rounded">
+                    <div class="card-body d-flex flex-center flex-column py-9 px-5">
+                        <div class="symbol symbol-65px symbol-circle mb-5" *ngIf="!record.picture">
+                            <img src="/assets/common/images/default-profile-picture.png" alt="image">
+                        </div>
+                        <div class="symbol symbol-65px symbol-circle mb-5" *ngIf="record.picture">
+                            <img src="{{record.picture}}" alt="image">
+                        </div>
+                        <a href="javascript:;" class="fs-4 text-gray-800 text-hover-primary fw-bold mb-0">
+                            {{record.firstName}} {{record.lastName}} <i title="Active"
+                                *ngIf="record.storeOwnerTeam.active" class="fas fa-check-circle ms-3 text-success"></i>
+                        </a>
+                        <div class="fw-semibold text-gray-400 mb-6 mt-5">
+                            <span *ngIf="record.storeOwnerTeam.primary" class="badge badge-primary me-2">Primary</span>
+                            <span *ngIf="record.storeOwnerTeam.orderEmailNotification"
+                                class="badge badge-success me-2">Order Email Alert</span>
+                            <span *ngIf="record.storeOwnerTeam.orderSmsNotification" class="badge badge-info">Order SMS
+                                Alert</span>
+                        </div>
+                        <div class="d-flex flex-center flex-wrap mb-5">
+                            <div *ngIf="record.mobile"
+                                class="border border-dashed rounded min-w-90px py-3 px-4 mx-2 mb-3">
+                                <div class="fs-6 fw-bold text-gray-700">{{record.mobile}}
+                                </div>
+                                <div class="fw-semibold text-gray-400">Mobile
+                                </div>
+                            </div>
+                            <div *ngIf="record.email"
+                                class="border border-dashed rounded min-w-90px py-3 px-4 mx-2 mb-3">
+                                <div class="fs-6 fw-bold text-gray-700">
+                                    {{record.email}}
+                                </div>
+                                <div class="fw-semibold text-gray-400">Email
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex">
+                            <button class="btn btn-sm btn-light-primary btn-icon me-3"
+                                (click)="createOrEditStoreOwnerTeamModal.show(record.storeOwnerTeam.id )">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button *ngIf="permission.isGranted('Pages.StoreOwnerTeams.Delete')"
+                                (click)="deleteStoreOwnerTeam(record.storeOwnerTeam)"
+                                class="btn btn-sm btn-light-primary btn-icon me-3">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- <div class="card card-custom gutter-b">
             <div class="card-body">
                 <form class="form" autocomplete="off">
                     <div>
@@ -26,15 +90,9 @@
                             <div class="col-xl-12">
                                 <div class="my-3">
                                     <div class="input-group mb-3">
-                                        <input
-                                            [(ngModel)]="filterText"
-                                            (ngModelChange)="getStoreOwnerTeams()"
-                                            name="filterText"
-                                            autoFocus
-                                            type="text"
-                                            class="form-control"
-                                            [placeholder]="l('SearchWithThreeDot')"
-                                        />
+                                        <input [(ngModel)]="filterText" (ngModelChange)="getStoreOwnerTeams()"
+                                            name="filterText" autoFocus type="text" class="form-control"
+                                            [placeholder]="l('SearchWithThreeDot')" />
                                         <button class="btn btn-primary" type="submit" (click)="getStoreOwnerTeams()">
                                             <i class="flaticon-search-1"></i>
                                         </button>
@@ -48,13 +106,8 @@
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="ActiveFilterSelect">{{ l('Active') }}</label>
-                                    <select
-                                        class="form-select"
-                                        name="ActiveFilter"
-                                        id="ActiveFilterSelect"
-                                        [(ngModel)]="activeFilter"
-                                        (ngModelChange)="getStoreOwnerTeams()"
-                                    >
+                                    <select class="form-select" name="ActiveFilter" id="ActiveFilterSelect"
+                                        [(ngModel)]="activeFilter" (ngModelChange)="getStoreOwnerTeams()">
                                         <option value="-1">{{ l('All') }}</option>
                                         <option value="0">{{ l('False') }}</option>
                                         <option value="1">{{ l('True') }}</option>
@@ -64,13 +117,8 @@
                             <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="PrimaryFilterSelect">{{ l('Primary') }}</label>
-                                    <select
-                                        class="form-select"
-                                        name="PrimaryFilter"
-                                        id="PrimaryFilterSelect"
-                                        [(ngModel)]="primaryFilter"
-                                        (ngModelChange)="getStoreOwnerTeams()"
-                                    >
+                                    <select class="form-select" name="PrimaryFilter" id="PrimaryFilterSelect"
+                                        [(ngModel)]="primaryFilter" (ngModelChange)="getStoreOwnerTeams()">
                                         <option value="-1">{{ l('All') }}</option>
                                         <option value="0">{{ l('False') }}</option>
                                         <option value="1">{{ l('True') }}</option>
@@ -82,13 +130,10 @@
                                     <label class="form-label" for="OrderEmailNotificationFilterSelect">
                                         {{ l('OrderEmailNotification') }}
                                     </label>
-                                    <select
-                                        class="form-select"
-                                        name="OrderEmailNotificationFilter"
+                                    <select class="form-select" name="OrderEmailNotificationFilter"
                                         id="OrderEmailNotificationFilterSelect"
                                         [(ngModel)]="orderEmailNotificationFilter"
-                                        (ngModelChange)="getStoreOwnerTeams()"
-                                    >
+                                        (ngModelChange)="getStoreOwnerTeams()">
                                         <option value="-1">{{ l('All') }}</option>
                                         <option value="0">{{ l('False') }}</option>
                                         <option value="1">{{ l('True') }}</option>
@@ -100,13 +145,9 @@
                                     <label class="form-label" for="OrderSmsNotificationFilterSelect">
                                         {{ l('OrderSmsNotification') }}
                                     </label>
-                                    <select
-                                        class="form-select"
-                                        name="OrderSmsNotificationFilter"
-                                        id="OrderSmsNotificationFilterSelect"
-                                        [(ngModel)]="orderSmsNotificationFilter"
-                                        (ngModelChange)="getStoreOwnerTeams()"
-                                    >
+                                    <select class="form-select" name="OrderSmsNotificationFilter"
+                                        id="OrderSmsNotificationFilterSelect" [(ngModel)]="orderSmsNotificationFilter"
+                                        (ngModelChange)="getStoreOwnerTeams()">
                                         <option value="-1">{{ l('All') }}</option>
                                         <option value="0">{{ l('False') }}</option>
                                         <option value="1">{{ l('True') }}</option>
@@ -119,13 +160,8 @@
                                     <label class="form-label" for="StoreNameFilter">
                                         ({{ l('Store') }}) {{ l('Name') }}
                                     </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="StoreNameFilter"
-                                        name="storeNameFilter"
-                                        [(ngModel)]="storeNameFilter"
-                                    />
+                                    <input type="text" class="form-control" id="StoreNameFilter" name="storeNameFilter"
+                                        [(ngModel)]="storeNameFilter" />
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -133,40 +169,26 @@
                                     <label class="form-label" for="UserNameFilter">
                                         ({{ l('User') }}) {{ l('Name') }}
                                     </label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="UserNameFilter"
-                                        name="userNameFilter"
-                                        [(ngModel)]="userNameFilter"
-                                    />
+                                    <input type="text" class="form-control" id="UserNameFilter" name="userNameFilter"
+                                        [(ngModel)]="userNameFilter" />
                                 </div>
                             </div>
                             <div class="col-md-12 mt-5">
-                                <button
-                                    (click)="resetFilters()"
-                                    class="btn btn-secondary btn-sm"
-                                    id="btn-reset-filters"
-                                >
+                                <button (click)="resetFilters()" class="btn btn-secondary btn-sm"
+                                    id="btn-reset-filters">
                                     Reset
                                 </button>
                             </div>
                         </div>
                         <div class="row my-4">
                             <div class="col-sm-12">
-                                <span
-                                    class="clickable-item text-muted"
-                                    *ngIf="!advancedFiltersAreShown"
-                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown"
-                                >
+                                <span class="clickable-item text-muted" *ngIf="!advancedFiltersAreShown"
+                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown">
                                     <i class="fa fa-angle-down"></i>
                                     {{ l('ShowAdvancedFilters') }}
                                 </span>
-                                <span
-                                    class="clickable-item text-muted"
-                                    *ngIf="advancedFiltersAreShown"
-                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown"
-                                >
+                                <span class="clickable-item text-muted" *ngIf="advancedFiltersAreShown"
+                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown">
                                     <i class="fa fa-angle-up"></i>
                                     {{ l('HideAdvancedFilters') }}
                                 </span>
@@ -176,28 +198,17 @@
                 </form>
 
                 <div class="row align-items-center">
-                    <!--<Primeng-Datatable-Start>-->
                     <div class="primeng-datatable-container col-12" [busyIf]="primengTableHelper.isLoading">
-                        <p-table
-                            #dataTable
-                            (onLazyLoad)="getStoreOwnerTeams($event)"
+                        <p-table #dataTable (onLazyLoad)="getStoreOwnerTeams($event)"
                             [value]="primengTableHelper.records"
-                            rows="{{ primengTableHelper.defaultRecordsCountPerPage }}"
-                            [paginator]="false"
-                            [lazy]="true"
-                            [scrollable]="true"
-                            ScrollWidth="100%"
-                            [responsive]="primengTableHelper.isResponsive"
-                            [resizableColumns]="primengTableHelper.resizableColumns"
-                        >
+                            rows="{{ primengTableHelper.defaultRecordsCountPerPage }}" [paginator]="false" [lazy]="true"
+                            [scrollable]="true" ScrollWidth="100%" [responsive]="primengTableHelper.isResponsive"
+                            [resizableColumns]="primengTableHelper.resizableColumns">
                             <ng-template pTemplate="header">
                                 <tr>
-                                    <th
-                                        style="width: 130px"
-                                        [hidden]="
+                                    <th style="width: 130px" [hidden]="
                                             !isGrantedAny('Pages.StoreOwnerTeams.Edit', 'Pages.StoreOwnerTeams.Delete')
-                                        "
-                                    >
+                                        ">
                                         {{ l('Actions') }}
                                     </th>
                                     <th style="width: 150px" pSortableColumn="storeFk.name">
@@ -228,12 +239,9 @@
                             </ng-template>
                             <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
                                 <tr>
-                                    <td
-                                        style="width: 130px"
-                                        [hidden]="
+                                    <td style="width: 130px" [hidden]="
                                             !isGrantedAny('Pages.StoreOwnerTeams.Edit', 'Pages.StoreOwnerTeams.Delete')
-                                        "
-                                    >
+                                        ">
                                         <div class="btn-group dropdown" dropdown container="body">
                                             <button class="dropdown-toggle btn btn-sm btn-primary" dropdownToggle>
                                                 <i class="fa fa-cog"></i>
@@ -242,35 +250,26 @@
                                             </button>
                                             <ul class="dropdown-menu" *dropdownMenu>
                                                 <li>
-                                                    <a
-                                                        href="javascript:;"
-                                                        class="dropdown-item"
-                                                        (click)="viewStoreOwnerTeamModal.show(record)"
-                                                    >
+                                                    <a href="javascript:;" class="dropdown-item"
+                                                        (click)="viewStoreOwnerTeamModal.show(record)">
                                                         {{ l('View') }}
                                                     </a>
                                                 </li>
                                                 <li>
-                                                    <a
-                                                        href="javascript:;"
+                                                    <a href="javascript:;"
                                                         *ngIf="permission.isGranted('Pages.StoreOwnerTeams.Edit')"
-                                                        class="dropdown-item"
-                                                        (click)="
+                                                        class="dropdown-item" (click)="
                                                             createOrEditStoreOwnerTeamModal.show(
                                                                 record.storeOwnerTeam.id
                                                             )
-                                                        "
-                                                    >
+                                                        ">
                                                         {{ l('Edit') }}
                                                     </a>
                                                 </li>
                                                 <li>
-                                                    <a
-                                                        class="dropdown-item"
-                                                        href="javascript:;"
+                                                    <a class="dropdown-item" href="javascript:;"
                                                         *ngIf="permission.isGranted('Pages.StoreOwnerTeams.Delete')"
-                                                        (click)="deleteStoreOwnerTeam(record.storeOwnerTeam)"
-                                                    >
+                                                        (click)="deleteStoreOwnerTeam(record.storeOwnerTeam)">
                                                         {{ l('Delete') }}
                                                     </a>
                                                 </li>
@@ -328,27 +327,20 @@
                             {{ l('NoData') }}
                         </div>
                         <div class="primeng-paging-container">
-                            <p-paginator
-                                [rows]="primengTableHelper.defaultRecordsCountPerPage"
-                                #paginator
+                            <p-paginator [rows]="primengTableHelper.defaultRecordsCountPerPage" #paginator
                                 (onPageChange)="getStoreOwnerTeams($event)"
                                 [totalRecords]="primengTableHelper.totalRecordsCount"
                                 [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
-                                [showCurrentPageReport]="true"
-                                [currentPageReportTemplate]="
+                                [showCurrentPageReport]="true" [currentPageReportTemplate]="
                                     'TotalRecordsCount' | localize : primengTableHelper.totalRecordsCount
-                                "
-                            ></p-paginator>
+                                "></p-paginator>
                         </div>
                     </div>
-                    <!--<Primeng-Datatable-End>-->
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
-    <createOrEditStoreOwnerTeamModal
-        #createOrEditStoreOwnerTeamModal
-        (modalSave)="getStoreOwnerTeams()"
-    ></createOrEditStoreOwnerTeamModal>
+    <createOrEditStoreOwnerTeamModal #createOrEditStoreOwnerTeamModal (modalSave)="getStoreOwnerTeams()">
+    </createOrEditStoreOwnerTeamModal>
     <viewStoreOwnerTeamModal #viewStoreOwnerTeamModal></viewStoreOwnerTeamModal>
 </div>

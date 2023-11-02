@@ -37,6 +37,8 @@ export class CreateOrEditStoreBusinessHourModalComponent extends AppComponentBas
     masterTagCategoryName = '';
     masterTagName = '';
 
+    storeId:number;
+
     constructor(
         injector: Injector,
         private _storeBusinessHoursServiceProxy: StoreBusinessHoursServiceProxy,
@@ -48,7 +50,8 @@ export class CreateOrEditStoreBusinessHourModalComponent extends AppComponentBas
     show(storeBusinessHourId?: number): void {
         if (!storeBusinessHourId) {
             this.storeBusinessHour = new CreateOrEditStoreBusinessHourDto();
-            this.storeBusinessHour.id = storeBusinessHourId;
+            //this.storeBusinessHour.id = storeBusinessHourId;
+            this.storeBusinessHour.id = null;
             this.storeName = '';
             this.masterTagCategoryName = '';
             this.masterTagName = '';
@@ -60,7 +63,7 @@ export class CreateOrEditStoreBusinessHourModalComponent extends AppComponentBas
                 .getStoreBusinessHourForEdit(storeBusinessHourId)
                 .subscribe((result) => {
                     this.storeBusinessHour = result.storeBusinessHour;
-
+                    this.storeId = result.storeBusinessHour.storeId;
                     this.storeName = result.storeName;
                     this.masterTagCategoryName = result.masterTagCategoryName;
                     this.masterTagName = result.masterTagName;
@@ -73,7 +76,7 @@ export class CreateOrEditStoreBusinessHourModalComponent extends AppComponentBas
 
     save(): void {
         this.saving = true;
-
+        this.storeBusinessHour.storeId = this.storeId;
         this._storeBusinessHoursServiceProxy
             .createOrEdit(this.storeBusinessHour)
             .pipe(
@@ -128,6 +131,76 @@ export class CreateOrEditStoreBusinessHourModalComponent extends AppComponentBas
     getNewMasterTagId() {
         this.storeBusinessHour.masterTagId = this.storeBusinessHourMasterTagLookupTableModal.id;
         this.masterTagName = this.storeBusinessHourMasterTagLookupTableModal.displayName;
+    }
+
+    mondayStartTimeValue(value: any) {
+        this.storeBusinessHour.mondayStartTime = value;
+        // console.log(this.storeBusinessHour.mondayStartTime);
+
+    }
+    mondayEndTimeValue(value: any) {
+        this.storeBusinessHour.mondayEndTime = value;
+        // console.log(this.storeBusinessHour.mondayEndTime);
+    }
+
+    tuesdayStartTimeValue(value: any) {
+        this.storeBusinessHour.tuesdayStartTime = value;
+        // console.log(this.storeBusinessHour.tuesdayStartTime);
+
+    }
+    tuesdayEndTimeValue(value: any) {
+        this.storeBusinessHour.tuesdayEndTime = value;
+        // console.log(this.storeBusinessHour.tuesdayEndTime);
+    }
+
+    wednesdayStartTimeValue(value: any) {
+        this.storeBusinessHour.wednesdayStartTime = value;
+        // console.log(this.storeBusinessHour.wednesdayStartTime);
+
+    }
+    wednesdayEndTimeValue(value: any) {
+        this.storeBusinessHour.wednesdayEndTime = value;
+        // console.log(this.storeBusinessHour.wednesdayEndTime);
+    }
+
+    thursdayStartTimeValue(value: any) {
+        this.storeBusinessHour.thursdayStartTime = value;
+        // console.log(this.storeBusinessHour.thursdayStartTime);
+
+    }
+    thursdayEndTimeValue(value: any) {
+        this.storeBusinessHour.thursdayEndTime = value;
+        // console.log(this.storeBusinessHour.thursdayEndTime);
+    }
+
+    fridayStartTimeValue(value: any) {
+        this.storeBusinessHour.fridayStartTime = value;
+        // console.log(this.storeBusinessHour.fridayStartTime);
+
+    }
+    fridayEndTimeValue(value: any) {
+        this.storeBusinessHour.fridayEndTime = value;
+        // console.log(this.storeBusinessHour.fridayEndTime);
+    }
+
+    saturdayStartTimeValue(value: any) {
+        this.storeBusinessHour.saturdayStartTime= value;
+        // console.log(this.storeBusinessHour.saturdayStartTime);
+
+    }
+    saturdayEndTimeValue(value: any) {
+        this.storeBusinessHour.saturdayEndTime = value;
+        // console.log(this.storeBusinessHour.saturdayEndTime);
+    }
+
+    sundayStartTimeValue(value: any) {
+        this.storeBusinessHour.sundayStartTime= value;
+        // console.log(this.storeBusinessHour.sundayStartTime);
+
+    }
+    sundayEndTimeValue(value: any) {
+        this.storeBusinessHour.sundayEndTime = value;
+        // console.log(this.storeBusinessHour.sundayEndTime);
     }
 
     close(): void {

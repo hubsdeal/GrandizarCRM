@@ -20,6 +20,9 @@ import { StoreMarketplaceCommissionSettingModule } from '../storeMarketplaceComm
 import { StoreTaskMapModule } from '@app/main/taskManagement/storeTaskMaps/storeTaskMap.module';
 import { StoreAccountTeamModule } from '../storeAccountTeams/storeAccountTeam.module';
 import { MainModule } from '@app/main/main.module';
+import { StoreBusinessHourModule } from '../storeBusinessHours/storeBusinessHour.module';
+import { StoreOwnerTeamModule } from '../storeOwnerTeams/storeOwnerTeam.module';
+import { StoreLocationModule } from '../storeLocations/storeLocation.module';
 
 @NgModule({
     declarations: [
@@ -39,13 +42,16 @@ import { MainModule } from '@app/main/main.module';
         StoreMarketplaceCommissionSettingModule,
         StoreTaskMapModule,
         StoreAccountTeamModule,
+        StoreBusinessHourModule,
+        StoreLocationModule,
+        StoreOwnerTeamModule,
         MainModule
     ],
-    exports:[
+    exports: [
         MyStoresComponent,
         CreateOrEditStoreModalComponent,
         StoreMediaLibraryLookupTableModalComponent,
         StoreMasterTagLookupTableModalComponent,
     ]
 })
-export class StoreModule {}
+export class StoreModule { }

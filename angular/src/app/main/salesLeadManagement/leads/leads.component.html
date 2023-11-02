@@ -1,17 +1,31 @@
 ﻿<div [@routerTransition]>
-    <sub-header [title]="'Leads' | localize" [description]="">
+    <!-- <sub-header [title]="'Lead List' | localize" [description]="">
         <div role="actions">
-            <!-- <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1">
-                <i class="fa fa-file-excel"></i>
-                {{ l('ExportToExcel') }}
-            </button> -->
 
             <button *ngIf="isGranted('Pages.Leads.Create')" (click)="createLead()" class="btn btn-primary blue">
                 <i class="fa fa-plus"></i>
                 {{ l('Lead') }}
             </button>
         </div>
-    </sub-header>
+    </sub-header> -->
+    <div class="w-100 d-flex mb-6 ps-9 pe-9 mt-6 justify-content-between align-items-center ng-tns-c282-7">
+        <div class="d-flex">
+            <h1 class="fs-3 fw-bold  my-0 page-heading text-dark">
+                Lead List
+            </h1>
+            <span style="cursor: pointer;" class="badge badge-primary badge ms-2">
+                Total: {{primengTableHelper.totalRecordsCount}}
+            </span>
+            <span style="cursor: pointer;" class="badge badge-success badge ms-2">
+                Total Revenue: $454
+            </span>
+        </div>
+        <button *ngIf="isGranted('Pages.Leads.Create')" (click)="createLead()" class="btn btn-primary blue">
+            <i class="fa fa-plus"></i>
+            {{ l('Lead') }}
+        </button>
+    </div>
+
 
     <div [class]="containerClass">
         <div class="card card-custom gutter-b">
@@ -273,13 +287,13 @@
                             <ng-template pTemplate="header">
                                 <tr>
                                     <th style="min-width: 220px">
-                                        {{ l('Lead Title') }}
+                                        {{ l('Title') }}
                                     </th>
                                     <th style="min-width: 220px">
-                                        {{ l('Contact Name') }}
+                                        {{ l('Contact') }}
                                     </th>
                                     <th style="min-width: 180px">
-                                        {{ l('Employee') }}
+                                        {{ l('Lead Owner') }}
                                     </th>
                                     <!-- <th style="min-width: 180px">
                                         {{ l('Business') }}
@@ -330,10 +344,10 @@
                                         {{ l('Lead Score') }}
                                     </th>
                                     <th style="min-width: 150px">
-                                        {{ l('Sales Amount') }}
+                                        {{ l('Expected Revenue') }}
                                     </th>
                                     <th style="width: 150px">
-                                        {{ l('Date') }}
+                                        {{ l('Status') }}
                                     </th>
                                     <th style="width: 130px"
                                         [hidden]="!isGrantedAny('Pages.Leads.Edit', 'Pages.Leads.Delete')">
@@ -360,7 +374,7 @@
                                                     </span>
                                                     <span *ngIf="record.storeName" class="kt-widget1__desc">
                                                         Store: {{ record.storeName }}
-                                                    </span> 
+                                                    </span>
                                                     <span *ngIf="record.hubName " class="kt-widget1__desc">
                                                         Hub: {{ record.hubName }}
                                                     </span>
@@ -370,7 +384,10 @@
                                                     <span *ngIf="record.leadSourceName " class="kt-widget1__desc">
                                                         Source: {{ record.leadSourceName }}
                                                     </span>
-                                                </div> 
+                                                    <span *ngIf="record.lead.createdDate" class="kt-widget1__desc">
+                                                        Date: {{ record.lead.createdDate | luxonFormat : 'dd-MM-yyyy' }}
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
                                     </td>
@@ -380,7 +397,8 @@
                                             <div class="kt-widget1__item border-0">
                                                 <div class="kt-widget1__info d-grid">
                                                     <a href="javascript:;">
-                                                        <h3 class="kt-widget1__title fs-6"> {{ record.contactFullName }}</h3>
+                                                        <h3 class="kt-widget1__title fs-6"> {{ record.contactFullName }}
+                                                        </h3>
                                                     </a>
                                                     <span class="kt-widget1__desc" *ngIf="record.lead.email">
                                                         Email: {{ record.lead.email }}
@@ -394,25 +412,19 @@
                                                     <span *ngIf="record.lead.jobTitle " class="kt-widget1__desc">
                                                         Job Title: {{ record.lead.jobTitle }}
                                                     </span>
-                                                    <span *ngIf="record.businessName " class="kt-widget1__desc">
+                                                    <!-- <span *ngIf="record.businessName " class="kt-widget1__desc">
                                                         Business: {{ record.businessName }}
-                                                    </span>
-                                                    <span *ngIf="record.leadSourceName " class="kt-widget1__desc">
-                                                        Source: {{ record.leadSourceName }}
-                                                    </span>
-                                                    <span *ngIf="record.lead.leadScore " class="kt-widget1__desc">
-                                                        Score:  {{ record.lead.leadScore }}
-                                                    </span>
-                                                </div> 
+                                                    </span> -->
+                                                </div>
                                             </div>
                                         </div>
                                     </td>
                                     <td style="width: 180px">
                                         {{ record.employeeName }}
-                                    </td> 
+                                    </td>
                                     <td style="width: 150px">
                                         {{ record.lead.leadScore }}
-                                    </td> 
+                                    </td>
                                     <!-- <td style="width: 150px">
                                         <span class="p-column-title">{{ l('Name') }}</span>
                                         {{ record.employeeName }}
@@ -454,11 +466,8 @@
                                         {{ record.lead.expectedSalesAmount }}
                                     </td>
                                     <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('CreatedDate') }}</span>
-                                        <span *ngIf="record.lead.createdDate">
-                                            {{ record.lead.createdDate | luxonFormat : 'F' }}
-                                        </span>
-                                        <span *ngIf="!record.lead.createdDate">-</span>
+                                        {{record.leadPipelineStageName}}
+                                        
                                     </td>
                                     <!-- <td style="width: 150px">
                                         <span class="p-column-title">{{ l('ExpectedClosingDate') }}</span>
@@ -475,12 +484,12 @@
                                                 <span class="caret"></span>
                                             </button>
                                             <ul class="dropdown-menu" *dropdownMenu>
-                                                <!-- <li>
+                                                <li>
                                                     <a href="javascript:;" class="dropdown-item"
                                                         (click)="viewLeadModal.show(record)">
                                                         {{ l('View') }}
                                                     </a>
-                                                </li> -->
+                                                </li>
                                                 <li>
                                                     <a href="javascript:;"
                                                         *ngIf="permission.isGranted('Pages.Leads.Edit')"

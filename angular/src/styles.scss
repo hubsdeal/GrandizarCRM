@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~fullcalendar/dist/fullcalendar.min.css";
+
 .star_active {
     color: #c2a853;
 }
@@ -10,8 +11,8 @@
 
 agm-map {
     height: 500px;
-  }
-  
+}
+
 
 .product_slide_box {
     box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
@@ -1513,7 +1514,8 @@ bs-days-calendar-view {
         text-align: end;
         transition: all 0.4s;
         display: none;
-        i{
+
+        i {
             position: absolute;
             margin-left: -15px;
             margin-top: -9px;
@@ -1525,43 +1527,74 @@ bs-days-calendar-view {
         }
     }
 }
-.hover_delete_button_p:hover{
-    .hover_delete_button{
+
+.hover_delete_button_p:hover {
+    .hover_delete_button {
         display: block !important;
         transition: all 0.5s;
     }
 }
 
-.img_doc_block{
+.img_doc_block {
     width: 50px;
     height: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
-.img_doc_block img{
+
+.img_doc_block img {
     width: 100%;
     height: 100%;
     object-fit: contain;
 }
 
 //task tag
-.task_tag_hover_menu{
+.task_tag_hover_menu {
     transition: all 0.4s;
-    a{
+
+    a {
         display: flex;
         align-items: center;
         justify-content: space-around;
-        i{
+
+        i {
             margin-left: 10px;
         }
     }
-    .task_del{
+
+    .task_del {
         display: none;
     }
-    &:hover{
-        .task_del{
+
+    &:hover {
+        .task_del {
             display: block;
+        }
+    }
+}
+
+.store_zipcode_map {
+    button {
+        border: 1px solid #2c9aee !important;
+        .fas{
+            color: gray;
+        }
+        .del_icon_zip {
+            display: none;
+        }
+
+        &:hover {
+            color: white;
+            .fas{
+                color: white;
+            }
+            .del_icon_zip {
+                display: inline;
+                font-size: 12px;
+                margin-left: 4px;
+                color: white;
+            }
         }
     }
 }
