@@ -161,6 +161,26 @@
                                 <validation-messages [formCtrl]="Store_Website"></validation-messages>
                             </div>
                         </div>
+                        <div class="col-xl-12">
+                            <div class="my-5 p_filter">
+                                <label class="form-label required" for="HubName">
+                                    Primary Hub
+                                </label>
+                                <p-dropdown [options]="hubOptions" [filter]="true" [virtualScroll]="true"
+                                    (onChange)="onPrimaryHubClick($event)" placeholder="Select Primary Hub"
+                                    [itemSize]="30" name="displayName" optionLabel="displayName" optionId="id"
+                                    [(ngModel)]="selectedHub" filterBy="displayName" required
+                                    [style]="{ width: '100%' }"></p-dropdown>
+                            </div>
+                        </div>
+                        <div class="xol-xl-12">
+                            <div class="my-5">
+                                <label class="form-label" for="Store_Contact">{{ l('Contact Name') }}</label>
+                                <input type="text" #Store_Contact="ngModel" id="Store_Contact" class="form-control"
+                                    [(ngModel)]="store.contactName" name="contactName" minlength="1" maxlength="1024" />
+                                <validation-messages [formCtrl]="Store_Contact"></validation-messages>
+                            </div>
+                        </div>
                         <div class="col-xl-12 mt-5">
                             <div class="select_button_custom">
                                 <p-selectButton [options]="localOrVirtualStoreOptions" name="isLocalOrOnlineStore"

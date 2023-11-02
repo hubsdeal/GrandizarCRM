@@ -8,6 +8,7 @@ import {
     StoreStateLookupTableDto,
     StoreRatingLikeLookupTableDto,
     StoreMasterTagSettingsServiceProxy,
+    HubStoresServiceProxy,
 } from '@shared/service-proxies/service-proxies';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { DateTime } from 'luxon';
@@ -50,12 +51,15 @@ export class CreateOrEditStoreModalComponent extends AppComponentBase implements
     localOrVirtualStoreOptions: SelectItem[];
 
     selectedStoreTagSettingCategory: any;
+    selectedHub:any
     storeTagSettingCategoryOptions: any = []
+    hubOptions:any=[];
     constructor(
         injector: Injector,
         private _storesServiceProxy: StoresServiceProxy,
         private _storeMasterTagSettingsServiceProxy: StoreMasterTagSettingsServiceProxy,
         private _dateTimeService: DateTimeService,
+        private _hubStoresServiceProxy: HubStoresServiceProxy,
         private _router: Router
     ) {
         super(injector);
@@ -99,6 +103,9 @@ export class CreateOrEditStoreModalComponent extends AppComponentBase implements
         });
         this._storeMasterTagSettingsServiceProxy.getAllStoreTagSettingCategoryForLookupTable('', '', 0, 1000).subscribe(result => {
             this.storeTagSettingCategoryOptions = result.items;
+        });
+        this._hubStoresServiceProxy.getAllHubForLookupTable('','',0,3000).subscribe((result) => {
+            this.hubOptions = result.items;
         });
         this.localOrVirtualStoreOptions = [{ label: 'Local Store', value: false }, { label: 'Virtual Store', value: true }];
     }
@@ -164,6 +171,12 @@ export class CreateOrEditStoreModalComponent extends AppComponentBase implements
     onStoreTagSettingCategoryClick(event: any) {
         if (event.value != null) {
             this.store.storeTagSettingCategoryId = event.value.id;
+        }
+    }
+
+    onPrimaryHubClick(event: any) {
+        if (event.value != null) {
+            this.store.hubId = event.value.id;
         }
     }
 }
