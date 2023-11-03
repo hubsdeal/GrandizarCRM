@@ -19,7 +19,7 @@ import { CreateOrEditBulkProductMediaLibraryModalComponent } from './create-or-e
 @Component({
   selector: 'app-product-dashboard',
   templateUrl: './product-dashboard.component.html',
-  styleUrls: ['./product-dashboard.component.css']
+  styleUrls: ['./product-dashboard.component.scss']
 })
 export class ProductDashboardComponent extends AppComponentBase {
 
