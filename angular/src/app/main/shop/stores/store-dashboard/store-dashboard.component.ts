@@ -23,6 +23,7 @@ import { StoreZipCodeMapDto } from '@shared/service-proxies/service-proxies';
 import { CreateOrEditStoreLocationModalComponent } from '../../storeLocations/create-or-edit-storeLocation-modal.component';
 import { AppSessionService } from '@shared/common/session/app-session.service';
 import { DatePipe } from '@angular/common';
+import { HubStoresServiceProxy } from '@shared/service-proxies/service-proxies';
 
 @Component({
   selector: 'app-store-dashboard',
@@ -136,7 +137,7 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
   storeReview: ReviewByStoreFromSpDto[] = [];
   ratingValue: any;
   customerReview: CreateOrEditStoreReviewDto = new CreateOrEditStoreReviewDto();
-
+  hubOptions:any=[];
   constructor(
     injector: Injector,
     private route: ActivatedRoute,
@@ -156,6 +157,7 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
     private datePipe: DatePipe,
     private _appSessionService: AppSessionService,
     private _storeReviewsServiceProxy: StoreReviewsServiceProxy,
+    private _hubStoresServiceProxy: HubStoresServiceProxy,
     private dialog: MatDialog
   ) {
     super(injector);
@@ -189,6 +191,9 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
     this._storeMasterTagSettingsServiceProxy.getAllStoreTagSettingCategoryForLookupTable('', '', 0, 1000).subscribe(result => {
       this.storeTagSettingCategoryOptions = result.items;
     });
+    this._hubStoresServiceProxy.getAllHubForLookupTable('','',0,3000).subscribe((result) => {
+      this.hubOptions = result.items;
+  });
   }
 
   onCountryChange(event: any) {

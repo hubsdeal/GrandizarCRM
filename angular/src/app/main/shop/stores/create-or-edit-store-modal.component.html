@@ -173,14 +173,14 @@
                                     [style]="{ width: '100%' }"></p-dropdown>
                             </div>
                         </div>
-                        <div class="xol-xl-12">
+                        <!-- <div class="col-xl-12">
                             <div class="my-5">
                                 <label class="form-label" for="Store_Contact">{{ l('Contact Name') }}</label>
                                 <input type="text" #Store_Contact="ngModel" id="Store_Contact" class="form-control"
                                     [(ngModel)]="store.contactName" name="contactName" minlength="1" maxlength="1024" />
                                 <validation-messages [formCtrl]="Store_Contact"></validation-messages>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="col-xl-12 mt-5">
                             <div class="select_button_custom">
                                 <p-selectButton [options]="localOrVirtualStoreOptions" name="isLocalOrOnlineStore"
