@@ -1,7 +1,7 @@
 ﻿import { AppConsts } from '@shared/AppConsts';
-import { Component, Injector, ViewEncapsulation, ViewChild } from '@angular/core';
+import { Component, Injector, ViewEncapsulation, ViewChild, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ProductAccountTeamsServiceProxy, ProductAccountTeamDto } from '@shared/service-proxies/service-proxies';
+import { ProductAccountTeamsServiceProxy, ProductAccountTeamDto, GetProductAccountTeamForViewDto } from '@shared/service-proxies/service-proxies';
 import { NotifyService } from 'abp-ng2-module';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { TokenAuthServiceProxy } from '@shared/service-proxies/service-proxies';
@@ -24,7 +24,7 @@ import { DateTimeService } from '@app/shared/common/timing/date-time.service';
     encapsulation: ViewEncapsulation.None,
     animations: [appModuleAnimation()],
 })
-export class ProductAccountTeamsComponent extends AppComponentBase {
+export class ProductAccountTeamsComponent extends AppComponentBase implements OnInit {
     @ViewChild('createOrEditProductAccountTeamModal', { static: true })
     createOrEditProductAccountTeamModal: CreateOrEditProductAccountTeamModalComponent;
     @ViewChild('viewProductAccountTeamModal', { static: true })
@@ -44,6 +44,11 @@ export class ProductAccountTeamsComponent extends AppComponentBase {
     employeeNameFilter = '';
     productNameFilter = '';
 
+    @Input() productId: number;
+
+    totalRecordsCount: number;
+    allEmployee: GetProductAccountTeamForViewDto[] = [];
+
     constructor(
         injector: Injector,
         private _productAccountTeamsServiceProxy: ProductAccountTeamsServiceProxy,
@@ -56,51 +61,24 @@ export class ProductAccountTeamsComponent extends AppComponentBase {
         super(injector);
     }
 
-    getProductAccountTeams(event?: LazyLoadEvent) {
-        if (this.primengTableHelper.shouldResetPaging(event)) {
-            this.paginator.changePage(0);
-            if (this.primengTableHelper.records && this.primengTableHelper.records.length > 0) {
-                return;
-            }
-        }
+    ngOnInit(): void {
+        this.getAllProductAccountTeams(this.productId);
+    }
 
-        this.primengTableHelper.showLoadingIndicator();
 
-        this._productAccountTeamsServiceProxy
-            .getAll(
-                this.filterText,
-                this.primaryFilter,
-                this.activeFilter,
-                this.maxRemoveDateFilter === undefined
-                    ? this.maxRemoveDateFilter
-                    : this._dateTimeService.getEndOfDayForDate(this.maxRemoveDateFilter),
-                this.minRemoveDateFilter === undefined
-                    ? this.minRemoveDateFilter
-                    : this._dateTimeService.getStartOfDayForDate(this.minRemoveDateFilter),
-                this.maxAssignDateFilter === undefined
-                    ? this.maxAssignDateFilter
-                    : this._dateTimeService.getEndOfDayForDate(this.maxAssignDateFilter),
-                this.minAssignDateFilter === undefined
-                    ? this.minAssignDateFilter
-                    : this._dateTimeService.getStartOfDayForDate(this.minAssignDateFilter),
-                this.employeeNameFilter,
-                this.productNameFilter,
-                this.primengTableHelper.getSorting(this.dataTable),
-                this.primengTableHelper.getSkipCount(this.paginator, event),
-                this.primengTableHelper.getMaxResultCount(this.paginator, event)
-            )
-            .subscribe((result) => {
-                this.primengTableHelper.totalRecordsCount = result.totalCount;
-                this.primengTableHelper.records = result.items;
-                this.primengTableHelper.hideLoadingIndicator();
-            });
+    getAllProductAccountTeams(id:number) {
+        this._productAccountTeamsServiceProxy.getAllByProductId(this.productId).subscribe(result => {
+            this.totalRecordsCount = result.totalCount;
+            this.allEmployee = result.items;
+        });
     }
 
     reloadPage(): void {
-        this.paginator.changePage(this.paginator.getPage());
+        this.getAllProductAccountTeams(this.productId)
     }
 
     createProductAccountTeam(): void {
+        this.createOrEditProductAccountTeamModal.productId = this.productId;
         this.createOrEditProductAccountTeamModal.show();
     }
 
@@ -152,6 +130,5 @@ export class ProductAccountTeamsComponent extends AppComponentBase {
         this.employeeNameFilter = '';
         this.productNameFilter = '';
 
-        this.getProductAccountTeams();
     }
 }

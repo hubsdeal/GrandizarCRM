@@ -1,5 +1,5 @@
 ﻿import { AppConsts } from '@shared/AppConsts';
-import { Component, Injector, ViewEncapsulation, ViewChild } from '@angular/core';
+import { Component, Injector, ViewEncapsulation, ViewChild, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductNotesServiceProxy, ProductNoteDto } from '@shared/service-proxies/service-proxies';
 import { NotifyService } from 'abp-ng2-module';
@@ -24,7 +24,7 @@ import { DateTimeService } from '@app/shared/common/timing/date-time.service';
     encapsulation: ViewEncapsulation.None,
     animations: [appModuleAnimation()],
 })
-export class ProductNotesComponent extends AppComponentBase {
+export class ProductNotesComponent extends AppComponentBase implements OnInit {
     @ViewChild('createOrEditProductNoteModal', { static: true })
     createOrEditProductNoteModal: CreateOrEditProductNoteModalComponent;
     @ViewChild('viewProductNoteModal', { static: true }) viewProductNoteModal: ViewProductNoteModalComponent;
@@ -37,6 +37,9 @@ export class ProductNotesComponent extends AppComponentBase {
     notesFilter = '';
     productNameFilter = '';
 
+    @Input() productId: number;
+    allNotes: any[] = [];
+
     constructor(
         injector: Injector,
         private _productNotesServiceProxy: ProductNotesServiceProxy,
@@ -47,6 +50,27 @@ export class ProductNotesComponent extends AppComponentBase {
         private _dateTimeService: DateTimeService
     ) {
         super(injector);
+        
+    }
+
+    ngOnInit(): void {
+        this.getAllProductNotes(this.productId);
+    }
+
+    getAllProductNotes(id:number) {
+        this._productNotesServiceProxy
+            .getAll(
+                this.filterText,
+                this.notesFilter,
+                this.productNameFilter,
+                id,
+                '',
+                0,
+                10000
+            )
+            .subscribe((result) => {
+                this.allNotes = result.items;
+            });
     }
 
     getProductNotes(event?: LazyLoadEvent) {
@@ -59,28 +83,29 @@ export class ProductNotesComponent extends AppComponentBase {
 
         this.primengTableHelper.showLoadingIndicator();
 
-        this._productNotesServiceProxy
-            .getAll(
-                this.filterText,
-                this.notesFilter,
-                this.productNameFilter,
-                undefined,
-                this.primengTableHelper.getSorting(this.dataTable),
-                this.primengTableHelper.getSkipCount(this.paginator, event),
-                this.primengTableHelper.getMaxResultCount(this.paginator, event)
-            )
-            .subscribe((result) => {
-                this.primengTableHelper.totalRecordsCount = result.totalCount;
-                this.primengTableHelper.records = result.items;
-                this.primengTableHelper.hideLoadingIndicator();
-            });
+        // this._productNotesServiceProxy
+        //     .getAll(
+        //         this.filterText,
+        //         this.notesFilter,
+        //         this.productNameFilter,
+        //         this.productId,
+        //         this.primengTableHelper.getSorting(this.dataTable),
+        //         this.primengTableHelper.getSkipCount(this.paginator, event),
+        //         this.primengTableHelper.getMaxResultCount(this.paginator, event)
+        //     )
+        //     .subscribe((result) => {
+        //         this.primengTableHelper.totalRecordsCount = result.totalCount;
+        //         this.primengTableHelper.records = result.items;
+        //         this.primengTableHelper.hideLoadingIndicator();
+        //     });
     }
 
     reloadPage(): void {
-        this.paginator.changePage(this.paginator.getPage());
+        this.getAllProductNotes(this.productId);
     }
 
     createProductNote(): void {
+        this.createOrEditProductNoteModal.productId = this.productId;
         this.createOrEditProductNoteModal.show();
     }
 

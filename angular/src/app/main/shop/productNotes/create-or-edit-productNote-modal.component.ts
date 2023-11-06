@@ -45,7 +45,7 @@ export class CreateOrEditProductNoteModalComponent extends AppComponentBase impl
         } else {
             this._productNotesServiceProxy.getProductNoteForEdit(productNoteId).subscribe((result) => {
                 this.productNote = result.productNote;
-
+                this.productId = result.productNote.productId;
                 this.productName = result.productName;
 
                 this.active = true;

@@ -4,7 +4,7 @@ import { DomSanitizer, Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { ChatGptResponseModalComponent } from '@app/shared/chat-gpt-response-modal/chat-gpt-response-modal.component';
 import { AppComponentBase } from '@shared/common/app-component-base';
-import { CreateOrEditProductByVariantDto, CreateOrEditProductDto, CreateOrEditProductMediaDto, GetProductAccountTeamForViewDto, GetProductMediaForViewDto, GetStoreMediaForViewDto, OrderProductVariantCategory, ProductAccountTeamsServiceProxy, ProductByVariantsServiceProxy, ProductCategoryVariantMapsServiceProxy, ProductDashboardStatisticsForViewDto, ProductMediasServiceProxy, ProductsServiceProxy, ProductStoreLookupTableDto, ProductTeamsServiceProxy, PublicPagesCommonServiceProxy } from '@shared/service-proxies/service-proxies';
+import { CreateOrEditProductByVariantDto, CreateOrEditProductDto, CreateOrEditProductMediaDto, CreateOrEditProductReviewDto, GetProductAccountTeamForViewDto, GetProductMediaForViewDto, GetStoreMediaForViewDto, OrderProductVariantCategory, ProductAccountTeamsServiceProxy, ProductByVariantsServiceProxy, ProductCategoryVariantMapsServiceProxy, ProductDashboardStatisticsForViewDto, ProductMediasServiceProxy, ProductReviewsServiceProxy, ProductsServiceProxy, ProductStoreLookupTableDto, ProductTeamsServiceProxy, PublicPagesCommonServiceProxy, ReviewByProductFromSpDto } from '@shared/service-proxies/service-proxies';
 import { TokenService } from 'abp-ng2-module';
 import { FileUploader, FileUploaderOptions } from 'ng2-file-upload';
 import { SelectItem } from 'primeng/api';
@@ -15,11 +15,16 @@ import { CreateOrEditProductNoteModalComponent } from '../../productNotes/create
 import { CreateOrEditProductTaskMapModalComponent } from '../../productTaskMaps/create-or-edit-productTaskMap-modal.component';
 import { CreateOrEditMediaLibraryModalComponent } from '@app/main/lookupData/mediaLibraries/create-or-edit-mediaLibrary-modal.component';
 import { CreateOrEditBulkProductMediaLibraryModalComponent } from './create-or-edit-bulk-product-media-library-modal/create-or-edit-bulk-product-media-library-modal.component';
+import { DatePipe } from '@angular/common';
+import { AppSessionService } from '@shared/common/session/app-session.service';
 
 @Component({
   selector: 'app-product-dashboard',
   templateUrl: './product-dashboard.component.html',
-  styleUrls: ['./product-dashboard.component.scss']
+  styleUrls: ['./product-dashboard.component.scss'],
+  providers: [
+    DatePipe
+  ]
 })
 export class ProductDashboardComponent extends AppComponentBase {
 
@@ -122,6 +127,11 @@ export class ProductDashboardComponent extends AppComponentBase {
 
   showCalendarView: boolean;
   showListView: boolean;
+
+  productReview: ReviewByProductFromSpDto[] = [];
+  ratingValue: any;
+  customerReview: CreateOrEditProductReviewDto = new CreateOrEditProductReviewDto();
+  reviewPublishedOptions: SelectItem[];
   constructor(
     injector: Injector,
     private route: ActivatedRoute,
@@ -131,14 +141,18 @@ export class ProductDashboardComponent extends AppComponentBase {
     private _productMediasServiceProxy: ProductMediasServiceProxy,
     private _sanitizer: DomSanitizer,
     private titleService: Title,
+    private datePipe: DatePipe,
+    private _appSessionService: AppSessionService,
     private _productAccountTeamsServiceProxy: ProductAccountTeamsServiceProxy,
     private _productCategoryAndVariantCategoryMapsServiceProxy: ProductCategoryVariantMapsServiceProxy,
     private _productVariantsServiceProxy: ProductByVariantsServiceProxy,
-    private _publicPagesCommonServiceProxy : PublicPagesCommonServiceProxy
+    private _publicPagesCommonServiceProxy : PublicPagesCommonServiceProxy,
+    private _productReviewsServiceProxy: ProductReviewsServiceProxy
   ) {
     super(injector);
     this.productPublishedOptions = [{ label: 'Draft', value: false }, { label: 'Published', value: true }];
     this.productServiceOptions = [{ label: 'Product', value: true }, { label: 'Service', value: false }];
+    this.reviewPublishedOptions = [{ label: 'Un Published', value: false }, { label: 'Published', value: true }];
   }
 
   ngOnInit(): void {
@@ -148,6 +162,7 @@ export class ProductDashboardComponent extends AppComponentBase {
     this.getProductDetails(this.productId);
     this.getProductTeams(this.productId);
     this.getStatisticsData();
+    this.getReviews(this.productId);
   }
   ngAfterViewInit() {
     this.getAllAddedVariants();
@@ -566,6 +581,44 @@ export class ProductDashboardComponent extends AppComponentBase {
   onListView() {
     this.showListView = !this.showListView;
     this.showCalendarView = !this.showCalendarView;
+  }
+
+  //review
+  getReviews(productId: number) {
+    this._productReviewsServiceProxy.getAllProductReviewsByProductBySp('', productId, undefined, undefined, '', 0, 50).subscribe(result => {
+      this.productReview = result.productReviews;
+    });
+  }
+
+  getFormatDate(date: Date) {
+    return this.datePipe.transform(date, 'MMM d, y')
+  }
+  subMitReview() {
+    this.customerReview.ratingLikeId = this.ratingValue;
+    this.customerReview.contactId = this._appSessionService.contactId;
+    this.customerReview.productId = this.productId;
+    this.customerReview.publish = true;
+
+    this._publicPagesCommonServiceProxy.createProductReview(this.customerReview)
+      .pipe(finalize(() => { }))
+      .subscribe(() => {
+        this.getReviews(this.productId);
+        this.notify.info(this.l('Review Submitted Successfully'));
+        this.customerReview = new CreateOrEditProductReviewDto();
+        this.ratingValue = null;
+      });
+  }
+
+  onReviewPublishClick(event: any, id: number) {
+    debugger
+    if (event) {
+      this._productReviewsServiceProxy.getProductReviewForEdit(id).subscribe(result => {
+        result.productReview.publish = !result.productReview.publish;
+        this._productReviewsServiceProxy.createOrEdit(result.productReview).subscribe(r => {
+          this.notify.info(this.l('Successfully Updated'));
+        })
+      });
+    }
   }
 
 }

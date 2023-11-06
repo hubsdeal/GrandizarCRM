@@ -207,7 +207,7 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
 
 
   openAiModal(feildName: string): void {
-    this.productShortDesc = "Write Store About where store name is Saffola"
+    this.productShortDesc = `Write Store About where store name is ${this.countryName}`
     var modalTitle = "AI Text Generator - About Store"
     const dialogRef = this.dialog.open(ChatGptResponseModalComponent, {
       data: { promtFromAnotherComponent: this.productShortDesc, feildName: feildName, modalTitle: modalTitle },
@@ -216,7 +216,7 @@ export class StoreDashboardComponent extends AppComponentBase implements OnInit,
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(result)
-      this.bindingData = result.data;
+      this.store.description = result.data;
     });
   }
 
