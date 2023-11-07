@@ -13,6 +13,7 @@ import {ContractContractTypeLookupTableModalComponent} from './contract-contract
     					import {ContractProductLookupTableModalComponent} from './contract-product-lookup-table-modal.component';
     					import {ContractHubLookupTableModalComponent} from './contract-hub-lookup-table-modal.component';
     					import {ContractContactLookupTableModalComponent} from './contract-contact-lookup-table-modal.component';
+import { ContractDashboardComponent } from './contract-dashboard/contract-dashboard.component';
     					
 
 
@@ -30,6 +31,7 @@ import {ContractContractTypeLookupTableModalComponent} from './contract-contract
     					ContractProductLookupTableModalComponent,
     					ContractHubLookupTableModalComponent,
     					ContractContactLookupTableModalComponent,
+         ContractDashboardComponent,
     ],
     imports: [AppSharedModule, ContractRoutingModule , AdminSharedModule ],
     
