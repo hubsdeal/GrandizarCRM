@@ -95,9 +95,8 @@
                             <div class="tab-content" id="myTabContent">
                                 <!--begin:::Tab pane-->
                                 <div class="tab-pane fade active show" id="editor" role="tabpanel">
-                                    <div class="pt-9">
-                                        <div
-                                            class="notice bg-white rounded border-primary border border-dashed p-9">
+                                    <div class="pt-9 mb-9">
+                                        <div class="notice bg-white rounded border-primary border border-dashed p-9">
                                             <div style="border-width: 1px;"
                                                 class="d-flex align-items-end border-bottom-dashed border-secondary pb-7">
                                                 <span class="svg-icon svg-icon-2tx svg-icon-warning me-4">
@@ -109,7 +108,7 @@
                                                 <form #contractBasicInfoForm="ngForm" novalidate
                                                     (ngSubmit)="saveBasicInfo()" autocomplete="off">
                                                     <div class="row">
-                                                        <div class="col-xl-8">
+                                                        <div class="col-xl-12">
                                                             <div class="my-5">
                                                                 <div class="p_filter">
                                                                     <label class="form-label required"
@@ -199,9 +198,289 @@
                                                         </div>
                                                     </div>
                                                     <div class="row">
-                                                        <div class="col-xl-12 d-flex justify-content-end mt-5 border-top pt-5">
+                                                        <div
+                                                            class="col-xl-12 d-flex justify-content-end mt-5 border-top pt-5">
                                                             <button type="submit" class="btn btn-primary blue"
                                                                 [disabled]="!contractBasicInfoForm.form.valid"
+                                                                [buttonBusy]="saving"
+                                                                [busyText]="l('SavingWithThreeDot')"><i
+                                                                    class="fa fa-save"></i>
+                                                                <span>{{l("Save")}}</span></button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="pt-9 mb-9">
+                                        <div class="notice bg-white rounded border-primary border border-dashed p-9">
+                                            <div style="border-width: 1px;"
+                                                class="d-flex align-items-end border-bottom-dashed border-secondary pb-7">
+                                                <span class="svg-icon svg-icon-2tx svg-icon-warning me-4">
+                                                    <i class="fas fa-info fa-2x text-primary"></i>
+                                                </span>
+                                                <h4 class="text-gray-900 fw-bold mb-0">Contract Details</h4>
+                                            </div>
+                                            <div class="mt-5">
+                                                <form #contractDetailsForm="ngForm" novalidate
+                                                    (ngSubmit)="saveContractDetailsInfo()" autocomplete="off">
+                                                    <div class="row">
+                                                        <div class="col-xl-12">
+                                                            <div class="split_section_twocol">
+                                                                <div class="first_col">
+                                                                    <h4 class="text-primary fw-bold mb-4 mt-3">First
+                                                                        Party</h4>
+                                                                    <div class="my-5">
+                                                                        <label class="form-label"
+                                                                            for="Contract_FirstPartyFullName">{{l("Full
+                                                                            Name")}}</label>
+                                                                        <input type="text"
+                                                                            #Contract_FirstPartyFullName="ngModel"
+                                                                            id="Contract_FirstPartyFullName"
+                                                                            class="form-control"
+                                                                            [(ngModel)]="contract.firstPartyFullName"
+                                                                            name="FirstPartyFullName" minlength="1"
+                                                                            maxlength="256" />
+                                                                        <validation-messages
+                                                                            [formCtrl]="Contract_FirstPartyFullName"></validation-messages>
+                                                                    </div>
+
+                                                                    <div class="my-5">
+                                                                        <label class="form-label"
+                                                                            for="Contract_FirstPartyAddress">{{l("Address")}}</label>
+                                                                        <input type="text"
+                                                                            #Contract_FirstPartyAddress="ngModel"
+                                                                            id="Contract_FirstPartyAddress"
+                                                                            class="form-control"
+                                                                            [(ngModel)]="contract.firstPartyAddress"
+                                                                            name="FirstPartyAddress" minlength="1"
+                                                                            maxlength="1024" />
+                                                                        <validation-messages
+                                                                            [formCtrl]="Contract_FirstPartyAddress"></validation-messages>
+                                                                    </div>
+
+                                                                    <div class="my-5">
+                                                                        <label class="form-label"
+                                                                            for="Contract_FirstPartyPhone">{{l("Phone")}}</label>
+                                                                        <input type="text"
+                                                                            #Contract_FirstPartyPhone="ngModel"
+                                                                            id="Contract_FirstPartyPhone"
+                                                                            class="form-control"
+                                                                            [(ngModel)]="contract.firstPartyPhone"
+                                                                            name="FirstPartyPhone" minlength="1"
+                                                                            maxlength="50" />
+                                                                        <validation-messages
+                                                                            [formCtrl]="Contract_FirstPartyPhone"></validation-messages>
+                                                                    </div>
+
+                                                                    <div class="my-5">
+                                                                        <label class="form-label"
+                                                                            for="Contract_FirstPartyEmailAddress">{{l("Email")}}</label>
+                                                                        <input type="text"
+                                                                            #Contract_FirstPartyEmailAddress="ngModel"
+                                                                            id="Contract_FirstPartyEmailAddress"
+                                                                            class="form-control"
+                                                                            [(ngModel)]="contract.firstPartyEmailAddress"
+                                                                            name="FirstPartyEmailAddress" minlength="1"
+                                                                            maxlength="128" />
+                                                                        <validation-messages
+                                                                            [formCtrl]="Contract_FirstPartyEmailAddress"></validation-messages>
+                                                                    </div>
+
+                                                                    <div class="my-5">
+                                                                        <label class="form-label"
+                                                                            for="Contract_FirstPartyIdTypeAndNumber">{{l("ID
+                                                                            Type And Number")}}</label>
+                                                                        <input type="text"
+                                                                            #Contract_FirstPartyIdTypeAndNumber="ngModel"
+                                                                            id="Contract_FirstPartyIdTypeAndNumber"
+                                                                            class="form-control"
+                                                                            [(ngModel)]="contract.firstPartyIdTypeAndNumber"
+                                                                            name="FirstPartyIdTypeAndNumber"
+                                                                            minlength="1" maxlength="256" />
+                                                                        <validation-messages
+                                                                            [formCtrl]="Contract_FirstPartyIdTypeAndNumber"></validation-messages>
+                                                                    </div>
+
+                                                                    <div class="my-5">
+                                                                        <label class="form-label"
+                                                                            for="Contract_FirstPartySignDate">{{l("Sign
+                                                                            Date")}}</label>
+                                                                        <input class="form-control m-input"
+                                                                            #Contract_FirstPartySignDate type="datetime"
+                                                                            bsDatepicker datePickerLuxonModifier
+                                                                            [(date)]="contract.firstPartySignDate"
+                                                                            id="Contract_FirstPartySignDate"
+                                                                            name="Contract_FirstPartySignDate">
+                                                                        <validation-messages
+                                                                            [formCtrl]="Contract_FirstPartySignDate"></validation-messages>
+                                                                    </div>
+
+                                                                    <!-- <div class="my-5">
+                                                                        <label class="form-label"
+                                                                            for="Contract_FirstPartySignBinaryId">{{l("Sign")}}</label>
+                                                                        <input type="text"
+                                                                            #Contract_FirstPartySignBinaryId="ngModel"
+                                                                            id="Contract_FirstPartySignBinaryId"
+                                                                            class="form-control"
+                                                                            [(ngModel)]="contract.firstPartySignBinaryId"
+                                                                            name="FirstPartySignBinaryId" />
+                                                                        <validation-messages
+                                                                            [formCtrl]="Contract_FirstPartySignBinaryId"></validation-messages>
+                                                                    </div> -->
+
+                                                                    <div class="my-5">
+                                                                        <a href="javascript:;"  (click)="createContractSignature()" class="btn btn-light-primary">
+                                                                            <i class="fas fa-signature"></i> Add Sign
+                                                                        </a>
+                                                                    </div>
+
+                                                                    <div class="my-5">
+                                                                        <label class="form-label"
+                                                                            for="Contract_FirstPartyIpAddress">{{l("IP
+                                                                            Address")}}</label>
+                                                                        <input type="text"
+                                                                            #Contract_FirstPartyIpAddress="ngModel"
+                                                                            id="Contract_FirstPartyIpAddress"
+                                                                            class="form-control"
+                                                                            [(ngModel)]="contract.firstPartyIpAddress"
+                                                                            name="FirstPartyIpAddress" minlength="1"
+                                                                            maxlength="128" />
+                                                                        <validation-messages
+                                                                            [formCtrl]="Contract_FirstPartyIpAddress"></validation-messages>
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="first_col">
+                                                                    <h4 class="text-primary fw-bold mb-4 mt-3">Second
+                                                                        Party</h4>
+
+                                                                    <div class="my-5">
+                                                                        <label class="form-label"
+                                                                            for="Contract_SecondPartyFullName">Full Name</label>
+                                                                        <input type="text"
+                                                                            #Contract_SecondPartyFullName="ngModel"
+                                                                            id="Contract_SecondPartyFullName"
+                                                                            class="form-control"
+                                                                            [(ngModel)]="contract.secondPartyFullName"
+                                                                            name="SecondPartyFullName" minlength="1"
+                                                                            maxlength="256" />
+                                                                        <validation-messages
+                                                                            [formCtrl]="Contract_SecondPartyFullName"></validation-messages>
+                                                                    </div>
+
+                                                                    <div class="my-5">
+                                                                        <label class="form-label"
+                                                                            for="Contract_SecondPartyAddress">{{l("Address")}}</label>
+                                                                        <input type="text"
+                                                                            #Contract_SecondPartyAddress="ngModel"
+                                                                            id="Contract_SecondPartyAddress"
+                                                                            class="form-control"
+                                                                            [(ngModel)]="contract.secondPartyAddress"
+                                                                            name="SecondPartyAddress" minlength="1"
+                                                                            maxlength="1024" />
+                                                                        <validation-messages
+                                                                            [formCtrl]="Contract_SecondPartyAddress"></validation-messages>
+                                                                    </div>
+
+                                                                    <div class="my-5">
+                                                                        <label class="form-label"
+                                                                            for="Contract_SecondPartyPhone">{{l("Phone")}}</label>
+                                                                        <input type="text"
+                                                                            #Contract_SecondPartyPhone="ngModel"
+                                                                            id="Contract_SecondPartyPhone"
+                                                                            class="form-control"
+                                                                            [(ngModel)]="contract.secondPartyPhone"
+                                                                            name="SecondPartyPhone" minlength="1"
+                                                                            maxlength="50" />
+                                                                        <validation-messages
+                                                                            [formCtrl]="Contract_SecondPartyPhone"></validation-messages>
+                                                                    </div>
+
+                                                                    <div class="my-5">
+                                                                        <label class="form-label"
+                                                                            for="Contract_SecondPartyEmailAddress">{{l("Email")}}</label>
+                                                                        <input type="text"
+                                                                            #Contract_SecondPartyEmailAddress="ngModel"
+                                                                            id="Contract_SecondPartyEmailAddress"
+                                                                            class="form-control"
+                                                                            [(ngModel)]="contract.secondPartyEmailAddress"
+                                                                            name="SecondPartyEmailAddress" minlength="1"
+                                                                            maxlength="128" />
+                                                                        <validation-messages
+                                                                            [formCtrl]="Contract_SecondPartyEmailAddress"></validation-messages>
+                                                                    </div>
+
+                                                                    <div class="my-5">
+                                                                        <label class="form-label"
+                                                                            for="Contract_SecondPartyIdTypeAndNumber">{{l("ID Type And Number")}}</label>
+                                                                        <input type="text"
+                                                                            #Contract_SecondPartyIdTypeAndNumber="ngModel"
+                                                                            id="Contract_SecondPartyIdTypeAndNumber"
+                                                                            class="form-control"
+                                                                            [(ngModel)]="contract.secondPartyIdTypeAndNumber"
+                                                                            name="SecondPartyIdTypeAndNumber"
+                                                                            minlength="1" maxlength="128" />
+                                                                        <validation-messages
+                                                                            [formCtrl]="Contract_SecondPartyIdTypeAndNumber"></validation-messages>
+                                                                    </div>
+
+                                                                    <div class="my-5">
+                                                                        <label class="form-label"
+                                                                            for="Contract_SecondPartySignDate">{{l("Sign Date")}}</label>
+                                                                        <input class="form-control m-input"
+                                                                            #Contract_SecondPartySignDate
+                                                                            type="datetime" bsDatepicker
+                                                                            datePickerLuxonModifier
+                                                                            [(date)]="contract.secondPartySignDate"
+                                                                            id="Contract_SecondPartySignDate"
+                                                                            name="Contract_SecondPartySignDate">
+                                                                        <validation-messages
+                                                                            [formCtrl]="Contract_SecondPartySignDate"></validation-messages>
+                                                                    </div>
+
+                                                                    <!-- <div class="my-5">
+                                                                        <label class="form-label"
+                                                                            for="Contract_SecondPartySignBinaryId">{{l("Sign")}}</label>
+                                                                        <input type="text"
+                                                                            #Contract_SecondPartySignBinaryId="ngModel"
+                                                                            id="Contract_SecondPartySignBinaryId"
+                                                                            class="form-control"
+                                                                            [(ngModel)]="contract.secondPartySignBinaryId"
+                                                                            name="SecondPartySignBinaryId" />
+                                                                        <validation-messages
+                                                                            [formCtrl]="Contract_SecondPartySignBinaryId"></validation-messages>
+                                                                    </div> -->
+
+                                                                    <div class="my-5">
+                                                                        <a href="javascript:;" (click)="createContractSignature()" class="btn btn-light-primary">
+                                                                            <i class="fas fa-signature"></i> Add Sign
+                                                                        </a>
+                                                                    </div>
+
+                                                                    <div class="my-5">
+                                                                        <label class="form-label"
+                                                                            for="Contract_SecondPartyIpAddress">{{l("IP Address")}}</label>
+                                                                        <input type="text"
+                                                                            #Contract_SecondPartyIpAddress="ngModel"
+                                                                            id="Contract_SecondPartyIpAddress"
+                                                                            class="form-control"
+                                                                            [(ngModel)]="contract.secondPartyIpAddress"
+                                                                            name="SecondPartyIpAddress" minlength="1"
+                                                                            maxlength="128" />
+                                                                        <validation-messages
+                                                                            [formCtrl]="Contract_SecondPartyIpAddress"></validation-messages>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div
+                                                            class="col-xl-12 d-flex justify-content-end mt-5 border-top pt-5">
+                                                            <button type="submit" class="btn btn-primary blue"
+                                                                [disabled]="!contractDetailsForm.form.valid"
                                                                 [buttonBusy]="saving"
                                                                 [busyText]="l('SavingWithThreeDot')"><i
                                                                     class="fa fa-save"></i>
@@ -224,4 +503,5 @@
             </div>
         </div>
     </div>
+    <createOrEditContractSignature #createOrEditContractSignature></createOrEditContractSignature>
 </div>

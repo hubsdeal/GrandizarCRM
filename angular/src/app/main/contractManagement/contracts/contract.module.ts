@@ -14,6 +14,7 @@ import {ContractContractTypeLookupTableModalComponent} from './contract-contract
     					import {ContractHubLookupTableModalComponent} from './contract-hub-lookup-table-modal.component';
     					import {ContractContactLookupTableModalComponent} from './contract-contact-lookup-table-modal.component';
 import { ContractDashboardComponent } from './contract-dashboard/contract-dashboard.component';
+import { CreateOrEditContractSignatureComponent } from './contract-dashboard/create-or-edit-contract-signature/create-or-edit-contract-signature.component';
     					
 
 
@@ -32,6 +33,7 @@ import { ContractDashboardComponent } from './contract-dashboard/contract-dashbo
     					ContractHubLookupTableModalComponent,
     					ContractContactLookupTableModalComponent,
          ContractDashboardComponent,
+         CreateOrEditContractSignatureComponent,
     ],
     imports: [AppSharedModule, ContractRoutingModule , AdminSharedModule ],
     

@@ -1,0 +1,43 @@
+<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #contractForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span>{{l("Add Signature")}}</span>
+                    </h4>
+                    <button type="button" class="btn-close" (click)="close()" aria-label="Close"
+                        [disabled]="saving"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="mb-3" for="ContractSign_MacAddress">{{l("Create Signature")}}</label>
+                        <div class="border">
+                            <signature-pad [options]="signaturePadOptions" (onBeginEvent)="drawStart()"
+                                (onEndEvent)="drawComplete()"></signature-pad>
+                        </div>
+                    </div>
+                    <h6 class="mb-4 mt-4 text-center">or</h6>
+                    <div class="form-group">
+                        <label class="mb-3" for="ContractSign_MacAddress">{{l("Upload Signature")}}</label>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="customFile" ng2FileSelect
+                                [uploader]="uploader">
+                            <label class="custom-file-label text-left" for="customFile">Choose
+                                file</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default"
+                        (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!contractForm.form.valid"
+                        [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i>
+                        <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
