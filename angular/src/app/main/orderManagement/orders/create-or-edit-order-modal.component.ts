@@ -13,6 +13,7 @@ import { OrderOrderStatusLookupTableModalComponent } from './order-orderStatus-l
 import { OrderCurrencyLookupTableModalComponent } from './order-currency-lookup-table-modal.component';
 import { OrderStoreLookupTableModalComponent } from './order-store-lookup-table-modal.component';
 import { OrderOrderSalesChannelLookupTableModalComponent } from './order-orderSalesChannel-lookup-table-modal.component';
+import { SelectItem } from 'primeng/api';
 
 @Component({
     selector: 'createOrEditOrderModal',
@@ -50,6 +51,7 @@ export class CreateOrEditOrderModalComponent extends AppComponentBase implements
     storeName = '';
     orderSalesChannelName = '';
 
+    deliveryOrPickupOptions: SelectItem[];
     constructor(
         injector: Injector,
         private _ordersServiceProxy: OrdersServiceProxy,
@@ -69,7 +71,7 @@ export class CreateOrEditOrderModalComponent extends AppComponentBase implements
             this.currencyName = '';
             this.storeName = '';
             this.orderSalesChannelName = '';
-
+            this.order.deliveryOrPickup = true;
             this.active = true;
             this.modal.show();
         } else {
@@ -88,6 +90,7 @@ export class CreateOrEditOrderModalComponent extends AppComponentBase implements
                 this.modal.show();
             });
         }
+        this.deliveryOrPickupOptions = [{ label: 'Delivery', value: true }, { label: 'Pickup', value: false }];
     }
 
     save(): void {
