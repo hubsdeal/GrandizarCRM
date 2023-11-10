@@ -52,6 +52,11 @@ export class CreateOrEditOrderModalComponent extends AppComponentBase implements
     orderSalesChannelName = '';
 
     deliveryOrPickupOptions: SelectItem[];
+    shippingOptions: SelectItem[];
+
+    localDelivery = true;
+
+    isNewCustomer:boolean;
     constructor(
         injector: Injector,
         private _ordersServiceProxy: OrdersServiceProxy,
@@ -71,6 +76,7 @@ export class CreateOrEditOrderModalComponent extends AppComponentBase implements
             this.currencyName = '';
             this.storeName = '';
             this.orderSalesChannelName = '';
+            this.localDelivery = true;
             this.order.deliveryOrPickup = true;
             this.active = true;
             this.modal.show();
@@ -90,7 +96,8 @@ export class CreateOrEditOrderModalComponent extends AppComponentBase implements
                 this.modal.show();
             });
         }
-        this.deliveryOrPickupOptions = [{ label: 'Delivery', value: true }, { label: 'Pickup', value: false }];
+        this.deliveryOrPickupOptions = [{ label: 'Delivery', value: true }, { label: 'Store Pickup', value: false }];
+        this.shippingOptions = [{ label: 'Local Delivery', value: true }, { label: 'Shipping', value: false }];
     }
 
     save(): void {
@@ -108,6 +115,10 @@ export class CreateOrEditOrderModalComponent extends AppComponentBase implements
                 this.close();
                 this.modalSave.emit(null);
             });
+    }
+
+    onAddNewCustomer(){
+        this.isNewCustomer = !this.isNewCustomer;
     }
 
     openSelectStateModal() {
