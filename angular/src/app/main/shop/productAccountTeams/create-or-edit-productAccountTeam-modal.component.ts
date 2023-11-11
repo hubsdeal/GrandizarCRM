@@ -58,7 +58,7 @@ export class CreateOrEditProductAccountTeamModalComponent extends AppComponentBa
                 .getProductAccountTeamForEdit(productAccountTeamId)
                 .subscribe((result) => {
                     this.productAccountTeam = result.productAccountTeam;
-
+                    this.productId=result.productAccountTeam.productId;
                     this.employeeName = result.employeeName;
                     this.productName = result.productName;
 

@@ -22,7 +22,7 @@
         <button *ngIf="isGranted('Pages.ProductNotes.Create')" (click)="createProductNote()"
             class="btn btn-primary blue">
             <i class="fa fa-plus"></i>
-          Product Note
+            Product Note
         </button>
     </div>
 
@@ -175,23 +175,22 @@
                 </div>
             </div> -->
             <!-- run loop here -->
-            <div class="card-body border rounded mb-5 pb-0">
+            <div class="card-body border rounded mb-5 pb-0" *ngFor="let item of allNotes">
                 <div class="d-flex align-items-center mb-5">
                     <div class="d-flex align-items-center flex-grow-1">
                         <div class="symbol symbol-45px me-5">
-                            <img src="assets/common/images/default-profile-picture.png" alt="User">
-                            <!-- <img *ngIf="item.picture" src="{{item.picture}}" alt="User"> -->
+                            <img *ngIf="!item.picture" src="assets/common/images/default-profile-picture.png"
+                                alt="User">
+                            <img *ngIf="item.picture" src="{{item.picture}}" alt="User">
                         </div>
                         <div class="d-flex flex-column">
                             <a href="javascript:;" class="text-gray-600 text-hover-primary fs-5 fw-bold">
-                                <!-- {{item.createdBy}} <span class="fs-6 text-gray-400">({{item.username}})</span> -->
-                                Faisal Alam <span class="fs-6 text-gray-400">Admin</span>
+                                {{item.createdBy}} <span class="fs-6 text-gray-400">({{item.username}})</span>
                             </a>
                             <span class="text-gray-400 fw-bold">
-                                <!-- <span *ngIf="item.creationTime">{{item.creationTime
+                                <span *ngIf="item.creationTime">{{item.creationTime
                                     | luxonFormat : 'F'}}
-                                </span> -->
-                                10-May-2016
+                                </span>
                             </span>
                         </div>
                     </div>
@@ -201,10 +200,10 @@
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" *dropdownMenu>
-                            <!-- <li>
+                            <li>
                                 <a href="javascript:;" *ngIf="permission.isGranted('Pages.ProductNotes.Edit')"
                                     class="dropdown-item" (click)="
-                                        createOrEditProductNoteModal.show(record.productNote.id)
+                                        createOrEditProductNoteModal.show(item.productNote.id)
                                     ">
                                     {{ l('Edit') }}
                                 </a>
@@ -212,17 +211,7 @@
                             <li>
                                 <a class="dropdown-item" href="javascript:;"
                                     *ngIf="permission.isGranted('Pages.ProductNotes.Delete')"
-                                    (click)="deleteProductNote(record.productNote)">
-                                    {{ l('Delete') }}
-                                </a>
-                            </li> -->
-                            <li>
-                                <a href="javascript:;" class="dropdown-item">
-                                    {{ l('Edit') }}
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="javascript:;">
+                                    (click)="deleteProductNote(item.productNote)">
                                     {{ l('Delete') }}
                                 </a>
                             </li>
@@ -232,14 +221,14 @@
 
                 <div class="mb-7">
                     <div class="text-gray-800 mb-5">
-                        This is a sample notes
+                        {{item.productNote.notes}}
                     </div>
                 </div>
             </div>
 
         </div>
     </div>
-    <createOrEditProductNoteModal #createOrEditProductNoteModal (modalSave)="getProductNotes()">
+    <createOrEditProductNoteModal #createOrEditProductNoteModal (modalSave)="getAllProductNotes(productId)">
     </createOrEditProductNoteModal>
     <viewProductNoteModal #viewProductNoteModal></viewProductNoteModal>
 </div>

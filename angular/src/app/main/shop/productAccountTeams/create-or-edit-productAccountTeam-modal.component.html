@@ -1,13 +1,5 @@
-﻿<div
-    bsModal
-    #createOrEditModal="bs-modal"
-    class="modal fade"
-    tabindex="-1"
-    role="dialog"
-    aria-labelledby="createOrEditModal"
-    aria-hidden="true"
-    [config]="{ backdrop: 'static' }"
->
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{ backdrop: 'static' }">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <form *ngIf="active" #productAccountTeamForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
@@ -17,26 +9,15 @@
                         <span *ngIf="!productAccountTeam.id">{{ l('CreateNewProductAccountTeam') }}</span>
                     </h4>
 
-                    <button
-                        type="button"
-                        class="btn-close"
-                        (click)="close()"
-                        aria-label="Close"
-                        [disabled]="saving"
-                    ></button>
+                    <button type="button" class="btn-close" (click)="close()" aria-label="Close"
+                        [disabled]="saving"></button>
                 </div>
                 <div class="modal-body">
                     <div class="my-3">
                         <label class="form-label" for="EmployeeName">{{ l('Employee') }}</label>
                         <div class="input-group">
-                            <input
-                                class="form-control"
-                                id="EmployeeName"
-                                name="employeeName"
-                                [(ngModel)]="employeeName"
-                                type="text"
-                                disabled
-                            />
+                            <input class="form-control" id="EmployeeName" name="employeeName" [(ngModel)]="employeeName"
+                                type="text" disabled />
                             <button class="btn btn-primary blue" (click)="openSelectEmployeeModal()" type="button">
                                 <i class="fa fa-search"></i>
                                 {{ l('Pick') }}
@@ -46,26 +27,14 @@
                             </button>
                         </div>
                     </div>
-                    <input
-                        class="form-control"
-                        name="productAccountTeam.employeeId"
-                        [(ngModel)]="productAccountTeam.employeeId"
-                        type="text"
-                        required
-                        hidden
-                    />
+                    <input class="form-control" name="productAccountTeam.employeeId"
+                        [(ngModel)]="productAccountTeam.employeeId" type="text" required hidden />
 
                     <div class="my-3" *ngIf="!productId">
                         <label class="form-label" for="ProductName">{{ l('Product') }}</label>
                         <div class="input-group">
-                            <input
-                                class="form-control"
-                                id="ProductName"
-                                name="productName"
-                                [(ngModel)]="productName"
-                                type="text"
-                                disabled
-                            />
+                            <input class="form-control" id="ProductName" name="productName" [(ngModel)]="productName"
+                                type="text" disabled />
                             <button class="btn btn-primary blue" (click)="openSelectProductModal()" type="button">
                                 <i class="fa fa-search"></i>
                                 {{ l('Pick') }}
@@ -75,25 +44,13 @@
                             </button>
                         </div>
                     </div>
-                    <input *ngIf="!productId"
-                        class="form-control"
-                        name="productAccountTeam.productId"
-                        [(ngModel)]="productAccountTeam.productId"
-                        type="text"
-                        required
-                        hidden
-                    />
+                    <input *ngIf="!productId" class="form-control" name="productAccountTeam.productId"
+                        [(ngModel)]="productAccountTeam.productId" type="text" required hidden />
 
                     <br />
                     <label class="form-check form-check-custom form-check-solid">
-                        <input
-                            id="ProductAccountTeam_Primary"
-                            #ProductAccountTeam_Primary="ngModel"
-                            name="Primary"
-                            [(ngModel)]="productAccountTeam.primary"
-                            type="checkbox"
-                            class="form-check-input"
-                        />
+                        <input id="ProductAccountTeam_Primary" #ProductAccountTeam_Primary="ngModel" name="Primary"
+                            [(ngModel)]="productAccountTeam.primary" type="checkbox" class="form-check-input" />
                         <span class="form-check-label">
                             {{ l('Primary') }}
                         </span>
@@ -102,14 +59,8 @@
 
                     <br />
                     <label class="form-check form-check-custom form-check-solid">
-                        <input
-                            id="ProductAccountTeam_Active"
-                            #ProductAccountTeam_Active="ngModel"
-                            name="Active"
-                            [(ngModel)]="productAccountTeam.active"
-                            type="checkbox"
-                            class="form-check-input"
-                        />
+                        <input id="ProductAccountTeam_Active" #ProductAccountTeam_Active="ngModel" name="Active"
+                            [(ngModel)]="productAccountTeam.active" type="checkbox" class="form-check-input" />
                         <span class="form-check-label">
                             {{ l('Active') }}
                         </span>
@@ -118,31 +69,17 @@
 
                     <div class="my-3">
                         <label class="form-label" for="ProductAccountTeam_RemoveDate">{{ l('RemoveDate') }}</label>
-                        <input
-                            class="form-control m-input"
-                            #ProductAccountTeam_RemoveDate
-                            type="datetime"
-                            bsDatepicker
-                            datePickerLuxonModifier
-                            [(date)]="productAccountTeam.removeDate"
-                            id="ProductAccountTeam_RemoveDate"
-                            name="ProductAccountTeam_RemoveDate"
-                        />
+                        <input class="form-control m-input" #ProductAccountTeam_RemoveDate type="datetime" bsDatepicker
+                            datePickerLuxonModifier [(date)]="productAccountTeam.removeDate"
+                            id="ProductAccountTeam_RemoveDate" name="ProductAccountTeam_RemoveDate" />
                         <validation-messages [formCtrl]="ProductAccountTeam_RemoveDate"></validation-messages>
                     </div>
 
                     <div class="my-3">
                         <label class="form-label" for="ProductAccountTeam_AssignDate">{{ l('AssignDate') }}</label>
-                        <input
-                            class="form-control m-input"
-                            #ProductAccountTeam_AssignDate
-                            type="datetime"
-                            bsDatepicker
-                            datePickerLuxonModifier
-                            [(date)]="productAccountTeam.assignDate"
-                            id="ProductAccountTeam_AssignDate"
-                            name="ProductAccountTeam_AssignDate"
-                        />
+                        <input class="form-control m-input" #ProductAccountTeam_AssignDate type="datetime" bsDatepicker
+                            datePickerLuxonModifier [(date)]="productAccountTeam.assignDate"
+                            id="ProductAccountTeam_AssignDate" name="ProductAccountTeam_AssignDate" />
                         <validation-messages [formCtrl]="ProductAccountTeam_AssignDate"></validation-messages>
                     </div>
                 </div>
@@ -150,13 +87,8 @@
                     <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
                         {{ l('Cancel') }}
                     </button>
-                    <button
-                        type="submit"
-                        class="btn btn-primary blue"
-                        [disabled]="!productAccountTeamForm.form.valid"
-                        [buttonBusy]="saving"
-                        [busyText]="l('SavingWithThreeDot')"
-                    >
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!productAccountTeamForm.form.valid"
+                        [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')">
                         <i class="fa fa-save"></i>
                         <span>{{ l('Save') }}</span>
                     </button>
@@ -164,12 +96,8 @@
             </form>
         </div>
     </div>
-    <productAccountTeamEmployeeLookupTableModal
-        #productAccountTeamEmployeeLookupTableModal
-        (modalSave)="getNewEmployeeId()"
-    ></productAccountTeamEmployeeLookupTableModal>
-    <productAccountTeamProductLookupTableModal
-        #productAccountTeamProductLookupTableModal
-        (modalSave)="getNewProductId()"
-    ></productAccountTeamProductLookupTableModal>
+    <productAccountTeamEmployeeLookupTableModal #productAccountTeamEmployeeLookupTableModal
+        (modalSave)="getNewEmployeeId()"></productAccountTeamEmployeeLookupTableModal>
+    <productAccountTeamProductLookupTableModal #productAccountTeamProductLookupTableModal
+        (modalSave)="getNewProductId()"></productAccountTeamProductLookupTableModal>
 </div>

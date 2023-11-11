@@ -16,58 +16,51 @@
     <div class="w-100 d-flex mb-6 ps-9 pe-9 mt-6 justify-content-between align-items-center ng-tns-c282-7">
         <div class="d-flex">
             <h1 class="fs-3 fw-bold  my-0 page-heading text-dark">
-                Product Category Team
+                Product Account Team
             </h1>
         </div>
         <button *ngIf="isGranted('Pages.ProductAccountTeams.Create')" (click)="createProductAccountTeam()"
             class="btn btn-primary blue">
             <i class="fa fa-plus"></i>
-            {{ l('Product Account Team') }}
+            {{ l('Account Team') }}
         </button>
     </div>
 
     <div [class]="containerClass">
         <div class="card mb-5 mb-xxl-8">
-            <div class="card-body">
+            <div class="card-body p-0">
                 <div class="row">
-                    <div class="col-md-6 col-xxl-4 mb-4">
+                    <div class="col-md-6 col-xxl-4 mb-4" *ngFor="let record of allEmployee">
                         <!--begin::Card-->
                         <div class="card shadow-sm rounded">
                             <div class="card-body d-flex flex-center flex-column py-9 px-5">
-                                <div class="symbol symbol-65px symbol-circle mb-5">
+                                <div class="symbol symbol-65px symbol-circle mb-5" *ngIf="!record.picture">
                                     <img src="/assets/common/images/default-profile-picture.png" alt="image">
                                 </div>
-                                <a href="javascript:;" class="fs-4 text-gray-800 text-hover-primary fw-bold mb-0">Kitona
-                                    Johnson <i title="Active" class="fas fa-check-circle ms-3 text-success"></i>
-                                </a>
-                                
-                                <div class="fw-semibold text-gray-400 mb-0">
-                                    Web Designer
-                                    at Nextop Ltd.
+                                <div class="symbol symbol-65px symbol-circle mb-5" *ngIf="record.picture">
+                                    <img src="{{record.picture}}" alt="image">
                                 </div>
-                                <div class="fw-semibold text-gray-400 mb-6">
+                                <a href="javascript:;"
+                                    [routerLink]="['/app/main/crm/employees/dashboard',record.productAccountTeam.employeeId]"
+                                    class="fs-4 text-gray-800 text-hover-primary fw-bold mb-0">
+                                    {{record.employeeName}} <i title="Active" *ngIf="record.productAccountTeam.active"
+                                        class="fas fa-check-circle ms-3 text-success"></i>
+                                </a>
+                                <div *ngIf="record.productAccountTeam.primary" class="fw-semibold text-gray-400 mt-4 mb-6">
                                     <span class="badge badge-primary">Primary Manager</span>
                                 </div>
-                                <div class="d-flex flex-center flex-wrap mb-5">
-                                    <div class="border border-dashed rounded min-w-90px py-3 px-4 mx-2 mb-3">
-                                        <div class="fs-6 fw-bold text-gray-700">9015458
-                                        </div>
-                                        <div class="fw-semibold text-gray-400">Mobile
-                                        </div>
-                                    </div>
-                                    <div class="border border-dashed rounded min-w-90px py-3 px-4 mx-2 mb-3">
-                                        <div class="fs-6 fw-bold text-gray-700">
-                                            rashed@gmail.com
-                                        </div>
-                                        <div class="fw-semibold text-gray-400">Email
-                                        </div>
-                                    </div>
-                                </div>
                                 <div class="d-flex">
-                                    <button class="btn btn-sm btn-light-primary btn-icon me-3">
+                                    <button class="btn btn-sm btn-light-primary me-3"
+                                        *ngIf="permission.isGranted('Pages.ProductAccountTeams.Edit')"(click)="
+                                        createOrEditProductAccountTeamModal.show(
+                                            record.productAccountTeam.id
+                                        )
+                                    ">
                                         <i class="fas fa-edit"></i>
                                     </button>
-                                    <button class="btn btn-sm btn-light-primary btn-icon me-3">
+                                    <button *ngIf="permission.isGranted('Pages.ProductAccountTeams.Delete')"
+                                        (click)="deleteProductAccountTeam(record.productAccountTeam)"
+                                        class="btn btn-sm btn-light-primary">
                                         <i class="fas fa-trash-alt"></i>
                                     </button>
                                 </div>
@@ -341,7 +334,8 @@
             </div>
         </div>
     </div>
-    <createOrEditProductAccountTeamModal #createOrEditProductAccountTeamModal (modalSave)="getProductAccountTeams()">
+    <createOrEditProductAccountTeamModal #createOrEditProductAccountTeamModal
+        (modalSave)="getAllProductAccountTeams(productId)">
     </createOrEditProductAccountTeamModal>
     <viewProductAccountTeamModal #viewProductAccountTeamModal></viewProductAccountTeamModal>
 </div>

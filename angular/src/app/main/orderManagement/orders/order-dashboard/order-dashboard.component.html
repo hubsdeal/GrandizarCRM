@@ -1,315 +1,775 @@
 <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
-    <!--begin::Content wrapper-->
     <div class="d-flex flex-column flex-column-fluid">
-        <!--begin::Toolbar-->
         <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
-            <!--begin::Toolbar container-->
-            <div id="kt_app_toolbar_container" class="app-container container-xxl d-flex flex-stack">
-                <!--begin::Page title-->
+            <div id="kt_app_toolbar_container" class="app-container w-100 d-flex flex-stack">
                 <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
-                    <!--begin::Title-->
                     <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">
                         Order Dashboard
                     </h1>
-                    <!--end::Title-->
-                    <!--begin::Breadcrumb-->
                     <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
-                        <!--begin::Item-->
                         <li class="breadcrumb-item text-muted">
                             <a href="javascript:;" [routerLink]="['/app/admin/hostDashboard']"
                                 class="text-muted text-hover-primary">Dashboard</a>
                         </li>
-                        <!--end::Item-->
-                        <!--begin::Item-->
                         <li class="breadcrumb-item">
                             <span class="bullet bg-gray-400 w-5px h-2px"></span>
                         </li>
-                        <!--end::Item-->
-                        <!--begin::Item-->
                         <li [routerLink]="['/app/main/orderManagement/orders']" class="breadcrumb-item text-muted">Order
                             List</li>
-                        <!--end::Item-->
                     </ul>
-                    <!--end::Breadcrumb-->
                 </div>
-                <!--end::Page title-->
                 <div class="d-flex align-items-center gap-2 gap-lg-3">
                     <a [routerLink]="['/app/main/orderManagement/orders']" href="javascript:;"
                         class="btn btn-sm fw-bold btn-primary" data-bs-toggle="modal"
                         data-bs-target="#kt_modal_create_app"><i class="fas fa-arrow-alt-circle-left fa-2xl"></i></a>
                 </div>
             </div>
-            <!--end::Toolbar container-->
         </div>
         <!--end::Toolbar-->
         <!--begin::Content-->
         <div id="kt_app_content" class="app-content flex-column-fluid">
             <!--begin::Content container-->
-            <div id="kt_app_content_container" class="app-container container-xxl">
-                <!--begin::Order details page-->
-                <div class="d-flex flex-column gap-7 gap-lg-10">
-                    <div class="d-flex flex-wrap flex-stack gap-5 gap-lg-10">
-                        <!--begin:::Tabs-->
-                        <ul class="nav nav-custom nav-tabs nav-line-tabs nav-line-tabs-2x border-0 fs-4 fw-semibold mb-lg-n2 me-auto"
-                            role="tablist">
-                            <!--begin:::Tab item-->
-                            <li class="nav-item" role="presentation">
-                                <a class="nav-link text-active-primary pb-4 active" data-bs-toggle="tab"
-                                    href="#kt_ecommerce_sales_order_summary" aria-selected="true" role="tab">Order
-                                    Summary</a>
-                            </li>
-                            <!--end:::Tab item-->
-                            <!--begin:::Tab item-->
-                            <li class="nav-item" role="presentation">
-                                <a class="nav-link text-active-primary pb-4" data-bs-toggle="tab"
-                                    href="#kt_ecommerce_sales_order_history" aria-selected="false" tabindex="-1"
-                                    role="tab">Order History</a>
-                            </li>
-                            <!--end:::Tab item-->
-                        </ul>
-                        <!--end:::Tabs-->
-                        <!--begin::Button-->
-                        <a href="javascript:;"
-                            class="btn btn-icon btn-light btn-sm ms-auto me-lg-n7">
-                            <!--begin::Svg Icon | path: icons/duotune/arrows/arr074.svg-->
-                            <span class="svg-icon svg-icon-2">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M11.2657 11.4343L15.45 7.25C15.8642 6.83579 15.8642 6.16421 15.45 5.75C15.0358 5.33579 14.3642 5.33579 13.95 5.75L8.40712 11.2929C8.01659 11.6834 8.01659 12.3166 8.40712 12.7071L13.95 18.25C14.3642 18.6642 15.0358 18.6642 15.45 18.25C15.8642 17.8358 15.8642 17.1642 15.45 16.75L11.2657 12.5657C10.9533 12.2533 10.9533 11.7467 11.2657 11.4343Z"
-                                        fill="currentColor"></path>
-                                </svg>
-                            </span>
-                            <!--end::Svg Icon-->
-                        </a>
-                        <!--end::Button-->
-                        <!--begin::Button-->
-                        <a href="javascript:;"
-                            class="btn btn-success btn-sm me-lg-n7">Edit Order</a>
-                        <!--end::Button-->
-                        <!--begin::Button-->
-                        <a href="javascript:;"
-                            class="btn btn-primary btn-sm">Add New Order</a>
-                        <!--end::Button-->
+            <div id="kt_app_content_container" class="app-container w-100">
+                <div class="card mb-6 mb-xl-9">
+                    <div class="card-body pt-9 pb-0">
+                        <div class="d-flex flex-wrap flex-sm-nowrap mb-6">
+                            <div
+                                class="d-flex flex-center flex-shrink-0 bg-light rounded w-100px h-100px w-lg-150px h-lg-150px me-7 mb-4">
+                                <img class="dashboard_header_image" src="/assets/common/images/p1.png" alt="image">
+                            </div>
+
+                            <div class="flex-grow-1">
+                                <div class="d-flex justify-content-between align-items-start flex-wrap mb-2">
+                                    <div class="d-flex flex-column">
+                                        <div class="d-flex align-items-center mb-1">
+                                            <a href="javascript:;"
+                                                class="text-gray-800 text-hover-primary fs-2 fw-bold me-3">
+                                                Grandizar
+                                            </a>
+                                            <span class="badge badge-primary text-center ms-2" title="Primary Category">
+                                                Order received
+                                            </span>
+                                        </div>
+                                        <div
+                                            class="d-flex flex-wrap fw-semibold mb-1 align-items-center fs-6 text-gray-500">
+                                            <i class="fas fa-file-invoice me-2"></i>
+                                            <span>Invoice: </span>
+                                            <span class="fw-bold">INV-545tdfg</span>
+                                        </div>
+                                        <div
+                                            class="d-flex flex-wrap fw-semibold mb-1 align-items-center fs-6 text-gray-500">
+                                            <i class="fas fa-calendar me-2"></i>
+                                            <span>Date & Time: </span>
+                                            <span class="fw-bold">January 12, 2020 - 3:30 PM ES</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex mb-4">
+                                        <a href="javascript:;" class="btn btn-icon btn-primary  me-4"><i
+                                                class="fas fa-envelope-open-text fs-4"></i></a>
+                                        <a href="javascript:;" class="btn btn-icon btn-success"><i
+                                                class="fas fa-print fs-4 me-0"></i></a>
+                                    </div>
+                                </div>
+
+                                <!--begin::Info-->
+                                <div class="d-flex flex-wrap justify-content-start">
+                                    <div class="d-flex flex-wrap">
+                                        <div
+                                            class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
+                                            <div class="d-flex align-items-center">
+                                                <div class="fs-4 fw-bold">05</div>
+                                            </div>
+                                            <div class="fw-semibold fs-6 text-gray-400">#Items</div>
+                                        </div>
+                                        <div
+                                            class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
+                                            <div class="d-flex align-items-center">
+                                                <div class="fs-4 fw-bold">$445</div>
+                                            </div>
+                                            <div class="fw-semibold fs-6 text-gray-400">Total Amount</div>
+                                        </div>
+                                        <div
+                                            class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
+                                            <div class="d-flex align-items-center">
+                                                <div class="fs-4 fw-bold">Phone</div>
+                                            </div>
+                                            <div class="fw-semibold fs-6 text-gray-400">Order Channel</div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="separator"></div>
+
+                        <div class="db_tabs_aligned_top">
+                            <ul class="nav mt-5 nav-tabs nav-line-tabs nav-line-tabs-2x mb-0 fs-5">
+                                <li class="nav-item">
+                                    <a class="nav-link active" data-bs-toggle="tab" href="#customer">
+                                        <i class="fas fa-edit"></i> Customer
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" data-bs-toggle="tab" href="#pr_orders">
+                                        <i class="fas fa-cart-arrow-down"></i> Store and Products
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" data-bs-toggle="tab" href="#payments">
+                                        <i class="fas fa-dollar"></i> Payments
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-bs-toggle="tab" href="#deliveryshipping">
+                                        <i class="fas fa-truck-moving"></i> Delivery/Shipping
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-bs-toggle="tab" href="#ratings">
+                                        <i class="fas fa-star"></i> Review and Ratings
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-bs-toggle="tab" href="#returns">
+                                        <i class="fas fa-redo"></i> Dispute/Returns
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-bs-toggle="tab" href="#ecomteam">
+                                        <i class="fas fa-users"></i> eComOps Team
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                    <!--begin::Order summary-->
-                    <div class="d-flex flex-column flex-xl-row gap-7 gap-lg-10">
-                        <!--begin::Order details-->
-                        <div class="card card-flush py-4 flex-row-fluid">
-                            <!--begin::Card header-->
-                            <div class="card-header">
-                                <div class="card-title">
-                                    <h2>Order Details (#14534)</h2>
-                                </div>
-                            </div>
-                            <!--end::Card header-->
-                            <!--begin::Card body-->
-                            <div class="card-body pt-0">
-                                <div class="table-responsive">
-                                    <!--begin::Table-->
-                                    <table class="table align-middle table-row-bordered mb-0 fs-6 gy-5 min-w-300px">
-                                        <!--begin::Table body-->
-                                        <tbody class="fw-semibold text-gray-600">
-                                            <!--begin::Date-->
-                                            <tr>
-                                                <td class="text-muted">
-                                                    <div class="d-flex align-items-center">
-                                                        <!--begin::Svg Icon | path: icons/duotune/files/fil002.svg-->
-                                                        <span class="svg-icon svg-icon-2 me-2">
-                                                            <svg width="20" height="21" viewBox="0 0 20 21" fill="none"
-                                                                xmlns="http://www.w3.org/2000/svg">
-                                                                <path opacity="0.3"
-                                                                    d="M19 3.40002C18.4 3.40002 18 3.80002 18 4.40002V8.40002H14V4.40002C14 3.80002 13.6 3.40002 13 3.40002C12.4 3.40002 12 3.80002 12 4.40002V8.40002H8V4.40002C8 3.80002 7.6 3.40002 7 3.40002C6.4 3.40002 6 3.80002 6 4.40002V8.40002H2V4.40002C2 3.80002 1.6 3.40002 1 3.40002C0.4 3.40002 0 3.80002 0 4.40002V19.4C0 20 0.4 20.4 1 20.4H19C19.6 20.4 20 20 20 19.4V4.40002C20 3.80002 19.6 3.40002 19 3.40002ZM18 10.4V13.4H14V10.4H18ZM12 10.4V13.4H8V10.4H12ZM12 15.4V18.4H8V15.4H12ZM6 10.4V13.4H2V10.4H6ZM2 15.4H6V18.4H2V15.4ZM14 18.4V15.4H18V18.4H14Z"
-                                                                    fill="currentColor"></path>
-                                                                <path
-                                                                    d="M19 0.400024H1C0.4 0.400024 0 0.800024 0 1.40002V4.40002C0 5.00002 0.4 5.40002 1 5.40002H19C19.6 5.40002 20 5.00002 20 4.40002V1.40002C20 0.800024 19.6 0.400024 19 0.400024Z"
-                                                                    fill="currentColor"></path>
-                                                            </svg>
-                                                        </span>
-                                                        <!--end::Svg Icon-->Date Added
+                </div>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="customer" role="tabpanel">
+                        <div class="card mb-6">
+                            <div class="card-body pt-10">
+                                <!--begin::Form-->
+                                <form #productForm="ngForm" novalidate
+                                    class="form fv-plugins-bootstrap5 fv-plugins-framework">
+                                    <div class="my-5 d-flex justify-content-between">
+                                        <div class="select_button_custom">
+                                            <p-selectButton [options]="deliveryOrPickupOptions" name="deliveryOrPickup"
+                                                id="deliveryOrPickup" [(ngModel)]="order.deliveryOrPickup"
+                                                optionLabel="label" optionValue="value"></p-selectButton>
+                                        </div>
+                                        <div class="select_button_custom">
+                                            <p-selectButton [options]="shippingOptions" name="deliveryOrPickup"
+                                                [(ngModel)]="localDelivery" id="deliveryOrPickup" optionLabel="label"
+                                                optionValue="value"></p-selectButton>
+                                        </div>
+                                    </div>
+
+                                    <div class="my-5">
+                                        <label class="form-label" for="StoreName">{{ l('Store') }}</label>
+                                        <div class="input-group">
+                                            <input class="form-control" id="StoreName" name="storeName"
+                                                [(ngModel)]="storeName" type="text" disabled />
+                                            <button class="btn btn-primary blue" (click)="openSelectStoreModal()"
+                                                type="button">
+                                                <i class="fa fa-search"></i>
+                                                {{ l('Select Store') }}
+                                            </button>
+                                            <button class="btn btn-danger btn-icon" type="button"
+                                                (click)="setStoreIdNull()">
+                                                <i class="fa fa-times"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <input class="form-control" name="order.storeId" [(ngModel)]="order.storeId"
+                                        type="text" hidden />
+
+                                    <div class="d-flex my-9">
+                                        <button *ngIf="!contactFullName" class="btn btn-primary blue me-4"
+                                            (click)="onAddNewCustomer()" type="button">
+                                            <i class="fas fa-plus"></i>
+                                            <span>New Customer</span>
+                                        </button>
+                                        <div>
+                                            <div class="input-group">
+                                                <input *ngIf="contactFullName" class="form-control mw-375px"
+                                                    id="ContactFullName" name="contactFullName"
+                                                    [(ngModel)]="contactFullName" type="text" disabled />
+                                                <button class="btn btn-primary blue" (click)="openSelectContactModal()"
+                                                    type="button">
+                                                    <i class="fa fa-search"></i>
+                                                    {{ l('Existing Customer') }}
+                                                </button>
+                                                <button class="btn btn-danger btn-icon" type="button"
+                                                    (click)="setContactIdNull()">
+                                                    <i class="fa fa-times"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <input class="form-control" name="order.contactId" [(ngModel)]="order.contactId"
+                                            type="text" hidden />
+                                    </div>
+
+                                    <div class="border border-primary border-dashed rounded py-3 px-4 mb-9">
+                                        <h3 class="card-title align-items-start flex-column mb-3 mt-4">
+                                            <span class="card-label fw-bold text-gray-800">Customer Information</span>
+                                        </h3>
+                                        <div class="row">
+                                            <div class="col-xl-6">
+                                                <div class="my-5">
+                                                    <label class="form-label" for="fname">{{ l('First Name') }}</label>
+                                                    <input type="text" id="fname" class="form-control" name="fname"
+                                                        minlength="1" maxlength="256" />
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-6">
+                                                <div class="my-5">
+                                                    <label class="form-label" for="lname">{{ l('Last Name') }}</label>
+                                                    <input type="text" id="lname" class="form-control" name="lname"
+                                                        minlength="1" maxlength="256" />
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-6">
+                                                <div class="my-5">
+                                                    <label class="form-label" for="Order_Email">{{ l('Email') }}</label>
+                                                    <input type="text" id="Order_Email" class="form-control"
+                                                        name="Email" minlength="1" maxlength="256" />
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-6">
+                                                <div class="my-5">
+                                                    <label class="form-label" for="phone">{{ l('Phone') }}</label>
+                                                    <input type="text" id="phone" class="form-control" name="phone"
+                                                        minlength="1" maxlength="256" />
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-12">
+                                                <div class="my-5">
+                                                    <label class="form-label" for="address">{{ l('Address') }}</label>
+                                                    <input type="text" id="address" class="form-control" name="address"
+                                                        minlength="1" maxlength="256" />
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-6">
+                                                <div class="my-5">
+                                                    <label class="form-label" for="Code">{{ l('Zip Code') }}</label>
+                                                    <input type="text" id="Code" class="form-control" name="Email"
+                                                        minlength="1" maxlength="256" />
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-6">
+                                                <div class="my-5">
+                                                    <label class="form-label" for="City">{{ l('City') }}</label>
+                                                    <input type="text" id="City" class="form-control" name="City"
+                                                        minlength="1" maxlength="256" />
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-6">
+                                                <div class="my-5">
+                                                    <label class="form-label" for="StateName">{{ l('State') }}</label>
+                                                    <div class="input-group">
+                                                        <input class="form-control" id="StateName" name="stateName"
+                                                            [(ngModel)]="stateName" type="text" disabled />
+                                                        <button class="btn btn-primary blue"
+                                                            (click)="openSelectStateModal()" type="button">
+                                                            <i class="fa fa-search"></i>
+                                                            {{ l('Pick') }}
+                                                        </button>
+                                                        <button class="btn btn-danger btn-icon" type="button"
+                                                            (click)="setStateIdNull()">
+                                                            <i class="fa fa-times"></i>
+                                                        </button>
                                                     </div>
-                                                </td>
-                                                <td class="fw-bold text-end">04/02/2023</td>
-                                            </tr>
-                                            <!--end::Date-->
-                                            <!--begin::Payment method-->
-                                            <tr>
-                                                <td class="text-muted">
-                                                    <div class="d-flex align-items-center">
-                                                        <!--begin::Svg Icon | path: icons/duotune/finance/fin008.svg-->
-                                                        <span class="svg-icon svg-icon-2 me-2">
-                                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                                xmlns="http://www.w3.org/2000/svg">
-                                                                <path opacity="0.3"
-                                                                    d="M3.20001 5.91897L16.9 3.01895C17.4 2.91895 18 3.219 18.1 3.819L19.2 9.01895L3.20001 5.91897Z"
-                                                                    fill="currentColor"></path>
-                                                                <path opacity="0.3"
-                                                                    d="M13 13.9189C13 12.2189 14.3 10.9189 16 10.9189H21C21.6 10.9189 22 11.3189 22 11.9189V15.9189C22 16.5189 21.6 16.9189 21 16.9189H16C14.3 16.9189 13 15.6189 13 13.9189ZM16 12.4189C15.2 12.4189 14.5 13.1189 14.5 13.9189C14.5 14.7189 15.2 15.4189 16 15.4189C16.8 15.4189 17.5 14.7189 17.5 13.9189C17.5 13.1189 16.8 12.4189 16 12.4189Z"
-                                                                    fill="currentColor"></path>
-                                                                <path
-                                                                    d="M13 13.9189C13 12.2189 14.3 10.9189 16 10.9189H21V7.91895C21 6.81895 20.1 5.91895 19 5.91895H3C2.4 5.91895 2 6.31895 2 6.91895V20.9189C2 21.5189 2.4 21.9189 3 21.9189H19C20.1 21.9189 21 21.0189 21 19.9189V16.9189H16C14.3 16.9189 13 15.6189 13 13.9189Z"
-                                                                    fill="currentColor"></path>
-                                                            </svg>
-                                                        </span>
-                                                        <!--end::Svg Icon-->Payment Method
+                                                </div>
+                                                <input class="form-control" name="order.stateId"
+                                                    [(ngModel)]="order.stateId" type="text" hidden />
+                                            </div>
+                                            <div class="col-xl-6">
+                                                <div class="my-5">
+                                                    <label class="form-label" for="CountryName">{{ l('Country')
+                                                        }}</label>
+                                                    <div class="input-group">
+                                                        <input class="form-control" id="CountryName" name="countryName"
+                                                            [(ngModel)]="countryName" type="text" disabled />
+                                                        <button class="btn btn-primary blue"
+                                                            (click)="openSelectCountryModal()" type="button">
+                                                            <i class="fa fa-search"></i>
+                                                            {{ l('Pick') }}
+                                                        </button>
+                                                        <button class="btn btn-danger btn-icon" type="button"
+                                                            (click)="setCountryIdNull()">
+                                                            <i class="fa fa-times"></i>
+                                                        </button>
                                                     </div>
-                                                </td>
-                                                <td class="fw-bold text-end">Online
-                                                    <img src="assets/media/svg/card-logos/visa.svg" class="w-50px ms-2">
-                                                </td>
-                                            </tr>
-                                            <!--end::Payment method-->
-                                            <!--begin::Date-->
-                                            <tr>
-                                                <td class="text-muted">
-                                                    <div class="d-flex align-items-center">
-                                                        <!--begin::Svg Icon | path: icons/duotune/ecommerce/ecm006.svg-->
-                                                        <span class="svg-icon svg-icon-2 me-2">
-                                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                                xmlns="http://www.w3.org/2000/svg">
-                                                                <path
-                                                                    d="M20 8H16C15.4 8 15 8.4 15 9V16H10V17C10 17.6 10.4 18 11 18H16C16 16.9 16.9 16 18 16C19.1 16 20 16.9 20 18H21C21.6 18 22 17.6 22 17V13L20 8Z"
-                                                                    fill="currentColor"></path>
-                                                                <path opacity="0.3"
-                                                                    d="M20 18C20 19.1 19.1 20 18 20C16.9 20 16 19.1 16 18C16 16.9 16.9 16 18 16C19.1 16 20 16.9 20 18ZM15 4C15 3.4 14.6 3 14 3H3C2.4 3 2 3.4 2 4V13C2 13.6 2.4 14 3 14H15V4ZM6 16C4.9 16 4 16.9 4 18C4 19.1 4.9 20 6 20C7.1 20 8 19.1 8 18C8 16.9 7.1 16 6 16Z"
-                                                                    fill="currentColor"></path>
-                                                            </svg>
-                                                        </span>
-                                                        <!--end::Svg Icon-->Shipping Method
+                                                </div>
+                                                <input class="form-control" name="order.countryId"
+                                                    [(ngModel)]="order.countryId" type="text" hidden />
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="border border-primary border-dashed rounded py-3 px-4 mb-3">
+                                        <h3 class="card-title align-items-start flex-column mb-3 mt-4">
+                                            <span class="card-label fw-bold text-gray-800">Delivery Address</span>
+                                        </h3>
+                                        <div class="d-flex m-0 mb-5">
+                                            <a href="javascript:;" class="btn btn-light-primary">Home Address</a>
+                                            <a href="javascript:;" class="btn btn-light-primary">Office Address</a>
+                                            <a href="javascript:;" class="btn btn-light-primary">Warehouse Address</a>
+                                            <a href="javascript:;" class="btn btn-light-primary">Full Address</a>
+                                        </div>
+                                        <div class="row">
+                                            <div class="my-5">
+                                                <label class="form-label" for="Order_DeliveryAddress">{{
+                                                    l('DeliveryAddress') }}</label>
+                                                <input type="text" #Order_DeliveryAddress="ngModel"
+                                                    id="Order_DeliveryAddress" class="form-control"
+                                                    [(ngModel)]="order.deliveryAddress" name="DeliveryAddress"
+                                                    minlength="1" maxlength="1024" />
+                                                <validation-messages
+                                                    [formCtrl]="Order_DeliveryAddress"></validation-messages>
+                                            </div>
+                                            <div class="my-5">
+                                                <label class="form-label" for="Order_FullName">{{ l('Name') }}</label>
+                                                <input type="text" #Order_FullName="ngModel" id="Order_FullName"
+                                                    class="form-control" [(ngModel)]="order.fullName" name="FullName"
+                                                    minlength="1" maxlength="256" />
+                                                <validation-messages [formCtrl]="Order_FullName"></validation-messages>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-xl-6">
+                                                    <div class="my-5">
+                                                        <label class="form-label" for="Order_Email">{{ l('Email')
+                                                            }}</label>
+                                                        <input type="text" #Order_Email="ngModel" id="Order_Email"
+                                                            class="form-control" [(ngModel)]="order.email" name="Email"
+                                                            minlength="1" maxlength="256" />
+                                                        <validation-messages
+                                                            [formCtrl]="Order_Email"></validation-messages>
                                                     </div>
-                                                </td>
-                                                <td class="fw-bold text-end">Flat Shipping Rate</td>
-                                            </tr>
-                                            <!--end::Date-->
-                                        </tbody>
-                                        <!--end::Table body-->
-                                    </table>
-                                    <!--end::Table-->
-                                </div>
-                            </div>
-                            <!--end::Card body-->
-                        </div>
-                        <!--end::Order details-->
-                        <!--begin::Customer details-->
-                        <div class="card card-flush py-4 flex-row-fluid">
-                            <!--begin::Card header-->
-                            <div class="card-header">
-                                <div class="card-title">
-                                    <h2>Customer Details</h2>
-                                </div>
-                            </div>
-                            <!--end::Card header-->
-                            <!--begin::Card body-->
-                            <div class="card-body pt-0">
-                                <div class="table-responsive">
-                                    <!--begin::Table-->
-                                    <table class="table align-middle table-row-bordered mb-0 fs-6 gy-5 min-w-300px">
-                                        <!--begin::Table body-->
-                                        <tbody class="fw-semibold text-gray-600">
-                                            <!--begin::Customer name-->
-                                            <tr>
-                                                <td class="text-muted">
-                                                    <div class="d-flex align-items-center">
-                                                        <!--begin::Svg Icon | path: icons/duotune/communication/com006.svg-->
-                                                        <span class="svg-icon svg-icon-2 me-2">
-                                                            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
-                                                                xmlns="http://www.w3.org/2000/svg">
-                                                                <path opacity="0.3"
-                                                                    d="M16.5 9C16.5 13.125 13.125 16.5 9 16.5C4.875 16.5 1.5 13.125 1.5 9C1.5 4.875 4.875 1.5 9 1.5C13.125 1.5 16.5 4.875 16.5 9Z"
-                                                                    fill="currentColor"></path>
-                                                                <path
-                                                                    d="M9 16.5C10.95 16.5 12.75 15.75 14.025 14.55C13.425 12.675 11.4 11.25 9 11.25C6.6 11.25 4.57499 12.675 3.97499 14.55C5.24999 15.75 7.05 16.5 9 16.5Z"
-                                                                    fill="currentColor"></path>
-                                                                <rect x="7" y="6" width="4" height="4" rx="2"
-                                                                    fill="currentColor"></rect>
-                                                            </svg>
-                                                        </span>
-                                                        <!--end::Svg Icon-->Customer
+                                                </div>
+                                                <div class="col-xl-6">
+                                                    <div class="my-5">
+                                                        <label class="form-label" for="Order_Email">{{ l('Phone')
+                                                            }}</label>
+                                                        <input type="text" #Order_Email="ngModel" id="Order_Email"
+                                                            class="form-control" [(ngModel)]="order.email" name="Email"
+                                                            minlength="1" maxlength="256" />
+                                                        <validation-messages
+                                                            [formCtrl]="Order_Email"></validation-messages>
                                                     </div>
-                                                </td>
-                                                <td class="fw-bold text-end">
-                                                    <div class="d-flex align-items-center justify-content-end">
-                                                        <!--begin:: Avatar -->
-                                                        <div
-                                                            class="symbol symbol-circle symbol-25px overflow-hidden me-3">
-                                                            <a
-                                                                href="../../demo1/dist/apps/ecommerce/customers/details.html">
-                                                                <div class="symbol-label">
-                                                                    <img src="assets/media/avatars/300-23.jpg"
-                                                                        alt="Dan Wilson" class="w-100">
-                                                                </div>
-                                                            </a>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xl-6">
+                                                    <div class="my-5">
+                                                        <label class="form-label" for="Order_City">{{ l('City')
+                                                            }}</label>
+                                                        <input type="text" #Order_City="ngModel" id="Order_City"
+                                                            class="form-control" [(ngModel)]="order.city" name="City"
+                                                            minlength="1" maxlength="128" />
+                                                        <validation-messages
+                                                            [formCtrl]="Order_City"></validation-messages>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-6">
+                                                    <div class="my-5">
+                                                        <label class="form-label" for="Order_ZipCode">{{ l('ZipCode')
+                                                            }}</label>
+                                                        <input type="text" #Order_ZipCode="ngModel" id="Order_ZipCode"
+                                                            class="form-control" [(ngModel)]="order.zipCode"
+                                                            name="ZipCode" minlength="1" maxlength="50" />
+                                                        <validation-messages
+                                                            [formCtrl]="Order_ZipCode"></validation-messages>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-6">
+                                                    <div class="my-5">
+                                                        <label class="form-label" for="StateName">{{ l('State')
+                                                            }}</label>
+                                                        <div class="input-group">
+                                                            <input class="form-control" id="StateName" name="stateName"
+                                                                [(ngModel)]="stateName" type="text" disabled />
+                                                            <button class="btn btn-primary blue"
+                                                                (click)="openSelectStateModal()" type="button">
+                                                                <i class="fa fa-search"></i>
+                                                                {{ l('Pick') }}
+                                                            </button>
+                                                            <button class="btn btn-danger btn-icon" type="button"
+                                                                (click)="setStateIdNull()">
+                                                                <i class="fa fa-times"></i>
+                                                            </button>
                                                         </div>
-                                                        <!--end::Avatar-->
-                                                        <!--begin::Name-->
-                                                        <a href="../../demo1/dist/apps/ecommerce/customers/details.html"
-                                                            class="text-gray-600 text-hover-primary">Dan Wilson</a>
-                                                        <!--end::Name-->
                                                     </div>
-                                                </td>
-                                            </tr>
-                                            <!--end::Customer name-->
-                                            <!--begin::Customer email-->
-                                            <tr>
-                                                <td class="text-muted">
-                                                    <div class="d-flex align-items-center">
-                                                        <!--begin::Svg Icon | path: icons/duotune/communication/com011.svg-->
-                                                        <span class="svg-icon svg-icon-2 me-2">
-                                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                                xmlns="http://www.w3.org/2000/svg">
-                                                                <path opacity="0.3"
-                                                                    d="M21 19H3C2.4 19 2 18.6 2 18V6C2 5.4 2.4 5 3 5H21C21.6 5 22 5.4 22 6V18C22 18.6 21.6 19 21 19Z"
-                                                                    fill="currentColor"></path>
-                                                                <path
-                                                                    d="M21 5H2.99999C2.69999 5 2.49999 5.10005 2.29999 5.30005L11.2 13.3C11.7 13.7 12.4 13.7 12.8 13.3L21.7 5.30005C21.5 5.10005 21.3 5 21 5Z"
-                                                                    fill="currentColor"></path>
-                                                            </svg>
-                                                        </span>
-                                                        <!--end::Svg Icon-->Email
+                                                    <input class="form-control" name="order.stateId"
+                                                        [(ngModel)]="order.stateId" type="text" hidden />
+                                                </div>
+                                                <div class="col-xl-6">
+                                                    <div class="my-5">
+                                                        <label class="form-label" for="CountryName">{{ l('Country')
+                                                            }}</label>
+                                                        <div class="input-group">
+                                                            <input class="form-control" id="CountryName"
+                                                                name="countryName" [(ngModel)]="countryName" type="text"
+                                                                disabled />
+                                                            <button class="btn btn-primary blue"
+                                                                (click)="openSelectCountryModal()" type="button">
+                                                                <i class="fa fa-search"></i>
+                                                                {{ l('Pick') }}
+                                                            </button>
+                                                            <button class="btn btn-danger btn-icon" type="button"
+                                                                (click)="setCountryIdNull()">
+                                                                <i class="fa fa-times"></i>
+                                                            </button>
+                                                        </div>
                                                     </div>
-                                                </td>
-                                                <td class="fw-bold text-end">
-                                                    <a href="../../demo1/dist/apps/user-management/users/view.html"
-                                                        class="text-gray-600 text-hover-primary">dam@consilting.com</a>
-                                                </td>
-                                            </tr>
-                                            <!--end::Payment method-->
-                                            <!--begin::Date-->
-                                            <tr>
-                                                <td class="text-muted">
-                                                    <div class="d-flex align-items-center">
-                                                        <!--begin::Svg Icon | path: icons/duotune/electronics/elc003.svg-->
-                                                        <span class="svg-icon svg-icon-2 me-2">
-                                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                                xmlns="http://www.w3.org/2000/svg">
-                                                                <path
-                                                                    d="M5 20H19V21C19 21.6 18.6 22 18 22H6C5.4 22 5 21.6 5 21V20ZM19 3C19 2.4 18.6 2 18 2H6C5.4 2 5 2.4 5 3V4H19V3Z"
-                                                                    fill="currentColor"></path>
-                                                                <path opacity="0.3" d="M19 4H5V20H19V4Z"
-                                                                    fill="currentColor"></path>
-                                                            </svg>
-                                                        </span>
-                                                        <!--end::Svg Icon-->Phone
-                                                    </div>
-                                                </td>
-                                                <td class="fw-bold text-end">+6141 234 567</td>
-                                            </tr>
-                                            <!--end::Date-->
-                                        </tbody>
-                                        <!--end::Table body-->
-                                    </table>
-                                    <!--end::Table-->
-                                </div>
+                                                    <input class="form-control" name="order.countryId"
+                                                        [(ngModel)]="order.countryId" type="text" hidden />
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-end mt-5">
+                                        <!--begin::Button-->
+                                        <button type="button" class="btn btn-primary">
+                                            <i class="fa fa-save"></i>
+                                            Save
+                                        </button>
+                                        <!--end::Button-->
+                                    </div>
+                                    <!--end::Action buttons-->
+                                </form>
+                                <!--end::Form-->
                             </div>
-                            <!--end::Card body-->
                         </div>
-                        <!--end::Customer details-->
-                        <!--begin::Documents-->
-                        <div class="card card-flush py-4 flex-row-fluid">
+                    </div>
+                    <div class="tab-pane fade" id="pr_orders" role="tabpanel">
+                        <div class="d-flex flex-column flex-xl-row gap-7 gap-lg-10 mb-9">
+                            <!--begin::Order details-->
+                            <div class="card card-flush py-4 flex-row-fluid">
+                                <!--begin::Card header-->
+                                <div class="card-header">
+                                    <div class="card-title">
+                                        <h2>Order Details (#14534)</h2>
+                                    </div>
+                                </div>
+                                <!--end::Card header-->
+                                <!--begin::Card body-->
+                                <div class="card-body pt-0">
+                                    <div class="table-responsive">
+                                        <!--begin::Table-->
+                                        <table class="table align-middle table-row-bordered mb-0 fs-6 gy-5 min-w-300px">
+                                            <!--begin::Table body-->
+                                            <tbody class="fw-semibold text-gray-600">
+                                                <!--begin::Date-->
+                                                <tr>
+                                                    <td class="text-muted">
+                                                        <div class="d-flex align-items-center">
+                                                            <!--begin::Svg Icon | path: icons/duotune/files/fil002.svg-->
+                                                            <span class="svg-icon svg-icon-2 me-2">
+                                                                <svg width="20" height="21" viewBox="0 0 20 21"
+                                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path opacity="0.3"
+                                                                        d="M19 3.40002C18.4 3.40002 18 3.80002 18 4.40002V8.40002H14V4.40002C14 3.80002 13.6 3.40002 13 3.40002C12.4 3.40002 12 3.80002 12 4.40002V8.40002H8V4.40002C8 3.80002 7.6 3.40002 7 3.40002C6.4 3.40002 6 3.80002 6 4.40002V8.40002H2V4.40002C2 3.80002 1.6 3.40002 1 3.40002C0.4 3.40002 0 3.80002 0 4.40002V19.4C0 20 0.4 20.4 1 20.4H19C19.6 20.4 20 20 20 19.4V4.40002C20 3.80002 19.6 3.40002 19 3.40002ZM18 10.4V13.4H14V10.4H18ZM12 10.4V13.4H8V10.4H12ZM12 15.4V18.4H8V15.4H12ZM6 10.4V13.4H2V10.4H6ZM2 15.4H6V18.4H2V15.4ZM14 18.4V15.4H18V18.4H14Z"
+                                                                        fill="currentColor"></path>
+                                                                    <path
+                                                                        d="M19 0.400024H1C0.4 0.400024 0 0.800024 0 1.40002V4.40002C0 5.00002 0.4 5.40002 1 5.40002H19C19.6 5.40002 20 5.00002 20 4.40002V1.40002C20 0.800024 19.6 0.400024 19 0.400024Z"
+                                                                        fill="currentColor"></path>
+                                                                </svg>
+                                                            </span>
+                                                            <!--end::Svg Icon-->Date Added
+                                                        </div>
+                                                    </td>
+                                                    <td class="fw-bold text-end">04/02/2023</td>
+                                                </tr>
+                                                <!--end::Date-->
+                                                <!--begin::Payment method-->
+                                                <tr>
+                                                    <td class="text-muted">
+                                                        <div class="d-flex align-items-center">
+                                                            <!--begin::Svg Icon | path: icons/duotune/finance/fin008.svg-->
+                                                            <span class="svg-icon svg-icon-2 me-2">
+                                                                <svg width="24" height="24" viewBox="0 0 24 24"
+                                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path opacity="0.3"
+                                                                        d="M3.20001 5.91897L16.9 3.01895C17.4 2.91895 18 3.219 18.1 3.819L19.2 9.01895L3.20001 5.91897Z"
+                                                                        fill="currentColor"></path>
+                                                                    <path opacity="0.3"
+                                                                        d="M13 13.9189C13 12.2189 14.3 10.9189 16 10.9189H21C21.6 10.9189 22 11.3189 22 11.9189V15.9189C22 16.5189 21.6 16.9189 21 16.9189H16C14.3 16.9189 13 15.6189 13 13.9189ZM16 12.4189C15.2 12.4189 14.5 13.1189 14.5 13.9189C14.5 14.7189 15.2 15.4189 16 15.4189C16.8 15.4189 17.5 14.7189 17.5 13.9189C17.5 13.1189 16.8 12.4189 16 12.4189Z"
+                                                                        fill="currentColor"></path>
+                                                                    <path
+                                                                        d="M13 13.9189C13 12.2189 14.3 10.9189 16 10.9189H21V7.91895C21 6.81895 20.1 5.91895 19 5.91895H3C2.4 5.91895 2 6.31895 2 6.91895V20.9189C2 21.5189 2.4 21.9189 3 21.9189H19C20.1 21.9189 21 21.0189 21 19.9189V16.9189H16C14.3 16.9189 13 15.6189 13 13.9189Z"
+                                                                        fill="currentColor"></path>
+                                                                </svg>
+                                                            </span>
+                                                            <!--end::Svg Icon-->Payment Method
+                                                        </div>
+                                                    </td>
+                                                    <td class="fw-bold text-end">Online
+                                                        <img src="assets/media/svg/card-logos/visa.svg"
+                                                            class="w-50px ms-2">
+                                                    </td>
+                                                </tr>
+                                                <!--end::Payment method-->
+                                                <!--begin::Date-->
+                                                <tr>
+                                                    <td class="text-muted">
+                                                        <div class="d-flex align-items-center">
+                                                            <!--begin::Svg Icon | path: icons/duotune/ecommerce/ecm006.svg-->
+                                                            <span class="svg-icon svg-icon-2 me-2">
+                                                                <svg width="24" height="24" viewBox="0 0 24 24"
+                                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path
+                                                                        d="M20 8H16C15.4 8 15 8.4 15 9V16H10V17C10 17.6 10.4 18 11 18H16C16 16.9 16.9 16 18 16C19.1 16 20 16.9 20 18H21C21.6 18 22 17.6 22 17V13L20 8Z"
+                                                                        fill="currentColor"></path>
+                                                                    <path opacity="0.3"
+                                                                        d="M20 18C20 19.1 19.1 20 18 20C16.9 20 16 19.1 16 18C16 16.9 16.9 16 18 16C19.1 16 20 16.9 20 18ZM15 4C15 3.4 14.6 3 14 3H3C2.4 3 2 3.4 2 4V13C2 13.6 2.4 14 3 14H15V4ZM6 16C4.9 16 4 16.9 4 18C4 19.1 4.9 20 6 20C7.1 20 8 19.1 8 18C8 16.9 7.1 16 6 16Z"
+                                                                        fill="currentColor"></path>
+                                                                </svg>
+                                                            </span>
+                                                            <!--end::Svg Icon-->Shipping Method
+                                                        </div>
+                                                    </td>
+                                                    <td class="fw-bold text-end">Flat Shipping Rate</td>
+                                                </tr>
+                                                <!--end::Date-->
+                                            </tbody>
+                                            <!--end::Table body-->
+                                        </table>
+                                        <!--end::Table-->
+                                    </div>
+                                </div>
+                                <!--end::Card body-->
+                            </div>
+                            <!--end::Order details-->
+                            <!--begin::Customer details-->
+                            <div class="card card-flush py-4 flex-row-fluid">
+                                <!--begin::Card header-->
+                                <div class="card-header">
+                                    <div class="card-title">
+                                        <h2>Customer Details</h2>
+                                    </div>
+                                </div>
+                                <!--end::Card header-->
+                                <!--begin::Card body-->
+                                <div class="card-body pt-0">
+                                    <div class="table-responsive">
+                                        <!--begin::Table-->
+                                        <table class="table align-middle table-row-bordered mb-0 fs-6 gy-5 min-w-300px">
+                                            <!--begin::Table body-->
+                                            <tbody class="fw-semibold text-gray-600">
+                                                <!--begin::Customer name-->
+                                                <tr>
+                                                    <td class="text-muted">
+                                                        <div class="d-flex align-items-center">
+                                                            <!--begin::Svg Icon | path: icons/duotune/communication/com006.svg-->
+                                                            <span class="svg-icon svg-icon-2 me-2">
+                                                                <svg width="18" height="18" viewBox="0 0 18 18"
+                                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path opacity="0.3"
+                                                                        d="M16.5 9C16.5 13.125 13.125 16.5 9 16.5C4.875 16.5 1.5 13.125 1.5 9C1.5 4.875 4.875 1.5 9 1.5C13.125 1.5 16.5 4.875 16.5 9Z"
+                                                                        fill="currentColor"></path>
+                                                                    <path
+                                                                        d="M9 16.5C10.95 16.5 12.75 15.75 14.025 14.55C13.425 12.675 11.4 11.25 9 11.25C6.6 11.25 4.57499 12.675 3.97499 14.55C5.24999 15.75 7.05 16.5 9 16.5Z"
+                                                                        fill="currentColor"></path>
+                                                                    <rect x="7" y="6" width="4" height="4" rx="2"
+                                                                        fill="currentColor"></rect>
+                                                                </svg>
+                                                            </span>
+                                                            <!--end::Svg Icon-->Customer
+                                                        </div>
+                                                    </td>
+                                                    <td class="fw-bold text-end">
+                                                        <div class="d-flex align-items-center justify-content-end">
+                                                            <!--begin:: Avatar -->
+                                                            <div
+                                                                class="symbol symbol-circle symbol-25px overflow-hidden me-3">
+                                                                <a
+                                                                    href="../../demo1/dist/apps/ecommerce/customers/details.html">
+                                                                    <div class="symbol-label">
+                                                                        <img src="assets/media/avatars/300-23.jpg"
+                                                                            alt="Dan Wilson" class="w-100">
+                                                                    </div>
+                                                                </a>
+                                                            </div>
+                                                            <!--end::Avatar-->
+                                                            <!--begin::Name-->
+                                                            <a href="../../demo1/dist/apps/ecommerce/customers/details.html"
+                                                                class="text-gray-600 text-hover-primary">Dan Wilson</a>
+                                                            <!--end::Name-->
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <!--end::Customer name-->
+                                                <!--begin::Customer email-->
+                                                <tr>
+                                                    <td class="text-muted">
+                                                        <div class="d-flex align-items-center">
+                                                            <!--begin::Svg Icon | path: icons/duotune/communication/com011.svg-->
+                                                            <span class="svg-icon svg-icon-2 me-2">
+                                                                <svg width="24" height="24" viewBox="0 0 24 24"
+                                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path opacity="0.3"
+                                                                        d="M21 19H3C2.4 19 2 18.6 2 18V6C2 5.4 2.4 5 3 5H21C21.6 5 22 5.4 22 6V18C22 18.6 21.6 19 21 19Z"
+                                                                        fill="currentColor"></path>
+                                                                    <path
+                                                                        d="M21 5H2.99999C2.69999 5 2.49999 5.10005 2.29999 5.30005L11.2 13.3C11.7 13.7 12.4 13.7 12.8 13.3L21.7 5.30005C21.5 5.10005 21.3 5 21 5Z"
+                                                                        fill="currentColor"></path>
+                                                                </svg>
+                                                            </span>
+                                                            <!--end::Svg Icon-->Email
+                                                        </div>
+                                                    </td>
+                                                    <td class="fw-bold text-end">
+                                                        <a href="../../demo1/dist/apps/user-management/users/view.html"
+                                                            class="text-gray-600 text-hover-primary">dam@consilting.com</a>
+                                                    </td>
+                                                </tr>
+                                                <!--end::Payment method-->
+                                                <!--begin::Date-->
+                                                <tr>
+                                                    <td class="text-muted">
+                                                        <div class="d-flex align-items-center">
+                                                            <!--begin::Svg Icon | path: icons/duotune/electronics/elc003.svg-->
+                                                            <span class="svg-icon svg-icon-2 me-2">
+                                                                <svg width="24" height="24" viewBox="0 0 24 24"
+                                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path
+                                                                        d="M5 20H19V21C19 21.6 18.6 22 18 22H6C5.4 22 5 21.6 5 21V20ZM19 3C19 2.4 18.6 2 18 2H6C5.4 2 5 2.4 5 3V4H19V3Z"
+                                                                        fill="currentColor"></path>
+                                                                    <path opacity="0.3" d="M19 4H5V20H19V4Z"
+                                                                        fill="currentColor"></path>
+                                                                </svg>
+                                                            </span>
+                                                            <!--end::Svg Icon-->Phone
+                                                        </div>
+                                                    </td>
+                                                    <td class="fw-bold text-end">+6141 234 567</td>
+                                                </tr>
+                                                <!--end::Date-->
+                                            </tbody>
+                                            <!--end::Table body-->
+                                        </table>
+                                        <!--end::Table-->
+                                    </div>
+                                </div>
+                                <!--end::Card body-->
+                            </div>
+                            <!--end::Customer details-->
+                            <!--begin::Documents-->
+                            <div class="card card-flush py-4 flex-row-fluid">
+                                <!--begin::Card header-->
+                                <div class="card-header">
+                                    <div class="card-title">
+                                        <h2>Store Details</h2>
+                                    </div>
+                                </div>
+                                <!--end::Card header-->
+                                <!--begin::Card body-->
+                                <div class="card-body pt-0">
+                                    <div class="table-responsive">
+                                        <!--begin::Table-->
+                                        <table class="table align-middle table-row-bordered mb-0 fs-6 gy-5 min-w-300px">
+                                            <!--begin::Table body-->
+                                            <tbody class="fw-semibold text-gray-600">
+                                                <!--begin::Invoice-->
+                                                <tr>
+                                                    <td class="text-muted">
+                                                        <div class="d-flex align-items-center">
+                                                            <!--begin::Svg Icon | path: icons/duotune/ecommerce/ecm008.svg-->
+                                                            <span class="svg-icon svg-icon-2 me-2">
+                                                                <svg width="24" height="24" viewBox="0 0 24 24"
+                                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path opacity="0.3"
+                                                                        d="M18 21.6C16.3 21.6 15 20.3 15 18.6V2.50001C15 2.20001 14.6 1.99996 14.3 2.19996L13 3.59999L11.7 2.3C11.3 1.9 10.7 1.9 10.3 2.3L9 3.59999L7.70001 2.3C7.30001 1.9 6.69999 1.9 6.29999 2.3L5 3.59999L3.70001 2.3C3.50001 2.1 3 2.20001 3 3.50001V18.6C3 20.3 4.3 21.6 6 21.6H18Z"
+                                                                        fill="currentColor"></path>
+                                                                    <path
+                                                                        d="M12 12.6H11C10.4 12.6 10 12.2 10 11.6C10 11 10.4 10.6 11 10.6H12C12.6 10.6 13 11 13 11.6C13 12.2 12.6 12.6 12 12.6ZM9 11.6C9 11 8.6 10.6 8 10.6H6C5.4 10.6 5 11 5 11.6C5 12.2 5.4 12.6 6 12.6H8C8.6 12.6 9 12.2 9 11.6ZM9 7.59998C9 6.99998 8.6 6.59998 8 6.59998H6C5.4 6.59998 5 6.99998 5 7.59998C5 8.19998 5.4 8.59998 6 8.59998H8C8.6 8.59998 9 8.19998 9 7.59998ZM13 7.59998C13 6.99998 12.6 6.59998 12 6.59998H11C10.4 6.59998 10 6.99998 10 7.59998C10 8.19998 10.4 8.59998 11 8.59998H12C12.6 8.59998 13 8.19998 13 7.59998ZM13 15.6C13 15 12.6 14.6 12 14.6H10C9.4 14.6 9 15 9 15.6C9 16.2 9.4 16.6 10 16.6H12C12.6 16.6 13 16.2 13 15.6Z"
+                                                                        fill="currentColor"></path>
+                                                                    <path
+                                                                        d="M15 18.6C15 20.3 16.3 21.6 18 21.6C19.7 21.6 21 20.3 21 18.6V12.5C21 12.2 20.6 12 20.3 12.2L19 13.6L17.7 12.3C17.3 11.9 16.7 11.9 16.3 12.3L15 13.6V18.6Z"
+                                                                        fill="currentColor"></path>
+                                                                </svg>
+                                                            </span>
+                                                            Store Name
+                                                        </div>
+                                                    </td>
+                                                    <td class="fw-bold text-end">
+                                                        <a href="../../demo1/dist/apps/invoices/view/invoice-3.html"
+                                                            class="text-gray-600 text-hover-primary">Grandizar</a>
+                                                    </td>
+                                                </tr>
+                                                <!--end::Invoice-->
+                                                <!--begin::Shipping-->
+                                                <tr>
+                                                    <td class="text-muted">
+                                                        <div class="d-flex align-items-center">
+                                                            <!--begin::Svg Icon | path: icons/duotune/ecommerce/ecm006.svg-->
+                                                            <span class="svg-icon svg-icon-2 me-2">
+                                                                <svg width="24" height="24" viewBox="0 0 24 24"
+                                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path
+                                                                        d="M20 8H16C15.4 8 15 8.4 15 9V16H10V17C10 17.6 10.4 18 11 18H16C16 16.9 16.9 16 18 16C19.1 16 20 16.9 20 18H21C21.6 18 22 17.6 22 17V13L20 8Z"
+                                                                        fill="currentColor"></path>
+                                                                    <path opacity="0.3"
+                                                                        d="M20 18C20 19.1 19.1 20 18 20C16.9 20 16 19.1 16 18C16 16.9 16.9 16 18 16C19.1 16 20 16.9 20 18ZM15 4C15 3.4 14.6 3 14 3H3C2.4 3 2 3.4 2 4V13C2 13.6 2.4 14 3 14H15V4ZM6 16C4.9 16 4 16.9 4 18C4 19.1 4.9 20 6 20C7.1 20 8 19.1 8 18C8 16.9 7.1 16 6 16Z"
+                                                                        fill="currentColor"></path>
+                                                                </svg>
+                                                            </span>
+                                                            Address
+                                                        </div>
+                                                    </td>
+                                                    <td class="fw-bold text-end">
+                                                        <a href="#" class="text-gray-600 text-hover-primary">Riyadh</a>
+                                                    </td>
+                                                </tr>
+                                                <!--end::Shipping-->
+                                                <!--begin::Rewards-->
+                                                <tr>
+                                                    <td class="text-muted">
+                                                        <div class="d-flex align-items-center">
+                                                            <!--begin::Svg Icon | path: icons/duotune/ecommerce/ecm011.svg-->
+                                                            <span class="svg-icon svg-icon-2 me-2">
+                                                                <svg width="24" height="24" viewBox="0 0 24 24"
+                                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path opacity="0.3"
+                                                                        d="M21.6 11.2L19.3 8.89998V5.59993C19.3 4.99993 18.9 4.59993 18.3 4.59993H14.9L12.6 2.3C12.2 1.9 11.6 1.9 11.2 2.3L8.9 4.59993H5.6C5 4.59993 4.6 4.99993 4.6 5.59993V8.89998L2.3 11.2C1.9 11.6 1.9 12.1999 2.3 12.5999L4.6 14.9V18.2C4.6 18.8 5 19.2 5.6 19.2H8.9L11.2 21.5C11.6 21.9 12.2 21.9 12.6 21.5L14.9 19.2H18.2C18.8 19.2 19.2 18.8 19.2 18.2V14.9L21.5 12.5999C22 12.1999 22 11.6 21.6 11.2Z"
+                                                                        fill="currentColor"></path>
+                                                                    <path
+                                                                        d="M11.3 9.40002C11.3 10.2 11.1 10.9 10.7 11.3C10.3 11.7 9.8 11.9 9.2 11.9C8.8 11.9 8.40001 11.8 8.10001 11.6C7.80001 11.4 7.50001 11.2 7.40001 10.8C7.20001 10.4 7.10001 10 7.10001 9.40002C7.10001 8.80002 7.20001 8.4 7.30001 8C7.40001 7.6 7.7 7.29998 8 7.09998C8.3 6.89998 8.7 6.80005 9.2 6.80005C9.5 6.80005 9.80001 6.9 10.1 7C10.4 7.1 10.6 7.3 10.8 7.5C11 7.7 11.1 8.00005 11.2 8.30005C11.3 8.60005 11.3 9.00002 11.3 9.40002ZM10.1 9.40002C10.1 8.80002 10 8.39998 9.90001 8.09998C9.80001 7.79998 9.6 7.70007 9.2 7.70007C9 7.70007 8.8 7.80002 8.7 7.90002C8.6 8.00002 8.50001 8.2 8.40001 8.5C8.40001 8.7 8.30001 9.10002 8.30001 9.40002C8.30001 9.80002 8.30001 10.1 8.40001 10.4C8.40001 10.6 8.5 10.8 8.7 11C8.8 11.1 9 11.2001 9.2 11.2001C9.5 11.2001 9.70001 11.1 9.90001 10.8C10 10.4 10.1 10 10.1 9.40002ZM14.9 7.80005L9.40001 16.7001C9.30001 16.9001 9.10001 17.1 8.90001 17.1C8.80001 17.1 8.70001 17.1 8.60001 17C8.50001 16.9 8.40001 16.8001 8.40001 16.7001C8.40001 16.6001 8.4 16.5 8.5 16.4L14 7.5C14.1 7.3 14.2 7.19998 14.3 7.09998C14.4 6.99998 14.5 7 14.6 7C14.7 7 14.8 6.99998 14.9 7.09998C15 7.19998 15 7.30002 15 7.40002C15.2 7.30002 15.1 7.50005 14.9 7.80005ZM16.6 14.2001C16.6 15.0001 16.4 15.7 16 16.1C15.6 16.5 15.1 16.7001 14.5 16.7001C14.1 16.7001 13.7 16.6 13.4 16.4C13.1 16.2 12.8 16 12.7 15.6C12.5 15.2 12.4 14.8001 12.4 14.2001C12.4 13.3001 12.6 12.7 12.9 12.3C13.2 11.9 13.7 11.7001 14.5 11.7001C14.8 11.7001 15.1 11.8 15.4 11.9C15.7 12 15.9 12.2 16.1 12.4C16.3 12.6 16.4 12.9001 16.5 13.2001C16.6 13.4001 16.6 13.8001 16.6 14.2001ZM15.4 14.1C15.4 13.5 15.3 13.1 15.2 12.9C15.1 12.6 14.9 12.5 14.5 12.5C14.3 12.5 14.1 12.6001 14 12.7001C13.9 12.8001 13.8 13.0001 13.7 13.2001C13.6 13.4001 13.6 13.8 13.6 14.1C13.6 14.7 13.7 15.1 13.8 15.4C13.9 15.7 14.1 15.8 14.5 15.8C14.8 15.8 15 15.7 15.2 15.4C15.3 15.2 15.4 14.7 15.4 14.1Z"
+                                                                        fill="currentColor"></path>
+                                                                </svg>
+                                                            </span>
+                                                            <!--end::Svg Icon-->Reward Points
+                                                            <i class="fas fa-exclamation-circle ms-2 fs-7"
+                                                                data-bs-toggle="tooltip" title=""
+                                                                data-bs-original-title="Reward value earned by customer when purchasing this order."
+                                                                data-kt-initialized="1"></i>
+                                                        </div>
+                                                    </td>
+                                                    <td class="fw-bold text-end">600</td>
+                                                </tr>
+                                                <!--end::Rewards-->
+                                            </tbody>
+                                            <!--end::Table body-->
+                                        </table>
+                                        <!--end::Table-->
+                                    </div>
+                                </div>
+                                <!--end::Card body-->
+                            </div>
+                            <!--end::Documents-->
+                        </div>
+                        <!--begin::Product List-->
+                        <div class="card card-flush py-4 flex-row-fluid overflow-hidden">
                             <!--begin::Card header-->
                             <div class="card-header">
                                 <div class="card-title">
-                                    <h2>Store Details</h2>
+                                    <h2>Order #14534</h2>
                                 </div>
                             </div>
                             <!--end::Card header-->
@@ -317,552 +777,716 @@
                             <div class="card-body pt-0">
                                 <div class="table-responsive">
                                     <!--begin::Table-->
-                                    <table class="table align-middle table-row-bordered mb-0 fs-6 gy-5 min-w-300px">
+                                    <table class="table align-middle table-row-dashed fs-6 gy-5 mb-0">
+                                        <!--begin::Table head-->
+                                        <thead>
+                                            <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
+                                                <th class="min-w-175px">Product</th>
+                                                <th class="min-w-100px text-end">SKU</th>
+                                                <th class="min-w-70px text-end">Qty</th>
+                                                <th class="min-w-100px text-end">Unit Price</th>
+                                                <th class="min-w-100px text-end">Total</th>
+                                            </tr>
+                                        </thead>
+                                        <!--end::Table head-->
                                         <!--begin::Table body-->
                                         <tbody class="fw-semibold text-gray-600">
-                                            <!--begin::Invoice-->
+                                            <!--begin::Products-->
                                             <tr>
-                                                <td class="text-muted">
+                                                <!--begin::Product-->
+                                                <td>
                                                     <div class="d-flex align-items-center">
-                                                        <!--begin::Svg Icon | path: icons/duotune/ecommerce/ecm008.svg-->
-                                                        <span class="svg-icon svg-icon-2 me-2">
-                                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                                xmlns="http://www.w3.org/2000/svg">
-                                                                <path opacity="0.3"
-                                                                    d="M18 21.6C16.3 21.6 15 20.3 15 18.6V2.50001C15 2.20001 14.6 1.99996 14.3 2.19996L13 3.59999L11.7 2.3C11.3 1.9 10.7 1.9 10.3 2.3L9 3.59999L7.70001 2.3C7.30001 1.9 6.69999 1.9 6.29999 2.3L5 3.59999L3.70001 2.3C3.50001 2.1 3 2.20001 3 3.50001V18.6C3 20.3 4.3 21.6 6 21.6H18Z"
-                                                                    fill="currentColor"></path>
-                                                                <path
-                                                                    d="M12 12.6H11C10.4 12.6 10 12.2 10 11.6C10 11 10.4 10.6 11 10.6H12C12.6 10.6 13 11 13 11.6C13 12.2 12.6 12.6 12 12.6ZM9 11.6C9 11 8.6 10.6 8 10.6H6C5.4 10.6 5 11 5 11.6C5 12.2 5.4 12.6 6 12.6H8C8.6 12.6 9 12.2 9 11.6ZM9 7.59998C9 6.99998 8.6 6.59998 8 6.59998H6C5.4 6.59998 5 6.99998 5 7.59998C5 8.19998 5.4 8.59998 6 8.59998H8C8.6 8.59998 9 8.19998 9 7.59998ZM13 7.59998C13 6.99998 12.6 6.59998 12 6.59998H11C10.4 6.59998 10 6.99998 10 7.59998C10 8.19998 10.4 8.59998 11 8.59998H12C12.6 8.59998 13 8.19998 13 7.59998ZM13 15.6C13 15 12.6 14.6 12 14.6H10C9.4 14.6 9 15 9 15.6C9 16.2 9.4 16.6 10 16.6H12C12.6 16.6 13 16.2 13 15.6Z"
-                                                                    fill="currentColor"></path>
-                                                                <path
-                                                                    d="M15 18.6C15 20.3 16.3 21.6 18 21.6C19.7 21.6 21 20.3 21 18.6V12.5C21 12.2 20.6 12 20.3 12.2L19 13.6L17.7 12.3C17.3 11.9 16.7 11.9 16.3 12.3L15 13.6V18.6Z"
-                                                                    fill="currentColor"></path>
-                                                            </svg>
-                                                        </span>
-                                                       Store Name
+                                                        <!--begin::Thumbnail-->
+                                                        <a href="../../demo1/dist/apps/ecommerce/catalog/edit-product.html"
+                                                            class="symbol symbol-50px">
+                                                            <span class="symbol-label"
+                                                                style="background-image:url(assets/media//stock/ecommerce/1.gif);"></span>
+                                                        </a>
+                                                        <!--end::Thumbnail-->
+                                                        <!--begin::Title-->
+                                                        <div class="ms-5">
+                                                            <a href="../../demo1/dist/apps/ecommerce/catalog/edit-product.html"
+                                                                class="fw-bold text-gray-600 text-hover-primary">Product
+                                                                1</a>
+                                                            <div class="fs-7 text-muted">Delivery Date:
+                                                                04/02/2023</div>
+                                                        </div>
+                                                        <!--end::Title-->
                                                     </div>
                                                 </td>
-                                                <td class="fw-bold text-end">
-                                                    <a href="../../demo1/dist/apps/invoices/view/invoice-3.html"
-                                                        class="text-gray-600 text-hover-primary">Grandizar</a>
-                                                </td>
+                                                <!--end::Product-->
+                                                <!--begin::SKU-->
+                                                <td class="text-end">02773009</td>
+                                                <!--end::SKU-->
+                                                <!--begin::Quantity-->
+                                                <td class="text-end">2</td>
+                                                <!--end::Quantity-->
+                                                <!--begin::Price-->
+                                                <td class="text-end">$120.00</td>
+                                                <!--end::Price-->
+                                                <!--begin::Total-->
+                                                <td class="text-end">$240.00</td>
+                                                <!--end::Total-->
                                             </tr>
-                                            <!--end::Invoice-->
+                                            <tr>
+                                                <!--begin::Product-->
+                                                <td>
+                                                    <div class="d-flex align-items-center">
+                                                        <!--begin::Thumbnail-->
+                                                        <a href="../../demo1/dist/apps/ecommerce/catalog/edit-product.html"
+                                                            class="symbol symbol-50px">
+                                                            <span class="symbol-label"
+                                                                style="background-image:url(assets/media//stock/ecommerce/100.gif);"></span>
+                                                        </a>
+                                                        <!--end::Thumbnail-->
+                                                        <!--begin::Title-->
+                                                        <div class="ms-5">
+                                                            <a href="../../demo1/dist/apps/ecommerce/catalog/edit-product.html"
+                                                                class="fw-bold text-gray-600 text-hover-primary">Footwear</a>
+                                                            <div class="fs-7 text-muted">Delivery Date:
+                                                                04/02/2023</div>
+                                                        </div>
+                                                        <!--end::Title-->
+                                                    </div>
+                                                </td>
+                                                <!--end::Product-->
+                                                <!--begin::SKU-->
+                                                <td class="text-end">02869003</td>
+                                                <!--end::SKU-->
+                                                <!--begin::Quantity-->
+                                                <td class="text-end">1</td>
+                                                <!--end::Quantity-->
+                                                <!--begin::Price-->
+                                                <td class="text-end">$24.00</td>
+                                                <!--end::Price-->
+                                                <!--begin::Total-->
+                                                <td class="text-end">$24.00</td>
+                                                <!--end::Total-->
+                                            </tr>
+                                            <!--end::Products-->
+                                            <!--begin::Subtotal-->
+                                            <tr>
+                                                <td colspan="4" class="text-end">Subtotal</td>
+                                                <td class="text-end">$264.00</td>
+                                            </tr>
+                                            <!--end::Subtotal-->
+                                            <!--begin::VAT-->
+                                            <tr>
+                                                <td colspan="4" class="text-end">VAT (0%)</td>
+                                                <td class="text-end">$0.00</td>
+                                            </tr>
+                                            <!--end::VAT-->
                                             <!--begin::Shipping-->
                                             <tr>
-                                                <td class="text-muted">
-                                                    <div class="d-flex align-items-center">
-                                                        <!--begin::Svg Icon | path: icons/duotune/ecommerce/ecm006.svg-->
-                                                        <span class="svg-icon svg-icon-2 me-2">
-                                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                                xmlns="http://www.w3.org/2000/svg">
-                                                                <path
-                                                                    d="M20 8H16C15.4 8 15 8.4 15 9V16H10V17C10 17.6 10.4 18 11 18H16C16 16.9 16.9 16 18 16C19.1 16 20 16.9 20 18H21C21.6 18 22 17.6 22 17V13L20 8Z"
-                                                                    fill="currentColor"></path>
-                                                                <path opacity="0.3"
-                                                                    d="M20 18C20 19.1 19.1 20 18 20C16.9 20 16 19.1 16 18C16 16.9 16.9 16 18 16C19.1 16 20 16.9 20 18ZM15 4C15 3.4 14.6 3 14 3H3C2.4 3 2 3.4 2 4V13C2 13.6 2.4 14 3 14H15V4ZM6 16C4.9 16 4 16.9 4 18C4 19.1 4.9 20 6 20C7.1 20 8 19.1 8 18C8 16.9 7.1 16 6 16Z"
-                                                                    fill="currentColor"></path>
-                                                            </svg>
-                                                        </span>
-                                                        Address
-                                                    </div>
-                                                </td>
-                                                <td class="fw-bold text-end">
-                                                    <a href="#"
-                                                        class="text-gray-600 text-hover-primary">Riyadh</a>
-                                                </td>
+                                                <td colspan="4" class="text-end">Shipping Rate</td>
+                                                <td class="text-end">$5.00</td>
                                             </tr>
                                             <!--end::Shipping-->
-                                            <!--begin::Rewards-->
+                                            <!--begin::Grand total-->
                                             <tr>
-                                                <td class="text-muted">
-                                                    <div class="d-flex align-items-center">
-                                                        <!--begin::Svg Icon | path: icons/duotune/ecommerce/ecm011.svg-->
-                                                        <span class="svg-icon svg-icon-2 me-2">
-                                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                                xmlns="http://www.w3.org/2000/svg">
-                                                                <path opacity="0.3"
-                                                                    d="M21.6 11.2L19.3 8.89998V5.59993C19.3 4.99993 18.9 4.59993 18.3 4.59993H14.9L12.6 2.3C12.2 1.9 11.6 1.9 11.2 2.3L8.9 4.59993H5.6C5 4.59993 4.6 4.99993 4.6 5.59993V8.89998L2.3 11.2C1.9 11.6 1.9 12.1999 2.3 12.5999L4.6 14.9V18.2C4.6 18.8 5 19.2 5.6 19.2H8.9L11.2 21.5C11.6 21.9 12.2 21.9 12.6 21.5L14.9 19.2H18.2C18.8 19.2 19.2 18.8 19.2 18.2V14.9L21.5 12.5999C22 12.1999 22 11.6 21.6 11.2Z"
-                                                                    fill="currentColor"></path>
-                                                                <path
-                                                                    d="M11.3 9.40002C11.3 10.2 11.1 10.9 10.7 11.3C10.3 11.7 9.8 11.9 9.2 11.9C8.8 11.9 8.40001 11.8 8.10001 11.6C7.80001 11.4 7.50001 11.2 7.40001 10.8C7.20001 10.4 7.10001 10 7.10001 9.40002C7.10001 8.80002 7.20001 8.4 7.30001 8C7.40001 7.6 7.7 7.29998 8 7.09998C8.3 6.89998 8.7 6.80005 9.2 6.80005C9.5 6.80005 9.80001 6.9 10.1 7C10.4 7.1 10.6 7.3 10.8 7.5C11 7.7 11.1 8.00005 11.2 8.30005C11.3 8.60005 11.3 9.00002 11.3 9.40002ZM10.1 9.40002C10.1 8.80002 10 8.39998 9.90001 8.09998C9.80001 7.79998 9.6 7.70007 9.2 7.70007C9 7.70007 8.8 7.80002 8.7 7.90002C8.6 8.00002 8.50001 8.2 8.40001 8.5C8.40001 8.7 8.30001 9.10002 8.30001 9.40002C8.30001 9.80002 8.30001 10.1 8.40001 10.4C8.40001 10.6 8.5 10.8 8.7 11C8.8 11.1 9 11.2001 9.2 11.2001C9.5 11.2001 9.70001 11.1 9.90001 10.8C10 10.4 10.1 10 10.1 9.40002ZM14.9 7.80005L9.40001 16.7001C9.30001 16.9001 9.10001 17.1 8.90001 17.1C8.80001 17.1 8.70001 17.1 8.60001 17C8.50001 16.9 8.40001 16.8001 8.40001 16.7001C8.40001 16.6001 8.4 16.5 8.5 16.4L14 7.5C14.1 7.3 14.2 7.19998 14.3 7.09998C14.4 6.99998 14.5 7 14.6 7C14.7 7 14.8 6.99998 14.9 7.09998C15 7.19998 15 7.30002 15 7.40002C15.2 7.30002 15.1 7.50005 14.9 7.80005ZM16.6 14.2001C16.6 15.0001 16.4 15.7 16 16.1C15.6 16.5 15.1 16.7001 14.5 16.7001C14.1 16.7001 13.7 16.6 13.4 16.4C13.1 16.2 12.8 16 12.7 15.6C12.5 15.2 12.4 14.8001 12.4 14.2001C12.4 13.3001 12.6 12.7 12.9 12.3C13.2 11.9 13.7 11.7001 14.5 11.7001C14.8 11.7001 15.1 11.8 15.4 11.9C15.7 12 15.9 12.2 16.1 12.4C16.3 12.6 16.4 12.9001 16.5 13.2001C16.6 13.4001 16.6 13.8001 16.6 14.2001ZM15.4 14.1C15.4 13.5 15.3 13.1 15.2 12.9C15.1 12.6 14.9 12.5 14.5 12.5C14.3 12.5 14.1 12.6001 14 12.7001C13.9 12.8001 13.8 13.0001 13.7 13.2001C13.6 13.4001 13.6 13.8 13.6 14.1C13.6 14.7 13.7 15.1 13.8 15.4C13.9 15.7 14.1 15.8 14.5 15.8C14.8 15.8 15 15.7 15.2 15.4C15.3 15.2 15.4 14.7 15.4 14.1Z"
-                                                                    fill="currentColor"></path>
-                                                            </svg>
-                                                        </span>
-                                                        <!--end::Svg Icon-->Reward Points
-                                                        <i class="fas fa-exclamation-circle ms-2 fs-7"
-                                                            data-bs-toggle="tooltip" title=""
-                                                            data-bs-original-title="Reward value earned by customer when purchasing this order."
-                                                            data-kt-initialized="1"></i>
-                                                    </div>
-                                                </td>
-                                                <td class="fw-bold text-end">600</td>
+                                                <td colspan="4" class="fs-3 text-dark text-end">Grand Total</td>
+                                                <td class="text-dark fs-3 fw-bolder text-end">$269.00</td>
                                             </tr>
-                                            <!--end::Rewards-->
+                                            <!--end::Grand total-->
                                         </tbody>
-                                        <!--end::Table body-->
+                                        <!--end::Table head-->
                                     </table>
                                     <!--end::Table-->
                                 </div>
                             </div>
                             <!--end::Card body-->
                         </div>
-                        <!--end::Documents-->
+                        <!--end::Product List-->
                     </div>
-                    <!--end::Order summary-->
-                    <!--begin::Tab content-->
-                    <div class="tab-content">
-                        <!--begin::Tab pane-->
-                        <div class="tab-pane fade show active" id="kt_ecommerce_sales_order_summary" role="tab-panel">
-                            <!--begin::Orders-->
-                            <div class="d-flex flex-column gap-7 gap-lg-10">
-                                <div class="d-flex flex-column flex-xl-row gap-7 gap-lg-10">
-                                    <!--begin::Payment address-->
-                                    <div class="card card-flush py-4 flex-row-fluid overflow-hidden">
-                                        <!--begin::Background-->
-                                        <div class="position-absolute top-0 end-0 opacity-10 pe-none text-end">
-                                            <img src="assets/media/icons/duotune/ecommerce/ecm001.svg" class="w-175px">
+                    <div class="tab-pane fade" id="payments" role="tabpanel">
+                        <div class="row">
+
+                            <div class="col-xl-9">
+                                <div class="card">
+                                    <div class="card-body p-10">
+                                        <button class="btn btn-active-primary w-100 mb-5">
+                                            Wallet Cash $596
+                                            <br>
+                                            <small>500=5.00</small>
+                                        </button>
+                                        <!--begin::Input group-->
+                                        <div class="mb-10">
+                                            <!--begin::Label-->
+                                            <label class="form-label fw-bold fs-6 text-gray-700">Currency</label>
+                                            <!--end::Label-->
+                                            <!--begin::Select-->
+                                            <select name="currnecy" aria-label="Select a Timezone"
+                                                data-control="select2" data-placeholder="Select currency"
+                                                class="form-select form-select-solid select2-hidden-accessible"
+                                                data-select2-id="select2-data-10-t1bo" tabindex="-1" aria-hidden="true"
+                                                data-kt-initialized="1">
+                                                <option value="" data-select2-id="select2-data-12-g8jj"></option>
+                                                <option data-kt-flag="flags/united-states.svg" value="USD">
+                                                    USD&nbsp;-&nbsp;USA dollar</option>
+                                                <option data-kt-flag="flags/united-kingdom.svg" value="GBP">
+                                                    GBP&nbsp;-&nbsp;British pound</option>
+                                                <option data-kt-flag="flags/australia.svg" value="AUD">
+                                                    AUD&nbsp;-&nbsp;Australian dollar</option>
+                                                <option data-kt-flag="flags/japan.svg" value="JPY">
+                                                    JPY&nbsp;-&nbsp;Japanese yen</option>
+                                                <option data-kt-flag="flags/sweden.svg" value="SEK">
+                                                    SEK&nbsp;-&nbsp;Swedish krona</option>
+                                                <option data-kt-flag="flags/canada.svg" value="CAD">
+                                                    CAD&nbsp;-&nbsp;Canadian dollar</option>
+                                                <option data-kt-flag="flags/switzerland.svg" value="CHF">
+                                                    CHF&nbsp;-&nbsp;Swiss franc</option>
+                                            </select><span
+                                                class="select2 select2-container select2-container--bootstrap5"
+                                                dir="ltr" data-select2-id="select2-data-11-u798"
+                                                style="width: 100%;"><span class="selection"><span
+                                                        class="select2-selection select2-selection--single form-select form-select-solid"
+                                                        role="combobox" aria-haspopup="true" aria-expanded="false"
+                                                        tabindex="0" aria-disabled="false"
+                                                        aria-labelledby="select2-currnecy-3y-container"
+                                                        aria-controls="select2-currnecy-3y-container"><span
+                                                            class="select2-selection__rendered"
+                                                            id="select2-currnecy-3y-container" role="textbox"
+                                                            aria-readonly="true" title="Select currency"><span
+                                                                class="select2-selection__placeholder">Select
+                                                                currency</span></span><span
+                                                            class="select2-selection__arrow" role="presentation"><b
+                                                                role="presentation"></b></span></span></span><span
+                                                    class="dropdown-wrapper" aria-hidden="true"></span></span>
+                                            <!--end::Select-->
                                         </div>
-                                        <!--end::Background-->
-                                        <!--begin::Card header-->
-                                        <div class="card-header">
-                                            <div class="card-title">
-                                                <h2>Payment Address</h2>
+                                        <div class="row mb-10">
+                                            <div class="col">
+                                                <a href="javascript:;"
+                                                    class="btn btn-light btn-active-light-primary w-100">Cash on
+                                                    Delivery</a>
+                                            </div>
+                                            <div class="col">
+                                                <a href="javascript:;"
+                                                    class="btn btn-light btn-active-light-primary w-100">Pay at the
+                                                    Store</a>
                                             </div>
                                         </div>
-                                        <!--end::Card header-->
-                                        <!--begin::Card body-->
-                                        <div class="card-body pt-0">Unit 1/23 Hastings Road,
-                                            <br>Melbourne 3000,
-                                            <br>Victoria,
-                                            <br>Australia.
+                                        <!--end::Input group-->
+                                        <!--begin::Separator-->
+                                        <div class="separator separator-dashed mb-8"></div>
+                                        <!--end::Separator-->
+                                        <!--begin::Input group-->
+                                        <div class="mb-8">
+                                            <label
+                                                class="form-check form-switch form-switch-sm form-check-custom form-check-solid flex-stack">
+                                                <span
+                                                    class="form-check-label ms-0 fw-bold fs-6 text-gray-700">Notes</span>
+                                                <input class="form-check-input" type="checkbox" value="">
+                                            </label>
+                                            <!--end::Option-->
                                         </div>
-                                        <!--end::Card body-->
+                                        <!--end::Input group-->
+                                        <!--begin::Separator-->
+                                        <div class="separator separator-dashed mb-8"></div>
+                                        <!--end::Separator-->
+                                        <!--begin::Actions-->
+                                        <div class="mb-0">
+                                            <!--begin::Row-->
+
+                                            <!--end::Row-->
+                                            <button type="submit" href="#" class="btn btn-primary w-100"
+                                                id="kt_invoice_submit_button">
+                                                <!--begin::Svg Icon | path: icons/duotune/general/gen016.svg-->
+                                                <span class="svg-icon svg-icon-3">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path
+                                                            d="M15.43 8.56949L10.744 15.1395C10.6422 15.282 10.5804 15.4492 10.5651 15.6236C10.5498 15.7981 10.5815 15.9734 10.657 16.1315L13.194 21.4425C13.2737 21.6097 13.3991 21.751 13.5557 21.8499C13.7123 21.9488 13.8938 22.0014 14.079 22.0015H14.117C14.3087 21.9941 14.4941 21.9307 14.6502 21.8191C14.8062 21.7075 14.9261 21.5526 14.995 21.3735L21.933 3.33649C22.0011 3.15918 22.0164 2.96594 21.977 2.78013C21.9376 2.59432 21.8452 2.4239 21.711 2.28949L15.43 8.56949Z"
+                                                            fill="currentColor"></path>
+                                                        <path opacity="0.3"
+                                                            d="M20.664 2.06648L2.62602 9.00148C2.44768 9.07085 2.29348 9.19082 2.1824 9.34663C2.07131 9.50244 2.00818 9.68731 2.00074 9.87853C1.99331 10.0697 2.04189 10.259 2.14054 10.4229C2.23919 10.5869 2.38359 10.7185 2.55601 10.8015L7.86601 13.3365C8.02383 13.4126 8.19925 13.4448 8.37382 13.4297C8.54839 13.4145 8.71565 13.3526 8.85801 13.2505L15.43 8.56548L21.711 2.28448C21.5762 2.15096 21.4055 2.05932 21.2198 2.02064C21.034 1.98196 20.8409 1.99788 20.664 2.06648Z"
+                                                            fill="currentColor"></path>
+                                                    </svg>
+                                                </span>
+                                                <!--end::Svg Icon-->Pay</button>
+                                        </div>
+                                        <!--end::Actions-->
                                     </div>
-                                    <!--end::Payment address-->
-                                    <!--begin::Shipping address-->
-                                    <div class="card card-flush py-4 flex-row-fluid overflow-hidden">
-                                        <!--begin::Background-->
-                                        <div class="position-absolute top-0 end-0 opacity-10 pe-none text-end">
-                                            <img src="assets/media/icons/duotune/ecommerce/ecm006.svg" class="w-175px">
-                                        </div>
-                                        <!--end::Background-->
-                                        <!--begin::Card header-->
-                                        <div class="card-header">
-                                            <div class="card-title">
-                                                <h2>Shipping Address</h2>
-                                            </div>
-                                        </div>
-                                        <!--end::Card header-->
-                                        <!--begin::Card body-->
-                                        <div class="card-body pt-0">Unit 1/23 Hastings Road,
-                                            <br>Melbourne 3000,
-                                            <br>Victoria,
-                                            <br>Australia.
-                                        </div>
-                                        <!--end::Card body-->
-                                    </div>
-                                    <!--end::Shipping address-->
                                 </div>
-                                <!--begin::Product List-->
+                            </div>
+                            <div class="col-xl-3">
+                                <div
+                                    class="d-print-none bg-white border border-dashed border-gray-300 card-rounded h-lg-100 min-w-md-350px p-9 bg-lighten">
+                                    <div class="text-center">
+                                        <!--begin::Total Amount-->
+                                        <div class="fs-3 fw-bold text-muted mb-3">TOTAL AMOUNT</div>
+                                        <div class="fs-xl-2x fs-2 fw-bolder">$20,600.00</div>
+                                        <div class="text-muted fw-semibold">Taxes included</div>
+                                        <!--end::Total Amount-->
+                                        <div class="border-bottom w-100 my-7 my-lg-16"></div>
+                                        <!--begin::Invoice To-->
+                                        <div class="text-gray-600 fs-6 fw-semibold mb-3">INVOICE TO.</div>
+                                        <div class="fs-6 text-gray-800 fw-semibold mb-8">Iris Watson.
+                                            <br>Fredrick Nebraska 20620
+                                        </div>
+                                        <!--end::Invoice To-->
+                                        <!--begin::Invoice No-->
+                                        <div class="text-gray-600 fs-6 fw-semibold mb-3">INVOICE NO.</div>
+                                        <div class="fs-6 text-gray-800 fw-semibold mb-8">56758</div>
+                                        <!--end::Invoice No-->
+                                        <!--begin::Invoice Date-->
+                                        <div class="text-gray-600 fs-6 fw-semibold mb-3">DATE</div>
+                                        <div class="fs-6 text-gray-800 fw-semibold">12 May, 2020</div>
+                                        <!--end::Invoice Date-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="deliveryshipping" role="tabpanel">
+                        <div class="d-flex flex-column mb-9 gap-7 gap-lg-10">
+                            <div class="d-flex flex-column flex-xl-row gap-7 gap-lg-10">
+                                <!--begin::Payment address-->
                                 <div class="card card-flush py-4 flex-row-fluid overflow-hidden">
+                                    <!--begin::Background-->
+                                    <div class="position-absolute top-0 end-0 opacity-10 pe-none text-end">
+                                        <img src="assets/media/icons/duotune/ecommerce/ecm001.svg" class="w-175px">
+                                    </div>
+                                    <!--end::Background-->
                                     <!--begin::Card header-->
                                     <div class="card-header">
                                         <div class="card-title">
-                                            <h2>Order #14534</h2>
+                                            <h2>Payment Address</h2>
                                         </div>
                                     </div>
                                     <!--end::Card header-->
                                     <!--begin::Card body-->
-                                    <div class="card-body pt-0">
-                                        <div class="table-responsive">
-                                            <!--begin::Table-->
-                                            <table class="table align-middle table-row-dashed fs-6 gy-5 mb-0">
-                                                <!--begin::Table head-->
-                                                <thead>
-                                                    <tr
-                                                        class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
-                                                        <th class="min-w-175px">Product</th>
-                                                        <th class="min-w-100px text-end">SKU</th>
-                                                        <th class="min-w-70px text-end">Qty</th>
-                                                        <th class="min-w-100px text-end">Unit Price</th>
-                                                        <th class="min-w-100px text-end">Total</th>
-                                                    </tr>
-                                                </thead>
-                                                <!--end::Table head-->
-                                                <!--begin::Table body-->
-                                                <tbody class="fw-semibold text-gray-600">
-                                                    <!--begin::Products-->
-                                                    <tr>
-                                                        <!--begin::Product-->
-                                                        <td>
-                                                            <div class="d-flex align-items-center">
-                                                                <!--begin::Thumbnail-->
-                                                                <a href="../../demo1/dist/apps/ecommerce/catalog/edit-product.html"
-                                                                    class="symbol symbol-50px">
-                                                                    <span class="symbol-label"
-                                                                        style="background-image:url(assets/media//stock/ecommerce/1.gif);"></span>
-                                                                </a>
-                                                                <!--end::Thumbnail-->
-                                                                <!--begin::Title-->
-                                                                <div class="ms-5">
-                                                                    <a href="../../demo1/dist/apps/ecommerce/catalog/edit-product.html"
-                                                                        class="fw-bold text-gray-600 text-hover-primary">Product
-                                                                        1</a>
-                                                                    <div class="fs-7 text-muted">Delivery Date:
-                                                                        04/02/2023</div>
-                                                                </div>
-                                                                <!--end::Title-->
-                                                            </div>
-                                                        </td>
-                                                        <!--end::Product-->
-                                                        <!--begin::SKU-->
-                                                        <td class="text-end">02773009</td>
-                                                        <!--end::SKU-->
-                                                        <!--begin::Quantity-->
-                                                        <td class="text-end">2</td>
-                                                        <!--end::Quantity-->
-                                                        <!--begin::Price-->
-                                                        <td class="text-end">$120.00</td>
-                                                        <!--end::Price-->
-                                                        <!--begin::Total-->
-                                                        <td class="text-end">$240.00</td>
-                                                        <!--end::Total-->
-                                                    </tr>
-                                                    <tr>
-                                                        <!--begin::Product-->
-                                                        <td>
-                                                            <div class="d-flex align-items-center">
-                                                                <!--begin::Thumbnail-->
-                                                                <a href="../../demo1/dist/apps/ecommerce/catalog/edit-product.html"
-                                                                    class="symbol symbol-50px">
-                                                                    <span class="symbol-label"
-                                                                        style="background-image:url(assets/media//stock/ecommerce/100.gif);"></span>
-                                                                </a>
-                                                                <!--end::Thumbnail-->
-                                                                <!--begin::Title-->
-                                                                <div class="ms-5">
-                                                                    <a href="../../demo1/dist/apps/ecommerce/catalog/edit-product.html"
-                                                                        class="fw-bold text-gray-600 text-hover-primary">Footwear</a>
-                                                                    <div class="fs-7 text-muted">Delivery Date:
-                                                                        04/02/2023</div>
-                                                                </div>
-                                                                <!--end::Title-->
-                                                            </div>
-                                                        </td>
-                                                        <!--end::Product-->
-                                                        <!--begin::SKU-->
-                                                        <td class="text-end">02869003</td>
-                                                        <!--end::SKU-->
-                                                        <!--begin::Quantity-->
-                                                        <td class="text-end">1</td>
-                                                        <!--end::Quantity-->
-                                                        <!--begin::Price-->
-                                                        <td class="text-end">$24.00</td>
-                                                        <!--end::Price-->
-                                                        <!--begin::Total-->
-                                                        <td class="text-end">$24.00</td>
-                                                        <!--end::Total-->
-                                                    </tr>
-                                                    <!--end::Products-->
-                                                    <!--begin::Subtotal-->
-                                                    <tr>
-                                                        <td colspan="4" class="text-end">Subtotal</td>
-                                                        <td class="text-end">$264.00</td>
-                                                    </tr>
-                                                    <!--end::Subtotal-->
-                                                    <!--begin::VAT-->
-                                                    <tr>
-                                                        <td colspan="4" class="text-end">VAT (0%)</td>
-                                                        <td class="text-end">$0.00</td>
-                                                    </tr>
-                                                    <!--end::VAT-->
-                                                    <!--begin::Shipping-->
-                                                    <tr>
-                                                        <td colspan="4" class="text-end">Shipping Rate</td>
-                                                        <td class="text-end">$5.00</td>
-                                                    </tr>
-                                                    <!--end::Shipping-->
-                                                    <!--begin::Grand total-->
-                                                    <tr>
-                                                        <td colspan="4" class="fs-3 text-dark text-end">Grand Total</td>
-                                                        <td class="text-dark fs-3 fw-bolder text-end">$269.00</td>
-                                                    </tr>
-                                                    <!--end::Grand total-->
-                                                </tbody>
-                                                <!--end::Table head-->
-                                            </table>
-                                            <!--end::Table-->
-                                        </div>
+                                    <div class="card-body pt-0">Unit 1/23 Hastings Road,
+                                        <br>Melbourne 3000,
+                                        <br>Victoria,
+                                        <br>Australia.
                                     </div>
                                     <!--end::Card body-->
                                 </div>
-                                <!--end::Product List-->
+                                <!--end::Payment address-->
+                                <!--begin::Shipping address-->
+                                <div class="card card-flush py-4 flex-row-fluid overflow-hidden">
+                                    <!--begin::Background-->
+                                    <div class="position-absolute top-0 end-0 opacity-10 pe-none text-end">
+                                        <img src="assets/media/icons/duotune/ecommerce/ecm006.svg" class="w-175px">
+                                    </div>
+                                    <!--end::Background-->
+                                    <!--begin::Card header-->
+                                    <div class="card-header">
+                                        <div class="card-title">
+                                            <h2>Shipping Address</h2>
+                                        </div>
+                                    </div>
+                                    <!--end::Card header-->
+                                    <!--begin::Card body-->
+                                    <div class="card-body pt-0">Unit 1/23 Hastings Road,
+                                        <br>Melbourne 3000,
+                                        <br>Victoria,
+                                        <br>Australia.
+                                    </div>
+                                    <!--end::Card body-->
+                                </div>
+                                <!--end::Shipping address-->
                             </div>
-                            <!--end::Orders-->
+
                         </div>
-                        <!--end::Tab pane-->
-                        <!--begin::Tab pane-->
-                        <div class="tab-pane fade" id="kt_ecommerce_sales_order_history" role="tab-panel">
-                            <!--begin::Orders-->
-                            <div class="d-flex flex-column gap-7 gap-lg-10">
-                                <!--begin::Order history-->
-                                <div class="card card-flush py-4 flex-row-fluid">
-                                    <!--begin::Card header-->
-                                    <div class="card-header">
-                                        <div class="card-title">
-                                            <h2>Order History</h2>
-                                        </div>
-                                    </div>
-                                    <!--end::Card header-->
-                                    <!--begin::Card body-->
-                                    <div class="card-body pt-0">
-                                        <div class="table-responsive">
-                                            <!--begin::Table-->
-                                            <table class="table align-middle table-row-dashed fs-6 gy-5 mb-0">
-                                                <!--begin::Table head-->
-                                                <thead>
-                                                    <tr
-                                                        class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
-                                                        <th class="min-w-100px">Date Added</th>
-                                                        <th class="min-w-175px">Comment</th>
-                                                        <th class="min-w-70px">Order Status</th>
-                                                        <th class="min-w-100px">Customer Notifed</th>
-                                                    </tr>
-                                                </thead>
-                                                <!--end::Table head-->
-                                                <!--begin::Table body-->
-                                                <tbody class="fw-semibold text-gray-600">
-                                                    <tr>
-                                                        <!--begin::Date-->
-                                                        <td>04/02/2023</td>
-                                                        <!--end::Date-->
-                                                        <!--begin::Comment-->
-                                                        <td>Order completed</td>
-                                                        <!--end::Comment-->
-                                                        <!--begin::Status-->
-                                                        <td>
-                                                            <!--begin::Badges-->
-                                                            <div class="badge badge-light-success">Completed</div>
-                                                            <!--end::Badges-->
-                                                        </td>
-                                                        <!--end::Status-->
-                                                        <!--begin::Customer Notified-->
-                                                        <td>No</td>
-                                                        <!--end::Customer Notified-->
-                                                    </tr>
-                                                    <tr>
-                                                        <!--begin::Date-->
-                                                        <td>03/02/2023</td>
-                                                        <!--end::Date-->
-                                                        <!--begin::Comment-->
-                                                        <td>Order received by customer</td>
-                                                        <!--end::Comment-->
-                                                        <!--begin::Status-->
-                                                        <td>
-                                                            <!--begin::Badges-->
-                                                            <div class="badge badge-light-success">Delivered</div>
-                                                            <!--end::Badges-->
-                                                        </td>
-                                                        <!--end::Status-->
-                                                        <!--begin::Customer Notified-->
-                                                        <td>Yes</td>
-                                                        <!--end::Customer Notified-->
-                                                    </tr>
-                                                    <tr>
-                                                        <!--begin::Date-->
-                                                        <td>02/02/2023</td>
-                                                        <!--end::Date-->
-                                                        <!--begin::Comment-->
-                                                        <td>Order shipped from warehouse</td>
-                                                        <!--end::Comment-->
-                                                        <!--begin::Status-->
-                                                        <td>
-                                                            <!--begin::Badges-->
-                                                            <div class="badge badge-light-primary">Delivering</div>
-                                                            <!--end::Badges-->
-                                                        </td>
-                                                        <!--end::Status-->
-                                                        <!--begin::Customer Notified-->
-                                                        <td>Yes</td>
-                                                        <!--end::Customer Notified-->
-                                                    </tr>
-                                                    <tr>
-                                                        <!--begin::Date-->
-                                                        <td>01/02/2023</td>
-                                                        <!--end::Date-->
-                                                        <!--begin::Comment-->
-                                                        <td>Payment received</td>
-                                                        <!--end::Comment-->
-                                                        <!--begin::Status-->
-                                                        <td>
-                                                            <!--begin::Badges-->
-                                                            <div class="badge badge-light-primary">Processing</div>
-                                                            <!--end::Badges-->
-                                                        </td>
-                                                        <!--end::Status-->
-                                                        <!--begin::Customer Notified-->
-                                                        <td>No</td>
-                                                        <!--end::Customer Notified-->
-                                                    </tr>
-                                                    <tr>
-                                                        <!--begin::Date-->
-                                                        <td>31/01/2023</td>
-                                                        <!--end::Date-->
-                                                        <!--begin::Comment-->
-                                                        <td>Pending payment</td>
-                                                        <!--end::Comment-->
-                                                        <!--begin::Status-->
-                                                        <td>
-                                                            <!--begin::Badges-->
-                                                            <div class="badge badge-light-warning">Pending</div>
-                                                            <!--end::Badges-->
-                                                        </td>
-                                                        <!--end::Status-->
-                                                        <!--begin::Customer Notified-->
-                                                        <td>No</td>
-                                                        <!--end::Customer Notified-->
-                                                    </tr>
-                                                    <tr>
-                                                        <!--begin::Date-->
-                                                        <td>30/01/2023</td>
-                                                        <!--end::Date-->
-                                                        <!--begin::Comment-->
-                                                        <td>Payment method updated</td>
-                                                        <!--end::Comment-->
-                                                        <!--begin::Status-->
-                                                        <td>
-                                                            <!--begin::Badges-->
-                                                            <div class="badge badge-light-warning">Pending</div>
-                                                            <!--end::Badges-->
-                                                        </td>
-                                                        <!--end::Status-->
-                                                        <!--begin::Customer Notified-->
-                                                        <td>No</td>
-                                                        <!--end::Customer Notified-->
-                                                    </tr>
-                                                    <tr>
-                                                        <!--begin::Date-->
-                                                        <td>29/01/2023</td>
-                                                        <!--end::Date-->
-                                                        <!--begin::Comment-->
-                                                        <td>Payment method expired</td>
-                                                        <!--end::Comment-->
-                                                        <!--begin::Status-->
-                                                        <td>
-                                                            <!--begin::Badges-->
-                                                            <div class="badge badge-light-danger">Failed</div>
-                                                            <!--end::Badges-->
-                                                        </td>
-                                                        <!--end::Status-->
-                                                        <!--begin::Customer Notified-->
-                                                        <td>Yes</td>
-                                                        <!--end::Customer Notified-->
-                                                    </tr>
-                                                    <tr>
-                                                        <!--begin::Date-->
-                                                        <td>28/01/2023</td>
-                                                        <!--end::Date-->
-                                                        <!--begin::Comment-->
-                                                        <td>Pending payment</td>
-                                                        <!--end::Comment-->
-                                                        <!--begin::Status-->
-                                                        <td>
-                                                            <!--begin::Badges-->
-                                                            <div class="badge badge-light-warning">Pending</div>
-                                                            <!--end::Badges-->
-                                                        </td>
-                                                        <!--end::Status-->
-                                                        <!--begin::Customer Notified-->
-                                                        <td>No</td>
-                                                        <!--end::Customer Notified-->
-                                                    </tr>
-                                                    <tr>
-                                                        <!--begin::Date-->
-                                                        <td>27/01/2023</td>
-                                                        <!--end::Date-->
-                                                        <!--begin::Comment-->
-                                                        <td>Order received</td>
-                                                        <!--end::Comment-->
-                                                        <!--begin::Status-->
-                                                        <td>
-                                                            <!--begin::Badges-->
-                                                            <div class="badge badge-light-warning">Pending</div>
-                                                            <!--end::Badges-->
-                                                        </td>
-                                                        <!--end::Status-->
-                                                        <!--begin::Customer Notified-->
-                                                        <td>Yes</td>
-                                                        <!--end::Customer Notified-->
-                                                    </tr>
-                                                </tbody>
-                                                <!--end::Table head-->
-                                            </table>
-                                            <!--end::Table-->
-                                        </div>
-                                    </div>
-                                    <!--end::Card body-->
+
+                        <div class="card">
+                            <div class="card-header mt-6">
+                                <!--begin::Card title-->
+                                <div class="card-title flex-column">
+                                    <h2 class="mb-1">Delivery Fullfilment Teams</h2>
+                                    <div class="fs-6 fw-semibold text-muted">Nearby</div>
                                 </div>
-                                <!--end::Order history-->
-                                <!--begin::Order data-->
-                                <div class="card card-flush py-4 flex-row-fluid">
-                                    <!--begin::Card header-->
-                                    <div class="card-header">
-                                        <div class="card-title">
-                                            <h2>Order Data</h2>
-                                        </div>
-                                    </div>
-                                    <!--end::Card header-->
-                                    <!--begin::Card body-->
-                                    <div class="card-body pt-0">
-                                        <div class="table-responsive">
-                                            <!--begin::Table-->
-                                            <table class="table align-middle table-row-bordered mb-0 fs-6 gy-5">
-                                                <!--begin::Table body-->
-                                                <tbody class="fw-semibold text-gray-600">
-                                                    <!--begin::IP address-->
-                                                    <tr>
-                                                        <td class="text-muted">IP Address</td>
-                                                        <td class="fw-bold text-end">172.68.221.26</td>
-                                                    </tr>
-                                                    <!--end::IP address-->
-                                                    <!--begin::Forwarded IP-->
-                                                    <tr>
-                                                        <td class="text-muted">Forwarded IP</td>
-                                                        <td class="fw-bold text-end">89.201.163.49</td>
-                                                    </tr>
-                                                    <!--end::Forwarded IP-->
-                                                    <!--begin::User agent-->
-                                                    <tr>
-                                                        <td class="text-muted">User Agent</td>
-                                                        <td class="fw-bold text-end">Mozilla/5.0 (Windows NT 10.0;
-                                                            Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)
-                                                            Chrome/96.0.4664.110 Safari/537.36</td>
-                                                    </tr>
-                                                    <!--end::User agent-->
-                                                    <!--begin::Accept language-->
-                                                    <tr>
-                                                        <td class="text-muted">Accept Language</td>
-                                                        <td class="fw-bold text-end">en-GB,en-US;q=0.9,en;q=0.8</td>
-                                                    </tr>
-                                                    <!--end::Accept language-->
-                                                </tbody>
-                                                <!--end::Table body-->
-                                            </table>
-                                            <!--end::Table-->
-                                        </div>
-                                    </div>
-                                    <!--end::Card body-->
-                                </div>
-                                <!--end::Order data-->
                             </div>
-                            <!--end::Orders-->
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-xl-3">
+                                        <!--begin::Card body-->
+                                        <div
+                                            class="card-body border-dashed border-light d-flex flex-center flex-column py-9 px-5">
+                                            <!--begin::Avatar-->
+                                            <div class="symbol symbol-65px symbol-circle mb-5">
+                                                <span
+                                                    class="symbol-label fs-2x fw-semibold text-info bg-light-info">P</span>
+                                                <div
+                                                    class="bg-success position-absolute rounded-circle translate-middle start-100 top-100 border border-4 border-body h-15px w-15px ms-n3 mt-n3">
+                                                </div>
+                                            </div>
+                                            <!--end::Avatar-->
+                                            <!--begin::Name-->
+                                            <a href="#"
+                                                class="fs-4 text-gray-800 text-hover-primary fw-bold mb-0">Rashedur
+                                                Rahamn</a>
+                                            <!--end::Name-->
+                                            <!--begin::Position-->
+                                            <div class="fw-semibold text-gray-400 mb-6"><i
+                                                    class="fas fa-map-location me-2"></i> 10min away</div>
+                                            <!--end::Position-->
+                                            <!--begin::Follow-->
+                                            <button class="btn btn-sm btn-light-primary" data-kt-follow-btn="true">
+                                                <!--begin::Svg Icon | path: icons/duotune/arrows/arr012.svg-->
+                                                <span class="svg-icon following svg-icon-3">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path opacity="0.3"
+                                                            d="M10 18C9.7 18 9.5 17.9 9.3 17.7L2.3 10.7C1.9 10.3 1.9 9.7 2.3 9.3C2.7 8.9 3.29999 8.9 3.69999 9.3L10.7 16.3C11.1 16.7 11.1 17.3 10.7 17.7C10.5 17.9 10.3 18 10 18Z"
+                                                            fill="currentColor"></path>
+                                                        <path
+                                                            d="M10 18C9.7 18 9.5 17.9 9.3 17.7C8.9 17.3 8.9 16.7 9.3 16.3L20.3 5.3C20.7 4.9 21.3 4.9 21.7 5.3C22.1 5.7 22.1 6.30002 21.7 6.70002L10.7 17.7C10.5 17.9 10.3 18 10 18Z"
+                                                            fill="currentColor"></path>
+                                                    </svg>
+                                                </span>
+                                                <!--end::Svg Icon-->
+                                                <!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
+                                                <span class="svg-icon follow svg-icon-3 d-none">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <rect opacity="0.5" x="11.364" y="20.364" width="16" height="2"
+                                                            rx="1" transform="rotate(-90 11.364 20.364)"
+                                                            fill="currentColor"></rect>
+                                                        <rect x="4.36396" y="11.364" width="16" height="2" rx="1"
+                                                            fill="currentColor"></rect>
+                                                    </svg>
+                                                </span>
+                                                <!--end::Svg Icon-->
+                                                <!--begin::Indicator label-->
+                                                <span class="indicator-label">Select Rashed</span>
+                                                <!--end::Indicator label-->
+                                                <!--begin::Indicator progress-->
+                                                <span class="indicator-progress">Please wait...
+                                                    <span
+                                                        class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                                <!--end::Indicator progress-->
+                                            </button>
+                                            <!--end::Follow-->
+                                        </div>
+                                        <!--begin::Card body-->
+                                    </div>
+                                    <div class="col-xl-3">
+                                        <!--begin::Card body-->
+                                        <div
+                                            class="card-body border-dashed border-light d-flex flex-center flex-column py-9 px-5">
+                                            <!--begin::Avatar-->
+                                            <div class="symbol symbol-65px symbol-circle mb-5">
+                                                <span
+                                                    class="symbol-label fs-2x fw-semibold text-info bg-light-info">P</span>
+                                                <div
+                                                    class="bg-success position-absolute rounded-circle translate-middle start-100 top-100 border border-4 border-body h-15px w-15px ms-n3 mt-n3">
+                                                </div>
+                                            </div>
+                                            <!--end::Avatar-->
+                                            <!--begin::Name-->
+                                            <a href="#"
+                                                class="fs-4 text-gray-800 text-hover-primary fw-bold mb-0">Rashedur
+                                                Rahamn</a>
+                                            <!--end::Name-->
+                                            <!--begin::Position-->
+                                            <div class="fw-semibold text-gray-400 mb-6"><i
+                                                    class="fas fa-map-location me-2"></i> 10min away</div>
+                                            <!--end::Position-->
+                                            <!--begin::Follow-->
+                                            <button class="btn btn-sm btn-light-primary" data-kt-follow-btn="true">
+                                                <!--begin::Svg Icon | path: icons/duotune/arrows/arr012.svg-->
+                                                <span class="svg-icon following svg-icon-3">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path opacity="0.3"
+                                                            d="M10 18C9.7 18 9.5 17.9 9.3 17.7L2.3 10.7C1.9 10.3 1.9 9.7 2.3 9.3C2.7 8.9 3.29999 8.9 3.69999 9.3L10.7 16.3C11.1 16.7 11.1 17.3 10.7 17.7C10.5 17.9 10.3 18 10 18Z"
+                                                            fill="currentColor"></path>
+                                                        <path
+                                                            d="M10 18C9.7 18 9.5 17.9 9.3 17.7C8.9 17.3 8.9 16.7 9.3 16.3L20.3 5.3C20.7 4.9 21.3 4.9 21.7 5.3C22.1 5.7 22.1 6.30002 21.7 6.70002L10.7 17.7C10.5 17.9 10.3 18 10 18Z"
+                                                            fill="currentColor"></path>
+                                                    </svg>
+                                                </span>
+                                                <!--end::Svg Icon-->
+                                                <!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
+                                                <span class="svg-icon follow svg-icon-3 d-none">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <rect opacity="0.5" x="11.364" y="20.364" width="16" height="2"
+                                                            rx="1" transform="rotate(-90 11.364 20.364)"
+                                                            fill="currentColor"></rect>
+                                                        <rect x="4.36396" y="11.364" width="16" height="2" rx="1"
+                                                            fill="currentColor"></rect>
+                                                    </svg>
+                                                </span>
+                                                <!--end::Svg Icon-->
+                                                <!--begin::Indicator label-->
+                                                <span class="indicator-label">Select Rashed</span>
+                                                <!--end::Indicator label-->
+                                                <!--begin::Indicator progress-->
+                                                <span class="indicator-progress">Please wait...
+                                                    <span
+                                                        class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                                <!--end::Indicator progress-->
+                                            </button>
+                                            <!--end::Follow-->
+                                        </div>
+                                        <!--begin::Card body-->
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <!--end::Tab pane-->
                     </div>
-                    <!--end::Tab content-->
+                    <div class="tab-pane fade" id="ratings" role="tabpanel">
+                        <div class="card mb-6">
+                            <div class="card-body">
+                                <div class="border-dashed border-1 rounded border-primary mb-10">
+                                    <div class="card card-flush">
+                                        <div class="card-header pt-9">
+                                            <div class="d-flex align-items-center">
+                                                <div class="symbol symbol-50px me-5">
+                                                    <img src="/assets/common/images/default-profile-picture.png"
+                                                        class="" alt="">
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <a href="javascript:;"
+                                                        class="text-gray-800 text-hover-primary fs-4 fw-bold">
+                                                        <span class="mr-2">
+                                                            By Rashedur Rahman
+                                                        </span>
+                                                        <small class="review_time fst-italic fw-lighter"> at
+                                                            3 Mar 2023
+                                                            <span>
+                                                                (2:30PM)
+                                                            </span>
+                                                        </small>
+                                                    </a>
+                                                    <div data-order="rating-4">
+                                                        <p-rating [(ngModel)]="ratingValue" [readonly]="true"
+                                                            id="review.ratingScore" name="review.ratingScore"
+                                                            [cancel]="false"></p-rating>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card-toolbar">
+                                                <p-selectButton [options]="reviewPublishedOptions"
+                                                    name="reviewPublishedOptions" id="reviewPublishedOptions"
+                                                    [(ngModel)]="localDelivery" optionLabel="label"
+                                                    optionValue="value"></p-selectButton>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="fs-6 fw-normal text-gray-700">
+                                                Nice Product
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="border-dashed border-1 rounded border-primary">
+                                    <div class="card card-flush border-dashed rounded">
+                                        <div class="card-header justify-content-start align-items-center pt-4">
+                                            <div class="symbol symbol-45px me-5">
+                                                <img src="/assets/common/images/default-profile-picture.png" class=""
+                                                    alt="">
+                                            </div>
+                                            <div>
+                                                <div class="text-gray-600 fw-bold fs-4 mb-0">
+                                                    Write
+                                                    Your Review
+                                                </div>
+                                                <div data-order="rating-4">
+                                                    <p-rating [(ngModel)]="ratingValue" id="ratingValue"
+                                                        name="ratingValue" [cancel]="false"></p-rating>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body pt-2 pb-0">
+                                            <textarea class="form-control bg-transparent border-0 px-0"
+                                                id="kt_social_feeds_post_input" name="message"
+                                                placeholder="Write a review..."
+                                                style="overflow: hidden; overflow-wrap: break-word; resize: none; height: 44px;"></textarea>
+                                        </div>
+                                        <div class="card-footer d-flex justify-content-end pt-0">
+                                            <a href="javascript:;" class="btn btn-sm btn-primary">
+                                                Save
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="returns" role="tabpanel">
+                        Order Dispute
+                    </div>
+                    <div class="tab-pane fade" id="ecomteam" role="tabpanel">
+                        <div class="card">
+                            <!--begin::Card head-->
+                            <div class="card-header card-header-stretch">
+                                <!--begin::Title-->
+                                <div class="card-title d-flex align-items-center">
+                                    <!--begin::Svg Icon | path: icons/duotune/general/gen014.svg-->
+                                    <span class="svg-icon svg-icon-1 svg-icon-primary me-3 lh-0">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path opacity="0.3"
+                                                d="M21 22H3C2.4 22 2 21.6 2 21V5C2 4.4 2.4 4 3 4H21C21.6 4 22 4.4 22 5V21C22 21.6 21.6 22 21 22Z"
+                                                fill="currentColor"></path>
+                                            <path
+                                                d="M6 6C5.4 6 5 5.6 5 5V3C5 2.4 5.4 2 6 2C6.6 2 7 2.4 7 3V5C7 5.6 6.6 6 6 6ZM11 5V3C11 2.4 10.6 2 10 2C9.4 2 9 2.4 9 3V5C9 5.6 9.4 6 10 6C10.6 6 11 5.6 11 5ZM15 5V3C15 2.4 14.6 2 14 2C13.4 2 13 2.4 13 3V5C13 5.6 13.4 6 14 6C14.6 6 15 5.6 15 5ZM19 5V3C19 2.4 18.6 2 18 2C17.4 2 17 2.4 17 3V5C17 5.6 17.4 6 18 6C18.6 6 19 5.6 19 5Z"
+                                                fill="currentColor"></path>
+                                            <path
+                                                d="M8.8 13.1C9.2 13.1 9.5 13 9.7 12.8C9.9 12.6 10.1 12.3 10.1 11.9C10.1 11.6 10 11.3 9.8 11.1C9.6 10.9 9.3 10.8 9 10.8C8.8 10.8 8.59999 10.8 8.39999 10.9C8.19999 11 8.1 11.1 8 11.2C7.9 11.3 7.8 11.4 7.7 11.6C7.6 11.8 7.5 11.9 7.5 12.1C7.5 12.2 7.4 12.2 7.3 12.3C7.2 12.4 7.09999 12.4 6.89999 12.4C6.69999 12.4 6.6 12.3 6.5 12.2C6.4 12.1 6.3 11.9 6.3 11.7C6.3 11.5 6.4 11.3 6.5 11.1C6.6 10.9 6.8 10.7 7 10.5C7.2 10.3 7.49999 10.1 7.89999 10C8.29999 9.90003 8.60001 9.80003 9.10001 9.80003C9.50001 9.80003 9.80001 9.90003 10.1 10C10.4 10.1 10.7 10.3 10.9 10.4C11.1 10.5 11.3 10.8 11.4 11.1C11.5 11.4 11.6 11.6 11.6 11.9C11.6 12.3 11.5 12.6 11.3 12.9C11.1 13.2 10.9 13.5 10.6 13.7C10.9 13.9 11.2 14.1 11.4 14.3C11.6 14.5 11.8 14.7 11.9 15C12 15.3 12.1 15.5 12.1 15.8C12.1 16.2 12 16.5 11.9 16.8C11.8 17.1 11.5 17.4 11.3 17.7C11.1 18 10.7 18.2 10.3 18.3C9.9 18.4 9.5 18.5 9 18.5C8.5 18.5 8.1 18.4 7.7 18.2C7.3 18 7 17.8 6.8 17.6C6.6 17.4 6.4 17.1 6.3 16.8C6.2 16.5 6.10001 16.3 6.10001 16.1C6.10001 15.9 6.2 15.7 6.3 15.6C6.4 15.5 6.6 15.4 6.8 15.4C6.9 15.4 7.00001 15.4 7.10001 15.5C7.20001 15.6 7.3 15.6 7.3 15.7C7.5 16.2 7.7 16.6 8 16.9C8.3 17.2 8.6 17.3 9 17.3C9.2 17.3 9.5 17.2 9.7 17.1C9.9 17 10.1 16.8 10.3 16.6C10.5 16.4 10.5 16.1 10.5 15.8C10.5 15.3 10.4 15 10.1 14.7C9.80001 14.4 9.50001 14.3 9.10001 14.3C9.00001 14.3 8.9 14.3 8.7 14.3C8.5 14.3 8.39999 14.3 8.39999 14.3C8.19999 14.3 7.99999 14.2 7.89999 14.1C7.79999 14 7.7 13.8 7.7 13.7C7.7 13.5 7.79999 13.4 7.89999 13.2C7.99999 13 8.2 13 8.5 13H8.8V13.1ZM15.3 17.5V12.2C14.3 13 13.6 13.3 13.3 13.3C13.1 13.3 13 13.2 12.9 13.1C12.8 13 12.7 12.8 12.7 12.6C12.7 12.4 12.8 12.3 12.9 12.2C13 12.1 13.2 12 13.6 11.8C14.1 11.6 14.5 11.3 14.7 11.1C14.9 10.9 15.2 10.6 15.5 10.3C15.8 10 15.9 9.80003 15.9 9.70003C15.9 9.60003 16.1 9.60004 16.3 9.60004C16.5 9.60004 16.7 9.70003 16.8 9.80003C16.9 9.90003 17 10.2 17 10.5V17.2C17 18 16.7 18.4 16.2 18.4C16 18.4 15.8 18.3 15.6 18.2C15.4 18.1 15.3 17.8 15.3 17.5Z"
+                                                fill="currentColor"></path>
+                                        </svg>
+                                    </span>
+                                    <!--end::Svg Icon-->
+                                    <h3 class="fw-bold m-0 text-gray-800">Order Timeline</h3>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <!--begin::Timeline-->
+                                <div class="timeline">
+                                    <!--begin::Timeline item-->
+                                    <div class="timeline-item">
+                                        <!--begin::Timeline line-->
+                                        <div class="timeline-line w-40px"></div>
+                                        <!--end::Timeline line-->
+                                        <!--begin::Timeline icon-->
+                                        <div class="timeline-icon symbol symbol-circle symbol-40px me-4">
+                                            <div class="symbol-label bg-primary">
+                                                <!--begin::Svg Icon | path: icons/duotune/communication/com003.svg-->
+                                                <span class="svg-icon svg-icon-2 svg-icon-white">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path opacity="0.3"
+                                                            d="M2 4V16C2 16.6 2.4 17 3 17H13L16.6 20.6C17.1 21.1 18 20.8 18 20V17H21C21.6 17 22 16.6 22 16V4C22 3.4 21.6 3 21 3H3C2.4 3 2 3.4 2 4Z"
+                                                            fill="currentColor"></path>
+                                                        <path
+                                                            d="M18 9H6C5.4 9 5 8.6 5 8C5 7.4 5.4 7 6 7H18C18.6 7 19 7.4 19 8C19 8.6 18.6 9 18 9ZM16 12C16 11.4 15.6 11 15 11H6C5.4 11 5 11.4 5 12C5 12.6 5.4 13 6 13H15C15.6 13 16 12.6 16 12Z"
+                                                            fill="currentColor"></path>
+                                                    </svg>
+                                                </span>
+                                                <!--end::Svg Icon-->
+                                            </div>
+                                        </div>
+                                        <!--end::Timeline icon-->
+                                        <!--begin::Timeline content-->
+                                        <div class="timeline-content mb-10 mt-n1">
+                                            <div class="d-flex flex-stack mt-1">
+                                                <div class="symbol symbol-40px me-4">
+                                                    <div
+                                                        class="symbol-label fs-2 fw-semibold bg-danger text-inverse-danger">
+                                                        R</div>
+                                                </div>
+                                                <div class="d-flex align-items-center flex-row-fluid flex-wrap">
+                                                    <div class="flex-grow-1 me-2">
+                                                        <a href="../../demo1/dist/pages/user-profile/overview.html"
+                                                            class="text-primary fs-6 fw-bold">
+                                                            <span class="text-muted">Status: </span> Order Placed
+                                                        </a>
+                                                        <span class="text-muted fw-semibold d-block fs-7">
+                                                            Updated By: <span class="fw-bold">Rashedur Rahamn</span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--end::Timeline content-->
+                                    </div>
+                                    <!--end::Timeline item-->
+                                    <!--begin::Timeline item-->
+                                    <div class="timeline-item">
+                                        <!--begin::Timeline line-->
+                                        <div class="timeline-line w-40px"></div>
+                                        <!--end::Timeline line-->
+                                        <!--begin::Timeline icon-->
+                                        <div class="timeline-icon symbol symbol-circle symbol-40px">
+                                            <div class="symbol-label bg-primary">
+                                                <!--begin::Svg Icon | path: icons/duotune/communication/com009.svg-->
+                                                <span class="svg-icon svg-icon-2 svg-icon-white">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path opacity="0.3"
+                                                            d="M5.78001 21.115L3.28001 21.949C3.10897 22.0059 2.92548 22.0141 2.75004 21.9727C2.57461 21.9312 2.41416 21.8418 2.28669 21.7144C2.15923 21.5869 2.06975 21.4264 2.0283 21.251C1.98685 21.0755 1.99507 20.892 2.05201 20.7209L2.886 18.2209L7.22801 13.879L10.128 16.774L5.78001 21.115Z"
+                                                            fill="currentColor"></path>
+                                                        <path
+                                                            d="M21.7 8.08899L15.911 2.30005C15.8161 2.2049 15.7033 2.12939 15.5792 2.07788C15.455 2.02637 15.3219 1.99988 15.1875 1.99988C15.0531 1.99988 14.92 2.02637 14.7958 2.07788C14.6717 2.12939 14.5589 2.2049 14.464 2.30005L13.74 3.02295C13.548 3.21498 13.4402 3.4754 13.4402 3.74695C13.4402 4.01849 13.548 4.27892 13.74 4.47095L14.464 5.19397L11.303 8.35498C10.1615 7.80702 8.87825 7.62639 7.62985 7.83789C6.38145 8.04939 5.2293 8.64265 4.332 9.53601C4.14026 9.72817 4.03256 9.98855 4.03256 10.26C4.03256 10.5315 4.14026 10.7918 4.332 10.984L13.016 19.667C13.208 19.859 13.4684 19.9668 13.74 19.9668C14.0115 19.9668 14.272 19.859 14.464 19.667C15.3575 18.77 15.9509 17.618 16.1624 16.3698C16.374 15.1215 16.1932 13.8383 15.645 12.697L18.806 9.53601L19.529 10.26C19.721 10.452 19.9814 10.5598 20.253 10.5598C20.5245 10.5598 20.785 10.452 20.977 10.26L21.7 9.53601C21.7952 9.44108 21.8706 9.32825 21.9221 9.2041C21.9737 9.07995 22.0002 8.94691 22.0002 8.8125C22.0002 8.67809 21.9737 8.54505 21.9221 8.4209C21.8706 8.29675 21.7952 8.18392 21.7 8.08899Z"
+                                                            fill="currentColor"></path>
+                                                    </svg>
+                                                </span>
+                                                <!--end::Svg Icon-->
+                                            </div>
+                                        </div>
+                                        <!--end::Timeline icon-->
+                                        <!--begin::Timeline content-->
+                                        <div class="timeline-content mb-10 mt-n2">
+                                            <div class="d-flex flex-stack mt-1">
+                                                <div class="symbol symbol-40px me-4">
+                                                    <div
+                                                        class="symbol-label fs-2 fw-semibold bg-danger text-inverse-danger">
+                                                        R</div>
+                                                </div>
+                                                <div class="d-flex align-items-center flex-row-fluid flex-wrap">
+                                                    <div class="flex-grow-1 me-2">
+                                                        <a href="../../demo1/dist/pages/user-profile/overview.html"
+                                                            class="text-primary fs-6 fw-bold">
+                                                            <span class="text-muted">Status: </span> Order Placed
+                                                        </a>
+                                                        <span class="text-muted fw-semibold d-block fs-7">
+                                                            Updated By: <span class="fw-bold">Rashedur Rahamn</span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--end::Timeline content-->
+                                    </div>
+
+                                    <div class="timeline-item">
+                                        <!--begin::Timeline line-->
+                                        <div class="timeline-line w-40px"></div>
+                                        <!--end::Timeline line-->
+                                        <!--begin::Timeline icon-->
+                                        <div class="timeline-icon symbol symbol-circle symbol-40px">
+                                            <div class="symbol-label bg-primary">
+                                                <!--begin::Svg Icon | path: icons/duotune/communication/com009.svg-->
+                                                <span class="svg-icon svg-icon-2 svg-icon-white">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path opacity="0.3"
+                                                            d="M5.78001 21.115L3.28001 21.949C3.10897 22.0059 2.92548 22.0141 2.75004 21.9727C2.57461 21.9312 2.41416 21.8418 2.28669 21.7144C2.15923 21.5869 2.06975 21.4264 2.0283 21.251C1.98685 21.0755 1.99507 20.892 2.05201 20.7209L2.886 18.2209L7.22801 13.879L10.128 16.774L5.78001 21.115Z"
+                                                            fill="currentColor"></path>
+                                                        <path
+                                                            d="M21.7 8.08899L15.911 2.30005C15.8161 2.2049 15.7033 2.12939 15.5792 2.07788C15.455 2.02637 15.3219 1.99988 15.1875 1.99988C15.0531 1.99988 14.92 2.02637 14.7958 2.07788C14.6717 2.12939 14.5589 2.2049 14.464 2.30005L13.74 3.02295C13.548 3.21498 13.4402 3.4754 13.4402 3.74695C13.4402 4.01849 13.548 4.27892 13.74 4.47095L14.464 5.19397L11.303 8.35498C10.1615 7.80702 8.87825 7.62639 7.62985 7.83789C6.38145 8.04939 5.2293 8.64265 4.332 9.53601C4.14026 9.72817 4.03256 9.98855 4.03256 10.26C4.03256 10.5315 4.14026 10.7918 4.332 10.984L13.016 19.667C13.208 19.859 13.4684 19.9668 13.74 19.9668C14.0115 19.9668 14.272 19.859 14.464 19.667C15.3575 18.77 15.9509 17.618 16.1624 16.3698C16.374 15.1215 16.1932 13.8383 15.645 12.697L18.806 9.53601L19.529 10.26C19.721 10.452 19.9814 10.5598 20.253 10.5598C20.5245 10.5598 20.785 10.452 20.977 10.26L21.7 9.53601C21.7952 9.44108 21.8706 9.32825 21.9221 9.2041C21.9737 9.07995 22.0002 8.94691 22.0002 8.8125C22.0002 8.67809 21.9737 8.54505 21.9221 8.4209C21.8706 8.29675 21.7952 8.18392 21.7 8.08899Z"
+                                                            fill="currentColor"></path>
+                                                    </svg>
+                                                </span>
+                                                <!--end::Svg Icon-->
+                                            </div>
+                                        </div>
+                                        <!--end::Timeline icon-->
+                                        <!--begin::Timeline content-->
+                                        <div class="timeline-content mb-10 mt-n3">
+                                            <div class="d-flex flex-stack mt-1">
+                                                <div class="symbol symbol-40px me-4">
+                                                    <div
+                                                        class="symbol-label fs-2 fw-semibold bg-danger text-inverse-danger">
+                                                        R</div>
+                                                </div>
+                                                <div class="d-flex align-items-center flex-row-fluid flex-wrap">
+                                                    <div class="flex-grow-1 me-2">
+                                                        <a href="../../demo1/dist/pages/user-profile/overview.html"
+                                                            class="text-primary fs-6 fw-bold">
+                                                            <span class="text-muted">Status: </span> Order Placed
+                                                        </a>
+                                                        <span class="text-muted fw-semibold d-block fs-7">
+                                                            Updated By: <span class="fw-bold">Rashedur Rahamn</span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--end::Timeline content-->
+                                    </div>
+                                </div>
+                                <!--end::Timeline-->
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <!--end::Order details page-->
             </div>
             <!--end::Content container-->
         </div>
@@ -870,3 +1494,15 @@
     </div>
     <!--end::Content wrapper-->
 </div>
+<orderStateLookupTableModal #orderStateLookupTableModal (modalSave)="getNewStateId()"></orderStateLookupTableModal>
+<orderCountryLookupTableModal #orderCountryLookupTableModal (modalSave)="getNewCountryId()">
+</orderCountryLookupTableModal>
+<orderContactLookupTableModal #orderContactLookupTableModal (modalSave)="getNewContactId()">
+</orderContactLookupTableModal>
+<orderOrderStatusLookupTableModal #orderOrderStatusLookupTableModal (modalSave)="getNewOrderStatusId()">
+</orderOrderStatusLookupTableModal>
+<orderCurrencyLookupTableModal #orderCurrencyLookupTableModal (modalSave)="getNewCurrencyId()">
+</orderCurrencyLookupTableModal>
+<orderStoreLookupTableModal #orderStoreLookupTableModal (modalSave)="getNewStoreId()"></orderStoreLookupTableModal>
+<orderOrderSalesChannelLookupTableModal #orderOrderSalesChannelLookupTableModal
+    (modalSave)="getNewOrderSalesChannelId()"></orderOrderSalesChannelLookupTableModal>

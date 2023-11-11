@@ -48,6 +48,7 @@ import { AgmCoreModule } from '@agm/core';
 import { RatingModule } from 'primeng/rating';
 
 import { AgmOverlays } from 'agm-overlays';
+import { SignaturePadModule } from 'angular2-signaturepad';
 @NgModule({
     imports: [
         CommonModule,
@@ -77,7 +78,8 @@ import { AgmOverlays } from 'agm-overlays';
         MultiSelectModule,
         SwiperModule,
         FullCalendarModule,
-        RatingModule
+        RatingModule,
+        SignaturePadModule
     ], 
     declarations: [
         TimeZoneComboComponent,
@@ -112,7 +114,8 @@ import { AgmOverlays } from 'agm-overlays';
         FullCalendarModule,
         AgmCoreModule,
         AgmOverlays,
-        RatingModule 
+        RatingModule,
+        SignaturePadModule
     ],
     providers: [
         DateTimeService,
