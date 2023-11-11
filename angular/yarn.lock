@@ -2,6 +2,13 @@
 # yarn lockfile v1
 
 
+"@agm/core@1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@agm/core/-/core-1.0.0.tgz#b2a77d18fbffe04cd5c90cf2ead41a5663f89862"
+  integrity sha512-tgrobTyAHCZ3cdi21IdiBafiHLxsC5/6ncq6+f9RV+HrLg0XDuk+DA7upfdE34o2Ui3fNRDYDIgExRVFLsSPCw==
+  dependencies:
+    tslib "^1.9.0"
+
 "@ampproject/remapping@2.2.0", "@ampproject/remapping@^2.1.0":
   version "2.2.0"
   resolved "https://registry.npmjs.org/@ampproject/remapping/-/remapping-2.2.0.tgz"
@@ -2185,6 +2192,11 @@ aggregate-error@^3.0.0:
   dependencies:
     clean-stack "^2.0.0"
     indent-string "^4.0.0"
+
+agm-overlays@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/agm-overlays/-/agm-overlays-2.0.0.tgz#4fbfd2eaecca82ec9641dbf984a1ec6bf2934281"
+  integrity sha512-DIYdFTW4cKqjG2vE8K6swo9qFRGOrz5caKyUo4XT1kYEpnlQvSMVRMzLKqpmVOHwujYqObELqX/lDf6G8sdhgw==
 
 ajv-formats@2.1.1, ajv-formats@^2.1.1:
   version "2.1.1"

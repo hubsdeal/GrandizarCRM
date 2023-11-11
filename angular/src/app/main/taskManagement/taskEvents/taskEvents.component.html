@@ -245,7 +245,6 @@
                 </form>
 
                 <div class="row align-items-center">
-                    <!--<Primeng-Datatable-Start>-->
                     <div class="primeng-datatable-container col-12" [busyIf]="primengTableHelper.isLoading">
                         <p-table #dataTable (onLazyLoad)="getTaskEvents($event)" [value]="primengTableHelper.records"
                             rows="{{ primengTableHelper.defaultRecordsCountPerPage }}" [paginator]="false" [lazy]="true"
@@ -253,126 +252,38 @@
                             [resizableColumns]="primengTableHelper.resizableColumns">
                             <ng-template pTemplate="header">
                                 <tr>
-                                    <th style="width:30px; text-align: center;">
-                                        <label
-                                            class="form-check form-check-custom form-check-inline form-check-solid is-invalid">
-                                            <input class="form-check-input" (change)="onChangesSelectAll()"
-                                                [(ngModel)]="selectedAll" type="checkbox">
-                                            <span class="fw-semibold ps-2 fs-6">
-                                            </span>
-                                        </label>
-                                    </th>
-                                    <th style="width: 250px">
-                                        {{ l('Task Title') }}
-                                    </th>
-                                    <th style="width: 180px;">
-                                        {{l('Start Date & Time')}}
-                                    </th>
-                                    <th style="width: 180px;">
-                                        {{l('End Date & Time')}}
-                                    </th>
-                                    <th style="width: 150px; text-align: center;">
-                                        {{l('Est. Hour')}}
-                                    </th>
-                                    <th style="width: 150px; text-align: center;">
-                                        {{l('Actual Hour')}}
-                                    </th>
-                                    <th style="width: 180px; text-align: center;">
-                                        {{l('Team')}}
-                                    </th>
-                                    <th style="width: 180px; text-align: center;">
-                                        {{l('Completion Status')}}
-                                    </th>
-                                    <th class="text-center" style="width: 130px">
-                                        {{l('Status')}}
-                                    </th>
-                                    <th class="text-center" style="width: 130px">
-                                        {{l('Priority')}}
-                                    </th>
-
-
-                                    <!-- <th style="width: 150px" pSortableColumn="name">
-                                        {{ l('Name') }}
-                                        <p-sortIcon field="taskEvent.name"></p-sortIcon>
-                                    </th>
-                                    <th style="width: 150px" pSortableColumn="description">
-                                        {{ l('Description') }}
-                                        <p-sortIcon field="taskEvent.description"></p-sortIcon>
-                                    </th>
-                                    <th style="width: 150px" pSortableColumn="status">
-                                        {{ l('Status') }}
-                                        <p-sortIcon field="taskEvent.status"></p-sortIcon>
-                                    </th>
-                                    <th style="width: 150px" pSortableColumn="priority">
-                                        {{ l('Priority') }}
-                                        <p-sortIcon field="taskEvent.priority"></p-sortIcon>
-                                    </th>
-                                    <th style="width: 150px" pSortableColumn="eventDate">
-                                        {{ l('EventDate') }}
-                                        <p-sortIcon field="taskEvent.eventDate"></p-sortIcon>
-                                    </th>
-                                    <th style="width: 150px" pSortableColumn="startTime">
-                                        {{ l('StartTime') }}
-                                        <p-sortIcon field="taskEvent.startTime"></p-sortIcon>
-                                    </th>
-                                    <th style="width: 150px" pSortableColumn="endTime">
-                                        {{ l('EndTime') }}
-                                        <p-sortIcon field="taskEvent.endTime"></p-sortIcon>
-                                    </th>
-                                    <th style="width: 150px" pSortableColumn="template">
-                                        {{ l('Template') }}
-                                        <p-sortIcon field="taskEvent.template"></p-sortIcon>
-                                    </th>
-                                    <th style="width: 150px" pSortableColumn="actualTime">
-                                        {{ l('ActualTime') }}
-                                        <p-sortIcon field="taskEvent.actualTime"></p-sortIcon>
-                                    </th>
-                                    <th style="width: 150px" pSortableColumn="endDate">
-                                        {{ l('EndDate') }}
-                                        <p-sortIcon field="taskEvent.endDate"></p-sortIcon>
-                                    </th>
-                                    <th style="width: 150px" pSortableColumn="estimatedTime">
-                                        {{ l('EstimatedTime') }}
-                                        <p-sortIcon field="taskEvent.estimatedTime"></p-sortIcon>
-                                    </th>
-                                    <th style="width: 150px" pSortableColumn="hourAndMinutes">
-                                        {{ l('HourAndMinutes') }}
-                                        <p-sortIcon field="taskEvent.hourAndMinutes"></p-sortIcon>
+                                    <!-- <th style="width:30px; text-align: center;">
+                                        <input class="form-check-input" (change)="onChangesSelectAll()" [(ngModel)]="selectedAll"
+                                            type="checkbox">
                                     </th> -->
-                                    <th style="width: 130px"
-                                        [hidden]="!isGrantedAny('Pages.TaskEvents.Edit', 'Pages.TaskEvents.Delete')">
+                                    <th style="width: 250px">{{ l('Task Title') }}</th>
+                                    <th style="width: 180px;">{{l('Start Date & Time')}}</th>
+                                    <th style="width: 180px;">{{l('End Date & Time')}}</th>
+                                    <th style="width: 150px; text-align: center;">{{l('Est. Hour')}}</th>
+                                    <th style="width: 150px; text-align: center;">{{l('Actual Hour')}}</th>
+                                    <th style="width: 180px; text-align: center;">{{l('Team')}}</th>
+                                    <th style="width: 180px; text-align: center;">{{l('Completion Status')}}</th>
+                                    <th class="text-center" style="width: 130px">{{l('Status')}}</th>
+                                    <th class="text-center" style="width: 130px">{{l('Priority')}}</th>
+                                    <th style="width: 130px" [hidden]="!isGrantedAny('Pages.TaskEvents.Edit', 'Pages.TaskEvents.Delete')">
                                         {{ l('Actions') }}
                                     </th>
                                 </tr>
                             </ng-template>
                             <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
                                 <tr>
-                                    <td style="width: 30px;">
-                                        <label
-                                            class="form-check form-check-custom form-check-inline form-check-solid is-invalid mb-2">
-                                            <input class="form-check-input" type="checkbox"
-                                                [(ngModel)]="record.selected" (change)="checkIfAllSelected()">
-                                            <span class="fw-semibold ps-2 fs-6">
-                                            </span>
-                                        </label>
-                                    </td>
+                                    <!-- <td style="width: 30px;">
+                                        <input class="form-check-input" type="checkbox" [(ngModel)]="record.selected" (change)="checkIfAllSelected()">
+                                    </td> -->
                                     <td style="width: 250px">
-                                        <span class="p-column-title">{{ l('Name') }}</span>
-                                        <div class="d-flex flex-column flex-grow-1 my-lg-0 my-2 pe-3">
-                                            <a href="javascript:;" title=" {{ record.taskEvent.name }}"
-                                                [routerLink]="['/app/main/taskManagement/taskEvents/dashboard',record.taskEvent.id]"
-                                                class="fs-5 text-gray-800 text-hover-primary fw-bold">
-                                                {{ record.taskEvent.name }}
-                                            </a>
-                                            <!-- <span class="text-gray-400 fw-semibold fs-7 my-0">
-                                                <i class="fas fa-tags mr-1"></i>
-                                                Web Development, Web Design, Software Development
-                                            </span> -->
-                                        </div>
+                                        <a href="javascript:;" [routerLink]="['/app/main/taskManagement/taskEvents/dashboard', record.taskEvent.id]"
+                                            class="fs-5 text-gray-800 text-hover-primary fw-bold">
+                                            {{ record.taskEvent.name }}
+                                        </a>
                                     </td>
                                     <td style="width:180px;">
                                         <span *ngIf="record.taskEvent.eventDate">
-                                            {{record.taskEvent.eventDate | luxonFormat : 'dd-MM-yyyy'}} 
+                                            {{record.taskEvent.eventDate | luxonFormat : 'dd-MM-yyyy::HH:mm'}} 
                                         </span>
                                         <span *ngIf="record.taskEvent.startTime && record.taskEvent.eventDate">(</span>
                                         <span *ngIf="record.taskEvent.startTime">{{record.taskEvent.startTime}}</span>
@@ -380,130 +291,53 @@
                                     </td>
                                     <td style="width:180px;">
                                         <span *ngIf="record.taskEvent.endDate">
-                                            {{record.taskEvent.endDate | luxonFormat : 'dd-MM-yyyy'}}
+                                            {{record.taskEvent.endDate | luxonFormat : 'dd-MM-yyyy::HH:mm'}}
                                         </span>
                                         <span *ngIf="record.taskEvent.endTime && record.taskEvent.endDate">(</span>
                                         <span *ngIf="record.taskEvent.endTime">{{record.taskEvent.endTime}}</span>
                                         <span *ngIf="record.taskEvent.endTime && record.taskEvent.endDate">)</span>
                                     </td>
-                                    <td style="width:150px; text-align: center;">
-                                        {{ record.taskEvent.actualTime }}
-                                    </td>
-                                    <td style="width:150px; text-align: center;">
-                                        {{ record.taskEvent.actualTime }}
-                                    </td>
+                                    <td style="width:150px; text-align: center;">{{ record.taskEvent.actualTime || 0 }}</td>
+                                    <td style="width:150px; text-align: center;">{{ record.taskEvent.actualTime || 0 }}</td>
                                     <td style="width: 180px; text-align: center;">
                                         <div class="symbol-group symbol-hover flex-nowrap d-flex justify-content-center">
                                             <div *ngFor="let team of record.team" class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
                                                 data-bs-original-title="Alan Warden" data-kt-initialized="1">
-                                                
                                                 <span *ngIf ="!team.picture" title="{{team.employeeName}}"
                                                     class="symbol-label bg-warning text-inverse-warning fw-bold">{{team.employeeName | nameSplit}}</span>
-                                                    <img *ngIf ="team.picture" alt="Pic" src="{{team.picture}}">
+                                                <img *ngIf ="team.picture" alt="Pic" src="{{team.picture}}">
                                             </div>
-                                           
                                         </div>
                                     </td>
                                     <td style="width: 180px; text-align: center;">
-                                        <div>
-                                            <input type="text" pInputText [(ngModel)]="record.taskEvent.completionPercentage" class="w-full"/>
-                                            <p-slider [(ngModel)]="record.taskEvent.completionPercentage"  class="w-full"></p-slider>
-                                        </div>
+                                        <div
+                                                                            class="d-flex align-items-center flex-column mt-5">
+                                                                            <div
+                                                                                class="d-flex justify-content-between w-100 mt-auto mb-2">
+                                                                                <span
+                                                                                    class="fw-bold fs-6">{{record.taskEvent.completionPercentage}}%</span>
+
+                                                                            </div>
+                                                                            <div class="h-5px mx-3 w-100 bg-light mb-3">
+                                                                                <p-slider
+                                                                                    [(ngModel)]="record.taskEvent.completionPercentage"></p-slider>
+                                                                            </div>
+                                                                        </div>
+                                        <!-- <progress max="100" value="{{ record.taskEvent.completionPercentage }}"></progress> -->
                                     </td>
                                     <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('Status') }}</span>
-                                        <div *ngIf="record.taskStatusName" class="text-center">
+                                        <div class="text-center">
                                             <span class="badge badge-primary badge-sm">{{record.taskStatusName}}</span>
                                         </div>
-                                        <!-- <div *ngIf="!record.taskEvent.status" class="text-center">
-                                            <span class="badge badge-danger badge-sm">Open</span>
-                                        </div> -->
                                     </td>
                                     <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('Priority') }}</span>
-                                        <div *ngIf="record.taskEvent.priority" class="text-center">
-                                            <span class="badge badge-danger badge-sm">High</span>
-                                        </div>
-                                        <div *ngIf="!record.taskEvent.priority" class="text-center">
-                                            <span class="badge badge-warning badge-sm">Low</span>
+                                        <div class="text-center">
+                                            <span class="badge badge-{{record.taskEvent.priority ? 'danger' : 'warning'}} badge-sm">
+                                                {{record.taskEvent.priority ? 'High' : 'Low'}}
+                                            </span>
                                         </div>
                                     </td>
-
-
-
-
-
-                                    <!-- <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('Name') }}</span>
-                                        {{ record.taskStatusName }}
-                                    </td>
-                                    <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('Description') }}</span>
-                                        {{ record.taskEvent.description }}
-                                    </td>
-                                    <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('Status') }}</span>
-                                        <div *ngIf="record.taskEvent.status" class="text-center">
-                                            <i class="fa fa-check-circle text-success" title="True"></i>
-                                        </div>
-                                        <div *ngIf="!record.taskEvent.status" class="text-center">
-                                            <i class="fa fa-times-circle" title="False"></i>
-                                        </div>
-                                    </td>
-                                    <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('Priority') }}</span>
-                                        <div *ngIf="record.taskEvent.priority" class="text-center">
-                                            <i class="fa fa-check-circle text-success" title="True"></i>
-                                        </div>
-                                        <div *ngIf="!record.taskEvent.priority" class="text-center">
-                                            <i class="fa fa-times-circle" title="False"></i>
-                                        </div>
-                                    </td>
-                                    <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('EventDate') }}</span>
-                                        <span *ngIf="record.taskEvent.eventDate">
-                                            {{ record.taskEvent.eventDate | luxonFormat : 'F' }}
-                                        </span>
-                                        <span *ngIf="!record.taskEvent.eventDate">-</span>
-                                    </td>
-                                    <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('StartTime') }}</span>
-                                        {{ record.taskEvent.startTime }}
-                                    </td>
-                                    <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('EndTime') }}</span>
-                                        {{ record.taskEvent.endTime }}
-                                    </td>
-                                    <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('Template') }}</span>
-                                        <div *ngIf="record.taskEvent.template" class="text-center">
-                                            <i class="fa fa-check-circle text-success" title="True"></i>
-                                        </div>
-                                        <div *ngIf="!record.taskEvent.template" class="text-center">
-                                            <i class="fa fa-times-circle" title="False"></i>
-                                        </div>
-                                    </td>
-                                    <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('ActualTime') }}</span>
-                                        {{ record.taskEvent.actualTime }}
-                                    </td>
-                                    <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('EndDate') }}</span>
-                                        <span *ngIf="record.taskEvent.endDate">
-                                            {{ record.taskEvent.endDate | luxonFormat : 'F' }}
-                                        </span>
-                                        <span *ngIf="!record.taskEvent.endDate">-</span>
-                                    </td>
-                                    <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('EstimatedTime') }}</span>
-                                        {{ record.taskEvent.estimatedTime }}
-                                    </td>
-                                    <td style="width: 150px">
-                                        <span class="p-column-title">{{ l('HourAndMinutes') }}</span>
-                                        {{ record.taskEvent.hourAndMinutes }}
-                                    </td> -->
-                                    <td style="width: 130px"
-                                        [hidden]="!isGrantedAny('Pages.TaskEvents.Edit', 'Pages.TaskEvents.Delete')">
+                                    <td style="width: 130px" [hidden]="!isGrantedAny('Pages.TaskEvents.Edit', 'Pages.TaskEvents.Delete')">
                                         <div class="btn-group dropdown" dropdown container="body">
                                             <button class="dropdown-toggle btn btn-sm btn-primary" dropdownToggle>
                                                 <i class="fa fa-cog"></i>
@@ -511,16 +345,8 @@
                                                 {{ l('Actions') }}
                                             </button>
                                             <ul class="dropdown-menu" *dropdownMenu>
-                                                <!-- <li>
-                                                    <a href="javascript:;" class="dropdown-item"
-                                                        (click)="viewTaskEventModal.show(record)">
-                                                        {{ l('View') }}
-                                                    </a>
-                                                </li> -->
                                                 <li>
-                                                    <a href="javascript:;"
-                                                        *ngIf="permission.isGranted('Pages.TaskEvents.Edit')"
-                                                        class="dropdown-item"
+                                                    <a href="javascript:;" *ngIf="permission.isGranted('Pages.TaskEvents.Edit')" class="dropdown-item"
                                                         (click)="createOrEditTaskEventModal.show(record.taskEvent.id)">
                                                         {{ l('Edit') }}
                                                     </a>
@@ -546,13 +372,13 @@
                                 (onPageChange)="getTaskEvents($event)"
                                 [totalRecords]="primengTableHelper.totalRecordsCount"
                                 [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
-                                [showCurrentPageReport]="true" [currentPageReportTemplate]="
-                                    'TotalRecordsCount' | localize : primengTableHelper.totalRecordsCount
-                                "></p-paginator>
+                                [showCurrentPageReport]="true"
+                                [currentPageReportTemplate]="'TotalRecordsCount' | localize : primengTableHelper.totalRecordsCount">
+                            </p-paginator>
                         </div>
                     </div>
-                    <!--<Primeng-Datatable-End>-->
                 </div>
+                
             </div>
         </div>
     </div>
