@@ -74,7 +74,7 @@
                     <div class="my-5">
                         <label class="form-label" for="ProductCategory_Description">{{ l('Description') }}</label>
                         <p-editor id="ProductCategory_Description" name="description" [(ngModel)]="productCategory.description"
-                            ngDefaultControl [style]="{ height: '300px' }" placeholder="'Type here...'"></p-editor>
+                            ngDefaultControl [style]="{ height: '300px' }" placeholder="'Add product category description...'"></p-editor>
                     </div>
 
                     <div class="my-5">
@@ -146,36 +146,21 @@
                             class="multiselect-custom-virtual-scroll" (onChange)="onEmployeeSelect($event)">
                         </p-multiSelect>
                     </div>
-                    <div class="my-5">
-                        <!-- <label class="form-check form-check-custom form-check-solid">
-                            <input id="ProductCategory_ProductOrService" #ProductCategory_ProductOrService="ngModel"
-                                name="ProductOrService" [(ngModel)]="productCategory.productOrService" type="checkbox"
-                                class="form-check-input" />
-                            <span class="form-check-label">
-                                {{ l('ProductOrService') }}
-                            </span>
-                        </label> -->
-                        <div class="fv-row mb-7 mt-7 fv-plugins-icon-container select_button_custom">
-                            <p-selectButton [options]="productServiceOptions" name="productServiceOptions"
-                                id="productServiceOptions" [(ngModel)]="productCategory.productOrService" optionLabel="label"
-                                optionValue="value"></p-selectButton>
+                    <div style="display: flex; justify-content: flex-start;">
+                        <div class="my-5" style="margin-right: 20px;">
+                            <div class="fv-row mb-7 mt-7 fv-plugins-icon-container select_button_custom">
+                                <p-selectButton [options]="productServiceOptions" name="productServiceOptions"
+                                    id="productServiceOptions" [(ngModel)]="productCategory.productOrService" optionLabel="label"
+                                    optionValue="value"></p-selectButton>
+                            </div>
                         </div>
-                        <!-- <validation-messages [formCtrl]="ProductCategory_ProductOrService"></validation-messages> -->
-                    </div>
-
-                    <div class="my-5">
-                        <!-- <label class="form-check form-check-custom form-check-solid">
-                            <input id="published"
-                                name="published" [(ngModel)]="productCategory.published" type="checkbox"
-                                class="form-check-input" />
-                            <span class="form-check-label">
-                                {{ l('Published') }}
-                            </span>
-                        </label> -->
-                        <div class="fv-row mb-7 mt-7 fv-plugins-icon-container select_button_custom">
-                            <p-selectButton [options]="PublishingOptions" name="PublishingOptions"
-                                id="PublishingOptions" [(ngModel)]="productCategory.published" optionLabel="label"
-                                optionValue="value"></p-selectButton>
+                    
+                        <div class="my-5" style="flex: 1;">
+                            <div class="fv-row mb-7 mt-7 fv-plugins-icon-container select_button_custom">
+                                <p-selectButton [options]="PublishingOptions" name="PublishingOptions"
+                                    id="PublishingOptions" [(ngModel)]="productCategory.published" optionLabel="label"
+                                    optionValue="value"></p-selectButton>
+                            </div>
                         </div>
                     </div>
                 </div>

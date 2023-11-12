@@ -2266,6 +2266,14 @@ angular2-counto@^1.2.5:
   resolved "https://registry.npmjs.org/angular2-counto/-/angular2-counto-1.2.5.tgz"
   integrity sha512-W9WVzUOn+e5tRwHtz0EUiApOBjx1X3GbZ6FVb82f6mAaJdq756WIvMgK5kldpx8jJNsR3W/riF76G26zbs10gw==
 
+angular2-signaturepad@^3.0.4:
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/angular2-signaturepad/-/angular2-signaturepad-3.0.4.tgz#d013744eba51c7710756dc5b0d7071d9044ae026"
+  integrity sha512-KRWlFIU77V8NiiAWYDNU7egfBJmvczr3qVjpw6m3KsT125WPwtBBzmD+/IJwRTWa5mUgykBEFYrsesKWolAXsQ==
+  dependencies:
+    signature_pad "2.3.2"
+    tslib "^2.0.0"
+
 angular2-text-mask@^9.0.0:
   version "9.0.0"
   resolved "https://registry.npmjs.org/angular2-text-mask/-/angular2-text-mask-9.0.0.tgz"
@@ -8971,6 +8979,11 @@ signal-exit@^3.0.2, signal-exit@^3.0.3, signal-exit@^3.0.7:
   version "3.0.7"
   resolved "https://registry.npmjs.org/signal-exit/-/signal-exit-3.0.7.tgz"
   integrity sha512-wnD2ZE+l+SPC/uoS0vXeE9L1+0wuaMqKlfz9AMUo38JsyLSBWSFcHR1Rri62LZc12vLr1gb3jl7iwQhgwpAbGQ==
+
+signature_pad@2.3.2:
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/signature_pad/-/signature_pad-2.3.2.tgz#ca7230021c89cedeead27b33d8d16ff254e5f04a"
+  integrity sha512-peYXLxOsIY6MES2TrRLDiNg2T++8gGbpP2yaC+6Ohtxr+a2dzoaqWosWDY9sWqTAAk6E/TyQO+LJw9zQwyu5kA==
 
 simple-line-icons@^2.4.1:
   version "2.5.5"
