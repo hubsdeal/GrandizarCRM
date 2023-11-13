@@ -13,6 +13,7 @@ import { OrderOrderStatusLookupTableModalComponent } from './order-orderStatus-l
 import { OrderCurrencyLookupTableModalComponent } from './order-currency-lookup-table-modal.component';
 import { OrderStoreLookupTableModalComponent } from './order-store-lookup-table-modal.component';
 import { OrderOrderSalesChannelLookupTableModalComponent } from './order-orderSalesChannel-lookup-table-modal.component';
+import { SelectItem } from 'primeng/api';
 
 @Component({
     selector: 'createOrEditOrderModal',
@@ -50,6 +51,12 @@ export class CreateOrEditOrderModalComponent extends AppComponentBase implements
     storeName = '';
     orderSalesChannelName = '';
 
+    deliveryOrPickupOptions: SelectItem[];
+    shippingOptions: SelectItem[];
+
+    localDelivery = true;
+
+    isNewCustomer:boolean;
     constructor(
         injector: Injector,
         private _ordersServiceProxy: OrdersServiceProxy,
@@ -69,7 +76,8 @@ export class CreateOrEditOrderModalComponent extends AppComponentBase implements
             this.currencyName = '';
             this.storeName = '';
             this.orderSalesChannelName = '';
-
+            this.localDelivery = true;
+            this.order.deliveryOrPickup = true;
             this.active = true;
             this.modal.show();
         } else {
@@ -88,6 +96,8 @@ export class CreateOrEditOrderModalComponent extends AppComponentBase implements
                 this.modal.show();
             });
         }
+        this.deliveryOrPickupOptions = [{ label: 'Delivery', value: true }, { label: 'Store Pickup', value: false }];
+        this.shippingOptions = [{ label: 'Local Delivery', value: true }, { label: 'Shipping', value: false }];
     }
 
     save(): void {
@@ -105,6 +115,10 @@ export class CreateOrEditOrderModalComponent extends AppComponentBase implements
                 this.close();
                 this.modalSave.emit(null);
             });
+    }
+
+    onAddNewCustomer(){
+        this.isNewCustomer = !this.isNewCustomer;
     }
 
     openSelectStateModal() {

@@ -67,6 +67,14 @@ export class DateTimeService {
         return this.getDate().startOf('day');
     }
 
+    getOneYearFromToday(): DateTime {
+        return this.getDate().plus({ years: 1 });
+    }
+    
+    getStartOfDayOneYearFromToday(): DateTime {
+        return this.getStartOfDay().plus({ years: 1 });
+    }
+
     getStartOfWeek(): DateTime {
         return this.getDate().startOf('week');
     }

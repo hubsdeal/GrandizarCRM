@@ -2,6 +2,13 @@
 # yarn lockfile v1
 
 
+"@agm/core@1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@agm/core/-/core-1.0.0.tgz#b2a77d18fbffe04cd5c90cf2ead41a5663f89862"
+  integrity sha512-tgrobTyAHCZ3cdi21IdiBafiHLxsC5/6ncq6+f9RV+HrLg0XDuk+DA7upfdE34o2Ui3fNRDYDIgExRVFLsSPCw==
+  dependencies:
+    tslib "^1.9.0"
+
 "@ampproject/remapping@2.2.0", "@ampproject/remapping@^2.1.0":
   version "2.2.0"
   resolved "https://registry.npmjs.org/@ampproject/remapping/-/remapping-2.2.0.tgz"
@@ -2186,6 +2193,11 @@ aggregate-error@^3.0.0:
     clean-stack "^2.0.0"
     indent-string "^4.0.0"
 
+agm-overlays@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/agm-overlays/-/agm-overlays-2.0.0.tgz#4fbfd2eaecca82ec9641dbf984a1ec6bf2934281"
+  integrity sha512-DIYdFTW4cKqjG2vE8K6swo9qFRGOrz5caKyUo4XT1kYEpnlQvSMVRMzLKqpmVOHwujYqObELqX/lDf6G8sdhgw==
+
 ajv-formats@2.1.1, ajv-formats@^2.1.1:
   version "2.1.1"
   resolved "https://registry.npmjs.org/ajv-formats/-/ajv-formats-2.1.1.tgz"
@@ -2253,6 +2265,14 @@ angular2-counto@^1.2.5:
   version "1.2.5"
   resolved "https://registry.npmjs.org/angular2-counto/-/angular2-counto-1.2.5.tgz"
   integrity sha512-W9WVzUOn+e5tRwHtz0EUiApOBjx1X3GbZ6FVb82f6mAaJdq756WIvMgK5kldpx8jJNsR3W/riF76G26zbs10gw==
+
+angular2-signaturepad@^3.0.4:
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/angular2-signaturepad/-/angular2-signaturepad-3.0.4.tgz#d013744eba51c7710756dc5b0d7071d9044ae026"
+  integrity sha512-KRWlFIU77V8NiiAWYDNU7egfBJmvczr3qVjpw6m3KsT125WPwtBBzmD+/IJwRTWa5mUgykBEFYrsesKWolAXsQ==
+  dependencies:
+    signature_pad "2.3.2"
+    tslib "^2.0.0"
 
 angular2-text-mask@^9.0.0:
   version "9.0.0"
@@ -8959,6 +8979,11 @@ signal-exit@^3.0.2, signal-exit@^3.0.3, signal-exit@^3.0.7:
   version "3.0.7"
   resolved "https://registry.npmjs.org/signal-exit/-/signal-exit-3.0.7.tgz"
   integrity sha512-wnD2ZE+l+SPC/uoS0vXeE9L1+0wuaMqKlfz9AMUo38JsyLSBWSFcHR1Rri62LZc12vLr1gb3jl7iwQhgwpAbGQ==
+
+signature_pad@2.3.2:
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/signature_pad/-/signature_pad-2.3.2.tgz#ca7230021c89cedeead27b33d8d16ff254e5f04a"
+  integrity sha512-peYXLxOsIY6MES2TrRLDiNg2T++8gGbpP2yaC+6Ohtxr+a2dzoaqWosWDY9sWqTAAk6E/TyQO+LJw9zQwyu5kA==
 
 simple-line-icons@^2.4.1:
   version "2.5.5"

@@ -48,7 +48,7 @@ export class CreateOrEditHubAccountTeamModalComponent extends AppComponentBase i
             this.hubAccountTeam = new CreateOrEditHubAccountTeamDto();
             this.hubAccountTeam.id = hubAccountTeamId;
             this.hubAccountTeam.startDate = this._dateTimeService.getStartOfDay();
-            this.hubAccountTeam.endDate = this._dateTimeService.getStartOfDay();
+            this.hubAccountTeam.endDate = this._dateTimeService.getOneYearFromToday();
             this.hubName = '';
             this.employeeName = '';
             this.userName = '';

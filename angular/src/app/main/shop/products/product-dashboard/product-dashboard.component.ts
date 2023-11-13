@@ -164,6 +164,7 @@ export class ProductDashboardComponent extends AppComponentBase {
     this.getStatisticsData();
     this.getReviews(this.productId);
   }
+  
   ngAfterViewInit() {
     this.getAllAddedVariants();
   }
