@@ -61,6 +61,7 @@
     "ng-recaptcha": "^11.0.0",
     "ng-multiselect-dropdown": "^0.2.14",
     "ng2-file-upload": "^1.4.0",
+    "ng2-tel-input": "^2.3.0",
     "ngx-bootstrap": "^9.0.0",
     "ngx-image-cropper": "^6.3.1",
     "ngx-perfect-scrollbar": "^10.1.1",
@@ -84,7 +85,8 @@
     "ngx-material-timepicker": "^5.5.3",
     "swiper": "^6",
     "ng-fullcalendar": "1.7.1",
-    "agm-overlays": "^2.0.0"
+    "agm-overlays": "^2.0.0",
+    "intl-tel-input": "^17.0.8"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^15.0.3",

@@ -1611,8 +1611,15 @@ bs-days-calendar-view {
     .p-rating .p-rating-icon {
         color: #f2a73a;
     }
+
     .p-rating .p-rating-icon {
         font-size: 1.2rem !important;
+    }
+
+    //cdk overlay
+    .cdk-overlay-container {
+        position: fixed;
+        z-index: 9999;
     }
 }
 
@@ -1623,9 +1630,11 @@ bs-days-calendar-view {
 .p-rating .p-rating-icon {
     color: #f2a73a !important;
 }
+
 .p-rating .p-rating-icon {
     font-size: 1.2rem !important;
 }
+
 .p-selectbutton .p-button.p-highlight {
     background: #2b9ef3 !important;
     border-color: #3d9ef1 !important;
@@ -1644,5 +1653,21 @@ bs-days-calendar-view {
         margin-top: 3px;
         font-size: 13px;
         margin-bottom: 2px;
+    }
+}
+
+//cdk overlay
+.cdk-overlay-container {
+    position: fixed;
+    z-index: 9999;
+}
+
+//country code picker
+.input_tel_mobile_c {
+    display: grid;
+
+    .input_mobile_f {
+        width: 100%;
+        padding-left: 3.8rem !important;
     }
 }

@@ -1,18 +1,25 @@
 ﻿<div [@routerTransition]>
-    <sub-header [title]="'Master Hubs' | localize" [description]="">
-        <div role="actions">
-            <!-- <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1">
-                <i class="fa fa-file-excel"></i>
-                {{ l('ExportToExcel') }}
-            </button> -->
 
-            <button *ngIf="isGranted('Pages.Hubs.Create')" (click)="createHub()" class="btn btn-primary blue">
-                <i class="fa fa-plus"></i>
-                {{ l('Hub') }}
-            </button>
+    <div class="w-100 d-flex mb-6 ps-9 pe-9 mt-6 justify-content-between align-items-center ng-tns-c282-7">
+        <div class="d-flex">
+            <h1 class="fs-3 fw-bold  my-0 page-heading text-dark">
+                Master Hubs
+            </h1>
+            <span style="cursor: pointer;" class="badge badge-primary badge ms-2">
+                Total: {{primengTableHelper.totalRecordsCount | number:'1.0-0'}}
+            </span>
+            <span style="cursor: pointer;" class="badge badge-info badge ms-2">
+                Live : 14
+            </span>
+            <span style="cursor: pointer;" class="badge badge-warning badge ms-2">
+                Planning : 20
+            </span>
         </div>
-    </sub-header>
-
+        <button *ngIf="isGranted('Pages.Hubs.Create')" (click)="createHub()" class="btn btn-primary blue">
+            <i class="fa fa-plus"></i>
+            {{ l('Hub') }}
+        </button>
+    </div>
     <div [class]="containerClass">
         <div class="card card-custom gutter-b">
             <div class="card-body">
@@ -517,11 +524,11 @@
                                     </td> -->
                                     <td style="width: 100px">
                                         <span class="p-column-title">{{ l('Est. Population') }}</span>
-                                        {{ record.estimatedPopulation }}
+                                        {{ record.estimatedPopulation | number:'1.0-0' }}
                                     </td>
                                     <td style="width: 100px">
                                         <span class="p-column-title">{{ l('YearlyRevenue') }}</span>
-                                        {{ record.yearlyRevenue }}
+                                        {{ record.yearlyRevenue | number:'1.0-0' }}
                                     </td>
                                     <td style="width:100px; text-align: center;">
                                         <span class="p-column-title">{{ l('Sequence') }}</span>
@@ -654,7 +661,7 @@
                                                 <li>
                                                     <a class="dropdown-item" href="javascript:;"
                                                         *ngIf="permission.isGranted('Pages.Hubs.Delete')"
-                                                        (click)="deleteHub(record.hub)">
+                                                        (click)="deleteHub(record.id)">
                                                         {{ l('Delete') }}
                                                     </a>
                                                 </li>
@@ -669,7 +676,7 @@
                         </div>
                         <div class="primeng-paging-container">
                             <p-paginator [rows]="primengTableHelper.defaultRecordsCountPerPage" #paginator
-                                (onPageChange)="paginate($event)" [totalRecords]="primengTableHelper.totalRecordsCount"
+                                (onPageChange)="paginate($event)" [totalRecords]="primengTableHelper.totalRecordsCount | number:'1.0-0'"
                                 [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
                                 [showCurrentPageReport]="true" [currentPageReportTemplate]="
                                     'TotalRecordsCount' | localize : primengTableHelper.totalRecordsCount

@@ -202,10 +202,10 @@ export class HubsComponent extends AppComponentBase {
         this.createOrEditHubModal.show();
     }
 
-    deleteHub(hub: HubDto): void {
+    deleteHub(id: number): void {
         this.message.confirm('', this.l('AreYouSure'), (isConfirmed) => {
             if (isConfirmed) {
-                this._hubsServiceProxy.delete(hub.id).subscribe(() => {
+                this._hubsServiceProxy.delete(id).subscribe(() => {
                     this.reloadPage();
                     this.notify.success(this.l('SuccessfullyDeleted'));
                 });

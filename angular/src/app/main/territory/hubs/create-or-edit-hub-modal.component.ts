@@ -60,6 +60,7 @@ export class CreateOrEditHubModalComponent extends AppComponentBase implements O
     allCurrencys: HubCurrencyLookupTableDto[];
 
     partnerAndOwnedOptions: SelectItem[];
+    liveOptions: SelectItem[];
     sidebarVisible2: boolean;
 
     selectedCountry: any;
@@ -75,6 +76,12 @@ export class CreateOrEditHubModalComponent extends AppComponentBase implements O
     chatGPTPromt: string;
     productShortDesc: string;
     allHubs: any[];
+
+    telOptions = { initialCountry: 'sa', preferredCountries: ['sa'] };
+    dialCode: string;
+
+    @ViewChild('phone') phone: ElementRef;
+    isDialCodeAdded: boolean = false;
 
     constructor(
         injector: Injector,
@@ -144,7 +151,8 @@ export class CreateOrEditHubModalComponent extends AppComponentBase implements O
         this._hubsServiceProxy.getAllCurrencyForTableDropdown().subscribe((result) => {
             this.allCurrencys = result;
         });
-        this.partnerAndOwnedOptions = [{ label: 'Corporate Owned', value: true }, { label: 'Partner', value: false }];
+        this.partnerAndOwnedOptions = [{ label: 'Owned', value: true }, { label: 'Partner', value: false }];
+        this.liveOptions = [{ label: 'Live', value: true }, { label: 'Planning', value: false }];
         this._hubWidgetMapsServiceProxy
             .getAllHubForLookupTable(
                 '',
@@ -159,6 +167,12 @@ export class CreateOrEditHubModalComponent extends AppComponentBase implements O
     saveHub(fileToken?: string): void {
         this.saving = true;
         this.hub.fileToken = fileToken;
+
+        if (this.hub.phone) {
+            this.phone.nativeElement.dispatchEvent(
+                new KeyboardEvent('keyup', { bubbles: true })
+            );
+        };
 
         this._hubsServiceProxy
             .createOrEdit(this.hub)
@@ -296,55 +310,81 @@ export class CreateOrEditHubModalComponent extends AppComponentBase implements O
 
 
 
-    // openAiModal(feildName: string): void {
-    //     var promtText = "Get latitude and longitude for New York"
-    //     var modalTitle = "AI Latitude Longitude Response"
-    //     const dialogRef = this.dialog.open(ChatGptResponseModalComponent, {
-    //       data: { promtFromAnotherComponent: promtText, feildName: feildName, modalTitle: modalTitle },
-    //       width: '1100px',
-    //     });
-
-    //     dialogRef.afterClosed().subscribe(result => {
-    //       console.log(result)
-    //       //this.bindingData = result.data;
-    //     });
-    //   }
-
-    async getCoordinates() {
-        try {
-            if (this.selectedCountry && this.selectedState && this.selectedCity && this.selectedCounty) {
-                this.chatGPTPromt = 'Give me only the Latitude and longitude for ' + this.selectedCountry.displayName + ', ' + this.selectedState.displayName + ', ' + this.selectedCounty.displayName + ', ' + this.selectedCity.displayName + ' as json format as Key latitude and longitude';
-            } else if (this.selectedCountry && this.selectedState && this.selectedCounty) {
-                this.chatGPTPromt = 'Give me only the Latitude and longitude for ' + this.selectedCountry.displayName + ', ' + this.selectedState.displayName + ', ' + this.selectedCounty.displayName + ' as json format as Key latitude and longitude';
-            } else if (this.selectedCountry && this.selectedState) {
-                this.chatGPTPromt = 'Give me only the Latitude and longitude for ' + this.selectedCountry.displayName + ', ' + this.selectedState.displayName + ' as json format as Key latitude and longitude';
-            } else if (this.selectedCountry) {
-                this.chatGPTPromt = 'Give me only the Latitude and longitude for ' + this.selectedCountry.displayName + ' as json format as Key latitude and longitude';
-            }
-            console.log(this.chatGPTPromt);
-            const location = 'Give me Latitude and longitude for New York as json format as Key latitude and longitude'; // Replace with the desired location
-            const coordinates = await this.geocodingService.invokeGPT(this.chatGPTPromt);
-            console.log('Coordinates:', coordinates);
-            if (coordinates) {
-                this.hub.latitude = coordinates.latitude;
-                this.hub.longitude = coordinates.longitude;
-            }
-        } catch (error) {
-            console.error('Error:', error);
+    getCoordinates(fieldName: string) {
+        if (this.selectedCountry && this.selectedState && this.selectedCity && this.selectedCounty) {
+            this.chatGPTPromt = `Give me only the Latitude and longitude for 
+        Country: ${this.selectedCountry.displayName}, 
+        State: ${this.selectedState.displayName}, 
+        City: ${this.selectedCity}, 
+        County: ${this.selectedCounty} 
+        as json format as Key latitude and longitude`;
+        } else if (this.selectedCountry && this.selectedState && this.selectedCity) {
+            this.chatGPTPromt = `Give me only the Latitude and longitude for 
+        Country: ${this.selectedCountry.displayName}, 
+        State: ${this.selectedState.displayName}, 
+        City: ${this.selectedCity} 
+        as json format as Key latitude and longitude`;
+        } else if (this.selectedCountry && this.selectedState) {
+            this.chatGPTPromt = `Give me only the Latitude and longitude for 
+        Country: ${this.selectedCountry.displayName}, 
+        State: ${this.selectedState.displayName} 
+        as json format as Key latitude and longitude`;
+        } else if (this.selectedCountry) {
+            this.chatGPTPromt = `Give me only the Latitude and longitude for 
+        Country: ${this.selectedCountry.displayName} 
+        as json format as Key latitude and longitude`;
         }
-    }
 
-    openAiModalPr(feildName: string): void {
-        this.productShortDesc = "Write a  short description for a hub where hub name is Newyork"
-        var modalTitle = "AI Text Generator - About Hub"
+        var modalTitle = `AI Text Generator - Hub ${fieldName}`;
         const dialogRef = this.dialog.open(ChatGptResponseModalComponent, {
-            data: { promtFromAnotherComponent: this.productShortDesc, feildName: feildName, modalTitle: modalTitle },
+            data: { promtFromAnotherComponent: this.chatGPTPromt, feildName: fieldName, modalTitle: modalTitle },
             width: '1100px',
         });
 
         dialogRef.afterClosed().subscribe(result => {
-            console.log(result)
-            this.hub.description = result.data;
+            if (result.data != null) {
+                const responseText = this.extractCoordinates(result.data);
+                if (responseText) {
+                    this.hub.latitude = responseText.latitude;
+                    this.hub.longitude = responseText.longitude;
+                }
+            }
         });
+    }
+
+    private extractCoordinates(responseText: string): { latitude: number, longitude: number } {
+        // Remove HTML tags from the response text
+        const cleanText = responseText.replace(/<[^>]+>/g, '');
+
+        try {
+            const response = JSON.parse(cleanText);
+
+            if (response.latitude && response.longitude) {
+                const latitude = response.latitude;
+                const longitude = response.longitude;
+                return { latitude, longitude };
+            }
+        } catch (error) {
+            // JSON parsing failed, handle the error as needed
+            throw new Error('Unable to parse the response as JSON');
+        }
+
+        // If the response does not contain the latitude and longitude, return null or throw an error
+        throw new Error('Unable to extract coordinates from the response');
+    }
+    onCountryChangeMobile(event: any) {
+        this.dialCode = "+" + event.dialCode;
+    }
+
+    onCountryChangePhone(event: any) {
+        this.dialCode = "+" + event.dialCode;
+    }
+
+    getNumberPhone(event: any) {
+        this.isDialCodeAdded = true;
+        this.hub.phone = event;
+    }
+
+    telInputObject(event: any) {
     }
 }

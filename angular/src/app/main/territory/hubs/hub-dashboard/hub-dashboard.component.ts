@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Injector, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Injector, Input, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { ChatGptResponseModalComponent } from '@app/shared/chat-gpt-response-modal/chat-gpt-response-modal.component';
@@ -38,6 +38,7 @@ export class HubDashboardComponent extends AppComponentBase implements OnInit, A
   allCurrencys: HubCurrencyLookupTableDto[];
 
   partnerAndOwnedOptions: SelectItem[];
+  liveOptions: SelectItem[];
   sidebarVisible2: boolean;
 
   selectedCountry: any;
@@ -59,7 +60,10 @@ export class HubDashboardComponent extends AppComponentBase implements OnInit, A
   saving = false;
 
   countView: HubTopStatsForViewDto = new HubTopStatsForViewDto();
-
+  telOptions = { initialCountry: 'sa', preferredCountries: ['sa'] };
+  @ViewChild('phone') phone: ElementRef;
+  isDialCodeAdded: boolean = false;
+  dialCode: string;
   constructor(
     injector: Injector,
     private route: ActivatedRoute,
@@ -122,7 +126,11 @@ export class HubDashboardComponent extends AppComponentBase implements OnInit, A
   saveHub(fileToken?: string): void {
     this.saving = true;
     this.hub.fileToken = fileToken;
-
+    if (this.hub.phone) {
+      this.phone.nativeElement.dispatchEvent(
+        new KeyboardEvent('keyup', { bubbles: true })
+      );
+    };
     this._hubsServiceProxy
       .createOrEdit(this.hub)
       .pipe(
@@ -174,6 +182,7 @@ export class HubDashboardComponent extends AppComponentBase implements OnInit, A
       this.allCurrencys = result;
     });
     this.partnerAndOwnedOptions = [{ label: 'Corporate Owned', value: true }, { label: 'Partner', value: false }];
+    this.liveOptions = [{ label: 'Live', value: true }, { label: 'Planning', value: false }];
   }
 
   fileChangeEvent(event: any) {
@@ -359,5 +368,21 @@ export class HubDashboardComponent extends AppComponentBase implements OnInit, A
       console.log(result)
       this.bindingData = result.data;
     });
+  }
+
+  onCountryChangeMobile(event: any) {
+    this.dialCode = "+" + event.dialCode;
+  }
+
+  onCountryChangePhone(event: any) {
+    this.dialCode = "+" + event.dialCode;
+  }
+
+  getNumberPhone(event: any) {
+    this.isDialCodeAdded = true;
+    this.hub.phone = event;
+  }
+
+  telInputObject(event: any) {
   }
 }

@@ -159,11 +159,16 @@
                             </div>
                         </div>
                         <div class="col-xl-6">
-                            <div class="my-3">
+                            <div class="my-3 input_tel_mobile_c">
                                 <label class="form-label" for="Hub_Phone">{{ l('Phone') }}</label>
-                                <input type="text" #Hub_Phone="ngModel" id="Hub_Phone" class="form-control"
+                                <input #phone class="form-control input_mobile_f" name="phone" id="phone" type="text"
+                                    ng2TelInput [(ngModel)]="hub.phone"
+                                    (countryChange)="onCountryChangePhone($event)" [ng2TelInputOptions]="telOptions"
+                                    (ng2TelOutput)="getNumberPhone($event)"
+                                    (intlTelInputObject)="telInputObject($event)" maxlength="14" />
+                                <!-- <input type="text" #Hub_Phone="ngModel" id="Hub_Phone" class="form-control"
                                     [(ngModel)]="hub.phone" name="Phone" minlength="1" maxlength="50" />
-                                <validation-messages [formCtrl]="Hub_Phone"></validation-messages>
+                                <validation-messages [formCtrl]="Hub_Phone"></validation-messages> -->
                             </div>
                         </div>
                         <div class="col-xl-12">
@@ -204,7 +209,7 @@
                         </div>
                         <div class="col-xl-4 d-flex align-items-end">
                             <div class="my-3 d-flex align-items-end">
-                                <a href="javascript:;" (click)="getCoordinates()"
+                                <a href="javascript:;" (click)="getCoordinates('Latitude and Longitude')"
                                     class="btn btn mb-0 ms-4 fw-bold btn-primary">
                                     <i class="fa fa-map-marker"></i> Get Lat. Long. Data
                                 </a>
@@ -261,7 +266,7 @@
 
 
 
-                    <div class="mb-3 mt-3">
+                    <!-- <div class="mb-3 mt-3">
                         <label class="form-check form-check-custom form-check-solid">
                             <input id="Hub_Live" #Hub_Live="ngModel" name="Live" [(ngModel)]="hub.live" type="checkbox"
                                 class="form-check-input" />
@@ -270,6 +275,10 @@
                             </span>
                         </label>
                         <validation-messages [formCtrl]="Hub_Live"></validation-messages>
+                    </div> -->
+                    <div class="my-5 select_button_custom">
+                        <p-selectButton [options]="liveOptions" name="live" id="live"
+                            [(ngModel)]="hub.live" optionLabel="label" optionValue="value"></p-selectButton>
                     </div>
                     <!-- <div class="my-3">
                         <label class="form-label" for="Hub_Url">{{ l('Url') }}</label>

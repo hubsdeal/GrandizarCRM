@@ -524,12 +524,18 @@
                                                 <!--begin::Row-->
                                                 <div class="row row-cols-1 row-cols-sm-2 rol-cols-md-1 row-cols-lg-2">
                                                     <div class="col-12">
-                                                        <div class="fv-row mb-7 fv-plugins-icon-container">
+                                                        <div class="fv-row mb-7 input_tel_mobile_c fv-plugins-icon-container">
                                                             <label class="fs-6 fw-semibold form-label mt-3">
                                                                 <span class="required">Mobile</span>
                                                             </label>
-                                                            <input type="text" class="form-control" name="email"
-                                                                [(ngModel)]="hub.phone">
+                                                            <input #phone class="form-control input_mobile_f"
+                                                                name="phone" id="phone" type="text" ng2TelInput
+                                                                [(ngModel)]="hub.phone"
+                                                                (countryChange)="onCountryChangePhone($event)"
+                                                                [ng2TelInputOptions]="telOptions"
+                                                                (ng2TelOutput)="getNumberPhone($event)"
+                                                                (intlTelInputObject)="telInputObject($event)"
+                                                                maxlength="14" />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -653,7 +659,8 @@
                                                     </div>
                                                     <div class="cold-flex align-items-end">
                                                         <div class="d-flex align-items-end">
-                                                            <a href="javascript:;" (click)="getCoordinates('Latitude and Longitude')"
+                                                            <a href="javascript:;"
+                                                                (click)="getCoordinates('Latitude and Longitude')"
                                                                 class="btn btn mb-0 ms-0 mb-4 fw-bold btn-primary">
                                                                 <i class="fa fa-map-marker"></i> Get Lat. Long. Data
                                                             </a>
@@ -718,6 +725,14 @@
                                                         <input class="form-check-input w-45px h-30px" type="checkbox"
                                                             name="live" id="live" [(ngModel)]="hub.live">
                                                         <label class="form-check-label" for="live"></label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="fv-row mb-7 fv-plugins-icon-container d-flex">
+                                                    <div class="my-5 select_button_custom">
+                                                        <p-selectButton [options]="liveOptions" name="live" id="live"
+                                                            [(ngModel)]="hub.live" optionLabel="label"
+                                                            optionValue="value"></p-selectButton>
                                                     </div>
                                                 </div>
 
