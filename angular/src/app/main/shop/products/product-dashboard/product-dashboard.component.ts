@@ -634,7 +634,6 @@ export class ProductDashboardComponent extends AppComponentBase {
   }
 
   onReviewPublishClick(event: any, id: number) {
-    debugger
     if (event) {
       this._productReviewsServiceProxy.getProductReviewForEdit(id).subscribe(result => {
         result.productReview.publish = !result.productReview.publish;
@@ -642,6 +641,15 @@ export class ProductDashboardComponent extends AppComponentBase {
           this.notify.info(this.l('Successfully Updated'));
         })
       });
+    }
+  }
+
+  onProductPublishClick(event: any) {
+    if(event){
+      this.product.isPublished = event.value;
+      this._productsServiceProxy.createOrEdit(this.product).subscribe(result => {
+        this.notify.info(this.l('Successfully Updated'));
+      })
     }
   }
 

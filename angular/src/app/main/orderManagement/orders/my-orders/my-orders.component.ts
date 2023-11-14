@@ -1,4 +1,4 @@
-import { Component, Injector, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, Injector, Input, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DateTimeService } from '@app/shared/common/timing/date-time.service';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
@@ -80,6 +80,8 @@ export class MyOrdersComponent extends AppComponentBase {
   currencyNameFilter = '';
   storeNameFilter = '';
   orderSalesChannelNameFilter = '';
+
+  @Input() isFormDashboard = false;
 
   constructor(
       injector: Injector,

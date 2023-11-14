@@ -109,6 +109,7 @@ export class CreateOrEditTaskEventModalComponent extends AppComponentBase implem
         this.taskStatusOptions = [{ label: 'Completed', value: true }, { label: 'Open', value: false }];
         this.priorityOptions = [{ label: 'High', value: true }, { label: 'Low', value: false }];
         this.taskOptions = [{ label: 'Task', value: true }, { label: 'Event', value: false }];
+        this.taskEvent.teams = [];
         this.getTempleteList()
     }
 

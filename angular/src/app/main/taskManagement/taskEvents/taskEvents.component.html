@@ -1,10 +1,6 @@
 ﻿<div [@routerTransition]>
-    <sub-header [title]="'TaskEvents' | localize" [description]="">
+    <!-- <sub-header [title]="'TaskEvents' | localize" [description]="">
         <div role="actions">
-            <!-- <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1">
-                <i class="fa fa-file-excel"></i>
-                {{ l('ExportToExcel') }}
-            </button> -->
 
             <button *ngIf="isGranted('Pages.TaskEvents.Create')" (click)="createTaskEvent()"
                 class="btn btn-primary blue">
@@ -12,7 +8,21 @@
                 {{ l('Task Event') }}
             </button>
         </div>
-    </sub-header>
+    </sub-header> -->
+    <div class="w-100 d-flex mb-6 ps-9 pe-9 mt-6 justify-content-between align-items-center ng-tns-c282-7">
+        <div class="d-flex">
+            <h1 class="fs-3 fw-bold  my-0 page-heading text-dark">
+                Task Events
+            </h1>
+            <span style="cursor: pointer;" class="badge badge-primary badge ms-2">
+                Total: {{primengTableHelper.totalRecordsCount | number:'1.0-0'}}
+            </span>
+        </div>
+        <button *ngIf="isGranted('Pages.TaskEvents.Create')" (click)="createTaskEvent()" class="btn btn-primary blue">
+            <i class="fa fa-plus"></i>
+            {{ l('Task Event') }}
+        </button>
+    </div>
 
     <div [class]="containerClass">
         <div class="card card-custom gutter-b">
@@ -61,7 +71,7 @@
                                         <option value="1">{{ l('Completed') }}</option>
                                     </select> -->
                                     <select class="form-select" name="StatusFilter" id="StatusFilterSelect"
-                                    [(ngModel)]="statusFilter" (ngModelChange)="getTaskEvents()">
+                                        [(ngModel)]="statusFilter" (ngModelChange)="getTaskEvents()">
                                         <option value="-1">{{ l('All') }}</option>
                                         <option *ngFor="let item of allTaskStatuss" value="{{ item.id }}">
                                             {{ item.displayName }}
@@ -99,9 +109,12 @@
                             <div class="col-md-3">
                                 <div class="my-3 p_filter">
                                     <label class="form-label" for="team">{{ l('Team') }}</label>
-                                    <p-dropdown [style]="{ width: '100%' }" [options]="employeeList" [(ngModel)]="selectedEmployees" optionLabel="displayName" [filter]="true" filterBy="displayName" [showClear]="true" placeholder="Select a employee" (onChange)="onEmployeeSelect($event)">
+                                    <p-dropdown [style]="{ width: '100%' }" [options]="employeeList"
+                                        [(ngModel)]="selectedEmployees" optionLabel="displayName" [filter]="true"
+                                        filterBy="displayName" [showClear]="true" placeholder="Select a employee"
+                                        (onChange)="onEmployeeSelect($event)">
                                         <ng-template pTemplate="selectedItem">
-                                            
+
                                             <div class="flex align-items-center gap-2" *ngIf="selectedEmployees">
                                                 <!-- <div class="symbol symbol-35px symbol-circle">
                                                     <span *ngIf ="!selectedEmployees.picture" title="{{selectedEmployees.displayName}}"
@@ -121,13 +134,13 @@
                                                 <div>{{ employee.displayName }}</div>
                                             </div>
                                         </ng-template>
-                                       
+
                                     </p-dropdown>
                                     <!-- <p-dropdown  [filter]="true" [virtualScroll]="true"
                                         placeholder="Select Team" [itemSize]="30" name="employee"
                                         optionLabel="displayName" optionId="id" [(ngModel)]="selectedEmployees"
                                         filterBy="displayName" [style]="{ width: '100%' }" (onChange)="onEmployeeSelect($event)"></p-dropdown>  -->
-                                        <!-- <p-multiSelect name="employee" id="employee" [options]="employeeList"
+                                    <!-- <p-multiSelect name="employee" id="employee" [options]="employeeList"
                                     [(ngModel)]="selectedEmployees" optionLabel="displayName" [virtualScroll]="true"
                                     [filter]="true" [itemSize]="34" [maxSelectedLabels]="2"  placeholder="Select Team"
                                     class="multiselect-custom-virtual-scroll" (onChange)="onEmployeeSelect($event)"> 
@@ -265,7 +278,8 @@
                                     <th style="width: 180px; text-align: center;">{{l('Completion Status')}}</th>
                                     <th class="text-center" style="width: 130px">{{l('Status')}}</th>
                                     <th class="text-center" style="width: 130px">{{l('Priority')}}</th>
-                                    <th style="width: 130px" [hidden]="!isGrantedAny('Pages.TaskEvents.Edit', 'Pages.TaskEvents.Delete')">
+                                    <th style="width: 130px"
+                                        [hidden]="!isGrantedAny('Pages.TaskEvents.Edit', 'Pages.TaskEvents.Delete')">
                                         {{ l('Actions') }}
                                     </th>
                                 </tr>
@@ -276,14 +290,15 @@
                                         <input class="form-check-input" type="checkbox" [(ngModel)]="record.selected" (change)="checkIfAllSelected()">
                                     </td> -->
                                     <td style="width: 250px">
-                                        <a href="javascript:;" [routerLink]="['/app/main/taskManagement/taskEvents/dashboard', record.taskEvent.id]"
+                                        <a href="javascript:;"
+                                            [routerLink]="['/app/main/taskManagement/taskEvents/dashboard', record.taskEvent.id]"
                                             class="fs-5 text-gray-800 text-hover-primary fw-bold">
                                             {{ record.taskEvent.name }}
                                         </a>
                                     </td>
                                     <td style="width:180px;">
                                         <span *ngIf="record.taskEvent.eventDate">
-                                            {{record.taskEvent.eventDate | luxonFormat : 'dd-MM-yyyy::HH:mm'}} 
+                                            {{record.taskEvent.eventDate | luxonFormat : 'dd-MM-yyyy::HH:mm'}}
                                         </span>
                                         <span *ngIf="record.taskEvent.startTime && record.taskEvent.eventDate">(</span>
                                         <span *ngIf="record.taskEvent.startTime">{{record.taskEvent.startTime}}</span>
@@ -297,32 +312,35 @@
                                         <span *ngIf="record.taskEvent.endTime">{{record.taskEvent.endTime}}</span>
                                         <span *ngIf="record.taskEvent.endTime && record.taskEvent.endDate">)</span>
                                     </td>
-                                    <td style="width:150px; text-align: center;">{{ record.taskEvent.actualTime || 0 }}</td>
-                                    <td style="width:150px; text-align: center;">{{ record.taskEvent.actualTime || 0 }}</td>
+                                    <td style="width:150px; text-align: center;">{{ record.taskEvent.actualTime || 0 }}
+                                    </td>
+                                    <td style="width:150px; text-align: center;">{{ record.taskEvent.actualTime || 0 }}
+                                    </td>
                                     <td style="width: 180px; text-align: center;">
-                                        <div class="symbol-group symbol-hover flex-nowrap d-flex justify-content-center">
-                                            <div *ngFor="let team of record.team" class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
+                                        <div
+                                            class="symbol-group symbol-hover flex-nowrap d-flex justify-content-center">
+                                            <div *ngFor="let team of record.team"
+                                                class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
                                                 data-bs-original-title="Alan Warden" data-kt-initialized="1">
-                                                <span *ngIf ="!team.picture" title="{{team.employeeName}}"
-                                                    class="symbol-label bg-warning text-inverse-warning fw-bold">{{team.employeeName | nameSplit}}</span>
-                                                <img *ngIf ="team.picture" alt="Pic" src="{{team.picture}}">
+                                                <span *ngIf="!team.picture" title="{{team.employeeName}}"
+                                                    class="symbol-label bg-warning text-inverse-warning fw-bold">{{team.employeeName
+                                                    | nameSplit}}</span>
+                                                <img *ngIf="team.picture" alt="Pic" src="{{team.picture}}">
                                             </div>
                                         </div>
                                     </td>
                                     <td style="width: 180px; text-align: center;">
-                                        <div
-                                                                            class="d-flex align-items-center flex-column mt-5">
-                                                                            <div
-                                                                                class="d-flex justify-content-between w-100 mt-auto mb-2">
-                                                                                <span
-                                                                                    class="fw-bold fs-6">{{record.taskEvent.completionPercentage}}%</span>
+                                        <div class="d-flex align-items-center flex-column mt-5">
+                                            <div class="d-flex justify-content-between w-100 mt-auto mb-2">
+                                                <span
+                                                    class="fw-bold fs-6">{{record.taskEvent.completionPercentage}}%</span>
 
-                                                                            </div>
-                                                                            <div class="h-5px mx-3 w-100 bg-light mb-3">
-                                                                                <p-slider
-                                                                                    [(ngModel)]="record.taskEvent.completionPercentage"></p-slider>
-                                                                            </div>
-                                                                        </div>
+                                            </div>
+                                            <div class="h-5px mx-3 w-100 bg-light mb-3">
+                                                <p-slider
+                                                    [(ngModel)]="record.taskEvent.completionPercentage"></p-slider>
+                                            </div>
+                                        </div>
                                         <!-- <progress max="100" value="{{ record.taskEvent.completionPercentage }}"></progress> -->
                                     </td>
                                     <td style="width: 150px">
@@ -332,12 +350,14 @@
                                     </td>
                                     <td style="width: 150px">
                                         <div class="text-center">
-                                            <span class="badge badge-{{record.taskEvent.priority ? 'danger' : 'warning'}} badge-sm">
+                                            <span
+                                                class="badge badge-{{record.taskEvent.priority ? 'danger' : 'warning'}} badge-sm">
                                                 {{record.taskEvent.priority ? 'High' : 'Low'}}
                                             </span>
                                         </div>
                                     </td>
-                                    <td style="width: 130px" [hidden]="!isGrantedAny('Pages.TaskEvents.Edit', 'Pages.TaskEvents.Delete')">
+                                    <td style="width: 130px"
+                                        [hidden]="!isGrantedAny('Pages.TaskEvents.Edit', 'Pages.TaskEvents.Delete')">
                                         <div class="btn-group dropdown" dropdown container="body">
                                             <button class="dropdown-toggle btn btn-sm btn-primary" dropdownToggle>
                                                 <i class="fa fa-cog"></i>
@@ -346,7 +366,9 @@
                                             </button>
                                             <ul class="dropdown-menu" *dropdownMenu>
                                                 <li>
-                                                    <a href="javascript:;" *ngIf="permission.isGranted('Pages.TaskEvents.Edit')" class="dropdown-item"
+                                                    <a href="javascript:;"
+                                                        *ngIf="permission.isGranted('Pages.TaskEvents.Edit')"
+                                                        class="dropdown-item"
                                                         (click)="createOrEditTaskEventModal.show(record.taskEvent.id)">
                                                         {{ l('Edit') }}
                                                     </a>
@@ -378,7 +400,7 @@
                         </div>
                     </div>
                 </div>
-                
+
             </div>
         </div>
     </div>

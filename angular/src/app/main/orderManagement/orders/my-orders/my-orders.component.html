@@ -18,7 +18,7 @@
                 My Orders
             </h1>
         </div>
-        <button *ngIf="isGranted('Pages.Orders.Create')" (click)="createOrder()" class="btn btn-primary blue">
+        <button *ngIf="isGranted('Pages.Orders.Create') && isFormDashboard" (click)="createOrder()" class="btn btn-primary blue">
             <i class="fa fa-plus"></i>
             {{ l('Orders') }}
         </button>
