@@ -146,7 +146,7 @@ export class ProductDashboardComponent extends AppComponentBase {
     private _productAccountTeamsServiceProxy: ProductAccountTeamsServiceProxy,
     private _productCategoryAndVariantCategoryMapsServiceProxy: ProductCategoryVariantMapsServiceProxy,
     private _productVariantsServiceProxy: ProductByVariantsServiceProxy,
-    private _publicPagesCommonServiceProxy : PublicPagesCommonServiceProxy,
+    private _publicPagesCommonServiceProxy: PublicPagesCommonServiceProxy,
     private _productReviewsServiceProxy: ProductReviewsServiceProxy
   ) {
     super(injector);
@@ -164,7 +164,7 @@ export class ProductDashboardComponent extends AppComponentBase {
     this.getStatisticsData();
     this.getReviews(this.productId);
   }
-  
+
   ngAfterViewInit() {
     this.getAllAddedVariants();
   }
@@ -287,7 +287,30 @@ export class ProductDashboardComponent extends AppComponentBase {
     });
   }
 
+  openAiModalMetaData(fieldName: string): void {
+    const productName = this.product.name;
+    const promt = `Generate product meta data as json format with key pair and the key is SEO_Title, Meta_Keywords,
+                  Meta_Description where the Product Name is ${productName} and the product Category is ${this.categoryName}`;
+    var modalTitle = `AI Text Generator - ${fieldName}`;
+    const dialogRef = this.dialog.open(ChatGptResponseModalComponent, {
+      data: { promtFromAnotherComponent: promt, feildName: fieldName, modalTitle: modalTitle },
+      width: '1100px',
+    });
 
+    dialogRef.afterClosed().subscribe(result => {
+      if (result.data != null) {
+        this.insertProductMetaDetails(result.data);
+      }
+    });
+  }
+
+  insertProductMetaDetails(response: string): void {
+    const cleanedResponse = response.replace(/<br>/g, '');
+    const productDetails = JSON.parse(cleanedResponse);
+    this.product.seoTitle = productDetails.SEO_Title;
+    this.product.metaKeywords = productDetails.Meta_Keywords;
+    this.product.metaDescription = productDetails.Meta_Description;
+  }
   insertProductDetails(response: string): void {
     const cleanedResponse = response.replace(/<br>/g, '');
     const productDetails = JSON.parse(cleanedResponse);

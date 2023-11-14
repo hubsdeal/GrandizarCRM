@@ -59,7 +59,7 @@
 
                     <div class="my-5">
                         <label class="form-label" for="ProductCategory_Name">{{ l('Name') }} *</label>
-                        <input type="text" #ProductCategory_Name="ngModel" id="ProductCategory_Name"
+                        <input type="text" #ProductCategory_Name="ngModel" id="ProductCategory_Name" (change)="onNameChange($event)"
                             class="form-control" [(ngModel)]="productCategory.name" name="Name" minlength="1"
                             maxlength="128" required />
                         <validation-messages [formCtrl]="ProductCategory_Name"></validation-messages>

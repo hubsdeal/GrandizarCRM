@@ -45,13 +45,13 @@ export class CreateOrEditProductCategoryModalComponent extends AppComponentBase 
         private _dateTimeService: DateTimeService,
         private _tokenService: TokenService,
         private _mediaLibrariesServiceProxy: MediaLibrariesServiceProxy,
-        private _productCategoryTeamsServiceProxy:ProductCategoryTeamsServiceProxy
+        private _productCategoryTeamsServiceProxy: ProductCategoryTeamsServiceProxy
     ) {
         super(injector);
     }
 
     show(productCategoryId?: number): void {
-        this._productCategoryTeamsServiceProxy.getAllEmployeeForLookupTable('','',0,1000).subscribe(result => {
+        this._productCategoryTeamsServiceProxy.getAllEmployeeForLookupTable('', '', 0, 1000).subscribe(result => {
             this.employeeList = result.items;
         });
         if (!productCategoryId) {
@@ -59,7 +59,7 @@ export class CreateOrEditProductCategoryModalComponent extends AppComponentBase 
             this.productCategory.id = productCategoryId;
             this.mediaLibraryName = '';
             this.temporaryPictureUrl = '';
-           
+
 
             this.active = true;
             this.modal.show();
@@ -74,14 +74,13 @@ export class CreateOrEditProductCategoryModalComponent extends AppComponentBase 
             });
         }
         this._productCategoriesServiceProxy.getAllProductCategoryForTableDropdown().subscribe(result => {
-            debugger;
             this.allParentCategories = result;
             //this.allParentCategories = this.allParentCategories.sort((a, b) => a.localeCompare(b));
         });
-        this.productCategory.productOrService=true;
-        this.productCategory.published=false;
+        this.productCategory.productOrService = true;
+        this.productCategory.published = false;
         this.productServiceOptions = [{ label: 'Product', value: true }, { label: 'Service', value: false }];
-        this.PublishingOptions= [{ label: 'Published', value: true }, { label: 'Unpublished', value: false }];
+        this.PublishingOptions = [{ label: 'Published', value: true }, { label: 'Unpublished', value: false }];
         this.initFileUploader();
     }
 
@@ -215,10 +214,10 @@ export class CreateOrEditProductCategoryModalComponent extends AppComponentBase 
     ngOnInit(): void { }
     onEmployeeSelect(event: any) {
         if (event) {
-            let index =this.productCategory.teams?this.productCategory.teams.findIndex(x => x.id == event.itemValue.id):-1;
-            if(index<0){
+            let index = this.productCategory.teams ? this.productCategory.teams.findIndex(x => x.id == event.itemValue.id) : -1;
+            if (index < 0) {
                 this.productCategory.teams = event.value;
-            }else if(index>=0 && this.productCategory.id){
+            } else if (index >= 0 && this.productCategory.id) {
                 // this._taskTeamsServiceProxy.deleteByTask(this.taskEvent.id,event.itemValue.id).subscribe(result=>{
                 //     this.taskEvent.teams.splice(index, 1);
                 // });
@@ -229,5 +228,15 @@ export class CreateOrEditProductCategoryModalComponent extends AppComponentBase 
         // if (event.value.length > 0) {
 
         // }
+    }
+
+    onNameChange(event: any) {
+        if (event) {
+            const trimmedCategoryName = this.productCategory.name.trim();
+
+            this.productCategory.url = trimmedCategoryName.includes(' ')
+                ? trimmedCategoryName.replace(/\s+/g, '-').toLowerCase()
+                : trimmedCategoryName.toLowerCase();
+        }
     }
 }
