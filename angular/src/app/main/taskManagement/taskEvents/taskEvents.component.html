@@ -265,21 +265,13 @@
                             [resizableColumns]="primengTableHelper.resizableColumns">
                             <ng-template pTemplate="header">
                                 <tr>
-                                    <!-- <th style="width:30px; text-align: center;">
-                                        <input class="form-check-input" (change)="onChangesSelectAll()" [(ngModel)]="selectedAll"
-                                            type="checkbox">
-                                    </th> -->
                                     <th style="width: 250px">{{ l('Task Title') }}</th>
-                                    <th style="width: 180px;">{{l('Start Date & Time')}}</th>
-                                    <th style="width: 180px;">{{l('End Date & Time')}}</th>
-                                    <th style="width: 150px; text-align: center;">{{l('Est. Hour')}}</th>
-                                    <th style="width: 150px; text-align: center;">{{l('Actual Hour')}}</th>
+                                    <th style="width: 180px;">{{l('Date')}}</th>
+                                    <th style="width: 150px; text-align: center;">{{l('Est. / Actual Hours')}}</th>
                                     <th style="width: 180px; text-align: center;">{{l('Team')}}</th>
-                                    <th style="width: 180px; text-align: center;">{{l('Completion Status')}}</th>
-                                    <th class="text-center" style="width: 130px">{{l('Status')}}</th>
-                                    <th class="text-center" style="width: 130px">{{l('Priority')}}</th>
-                                    <th style="width: 130px"
-                                        [hidden]="!isGrantedAny('Pages.TaskEvents.Edit', 'Pages.TaskEvents.Delete')">
+                                    <th style="width: 180px; text-align: center;">{{l('Status / Completion')}}</th>
+                                    <th style="width: 130px; text-align: center;">{{l('Priority')}}</th>
+                                    <th style="width: 130px; text-align: center;" [hidden]="!isGrantedAny('Pages.TaskEvents.Edit', 'Pages.TaskEvents.Delete')">
                                         {{ l('Actions') }}
                                     </th>
                                 </tr>
@@ -296,7 +288,12 @@
                                             {{ record.taskEvent.name }}
                                         </a>
                                     </td>
-                                    <td style="width:180px;">
+                                    <td style="width: 180px;">
+                                        <div>
+                                            <span *ngIf="record.taskEvent.eventDate">{{record.taskEvent.eventDate | luxonFormat : 'dd-MM-yyyy'}}</span>
+                                            </div>
+                                    </td>
+                                    <!-- <td style="width:180px;">
                                         <span *ngIf="record.taskEvent.eventDate">
                                             {{record.taskEvent.eventDate | luxonFormat : 'dd-MM-yyyy::HH:mm'}}
                                         </span>
@@ -311,11 +308,16 @@
                                         <span *ngIf="record.taskEvent.endTime && record.taskEvent.endDate">(</span>
                                         <span *ngIf="record.taskEvent.endTime">{{record.taskEvent.endTime}}</span>
                                         <span *ngIf="record.taskEvent.endTime && record.taskEvent.endDate">)</span>
+                                    </td> -->
+                                    <td style="width:150px; text-align: center;">
+                                        <span class="badge rounded-pill badge-primary badge-md">
+                                        {{ record.taskEvent.estimatedTime || 0 }} / {{ record.taskEvent.actualTime || 0 }}
+                                        </span>
+                                    </td>
+                                    <!-- <td style="width:150px; text-align: center;">{{ record.taskEvent.estimatedTime || 0 }}
                                     </td>
                                     <td style="width:150px; text-align: center;">{{ record.taskEvent.actualTime || 0 }}
-                                    </td>
-                                    <td style="width:150px; text-align: center;">{{ record.taskEvent.actualTime || 0 }}
-                                    </td>
+                                    </td> -->
                                     <td style="width: 180px; text-align: center;">
                                         <div
                                             class="symbol-group symbol-hover flex-nowrap d-flex justify-content-center">
@@ -330,6 +332,10 @@
                                         </div>
                                     </td>
                                     <td style="width: 180px; text-align: center;">
+                                        <span class="badge badge-primary badge-sm">{{record.taskStatusName}}</span> /
+                                        <span class="fw-bold fs-6">{{record.taskEvent.completionPercentage}}%</span>
+                                    </td>
+                                    <!-- <td style="width: 180px; text-align: center;">
                                         <div class="d-flex align-items-center flex-column mt-5">
                                             <div class="d-flex justify-content-between w-100 mt-auto mb-2">
                                                 <span
@@ -341,13 +347,12 @@
                                                     [(ngModel)]="record.taskEvent.completionPercentage"></p-slider>
                                             </div>
                                         </div>
-                                        <!-- <progress max="100" value="{{ record.taskEvent.completionPercentage }}"></progress> -->
                                     </td>
                                     <td style="width: 150px">
                                         <div class="text-center">
                                             <span class="badge badge-primary badge-sm">{{record.taskStatusName}}</span>
                                         </div>
-                                    </td>
+                                    </td> -->
                                     <td style="width: 150px">
                                         <div class="text-center">
                                             <span
