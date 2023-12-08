@@ -13,7 +13,7 @@
                         [disabled]="saving"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="my-3">
+                    <!-- <div class="my-5">
                         <label class="form-label" for="MasterTagCategoryName">{{ l('MasterTagCategory') }}</label>
                         <div class="input-group">
                             <input class="form-control" id="MasterTagCategoryName" name="masterTagCategoryName"
@@ -32,7 +32,7 @@
                     <input class="form-control" name="job.masterTagCategoryId" [(ngModel)]="job.masterTagCategoryId"
                         type="text" hidden />
 
-                    <div class="my-3">
+                    <div class="my-5">
                         <label class="form-label" for="MasterTagName">{{ l('MasterTag') }}</label>
                         <div class="input-group">
                             <input class="form-control" id="MasterTagName" name="masterTagName"
@@ -49,7 +49,7 @@
                     <input class="form-control" name="job.masterTagId" [(ngModel)]="job.masterTagId" type="text"
                         hidden />
 
-                    <div class="my-3">
+                    <div class="my-5">
                         <label class="form-label" for="ProductCategoryName">{{ l('ProductCategory') }}</label>
                         <div class="input-group">
                             <input class="form-control" id="ProductCategoryName" name="productCategoryName"
@@ -67,7 +67,7 @@
                     <input class="form-control" name="job.productCategoryId" [(ngModel)]="job.productCategoryId"
                         type="text" hidden />
 
-                    <div class="my-3">
+                    <div class="my-5">
                         <label class="form-label" for="CurrencyName">{{ l('Currency') }}</label>
                         <div class="input-group">
                             <input class="form-control" id="CurrencyName" name="currencyName" [(ngModel)]="currencyName"
@@ -83,23 +83,9 @@
                     </div>
                     <input class="form-control" name="job.currencyId" [(ngModel)]="job.currencyId" type="text" hidden />
 
-                    <div class="my-3">
-                        <label class="form-label" for="BusinessName">{{ l('Business') }}</label>
-                        <div class="input-group">
-                            <input class="form-control" id="BusinessName" name="businessName" [(ngModel)]="businessName"
-                                type="text" disabled />
-                            <button class="btn btn-primary blue" (click)="openSelectBusinessModal()" type="button">
-                                <i class="fa fa-search"></i>
-                                {{ l('Pick') }}
-                            </button>
-                            <button class="btn btn-danger btn-icon" type="button" (click)="setBusinessIdNull()">
-                                <i class="fa fa-times"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <input class="form-control" name="job.businessId" [(ngModel)]="job.businessId" type="text" hidden />
+                    
 
-                    <div class="my-3">
+                    <div class="my-5">
                         <label class="form-label" for="CountryName">{{ l('Country') }}</label>
                         <div class="input-group">
                             <input class="form-control" id="CountryName" name="countryName" [(ngModel)]="countryName"
@@ -115,7 +101,7 @@
                     </div>
                     <input class="form-control" name="job.countryId" [(ngModel)]="job.countryId" type="text" hidden />
 
-                    <div class="my-3">
+                    <div class="my-5">
                         <label class="form-label" for="StateName">{{ l('State') }}</label>
                         <div class="input-group">
                             <input class="form-control" id="StateName" name="stateName" [(ngModel)]="stateName"
@@ -131,7 +117,7 @@
                     </div>
                     <input class="form-control" name="job.stateId" [(ngModel)]="job.stateId" type="text" hidden />
 
-                    <div class="my-3">
+                    <div class="my-5">
                         <label class="form-label" for="CityName">{{ l('City') }}</label>
                         <div class="input-group">
                             <input class="form-control" id="CityName" name="cityName" [(ngModel)]="cityName" type="text"
@@ -147,7 +133,7 @@
                     </div>
                     <input class="form-control" name="job.cityId" [(ngModel)]="job.cityId" type="text" hidden />
 
-                    <div class="my-3">
+                    <div class="my-5">
                         <label class="form-label" for="JobStatusTypeName">{{ l('JobStatusType') }}</label>
                         <div class="input-group">
                             <input class="form-control" id="JobStatusTypeName" name="jobStatusTypeName"
@@ -164,7 +150,55 @@
                     <input class="form-control" name="job.jobStatusTypeId" [(ngModel)]="job.jobStatusTypeId" type="text"
                         hidden />
 
-                    <div class="my-3">
+                     -->
+
+                    <div class="row my-5">
+                        <div class="col-xl-6 select_button_custom">
+                            <div class="fv-row mb-7 fv-plugins-icon-container">
+                                <label class="fs-6 fw-semibold form-label mt-3">
+                                    <span class="required">Local or Remote Job</span>
+                                </label>
+                                <p-selectButton [options]="remoteOnsiteOptions" name="remoteWorkOrOnSiteWork"
+                                    id="remoteWorkOrOnSiteWork" [(ngModel)]="job.remoteWorkOrOnSiteWork"
+                                    optionLabel="label" optionValue="value"></p-selectButton>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 select_button_custom">
+                            <div class="fv-row mb-7">
+                                <label class="fs-6 fw-semibold form-label mt-3">
+                                    <span class="required">Full Time Job or Gig WOrk</span>
+                                </label>
+                                <p-selectButton [options]="fullTimeOrGigWorkOptions" name="fullTimeJobOrGigWorkProject"
+                                    id="fullTimeJobOrGigWorkProject" [(ngModel)]="job.fullTimeJobOrGigWorkProject"
+                                    optionLabel="label" optionValue="value"></p-selectButton>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="my-5">
+                        <label class="form-label" for="Job_Title">{{ l('Title') }} *</label>
+                        <input type="text" #Job_Title="ngModel" id="Job_Title" class="form-control"
+                            [(ngModel)]="job.title" name="Title" minlength="1" maxlength="2048" required />
+                        <validation-messages [formCtrl]="Job_Title"></validation-messages>
+                    </div>
+
+
+                    <div class="my-5">
+                        <label class="form-label" for="BusinessName">{{ l('Business') }}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="BusinessName" name="businessName" [(ngModel)]="businessName"
+                                type="text" disabled />
+                            <button class="btn btn-primary blue" (click)="openSelectBusinessModal()" type="button">
+                                <i class="fa fa-search"></i>
+                                {{ l('Pick') }}
+                            </button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setBusinessIdNull()">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input class="form-control" name="job.businessId" [(ngModel)]="job.businessId" type="text" hidden />
+
+                    <div class="my-5">
                         <label class="form-label" for="StoreName">{{ l('Store') }}</label>
                         <div class="input-group">
                             <input class="form-control" id="StoreName" name="storeName" [(ngModel)]="storeName"
@@ -179,15 +213,7 @@
                         </div>
                     </div>
                     <input class="form-control" name="job.storeId" [(ngModel)]="job.storeId" type="text" hidden />
-
-                    <div class="my-3">
-                        <label class="form-label" for="Job_Title">{{ l('Title') }} *</label>
-                        <input type="text" #Job_Title="ngModel" id="Job_Title" class="form-control"
-                            [(ngModel)]="job.title" name="Title" minlength="1" maxlength="2048" required />
-                        <validation-messages [formCtrl]="Job_Title"></validation-messages>
-                    </div>
-
-                    <br />
+                    <!-- <br />
                     <label class="form-check form-check-custom form-check-solid">
                         <input id="Job_FullTimeJobOrGigWorkProject" #Job_FullTimeJobOrGigWorkProject="ngModel"
                             name="FullTimeJobOrGigWorkProject" [(ngModel)]="job.fullTimeJobOrGigWorkProject"
@@ -220,7 +246,7 @@
                     </label>
                     <validation-messages [formCtrl]="Job_SalaryBasedOrFixedPrice"></validation-messages>
 
-                    <div class="my-3">
+                    <div class="my-5">
                         <label class="form-label" for="Job_SalaryOrStaffingRate">{{ l('SalaryOrStaffingRate') }}</label>
                         <input type="text" #Job_SalaryOrStaffingRate="ngModel" id="Job_SalaryOrStaffingRate"
                             class="form-control" [(ngModel)]="job.salaryOrStaffingRate" name="SalaryOrStaffingRate"
@@ -228,7 +254,7 @@
                         <validation-messages [formCtrl]="Job_SalaryOrStaffingRate"></validation-messages>
                     </div>
 
-                    <div class="my-3">
+                    <div class="my-5">
                         <label class="form-label" for="Job_ReferralPoints">{{ l('ReferralPoints') }}</label>
                         <input type="text" #Job_ReferralPoints="ngModel" id="Job_ReferralPoints" class="form-control"
                             [(ngModel)]="job.referralPoints" name="ReferralPoints" minlength="1" maxlength="128" />
@@ -252,7 +278,7 @@
                         <validation-messages [formCtrl]="Job_NumberOfJobs"></validation-messages>
                     </div>
 
-                    <div class="my-3">
+                    <div class="my-5">
                         <label class="form-label" for="Job_MinimumExperience">{{ l('MinimumExperience') }}</label>
                         <input type="text" #Job_MinimumExperience="ngModel" id="Job_MinimumExperience"
                             class="form-control" [(ngModel)]="job.minimumExperience" name="MinimumExperience"
@@ -260,7 +286,7 @@
                         <validation-messages [formCtrl]="Job_MinimumExperience"></validation-messages>
                     </div>
 
-                    <div class="my-3">
+                    <div class="my-5">
                         <label class="form-label" for="Job_MaximumExperience">{{ l('MaximumExperience') }}</label>
                         <input type="text" #Job_MaximumExperience="ngModel" id="Job_MaximumExperience"
                             class="form-control" [(ngModel)]="job.maximumExperience" name="MaximumExperience"
@@ -268,14 +294,14 @@
                         <validation-messages [formCtrl]="Job_MaximumExperience"></validation-messages>
                     </div>
 
-                    <div class="my-3">
+                    <div class="my-5">
                         <label class="form-label" for="Job_JobDescription">{{ l('JobDescription') }}</label>
                         <input type="text" #Job_JobDescription="ngModel" id="Job_JobDescription" class="form-control"
                             [(ngModel)]="job.jobDescription" name="JobDescription" />
                         <validation-messages [formCtrl]="Job_JobDescription"></validation-messages>
                     </div>
 
-                    <div class="my-3">
+                    <div class="my-5">
                         <label class="form-label" for="Job_JobLocationFullAddress">
                             {{ l('JobLocationFullAddress') }}
                         </label>
@@ -285,7 +311,7 @@
                         <validation-messages [formCtrl]="Job_JobLocationFullAddress"></validation-messages>
                     </div>
 
-                    <div class="my-3">
+                    <div class="my-5">
                         <label class="form-label" for="Job_ZipCode">{{ l('ZipCode') }}</label>
                         <input type="text" #Job_ZipCode="ngModel" id="Job_ZipCode" class="form-control"
                             [(ngModel)]="job.zipCode" name="ZipCode" minlength="1" maxlength="50" />
@@ -306,14 +332,14 @@
                         <validation-messages [formCtrl]="Job_Longitude"></validation-messages>
                     </div>
 
-                    <div class="my-3">
+                    <div class="my-5">
                         <label class="form-label" for="Job_StartDate">{{ l('StartDate') }}</label>
                         <input class="form-control m-input" #Job_StartDate type="datetime" bsDatepicker
                             datePickerLuxonModifier [(date)]="job.startDate" id="Job_StartDate" name="Job_StartDate" />
                         <validation-messages [formCtrl]="Job_StartDate"></validation-messages>
                     </div>
 
-                    <div class="my-3">
+                    <div class="my-5">
                         <label class="form-label" for="Job_HireByDate">{{ l('HireByDate') }}</label>
                         <input class="form-control m-input" #Job_HireByDate type="datetime" bsDatepicker
                             datePickerLuxonModifier [(date)]="job.hireByDate" id="Job_HireByDate"
@@ -321,7 +347,7 @@
                         <validation-messages [formCtrl]="Job_HireByDate"></validation-messages>
                     </div>
 
-                    <div class="my-3">
+                    <div class="my-5">
                         <label class="form-label" for="Job_PublishDate">{{ l('PublishDate') }}</label>
                         <input class="form-control m-input" #Job_PublishDate type="datetime" bsDatepicker
                             datePickerLuxonModifier [(date)]="job.publishDate" id="Job_PublishDate"
@@ -329,7 +355,7 @@
                         <validation-messages [formCtrl]="Job_PublishDate"></validation-messages>
                     </div>
 
-                    <div class="my-3">
+                    <div class="my-5">
                         <label class="form-label" for="Job_ExpirationDate">{{ l('ExpirationDate') }}</label>
                         <input class="form-control m-input" #Job_ExpirationDate type="datetime" bsDatepicker
                             datePickerLuxonModifier [(date)]="job.expirationDate" id="Job_ExpirationDate"
@@ -337,7 +363,7 @@
                         <validation-messages [formCtrl]="Job_ExpirationDate"></validation-messages>
                     </div>
 
-                    <div class="my-3">
+                    <div class="my-5">
                         <label class="form-label" for="Job_InternalJobDescription">
                             {{ l('InternalJobDescription') }}
                         </label>
@@ -347,7 +373,7 @@
                         <validation-messages [formCtrl]="Job_InternalJobDescription"></validation-messages>
                     </div>
 
-                    <div class="my-3">
+                    <div class="my-5">
                         <label class="form-label" for="Job_CityLocation">{{ l('CityLocation') }}</label>
                         <input type="text" #Job_CityLocation="ngModel" id="Job_CityLocation" class="form-control"
                             [(ngModel)]="job.cityLocation" name="CityLocation" minlength="1" maxlength="128" />
@@ -364,12 +390,12 @@
                     </label>
                     <validation-messages [formCtrl]="Job_Published"></validation-messages>
 
-                    <div class="my-3">
+                    <div class="my-5">
                         <label class="form-label" for="Job_Url">{{ l('Url') }}</label>
                         <input type="text" #Job_Url="ngModel" id="Job_Url" class="form-control" [(ngModel)]="job.url"
                             name="Url" />
                         <validation-messages [formCtrl]="Job_Url"></validation-messages>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="modal-footer">
                     <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">

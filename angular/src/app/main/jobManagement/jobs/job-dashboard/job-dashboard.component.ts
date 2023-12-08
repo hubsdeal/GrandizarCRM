@@ -10,7 +10,7 @@ import { SelectItem } from 'primeng/api';
   styleUrls: ['./job-dashboard.component.css']
 })
 export class JobDashboardComponent extends AppComponentBase implements OnInit, AfterViewInit {
-  jobId: number;
+  jobId: number; 
   bindingData: any;
   remoteOnsiteOptions: SelectItem[];
   fullTimeOrGigWorkOptions: SelectItem[];
@@ -29,7 +29,6 @@ export class JobDashboardComponent extends AppComponentBase implements OnInit, A
     this.remoteOnsiteOptions = [{ label: 'Onsite/Local', value: false }, { label: 'Remote', value: true }];
     this.salaryBasedOrFixedPriceOptions = [{ label: 'Salary/Staffing Rate', value: true }, { label: 'Fixed Price', value: false }];
     this.fullTimeOrGigWorkOptions = [{ label: 'Full Time Job', value: true }, { label: 'Gig Work', value: false }];
-    this.salaryBasedOrFixedPriceOptions = [{ label: 'Salary/Staffing Rate', value: true }, { label: 'Fixed Price', value: false }];
   }
 
   ngOnInit(): void {

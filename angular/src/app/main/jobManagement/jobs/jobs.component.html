@@ -1,10 +1,10 @@
 ﻿<div [@routerTransition]>
     <sub-header [title]="'Jobs' | localize" [description]="">
         <div role="actions">
-            <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1">
+            <!-- <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1">
                 <i class="fa fa-file-excel"></i>
                 {{ l('ExportToExcel') }}
-            </button>
+            </button> -->
 
             <button *ngIf="isGranted('Pages.Jobs.Create')" (click)="createJob()" class="btn btn-primary blue">
                 <i class="fa fa-plus"></i>
@@ -39,10 +39,10 @@
                                 <div class="my-3">
                                     <label class="form-label" for="TitleFilter">{{ l('Title') }}</label>
                                     <input type="text" class="form-control" id="TitleFilter" name="titleFilter"
-                                        [(ngModel)]="titleFilter" (ngModelChange)="getJobs()" />
+                                        [(ngModel)]="filterText" (ngModelChange)="getJobs()" />
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <!-- <div class="col-md-3">
                                 <div class="my-3">
                                     <label class="form-label" for="FullTimeJobOrGigWorkProjectFilterSelect">
                                         {{ l('FullTimeJobOrGigWorkProject') }}
@@ -403,7 +403,7 @@
                                     <input type="text" class="form-control" id="StoreNameFilter" name="storeNameFilter"
                                         [(ngModel)]="storeNameFilter" />
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="col-md-12 mt-5">
                                 <button (click)="resetFilters()" class="btn btn-secondary btn-sm"
                                     id="btn-reset-filters">
@@ -440,7 +440,8 @@
                                     <th style="width:30px; text-align: center;">
                                         <label
                                             class="form-check form-check-custom form-check-inline form-check-solid is-invalid">
-                                            <input class="form-check-input" type="checkbox" value="1">
+                                            <input class="form-check-input" type="checkbox" value="true"
+                                                (change)="onChangesSelectAll()" [(ngModel)]="selectedAll">
                                             <span class="fw-semibold ps-2 fs-6">
                                             </span>
                                         </label>
@@ -622,7 +623,8 @@
                                     <td style="width: 30px;">
                                         <label
                                             class="form-check form-check-custom form-check-inline form-check-solid is-invalid mb-2">
-                                            <input class="form-check-input" type="checkbox" value="1">
+                                            <input class="form-check-input" type="checkbox"
+                                                [(ngModel)]="record.selected" (change)="checkIfAllSelected()">
                                             <span class="fw-semibold ps-2 fs-6">
                                             </span>
                                         </label>
@@ -631,18 +633,18 @@
                                         <span class="p-column-title">{{ l('Name') }}</span>
                                         <div class="d-flex flex-wrap flex-grow-1 mt-n2 mt-lg-n1">
                                             <div class="d-flex flex-column flex-grow-1 my-lg-0 my-2 pe-3">
-                                                <a href="javascript:;" title="{{ record.job.title }}"
-                                                    [routerLink]="['/app/main/jobManagement/jobs/dashboard',record.job.id]"
+                                                <a href="javascript:;" title="{{ record.jobTitle }}"
+                                                    [routerLink]="['/app/main/jobManagement/jobs/dashboard',record.id]"
                                                     class="fs-5 text-gray-800 text-hover-primary fw-bold mb-1">
-                                                    {{ record.job.title }}
-                                                    <i *ngIf="record.job.published"
+                                                    {{ record.jobTitle }}
+                                                    <i *ngIf="record.isPublishedOnlineOrExclusive"
                                                         class="fas fa-check-circle ml-1 mr-0 text-success"
                                                         title="Published"></i>
                                                 </a>
-                                                <span *ngIf="record.businessName"
+                                                <span *ngIf="record.companyName"
                                                     class="text-gray-400 fw-semibold fs-7 my-0">
                                                     <span class="text-primary">Company Name: </span>
-                                                    {{ record.businessName }}
+                                                    {{ record.companyName }}
                                                 </span>
                                                 <span class="text-gray-400 fw-semibold fs-7 my-1">
                                                     <i class="fas fa-map-marked-alt me-1"></i>
@@ -650,21 +652,21 @@
                                                         {{ record.cityName }}
                                                     </span>
                                                     <span
-                                                        *ngIf="record.cityName && (record.stateName || record.countryName || record.job.zipCode)">,
+                                                        *ngIf="record.cityName && (record.stateName || record.countryName || record.zipCode)">,
                                                     </span>
                                                     <span>
                                                         {{ record.stateName }}
                                                     </span>
                                                     <span
-                                                        *ngIf="record.stateName && (record.countryName || record.job.zipCode)">,
+                                                        *ngIf="record.stateName && (record.countryName || record.zipCode)">,
                                                     </span>
                                                     <span>
                                                         {{ record.countryName }}
                                                     </span>
-                                                    <span *ngIf=" record.countryName && record.job.zipCode">,
+                                                    <span *ngIf=" record.countryName && record.zipCode">,
                                                     </span>
                                                     <span>
-                                                        {{ record.job.zipCode }}
+                                                        {{ record.zipCode }}
                                                     </span>
                                                 </span>
                                             </div>
@@ -672,40 +674,40 @@
                                     </td>
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('Job Type') }}</span>
-                                        Remote
+                                        {{record.jobTypeName}}
                                     </td>
                                     <td style="width: 90px; text-align: center;">
                                         <span class="p-column-title">{{ l('Sourcing') }}</span>
-                                        0
+                                        {{record.sourcing}}
                                     </td>
                                     <td style="width: 110px; text-align: center;">
                                         <span class="p-column-title">{{ l('Short-Listed') }}</span>
-                                        0
+                                        {{record.shortListed}}
                                     </td>
                                     <td style="width: 100px; text-align: center;">
                                         <span class="p-column-title">{{ l('Interviews') }}</span>
-                                        0
+                                        {{record.interviews}}
                                     </td>
                                     <td style="width: 90px; text-align: center;">
                                         <span class="p-column-title">{{ l('Offered') }}</span>
-                                        0
+                                        {{record.offered}}
                                     </td>
                                     <td style="width: 90px; text-align: center;">
                                         <span class="p-column-title">{{ l('Hired') }}</span>
-                                        0
+                                        {{record.hired}}
                                     </td>
                                     <td style="width: 150px; text-align: center;">
                                         <span class="p-column-title">{{ l('Status Type') }}</span>
                                         <span class="badge badge-primary">
-                                            {{ record.jobStatusTypeName }}
+                                            {{record.jobStatusName}}
                                         </span>
                                     </td>
                                     <td style="width: 150px; text-align: center;">
                                         <span class="p-column-title">{{ l('Remote Work') }}</span>
-                                        <span class="badge badge-primary" *ngIf="record.job.remoteWorkOrOnSiteWork">
+                                        <span class="badge badge-primary" *ngIf="record.remoteWorkOrOnSiteWork">
                                             Yes
                                         </span>
-                                        <span class="badge badge-danger" *ngIf="!record.job.remoteWorkOrOnSiteWork">
+                                        <span class="badge badge-danger" *ngIf="!record.remoteWorkOrOnSiteWork">
                                             No
                                         </span>
                                     </td>
@@ -887,17 +889,17 @@
                                                 <span class="caret"></span>
                                             </button>
                                             <ul class="dropdown-menu" *dropdownMenu>
-                                                <li>
+                                                <!-- <li>
                                                     <a href="javascript:;" class="dropdown-item"
                                                         (click)="viewJobModal.show(record)">
                                                         {{ l('View') }}
                                                     </a>
-                                                </li>
+                                                </li> -->
                                                 <li>
                                                     <a href="javascript:;"
                                                         *ngIf="permission.isGranted('Pages.Jobs.Edit')"
                                                         class="dropdown-item"
-                                                        (click)="createOrEditJobModal.show(record.job.id)">
+                                                        (click)="createOrEditJobModal.show(record.id)">
                                                         {{ l('Edit') }}
                                                     </a>
                                                 </li>

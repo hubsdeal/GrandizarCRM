@@ -16,6 +16,7 @@ import { JobStateLookupTableModalComponent } from './job-state-lookup-table-moda
 import { JobCityLookupTableModalComponent } from './job-city-lookup-table-modal.component';
 import { JobJobStatusTypeLookupTableModalComponent } from './job-jobStatusType-lookup-table-modal.component';
 import { JobStoreLookupTableModalComponent } from './job-store-lookup-table-modal.component';
+import { SelectItem } from 'primeng/api';
 
 @Component({
     selector: 'createOrEditJobModal',
@@ -61,19 +62,25 @@ export class CreateOrEditJobModalComponent extends AppComponentBase implements O
     jobStatusTypeName = '';
     storeName = '';
 
-    isFromProject:boolean = false;
+    isFromProject: boolean = false;
+
+    remoteOnsiteOptions: SelectItem[];
+    fullTimeOrGigWorkOptions: SelectItem[];
     constructor(
         injector: Injector,
         private _jobsServiceProxy: JobsServiceProxy,
         private _dateTimeService: DateTimeService
     ) {
         super(injector);
+
     }
 
     show(jobId?: number): void {
         if (!jobId) {
             this.job = new CreateOrEditJobDto();
             this.job.id = jobId;
+            this.job.remoteWorkOrOnSiteWork = true;
+            this.job.fullTimeJobOrGigWorkProject = true;
             this.job.startDate = this._dateTimeService.getStartOfDay();
             this.job.hireByDate = this._dateTimeService.getStartOfDay();
             this.job.publishDate = this._dateTimeService.getStartOfDay();
@@ -110,6 +117,9 @@ export class CreateOrEditJobModalComponent extends AppComponentBase implements O
                 this.modal.show();
             });
         }
+
+        this.remoteOnsiteOptions = [{ label: 'Onsite/Local', value: false }, { label: 'Remote', value: true }];
+        this.fullTimeOrGigWorkOptions = [{ label: 'Full Time Job', value: true }, { label: 'Gig Work', value: false }];
     }
 
     save(): void {
@@ -267,5 +277,5 @@ export class CreateOrEditJobModalComponent extends AppComponentBase implements O
         this.modal.hide();
     }
 
-    ngOnInit(): void {}
+    ngOnInit(): void { }
 }
