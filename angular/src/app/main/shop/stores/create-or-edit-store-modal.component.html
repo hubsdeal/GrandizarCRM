@@ -128,7 +128,7 @@
                         </div>
                         <div class="col-xl-12">
                             <div class="my-5">
-                                <label class="form-label" for="Store_Phone">{{ l('Phone') }}</label>
+                                <label class="form-label" for="Store_Phone">{{ l('Primary Contact') }}</label>
                                 <input type="text" #Store_Phone="ngModel" id="Store_Phone" class="form-control"
                                     [(ngModel)]="store.phone" name="Phone" minlength="1" maxlength="50" />
                                 <validation-messages [formCtrl]="Store_Phone"></validation-messages>
@@ -546,6 +546,21 @@
                         </span>
                     </label>
                     <validation-messages [formCtrl]="Store_IsVerified"></validation-messages> -->
+
+                    <div class="my-5">
+                        <label class="form-label" for="Store_ZipCode">{{ l('ZipCode') }}</label>
+                        <input
+                            type="text"
+                            #Store_ZipCode="ngModel"
+                            id="Store_ZipCode"
+                            class="form-control"
+                            [(ngModel)]="store.zipCode"
+                            name="ZipCode"
+                            minlength="1"
+                            maxlength="50"
+                        />
+                        <validation-messages [formCtrl]="Store_ZipCode"></validation-messages>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">

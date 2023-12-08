@@ -89,6 +89,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 import { SessionTimeoutModalComponent } from './shared/common/session-timeout/session-timeout-modal-component';
 import { SessionTimeoutComponent } from './shared/common/session-timeout/session-timeout.component';
 import { AutoCompleteModule } from 'primeng/autocomplete';
+import { AccordionModule } from 'primeng/accordion';
 import { MenuSearchBarComponent } from './shared/layout/nav/menu-search-bar/menu-search-bar.component';
 import { NgxSpinnerModule, NgxSpinnerComponent } from 'ngx-spinner';
 import { ScrollTopComponent } from './shared/layout/scroll-top.component';
@@ -102,6 +103,7 @@ import { RecoveryCodesComponent } from './shared/layout/profile/recovery-codes.c
 import { VerifyCodeModalComponent } from './shared/layout/profile/verify-code-modal.component';
 import { ViewRecoveryCodesModalComponent } from './shared/layout/profile/view-recovery-codes-modal.component';
 import { GeocodingService } from './shared/chat-gpt-response-modal/services/chat-gpt-lat-long.service';
+import { SanitizeHtmlPipe } from './main/taskManagement/taskEvents/task-events-dashboard/SanitizeHtmlPipe';
 
 @NgModule({
     declarations: [
@@ -165,6 +167,7 @@ import { GeocodingService } from './shared/chat-gpt-response-modal/services/chat
         ActiveDelegatedUsersComboComponent,
         DefaultLogoComponent,
         ToggleDarkModeComponent,
+        SanitizeHtmlPipe
     ],
     providers: [
         ImpersonationService,
@@ -206,6 +209,7 @@ import { GeocodingService } from './shared/chat-gpt-response-modal/services/chat
         TextMaskModule,
         ImageCropperModule,
         AutoCompleteModule,
+        AccordionModule,
         NgxSpinnerModule,
         AppBsModalModule,
         SubheaderModule,

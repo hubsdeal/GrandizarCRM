@@ -16,8 +16,7 @@ import { ChatGptResponseModalComponent } from '@app/shared/chat-gpt-response-mod
 import { MatDialog } from '@angular/material/dialog';
 import { CreateOrEditTaskTagModalComponent } from '../../taskTags/create-or-edit-taskTag-modal.component';
 import { ViewTaskTagModalComponent } from '../../taskTags/view-taskTag-modal.component';
-
-
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-task-events-dashboard',
@@ -34,6 +33,8 @@ export class TaskEventsDashboardComponent extends AppComponentBase implements On
     createOrEditTaskTagModal: CreateOrEditTaskTagModalComponent;
     @ViewChild('viewTaskTagModal', { static: true }) viewTaskTagModal: ViewTaskTagModalComponent;
     
+    safeHtmlContent: SafeHtml;
+
   taskEventId: number;
   taskEvent: GetTaskEventForViewDto = new GetTaskEventForViewDto();
   docTypes: GetDocumentTypeForViewDto[];
@@ -77,6 +78,7 @@ taskTags:any;
     private _activatedRoute: ActivatedRoute,
     private dialog: MatDialog,
     private _fileDownloadService: FileDownloadService,
+    private sanitizer: DomSanitizer
   ) {
     super(injector);
   }
@@ -96,6 +98,8 @@ taskTags:any;
   getTaskById() {
     this._taskEventsServiceProxy.getTaskEventForView(this.taskEventId).subscribe((result) => {
       this.taskEvent = result
+      const dirtyHtmlContent = this.taskEvent?.taskEvent?.description;
+      this.safeHtmlContent = this.sanitizer.bypassSecurityTrustHtml(dirtyHtmlContent);
     })
   }
  
